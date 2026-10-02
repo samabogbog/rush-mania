@@ -18,10 +18,10 @@ npm run dev
 ถ้าใช้ไฟล์ build ที่อยู่ใน `dist/` และมี Python สามารถรันโดยไม่ต้องติดตั้ง Node.js:
 
 ```powershell
-py -m http.server 8080 --directory dist
+py -m http.server 8080 --directory dist/client
 ```
 
-แล้วเปิด http://localhost:8080 (อย่าเปิด `dist/index.html` ด้วย file:// โดยตรง)
+แล้วเปิด http://localhost:8080/?practice=1 (อย่าเปิด `dist/client/index.html` ด้วย file:// โดยตรง)
 
 ## วิธีเล่น
 
@@ -46,9 +46,10 @@ py -m http.server 8080 --directory dist
 - ต่อสู้, สกิลและ cooldown, ยา, EXP/level, แต้มสถานะ, ของดรอป, เก็บของ, ร้านค้า, ตีบวกดาบ, เควสเริ่มต้น
 - บันทึกความคืบหน้าด้วย localStorage ในเบราว์เซอร์ทุก 5 วินาทีและเมื่อสถานะเปลี่ยน
 - เมนูเปิดแล้วพักเกม; หาก HP หมดจะกลับจุดเริ่มและเสียค่าฟื้นฟู 15 z
-- เป็น **single-player prototype** ยังไม่มี multiplayer, บัญชีผู้เล่น, เซิร์ฟเวอร์เกม, แชตออนไลน์ หรือ economy ที่ป้องกันการโกง
+- โหมด **Online alpha** มีบัญชี Sites, server save, shared monsters, ผู้เล่นอื่นและ world chat; ยังไม่มี party, player trade, marketplace หรือเนื้อหาครบ B+
+- โหมด **Practice** เล่นเดี่ยวและใช้เซฟในเครื่องเดิม
 - แชตในหน้าจอเป็นบันทึกเหตุการณ์และโน้ตเฉพาะเครื่องเท่านั้น
-- บันทึกขึ้นกับ origin ของเว็บ การเปลี่ยนพอร์ต/โดเมนหรือการล้างข้อมูลเว็บจะไม่ใช้เซฟเดิม
+- เซฟ Practice ขึ้นกับ origin ของเว็บ; online character ผูกกับตัวตน Sites และเก็บบนเซิร์ฟเวอร์
 
 ## ภาพอ้างอิง
 
@@ -73,7 +74,7 @@ py -m http.server 8080 --directory dist
 
 ```sh
 npm run build
-npm run preview
+npm run preview # static Practice only; use ?practice=1
 npm test
 ```
 
@@ -113,6 +114,32 @@ World จัดการ resize, context loss/restoration, event listeners แ�
 
 เพิ่มสามอาชีพและ 30 สกิลที่มีผลจริง เลเวลสูงสุด 100 ปลดล็อกสกิลทุก 10 เลเวล สูตรลดดาเมจตาม DEF คือ `ATK * (100 / (DEF + 100))` โดยสุ่ม attack roll ±10% และมีโอกาสคริติคอลตาม AGI
 มอนสเตอร์มีวงเตือนก่อนโจมตี 0.65 วินาที สามารถเดินออกจากระยะเพื่อหลบได้ เวทที่มี cast time ถูกยกเลิกเมื่อเดิน (ใช้ MP และ cooldown แล้ว)
-Class, loadout และความคืบหน้าบันทึกใน `mossvale-save` เดิม; เซฟเก่าจะได้อาชีพ Swordsman โดยคงเลเวล เงิน ไอเท็ม และการตีบวกไว้
+ในโหมด Practice, class, loadout และความคืบหน้าบันทึกใน `mossvale-save` เดิม; เซฟเก่าจะได้อาชีพ Swordsman โดยคงเลเวล เงิน ไอเท็ม และการตีบวกไว้
 เสียงเดิน ต่อสู้ เลเวล และ UI สังเคราะห์ในเครื่อง เปิด/ปิดได้ใน Settings ส่วนโมเดลยังเป็น procedural และยังไม่มี multiplayer
 รายละเอียดที่ทำแล้ว ขอบเขตที่ยังต้องทำ และข้อความเป้าหมายที่ขาดอยู่: [B+ plan](docs/BPLUS-PLAN.md)
+
+
+## Online foundation — 2 October 2026
+
+Sites รุ่นออนไลน์ใช้บัญชีที่ลงชื่อเข้าเว็บไซต์อยู่แล้วเป็นตัวตนผู้เล่น ผ่าน `oai-authenticated-user-id` ที่ dispatcher เติมให้ ไม่มีระบบรหัสผ่านที่แอปสร้างเอง D1 เก็บตัวละครและ shared realm; Worker รับเฉพาะคำสั่งที่ตรวจสอบได้และคำนวณการเคลื่อนที่ combat EXP loot เงิน และไอเท็มบนเซิร์ฟเวอร์
+
+- Online character เริ่มใหม่บนเซิร์ฟเวอร์ เซฟเดิมใน `mossvale-save` ยังคงอยู่และเปิดผ่าน `?practice=1` ได้ ไม่รับค่าทอง/เลเวลที่ browser อ้างเข้าสู่ online
+- Snapshot HTTP ประมาณ 5 Hz; pending command retry ใช้ session/sequence เดิมเพื่อป้องกันซื้อหรือรับรางวัลซ้ำ; reload เปิด session ใหม่และปิด session เก่า
+- โลกเดินต่อเมื่อเปิดหน้าต่าง เมนูจะหยุดส่งคำสั่งเดินเท่านั้น; ผู้เล่นที่ไม่มี heartbeat เกิน 10 วินาทีหยุด auto combat และหายจาก peers
+- รุ่น alpha ใช้ aggregate realm และ revision compare-and-swap ให้ทดสอบ authority/persistence ได้ ก่อน beta ต้องวัด contention และแยก realtime room actors ไม่ใช่ระบบ MMO ขนาดใหญ่เสร็จแล้ว
+- Operator ที่ email ตรงกับ `ADMIN_EMAIL` ใน Sites runtime เท่านั้นเปิด report/ledger, backup และ export ผ่าน Settings → Realm operations ได้ ไม่มี runtime schema initialization
+
+ทดสอบออนไลน์ในเครื่อง (Node24; เปิดสอง terminal):
+
+```sh
+npm run dev:server
+npm run dev
+```
+
+เปิด `http://localhost:5173/?online=1` ตัวจำลอง local ใช้ SQLite ใน `.local/game.sqlite` และ identity cookie เฉพาะ loopback; **ตัวจำลองไม่ได้ถูก bundle เข้าสู่ Worker production** โหมด Vite ปกติยังเป็น Practice เพื่อรักษาเซฟและการทดสอบเดิม
+
+`db/schema.ts` เป็นแหล่ง schema; `npm run db:generate` สร้าง Drizzle migration ใหม่; production migrations ใช้ใน Sites publish ก่อน Worker upload ไม่แก้ migration ที่นำไปใช้แล้ว
+
+Build output เปลี่ยนเป็น `dist/client/` และ `dist/server/index.js` (Worker ESM default.fetch) ส่วน API ไม่ใช่ static HTML ต้องทดสอบด้วย local API หรือ Sites; static preview ใช้เพื่อ Practice เท่านั้น
+
+ดูข้อกำหนดครบ 12 ส่วน ลำดับงาน และเกณฑ์เปิด B+ ใน [docs/BPLUS-PLAN.md](docs/BPLUS-PLAN.md) รุ่นนี้ยังไม่ใช่เกม B+ ที่เนื้อหา/social/economy/rigged-animation ครบแล้ว

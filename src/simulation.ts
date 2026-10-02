@@ -62,6 +62,7 @@ export type Monster = {
   poisonDamage: number;
   windup: number;
   aggro: boolean;
+  owner?: string;
 };
 export type Item = { name: string; icon: string; count: number };
 export type Save = {
@@ -130,9 +131,9 @@ export class Simulation {
   routeTimer = 0;
   onEvent: (text: string, type?: string, x?: number, z?: number) => void =
     () => {};
-  constructor(private random: () => number = Math.random) {
+  constructor(private random: () => number = Math.random, initial?: Save, private storage: Pick<Storage, "getItem" | "setItem"> | null = typeof localStorage === "undefined" ? null : localStorage) {
     try {
-      const s = JSON.parse(localStorage.getItem("mossvale-save") || "null");
+      const s = initial ?? JSON.parse(this.storage?.getItem("mossvale-save") || "null");
       this.save =
         s?.level && s?.stats && Array.isArray(s.items)
           ? { ...structuredClone(defaults), ...s }
@@ -239,7 +240,7 @@ export class Simulation {
       !isClass(job) ||
       this.target !== null ||
       this.cast ||
-      this.monsters.some((monster) => monster.alive && monster.aggro)
+      this.monsters.some((monster) => monster.alive && monster.aggro && (!this.actorId || monster.owner === this.actorId))
     ) {
       this.onEvent("Leave combat before changing your class.");
       return false;
@@ -292,7 +293,7 @@ export class Simulation {
     if (this.save.level === MAX_LEVEL) this.save.xp = 0;
   }
   persist() {
-    localStorage.setItem("mossvale-save", JSON.stringify(this.save));
+    this.storage?.setItem("mossvale-save", JSON.stringify(this.save));
   }
   addItem(name: string, icon: string, count = 1) {
     const item = this.save.items.find((i) => i.name === name);
@@ -341,6 +342,30 @@ export class Simulation {
     );
     if (living[0]) this.select(living[0].id);
   }
+  actorId = "";
+  enemyFilter: (monster: Monster) => boolean = () => true;
+  onKill?: (monster: Monster) => void;
+  admin = false;
+  online = false;
+  connection = "Practice · saved on this device";
+  remotePlayers: { id: string; name: string; job: ClassId; x: number; z: number; hp: number; maxHp: number }[] = [];
+  goTo(x: number, z: number) {
+    if (!Number.isFinite(x) || !Number.isFinite(z)) return;
+    this.target = null; this.destination = { x: Math.max(-14, Math.min(14, x)), z: Math.max(-13, Math.min(13, z)) }; this.route = []; this.routeTimer = 0;
+  }
+  clearTarget() { this.target = null; }
+  setAuto(enabled: boolean) { this.auto = enabled; }
+  buy(name: string) {
+    if (!["Red potion", "Blue potion"].includes(name)) return;
+    const blue = name === "Blue potion", cost = blue ? 20 : 15;
+    if (this.save.gold < cost) { this.onEvent("Not enough zeny"); return; }
+    this.save.gold -= cost; this.addItem(name, blue ? "💠" : "🧪"); this.persist(); this.onEvent("Potion added to your bag", "reward");
+  }
+  sell() {
+    let count = 0;
+    this.save.items = this.save.items.filter(i => { if (!i.name.includes("potion")) { count += i.count; return false; } return true; });
+    this.save.gold += count * 6; this.persist(); this.onEvent(count ? `Sold ${count} materials for ${count * 6} z` : "Gather monster drops to sell them.", "reward");
+  }
   hit(m: Monster, amount: number) {
     if (!m.alive) return;
     const variance = 0.9 + this.random() * 0.2;
@@ -359,12 +384,14 @@ export class Simulation {
       ),
     );
     m.aggro = true;
+    m.owner = this.actorId;
     this.actionTime = 0.25;
     m.hp -= amount;
     this.onEvent(String(amount), "damage", m.x, m.z);
     if (m.hp <= 0) {
       m.alive = false;
       m.respawn = 13;
+      this.onKill?.(m);
       this.addExperience(species[m.kind].xp);
       this.save.gold += 8;
       this.save.kills++;
@@ -708,6 +735,7 @@ export class Simulation {
     this.x = Math.max(-14, Math.min(14, this.x));
     this.z = Math.max(-13, Math.min(13, this.z));
     for (const m of this.monsters) {
+      if (!this.enemyFilter(m)) continue;
       if (!m.alive) {
         m.respawn -= dt;
         if (m.respawn <= 0) {

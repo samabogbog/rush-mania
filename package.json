@@ -5,17 +5,22 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && node tools/build-worker.mjs",
     "preview": "vite preview --host 0.0.0.0",
-    "test": "playwright test"
+    "test": "playwright test",
+    "db:generate": "drizzle-kit generate",
+    "dev:server": "node tools/dev-server.mjs"
   },
   "dependencies": {
     "@babylonjs/core": "^9.29.0",
-    "@fontsource/nunito": "^5.3.0"
+    "@fontsource/nunito": "^5.3.0",
+    "drizzle-orm": "^0.45.3"
   },
   "devDependencies": {
     "@playwright/test": "^1.56.0",
     "agent-browser": "^0.38.1",
+    "drizzle-kit": "^0.31.11",
+    "esbuild": "^0.28.2",
     "typescript": "^5.9.2",
     "vite": "^7.1.7"
   }

@@ -1,62 +1,76 @@
-# Mossvale B+ development plan
+# Mossvale — แผนพัฒนาเกมระดับ B+
 
-Updated: 2 October 2026 (Asia/Bangkok)
+ปรับปรุง 2 ตุลาคม 2026 · ข้อกำหนดครบทั้ง 12 ส่วน
 
-The B+ goal covers twelve product areas. This milestone implements the class/progression foundation; it is not a finished MMORPG or a claim that the product has reached B+ quality.
+เป้าหมายคือ MMORPG บนเว็บที่มีวงจร **ต่อสู้ → ฟาร์ม → สร้าง/อัปเกรด → ลงดันเจียนกับเพื่อน** ที่สนุกและเชื่อถือได้ คุณภาพ B+ ต้องตัดสินจากการเล่นและความเสถียร ไม่ใช่จำนวนเมนูหรือฟีเจอร์ที่มีชื่ออยู่ในเกม
 
-## Explicit requirements received
+## ขอบเขตที่ต้องมี
 
-- Babylon.js browser runtime.
-- Swordsman, Mage, Archer; ten skills per class.
-- Maximum character level 100.
-- Skill unlocks every ten levels: 10, 20, 30, …, 100. Basic attacks are available from level 1.
-- Base damage formula: `Damage = ATK * (100 / (DEF + 100))`.
-- Combat actions with readable feedback; monster attacks that can be anticipated and avoided.
-- Game UI, item/skill/menu PNG icons, vivid colors.
-- Skill loadout, cooldown and status feedback, tutorial.
-- Area music and action/UI sound effects.
-- Performance, persistence, operations and player-feedback tools.
-
-The goal text delivered to this session contains a truncation marker for requirements 3–9. The user's exact additions for models, map/content, item farming, online systems, parties and economy must be recovered before those acceptance criteria are finalized. The earlier chat's proposed list is background, not a substitute for the missing user requirements.
-
-## Delivered milestone
-
-- Data-driven class/skill catalog (`src/game/classes.ts`), three class roles and ranges, 30 functional skills.
-- DEF mitigation for player and monster damage. Attack rolls vary ±10%; critical chance starts at 6% with the default AGI and grows with AGI, capped at 35%.
-- Level ceiling and automatic unlocks, attribute progression, backward-compatible local save migration.
-- Direct attacks, target-centered and player-centered area attacks, healing, guard/attack buffs, stun, slow, damage over time and interruptible cast times.
-- Four assigned skill slots (keys 1, 2, 5, 6); potions retain keys 3 and 4. Drag/drop or select-and-assign controls.
-- Class selection outside combat; shared progression/refinement in this prototype.
-- Distinct procedural outfits and sword/staff/bow silhouettes. These are not rigged GLB character assets.
-- Monster attack windups and red ground warning circles; stepping out of melee range avoids the strike.
-- Procedural attack/recoil/bob poses, synthesized combat/footstep/UI sounds with sound toggle. These are a foundation, not final animation or audio production.
-- Unit and browser checks for all thirty skills, save migration, level cap, assignment, telegraphs, desktop/mobile controls and persistence.
-
-## Remaining product gates
-
-| Area | Current evidence | Remaining acceptance gate |
+| ส่วน | งานที่จะทำ | เกณฑ์ผ่านก่อนเปิด B+ |
 | --- | --- | --- |
-| Combat | Skill mechanics, warning circles, defensive movement | Playtests for readable timings, meaningful decisions, satisfying full animations and balanced difficulty |
-| Classes | Three classes, 30 functional skills, level cap and unlocks | Class/build balance throughout the level curve; equipment alternatives |
-| Models/animation | Procedural class silhouettes and feedback poses | User's missing requirements; rigged optimized assets and complete animation sets |
-| World/content | One existing map and three monster species | User's missing map/dungeon/boss/quest requirements and a cohesive progression path |
-| Farming/equipment | Existing drops, merchant and refinement | User's missing loot/crafting/equipment requirements and target drop tables |
-| Online | Single-player local simulation | User's missing server/concurrency/account requirements; authoritative simulation and server persistence |
-| Social/party | Local activity log | User's missing party/social requirements; real multi-client integration tests |
-| Economy | Local gold, NPC trades | User's missing player economy requirements; transactional persistence and economy balance |
-| UI/tutorial | Class selection, skill loadout, cooldown/status feedback, handbook | Equipment comparison, inventory filtering/sorting and guided onboarding |
-| Audio | Existing ambient melody plus synthesized local SFX | Finished area themes, species-specific sound banks, mixing and quality review |
-| Performance/stability | Batched meshes; browser playtests and context recovery | Defined target devices, FPS budgets and measured multiplayer load/reconnect tests |
-| Operations | Local tests and source/deployment versioning | Server logs, backups/restore drills, admin tools and consent-aware gameplay analytics |
+| 1. การต่อสู้ | แอนิเมชัน idle/เดิน/โจมตี/ใช้สกิล/โดนตี/ตาย; hit FX, เสียง, projectile; cast/windup/recovery ที่ต่างกัน; มอนสเตอร์ส่งสัญญาณก่อนโจมตี | ผู้ทดสอบใหม่อ่านท่าและหลบได้; อาวุธทั้งสามรู้สึกต่างกัน; ไม่มีโจมตีทะลุผนังหรือรับดาเมจหลังหลบพ้นแล้ว; ทดสอบที่ latency 150–250 ms |
+| 2. ตัวละครและอาชีพ | นักดาบรับแรงปะทะ/ป้องกันทีม, นักเวทโจมตีพื้นที่/ควบคุมศัตรู, นักธนูระยะไกล/จุดอ่อน; 10 สกิลต่ออาชีพ, Lv สูงสุด 100, ปลดล็อกที่ 10/20/…/100; ลงแต้มและเลือกอุปกรณ์ | ทุกสกิลใช้งานได้และมีเหตุผลให้เลือก; มีอย่างน้อย 2 build ต่ออาชีพ; ทดสอบดาเมจ/มานา/cooldown/การขัดจังหวะและ level cap |
+| 3. โมเดลและแอนิเมชัน | Rigged GLB พร้อม skeleton/animation; สัดส่วน chibi low poly, สีสดและขอบเขตสไตล์เดียวกัน; socket อาวุธและอุปกรณ์; ใบอนุญาตของทุก asset | แต่ละ clip เล่นและเปลี่ยนท่าได้จริง; อาวุธตามมือ; ไม่ลอย/จมหรือผิด scale; ตรวจจำนวน triangle, material, texture และขนาดไฟล์บนมือถือ |
+| 4. โลกและเนื้อหา | เมืองหลัก 1, พื้นที่ฟาร์ม 4, ดันเจียน 1, มอนสเตอร์ 24–26 ชนิดรวมบอส; NPC ร้าน/ช่าง/เควส; เควสพาเดินเส้นทางเติบโต | ทุกพื้นที่เข้าถึงและกลับเมืองได้; มีชนิดศัตรูและเหตุผลฟาร์มต่างกัน; เควสเริ่ม/คืบหน้า/รับรางวัลได้ครั้งเดียว; บอสมีอย่างน้อย 3 ท่าที่อ่านได้ |
+| 5. ฟาร์มและอุปกรณ์ | Drop table มีชนิด/โอกาส/แหล่ง; weapon/armor/accessory หลายแนว; คราฟต์; refinement; สมุดแหล่งวัตถุดิบ | ของทุกชิ้นมีประโยชน์หรือราคาขาย; แสดงสูตรและวัตถุดิบที่ขาด; เซิร์ฟเวอร์หักของและให้ผลลัพธ์เป็นธุรกรรมเดียว; build เปลี่ยนการเล่นได้ |
+| 6. ออนไลน์ | บัญชี Sites และตัวละครเซิร์ฟเวอร์; shared map; server authority สำหรับเดิน/สกิล/ดาเมจ/EXP/drop/gold/inventory; session/reconnect | 2 บัญชีเห็นโลกเดียวกัน; แก้ state ใน browser ไม่เพิ่มเงิน/เลเวล; retry คำสั่งเดิมไม่ให้รางวัลซ้ำ; reload/เน็ตหลุดไม่ทำเซฟหาย |
+| 7. เล่นร่วมกัน | World/party chat, friend request, party invite/accept/leave ขนาด 2–4; EXP แบ่งคนใกล้เหตุการณ์; loot round-robin; dungeon instance และ skill ช่วยเพื่อน | สองถึงสี่บัญชีร่วมดันเจียนจริง; ผู้หลุดไม่ยึดของ; ไม่มีรับ EXP ข้ามแผนที่; เพื่อนที่รับ invite แล้วเท่านั้นถูกเพิ่ม; นักดาบ/เวท/ธนูช่วยทีมต่างกัน |
+| 8. เศรษฐกิจ | ร้าน NPC; trade สองฝ่ายยืนยันข้อเสนอเดียวกัน; marketplace escrow; listing fee/tax/refinement/crafting เป็นเงินออก; unique item IDs และ ledger | ทั้งสองฝั่งยืนยันก่อนแลก; เปลี่ยน offer ยกเลิกคำยืนยันเก่า; disconnect/ซื้อพร้อมกันไม่ทำของซ้ำ; ตรวจยอดเงินและ owner ของ item ทุกธุรกรรม |
+| 9. UI/ความสะดวก | กระเป๋า filter/sort, equipment compare tooltip, drag skill hotbar, cooldown/status/cast bar; tutorial ผ่านเดิน/ตี/เก็บ/สวม/อัปเกรด | ใช้ mouse, keyboard, touch ได้; 390 px ไม่มีปุ่มบังกัน; tooltip บอกส่วนต่างค่าพลัง; tutorial มีความคืบหน้าจริงและข้าม/เปิดทบทวนได้ |
+| 10. เสียง/บรรยากาศ | เพลงประจำแต่ละพื้นที่; เดิน/โจมตี/สกิล/monster/loot/UI; mix ลดเสียงซ้อน; volume music/SFX แยก | เริ่มเสียงหลัง gesture; mute ทำงาน; เปลี่ยนพื้นที่แล้วเพลงเปลี่ยนโดยไม่ซ้อน; ระบุ license/ผู้สร้างเสียง |
+| 11. ประสิทธิภาพ/เสถียรภาพ | งบประมาณ graphics, GLB preload/cache/disposal, ลด draw calls; client FPS/frame-time; server load/latency; reconnect/transaction tests | เครื่องเป้าหมาย desktop 1080p ≥60 FPS และมือถือกลาง ≥30 FPS; load test ผู้เล่นพร้อมกัน 20 คน/zone ก่อน beta; p95 command latency และ error rate รายงานจากการวัด; ทดสอบ soak และ failure injection |
+| 12. ดูแลหลังเปิด | Operator tools ดูตัวละคร/ledger, tuning ที่มี audit, log, backup/export/restore drill, bug report และ funnel tutorial/quest/death/disconnect | แอดมินเท่านั้นเข้าถึง; ตรวจย้อนหลังการให้ของ/ปรับ balance ได้; กู้ backup ใน staging ได้; มีขั้นตอน rollback release; dashboard ใช้เหตุการณ์จริง |
 
-## Dependencies and implementation order
+### สูตรและกฎ combat
 
-1. Recover the missing requirements and fix target platform/concurrency budgets.
-2. Specify server-owned accounts/characters/inventory/combat events and persistence transactions before adding player trading or parties.
-3. Build a small real multiplayer slice and verify two clients, reconnect and atomic rewards.
-4. Author/import rigged assets and animations with license records, GLB budgets and collision proxies.
-5. Build the user's world/content slice, equipment progression and guided onboarding.
-6. Add social/economy features on the verified server boundary.
-7. Balance, test on target devices, run concurrency tests and add operational tools before broader launch.
+`Damage = ATK × (100 / (DEF + 100))` เป็นขั้นคำนวณพื้นฐาน จากนั้นใช้ตัวคูณสกิล, damage roll ±10%, critical และ buff ตามลำดับที่ระบุในโค้ดเดียวกันบนเซิร์ฟเวอร์ การโจมตีปกติมีตั้งแต่ Lv1; สกิลทั้งสิบปลดล็อกทุก 10 เลเวล รวมสกิลสุดท้ายที่ Lv100 ต้องจำลองครบทั้งช่วงเลเวลเพื่อปรับ EXP curve และความเร็วในการอัปเกรด
 
-No live service, additional account, paid asset or public audience has been created by this milestone. The existing Site retains its owner-private audience.
+## เส้นทางโลกที่ออกแบบไว้
+
+| พื้นที่ | ช่วงเลเวล | สิ่งที่ทำให้ต่างกัน | วัตถุดิบ/เป้าหมาย |
+| --- | --- | --- | --- |
+| Sprout Town | เมืองปลอดภัย | ร้าน ช่าง เควส บอร์ดปาร์ตี้ ตลาด | สอนคราฟต์และชี้แหล่งของ |
+| Moonlit Glade | 1–20 | Slime/เห็ด/พืช, ท่าระยะประชิดง่าย | อุปกรณ์เริ่มต้นและยารักษา |
+| Amber Orchard | 20–40 | แมลง/หมูป่า, charge แบบเส้นตรง | build ความเร็ว/critical |
+| Crystal Marsh | 40–65 | วิญญาณ/เต่า/แมงกะพรุน, พื้นที่ slow | build มานา/เวท/ต้านทาน |
+| Frostpeak Trail | 65–100 | สัตว์น้ำแข็ง/โกเล็ม, พื้นที่โจมตีวงกว้าง | อุปกรณ์ท้ายเกมและของลงดันเจียน |
+| Rootheart Ruins | ปาร์ตี้ 2–4, scale ตามช่วงที่เข้าถึง | หลายห้อง, mini-boss, บอส Rootheart Guardian | วัตถุดิบหายาก, อุปกรณ์ทีม, เป้าหมายเล่นซ้ำ |
+
+ชื่อและช่วงเลเวลนี้เป็นข้อเสนอเริ่มต้นสำหรับสร้างเนื้อหา ไม่ใช่การอ้างว่ามีแผนที่เหล่านี้อยู่ในรุ่นปัจจุบันแล้ว
+
+## สถาปัตยกรรม
+
+- **Babylon.js** ดูแล render, camera, picking, rig/animation, FX, resource lifecycle; DOM ดูแล HUD/หน้าต่าง/touch/accessibility
+- **Simulation TypeScript** แยกจาก engine และใช้ rules/catalog ชุดเดียวกันกับ server
+- **Sites Worker + D1** ใช้ตัวตนจาก dispatcher, เก็บตัวละครและ shared realm, รับเฉพาะคำสั่งผู้เล่นที่ validate ได้, คำนวณจากเวลาของ server
+- **Command session + sequence** ทำให้คำสั่งที่ replay หลัง response หายไม่หักเงิน/ให้ของซ้ำ; compare-and-swap revision ป้องกันเขียนทับข้อมูลจากคำขอพร้อมกัน
+- รุ่นออนไลน์แรกใช้ HTTP snapshot 5 Hz และ realm aggregate ขนาดจำกัด เป็นจุดเริ่มทดสอบ authority/persistence; ก่อนเพิ่ม concurrency ต้องวัด D1 contention/ค่าใช้จ่ายจริง แล้วแยก actor/zone, ใช้ persistent room actor และ WebSocket เมื่อ runtime รองรับ ไม่อ้างว่า poll-based alpha เป็นโครงสร้าง MMO ขนาดใหญ่เสร็จแล้ว
+- เซฟเดิมใน browser คงไว้สำหรับ **Practice** แยกจาก online character; ไม่ import เงิน/เลเวลที่ client อ้างเข้าสู่ระบบออนไลน์
+
+## ลำดับส่งงานและเงื่อนไขการจบแต่ละเฟส
+
+1. **Online foundation:** บัญชี, server save, คำสั่ง, shared monster, peers/chat, reconnect/idempotency, transactional tests — เป็นฐานให้ทุกระบบที่มีของและเงิน
+2. **Playable world slice:** เมือง + Glade + dungeon ห้องแรก; NPC, quest chain, rigged player/monster, death/respawn; ฟาร์มคราฟต์อุปกรณ์หนึ่ง build แล้วสู้บอสได้
+3. **Equipment + social:** inventory compare/filter, recipes/refinement, เพื่อน/party/EXP/drop sharing, team skills; ทดสอบ party 2–4 ครบ loop
+4. **Full content:** พื้นที่ฟาร์มอีก 3, มอนสเตอร์รวม 24–26, boss/dungeon encounter, 2 builds ต่ออาชีพ, level/EXP/drop balance ครบ 1–100
+5. **Economy:** confirmed player trade, marketplace escrow, currency sinks/ledger, duplicate/concurrency/failure tests
+6. **Beta gate:** tutorial, เพลง/เสียงครบ, มือถือ, operator/backup/restore/telemetry, target-device & 20-player load/soak test; รอบ playtest และปรับ balance
+
+อย่าขยายเป็น 26 มอนสเตอร์ก่อนวงจรต่อสู้และฟาร์มของพื้นที่แรกสนุกพอ และอย่าเปิดตลาดก่อน ownership/transaction tests ผ่าน
+
+## สิ่งที่มีแล้วและสิ่งที่ยังขาด
+
+**มีแล้วก่อนแผนนี้:** Babylon runtime และ render boundary, HUD/icons PNG สดใส, 3 อาชีพ/30 สกิล, Lv100/unlock, damage formula/variance/crit, stun/slow/poison/buffs/casts, telegraph และ dodge, local inventory/merchant/refinement/quest, original procedural map/models/audio, mobile controls, save migration และ browser tests
+
+**เพิ่มใน online foundation:** Worker/D1 schema & migrations, dispatcher identity, server-owned character/clock/actions, shared monster state, remote-player silhouettes, realm chat, session/replay protection, optimistic persistence, reconnect queue, Practice separation; tests สำหรับ authority/parallel writes/replay และ browser/network interruption
+
+**ยังต้องทำก่อนเรียก B+:** rigged GLB animation production, 4 farming areas+town+dungeon, 24–26 differentiated monster types, quest chains, gear/build/crafting depth, friends/party/team skills, trade/market escrow, tutorial/compare/filter, complete area audio, measured target-device/concurrency budgets, tuning/audit/restore drill and funnel telemetry. การมี server ในรุ่นแรกไม่ทำให้รายการนี้เสร็จเอง
+
+## สิ่งที่ต้องวัดใน playtest
+
+- 5 นาทีแรก: ผู้เล่นเดิน เลือกเป้าหมาย หลบท่า เก็บของ และรู้ว่าจะพัฒนาตัวละครอย่างไร โดยไม่ต้องอ่านคู่มือยาว
+- 30 นาทีแรก: ได้เปลี่ยนอุปกรณ์ ใช้สกิลที่ปลดล็อก เห็นเป้าหมายไปฟาร์มต่อ และเล่นร่วมกับเพื่อนได้
+- ระยะยาว: แต่ละ build มีจุดดี/จุดเสีย, เหตุผลลง dungeon ซ้ำ, เงินเข้า/ออกสมดุล, ไม่มี grind ที่ยาวเพียงเพื่อยืดเวลา
+- ความผิดพลาด: browser reload, response หายหลัง commit, ส่งคำสั่งซ้ำ, ซื้อพร้อมกัน, disconnect ระหว่าง loot/trade, graphics context loss, deploy/rollback และกู้ backup
+
+ระยะเวลาถึง B+ ต้องประเมินหลัง playable slice และ playtest เพราะงาน art/animation, จำนวน encounter และรอบ balance เป็นตัวแปรหลัก ไม่ควรสัญญาว่าต้นแบบที่ผ่าน unit tests จะเป็นเกม B+ โดยอัตโนมัติ

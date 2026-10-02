@@ -3,7 +3,7 @@ export interface GameWorld {
   angle: number;
   zoom: number;
   blocking: { x: number; z: number; r: number }[];
-  readonly diagnostics: { engine: string; drawCalls: number };
+  readonly diagnostics: { engine: string; drawCalls: number; fps:number; frameP95:number };
   resize(): void;
   project(x: number, z: number, y?: number): { x: number; y: number };
   effect(type: string, x: number, z: number): void;

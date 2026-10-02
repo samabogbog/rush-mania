@@ -4,7 +4,8 @@ import "@fontsource/nunito/latin-400.css";
 import "@fontsource/nunito/latin-700.css";
 import "@fontsource/nunito/latin-800.css";
 import "@fontsource/nunito/latin-900.css";
-import { Simulation, species } from "./simulation";
+import { species, type Simulation } from "./simulation";
+import { startSimulation, NetworkSimulation } from "./game/network";
 import { World } from "./world";
 import { FeedbackAudio } from "./game/audio";
 import { classes, MAX_LEVEL, type ClassId } from "./game/classes";
@@ -73,7 +74,11 @@ app.innerHTML = `<canvas id="game" aria-label="3D game world: click the ground t
 <div class="bottom-center"><div id="combat-state" aria-live="polite"></div><div class="control-hint"><span>${icon("mouse-pointer-2")} Click to move & attack</span><b>·</b><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> to walk</span></div><div class="action-bar"><button class="target-action" id="nearest" title="Select nearest monster (Tab)">${icon("crosshair")}<kbd>TAB</kbd></button><div class="action-divider"></div><button class="skill-slot gold" data-skill="0" title="Power Strike (1)"><kbd>1</kbd>${icon("swords")}<small>Strike</small><span class="cooldown"></span></button><button class="skill-slot purple" data-skill="1" title="Whirlwind (2)"><kbd>2</kbd>${icon("wind")}<small>Whirlwind</small><span class="cooldown"></span></button><button class="skill-slot red" data-skill="2" title="Red potion (3)"><kbd>3</kbd>${icon("flask-conical")}<small>Heal</small><span class="count" id="red-count">8</span><span class="cooldown"></span></button><button class="skill-slot blue" data-skill="3" title="Blue potion (4)"><kbd>4</kbd>${icon("droplets")}<small>Mana</small><span class="count" id="blue-count">4</span><span class="cooldown"></span></button><button class="skill-slot purple" data-skill="4" title="Skill slot 3 (5)"><kbd>5</kbd>${icon("sparkles")}<small>Slot 3</small><span class="cooldown"></span></button><button class="skill-slot gold" data-skill="5" title="Skill slot 4 (6)"><kbd>6</kbd>${icon("sparkles")}<small>Slot 4</small><span class="cooldown"></span></button><div class="action-divider"></div><button class="loot-action" id="loot" title="Pick up nearby loot (F)">${icon("hand")}<kbd>F</kbd><small>Pick up</small></button><button id="auto" title="Auto-select and attack monsters">${icon("repeat-2")}<small>Auto</small></button></div><div class="experience"><span>BASE EXP</span><div><i id="exp-fill"></i></div><b id="exp-text">0 / 120</b></div></div>
 <div class="bottom-right"><div class="wallet">${icon("coins")}<b id="gold">120</b><span>z</span></div><div class="utility"><button id="camera" title="Reset camera">${icon("focus")}</button><button data-panel="settings" title="Settings">${icon("settings-2")}</button><button data-panel="help" title="How to play">${icon("circle-help")}</button></div><span class="save-indicator"><i></i> Adventure saved locally</span></div>
 <div id="toast" role="status"></div><div id="panel-root"></div><div class="touch-controls"><button data-touch="up" aria-label="Walk up"><span class="arrow-up">${icon("arrow-down")}</span></button><button data-touch="left" aria-label="Walk left"><span class="arrow-left">${icon("arrow-right")}</span></button><button data-touch="down" aria-label="Walk down">${icon("arrow-down")}</button><button data-touch="right" aria-label="Walk right">${icon("arrow-right")}</button></div>`;
-const sim = new Simulation();
+let sim: Simulation;
+try { sim = await startSimulation(); } catch(error) {
+  app.innerHTML = `<div class="graphics-error"><h1>Realm unavailable</h1><p>Your online character is safe. Reload to reconnect.</p><button onclick="location.reload()">Reconnect</button><p><a href="?practice=1">Play practice with your existing device save</a></p></div>`;
+  throw error;
+}
 const feedback = new FeedbackAudio();
 window.addEventListener("pointerdown", () => feedback.unlock(), { once: true });
 window.addEventListener("keydown", () => feedback.unlock(), { once: true });
@@ -119,6 +124,8 @@ function renderLog() {
   log.scrollTop = log.scrollHeight;
 }
 sim.onEvent = (text, type = "system", x, z) => {
+  if (type === "sync") { if(panel) renderPanel(); refreshHotbar(); return; }
+  if (type === "chat") { activity(text, "World"); return; }
   if (type === "damage" || type === "hurt") {
     feedback.play(
       type === "hurt"
@@ -172,6 +179,7 @@ const titles: Record<string, [string, string]> = {
   map: ["map", "Moonlit Glade"],
   help: ["circle-help", "Adventurer’s handbook"],
   settings: ["settings-2", "Settings"],
+  operations: ["settings-2", "Realm operations"],
 };
 function renderPanel() {
   if (!panel) {
@@ -249,13 +257,16 @@ function renderPanel() {
       .map(([key, desc]) => `<div><kbd>${key}</kbd><span>${desc}</span></div>`)
       .join(
         "",
-      )}</div><div class="panel-note">Single-player prototype. Progress is saved in this browser. Opening a window pauses the world. Monsters respawn after 13 seconds.</div>`;
+      )}</div><div class="panel-note">${sim.online ? "Online realm. Progress is saved on the server. The world continues while windows are open." : "Practice mode. Progress is saved in this browser. Opening a window pauses the world."} Monsters respawn after 13 seconds.</div>`;
+  }
+  if (panel === "operations") {
+    body = '<p class="muted">Inspect characters and recent economy transactions, or save a recovery snapshot.</p><button id="backup-realm" class="primary-button">Create server backup</button><button id="export-realm" class="primary-button">Export current realm</button><pre id="operations-report">Loading realm report…</pre>';
   }
   if (panel === "settings") {
-    body = `<h3>Make yourself at home.</h3><div class="setting-row"><span>Sound effects</span><button id="sfx-panel">${feedback.enabled ? "On" : "Off"}</button></div><div class="setting-row"><span>Ambient music</span><button id="sound-panel">${music ? "On" : "Off"}</button></div><div class="setting-row"><span>Camera zoom</span><input id="zoom" type="range" min="0.65" max="1.6" step="0.05" value="${world.zoom}" aria-label="Camera zoom"></div><button id="save-now" class="primary-button">${icon("save")} Save adventure</button><div class="panel-note">Mossvale v0.1 · Babylon.js prototype<br>All characters and environments are original procedural assets.<br>No multiplayer server is connected.</div>`;
+    body = `<h3>Make yourself at home.</h3><div class="setting-row"><span>Sound effects</span><button id="sfx-panel">${feedback.enabled ? "On" : "Off"}</button></div><div class="setting-row"><span>Ambient music</span><button id="sound-panel">${music ? "On" : "Off"}</button></div><div class="setting-row"><span>Camera zoom</span><input id="zoom" type="range" min="0.65" max="1.6" step="0.05" value="${world.zoom}" aria-label="Camera zoom"></div><div class="panel-note">Graphics: ${world.diagnostics.drawCalls} draw calls · ${world.diagnostics.fps.toFixed(0)} FPS · p95 ${world.diagnostics.frameP95.toFixed(1)} ms</div>${sim.admin ? '<button id="realm-tools" class="primary-button">Realm operations</button>' : ""}<button id="save-now" class="primary-button">${icon("save")} ${sim.online ? "Check server connection" : "Save adventure"}</button><div class="panel-note">Mossvale v0.1 · Babylon.js prototype<br>All characters and environments are original procedural assets.<br>${sim.online ? "Server-authoritative realm · Sites account" : "Practice mode · local save"}</div>`;
   }
   $("#panel-root").innerHTML =
-    `<div class="panel-backdrop"></div><section class="game-panel ${panel === "map" ? "wide" : ""}" role="dialog" aria-modal="true" aria-label="${title}"><div class="panel-heading">${icon(ic)}<h2>${title}</h2><span>PAUSED</span><button id="close-panel" aria-label="Close window">${icon("x")}</button></div><div class="panel-body">${body}</div><div class="panel-footer">${icon("sparkles")} MOSSVALE <span>ESC to return to adventure</span></div></section>`;
+    `<div class="panel-backdrop"></div><section class="game-panel ${panel === "map" ? "wide" : ""}" role="dialog" aria-modal="true" aria-label="${title}"><div class="panel-heading">${icon(ic)}<h2>${title}</h2><span>${sim.online ? "LIVE" : "PAUSED"}</span><button id="close-panel" aria-label="Close window">${icon("x")}</button></div><div class="panel-body">${body}</div><div class="panel-footer">${icon("sparkles")} MOSSVALE <span>ESC to return to adventure</span></div></section>`;
   $("#close-panel").onclick = closePanel;
   $(".panel-backdrop").onclick = closePanel;
   document.querySelectorAll<HTMLElement>("[data-stat]").forEach(
@@ -319,59 +330,48 @@ function renderPanel() {
     document.querySelectorAll<HTMLElement>("[data-buy]").forEach(
       (b) =>
         (b.onclick = () => {
-          const blue = b.dataset.buy === "Blue potion",
-            cost = blue ? 20 : 15;
-          if (s.gold < cost) {
-            sim.onEvent("Not enough zeny");
-            return;
-          }
-          s.gold -= cost;
-          sim.addItem(b.dataset.buy!, blue ? "💠" : "🧪");
-          sim.persist();
+          sim.buy(b.dataset.buy!);
           renderPanel();
-          sim.onEvent("Potion added to your bag", "reward");
         }),
     );
     $("#sell").onclick = () => {
-      let count = 0;
-      s.items = s.items.filter((i) => {
-        if (!i.name.includes("potion")) {
-          count += i.count;
-          return false;
-        }
-        return true;
-      });
-      s.gold += count * 6;
-      sim.persist();
+      sim.sell();
       renderPanel();
-      sim.onEvent(
-        count
-          ? `Sold ${count} materials for ${count * 6} z`
-          : "Gather monster drops to sell them.",
-        "reward",
-      );
     };
   }
   if (panel === "map") {
     drawMap($("#large-map") as HTMLCanvasElement);
     $("#large-map").onclick = (e) => {
       const r = $("#large-map").getBoundingClientRect();
-      sim.target = null;
-      sim.destination = {
-        x: ((e.clientX - r.left) / r.width - 0.5) * 32,
-        z: ((e.clientY - r.top) / r.height - 0.5) * 32,
-      };
+      sim.goTo(((e.clientX - r.left) / r.width - 0.5) * 32, ((e.clientY - r.top) / r.height - 0.5) * 32);
       closePanel();
     };
   }
+  if (panel === "operations") {
+    void fetch('/api/operations').then(async response=>{
+      if(!response.ok)throw new Error('Operator report unavailable');
+      const report=await response.json(); const output=document.getElementById('operations-report');
+      if(output) output.textContent=JSON.stringify({revision:report.revision,players:report.players,ledger:report.ledger},null,2);
+    }).catch(()=>{const output=document.getElementById('operations-report');if(output)output.textContent='Could not load realm report. Reopen to retry.';});
+    $("#backup-realm").onclick=async()=>{
+      const response=await fetch('/api/operations',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});
+      sim.onEvent(response.ok?'Server backup created.':'Backup unavailable. Try again.');
+    };
+    $("#export-realm").onclick=async()=>{
+      const response=await fetch('/api/operations');if(!response.ok){sim.onEvent('Export unavailable');return;}
+      const report=await response.json();const url=URL.createObjectURL(new Blob([JSON.stringify(report.backup,null,2)],{type:'application/json'}));
+      const link=document.createElement('a');link.href=url;link.download=`mossvale-realm-${report.revision}.json`;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+    };
+  }
   if (panel === "settings") {
+    if(document.getElementById('realm-tools')) $("#realm-tools").onclick=()=>openPanel('operations');
     $("#sfx-panel").onclick = () => {
       feedback.toggle();
       renderPanel();
     };
     $("#save-now").onclick = () => {
       sim.persist();
-      sim.onEvent("Adventure saved!");
+      sim.onEvent(sim.online ? sim.connection : "Adventure saved!");
     };
     $("#sound-panel").onclick = () => {
       toggleMusic();
@@ -450,11 +450,11 @@ document
 $("#nearest").onclick = () => sim.nearest();
 $("#loot").onclick = () => sim.collect();
 $("#auto").onclick = () => {
-  sim.auto = !sim.auto;
+  sim.setAuto(!sim.auto);
   $("#auto").classList.toggle("active", sim.auto);
   sim.onEvent(sim.auto ? "Auto hunt enabled" : "Auto hunt stopped");
 };
-$("#untarget").onclick = () => (sim.target = null);
+$("#untarget").onclick = () => sim.clearTarget();
 $("#claim").onclick = () => sim.claim();
 $("#camera").onclick = () => {
   world.angle = 0;
@@ -479,7 +479,10 @@ document.querySelectorAll<HTMLElement>("[data-chat]").forEach(
 $("#chat-input").addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     const input = e.target as HTMLInputElement;
-    if (input.value.trim()) activity(input.value.trim(), "You");
+    if (input.value.trim()) {
+      if (sim instanceof NetworkSimulation) sim.chat(input.value.trim());
+      else activity(input.value.trim(), "You");
+    }
     input.value = "";
     input.blur();
   }
@@ -627,7 +630,7 @@ function frame(now: number) {
     sim.tick(step, dx, dz);
     remaining -= step;
   }
-  world.update(sim.paused ? 0 : dt);
+  world.update(sim.paused && !sim.online ? 0 : dt);
   footstepTimer -= dt;
   if (
     !sim.paused &&
@@ -645,6 +648,11 @@ function frame(now: number) {
   }
   if (hudClock > 0.08) {
     hudClock = 0;
+    $(".save-indicator").textContent = sim.connection;
+    $(".realm small").textContent = sim.online ? `CHANNEL 01 · ${sim.remotePlayers.length + 1} ONLINE` : "PRACTICE · DEVICE SAVE";
+    $(".chat-tabs span").textContent = sim.online ? "REALM CHAT" : "LOCAL ADVENTURE";
+    const chatInput = $("#chat-input") as HTMLInputElement;
+    chatInput.placeholder = sim.online ? "Say something to the realm…" : "Leave a local note…";
     const s = sim.save;
     $("#hp-text").textContent = `${Math.ceil(s.hp)} / ${sim.maxHp}`;
     $("#mp-text").textContent = `${Math.floor(s.mp)} / ${sim.maxMp}`;

@@ -1311,3 +1311,5 @@ h2.center {
 .action-bar .locked .cooldown:not(:empty) { display:block;inset:auto 4px 14px;background:#fff0c9;color:#6d4b2e;border:1px solid #926536;border-radius:3px;font-size:9px;line-height:12px; }
 .action-bar .skill-slot small { max-width:54px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
 body:has(.game-panel) .touch-controls { visibility:hidden; }
+#operations-report { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 360px; overflow: auto; background: #fff2cb; padding: 12px; border: 2px solid #734f33; border-radius: 8px; font-size: 12px; }
+.peer-label span { color: #fff9dc; background: #7861c2; }

@@ -43,11 +43,15 @@ export class World implements GameWorld {
   private readonly loot: Mesh[] = [];
   private effects: { mesh: TransformNode; time: number }[] = [];
   private readonly events = new AbortController();
+  private readonly peers = new Map<string, {node: TransformNode; label: HTMLDivElement; job:ClassId}>();
   private lastX = 0;
   private lastZ = 0;
   private ready = true;
   private disposed = false;
   private pausedBeforeLoss = false;
+  private visualTime=0;
+  private lastFrame = performance.now();
+  private frameTimes: number[] = [];
   angle = 0;
   zoom = 1;
   blocking: Obstacle[] = [];
@@ -187,6 +191,8 @@ export class World implements GameWorld {
     return {
       engine: "Babylon.js",
       drawCalls: this.instrumentation.drawCallsCounter.current,
+      fps: this.frameTimes.length ? 1000 / (this.frameTimes.reduce((a,b)=>a+b,0) / this.frameTimes.length) : 0,
+      frameP95: [...this.frameTimes].sort((a,b)=>a-b)[Math.max(0, Math.ceil(this.frameTimes.length * .95) - 1)] || 0,
     };
   }
 
@@ -207,13 +213,7 @@ export class World implements GameWorld {
     if (id !== undefined && this.sim.monsters.find((m) => m.id === id)?.alive) {
       this.sim.select(id);
     } else if (hit.pickedPoint) {
-      this.sim.target = null;
-      this.sim.destination = {
-        x: Math.max(-14, Math.min(14, hit.pickedPoint.x)),
-        z: Math.max(-13, Math.min(13, hit.pickedPoint.z)),
-      };
-      this.sim.route = [];
-      this.sim.routeTimer = 0;
+      this.sim.goTo(hit.pickedPoint.x, hit.pickedPoint.z);
     }
   }
 
@@ -261,12 +261,17 @@ export class World implements GameWorld {
 
   update(dt: number) {
     if (!this.ready || this.disposed) return;
-    const moving =
-      Math.hypot(this.sim.x - this.lastX, this.sim.z - this.lastZ) > 0.001;
+    const frameNow=performance.now();
+    this.frameTimes.push(frameNow-this.lastFrame);this.lastFrame=frameNow;if(this.frameTimes.length>120)this.frameTimes.shift();
+    this.visualTime+=dt;
+    const facingX=this.sim.x-(this.sim.online?this.player.position.x:this.lastX);
+    const facingZ=this.sim.z-(this.sim.online?this.player.position.z:this.lastZ);
+    const moving = Math.hypot(facingX,facingZ) > 0.015;
+    const blend=this.sim.online && dt>0 ? 1-Math.exp(-dt*16) : 1;
     if (moving)
       this.player.rotation.y = Math.atan2(
-        this.sim.x - this.lastX,
-        this.sim.z - this.lastZ,
+        facingX,
+        facingZ,
       );
     for (const [id, model] of this.heroModels)
       model.setEnabled(id === this.sim.save.job);
@@ -275,12 +280,13 @@ export class World implements GameWorld {
     this.player.scaling.setAll(this.sim.hurtTime > 0 ? 0.96 : 1);
     this.lastX = this.sim.x;
     this.lastZ = this.sim.z;
+    const heroBlend=Math.hypot(facingX,facingZ)>6?1:blend;
     this.player.position.set(
-      this.sim.x,
-      moving ? Math.abs(Math.sin(this.sim.time * 12)) * 0.06 : 0,
-      this.sim.z,
+      this.player.position.x+(this.sim.x-this.player.position.x)*heroBlend,
+      moving ? Math.abs(Math.sin(this.visualTime * 12)) * 0.06 : 0,
+      this.player.position.z+(this.sim.z-this.player.position.z)*heroBlend,
     );
-    const focus = new Vector3(this.sim.x * 0.42, 0, this.sim.z * 0.42);
+    const focus = new Vector3(this.player.position.x * 0.42, 0, this.player.position.z * 0.42);
     this.camera.position
       .copyFrom(focus)
       .addInPlace(
@@ -304,9 +310,9 @@ export class World implements GameWorld {
       const actor = this.monsters.get(monster.id)!;
       actor.setEnabled(monster.alive);
       actor.position.set(
-        monster.x,
-        Math.sin(this.sim.time * 2 + monster.id) * 0.05,
-        monster.z,
+        actor.position.x+(monster.x-actor.position.x)*blend,
+        Math.sin(this.visualTime * 2 + monster.id) * 0.05,
+        actor.position.z+(monster.z-actor.position.z)*blend,
       );
       const warning = this.warnings.get(monster.id)!;
       warning.setEnabled(monster.alive && monster.windup > 0);
@@ -317,14 +323,14 @@ export class World implements GameWorld {
       const label = this.monsterLabels.get(monster.id)!;
       label.querySelector("span")!.textContent =
         `${monster.kind}${monster.stun > 0 ? " · Stunned" : monster.poison > 0 ? " · Poison" : monster.slow > 0 ? " · Slow" : ""}`;
-      const point = this.project(monster.x, monster.z, 1.7);
+      const point = this.project(actor.position.x, actor.position.z, 1.7);
       label.style.transform = `translate(${point.x}px,${point.y}px) translate(-50%,-100%)`;
       label.style.display = monster.alive ? "" : "none";
       label.classList.toggle("target", this.sim.target === monster.id);
       label.querySelector("i")!.style.width =
         `${(monster.hp / species[monster.kind].hp) * 100}%`;
     }
-    const point = this.project(this.sim.x, this.sim.z, 2.5);
+    const point = this.project(this.player.position.x, this.player.position.z, 2.5);
     this.playerLabel.style.transform = `translate(${point.x}px,${point.y}px) translate(-50%,-100%)`;
     this.playerLabel.querySelector("i")!.style.width =
       `${(this.sim.save.hp / this.sim.maxHp) * 100}%`;
@@ -353,6 +359,21 @@ export class World implements GameWorld {
       }
       return true;
     });
+    for(const [id,peer] of this.peers) if(!this.sim.remotePlayers.some(p=>p.id===id && p.job===peer.job)) {peer.node.dispose();peer.label.remove();this.peers.delete(id);}
+    for(const player of this.sim.remotePlayers) {
+      let peer=this.peers.get(player.id);
+      if(!peer) {
+        const node=this.factory.group('other-adventurer');node.position.set(player.x,0,player.z);buildPlayer(this.factory,node,player.job);this.factory.mergeActor(node);
+        for(const mesh of node.getChildMeshes())mesh.isPickable=false;
+        const label=document.createElement('div');label.className='world-label player-label peer-label';
+        const name=document.createElement('span');name.textContent=player.name;label.append(name);this.labels.append(label);
+        peer={node,label,job:player.job};this.peers.set(player.id,peer);
+      }
+      const dx=player.x-peer.node.position.x,dz=player.z-peer.node.position.z;
+      if(Math.hypot(dx,dz)>.015)peer.node.rotation.y=Math.atan2(dx,dz);
+      peer.node.position.x+=dx*blend;peer.node.position.z+=dz*blend;
+      const point=this.project(peer.node.position.x,peer.node.position.z,2.5);peer.label.style.transform=`translate(${point.x}px,${point.y}px) translate(-50%,-100%)`;
+    }
     this.scene.render();
   }
 
@@ -365,5 +386,6 @@ export class World implements GameWorld {
     this.engine.dispose();
     for (const label of this.monsterLabels.values()) label.remove();
     this.playerLabel.remove();
+    for(const peer of this.peers.values())peer.label.remove();
   }
 }
