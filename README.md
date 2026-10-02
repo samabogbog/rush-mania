@@ -1,6 +1,6 @@
 # Mossvale Online — Web RPG Prototype
 
-ต้นแบบเกม RPG 3D low poly สำหรับเล่นบนเว็บ สร้างด้วย Three.js, TypeScript และ Vite
+ต้นแบบเกม RPG 3D low poly สำหรับเล่นบนเว็บ สร้างด้วย Babylon.js, TypeScript และ Vite
 
 ## เริ่มเล่นบน Windows
 
@@ -57,10 +57,13 @@ py -m http.server 8080 --directory dist
 ## โครงสร้าง
 
 - `src/simulation.ts`: state, AI, combat, progression, pathfinding, loot, saving
-- `src/world.ts`: Three.js scene, procedural models, camera, raycast, visual effects, static batching
+- `src/world.ts`: Babylon engine/scene, orthographic camera, picking, lighting/shadows, visual effects และ lifecycle
+- `src/render/contracts.ts`: interface ระหว่าง HUD กับชั้นแสดงผล
+- `src/render/primitives.ts`: geometry/material factory และ static batching
+- `src/render/procedural.ts`: โมเดลตัวละคร มอนสเตอร์ และแผนที่ แยกจากกฎเกม
 - `src/main.ts`: DOM HUD, dialogs, inputs, local activity log, ambient audio
 - `src/style.css`: responsive game UI
-- `tests/adventure.spec.ts`: browser checks covering gameplay, upgrades, persistence, navigation, mobile menus
+- `tests/adventure.spec.ts`: browser checks covering gameplay, upgrades, persistence, navigation, mobile menus, Babylon picking ที่ DPR 2 และ WebGL context recovery
 - `artifacts/`: screenshots captured during playtesting
 
 ## Build และตรวจสอบ
@@ -76,7 +79,7 @@ npm test
 ## Assets และ licenses
 
 โมเดลตัวละคร มอนสเตอร์ ฉาก และเอฟเฟกต์สร้างขึ้นใหม่ในโค้ด ส่วนภาพ avatar และไอคอนเป็น PNG ที่สร้างขึ้นสำหรับโปรเจกต์นี้ จึงไม่มีโมเดลหรือ texture ภายนอกที่ต้องดาวน์โหลดเมื่อเปิดเกม
-Three.js และ Vite: MIT; Nunito font: SIL Open Font License 1.1
+Babylon.js: Apache-2.0; Vite: MIT; Nunito font: SIL Open Font License 1.1
 ฟอนต์และ dependencies ถูก bundle ใน build ไม่โหลดจาก CDN ระหว่างเล่น
 
 ## UI revision — 2 October 2026
@@ -92,3 +95,13 @@ Three.js และ Vite: MIT; Nunito font: SIL Open Font License 1.1
 - `src/game-theme.css`: ธีม UI เกมแยกจากกฎ layout เพื่อปรับสีและกรอบได้ง่าย
 
 ไอคอนไม่ต้องโหลดจากอินเทอร์เน็ตระหว่างเล่น และใช้ชุดเดียวกันใน HUD, กระเป๋า, สกิล, สถานะ และร้านค้า
+
+## Babylon architecture — 2 October 2026
+
+Simulation ไม่ import Babylon และบันทึกเฉพาะข้อมูลเกมที่ serialize ได้ โดยใช้ key `mossvale-save` เดิม จึงโหลดเซฟจากเวอร์ชันก่อนบนโดเมนเดิมได้
+HUD เรียกผ่าน `GameWorld` interface และ diagnostics ไม่อ้างอิง API ของ renderer โดยตรง
+ชั้น Babylon รับ state จาก Simulation เพื่อวาง actor และแสดงผล; pointer picking ส่งคำสั่งเลือกเป้าหมาย/เดินกลับไปยัง Simulation
+กฎเกมเดินด้วย timestep ย่อยสูงสุด 25 ms; render ทำงานหนึ่งครั้งต่อ animation frame และยังซูมได้ขณะพักเกม
+World จัดการ resize, context loss/restoration, event listeners และ dispose ของ engine/scene เมื่อออกจากหน้า
+รวม geometry ของฉากคงที่ตาม material เพื่อลด draw calls; import Babylon เฉพาะโมดูลที่ใช้งาน
+โมเดลปัจจุบันยังเป็น procedural low poly โดยสามารถเปลี่ยน implementation ใน `src/render/procedural.ts` ภายหลังโดยไม่เปลี่ยนระบบต่อสู้หรือเซฟ

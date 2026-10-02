@@ -10,12 +10,11 @@
     "test": "playwright test"
   },
   "dependencies": {
-    "@fontsource/nunito": "^5.3.0",
-    "three": "^0.180.0"
+    "@babylonjs/core": "^9.29.0",
+    "@fontsource/nunito": "^5.3.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.56.0",
-    "@types/three": "^0.180.0",
     "agent-browser": "^0.38.1",
     "typescript": "^5.9.2",
     "vite": "^7.1.7"

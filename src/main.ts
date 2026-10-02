@@ -218,7 +218,7 @@ function renderPanel() {
       )}</div><div class="panel-note">Single-player prototype. Progress is saved in this browser. Opening a window pauses the world. Monsters respawn after 13 seconds.</div>`;
   }
   if (panel === "settings") {
-    body = `<h3>Make yourself at home.</h3><div class="setting-row"><span>Ambient music</span><button id="sound-panel">${music ? "On" : "Off"}</button></div><div class="setting-row"><span>Camera zoom</span><input id="zoom" type="range" min="0.65" max="1.6" step="0.05" value="${world.zoom}" aria-label="Camera zoom"></div><button id="save-now" class="primary-button">${icon("save")} Save adventure</button><div class="panel-note">Mossvale v0.1 · Three.js prototype<br>All characters and environments are original procedural assets.<br>No multiplayer server is connected.</div>`;
+    body = `<h3>Make yourself at home.</h3><div class="setting-row"><span>Ambient music</span><button id="sound-panel">${music ? "On" : "Off"}</button></div><div class="setting-row"><span>Camera zoom</span><input id="zoom" type="range" min="0.65" max="1.6" step="0.05" value="${world.zoom}" aria-label="Camera zoom"></div><button id="save-now" class="primary-button">${icon("save")} Save adventure</button><div class="panel-note">Mossvale v0.1 · Babylon.js prototype<br>All characters and environments are original procedural assets.<br>No multiplayer server is connected.</div>`;
   }
   $("#panel-root").innerHTML =
     `<div class="panel-backdrop"></div><section class="game-panel ${panel === "map" ? "wide" : ""}" role="dialog" aria-modal="true" aria-label="${title}"><div class="panel-heading">${icon(ic)}<h2>${title}</h2><span>PAUSED</span><button id="close-panel" aria-label="Close window">${icon("x")}</button></div><div class="panel-body">${body}</div><div class="panel-footer">${icon("sparkles")} MOSSVALE <span>ESC to return to adventure</span></div></section>`;
@@ -522,6 +522,7 @@ function drawMap(canvas: HTMLCanvasElement) {
 let last = performance.now(),
   hudClock = 0,
   saveClock = 0;
+let animationFrame = 0;
 function frame(now: number) {
   const dt = Math.min((now - last) / 1000, 0.25);
   last = now;
@@ -533,7 +534,7 @@ function frame(now: number) {
     sim.tick(step, dx, dz);
     remaining -= step;
   }
-  if (!sim.paused) world.update(dt);
+  world.update(sim.paused ? 0 : dt);
   hudClock += dt;
   saveClock += dt;
   if (saveClock > 5) {
@@ -580,9 +581,9 @@ function frame(now: number) {
     }
     drawMap($("#mini") as HTMLCanvasElement);
   }
-  requestAnimationFrame(frame);
+  animationFrame = requestAnimationFrame(frame);
 }
-requestAnimationFrame(frame);
+animationFrame = requestAnimationFrame(frame);
 // Read-only diagnostic snapshot for automated playtesting; no gameplay cheats.
 Object.defineProperty(window, "mossvale", {
   value: {
@@ -599,8 +600,21 @@ Object.defineProperty(window, "mossvale", {
       target: sim.target,
       loot: sim.loot.length,
       paused: sim.paused,
-      monsters: sim.monsters.map((m) => ({ ...m })),
-      drawCalls: world.renderer.info.render.calls,
+      monsters: sim.monsters.map((m) => ({
+        ...m,
+        screen: world.project(m.x, m.z, 0.5),
+      })),
+      destination: sim.destination ? { ...sim.destination } : null,
+      zoom: world.zoom,
+      ...world.diagnostics,
     }),
   },
+});
+
+window.addEventListener("pagehide", (event) => {
+  sim.persist();
+  if (!event.persisted) {
+    cancelAnimationFrame(animationFrame);
+    world.dispose();
+  }
 });

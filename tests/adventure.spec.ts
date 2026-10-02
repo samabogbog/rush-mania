@@ -150,3 +150,57 @@ test("mobile controls and inventory fit viewport", async ({ page }) => {
   await page.getByRole("button", { name: "Close window" }).click();
   expect((await snapshot(page)).paused).toBe(false);
 });
+
+test.describe("Babylon input and recovery", () => {
+  test.use({ deviceScaleFactor: 2 });
+  test("picks actors and ground after zoom and restores a lost graphics context", async ({
+    page,
+  }) => {
+    const errors: string[] = [];
+    page.on("pageerror", (error) => errors.push(error.message));
+    await page.goto("/");
+    await page.waitForFunction(
+      () => (window as any).mossvale?.snapshot().drawCalls > 0,
+    );
+    expect((await snapshot(page)).engine).toBe("Babylon.js");
+    await page.mouse.move(850, 430);
+    await page.mouse.wheel(0, -300);
+    await expect.poll(async () => (await snapshot(page)).zoom).toBeLessThan(1);
+    await page.mouse.click(840, 420);
+    await expect
+      .poll(async () => (await snapshot(page)).destination)
+      .not.toBeNull();
+    const destination = (await snapshot(page)).destination;
+    await page.waitForFunction((dest) => {
+      const state = (window as any).mossvale.snapshot();
+      return Math.hypot(state.x - dest.x, state.z - dest.z) < 0.4;
+    }, destination);
+    // The screen point comes from the same read-only projection that positions labels.
+    const monster = (await snapshot(page)).monsters.find(
+      (m: any) => m.id === 0,
+    );
+    await page.mouse.click(monster.screen.x, monster.screen.y);
+    await expect.poll(async () => (await snapshot(page)).target).toBe(0);
+    await page.waitForFunction(
+      () => (window as any).mossvale.snapshot().monsters[0].hp < 55,
+    );
+    await page.screenshot({ path: "artifacts/babylon-picking.png" });
+    const extension = await page.evaluate(() => {
+      const canvas = document.querySelector("#game") as HTMLCanvasElement;
+      const gl = canvas.getContext("webgl2") || canvas.getContext("webgl");
+      const ext = gl?.getExtension("WEBGL_lose_context");
+      (window as any).__testGraphics = ext;
+      ext?.loseContext();
+      return !!ext;
+    });
+    expect(extension).toBe(true);
+    await expect.poll(async () => (await snapshot(page)).paused).toBe(true);
+    await page.evaluate(() => (window as any).__testGraphics.restoreContext());
+    await expect.poll(async () => (await snapshot(page)).paused).toBe(false);
+    await page.keyboard.press("i");
+    await expect(page.getByRole("dialog", { name: "Inventory" })).toBeVisible();
+    await page.keyboard.press("Escape");
+    expect((await snapshot(page)).drawCalls).toBeLessThan(200);
+    expect(errors).toEqual([]);
+  });
+});
