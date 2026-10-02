@@ -45,7 +45,7 @@ PNG icon canvases are 128×128; longest artwork side is 96 px with at least 16 p
 ## Verification and what the numbers mean
 
 - 22 rule/API/SQLite transaction tests pass: damage/progression/class gates, legacy migrations, independent rooms, craft/equipment/refine, party/friends/dungeon, shared rewards/heal, trade offer reset, market escrow/fees/replay/full bag, owner identity and maintenance/backup/restore/tuning.
-- Original browser flows cover combat→loot→upgrade→shop→quest/save, class/loadout/cast, mobile menus, DPR2 picking and context recovery. New browser checks cover six area visuals/rig loading/equipment comparisons, online peer/chat/reconnect and the party→confirmed trade→market menu flow. All eight browser checks pass across isolated runs (30 tests total with the rule/API checks).
+- Original browser flows cover combat→loot→upgrade→shop→quest/save, class/loadout/cast, mobile menus, DPR2 picking and context recovery. New browser checks cover six area visuals/rig loading/equipment comparisons, online peer/chat/reconnect and the party→confirmed trade→market menu flow. All nine browser checks pass across isolated runs (31 tests total with the rule/API checks), including the missing-identity sign-in view.
 - Latest local load: **20 accounts, 280 requests, 0 errors, replay invariant true; p50 200 ms / p95 401 ms / max 509 ms**, while Chromium software rendering was also using the CPU. This is a local Node24/SQLite Worker adapter measurement, **not Cloudflare D1 capacity**.
 - A real browser loaded 20 active rig instances with **0 model errors**. Hardware acceleration is unavailable in the QA container, so its SwiftShader FPS cannot establish gaming-device performance.
 
@@ -60,3 +60,5 @@ Production audience stays owner-private. To test real parties, the owner must gr
 3. Measure 30-minute progression and gear choices at Lv20/40/65/100; adjust tuning/costs from observed time-to-kill and progression.
 4. Run an authorized 20-player production load/soak, interrupted trade/market response tests, and the above GPU benchmarks.
 5. Schedule backups and run a maintenance/recovery drill on the intended production environment before public launch.
+
+Browser identity comes only from the Sites dispatcher. Identity-free service/preview calls receive 401 and the browser offers a top-level `/signin-with-chatgpt` link. The service credential is never treated as a player account.

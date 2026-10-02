@@ -64,9 +64,10 @@ export class NetworkSimulation extends Simulation {
   chat(text:string){this.send('chat',text)}
   dispose(){this.stopped=true;if(this.timer)clearTimeout(this.timer)}
 }
+export class RealmConnectionError extends Error{constructor(message:string,public status:number){super(message)}}
 export async function startSimulation():Promise<Simulation> {
   if(import.meta.env.DEV&&!new URLSearchParams(location.search).has('online') || new URLSearchParams(location.search).get('practice')==='1')return new Simulation();
   const response=await fetch('/api/game',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({connect:true}),signal:AbortSignal.timeout(10000)});
-  if(!response.ok)throw new Error('Cannot connect to the online realm. Reload to retry. Your character is kept on the server.');
+  if(!response.ok)throw new RealmConnectionError('Cannot connect to the online realm. Your character is kept on the server.',response.status);
   return new NetworkSimulation(await response.json());
 }

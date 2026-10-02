@@ -5,7 +5,7 @@ import "@fontsource/nunito/latin-700.css";
 import "@fontsource/nunito/latin-800.css";
 import "@fontsource/nunito/latin-900.css";
 import { species, type Simulation } from "./simulation";
-import { startSimulation, NetworkSimulation } from "./game/network";
+import { startSimulation, NetworkSimulation, RealmConnectionError } from "./game/network";
 import { World } from "./world";
 import { FeedbackAudio } from "./game/audio";
 import { zones, species as catalogSpecies, questDefinitions, type ZoneId } from "./game/content";
@@ -77,9 +77,12 @@ app.innerHTML = `<canvas id="game" aria-label="3D game world: click the ground t
 <div class="bottom-center"><div id="combat-state" aria-live="polite"></div><div class="control-hint"><span>${icon("mouse-pointer-2")} Click to move & attack</span><b>·</b><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> to walk</span></div><div class="action-bar"><button class="target-action" id="nearest" title="Select nearest monster (Tab)">${icon("crosshair")}<kbd>TAB</kbd></button><div class="action-divider"></div><button class="skill-slot gold" data-skill="0" title="Power Strike (1)"><kbd>1</kbd>${icon("swords")}<small>Strike</small><span class="cooldown"></span></button><button class="skill-slot purple" data-skill="1" title="Whirlwind (2)"><kbd>2</kbd>${icon("wind")}<small>Whirlwind</small><span class="cooldown"></span></button><button class="skill-slot red" data-skill="2" title="Red potion (3)"><kbd>3</kbd>${icon("flask-conical")}<small>Heal</small><span class="count" id="red-count">8</span><span class="cooldown"></span></button><button class="skill-slot blue" data-skill="3" title="Blue potion (4)"><kbd>4</kbd>${icon("droplets")}<small>Mana</small><span class="count" id="blue-count">4</span><span class="cooldown"></span></button><button class="skill-slot purple" data-skill="4" title="Skill slot 3 (5)"><kbd>5</kbd>${icon("sparkles")}<small>Slot 3</small><span class="cooldown"></span></button><button class="skill-slot gold" data-skill="5" title="Skill slot 4 (6)"><kbd>6</kbd>${icon("sparkles")}<small>Slot 4</small><span class="cooldown"></span></button><div class="action-divider"></div><button class="loot-action" id="loot" title="Pick up nearby loot (F)">${icon("hand")}<kbd>F</kbd><small>Pick up</small></button><button id="auto" title="Auto-select and attack monsters">${icon("repeat-2")}<small>Auto</small></button></div><div class="experience"><span>BASE EXP</span><div><i id="exp-fill"></i></div><b id="exp-text">0 / 120</b></div></div>
 <div class="bottom-right"><div class="community-shortcuts"><button data-panel="community" title="Party & friends">${icon("hero")} Party</button><button data-panel="market" title="Player market">${icon("store")} Market</button></div><div class="wallet">${icon("coins")}<b id="gold">120</b><span>z</span></div><div class="utility"><button id="camera" title="Reset camera">${icon("focus")}</button><button data-panel="settings" title="Settings">${icon("settings-2")}</button><button data-panel="help" title="How to play">${icon("circle-help")}</button></div><span class="save-indicator"><i></i> Adventure saved locally</span></div>
 <div id="toast" role="status"></div><div id="panel-root"></div><div class="touch-controls"><button data-touch="up" aria-label="Walk up"><span class="arrow-up">${icon("arrow-down")}</span></button><button data-touch="left" aria-label="Walk left"><span class="arrow-left">${icon("arrow-right")}</span></button><button data-touch="down" aria-label="Walk down">${icon("arrow-down")}</button><button data-touch="right" aria-label="Walk right">${icon("arrow-right")}</button></div>`;
+async function boot(){
 let sim: Simulation;
 try { sim = await startSimulation(); } catch(error) {
-  app.innerHTML = `<div class="graphics-error"><h1>Realm unavailable</h1><p>Your online character is safe. Reload to reconnect.</p><button onclick="location.reload()">Reconnect</button><p><a href="?practice=1">Play practice with your existing device save</a></p></div>`;
+  const signIn=error instanceof RealmConnectionError&&error.status===401;
+  app.innerHTML = `<div class="graphics-error"><h1>${signIn?'Sign in to play online':'Realm unavailable'}</h1><p>${signIn?'Your online character belongs to your Sites account. Sign in to continue.':'Your online character is safe. Reload to reconnect.'}</p>${signIn?'<a class="primary-button" href="/signin-with-chatgpt?return_to=%2F" target="_top">Sign in with ChatGPT</a>':'<button onclick="location.reload()">Reconnect</button>'}<p><a href="?practice=1">Play practice with your existing device save</a></p></div>`;
+  if(signIn)return;
   throw error;
 }
 const feedback = new FeedbackAudio();
@@ -803,3 +806,6 @@ window.addEventListener("pagehide", (event) => {
     feedback.dispose();
   }
 });
+
+}
+void boot();

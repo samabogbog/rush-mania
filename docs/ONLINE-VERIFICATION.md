@@ -24,4 +24,4 @@ Menu windows do not pause the server. Players should retreat to safety before br
 
 ## Alpha 0.2 update (2026-10-02)
 
-Added rooms/worlds/rigged actors/equipment, parties/friends and shared rewards, trade/market escrow and operations maintenance/restore/tuning. Current evidence and open production/hardware gates are recorded in BPLUS-IMPLEMENTATION.md. Total verification: 22 rule/API tests and 8 browser scenarios passed across isolated runs. The new online party UI test also completed a mutual gold trade and sold an escrowed potion, verifying final server balances and zero page errors. Production audience remains unchanged.
+Added rooms/worlds/rigged actors/equipment, parties/friends and shared rewards, trade/market escrow and operations maintenance/restore/tuning. Current evidence and open production/hardware gates are recorded in BPLUS-IMPLEMENTATION.md. Total verification: 22 rule/API tests and 9 browser scenarios passed across isolated runs. The new online party UI test also completed a mutual gold trade and sold an escrowed potion, verifying final server balances and zero page errors. Production audience remains unchanged.
