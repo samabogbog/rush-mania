@@ -1,4 +1,5 @@
-import '@babylonjs/core/Culling/ray';
+import { classes, type ClassId } from "./game/classes";
+import "@babylonjs/core/Culling/ray";
 import { Camera } from "@babylonjs/core/Cameras/camera";
 import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
@@ -31,6 +32,8 @@ export class World implements GameWorld {
   private readonly factory: Primitives;
   private readonly instrumentation: SceneInstrumentation;
   private readonly player: TransformNode;
+  private readonly heroModels = new Map<ClassId, TransformNode>();
+  private readonly warnings = new Map<number, Mesh>();
   private readonly monsters = new Map<number, TransformNode>();
   private readonly monsterLabels = new Map<number, HTMLDivElement>();
   private readonly playerLabel: HTMLDivElement;
@@ -113,10 +116,15 @@ export class World implements GameWorld {
       )
         shadows.addShadowCaster(mesh);
     this.player = this.factory.group("hero");
-    buildPlayer(this.factory, this.player);
-    this.factory.mergeActor(this.player);
-    for (const mesh of this.player.getChildMeshes())
-      shadows.addShadowCaster(mesh);
+    for (const id of Object.keys(classes) as ClassId[]) {
+      const model = this.factory.group(`hero-${id}`);
+      buildPlayer(this.factory, model, id);
+      this.factory.mergeActor(model);
+      model.parent = this.player;
+      model.setEnabled(id === sim.save.job);
+      this.heroModels.set(id, model);
+      for (const mesh of model.getChildMeshes()) shadows.addShadowCaster(mesh);
+    }
     this.selection = this.factory.ring(0.94, 0xffe78c);
     this.factory.ring(0.72, 0x91f6ca, this.player);
     this.destination = this.factory.group("destination");
@@ -127,6 +135,7 @@ export class World implements GameWorld {
       for (const mesh of actor.getChildMeshes())
         mesh.metadata = { monsterId: monster.id };
       this.monsters.set(monster.id, actor);
+      this.warnings.set(monster.id, this.factory.ring(2.2, 0xff564f));
       for (const mesh of actor.getChildMeshes()) shadows.addShadowCaster(mesh);
       const label = document.createElement("div");
       label.className = "world-label monster-label";
@@ -259,6 +268,11 @@ export class World implements GameWorld {
         this.sim.x - this.lastX,
         this.sim.z - this.lastZ,
       );
+    for (const [id, model] of this.heroModels)
+      model.setEnabled(id === this.sim.save.job);
+    this.player.rotation.z =
+      this.sim.actionTime > 0 ? Math.sin(this.sim.actionTime * 18) * 0.12 : 0;
+    this.player.scaling.setAll(this.sim.hurtTime > 0 ? 0.96 : 1);
     this.lastX = this.sim.x;
     this.lastZ = this.sim.z;
     this.player.position.set(
@@ -294,7 +308,15 @@ export class World implements GameWorld {
         Math.sin(this.sim.time * 2 + monster.id) * 0.05,
         monster.z,
       );
+      const warning = this.warnings.get(monster.id)!;
+      warning.setEnabled(monster.alive && monster.windup > 0);
+      warning.position.set(monster.x, 0.05, monster.z);
+      warning.scaling.setAll(0.8 + 0.2 * (1 - monster.windup / 0.65));
+      actor.rotation.z =
+        monster.stun > 0 ? Math.sin(this.sim.time * 12) * 0.1 : 0;
       const label = this.monsterLabels.get(monster.id)!;
+      label.querySelector("span")!.textContent =
+        `${monster.kind}${monster.stun > 0 ? " · Stunned" : monster.poison > 0 ? " · Poison" : monster.slow > 0 ? " · Slow" : ""}`;
       const point = this.project(monster.x, monster.z, 1.7);
       label.style.transform = `translate(${point.x}px,${point.y}px) translate(-50%,-100%)`;
       label.style.display = monster.alive ? "" : "none";

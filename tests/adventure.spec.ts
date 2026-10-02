@@ -55,7 +55,7 @@ test("complete adventure loop, windows, upgrades and persistent progress", async
   await page.keyboard.press("Escape");
   await page.getByRole("button", { name: "Forge", exact: true }).click();
   const before = await snapshot(page);
-  await page.getByRole("button", { name: /Refine sword/ }).click();
+  await page.getByRole("button", { name: /Refine weapon/ }).click();
   const refined = await snapshot(page);
   expect(refined.weapon).toBe(before.weapon + 1);
   expect(refined.gold).toBe(before.gold - 60);

@@ -6,8 +6,12 @@ import "@fontsource/nunito/latin-800.css";
 import "@fontsource/nunito/latin-900.css";
 import { Simulation, species } from "./simulation";
 import { World } from "./world";
+import { FeedbackAudio } from "./game/audio";
+import { classes, MAX_LEVEL, type ClassId } from "./game/classes";
+import type { GameWorld } from "./render/contracts";
 const iconAliases: Record<string, string> = {
   sprout: "sprout",
+  heart: "health-potion",
   "chevron-right": "arrow-right",
   sparkles: "sparkles",
   "map-pin": "map-pin",
@@ -20,7 +24,7 @@ const iconAliases: Record<string, string> = {
   "arrow-right": "arrow-right",
   x: "close",
   backpack: "backpack",
-  "wand-sparkles": "swords",
+  "wand-sparkles": "sparkles",
   "user-round": "hero",
   anvil: "anvil",
   store: "store",
@@ -59,18 +63,21 @@ const itemIcon = (name: string) =>
 const portrait = `<img class="hero-portrait" src="/icons/hero.png" alt="Sprout the adventurer" draggable="false">`;
 const app = document.querySelector<HTMLDivElement>("#app")!;
 app.innerHTML = `<canvas id="game" aria-label="3D game world: click the ground to move, click a monster to attack"></canvas><div id="labels"></div><div id="floats"></div>
-<header class="identity"><div class="portrait">${portrait}<b id="level-badge">1</b></div><div class="identity-info"><div class="name-line"><strong>Sprout</strong><span>NOVICE</span>${icon("sprout")}</div><div class="resource hp"><i id="hp-fill"></i><span>HP <b id="hp-text"></b></span></div><div class="resource mp"><i id="mp-fill"></i><span>MP <b id="mp-text"></b></span></div><div class="xp-mini"><i id="xp-fill"></i></div></div><button class="identity-more" data-panel="character" title="Character status (C)">${icon("chevron-right")}</button></header>
+<header class="identity"><div class="portrait">${portrait}<b id="level-badge">1</b></div><div class="identity-info"><div class="name-line"><strong>Sprout</strong><span id="class-name">SWORDSMAN</span>${icon("sprout")}</div><div class="resource hp"><i id="hp-fill"></i><span>HP <b id="hp-text"></b></span></div><div class="resource mp"><i id="mp-fill"></i><span>MP <b id="mp-text"></b></span></div><div class="xp-mini"><i id="xp-fill"></i></div></div><button class="identity-more" data-panel="character" title="Character status (C)">${icon("chevron-right")}</button></header>
 <div class="world-heading"><div class="wordmark">${icon("sparkles")} MOSSVALE <span>ONLINE</span></div><div class="realm"><span></span> MOONLIT GLADE <b>·</b> <small>CHANNEL 01 · SOLO PROTOTYPE</small></div></div>
 <div class="map-area"><div class="map-title">${icon("map-pin")} Moonlit Glade <button data-panel="map" title="Open map (M)">${icon("maximize-2")}</button></div><button class="minimap" data-panel="map" aria-label="Open map"><canvas id="mini" width="180" height="160"></canvas><span class="north">N</span><span class="map-coordinate" id="coords">0, 2</span></button><div class="map-footer"><span>${icon("moon")} A bright new adventure</span><button id="sound" title="Toggle ambient music">${icon("volume-x")}</button></div></div>
 <div class="quest-tracker"><div class="quest-heading">${icon("scroll-text")} YOUR ADVENTURE <button id="quest-toggle" aria-label="Collapse quests">${icon("minus")}</button></div><div id="quest-content"><span class="quest-tag">BEGINNER QUEST</span><strong>A little courage</strong><p>The glade needs a helping hand.</p><div class="quest-objective"><span class="quest-dot"></span> Defeat woodland monsters <b id="quest-progress">0/5</b></div><div class="quest-progress"><i id="quest-fill"></i></div><button id="claim" hidden>Claim reward · 100 z ${icon("arrow-right")}</button><span class="quest-reward" id="quest-reward">REWARD <b>100 z</b> + 3 potions</span></div></div>
 <div id="target-hud" hidden><div><span id="target-name">Dewdrop</span><small>Lv. 1 · Wild monster</small></div><div class="target-bar"><i id="target-fill"></i></div><button id="untarget" title="Clear target">${icon("x")}</button></div>
 <nav class="side-menu" aria-label="Game menus"><button data-panel="inventory" title="Inventory (I)">${icon("backpack")}<span>Bag</span><kbd>I</kbd></button><button data-panel="skills" title="Skills (K)">${icon("wand-sparkles")}<span>Skills</span><kbd>K</kbd></button><button data-panel="character" title="Character (C)">${icon("user-round")}<span>Hero</span><kbd>C</kbd></button><button data-panel="forge" title="Upgrade equipment">${icon("anvil")}<span>Forge</span></button><button data-panel="shop" title="Potion merchant">${icon("store")}<span>Shop</span></button></nav>
 <div class="chat"><div class="chat-tabs"><button class="active" data-chat="world">World</button><button data-chat="combat">Combat</button><span>LOCAL ADVENTURE</span><button id="chat-hide" aria-label="Hide activity log">${icon("chevron-down")}</button></div><div id="chat-log"><p><b class="system">System</b> Welcome to Mossvale, adventurer.</p><p><b class="guide">Guide</b> Click a monster to begin your adventure!</p></div><div class="chat-input">${icon("message-circle")}<input id="chat-input" placeholder="Leave a local note…" maxlength="100" aria-label="Local note"><span>↵</span></div></div>
-<div class="bottom-center"><div class="control-hint"><span>${icon("mouse-pointer-2")} Click to move & attack</span><b>·</b><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> to walk</span></div><div class="action-bar"><button class="target-action" id="nearest" title="Select nearest monster (Tab)">${icon("crosshair")}<kbd>TAB</kbd></button><div class="action-divider"></div><button class="skill-slot gold" data-skill="0" title="Power Strike (1)"><kbd>1</kbd>${icon("swords")}<small>Strike</small><span class="cooldown"></span></button><button class="skill-slot purple" data-skill="1" title="Whirlwind (2)"><kbd>2</kbd>${icon("wind")}<small>Whirlwind</small><span class="cooldown"></span></button><button class="skill-slot red" data-skill="2" title="Red potion (3)"><kbd>3</kbd>${icon("flask-conical")}<small>Heal</small><span class="count" id="red-count">8</span><span class="cooldown"></span></button><button class="skill-slot blue" data-skill="3" title="Blue potion (4)"><kbd>4</kbd>${icon("droplets")}<small>Mana</small><span class="count" id="blue-count">4</span><span class="cooldown"></span></button><div class="action-divider"></div><button class="loot-action" id="loot" title="Pick up nearby loot (F)">${icon("hand")}<kbd>F</kbd><small>Pick up</small></button><button id="auto" title="Auto-select and attack monsters">${icon("repeat-2")}<small>Auto</small></button></div><div class="experience"><span>BASE EXP</span><div><i id="exp-fill"></i></div><b id="exp-text">0 / 120</b></div></div>
+<div class="bottom-center"><div id="combat-state" aria-live="polite"></div><div class="control-hint"><span>${icon("mouse-pointer-2")} Click to move & attack</span><b>·</b><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> to walk</span></div><div class="action-bar"><button class="target-action" id="nearest" title="Select nearest monster (Tab)">${icon("crosshair")}<kbd>TAB</kbd></button><div class="action-divider"></div><button class="skill-slot gold" data-skill="0" title="Power Strike (1)"><kbd>1</kbd>${icon("swords")}<small>Strike</small><span class="cooldown"></span></button><button class="skill-slot purple" data-skill="1" title="Whirlwind (2)"><kbd>2</kbd>${icon("wind")}<small>Whirlwind</small><span class="cooldown"></span></button><button class="skill-slot red" data-skill="2" title="Red potion (3)"><kbd>3</kbd>${icon("flask-conical")}<small>Heal</small><span class="count" id="red-count">8</span><span class="cooldown"></span></button><button class="skill-slot blue" data-skill="3" title="Blue potion (4)"><kbd>4</kbd>${icon("droplets")}<small>Mana</small><span class="count" id="blue-count">4</span><span class="cooldown"></span></button><button class="skill-slot purple" data-skill="4" title="Skill slot 3 (5)"><kbd>5</kbd>${icon("sparkles")}<small>Slot 3</small><span class="cooldown"></span></button><button class="skill-slot gold" data-skill="5" title="Skill slot 4 (6)"><kbd>6</kbd>${icon("sparkles")}<small>Slot 4</small><span class="cooldown"></span></button><div class="action-divider"></div><button class="loot-action" id="loot" title="Pick up nearby loot (F)">${icon("hand")}<kbd>F</kbd><small>Pick up</small></button><button id="auto" title="Auto-select and attack monsters">${icon("repeat-2")}<small>Auto</small></button></div><div class="experience"><span>BASE EXP</span><div><i id="exp-fill"></i></div><b id="exp-text">0 / 120</b></div></div>
 <div class="bottom-right"><div class="wallet">${icon("coins")}<b id="gold">120</b><span>z</span></div><div class="utility"><button id="camera" title="Reset camera">${icon("focus")}</button><button data-panel="settings" title="Settings">${icon("settings-2")}</button><button data-panel="help" title="How to play">${icon("circle-help")}</button></div><span class="save-indicator"><i></i> Adventure saved locally</span></div>
 <div id="toast" role="status"></div><div id="panel-root"></div><div class="touch-controls"><button data-touch="up" aria-label="Walk up"><span class="arrow-up">${icon("arrow-down")}</span></button><button data-touch="left" aria-label="Walk left"><span class="arrow-left">${icon("arrow-right")}</span></button><button data-touch="down" aria-label="Walk down">${icon("arrow-down")}</button><button data-touch="right" aria-label="Walk right">${icon("arrow-right")}</button></div>`;
 const sim = new Simulation();
-let world: World;
+const feedback = new FeedbackAudio();
+window.addEventListener("pointerdown", () => feedback.unlock(), { once: true });
+window.addEventListener("keydown", () => feedback.unlock(), { once: true });
+let world: GameWorld;
 try {
   world = new World(
     sim,
@@ -113,6 +120,15 @@ function renderLog() {
 }
 sim.onEvent = (text, type = "system", x, z) => {
   if (type === "damage" || type === "hurt") {
+    feedback.play(
+      type === "hurt"
+        ? "hurt"
+        : sim.save.job === "mage"
+          ? "magic"
+          : sim.save.job === "archer"
+            ? "arrow"
+            : "hit",
+    );
     if (x !== undefined && z !== undefined) {
       const p = world.project(x, z, 1.4);
       const el = document.createElement("div");
@@ -134,7 +150,10 @@ sim.onEvent = (text, type = "system", x, z) => {
   clearTimeout(toastTimer);
   toastTimer = window.setTimeout(() => ($("#toast").className = ""), 3000);
   activity(text, ["reward", "level"].includes(type) ? "Combat" : "System");
-  if (type === "level") world.effect("level", sim.x, sim.z);
+  if (type === "level") {
+    world.effect("level", sim.x, sim.z);
+    feedback.play("level");
+  }
   if (panel) renderPanel();
 };
 const descriptions: Record<string, string> = {
@@ -165,7 +184,7 @@ function renderPanel() {
   const [ic, title] = titles[panel];
   let body = "";
   if (panel === "inventory") {
-    body = `<div class="panel-sub"><span>${s.items.filter((i) => i.count).length + 1} / 24 slots</span><span>${icon("coins")} ${s.gold} z</span></div><div class="inventory-grid"><button class="item equipped" data-item="sword"><span>${icon("swords")}</span><b>+${s.weapon}</b><small>E</small></button>${s.items
+    body = `<div class="panel-sub"><span>${s.items.filter((i) => i.count).length + 1} / 24 slots</span><span>${icon("coins")} ${s.gold} z</span></div><div class="inventory-grid"><button class="item equipped" data-item="sword"><span>${icon(sim.job.icon)}</span><b>+${s.weapon}</b><small>E</small></button>${s.items
       .filter((i) => i.count)
       .map(
         (i) =>
@@ -176,13 +195,28 @@ function renderPanel() {
       )}${Array.from({ length: Math.max(0, 23 - s.items.filter((i) => i.count).length) }, () => '<div class="item empty"></div>').join("")}</div><div id="item-detail" class="item-detail"><strong>Your adventure, in a bag.</strong><p>Select an item to inspect or use it.</p></div>`;
   }
   if (panel === "character") {
-    body = `<div class="character-card"><div class="portrait">${portrait}</div><div><h2>Sprout</h2><span>Level ${s.level} · Novice</span><p>A small hero with a big adventure ahead.</p></div></div><div class="stat-pair"><span>Max HP <b>${sim.maxHp}</b></span><span>Max MP <b>${sim.maxMp}</b></span><span>Attack <b>${sim.damage}</b></span><span>Sword <b>+${s.weapon}</b></span></div><div class="section-label">ATTRIBUTES <span>${s.points} points available</span></div>${(["str", "vit", "agi"] as const).map((k, i) => `<div class="stat-row"><span>${["Strength", "Vitality", "Agility"][i]}<small>${["Increase attack damage", "Increase maximum health", "Increase attack speed"][i]}</small></span><b>${s.stats[k]}</b><button data-stat="${k}" ${s.points ? "" : "disabled"}>${icon("plus")}</button></div>`).join("")}<div class="panel-note">Defeat monsters to gain EXP. Each level grants 3 attribute points.</div>`;
+    body = `<div class="character-card"><div class="portrait">${portrait}</div><div><h2>Sprout</h2><span>Level ${s.level} / ${MAX_LEVEL} · ${sim.job.name}</span><p>${sim.job.role}</p></div></div><div class="class-picker">${(Object.entries(classes) as [ClassId, (typeof classes)[ClassId]][]).map(([id, job]) => `<button data-class="${id}" aria-pressed="${s.job === id}" ${sim.target !== null ? "disabled" : ""}>${icon(job.icon)}<strong>${job.name}</strong><small>${job.role}</small></button>`).join("")}</div><div class="stat-pair"><span>Max HP <b>${sim.maxHp}</b></span><span>Max MP <b>${sim.maxMp}</b></span><span>Attack <b>${sim.damage}</b></span><span>Defense <b>${sim.defense}</b></span></div><div class="section-label">ATTRIBUTES <span>${s.points} points available</span></div>${(["str", "vit", "agi"] as const).map((k, i) => `<div class="stat-row"><span>${[s.job === "mage" ? "Focus" : "Strength", "Vitality", "Agility"][i]}<small>${[s.job === "archer" ? "Melee strength" : "Increase attack power", "Increase health and defense", s.job === "archer" ? "Increase bow attack, attack speed and critical chance" : "Increase attack speed and critical chance"][i]}</small></span><b>${s.stats[k]}</b><button data-stat="${k}" ${s.points ? "" : "disabled"}>${icon("plus")}</button></div>`).join("")}<div class="panel-note">Change class outside combat. Level and equipment refinement are shared in this prototype. Each level grants 3 attribute points. Skills unlock at levels 10, 20 … 100.</div>`;
   }
   if (panel === "skills") {
-    body = `<div class="panel-sub"><span>NOVICE SKILL TREE</span><span>Strike rank ${s.skillLevel}/5</span></div><div class="skill-card"><span class="skill-art gold">${icon("swords")}</span><div><h3>Power Strike <small>RANK ${s.skillLevel}</small></h3><p>A focused blow for ${Math.round((1.6 + s.skillLevel * 0.2) * 100)}% attack damage.</p><span>10 MP · 4s cooldown · Key 1</span></div></div><button class="primary-button" id="skill-up" ${s.skillLevel >= 5 ? "disabled" : ""}>Train Power Strike · ${s.skillLevel * 70} z</button><div class="skill-card"><span class="skill-art purple">${icon("wind")}</span><div><h3>Whirlwind</h3><p>Strike every monster around you for 140% attack damage.</p><span>18 MP · 7s cooldown · Key 2</span></div></div><div class="panel-note">Select a monster and move into range before using a skill.</div>`;
+    body = `<div class="panel-sub"><span>${sim.job.name.toUpperCase()} SKILLS</span><span>${sim.unlockedSkills.length} / 10 unlocked</span></div><div class="loadout-grid">${s.hotbar
+      .map((id, index) => {
+        const skill = sim.skillList.find((skill) => skill.id === id);
+        return `<div class="loadout-slot" data-hotbar="${index}"><kbd>${[1, 2, 5, 6][index]}</kbd>${icon(skill?.icon || "plus")}<strong>${skill?.name || "Empty slot"}</strong><small>Drop a skill here</small></div>`;
+      })
+      .join(
+        "",
+      )}</div><p class="muted">Drag an unlocked skill into a slot, or choose a slot and press Assign.</p>${sim.skillList
+      .map((skill) => {
+        const unlocked = s.level >= skill.level;
+        return `<article class="skill-card ${unlocked ? "" : "skill-locked"}" data-skill-id="${skill.id}" draggable="${unlocked}"><span class="skill-art purple">${icon(skill.icon)}</span><div><h3>${skill.name} <small>LV ${skill.level}</small></h3><p>${skill.description}</p><span>${skill.mp} MP · ${skill.cooldown}s cooldown · ${skill.range}m range${skill.cast ? " · " + skill.cast + "s cast" : ""}</span><div class="skill-assignment"><select aria-label="Hotbar slot for ${skill.name}" data-slot-for="${skill.id}" ${unlocked ? "" : "disabled"}>${[1, 2, 5, 6].map((key, index) => `<option value="${index}">Key ${key}</option>`).join("")}</select><button data-assign="${skill.id}" ${unlocked ? "" : "disabled"}>${unlocked ? "Assign" : "Unlock at Lv " + skill.level}</button></div></div></article>`;
+      })
+      .join(
+        "",
+      )}<div class="panel-note">Damage = ATK × (100 / (DEF + 100)). Damage rolls vary by ±10%, with a critical chance influenced by AGI. Moving interrupts a cast; mana and cooldown remain spent.</div>`;
   }
+
   if (panel === "forge") {
-    body = `<div class="forge-art">${icon("swords")}<span>Novice sword +${s.weapon}</span></div><h2 class="center">A little sharper. A little braver.</h2><p class="center muted">Refine your sword to add 7 attack damage.<br>Each upgrade is guaranteed to succeed.</p><div class="stat-pair"><span>Current attack <b>${sim.damage}</b></span><span>After refinement <b>${sim.damage + 7}</b></span></div><button class="primary-button" id="refine">${icon("anvil")} Refine sword · ${60 + s.weapon * 40} z</button><div class="panel-note">Your wallet: ${s.gold} z</div>`;
+    body = `<div class="forge-art">${icon(sim.job.icon)}<span>${sim.job.weapon} +${s.weapon}</span></div><h2 class="center">A little sharper. A little braver.</h2><p class="center muted">Refine your weapon to add 7 attack damage.<br>Each upgrade is guaranteed to succeed.</p><div class="stat-pair"><span>Current attack <b>${sim.damage}</b></span><span>After refinement <b>${sim.damage + 7}</b></span></div><button class="primary-button" id="refine">${icon("anvil")} Refine weapon · ${60 + s.weapon * 40} z</button><div class="panel-note">Your wallet: ${s.gold} z</div>`;
   }
   if (panel === "shop") {
     body = `<p class="muted">A few essentials for the road ahead.</p>${[
@@ -205,7 +239,7 @@ function renderPanel() {
       ["Mouse", "Click ground to walk; click a monster to attack"],
       ["W A S D", "Move your character"],
       ["Tab / Space", "Select the nearest monster / attack"],
-      ["1 / 2", "Power Strike / Whirlwind"],
+      ["1 / 2 / 5 / 6", "Assigned class skills (unlock every 10 levels)"],
       ["3 / 4", "Health potion / Mana potion"],
       ["F", "Pick up nearby drops"],
       ["I / K / C", "Inventory / Skills / Character"],
@@ -218,7 +252,7 @@ function renderPanel() {
       )}</div><div class="panel-note">Single-player prototype. Progress is saved in this browser. Opening a window pauses the world. Monsters respawn after 13 seconds.</div>`;
   }
   if (panel === "settings") {
-    body = `<h3>Make yourself at home.</h3><div class="setting-row"><span>Ambient music</span><button id="sound-panel">${music ? "On" : "Off"}</button></div><div class="setting-row"><span>Camera zoom</span><input id="zoom" type="range" min="0.65" max="1.6" step="0.05" value="${world.zoom}" aria-label="Camera zoom"></div><button id="save-now" class="primary-button">${icon("save")} Save adventure</button><div class="panel-note">Mossvale v0.1 · Babylon.js prototype<br>All characters and environments are original procedural assets.<br>No multiplayer server is connected.</div>`;
+    body = `<h3>Make yourself at home.</h3><div class="setting-row"><span>Sound effects</span><button id="sfx-panel">${feedback.enabled ? "On" : "Off"}</button></div><div class="setting-row"><span>Ambient music</span><button id="sound-panel">${music ? "On" : "Off"}</button></div><div class="setting-row"><span>Camera zoom</span><input id="zoom" type="range" min="0.65" max="1.6" step="0.05" value="${world.zoom}" aria-label="Camera zoom"></div><button id="save-now" class="primary-button">${icon("save")} Save adventure</button><div class="panel-note">Mossvale v0.1 · Babylon.js prototype<br>All characters and environments are original procedural assets.<br>No multiplayer server is connected.</div>`;
   }
   $("#panel-root").innerHTML =
     `<div class="panel-backdrop"></div><section class="game-panel ${panel === "map" ? "wide" : ""}" role="dialog" aria-modal="true" aria-label="${title}"><div class="panel-heading">${icon(ic)}<h2>${title}</h2><span>PAUSED</span><button id="close-panel" aria-label="Close window">${icon("x")}</button></div><div class="panel-body">${body}</div><div class="panel-footer">${icon("sparkles")} MOSSVALE <span>ESC to return to adventure</span></div></section>`;
@@ -238,7 +272,7 @@ function renderPanel() {
           const name = b.dataset.item!;
           $("#item-detail").innerHTML =
             name === "sword"
-              ? `<strong>Novice sword +${s.weapon}</strong><p>Equipped · ${sim.damage} attack. Refine it at the forge.</p>`
+              ? `<strong>${sim.job.weapon} +${s.weapon}</strong><p>Equipped · ${sim.damage} attack. Refine it at the forge.</p>`
               : `<strong>${name}</strong><p>${descriptions[name]}</p>${name.includes("potion") ? '<button class="primary-button" id="use-item">Use potion</button>' : ""}`;
           if (document.getElementById("use-item"))
             $("#use-item").onclick = () => {
@@ -252,21 +286,35 @@ function renderPanel() {
       sim.upgrade();
       renderPanel();
     };
-  if (panel === "skills")
-    $("#skill-up").onclick = () => {
-      const cost = s.skillLevel * 70;
-      if (s.gold < cost) {
-        sim.onEvent("Not enough zeny to train this skill");
-        return;
-      }
-      if (s.skillLevel < 5) {
-        s.gold -= cost;
-        s.skillLevel++;
-        sim.persist();
+  document.querySelectorAll<HTMLElement>("[data-class]").forEach(
+    (button) =>
+      (button.onclick = () => {
+        sim.setClass(button.dataset.class as ClassId);
         renderPanel();
-        sim.onEvent("Power Strike improved!", "level");
-      }
-    };
+        refreshHotbar();
+      }),
+  );
+  document.querySelectorAll<HTMLElement>("[data-assign]").forEach(
+    (button) =>
+      (button.onclick = () => {
+        const id = button.dataset.assign!;
+        const select = document.querySelector<HTMLSelectElement>(
+          `[data-slot-for="${id}"]`,
+        )!;
+        if (sim.assignSkill(Number(select.value), id)) {
+          renderPanel();
+          refreshHotbar();
+        }
+      }),
+  );
+  document.querySelectorAll<HTMLElement>("[data-skill-id]").forEach(
+    (card) =>
+      (card.ondragstart = (event) => {
+        if (card.draggable)
+          event.dataTransfer?.setData("text/plain", card.dataset.skillId!);
+      }),
+  );
+  bindSkillDrops();
   if (panel === "shop") {
     document.querySelectorAll<HTMLElement>("[data-buy]").forEach(
       (b) =>
@@ -317,6 +365,10 @@ function renderPanel() {
     };
   }
   if (panel === "settings") {
+    $("#sfx-panel").onclick = () => {
+      feedback.toggle();
+      renderPanel();
+    };
     $("#save-now").onclick = () => {
       sim.persist();
       sim.onEvent("Adventure saved!");
@@ -337,6 +389,7 @@ function closePanel() {
   renderPanel();
 }
 function openPanel(name: string) {
+  feedback.play("ui");
   keys.clear();
   panel = panel === name ? "" : name;
   renderPanel();
@@ -375,7 +428,7 @@ window.addEventListener("keydown", (e) => {
   if (k === "tab" || k === " ") {
     e.preventDefault();
     if (k === "tab" || sim.target === null) sim.nearest();
-  } else if ("1234".includes(k)) sim.skill(Number(k) - 1);
+  } else if ("123456".includes(k)) sim.skill(Number(k) - 1);
   else if (k === "f") sim.collect();
   keys.add(k);
 });
@@ -519,15 +572,55 @@ function drawMap(canvas: HTMLCanvasElement) {
   c.lineWidth = 2;
   c.stroke();
 }
+let hotbarSignature = "";
+function bindSkillDrops() {
+  document.querySelectorAll<HTMLElement>("[data-hotbar]").forEach((slot) => {
+    slot.ondragover = (event) => event.preventDefault();
+    slot.ondrop = (event) => {
+      event.preventDefault();
+      const id = event.dataTransfer?.getData("text/plain");
+      if (id && sim.assignSkill(Number(slot.dataset.hotbar), id)) {
+        renderPanel();
+        refreshHotbar();
+      }
+    };
+  });
+}
+function refreshHotbar() {
+  const signature = `${sim.save.job}:${sim.save.level}:${sim.save.hotbar.join(",")}`;
+  if (signature === hotbarSignature) return;
+  hotbarSignature = signature;
+  $("#class-name").textContent = sim.job.name.toUpperCase();
+  [0, 1, 4, 5].forEach((key, index) => {
+    const button = document.querySelector<HTMLButtonElement>(
+      `.action-bar [data-skill="${key}"]`,
+    )!;
+    const skill = sim.skillList.find(
+      (skill) => skill.id === sim.save.hotbar[index],
+    );
+    const locked = !skill || sim.save.level < skill.level;
+    button.classList.toggle("locked", locked);
+    button.dataset.hotbar = String(index);
+    button.title = skill
+      ? `${skill.name} · ${skill.mp} MP · ${locked ? "Unlocks at level " + skill.level : skill.cooldown + "s cooldown"}`
+      : "Assign a skill in the Skills window";
+    button.innerHTML = `<kbd>${key + 1}</kbd>${icon(skill?.icon || "plus")}<small>${skill?.name || "Empty"}</small><span class="cooldown">${locked && skill ? "Lv " + skill.level : ""}</span>`;
+  });
+  bindSkillDrops();
+}
+refreshHotbar();
 let last = performance.now(),
   hudClock = 0,
   saveClock = 0;
 let animationFrame = 0;
+let footstepTimer = 0;
 function frame(now: number) {
   const dt = Math.min((now - last) / 1000, 0.25);
   last = now;
   const dx = (keys.has("d") ? 1 : 0) - (keys.has("a") ? 1 : 0),
     dz = (keys.has("s") ? 1 : 0) - (keys.has("w") ? 1 : 0);
+  const oldX = sim.x,
+    oldZ = sim.z;
   let remaining = dt;
   while (remaining > 0) {
     const step = Math.min(remaining, 0.025);
@@ -535,6 +628,15 @@ function frame(now: number) {
     remaining -= step;
   }
   world.update(sim.paused ? 0 : dt);
+  footstepTimer -= dt;
+  if (
+    !sim.paused &&
+    Math.hypot(sim.x - oldX, sim.z - oldZ) > 0.01 &&
+    footstepTimer <= 0
+  ) {
+    feedback.play("step");
+    footstepTimer = 0.3;
+  }
   hudClock += dt;
   saveClock += dt;
   if (saveClock > 5) {
@@ -549,8 +651,18 @@ function frame(now: number) {
     $("#hp-fill").style.width = (s.hp / sim.maxHp) * 100 + "%";
     $("#mp-fill").style.width = (s.mp / sim.maxMp) * 100 + "%";
     $("#xp-fill").style.width = $("#exp-fill").style.width =
-      (s.xp / sim.maxXp) * 100 + "%";
-    $("#exp-text").textContent = `${s.xp} / ${sim.maxXp}`;
+      (s.level === MAX_LEVEL ? 100 : (s.xp / sim.maxXp) * 100) + "%";
+    $("#exp-text").textContent =
+      s.level === MAX_LEVEL ? "MAX LEVEL" : `${s.xp} / ${sim.maxXp}`;
+    refreshHotbar();
+    $("#combat-state").textContent = sim.cast
+      ? `Casting ${sim.skillList.find((skill) => skill.id === sim.cast!.skillId)?.name} · ${sim.cast.remaining.toFixed(1)}s`
+      : [
+          sim.guard.time > 0 ? `Guard ${Math.ceil(sim.guard.time)}s` : "",
+          sim.fury.time > 0 ? `Attack boost ${Math.ceil(sim.fury.time)}s` : "",
+        ]
+          .filter(Boolean)
+          .join(" · ");
     $("#gold").textContent = s.gold.toLocaleString();
     $("#level-badge").textContent = String(s.level);
     $("#red-count").textContent = String(
@@ -566,12 +678,28 @@ function frame(now: number) {
     $("#quest-reward").textContent = s.questClaimed
       ? "✓ QUEST COMPLETE"
       : "REWARD   100 z + 3 potions";
-    document.querySelectorAll<HTMLElement>("[data-skill]").forEach((b, i) => {
-      const c = b.querySelector<HTMLElement>(".cooldown")!;
-      c.textContent =
-        sim.cooldowns[i] > 0 ? Math.ceil(sim.cooldowns[i]).toString() : "";
-      c.classList.toggle("cooling", sim.cooldowns[i] > 0);
-    });
+    document
+      .querySelectorAll<HTMLElement>(".action-bar [data-skill]")
+      .forEach((b) => {
+        const i = Number(b.dataset.skill);
+        const c = b.querySelector<HTMLElement>(".cooldown")!;
+        c.textContent =
+          sim.cooldowns[i] > 0
+            ? Math.ceil(sim.cooldowns[i]).toString()
+            : b.classList.contains("locked")
+              ? sim.skillList.find(
+                  (skill) =>
+                    skill.id === sim.save.hotbar[[0, 1, 4, 5].indexOf(i)],
+                )?.level
+                ? "Lv " +
+                  sim.skillList.find(
+                    (skill) =>
+                      skill.id === sim.save.hotbar[[0, 1, 4, 5].indexOf(i)],
+                  )!.level
+                : ""
+              : "";
+        c.classList.toggle("cooling", sim.cooldowns[i] > 0);
+      });
     const target = sim.monsters.find((m) => m.id === sim.target && m.alive);
     $("#target-hud").hidden = !target;
     if (target) {
@@ -588,6 +716,13 @@ animationFrame = requestAnimationFrame(frame);
 Object.defineProperty(window, "mossvale", {
   value: {
     snapshot: () => ({
+      job: sim.save.job,
+      hotbar: [...sim.save.hotbar],
+      unlockedSkills: sim.unlockedSkills.map((skill) => skill.id),
+      defense: sim.defense,
+      cooldowns: [...sim.cooldowns],
+      skillCooldowns: { ...sim.skillCooldowns },
+      cast: sim.cast ? { ...sim.cast } : null,
       x: sim.x,
       z: sim.z,
       level: sim.save.level,
@@ -616,5 +751,6 @@ window.addEventListener("pagehide", (event) => {
   if (!event.persisted) {
     cancelAnimationFrame(animationFrame);
     world.dispose();
+    feedback.dispose();
   }
 });

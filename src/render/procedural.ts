@@ -1,3 +1,4 @@
+import { classes, type ClassId } from "../game/classes";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { Primitives } from "./primitives";
 import { species, type Kind } from "../simulation";
@@ -168,10 +169,14 @@ export function buildMap(factory: Primitives, blocking: Obstacle[]) {
     lantern.material = factory.material(0xffd486, true);
   }
 }
-export function buildPlayer(factory: Primitives, g: TransformNode) {
+export function buildPlayer(
+  factory: Primitives,
+  g: TransformNode,
+  job: ClassId = "swordsman",
+) {
   const box = factory.box.bind(factory),
     ball = factory.ball.bind(factory);
-  box(0.62, 0.7, 0.38, 0x9a56ef, 0, 0.95, 0, g);
+  box(0.62, 0.7, 0.38, classes[job].color, 0, 0.95, 0, g);
   box(0.72, 0.13, 0.42, 0xffcb75, 0, 0.72, 0, g);
   ball(0.42, 0xf5c5a6, 0, 1.65, 0, g);
   ball(0.43, 0x493650, 0, 1.9, -0.03, g, 0.65);
@@ -182,12 +187,24 @@ export function buildPlayer(factory: Primitives, g: TransformNode) {
   box(0.29, 0.18, 0.38, 0x493851, 0.19, 0.1, 0.06, g);
   ball(0.16, 0xf5c5a6, -0.47, 1, 0.02, g);
   ball(0.16, 0xf5c5a6, 0.47, 1, 0.02, g);
-  box(0.1, 0.95, 0.07, 0xdbe9ed, 0.65, 0.92, 0.1, g).rotation.z = -0.3;
-  box(0.4, 0.1, 0.14, 0xffc974, 0.51, 0.5, 0.1, g);
-  box(0.11, 0.27, 0.1, 0x604361, 0.5, 0.35, 0.1, g);
+  if (job === "swordsman") {
+    box(0.1, 0.95, 0.07, 0xdbe9ed, 0.65, 0.92, 0.1, g).rotation.z = -0.3;
+    box(0.4, 0.1, 0.14, 0xffc974, 0.51, 0.5, 0.1, g);
+    box(0.11, 0.27, 0.1, 0x604361, 0.5, 0.35, 0.1, g);
+  } else if (job === "mage") {
+    box(0.09, 1.7, 0.09, 0x98633d, 0.55, 0.9, 0.1, g);
+    ball(0.22, 0x6fddff, 0.55, 1.8, 0.1, g);
+    box(0.4, 0.1, 0.2, 0xffdd7c, 0.55, 1.55, 0.1, g);
+  } else {
+    box(0.09, 0.85, 0.08, 0x915631, 0.6, 1, 0.12, g);
+    box(0.08, 0.48, 0.08, 0xc78c4c, 0.5, 1.5, 0.12, g).rotation.z = -0.35;
+    box(0.08, 0.48, 0.08, 0xc78c4c, 0.5, 0.5, 0.12, g).rotation.z = 0.35;
+    box(0.02, 1.35, 0.02, 0xffe4b0, 0.42, 1, 0.12, g);
+    box(0.08, 0.7, 0.25, 0x705337, -0.25, 1, -0.35, g);
+  }
   box(0.03, 0.07, 0.03, 0x33263a, -0.14, 1.64, 0.39, g);
   box(0.03, 0.07, 0.03, 0x33263a, 0.14, 1.64, 0.39, g);
-  const cape = box(0.63, 0.8, 0.06, 0x843bc8, 0, 0.94, -0.26, g);
+  const cape = box(0.63, 0.8, 0.06, classes[job].color, 0, 0.94, -0.26, g);
   cape.rotation.x = -0.15;
 }
 export function creature(factory: Primitives, kind: Kind) {

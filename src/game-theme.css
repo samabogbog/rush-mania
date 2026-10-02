@@ -1278,3 +1278,36 @@ h2.center {
     bottom: 180px;
   }
 }
+
+/* Character progression: compact game panels and four assignable skill slots. */
+.class-picker { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0; }
+.class-picker button { border:2px solid #604329;border-radius:8px;background:#ffedb8;padding:10px 6px;display:flex;align-items:center;flex-direction:column;gap:6px;color:#604329; }
+.class-picker button[aria-pressed="true"] { background:#ffe071;box-shadow:0 3px 0 #936334; }
+.class-picker button .game-icon { width:42px;height:42px; }
+.class-picker small { font-size:10px;line-height:1.4; }
+.loadout-grid { display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px; }
+.loadout-slot { position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;background:#ffefc0;border:2px dashed #956633;border-radius:8px;padding:10px 4px;text-align:center;font-size:11px; }
+.loadout-slot .game-icon { width:40px;height:40px; }
+.loadout-slot kbd { align-self:flex-start; }
+.loadout-slot small { font-size:9px; }
+.skill-locked { opacity:.6; }
+.skill-assignment { display:flex;gap:8px;margin-top:10px; }
+.skill-assignment button,.skill-assignment select { font:inherit;font-size:12px;background:#ffdf7a;color:#604329;border:2px solid #604329;border-radius:5px;padding:5px 9px; }
+.skill-assignment button:disabled { cursor:default; }
+.skill-card[draggable="true"] { cursor:grab; }
+.action-bar .locked .game-icon { filter:grayscale(.65);opacity:.6; }
+.action-bar .locked .cooldown { font-size:11px; }
+#combat-state:not(:empty) { padding:5px 12px;background:#fff0c8;border:2px solid #674329;border-radius:7px;display:table;margin:0 auto 8px;font-size:12px;font-weight:800; }
+@media(max-width:600px) {
+ .action-bar .skill-slot { width:39px; }
+ .action-bar .skill-slot > .game-icon { width:32px;height:32px; }
+ .action-bar .skill-slot small { max-width:36px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+ .class-picker { gap:5px; }
+ .class-picker small { font-size:8px; }
+ .loadout-grid { gap:5px; }
+ .loadout-slot strong { font-size:9px; }
+ .skill-assignment { flex-wrap:wrap; }
+}
+.action-bar .locked .cooldown:not(:empty) { display:block;inset:auto 4px 14px;background:#fff0c9;color:#6d4b2e;border:1px solid #926536;border-radius:3px;font-size:9px;line-height:12px; }
+.action-bar .skill-slot small { max-width:54px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+body:has(.game-panel) .touch-controls { visibility:hidden; }
