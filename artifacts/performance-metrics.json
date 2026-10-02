@@ -1,0 +1,25 @@
+{
+  "environment": "Chromium SwiftShader software rendering, 1280x720 CSS viewport, Low, 4s warmup + 7s CDP sample. FPS/p95 are rolling values including startup; not a player-device benchmark.",
+  "before": {
+    "drawCalls": 41,
+    "animations": 196,
+    "layouts": 377,
+    "layoutMs": 138,
+    "styleMs": 97,
+    "scriptMs": 924,
+    "taskMs": 1378,
+    "fps": 2.37739437576336,
+    "p95": 994.3999999910593
+  },
+  "after": {
+    "drawCalls": 23,
+    "animations": 126,
+    "layouts": 38,
+    "layoutMs": 61,
+    "styleMs": 45,
+    "scriptMs": 267,
+    "taskMs": 677,
+    "fps": 5.54713502195157,
+    "p95": 301.30000001192093
+  }
+}

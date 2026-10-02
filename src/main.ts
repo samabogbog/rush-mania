@@ -100,7 +100,8 @@ try {
     '<div class="graphics-error"><h1>Graphics unavailable</h1><p>Mossvale needs WebGL. Enable hardware acceleration in your browser and reload.</p><button onclick="location.reload()">Try again</button></div>';
   throw error;
 }
-const $ = (s: string) => document.querySelector<HTMLElement>(s)!;
+const nodes=new Map<string,HTMLElement>();
+const $ = (s:string)=>{let node=nodes.get(s);if(!node?.isConnected){node=document.querySelector<HTMLElement>(s)!;nodes.set(s,node);}return node;};
 let panel = "";
 let toastTimer = 0;
 let chatMode = "world";
@@ -775,6 +776,7 @@ Object.defineProperty(window, "mossvale", {
       cooldowns: [...sim.cooldowns],
       skillCooldowns: { ...sim.skillCooldowns },
       cast: sim.cast ? { ...sim.cast } : null,
+      renderX:sim.renderX,renderZ:sim.renderZ,
       x: sim.x,
       z: sim.z,
       level: sim.save.level,

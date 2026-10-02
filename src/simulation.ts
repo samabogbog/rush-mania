@@ -81,6 +81,8 @@ const defaults: Save = {
 };
 export class Simulation {
   save: Save;
+  get renderX(){return this.x}
+  get renderZ(){return this.z}
   x = 0;
   z = 2;
   target: number | null = null;

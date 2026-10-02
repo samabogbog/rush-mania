@@ -34,6 +34,12 @@ export class World implements GameWorld {
   readonly camera: FreeCamera;
   private readonly factory: Primitives;
   private readonly models: ModelLibrary;
+  private bounds={left:0,top:0,width:1,height:1};
+  private readonly identityMatrix=Matrix.Identity();
+  private labelClock=0;
+  private readonly labelNames=new Map<number,string>();
+  private readonly labelBars=new Map<number,HTMLElement>();
+  private readonly labelSpans=new Map<number,HTMLElement>();
   private outfitKey="";private outfit:TransformNode[]=[];
   private readonly shadows: ShadowGenerator;
   private currentZone: ZoneId | null=null;
@@ -73,7 +79,7 @@ export class World implements GameWorld {
     public canvas: HTMLCanvasElement,
     public labels: HTMLDivElement,
   ) {
-    this.engine = new Engine(canvas, true, {
+    this.engine = new Engine(canvas, this.quality!=="low", {
       stencil: true,
       preserveDrawingBuffer: false,
     });
@@ -204,7 +210,7 @@ export class World implements GameWorld {
     for(const node of this.monsters.values()){for(const mesh of node.getChildMeshes())this.shadows.removeShadowCaster(mesh);node.dispose();}
     for(const warning of this.warnings.values())Object.values(warning).forEach(m=>m.dispose());
     for(const label of this.monsterLabels.values())label.remove();
-    this.monsters.clear();this.warnings.clear();this.monsterLabels.clear();
+    this.monsters.clear();this.warnings.clear();this.monsterLabels.clear();this.labelNames.clear();this.labelBars.clear();this.labelSpans.clear();
     for(const monster of this.sim.monsters) {
       const actor=creature(this.factory,monster.kind);this.factory.mergeActor(actor);
       for(const mesh of actor.getChildMeshes()){mesh.metadata={monsterId:monster.id};this.shadows.addShadowCaster(mesh);}
@@ -216,11 +222,13 @@ export class World implements GameWorld {
       const positions=[0,0,0],indices:number[]=[];for(let i=0;i<=24;i++){const angle=-.86+1.72*i/24;positions.push(Math.sin(angle)*(spec.boss?4:range),0,Math.cos(angle)*(spec.boss?4:range));if(i<24)indices.push(0,i+2,i+1);}
       const data=new VertexData();data.positions=positions;data.indices=indices;data.normals=[];VertexData.ComputeNormals(positions,indices,data.normals);data.applyToMesh(cone);cone.material=this.factory.material(0xff514f,true,.3);cone.isPickable=false;
       this.warnings.set(monster.id,{circle,line,cone});
-      const label=document.createElement('div');label.className='world-label monster-label';label.dataset.id=String(monster.id);label.innerHTML='<span></span><div><i></i></div>';this.labels.append(label);this.monsterLabels.set(monster.id,label);
+      const label=document.createElement('div');label.className='world-label monster-label';label.dataset.id=String(monster.id);label.innerHTML='<span></span><div><i></i></div>';this.labels.append(label);this.monsterLabels.set(monster.id,label);this.labelBars.set(monster.id,label.querySelector("i")!);this.labelSpans.set(monster.id,label.querySelector("span")!);
     }
   }
 
-  setQuality(quality:"auto"|"high"|"low") {this.quality=quality;this.autoReduced=false;localStorage.setItem("mossvale-quality",quality);this.scene.shadowsEnabled=quality!=="low";this.engine.setHardwareScalingLevel(1/Math.min(devicePixelRatio,quality==="low"?.8:1.7));this.resize();}
+  setQuality(quality:"auto"|"high"|"low") {this.quality=quality;this.autoReduced=false;this.frameTimes=[];this.lastFrame=performance.now();localStorage.setItem("mossvale-quality",quality);this.applyQuality();this.resize();}
+  private applyQuality(){const low=this.quality==='low'||this.autoReduced;this.scene.shadowsEnabled=!low;this.models.setLowQuality(low);this.shadows.getShadowMap()?.resize(this.quality==='high'?1024:512);}
+
   private updateOutfit() {
     const model=this.heroModels.get(this.sim.save.job)!,nodes=model.getChildTransformNodes(false),spine=nodes.find(n=>n.name.endsWith('-spine')),hand=nodes.find(n=>n.name.endsWith('-right-hand'));
     if(!spine||!hand)return;
@@ -238,6 +246,7 @@ export class World implements GameWorld {
     return {
       engine: "Babylon.js",
       quality:this.quality,autoReduced:this.autoReduced,riggedActors:this.models.active,modelErrors:this.models.errors,
+      renderWidth:this.engine.getRenderWidth(),renderHeight:this.engine.getRenderHeight(),activeAnimations:this.scene.animatables.length,
       drawCalls: this.instrumentation.drawCallsCounter.current,
       fps: this.frameTimes.length ? 1000 / (this.frameTimes.reduce((a,b)=>a+b,0) / this.frameTimes.length) : 0,
       frameP95: [...this.frameTimes].sort((a,b)=>a-b)[Math.max(0, Math.ceil(this.frameTimes.length * .95) - 1)] || 0,
@@ -269,7 +278,10 @@ export class World implements GameWorld {
 
   resize() {
     if (this.disposed) return;
-    this.engine.resize();
+    const rect=this.canvas.getBoundingClientRect();this.bounds={left:rect.left,top:rect.top,width:rect.width,height:rect.height};
+    const low=this.quality==='low'||this.autoReduced,budget=low?960*540:this.quality==='high'?1920*1080:1280*720;
+    const ratio=Math.min(devicePixelRatio,low?1:1.7,Math.sqrt(budget/Math.max(1,rect.width*rect.height)));
+    this.engine.setHardwareScalingLevel(1/ratio);this.engine.resize();
     const span = 10.8 * this.zoom;
     const aspect = this.engine.getRenderWidth() / this.engine.getRenderHeight();
     this.camera.orthoLeft = -span * aspect;
@@ -284,11 +296,11 @@ export class World implements GameWorld {
       height = this.engine.getRenderHeight();
     const point = Vector3.Project(
       new Vector3(x, y, z),
-      Matrix.Identity(),
+      this.identityMatrix,
       this.scene.getTransformMatrix(),
       this.camera.viewport.toGlobal(width, height),
     );
-    const rect = this.canvas.getBoundingClientRect();
+    const rect = this.bounds;
     return {
       x: rect.left + (point.x * rect.width) / width,
       y: rect.top + (point.y * rect.height) / height,
@@ -314,10 +326,12 @@ export class World implements GameWorld {
     if(this.currentZone!==this.sim.save.zone){this.rebuildMap();this.rebuildMonsters();this.loot.splice(0).forEach(m=>m.dispose());}
     const frameNow=performance.now();
     this.frameTimes.push(frameNow-this.lastFrame);this.lastFrame=frameNow;if(this.frameTimes.length>120)this.frameTimes.shift();
-    if(this.quality==="auto"&&!this.autoReduced&&this.frameTimes.length>=12&&this.frameTimes.slice(-10).reduce((a,b)=>a+b,0)/10>80){this.scene.shadowsEnabled=false;this.engine.setHardwareScalingLevel(1/.8);this.autoReduced=true;this.resize();}
+    if(this.quality==="auto"&&!this.autoReduced&&this.frameTimes.length>=12&&this.frameTimes.slice(-10).reduce((a,b)=>a+b,0)/10>40){this.autoReduced=true;this.applyQuality();this.resize();}
+    this.labelClock+=dt;const updateLabels=this.labelClock>=1/(this.quality==='low'||this.autoReduced?20:30)||dt===0;if(updateLabels)this.labelClock=0;
     this.visualTime+=dt;
-    const facingX=this.sim.x-(this.sim.online?this.player.position.x:this.lastX);
-    const facingZ=this.sim.z-(this.sim.online?this.player.position.z:this.lastZ);
+    const renderX=this.sim.renderX,renderZ=this.sim.renderZ;
+    const facingX=renderX-(this.sim.online?this.player.position.x:this.lastX);
+    const facingZ=renderZ-(this.sim.online?this.player.position.z:this.lastZ);
     const moving = Math.hypot(facingX,facingZ) > 0.015;
     const blend=this.sim.online && dt>0 ? 1-Math.exp(-dt*16) : 1;
     if (moving)
@@ -326,18 +340,18 @@ export class World implements GameWorld {
         facingZ,
       );
     for (const [id, model] of this.heroModels)
-      {model.setEnabled(id === this.sim.save.job);if(id===this.sim.save.job)this.models.animate(model,moving,this.sim.save.hp,this.sim.actionTime>0,!!this.sim.cast,dt);}
+      {model.setEnabled(id === this.sim.save.job);this.models.animate(model,moving,this.sim.save.hp,this.sim.actionTime>0,!!this.sim.cast,dt);}
     this.updateOutfit();
     this.player.rotation.z =
       this.sim.actionTime > 0 ? Math.sin(this.sim.actionTime * 18) * 0.12 : 0;
     this.player.scaling.setAll(this.sim.hurtTime > 0 ? 0.96 : 1);
-    this.lastX = this.sim.x;
-    this.lastZ = this.sim.z;
+    this.lastX = renderX;
+    this.lastZ = renderZ;
     const heroBlend=Math.hypot(facingX,facingZ)>6?1:blend;
     this.player.position.set(
-      this.player.position.x+(this.sim.x-this.player.position.x)*heroBlend,
+      this.player.position.x+(renderX-this.player.position.x)*heroBlend,
       moving ? Math.abs(Math.sin(this.visualTime * 12)) * 0.06 : 0,
-      this.player.position.z+(this.sim.z-this.player.position.z)*heroBlend,
+      this.player.position.z+(renderZ-this.player.position.z)*heroBlend,
     );
     const focus = new Vector3(this.player.position.x * 0.42, 0, this.player.position.z * 0.42);
     this.camera.position
@@ -359,13 +373,14 @@ export class World implements GameWorld {
         0.05,
         this.sim.destination.z,
       );
-    for (const entry of this.zoneLabels){const point=this.project(entry.x,entry.z,2.4);entry.label.style.transform=`translate(${point.x}px,${point.y}px) translate(-50%,-100%)`;}
+    if(updateLabels)for (const entry of this.zoneLabels){const point=this.project(entry.x,entry.z,2.4);entry.label.style.transform=`translate(${point.x}px,${point.y}px) translate(-50%,-100%)`;}
     for (const monster of this.sim.monsters) {
       const actor = this.monsters.get(monster.id)!;
       actor.setEnabled(monster.alive||monster.respawn>12.1);
       const monsterMoving=Math.hypot(monster.x-actor.position.x,monster.z-actor.position.z)>.015;
       if(monsterMoving)actor.rotation.y=Math.atan2(monster.x-actor.position.x,monster.z-actor.position.z);
-      this.models.animate(actor,monsterMoving,monster.alive?monster.hp:0,monster.windup>0,false,dt);
+      const projected=this.project(actor.position.x+(monster.x-actor.position.x)*blend,actor.position.z+(monster.z-actor.position.z)*blend,1.7),visible=projected.x>this.bounds.left-80&&projected.x<this.bounds.left+this.bounds.width+80&&projected.y>this.bounds.top-80&&projected.y<this.bounds.top+this.bounds.height+80;
+      this.models.animate(actor,monsterMoving,monster.alive?monster.hp:0,monster.windup>0,false,dt,visible);
       actor.position.set(
         actor.position.x+(monster.x-actor.position.x)*blend,
         Math.sin(this.visualTime * 2 + monster.id) * 0.05,
@@ -379,20 +394,19 @@ export class World implements GameWorld {
       warning.scaling.setAll(.9+.1*(1-monster.windup/species[monster.kind].windup));
       actor.rotation.z =
         monster.stun > 0 ? Math.sin(this.sim.time * 12) * 0.1 : 0;
-      const label = this.monsterLabels.get(monster.id)!;
-      label.querySelector("span")!.textContent =
-        `${species[monster.kind].boss?"BOSS · ":""}${monster.kind} · Lv ${species[monster.kind].level}${monster.stun > 0 ? " · Stunned" : monster.poison > 0 ? " · Poison" : monster.slow > 0 ? " · Slow" : ""}`;
-      const point = this.project(actor.position.x, actor.position.z, 1.7);
-      label.style.transform = `translate(${point.x}px,${point.y}px) translate(-50%,-100%)`;
-      label.style.display = monster.alive ? "" : "none";
-      label.classList.toggle("target", this.sim.target === monster.id);
-      label.querySelector("i")!.style.width =
-        `${(monster.hp / this.sim.monsterSpec(monster.kind).hp) * 100}%`;
+      if(updateLabels){const label=this.monsterLabels.get(monster.id)!;
+        const text=`${species[monster.kind].boss?"BOSS · ":""}${monster.kind} · Lv ${species[monster.kind].level}${monster.stun>0?" · Stunned":monster.poison>0?" · Poison":monster.slow>0?" · Slow":""}`;
+        if(this.labelNames.get(monster.id)!==text){this.labelSpans.get(monster.id)!.textContent=text;this.labelNames.set(monster.id,text);}
+        label.style.transform=`translate3d(${projected.x}px,${projected.y}px,0) translate(-50%,-100%)`;
+        const display=monster.alive&&visible?'':'none';if(label.style.display!==display)label.style.display=display;
+        label.classList.toggle('target',this.sim.target===monster.id);
+        const width=`${monster.hp/this.sim.monsterSpec(monster.kind).hp*100}%`,bar=this.labelBars.get(monster.id)!;if(bar.style.width!==width)bar.style.width=width;
+      }
     }
-    const point = this.project(this.player.position.x, this.player.position.z, 2.5);
+    if(updateLabels){const point = this.project(this.player.position.x, this.player.position.z, 2.5);
     this.playerLabel.style.transform = `translate(${point.x}px,${point.y}px) translate(-50%,-100%)`;
     this.playerLabel.querySelector("i")!.style.width =
-      `${(this.sim.save.hp / this.sim.maxHp) * 100}%`;
+      `${(this.sim.save.hp / this.sim.maxHp) * 100}%`;}
     while (this.loot.length > this.sim.loot.length) this.loot.pop()!.dispose();
     while (this.loot.length < this.sim.loot.length) {
       const mesh = this.factory.mesh({ kind: "gem", r: 0.16 }, 0xffdf8a);
@@ -433,9 +447,11 @@ export class World implements GameWorld {
       if(Math.hypot(dx,dz)>.015)peer.node.rotation.y=Math.atan2(dx,dz);
       this.models.animate(peer.node,Math.hypot(dx,dz)>.015,player.hp,false,false,dt);
       peer.node.position.x+=dx*blend;peer.node.position.z+=dz*blend;
-      const point=this.project(peer.node.position.x,peer.node.position.z,2.5);peer.label.style.transform=`translate(${point.x}px,${point.y}px) translate(-50%,-100%)`;
+      if(updateLabels){const point=this.project(peer.node.position.x,peer.node.position.z,2.5);peer.label.style.transform=`translate(${point.x}px,${point.y}px) translate(-50%,-100%)`;}
     }
+    this.engine.beginFrame();
     this.scene.render();
+    this.engine.endFrame();
   }
 
   dispose() {

@@ -1,5 +1,6 @@
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
+import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
 import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
 import { Scene } from "@babylonjs/core/scene";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
@@ -153,14 +154,14 @@ export class Primitives {
     return m;
   }
   ring(radius: number, color: number, parent?: TransformNode) {
-    const m = MeshBuilder.CreateTorus(
-      "selection-ring",
-      { diameter: radius * 2 - 0.05, thickness: 0.05, tessellation: 48 },
-      this.scene,
-    );
+    // Ground markers need a flat outline, not a 48×48 torus (2,401 vertices).
+    const m=new Mesh("selection-ring",this.scene),positions:number[]=[],normals:number[]=[],indices:number[]=[];
+    for(let i=0;i<=32;i++){const angle=i*Math.PI*2/32;for(const r of [radius,Math.max(.01,radius-.05)]){positions.push(Math.sin(angle)*r,0,Math.cos(angle)*r);normals.push(0,1,0);}if(i<32)indices.push(i*2,i*2+2,i*2+1,i*2+1,i*2+2,i*2+3);}
+    const data=new VertexData();data.positions=positions;data.normals=normals;data.indices=indices;data.applyToMesh(m);
     m.position.y = 0.045;
     m.parent = parent ?? null;
     m.material = this.material(color, true);
+    m.material.backFaceCulling=false;
     m.isPickable = false;
     return m;
   }
@@ -202,7 +203,11 @@ export class Primitives {
     for (const m of this.scene.meshes) {
       if (!(m instanceof Mesh) || m === exclude || (included && !included.has(m)) || m.metadata?.npcId) continue;
       m.computeWorldMatrix(true);
-      const mat = m.material as StandardMaterial;
+      const original=m.material as StandardMaterial;
+      const color=original.diffuseColor,colors:number[]=[];
+      for(let vertex=0;vertex<m.getTotalVertices();vertex++)colors.push(color.r,color.g,color.b,1);
+      m.setVerticesData("color",colors);
+      const mat=this.material(0xffffff,original.disableLighting,original.alpha);m.material=mat;
       const group = groups.get(mat) ?? [];
       group.push(m);
       groups.set(mat, group);
