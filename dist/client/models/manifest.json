@@ -1,0 +1,553 @@
+{
+  "swordsman": {
+    "file": "/models/swordsman.glb",
+    "bytes": 42612,
+    "type": "hero",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 552
+  },
+  "mage": {
+    "file": "/models/mage.glb",
+    "bytes": 44660,
+    "type": "hero",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 588
+  },
+  "archer": {
+    "file": "/models/archer.glb",
+    "bytes": 45444,
+    "type": "hero",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 600
+  },
+  "Dewdrop": {
+    "file": "/models/Dewdrop.glb",
+    "bytes": 25616,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 264
+  },
+  "Wildcap": {
+    "file": "/models/Wildcap.glb",
+    "bytes": 41612,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 505
+  },
+  "Leafling": {
+    "file": "/models/Leafling.glb",
+    "bytes": 36216,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 446
+  },
+  "Sunbee": {
+    "file": "/models/Sunbee.glb",
+    "bytes": 42368,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 552
+  },
+  "RibbonHare": {
+    "file": "/models/RibbonHare.glb",
+    "bytes": 48564,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 660
+  },
+  "Applesprout": {
+    "file": "/models/Applesprout.glb",
+    "bytes": 36216,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 446
+  },
+  "AmberBoar": {
+    "file": "/models/AmberBoar.glb",
+    "bytes": 48564,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 660
+  },
+  "Honeybug": {
+    "file": "/models/Honeybug.glb",
+    "bytes": 42368,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 552
+  },
+  "Sporeguard": {
+    "file": "/models/Sporeguard.glb",
+    "bytes": 41612,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 505
+  },
+  "OrchardStag": {
+    "file": "/models/OrchardStag.glb",
+    "bytes": 48564,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 660
+  },
+  "GlowWisp": {
+    "file": "/models/GlowWisp.glb",
+    "bytes": 32984,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 390
+  },
+  "MarshTurtle": {
+    "file": "/models/MarshTurtle.glb",
+    "bytes": 27124,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 288
+  },
+  "ReedSprite": {
+    "file": "/models/ReedSprite.glb",
+    "bytes": 36216,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 446
+  },
+  "PuddleJelly": {
+    "file": "/models/PuddleJelly.glb",
+    "bytes": 25616,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 264
+  },
+  "CrystalMoth": {
+    "file": "/models/CrystalMoth.glb",
+    "bytes": 42368,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 552
+  },
+  "FrostCub": {
+    "file": "/models/FrostCub.glb",
+    "bytes": 48564,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 660
+  },
+  "IceGolem": {
+    "file": "/models/IceGolem.glb",
+    "bytes": 27124,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 288
+  },
+  "Snowcap": {
+    "file": "/models/Snowcap.glb",
+    "bytes": 41612,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 505
+  },
+  "PeakOwl": {
+    "file": "/models/PeakOwl.glb",
+    "bytes": 32984,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 390
+  },
+  "FrostWolf": {
+    "file": "/models/FrostWolf.glb",
+    "bytes": 48564,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 660
+  },
+  "Rootling": {
+    "file": "/models/Rootling.glb",
+    "bytes": 36216,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 446
+  },
+  "RuinSentinel": {
+    "file": "/models/RuinSentinel.glb",
+    "bytes": 27124,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 288
+  },
+  "ShadeWisp": {
+    "file": "/models/ShadeWisp.glb",
+    "bytes": 32984,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 390
+  },
+  "StoneWarden": {
+    "file": "/models/StoneWarden.glb",
+    "bytes": 27124,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 288
+  },
+  "VineBeast": {
+    "file": "/models/VineBeast.glb",
+    "bytes": 48564,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 660
+  },
+  "RootheartGuardian": {
+    "file": "/models/RootheartGuardian.glb",
+    "bytes": 29848,
+    "type": "monster",
+    "joints": 7,
+    "clips": [
+      "idle",
+      "walk",
+      "attack",
+      "skill",
+      "hurt",
+      "death"
+    ],
+    "origin": "original project-authored procedural mesh and rig",
+    "units": "meters",
+    "forward": "+Z",
+    "materials": 1,
+    "vertices": 332
+  }
+}

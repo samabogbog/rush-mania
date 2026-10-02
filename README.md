@@ -39,17 +39,30 @@ py -m http.server 8080 --directory dist/client
 - ทุกเลเวลได้รับแต้มสถานะ 3 แต้ม; STR เพิ่มดาเมจ, VIT เพิ่ม HP, AGI เพิ่มความเร็วโจมตี
 - Auto เปิดการล่ามอนสเตอร์ต่อเนื่อง ยังคงได้รับดาเมจและต้องใช้ยาเอง
 
-## ขอบเขตต้นแบบ
+## รุ่น Online alpha 0.2
 
-- ตัวละครหลัก 1 ตัว, แผนที่ Moonlit Glade 1 แผนที่
-- มอนสเตอร์ 15 ตัวจาก 3 ชนิด: Dewdrop, Wildcap, Leafling; เกิดใหม่หลังตาย 13 วินาที
-- ต่อสู้, สกิลและ cooldown, ยา, EXP/level, แต้มสถานะ, ของดรอป, เก็บของ, ร้านค้า, ตีบวกดาบ, เควสเริ่มต้น
-- บันทึกความคืบหน้าด้วย localStorage ในเบราว์เซอร์ทุก 5 วินาทีและเมื่อสถานะเปลี่ยน
-- เมนูเปิดแล้วพักเกม; หาก HP หมดจะกลับจุดเริ่มและเสียค่าฟื้นฟู 15 z
-- โหมด **Online alpha** มีบัญชี Sites, server save, shared monsters, ผู้เล่นอื่นและ world chat; ยังไม่มี party, player trade, marketplace หรือเนื้อหาครบ B+
-- โหมด **Practice** เล่นเดี่ยวและใช้เซฟในเครื่องเดิม
-- แชตในหน้าจอเป็นบันทึกเหตุการณ์และโน้ตเฉพาะเครื่องเท่านั้น
-- เซฟ Practice ขึ้นกับ origin ของเว็บ; online character ผูกกับตัวตน Sites และเก็บบนเซิร์ฟเวอร์
+- 3 อาชีพ, อาชีพละ 10 สกิล ปลดล็อกทุก 10 เลเวลจนถึง 100; ดาเมจใช้ `ATK * 100/(DEF+100)` พร้อม variance/critical
+- เมือง Sprout Town, พื้นที่ฟาร์ม Glade/Orchard/Marsh/Frost และดันเจียน Rootheart Ruins; มอนสเตอร์ 26 ชนิดพร้อมท่าเตือน circle/line/cone
+- ตัวละคร 3 ตัวและมอนสเตอร์ 26 ชนิดเป็น GLB ที่สร้างเอง มีโครงกระดูก 7 จุด และท่า idle/walk/attack/skill/hurt/death; อุปกรณ์เพิ่มชิ้นส่วนบนตัวละคร
+- อุปกรณ์ 18 แบบ, คราฟต์ด้วยวัสดุตามพื้นที่, สวมใส่ 3 ช่อง, ตีบวกแยกตามไอเท็ม, เควส 6 ชุดและ tutorial ตามการเล่น
+- Online ใช้ตัวตน Sites และเซฟ D1; เซิร์ฟเวอร์ตัดสินการเดิน ดาเมจ การดรอป เงิน ไอเท็ม และธุรกรรม
+- Party/Friends: เชิญและยอมรับ, EXP/เงินแบ่งเท่ากัน, วัสดุผลัดกันรับ; ดันเจียนเป็น instance ของปาร์ตี้ 2–4 คน Lv40+
+- สกิล heal/guard/fury ช่วยเพื่อนใกล้ตัว; นักดาบใช้ guard ดึงความสนใจมอนสเตอร์, นักเวทคุมพื้นที่, นักธนูทำดาเมจระยะไกล/poison
+- แลกไอเท็ม/เงินด้วยการยืนยันสองฝ่าย; เปลี่ยนข้อเสนอจะยกเลิกการยืนยัน; ตลาดเก็บของไว้กับเซิร์ฟเวอร์และคิดค่าขาย 10%
+- กระเป๋ากรอง/เรียงได้, เปรียบเทียบอุปกรณ์เมื่อชี้หรือเลือก, ลากสกิลลง hotbar; desktop/mobile controls
+- เพลงสังเคราะห์ต่างกันตามพื้นที่และเสียง combat/skills/monster/UI/steps; ปรับกราฟิก Auto/High/Low และแสดง FPS/p95 ที่วัดจริง
+- Settings → Realm operations สำหรับเจ้าของ: report/ledger/progression, สำรอง 20 ชุดล่าสุด, export, maintenance, restore, monster tuning; ผู้เล่นส่ง bug report ได้
+- Practice เก็บเซฟ localStorage แยกจาก online; เว็บ owner-private ยังคงสิทธิ์เดิม ผู้เล่นอื่นต้องได้รับสิทธิ์ Sites ก่อนจึงเข้าออนไลน์ได้
+
+นี่เป็น alpha ที่มีระบบหลักสำหรับเป้าหมาย B+ ไม่ใช่การรับรองคุณภาพ B+ แล้ว ดูงานทดสอบและข้อจำกัดที่ `docs/BPLUS-IMPLEMENTATION.md` ก่อนเปิดรับผู้เล่นจริง
+
+## เดินทางและเล่นกับเพื่อน
+
+เดินไป portal ทางเหนือ (0,-11) แล้วเปิด Map เลือกพื้นที่; พื้นที่ฟาร์มถัดไปต้อง Lv20/40/65 ตามลำดับ เปิด Party เพื่อสร้างปาร์ตี้และเชิญผู้เล่นที่อยู่ในพื้นที่เดียวกัน ผู้รับกด Join จากหน้าต่าง Party แล้วสมาชิกแต่ละคนเข้าดันเจียนทาง portal เมื่อครบอย่างน้อย 2 คน Lv40+
+
+Forge แสดงสูตร วัสดุที่มี และเงื่อนไขเลเวล; Bag แสดงแหล่งดรอปและปุ่มสวมใส่ Journal เปิดจาก handbook หรือคุยกับ NPC guide; Party และ Market อยู่เหนือกระเป๋าเงิน
+
+ทดสอบ local online ด้วย Node.js 24: เปิด `npm run dev:server` อีก terminal แล้วเข้า `http://localhost:5173/?online=1` ตัวจำลองบัญชี local ไม่อยู่ใน production Worker
 
 ## ภาพอ้างอิง
 
@@ -142,4 +155,4 @@ npm run dev
 
 Build output เปลี่ยนเป็น `dist/client/` และ `dist/server/index.js` (Worker ESM default.fetch) ส่วน API ไม่ใช่ static HTML ต้องทดสอบด้วย local API หรือ Sites; static preview ใช้เพื่อ Practice เท่านั้น
 
-ดูข้อกำหนดครบ 12 ส่วน ลำดับงาน และเกณฑ์เปิด B+ ใน [docs/BPLUS-PLAN.md](docs/BPLUS-PLAN.md) รุ่นนี้ยังไม่ใช่เกม B+ ที่เนื้อหา/social/economy/rigged-animation ครบแล้ว
+ดูข้อกำหนดครบ 12 ส่วน ลำดับงาน และเกณฑ์เปิด B+ ใน [docs/BPLUS-PLAN.md](docs/BPLUS-PLAN.md) รุ่น 0.2 เพิ่มระบบโลก/social/economy/rigged-animation แล้ว แต่ยังต้องผ่าน playtest, balance และ production/device benchmarks ก่อนรับรองระดับ B+

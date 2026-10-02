@@ -166,6 +166,9 @@ export class Primitives {
   }
   /** Bake the procedural actor's palette into vertex colors: one draw per actor. */
   mergeActor(actor: TransformNode) {
+    const position=actor.position.clone(),rotation=actor.rotation.clone(),scaling=actor.scaling.clone(),quaternion=actor.rotationQuaternion?.clone()||null,parent=actor.parent;
+    actor.parent=null;actor.position.setAll(0);actor.rotation.setAll(0);actor.scaling.setAll(1);actor.rotationQuaternion=null;
+    actor.computeWorldMatrix(true);
     const meshes = actor
       .getChildMeshes()
       .filter((mesh): mesh is Mesh => mesh instanceof Mesh);
@@ -190,12 +193,14 @@ export class Primitives {
       merged.parent = actor;
       merged.receiveShadows = true;
     }
+    actor.parent=parent;actor.position.copyFrom(position);actor.rotation.copyFrom(rotation);actor.scaling.copyFrom(scaling);actor.rotationQuaternion=quaternion;
+    actor.computeWorldMatrix(true);
   }
 
-  mergeStatic(exclude: Mesh) {
+  mergeStatic(exclude: Mesh, included?:Set<Mesh>) {
     const groups = new Map<StandardMaterial, Mesh[]>();
     for (const m of this.scene.meshes) {
-      if (!(m instanceof Mesh) || m === exclude) continue;
+      if (!(m instanceof Mesh) || m === exclude || (included && !included.has(m)) || m.metadata?.npcId) continue;
       m.computeWorldMatrix(true);
       const mat = m.material as StandardMaterial;
       const group = groups.get(mat) ?? [];

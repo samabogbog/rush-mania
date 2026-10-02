@@ -1,3 +1,5 @@
+import { ModelLibrary } from "./render/model-library";
+import { zones, type ZoneId } from "./game/content";
 import { classes, type ClassId } from "./game/classes";
 import "@babylonjs/core/Culling/ray";
 import { Camera } from "@babylonjs/core/Cameras/camera";
@@ -13,11 +15,12 @@ import { Scene } from "@babylonjs/core/scene";
 import { SceneInstrumentation } from "@babylonjs/core/Instrumentation/sceneInstrumentation";
 import { ShadowGenerator } from "@babylonjs/core/Lights/Shadows/shadowGenerator";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
+import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { Simulation, species } from "./simulation";
 import { Primitives } from "./render/primitives";
 import {
-  buildMap,
+  buildZoneMap,
   buildPlayer,
   creature,
   type Obstacle,
@@ -30,10 +33,17 @@ export class World implements GameWorld {
   readonly scene: Scene;
   readonly camera: FreeCamera;
   private readonly factory: Primitives;
+  private readonly models: ModelLibrary;
+  private outfitKey="";private outfit:TransformNode[]=[];
+  private readonly shadows: ShadowGenerator;
+  private currentZone: ZoneId | null=null;
+  private mapMeshes: Mesh[]=[];
+  private mapNodes: TransformNode[]=[];
+  private zoneLabels: {label:HTMLDivElement;x:number;z:number}[]=[];
   private readonly instrumentation: SceneInstrumentation;
   private readonly player: TransformNode;
   private readonly heroModels = new Map<ClassId, TransformNode>();
-  private readonly warnings = new Map<number, Mesh>();
+  private readonly warnings = new Map<number, {circle:Mesh;line:Mesh;cone:Mesh}>();
   private readonly monsters = new Map<number, TransformNode>();
   private readonly monsterLabels = new Map<number, HTMLDivElement>();
   private readonly playerLabel: HTMLDivElement;
@@ -52,6 +62,8 @@ export class World implements GameWorld {
   private visualTime=0;
   private lastFrame = performance.now();
   private frameTimes: number[] = [];
+  quality: "auto"|"high"|"low"=(localStorage.getItem("mossvale-quality") as "auto"|"high"|"low")||"auto";
+  private autoReduced=false;
   angle = 0;
   zoom = 1;
   blocking: Obstacle[] = [];
@@ -97,11 +109,12 @@ export class World implements GameWorld {
     sun.orthoBottom = -30;
     sun.shadowMinZ = 1;
     sun.shadowMaxZ = 80;
-    const shadows = new ShadowGenerator(1024, sun);
+    const shadows = this.shadows = new ShadowGenerator(1024, sun);
     shadows.usePercentageCloserFiltering = true;
     shadows.bias = 0.001;
     shadows.normalBias = 0.05;
     this.factory = new Primitives(this.scene);
+    this.models = new ModelLibrary(this.scene);
     this.ground = this.factory.mesh(
       { kind: "plane", w: 80, h: 80 },
       0x79bc64,
@@ -110,15 +123,7 @@ export class World implements GameWorld {
       0,
     );
     this.ground.rotation.x = -Math.PI / 2;
-    buildMap(this.factory, this.blocking);
-    sim.obstacles = this.blocking;
-    this.factory.mergeStatic(this.ground);
-    for (const mesh of this.scene.meshes)
-      if (
-        mesh !== this.ground &&
-        mesh.getBoundingInfo().boundingBox.extendSizeWorld.y > 0.1
-      )
-        shadows.addShadowCaster(mesh);
+    this.rebuildMap();
     this.player = this.factory.group("hero");
     for (const id of Object.keys(classes) as ClassId[]) {
       const model = this.factory.group(`hero-${id}`);
@@ -127,27 +132,14 @@ export class World implements GameWorld {
       model.parent = this.player;
       model.setEnabled(id === sim.save.job);
       this.heroModels.set(id, model);
+      this.models.attach(id,model,root=>{for(const mesh of root.getChildMeshes())this.shadows.addShadowCaster(mesh);});
       for (const mesh of model.getChildMeshes()) shadows.addShadowCaster(mesh);
     }
     this.selection = this.factory.ring(0.94, 0xffe78c);
     this.factory.ring(0.72, 0x91f6ca, this.player);
     this.destination = this.factory.group("destination");
     this.factory.ring(0.33, 0xb0ffdb, this.destination);
-    for (const monster of sim.monsters) {
-      const actor = creature(this.factory, monster.kind);
-      this.factory.mergeActor(actor);
-      for (const mesh of actor.getChildMeshes())
-        mesh.metadata = { monsterId: monster.id };
-      this.monsters.set(monster.id, actor);
-      this.warnings.set(monster.id, this.factory.ring(2.2, 0xff564f));
-      for (const mesh of actor.getChildMeshes()) shadows.addShadowCaster(mesh);
-      const label = document.createElement("div");
-      label.className = "world-label monster-label";
-      label.dataset.id = String(monster.id);
-      label.innerHTML = `<span>${monster.kind}</span><div><i></i></div>`;
-      labels.append(label);
-      this.monsterLabels.set(monster.id, label);
-    }
+    this.rebuildMonsters();
     this.playerLabel = document.createElement("div");
     this.playerLabel.id = "player-label";
     this.playerLabel.className = "world-label player-label";
@@ -183,13 +175,69 @@ export class World implements GameWorld {
       sim.paused = this.pausedBeforeLoss;
       sim.onEvent("Graphics restored. Your adventure is ready.");
     });
+    this.setQuality(this.quality);
     this.resize();
     this.update(0);
   }
 
+  private rebuildMap() {
+    for(const mesh of this.mapMeshes){this.shadows.removeShadowCaster(mesh);mesh.dispose();}
+    for(const node of this.mapNodes)node.dispose();
+    for(const entry of this.zoneLabels)entry.label.remove();this.zoneLabels=[];
+    const oldMeshes=new Set(this.scene.meshes),oldNodes=new Set(this.scene.transformNodes);
+    this.blocking=[];this.currentZone=this.sim.save.zone;
+    this.ground.material=this.factory.material(zones[this.currentZone].ground);
+    buildZoneMap(this.factory,this.blocking,this.currentZone);this.sim.obstacles=this.blocking;
+    const included=new Set(this.scene.meshes.filter((m):m is Mesh=>m instanceof Mesh&&!oldMeshes.has(m)));
+    this.factory.mergeStatic(this.ground,included);
+    for(const npc of zones[this.currentZone].npcs) {
+      const node=this.factory.group('npc-'+npc.id);buildPlayer(this.factory,node,npc.panel==='forge'?'swordsman':npc.panel==='journal'?'mage':'archer');this.factory.mergeActor(node);node.position.set(npc.x,0,npc.z);
+      for(const mesh of node.getChildMeshes())mesh.metadata={npcId:npc.id};
+      const label=document.createElement('div');label.className='world-label npc-label';label.textContent=npc.name;this.labels.append(label);this.zoneLabels.push({label,x:npc.x,z:npc.z});
+    }
+    const portalLabel=document.createElement('div');portalLabel.className='world-label npc-label';portalLabel.textContent='NORTH PORTAL · Open Map to travel';this.labels.append(portalLabel);this.zoneLabels.push({label:portalLabel,x:0,z:-12.5});
+    this.mapMeshes=this.scene.meshes.filter((m):m is Mesh=>m instanceof Mesh&&!oldMeshes.has(m));
+    this.mapNodes=this.scene.transformNodes.filter(n=>!oldNodes.has(n));
+    for(const mesh of this.mapMeshes)if(mesh.getBoundingInfo().boundingBox.extendSizeWorld.y>.1)this.shadows.addShadowCaster(mesh);
+  }
+  private rebuildMonsters() {
+    for(const node of this.monsters.values()){for(const mesh of node.getChildMeshes())this.shadows.removeShadowCaster(mesh);node.dispose();}
+    for(const warning of this.warnings.values())Object.values(warning).forEach(m=>m.dispose());
+    for(const label of this.monsterLabels.values())label.remove();
+    this.monsters.clear();this.warnings.clear();this.monsterLabels.clear();
+    for(const monster of this.sim.monsters) {
+      const actor=creature(this.factory,monster.kind);this.factory.mergeActor(actor);
+      for(const mesh of actor.getChildMeshes()){mesh.metadata={monsterId:monster.id};this.shadows.addShadowCaster(mesh);}
+      this.monsters.set(monster.id,actor);
+      this.models.attach(monster.kind,actor,root=>{for(const mesh of root.getChildMeshes()){mesh.metadata={monsterId:monster.id};this.shadows.addShadowCaster(mesh);}});
+      const spec=species[monster.kind],range=spec.boss?6:spec.range;
+      const circle=this.factory.ring(spec.boss?3.5:range,0xff564f),line=this.factory.mesh({kind:'plane',w:1.8,h:range},0xff514f),cone=new Mesh('cone-warning',this.scene);
+      line.rotation.x=-Math.PI/2;line.material=this.factory.material(0xff514f,true,.3);line.isPickable=false;
+      const positions=[0,0,0],indices:number[]=[];for(let i=0;i<=24;i++){const angle=-.86+1.72*i/24;positions.push(Math.sin(angle)*(spec.boss?4:range),0,Math.cos(angle)*(spec.boss?4:range));if(i<24)indices.push(0,i+2,i+1);}
+      const data=new VertexData();data.positions=positions;data.indices=indices;data.normals=[];VertexData.ComputeNormals(positions,indices,data.normals);data.applyToMesh(cone);cone.material=this.factory.material(0xff514f,true,.3);cone.isPickable=false;
+      this.warnings.set(monster.id,{circle,line,cone});
+      const label=document.createElement('div');label.className='world-label monster-label';label.dataset.id=String(monster.id);label.innerHTML='<span></span><div><i></i></div>';this.labels.append(label);this.monsterLabels.set(monster.id,label);
+    }
+  }
+
+  setQuality(quality:"auto"|"high"|"low") {this.quality=quality;this.autoReduced=false;localStorage.setItem("mossvale-quality",quality);this.scene.shadowsEnabled=quality!=="low";this.engine.setHardwareScalingLevel(1/Math.min(devicePixelRatio,quality==="low"?.8:1.7));this.resize();}
+  private updateOutfit() {
+    const model=this.heroModels.get(this.sim.save.job)!,nodes=model.getChildTransformNodes(false),spine=nodes.find(n=>n.name.endsWith('-spine')),hand=nodes.find(n=>n.name.endsWith('-right-hand'));
+    if(!spine||!hand)return;
+    const key=this.sim.save.job+spine.uniqueId+JSON.stringify(this.sim.save.equipped)+this.sim.refinement;if(key===this.outfitKey)return;this.outfitKey=key;
+    this.outfit.splice(0).forEach(n=>n.dispose());
+    const equipped=(slot:string)=>this.sim.save.items.find(i=>i.id===this.sim.save.equipped[slot as keyof typeof this.sim.save.equipped]);
+    const armor=equipped('armor'),accessory=equipped('accessory'),weapon=equipped('weapon');
+    if(armor){const coat=this.factory.group('equipped-armor');coat.parent=spine;this.outfit.push(coat);const color=armor.gearId==='root-plate'?0x6ad074:armor.gearId?.includes('wisp')||armor.gearId?.includes('shade')?0xab77e8:armor.gearId==='shell-vest'?0x50cdcc:0xf8b857;
+      this.factory.box(.66,.48,.12,color,0,-.02,.25,coat);this.factory.ball(.12,0xffe477,0,.1,.33,coat);}
+    if(accessory){const charm=this.factory.group('equipped-charm');charm.parent=spine;this.outfit.push(charm);this.factory.mesh({kind:'gem',r:.1},accessory.gearId==='root-signet'?0xd49bf7:0x99ef6a,0,-.21,.35,charm);}
+    if(weapon||this.sim.refinement){const rune=this.factory.group('equipped-weapon-rune');rune.parent=hand;this.outfit.push(rune);const gem=this.factory.mesh({kind:'gem',r:.12+Math.min(20,this.sim.refinement)*.004},weapon?.gearId?.includes('frost')?0x7eefff:0xffd55f,0,.25,0,rune);gem.material=this.factory.material(0xffd55f,true);}
+    for(const node of this.outfit)for(const mesh of node.getChildMeshes()){mesh.isPickable=false;this.shadows.addShadowCaster(mesh);}
+  }
   get diagnostics() {
     return {
       engine: "Babylon.js",
+      quality:this.quality,autoReduced:this.autoReduced,riggedActors:this.models.active,modelErrors:this.models.errors,
       drawCalls: this.instrumentation.drawCallsCounter.current,
       fps: this.frameTimes.length ? 1000 / (this.frameTimes.reduce((a,b)=>a+b,0) / this.frameTimes.length) : 0,
       frameP95: [...this.frameTimes].sort((a,b)=>a-b)[Math.max(0, Math.ceil(this.frameTimes.length * .95) - 1)] || 0,
@@ -204,11 +252,13 @@ export class World implements GameWorld {
       event.clientY - rect.top,
       (mesh) =>
         mesh === this.ground ||
-        (mesh.isEnabled() && mesh.metadata?.monsterId !== undefined),
+        (mesh.isEnabled() && (mesh.metadata?.monsterId !== undefined || mesh.metadata?.npcId !== undefined)),
       false,
       this.camera,
     );
     if (!hit?.hit) return;
+    const npc=hit.pickedMesh?.metadata?.npcId;
+    if(npc){this.sim.interact(npc);return;}
     const id = hit.pickedMesh?.metadata?.monsterId;
     if (id !== undefined && this.sim.monsters.find((m) => m.id === id)?.alive) {
       this.sim.select(id);
@@ -261,8 +311,10 @@ export class World implements GameWorld {
 
   update(dt: number) {
     if (!this.ready || this.disposed) return;
+    if(this.currentZone!==this.sim.save.zone){this.rebuildMap();this.rebuildMonsters();this.loot.splice(0).forEach(m=>m.dispose());}
     const frameNow=performance.now();
     this.frameTimes.push(frameNow-this.lastFrame);this.lastFrame=frameNow;if(this.frameTimes.length>120)this.frameTimes.shift();
+    if(this.quality==="auto"&&!this.autoReduced&&this.frameTimes.length>=12&&this.frameTimes.slice(-10).reduce((a,b)=>a+b,0)/10>80){this.scene.shadowsEnabled=false;this.engine.setHardwareScalingLevel(1/.8);this.autoReduced=true;this.resize();}
     this.visualTime+=dt;
     const facingX=this.sim.x-(this.sim.online?this.player.position.x:this.lastX);
     const facingZ=this.sim.z-(this.sim.online?this.player.position.z:this.lastZ);
@@ -274,7 +326,8 @@ export class World implements GameWorld {
         facingZ,
       );
     for (const [id, model] of this.heroModels)
-      model.setEnabled(id === this.sim.save.job);
+      {model.setEnabled(id === this.sim.save.job);if(id===this.sim.save.job)this.models.animate(model,moving,this.sim.save.hp,this.sim.actionTime>0,!!this.sim.cast,dt);}
+    this.updateOutfit();
     this.player.rotation.z =
       this.sim.actionTime > 0 ? Math.sin(this.sim.actionTime * 18) * 0.12 : 0;
     this.player.scaling.setAll(this.sim.hurtTime > 0 ? 0.96 : 1);
@@ -306,29 +359,35 @@ export class World implements GameWorld {
         0.05,
         this.sim.destination.z,
       );
+    for (const entry of this.zoneLabels){const point=this.project(entry.x,entry.z,2.4);entry.label.style.transform=`translate(${point.x}px,${point.y}px) translate(-50%,-100%)`;}
     for (const monster of this.sim.monsters) {
       const actor = this.monsters.get(monster.id)!;
-      actor.setEnabled(monster.alive);
+      actor.setEnabled(monster.alive||monster.respawn>12.1);
+      const monsterMoving=Math.hypot(monster.x-actor.position.x,monster.z-actor.position.z)>.015;
+      if(monsterMoving)actor.rotation.y=Math.atan2(monster.x-actor.position.x,monster.z-actor.position.z);
+      this.models.animate(actor,monsterMoving,monster.alive?monster.hp:0,monster.windup>0,false,dt);
       actor.position.set(
         actor.position.x+(monster.x-actor.position.x)*blend,
         Math.sin(this.visualTime * 2 + monster.id) * 0.05,
         actor.position.z+(monster.z-actor.position.z)*blend,
       );
-      const warning = this.warnings.get(monster.id)!;
-      warning.setEnabled(monster.alive && monster.windup > 0);
-      warning.position.set(monster.x, 0.05, monster.z);
-      warning.scaling.setAll(0.8 + 0.2 * (1 - monster.windup / 0.65));
+      const warnings=this.warnings.get(monster.id)!,shape=monster.shape||species[monster.kind].shape;
+      for(const [kind,mesh] of Object.entries(warnings))mesh.setEnabled(monster.alive&&monster.windup>0&&kind===shape);
+      const warning=warnings[shape],range=species[monster.kind].boss?(shape==='line'?6:shape==='cone'?4:3.5):species[monster.kind].range;
+      warning.position.set(monster.x+(shape==='line'?(monster.facingX??0)*range/2:0),.05,monster.z+(shape==='line'?(monster.facingZ??1)*range/2:0));
+      warning.rotation.y=shape==='circle'?0:Math.atan2(monster.facingX??0,monster.facingZ??1);
+      warning.scaling.setAll(.9+.1*(1-monster.windup/species[monster.kind].windup));
       actor.rotation.z =
         monster.stun > 0 ? Math.sin(this.sim.time * 12) * 0.1 : 0;
       const label = this.monsterLabels.get(monster.id)!;
       label.querySelector("span")!.textContent =
-        `${monster.kind}${monster.stun > 0 ? " · Stunned" : monster.poison > 0 ? " · Poison" : monster.slow > 0 ? " · Slow" : ""}`;
+        `${species[monster.kind].boss?"BOSS · ":""}${monster.kind} · Lv ${species[monster.kind].level}${monster.stun > 0 ? " · Stunned" : monster.poison > 0 ? " · Poison" : monster.slow > 0 ? " · Slow" : ""}`;
       const point = this.project(actor.position.x, actor.position.z, 1.7);
       label.style.transform = `translate(${point.x}px,${point.y}px) translate(-50%,-100%)`;
       label.style.display = monster.alive ? "" : "none";
       label.classList.toggle("target", this.sim.target === monster.id);
       label.querySelector("i")!.style.width =
-        `${(monster.hp / species[monster.kind].hp) * 100}%`;
+        `${(monster.hp / this.sim.monsterSpec(monster.kind).hp) * 100}%`;
     }
     const point = this.project(this.player.position.x, this.player.position.z, 2.5);
     this.playerLabel.style.transform = `translate(${point.x}px,${point.y}px) translate(-50%,-100%)`;
@@ -364,6 +423,7 @@ export class World implements GameWorld {
       let peer=this.peers.get(player.id);
       if(!peer) {
         const node=this.factory.group('other-adventurer');node.position.set(player.x,0,player.z);buildPlayer(this.factory,node,player.job);this.factory.mergeActor(node);
+        this.models.attach(player.job,node,root=>{for(const mesh of root.getChildMeshes())mesh.isPickable=false;});
         for(const mesh of node.getChildMeshes())mesh.isPickable=false;
         const label=document.createElement('div');label.className='world-label player-label peer-label';
         const name=document.createElement('span');name.textContent=player.name;label.append(name);this.labels.append(label);
@@ -371,6 +431,7 @@ export class World implements GameWorld {
       }
       const dx=player.x-peer.node.position.x,dz=player.z-peer.node.position.z;
       if(Math.hypot(dx,dz)>.015)peer.node.rotation.y=Math.atan2(dx,dz);
+      this.models.animate(peer.node,Math.hypot(dx,dz)>.015,player.hp,false,false,dt);
       peer.node.position.x+=dx*blend;peer.node.position.z+=dz*blend;
       const point=this.project(peer.node.position.x,peer.node.position.z,2.5);peer.label.style.transform=`translate(${point.x}px,${point.y}px) translate(-50%,-100%)`;
     }
@@ -382,10 +443,12 @@ export class World implements GameWorld {
     this.disposed = true;
     this.events.abort();
     this.instrumentation.dispose();
+    this.models.dispose();
     this.scene.dispose();
     this.engine.dispose();
     for (const label of this.monsterLabels.values()) label.remove();
     this.playerLabel.remove();
     for(const peer of this.peers.values())peer.label.remove();
+    for(const entry of this.zoneLabels)entry.label.remove();
   }
 }

@@ -21,3 +21,7 @@ Realm aggregate is bounded to 128 registered characters and 2 MB stored JSON. Re
 Only the active simulation advances monsters. Offline characters retain their server save; reconnect after 10 sec clears old destination/target/auto. One account has one active command session; use separate Sites accounts for multiplayer. Sites remains owner-private until the owner chooses to share access.
 
 Menu windows do not pause the server. Players should retreat to safety before browsing their bag. Network delay can affect the view; server position, range and windup checks determine damage.
+
+## Alpha 0.2 update (2026-10-02)
+
+Added rooms/worlds/rigged actors/equipment, parties/friends and shared rewards, trade/market escrow and operations maintenance/restore/tuning. Current evidence and open production/hardware gates are recorded in BPLUS-IMPLEMENTATION.md. Total verification: 22 rule/API tests and 8 browser scenarios passed across isolated runs. The new online party UI test also completed a mutual gold trade and sold an escrowed potion, verifying final server balances and zero page errors. Production audience remains unchanged.

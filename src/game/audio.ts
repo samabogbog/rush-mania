@@ -16,7 +16,7 @@ export class FeedbackAudio {
     localStorage.setItem("mossvale-sfx", this.enabled ? "on" : "off");
     if (this.enabled) this.unlock();
   }
-  play(kind: "hit" | "magic" | "arrow" | "hurt" | "level" | "ui" | "step") {
+  play(kind: "hit" | "magic" | "arrow" | "hurt" | "level" | "ui" | "step" | "monster") {
     const ctx = this.context;
     if (!this.enabled || !ctx || ctx.state !== "running") return;
     const bank = {
@@ -26,6 +26,7 @@ export class FeedbackAudio {
       hurt: [140, 60, 0.16, "sawtooth"],
       level: [500, 1000, 0.35, "sine"],
       ui: [700, 900, 0.06, "sine"],
+      monster:[180,90,0.24,"triangle"],
       step: [95, 65, 0.04, "triangle"],
     } as const;
     const [start, end, duration, type] = bank[kind];

@@ -1,4 +1,6 @@
 import { Simulation } from '../simulation';
+import type { ZoneId } from './content';
+import type { GearSlot } from './equipment';
 import type { ClassId } from './classes';
 import { actorFields, type Command, type Snapshot } from '../../server/protocol';
 export class NetworkSimulation extends Simulation {
@@ -9,16 +11,17 @@ export class NetworkSimulation extends Simulation {
   private eventCursor=0; private chatSeen=new Set<string>(); private retry=0; private stopped=false;
   constructor(snapshot:Snapshot) {super(Math.random,snapshot.player.actor.save,null);this.accept(snapshot);this.session=snapshot.player.session.id;this.sequence=snapshot.player.session.sequence;this.schedule(200);}
   private accept(snapshot:Snapshot) {
-    const before=JSON.stringify([this.save.job,this.save.stats,this.save.points,this.save.weapon,this.save.hotbar,this.save.items,this.save.gold]);
+    const before=JSON.stringify([this.save.job,this.save.stats,this.save.points,this.save.weapon,this.save.hotbar,this.save.items,this.save.gold,this.save.equipped,this.save.zone,this.save.quests]);
     for(const field of actorFields) (this as unknown as Record<string,unknown>)[field]=snapshot.player.actor[field];
-    this.admin=snapshot.admin===true;
+    const socialChanged=JSON.stringify([this.community,this.remotePlayers.map(p=>p.id)])!==JSON.stringify([snapshot.community,snapshot.peers.map(p=>p.id)]);this.community=snapshot.community;
+    this.balance=snapshot.balance||{};this.admin=snapshot.admin===true;
     this.monsters=snapshot.monsters;this.remotePlayers=snapshot.peers;
     this.queue=this.queue.filter(c=>Number(c.id.split(':')[1])>snapshot.player.session.sequence);
     for(const event of snapshot.player.events)if(event.id>this.eventCursor){this.eventCursor=event.id;this.onEvent(event.text,event.type,event.x,event.z)}
     for(const chat of snapshot.chat)if(!this.chatSeen.has(chat.id)){this.chatSeen.add(chat.id);this.onEvent(`${chat.from}: ${chat.text}`,'chat')}
     if(this.chatSeen.size>120)this.chatSeen=new Set(snapshot.chat.map(m=>m.id));
     this.connection='Online · server saved'; this.retry=0;
-    if(before!==JSON.stringify([this.save.job,this.save.stats,this.save.points,this.save.weapon,this.save.hotbar,this.save.items,this.save.gold]))this.onEvent('', 'sync');
+    if(socialChanged||before!==JSON.stringify([this.save.job,this.save.stats,this.save.points,this.save.weapon,this.save.hotbar,this.save.items,this.save.gold,this.save.equipped,this.save.zone,this.save.quests]))this.onEvent('', 'sync');
   }
   private send(type:string,...args:unknown[]) { if(this.stopped)return; if(this.queue.length>=32){this.onEvent('Waiting for connection. Try again shortly.');return;}this.queue.push({id:`${this.session}:${++this.sequence}`,type,args});this.schedule(0); }
   private schedule(delay:number) {if(this.timer)clearTimeout(this.timer);if(!this.stopped)this.timer=setTimeout(()=>void this.flush(),delay);}
@@ -50,6 +53,14 @@ export class NetworkSimulation extends Simulation {
   override assignSkill(slot:number,id:string){this.send('assignSkill',slot,id);return true}
   override buy(name:string){this.send('buy',name)}
   override sell(){this.send('sell')}
+  override toggleTutorial(){this.send('toggleTutorial')}
+  override interact(id:string){this.send('interact',id)}
+  override craft(id:string){this.send('craft',id);return true}
+  override equip(id:string){this.send('equip',id);return true}
+  override unequip(slot:GearSlot){this.send('unequip',slot)}
+  override claimQuest(id:string){this.send('claimQuest',id);return true}
+  override travel(zone:ZoneId){this.send('travel',zone);return true}
+  override communityAction(type:string,...args:unknown[]){this.send(type,...args)}
   chat(text:string){this.send('chat',text)}
   dispose(){this.stopped=true;if(this.timer)clearTimeout(this.timer)}
 }

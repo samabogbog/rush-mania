@@ -1,0 +1,210 @@
+[
+  {
+    "name": "honey",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      69,
+      96
+    ],
+    "maxContent": 96,
+    "minimumPadding": 16
+  },
+  {
+    "name": "fur",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      96,
+      90
+    ],
+    "maxContent": 96,
+    "minimumPadding": 16
+  },
+  {
+    "name": "tusk",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      80,
+      96
+    ],
+    "maxContent": 96,
+    "minimumPadding": 16
+  },
+  {
+    "name": "antler",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      91,
+      96
+    ],
+    "maxContent": 96,
+    "minimumPadding": 16
+  },
+  {
+    "name": "wisp-essence",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      84,
+      96
+    ],
+    "maxContent": 96,
+    "minimumPadding": 16
+  },
+  {
+    "name": "crystal-dust",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      96,
+      71
+    ],
+    "maxContent": 96,
+    "minimumPadding": 16
+  },
+  {
+    "name": "ice-shard",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      68,
+      96
+    ],
+    "maxContent": 96,
+    "minimumPadding": 16
+  },
+  {
+    "name": "frost-fang",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      88,
+      96
+    ],
+    "maxContent": 96,
+    "minimumPadding": 16
+  },
+  {
+    "name": "feather",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      81,
+      96
+    ],
+    "maxContent": 96,
+    "minimumPadding": 16
+  },
+  {
+    "name": "root-core",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      82,
+      96
+    ],
+    "maxContent": 96,
+    "minimumPadding": 16
+  },
+  {
+    "name": "field-coat",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      91,
+      96
+    ],
+    "maxContent": 96,
+    "minimumPadding": 16
+  },
+  {
+    "name": "shell-vest",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      81,
+      96
+    ],
+    "maxContent": 96,
+    "minimumPadding": 16
+  },
+  {
+    "name": "wisp-robe",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      90,
+      96
+    ],
+    "maxContent": 96,
+    "minimumPadding": 16
+  },
+  {
+    "name": "root-plate",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      96,
+      95
+    ],
+    "maxContent": 96,
+    "minimumPadding": 16
+  },
+  {
+    "name": "leaf-charm",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      67,
+      96
+    ],
+    "maxContent": 96,
+    "minimumPadding": 16
+  },
+  {
+    "name": "root-signet",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      96,
+      79
+    ],
+    "maxContent": 96,
+    "minimumPadding": 16
+  }
+]

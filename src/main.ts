@@ -8,6 +8,8 @@ import { species, type Simulation } from "./simulation";
 import { startSimulation, NetworkSimulation } from "./game/network";
 import { World } from "./world";
 import { FeedbackAudio } from "./game/audio";
+import { zones, species as catalogSpecies, questDefinitions, type ZoneId } from "./game/content";
+import { equipment, gearById, gearByName, type GearSlot, type Bonuses } from "./game/equipment";
 import { classes, MAX_LEVEL, type ClassId } from "./game/classes";
 import type { GameWorld } from "./render/contracts";
 const iconAliases: Record<string, string> = {
@@ -50,7 +52,7 @@ const iconAliases: Record<string, string> = {
 const icon = (name: string) =>
   `<img class="game-icon" src="/icons/${iconAliases[name] || name}.png" alt="" aria-hidden="true" draggable="false">`;
 const itemIcon = (name: string) =>
-  icon(
+  icon(gearByName(name)?.icon ||
     (
       {
         "Red potion": "health-potion",
@@ -58,6 +60,7 @@ const itemIcon = (name: string) =>
         "Dew jelly": "jelly",
         "Forest mushroom": "mushroom",
         "Verdant leaf": "leaf",
+        "Honey drop":"honey","Golden honey":"honey","Soft fur":"fur","Boar tusk":"tusk","Amber antler":"antler","Wisp essence":"wisp-essence","Shade essence":"wisp-essence","Crystal dust":"crystal-dust","Ice shard":"ice-shard","Frost fang":"frost-fang","Sky feather":"feather","Rootheart core":"root-core","Amber leaf":"leaf","Marsh reed":"leaf","Ancient root":"leaf","Living vine":"leaf","Amber spore":"mushroom","Snow spore":"mushroom","Crystal jelly":"jelly","Rune stone":"ice-shard","Warden stone":"ice-shard",
       } as Record<string, string>
     )[name] || "chest",
   );
@@ -72,7 +75,7 @@ app.innerHTML = `<canvas id="game" aria-label="3D game world: click the ground t
 <nav class="side-menu" aria-label="Game menus"><button data-panel="inventory" title="Inventory (I)">${icon("backpack")}<span>Bag</span><kbd>I</kbd></button><button data-panel="skills" title="Skills (K)">${icon("wand-sparkles")}<span>Skills</span><kbd>K</kbd></button><button data-panel="character" title="Character (C)">${icon("user-round")}<span>Hero</span><kbd>C</kbd></button><button data-panel="forge" title="Upgrade equipment">${icon("anvil")}<span>Forge</span></button><button data-panel="shop" title="Potion merchant">${icon("store")}<span>Shop</span></button></nav>
 <div class="chat"><div class="chat-tabs"><button class="active" data-chat="world">World</button><button data-chat="combat">Combat</button><span>LOCAL ADVENTURE</span><button id="chat-hide" aria-label="Hide activity log">${icon("chevron-down")}</button></div><div id="chat-log"><p><b class="system">System</b> Welcome to Mossvale, adventurer.</p><p><b class="guide">Guide</b> Click a monster to begin your adventure!</p></div><div class="chat-input">${icon("message-circle")}<input id="chat-input" placeholder="Leave a local note…" maxlength="100" aria-label="Local note"><span>↵</span></div></div>
 <div class="bottom-center"><div id="combat-state" aria-live="polite"></div><div class="control-hint"><span>${icon("mouse-pointer-2")} Click to move & attack</span><b>·</b><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> to walk</span></div><div class="action-bar"><button class="target-action" id="nearest" title="Select nearest monster (Tab)">${icon("crosshair")}<kbd>TAB</kbd></button><div class="action-divider"></div><button class="skill-slot gold" data-skill="0" title="Power Strike (1)"><kbd>1</kbd>${icon("swords")}<small>Strike</small><span class="cooldown"></span></button><button class="skill-slot purple" data-skill="1" title="Whirlwind (2)"><kbd>2</kbd>${icon("wind")}<small>Whirlwind</small><span class="cooldown"></span></button><button class="skill-slot red" data-skill="2" title="Red potion (3)"><kbd>3</kbd>${icon("flask-conical")}<small>Heal</small><span class="count" id="red-count">8</span><span class="cooldown"></span></button><button class="skill-slot blue" data-skill="3" title="Blue potion (4)"><kbd>4</kbd>${icon("droplets")}<small>Mana</small><span class="count" id="blue-count">4</span><span class="cooldown"></span></button><button class="skill-slot purple" data-skill="4" title="Skill slot 3 (5)"><kbd>5</kbd>${icon("sparkles")}<small>Slot 3</small><span class="cooldown"></span></button><button class="skill-slot gold" data-skill="5" title="Skill slot 4 (6)"><kbd>6</kbd>${icon("sparkles")}<small>Slot 4</small><span class="cooldown"></span></button><div class="action-divider"></div><button class="loot-action" id="loot" title="Pick up nearby loot (F)">${icon("hand")}<kbd>F</kbd><small>Pick up</small></button><button id="auto" title="Auto-select and attack monsters">${icon("repeat-2")}<small>Auto</small></button></div><div class="experience"><span>BASE EXP</span><div><i id="exp-fill"></i></div><b id="exp-text">0 / 120</b></div></div>
-<div class="bottom-right"><div class="wallet">${icon("coins")}<b id="gold">120</b><span>z</span></div><div class="utility"><button id="camera" title="Reset camera">${icon("focus")}</button><button data-panel="settings" title="Settings">${icon("settings-2")}</button><button data-panel="help" title="How to play">${icon("circle-help")}</button></div><span class="save-indicator"><i></i> Adventure saved locally</span></div>
+<div class="bottom-right"><div class="community-shortcuts"><button data-panel="community" title="Party & friends">${icon("hero")} Party</button><button data-panel="market" title="Player market">${icon("store")} Market</button></div><div class="wallet">${icon("coins")}<b id="gold">120</b><span>z</span></div><div class="utility"><button id="camera" title="Reset camera">${icon("focus")}</button><button data-panel="settings" title="Settings">${icon("settings-2")}</button><button data-panel="help" title="How to play">${icon("circle-help")}</button></div><span class="save-indicator"><i></i> Adventure saved locally</span></div>
 <div id="toast" role="status"></div><div id="panel-root"></div><div class="touch-controls"><button data-touch="up" aria-label="Walk up"><span class="arrow-up">${icon("arrow-down")}</span></button><button data-touch="left" aria-label="Walk left"><span class="arrow-left">${icon("arrow-right")}</span></button><button data-touch="down" aria-label="Walk down">${icon("arrow-down")}</button><button data-touch="right" aria-label="Walk right">${icon("arrow-right")}</button></div>`;
 let sim: Simulation;
 try { sim = await startSimulation(); } catch(error) {
@@ -124,6 +127,9 @@ function renderLog() {
   log.scrollTop = log.scrollHeight;
 }
 sim.onEvent = (text, type = "system", x, z) => {
+  if(type==="telegraph"){feedback.play("monster");return;}
+  if(type==="npc"){if(titles[text])openPanel(text);return;}
+  if(type==="zone"){closePanel();}
   if (type === "sync") { if(panel) renderPanel(); refreshHotbar(); return; }
   if (type === "chat") { activity(text, "World"); return; }
   if (type === "damage" || type === "hurt") {
@@ -149,7 +155,7 @@ sim.onEvent = (text, type = "system", x, z) => {
     return;
   }
   if (type === "strike" || type === "whirl") {
-    world.effect(type, x!, z!);
+    feedback.play(sim.save.job==='mage'?'magic':sim.save.job==='archer'?'arrow':'hit');world.effect(type, x!, z!);
     return;
   }
   $("#toast").textContent = text;
@@ -178,9 +184,12 @@ const titles: Record<string, [string, string]> = {
   shop: ["store", "Glade merchant"],
   map: ["map", "Moonlit Glade"],
   help: ["circle-help", "Adventurer’s handbook"],
-  settings: ["settings-2", "Settings"],
+  settings: ["settings-2", "Settings"],report:["quest","Report a bug"],
   operations: ["settings-2", "Realm operations"],
+  journal: ["quest", "Adventure journal"],
+  community:["hero","Party & friends"],market:["store","Player market"],
 };
+let inventoryFilter="all",inventorySort="name";
 function renderPanel() {
   if (!panel) {
     $("#panel-root").innerHTML = "";
@@ -188,22 +197,17 @@ function renderPanel() {
     return;
   }
   sim.paused = true;
+  const retained=Array.from(document.querySelectorAll<HTMLInputElement|HTMLSelectElement|HTMLTextAreaElement>(`[data-open-panel="${panel}"] input[id],[data-open-panel="${panel}"] select[id],[data-open-panel="${panel}"] textarea[id]`)).map(e=>({id:e.id,value:e.value,focused:document.activeElement===e}));
   const s = sim.save;
-  const [ic, title] = titles[panel];
+  const [ic, baseTitle] = titles[panel];
+  const title=panel==="map"?sim.zone.name:baseTitle;
   let body = "";
   if (panel === "inventory") {
-    body = `<div class="panel-sub"><span>${s.items.filter((i) => i.count).length + 1} / 24 slots</span><span>${icon("coins")} ${s.gold} z</span></div><div class="inventory-grid"><button class="item equipped" data-item="sword"><span>${icon(sim.job.icon)}</span><b>+${s.weapon}</b><small>E</small></button>${s.items
-      .filter((i) => i.count)
-      .map(
-        (i) =>
-          `<button class="item" data-item="${i.name}" title="${descriptions[i.name] || i.name}"><span>${itemIcon(i.name)}</span><b>${i.count}</b></button>`,
-      )
-      .join(
-        "",
-      )}${Array.from({ length: Math.max(0, 23 - s.items.filter((i) => i.count).length) }, () => '<div class="item empty"></div>').join("")}</div><div id="item-detail" class="item-detail"><strong>Your adventure, in a bag.</strong><p>Select an item to inspect or use it.</p></div>`;
+    const items=s.items.filter(i=>i.count && (inventoryFilter==='all'||inventoryFilter==='gear'&&i.gearId||inventoryFilter==='potion'&&i.name.includes('potion')||inventoryFilter==='material'&&!i.gearId&&!i.name.includes('potion'))).sort((a,b)=>inventorySort==='count'?b.count-a.count:a.name.localeCompare(b.name));
+    body=`<div class="panel-sub"><span>${s.items.filter(i=>i.count).length+1} / 60 slots</span><span>${icon('coins')} ${s.gold} z</span></div><div class="bag-controls"><label>Show <select id="bag-filter">${['all','gear','material','potion'].map(v=>`<option ${inventoryFilter===v?'selected':''} value="${v}">${v}</option>`).join('')}</select></label><label>Sort <select id="bag-sort"><option value="name" ${inventorySort==='name'?'selected':''}>Name</option><option value="count" ${inventorySort==='count'?'selected':''}>Quantity</option></select></label></div><div class="inventory-grid"><button class="item equipped" data-item="sword"><span>${icon(sim.job.icon)}</span><b>+${sim.refinement}</b><small>E</small></button>${items.map(i=>`<button class="item ${Object.values(s.equipped).includes(i.id||'')?'equipped':''}" data-item="${i.id||i.name}" title="${gearByName(i.name)?.description||descriptions[i.name]||i.name}"><span>${itemIcon(i.name)}</span><b>${i.gearId?'+'+(i.refine||0):i.count}</b>${Object.values(s.equipped).includes(i.id||'')?'<small>E</small>':''}</button>`).join('')}${Array.from({length:Math.max(0,23-items.length)},()=>'<div class="item empty"></div>').join('')}</div><div id="item-detail" class="item-detail"><strong>Your adventure, in a bag.</strong><p>Select equipment to compare its bonuses and equip it.</p></div>`;
   }
   if (panel === "character") {
-    body = `<div class="character-card"><div class="portrait">${portrait}</div><div><h2>Sprout</h2><span>Level ${s.level} / ${MAX_LEVEL} · ${sim.job.name}</span><p>${sim.job.role}</p></div></div><div class="class-picker">${(Object.entries(classes) as [ClassId, (typeof classes)[ClassId]][]).map(([id, job]) => `<button data-class="${id}" aria-pressed="${s.job === id}" ${sim.target !== null ? "disabled" : ""}>${icon(job.icon)}<strong>${job.name}</strong><small>${job.role}</small></button>`).join("")}</div><div class="stat-pair"><span>Max HP <b>${sim.maxHp}</b></span><span>Max MP <b>${sim.maxMp}</b></span><span>Attack <b>${sim.damage}</b></span><span>Defense <b>${sim.defense}</b></span></div><div class="section-label">ATTRIBUTES <span>${s.points} points available</span></div>${(["str", "vit", "agi"] as const).map((k, i) => `<div class="stat-row"><span>${[s.job === "mage" ? "Focus" : "Strength", "Vitality", "Agility"][i]}<small>${[s.job === "archer" ? "Melee strength" : "Increase attack power", "Increase health and defense", s.job === "archer" ? "Increase bow attack, attack speed and critical chance" : "Increase attack speed and critical chance"][i]}</small></span><b>${s.stats[k]}</b><button data-stat="${k}" ${s.points ? "" : "disabled"}>${icon("plus")}</button></div>`).join("")}<div class="panel-note">Change class outside combat. Level and equipment refinement are shared in this prototype. Each level grants 3 attribute points. Skills unlock at levels 10, 20 … 100.</div>`;
+    body = `<div class="character-card"><div class="portrait">${portrait}</div><div><h2>Sprout</h2><span>Level ${s.level} / ${MAX_LEVEL} · ${sim.job.name}</span><p>${sim.job.role}</p></div></div><div class="class-picker">${(Object.entries(classes) as [ClassId, (typeof classes)[ClassId]][]).map(([id, job]) => `<button data-class="${id}" aria-pressed="${s.job === id}" ${sim.target !== null ? "disabled" : ""}>${icon(job.icon)}<strong>${job.name}</strong><small>${job.role}</small></button>`).join("")}</div><div class="stat-pair"><span>Max HP <b>${sim.maxHp}</b></span><span>Max MP <b>${sim.maxMp}</b></span><span>Attack <b>${sim.damage.toFixed(1)}</b></span><span>Defense <b>${sim.defense}</b></span></div><div class="section-label">ATTRIBUTES <span>${s.points} points available</span></div>${(["str", "vit", "agi"] as const).map((k, i) => `<div class="stat-row"><span>${[s.job === "mage" ? "Focus" : "Strength", "Vitality", "Agility"][i]}<small>${[s.job === "archer" ? "Melee strength" : "Increase attack power", "Increase health and defense", s.job === "archer" ? "Increase bow attack, attack speed and critical chance" : "Increase attack speed and critical chance"][i]}</small></span><b>${s.stats[k]}</b><button data-stat="${k}" ${s.points ? "" : "disabled"}>${icon("plus")}</button></div>`).join("")}<div class="section-label">EQUIPMENT</div>${(['weapon','armor','accessory'] as GearSlot[]).map(slot=>{const item=s.items.find(i=>i.id===s.equipped[slot]);return `<div class="stat-row"><span>${slot}<small>${item?.name||'Basic class equipment'}</small></span>${item?`<button data-unequip="${slot}">Remove</button>`:''}</div>`}).join('')}<div class="panel-note">Change class outside combat. Level and equipment refinement are shared in this prototype. Each level grants 3 attribute points. Skills unlock at levels 10, 20 … 100.</div>`;
   }
   if (panel === "skills") {
     body = `<div class="panel-sub"><span>${sim.job.name.toUpperCase()} SKILLS</span><span>${sim.unlockedSkills.length} / 10 unlocked</span></div><div class="loadout-grid">${s.hotbar
@@ -216,7 +220,7 @@ function renderPanel() {
       )}</div><p class="muted">Drag an unlocked skill into a slot, or choose a slot and press Assign.</p>${sim.skillList
       .map((skill) => {
         const unlocked = s.level >= skill.level;
-        return `<article class="skill-card ${unlocked ? "" : "skill-locked"}" data-skill-id="${skill.id}" draggable="${unlocked}"><span class="skill-art purple">${icon(skill.icon)}</span><div><h3>${skill.name} <small>LV ${skill.level}</small></h3><p>${skill.description}</p><span>${skill.mp} MP · ${skill.cooldown}s cooldown · ${skill.range}m range${skill.cast ? " · " + skill.cast + "s cast" : ""}</span><div class="skill-assignment"><select aria-label="Hotbar slot for ${skill.name}" data-slot-for="${skill.id}" ${unlocked ? "" : "disabled"}>${[1, 2, 5, 6].map((key, index) => `<option value="${index}">Key ${key}</option>`).join("")}</select><button data-assign="${skill.id}" ${unlocked ? "" : "disabled"}>${unlocked ? "Assign" : "Unlock at Lv " + skill.level}</button></div></div></article>`;
+        return `<article class="skill-card ${unlocked ? "" : "skill-locked"}" data-skill-id="${skill.id}" draggable="${unlocked}"><span class="skill-art purple">${icon(skill.icon)}</span><div><h3>${skill.name} <small>LV ${skill.level}</small></h3><p>${skill.description}${["heal","guard","fury"].includes(skill.effect)?" Shares a reduced effect with party allies within 8m.":""}</p><span>${skill.mp} MP · ${skill.cooldown}s cooldown · ${skill.range}m range${skill.cast ? " · " + skill.cast + "s cast" : ""}</span><div class="skill-assignment"><select aria-label="Hotbar slot for ${skill.name}" data-slot-for="${skill.id}" ${unlocked ? "" : "disabled"}>${[1, 2, 5, 6].map((key, index) => `<option value="${index}">Key ${key}</option>`).join("")}</select><button data-assign="${skill.id}" ${unlocked ? "" : "disabled"}>${unlocked ? "Assign" : "Unlock at Lv " + skill.level}</button></div></div></article>`;
       })
       .join(
         "",
@@ -224,7 +228,7 @@ function renderPanel() {
   }
 
   if (panel === "forge") {
-    body = `<div class="forge-art">${icon(sim.job.icon)}<span>${sim.job.weapon} +${s.weapon}</span></div><h2 class="center">A little sharper. A little braver.</h2><p class="center muted">Refine your weapon to add 7 attack damage.<br>Each upgrade is guaranteed to succeed.</p><div class="stat-pair"><span>Current attack <b>${sim.damage}</b></span><span>After refinement <b>${sim.damage + 7}</b></span></div><button class="primary-button" id="refine">${icon("anvil")} Refine weapon · ${60 + s.weapon * 40} z</button><div class="panel-note">Your wallet: ${s.gold} z</div>`;
+    body=`<div class="forge-art">${icon(sim.job.icon)}<span>${s.items.find(i=>i.id===s.equipped.weapon)?.name||sim.job.weapon} +${sim.refinement}</span></div><p class="center muted">Refine your equipped weapon for +7 attack per level, up to +20.</p><div class="stat-pair"><span>Current attack <b>${sim.damage.toFixed(1)}</b></span><span>After refinement <b>${(sim.damage+7).toFixed(1)}</b></span></div><button class="primary-button" id="refine">${icon('anvil')} Refine weapon · ${60+sim.refinement*40} z</button><div class="section-label">CRAFT EQUIPMENT</div>${equipment.filter(g=>!g.job||g.job===s.job).map(g=>`<article class="recipe-card"><span>${icon(g.icon)}</span><div><strong>${g.name} <small>${g.rarity} · Lv ${g.level}</small></strong><p>${g.description}</p><small>${Object.entries(g.bonuses).map(([key,val])=>key.toUpperCase()+' +'+val).join(' · ')}</small><div>${g.materials.map(([name,count])=>`<span class="recipe-material ${(s.items.find(i=>i.name===name)?.count||0)>=count?'ready':''}">${name} ${(s.items.find(i=>i.name===name)?.count||0)}/${count}</span>`).join('')}</div><button data-craft="${g.id}" ${s.level<g.level?'disabled':''}>Craft · ${g.cost} z</button></div></article>`).join('')}<div class="panel-note">Inspect each area in Map to find its materials. Your wallet: ${s.gold} z</div>`;
   }
   if (panel === "shop") {
     body = `<p class="muted">A few essentials for the road ahead.</p>${[
@@ -240,10 +244,14 @@ function renderPanel() {
       )}<div class="section-label">SELL GATHERED MATERIALS</div><button id="sell" class="primary-button">Sell all monster drops · 6 z each</button><div class="panel-note">Your wallet: ${s.gold} z</div>`;
   }
   if (panel === "map") {
-    body = `<canvas id="large-map" width="480" height="360"></canvas><div class="map-legend"><span><i style="background:#edce78"></i>You</span><span><i style="background:#ee91a6"></i>Monsters</span><span><i style="background:#8decd3"></i>Camp</span></div><p class="muted center">Click the map to travel. Portal and merchant at the north camp.</p>`;
+    body = `<canvas id="large-map" width="480" height="360"></canvas><div class="map-legend"><span><i style="background:#edce78"></i>You</span><span><i style="background:#ee91a6"></i>Monsters</span><span><i style="background:#8decd3"></i>Camp</span></div><p class="muted center">Click the map to walk. Reach the glowing north portal to change area.</p><div class="area-list">${(Object.entries(zones) as [ZoneId,(typeof zones)[ZoneId]][]).map(([id,zone])=>`<article><h3>${zone.name} <small>${id==='town'?'SAFE TOWN':id==='ruins'?'PARTY DUNGEON':'Lv '+zone.level+'–'+zone.maxLevel}</small></h3><p>${zone.description}</p><div class="area-materials">${zone.species.map(kind=>`<span>${kind} · ${catalogSpecies[kind].drop}</span>`).join('')}</div><button data-travel="${id}" ${id===s.zone||s.level<zone.level?'disabled':''}>${id===s.zone?'Current area':s.level<zone.level?'Reach Lv '+zone.level:'Travel'}</button></article>`).join('')}</div>`;
+  }
+  if(panel==='journal') {
+    const steps=[['move','Walk with WASD or click the ground.'],['attack','Select a creature and defeat it. Read the red windup and step away.'],['collect','Walk to a drop and press F to collect it.'],['talk','Speak to an NPC near the north camp or in Sprout Town.'],['craft','Open Forge, gather a recipe’s materials and craft equipment.'],['equip','Open Bag and equip what you crafted.'],['refine','Refine your weapon at the forge.'],['travel','Use the north portal to visit a new area.'],['skill','Reach Lv10, assign your first skill, and use it.']];
+    body=`<h3>Learn by adventuring</h3><ol class="tutorial-steps">${steps.map(([id,text])=>`<li class="${s.tutorial.includes(id)?'done':''}">${s.tutorial.includes(id)?'✓ ':''}${text}</li>`).join('')}</ol><button id="skip-tutorial">${s.tutorial.includes('skip')?'Show tutorial hints':'Hide tutorial hints'}</button><div class="section-label">QUEST BOARD</div>${questDefinitions.map(q=>{const state=s.quests[q.id]||{progress:0,claimed:false};return `<article class="quest-card"><h3>${q.name}</h3><p>${q.description}</p><strong>${state.progress}/${q.target}</strong><small>Reward ${q.gold} z · ${q.xp} EXP · ${q.count} ${q.item}</small><button data-claim-quest="${q.id}" ${state.claimed||state.progress<q.target?'disabled':''}>${state.claimed?'Completed':'Claim reward'}</button></article>`}).join('')}`;
   }
   if (panel === "help") {
-    body = `<div class="handbook-intro">A little world.<br><em>A grand adventure.</em></div><p class="muted">Explore the Moonlit Glade, defeat creatures, gather materials, and grow stronger.</p><div class="help-rows">${[
+    body = `<button id="open-journal" class="primary-button">Quest board & tutorial</button><div class="handbook-intro">A little world.<br><em>A grand adventure.</em></div><p class="muted">Explore the Moonlit Glade, defeat creatures, gather materials, and grow stronger.</p><div class="help-rows">${[
       ["Mouse", "Click ground to walk; click a monster to attack"],
       ["W A S D", "Move your character"],
       ["Tab / Space", "Select the nearest monster / attack"],
@@ -260,13 +268,23 @@ function renderPanel() {
       )}</div><div class="panel-note">${sim.online ? "Online realm. Progress is saved on the server. The world continues while windows are open." : "Practice mode. Progress is saved in this browser. Opening a window pauses the world."} Monsters respawn after 13 seconds.</div>`;
   }
   if (panel === "operations") {
-    body = '<p class="muted">Inspect characters and recent economy transactions, or save a recovery snapshot.</p><button id="backup-realm" class="primary-button">Create server backup</button><button id="export-realm" class="primary-button">Export current realm</button><pre id="operations-report">Loading realm report…</pre>';
+    body = `<p>Inspect progression, bug reports and economy transactions. Restore and balance changes require the realm to be in maintenance.</p><button id="backup-realm">Create server backup</button><button id="export-realm">Export current realm</button><button id="maintenance-on">Pause realm for maintenance</button><button id="maintenance-off">Reopen realm</button><h3>Recovery</h3><select id="restore-backup"><option>Loading backups…</option></select><button id="restore-realm">Restore selected backup</button><h3>Monster balance</h3><select id="balance-kind">${Object.keys(catalogSpecies).map(k=>`<option>${k}</option>`).join('')}</select><select id="balance-stat">${['hp','atk','defense','xp','gold'].map(k=>`<option>${k}</option>`).join('')}</select><input id="balance-value" type="number" min="0" value="100"><button id="update-balance">Apply monster value</button><pre id="operations-report">Loading realm report…</pre>`;
   }
+  if(panel==='community') {
+    const c=sim.community,party=c?.party,trade=c?.trade;
+    body=!c?'<p>Sign in to the online realm to play with other adventurers.</p>':`<h3>${party?'Your party · '+party.members.length+'/4':'Find your adventuring party'}</h3><p>Nearby party members share EXP and gold equally. Material drops rotate between members. Level 40+ parties of 2–4 can enter Rootheart Ruins through the north portal.</p>${party?`<div class="party-members">${party.members.map(p=>`<span>${p.name} · Lv ${p.level} · ${p.online?'Online':'Offline'}</span>`).join('')}</div><button data-community="partyLeave">Leave party</button>`:'<button data-community="partyCreate">Create party</button>'}<h3>Nearby adventurers</h3>${sim.remotePlayers.map(p=>`<div class="community-row"><b>${p.name}</b><button data-community="partyInvite" data-id="${p.id}">Invite</button><button data-community="friendRequest" data-id="${p.id}">Friend</button><button data-community="tradeInvite" data-id="${p.id}">Trade</button></div>`).join('')||'<p>Other players in this area will appear here.</p>'}${c.invitations.map(i=>`<div class="community-row">${i.leader.name} invited you <button data-community="partyAccept" data-id="${i.id}">Join</button></div>`).join('')}<h3>Friends</h3>${c.friends.map(p=>`<div class="community-row">${p.name} · ${p.online?'Online':'Offline'} <button data-community="friendRemove" data-id="${p.id}">Remove</button></div>`).join('')||'<p>No friends yet.</p>'}${c.requests.map(p=>`<div class="community-row">${p.name} sent a request <button data-community="friendAccept" data-id="${p.id}">Accept</button></div>`).join('')}${trade?`<h3>Trade</h3><p>Both players set an offer and confirm it. Changing either offer clears both confirmations. Stay nearby until the exchange completes.</p>${!trade.accepted?(trade.players[1]===c.self?`<button data-community="tradeAccept" data-id="${trade.id}">Accept trade request</button>`:'<p>Waiting for the invited player to accept.</p>'):`<div class="trade-offers">${trade.players.map(id=>{const o=trade.offers[id];return `<p>${id===c.self?'You':'Partner'}: ${o?`${o.count} × ${trade.offeredItems[id]?.name||'Gold only'} · ${o.gold} z`:'No offer'} ${trade.confirmed.includes(id)?'✓ Confirmed':''}</p>`}).join('')}</div><label>Item <select id="trade-item"><option value="">Gold only</option>${s.items.filter(i=>i.count&&!Object.values(s.equipped).includes(i.id||'')).map(i=>`<option value="${i.id||i.name}">${i.name} × ${i.count}</option>`).join('')}</select></label><label>Quantity <input id="trade-count" type="number" min="0" value="1"></label><label>Gold <input id="trade-gold" type="number" min="0" value="0"></label><button id="set-trade-offer" data-id="${trade.id}">Set offer</button><button data-community="tradeConfirm" data-id="${trade.id}">Confirm exchange</button>`}<button data-community="tradeCancel" data-id="${trade.id}">Cancel trade</button>`:''}`;
+  }
+  if(panel==='market') {
+    const c=sim.community;
+    body=!c?'<p>The player market is available in the online realm.</p>':`<h3>Trade with adventurers</h3><p>Listed items are held by the server. Completed sales have a 10% gold fee. Cancel your listing to reclaim its item.</p><label>Item <select id="market-item">${s.items.filter(i=>i.count&&!Object.values(s.equipped).includes(i.id||'')).map(i=>`<option value="${i.id||i.name}">${i.name} × ${i.count}</option>`).join('')}</select></label><label>Quantity <input id="market-count" type="number" min="1" value="1"></label><label>Total price <input id="market-price" type="number" min="1" value="20"></label><button id="list-market">List item</button><div class="recipe-list">${c.listings.map(l=>`<article class="recipe-card">${itemIcon(l.item.name)}<div><h3>${l.item.name} × ${l.item.count}</h3><small>${l.sellerName} · ${l.price} z${l.item.gearId?' · +'+(l.item.refine||0):''}</small></div><button data-community="${l.seller===c.self?'marketCancel':'marketBuy'}" data-id="${l.id}">${l.seller===c.self?'Cancel':'Buy'}</button></article>`).join('')||'<p>The market is empty. List the first item!</p>'}</div>`;
+  }
+  if(panel==='report')body='<p>Describe what happened and what you expected. The report includes your character and area.</p><textarea id="bug-text" maxlength="500" rows="5" aria-label="Bug description"></textarea><button id="submit-bug">Send bug report</button>';
   if (panel === "settings") {
-    body = `<h3>Make yourself at home.</h3><div class="setting-row"><span>Sound effects</span><button id="sfx-panel">${feedback.enabled ? "On" : "Off"}</button></div><div class="setting-row"><span>Ambient music</span><button id="sound-panel">${music ? "On" : "Off"}</button></div><div class="setting-row"><span>Camera zoom</span><input id="zoom" type="range" min="0.65" max="1.6" step="0.05" value="${world.zoom}" aria-label="Camera zoom"></div><div class="panel-note">Graphics: ${world.diagnostics.drawCalls} draw calls · ${world.diagnostics.fps.toFixed(0)} FPS · p95 ${world.diagnostics.frameP95.toFixed(1)} ms</div>${sim.admin ? '<button id="realm-tools" class="primary-button">Realm operations</button>' : ""}<button id="save-now" class="primary-button">${icon("save")} ${sim.online ? "Check server connection" : "Save adventure"}</button><div class="panel-note">Mossvale v0.1 · Babylon.js prototype<br>All characters and environments are original procedural assets.<br>${sim.online ? "Server-authoritative realm · Sites account" : "Practice mode · local save"}</div>`;
+    body = `<h3>Make yourself at home.</h3><div class="setting-row"><span>Sound effects</span><button id="sfx-panel">${feedback.enabled ? "On" : "Off"}</button></div><div class="setting-row"><span>Ambient music</span><button id="sound-panel">${music ? "On" : "Off"}</button></div><div class="setting-row"><span>Graphics quality</span><select id="graphics-quality">${["auto","high","low"].map(q=>`<option ${world.quality===q?"selected":""}>${q}</option>`).join("")}</select></div><div class="setting-row"><span>Camera zoom</span><input id="zoom" type="range" min="0.65" max="1.6" step="0.05" value="${world.zoom}" aria-label="Camera zoom"></div><div class="panel-note">Graphics: ${world.diagnostics.drawCalls} draw calls · ${world.diagnostics.fps.toFixed(0)} FPS · p95 ${world.diagnostics.frameP95.toFixed(1)} ms</div>${sim.admin ? '<button id="realm-tools" class="primary-button">Realm operations</button>' : ""}<button data-panel="report">Report a bug</button><button id="save-now" class="primary-button">${icon("save")} ${sim.online ? "Check server connection" : "Save adventure"}</button><div class="panel-note">Mossvale v0.2 · Babylon.js alpha<br>All characters and environments are original procedural assets.<br>${sim.online ? "Server-authoritative realm · Sites account" : "Practice mode · local save"}</div>`;
   }
   $("#panel-root").innerHTML =
-    `<div class="panel-backdrop"></div><section class="game-panel ${panel === "map" ? "wide" : ""}" role="dialog" aria-modal="true" aria-label="${title}"><div class="panel-heading">${icon(ic)}<h2>${title}</h2><span>${sim.online ? "LIVE" : "PAUSED"}</span><button id="close-panel" aria-label="Close window">${icon("x")}</button></div><div class="panel-body">${body}</div><div class="panel-footer">${icon("sparkles")} MOSSVALE <span>ESC to return to adventure</span></div></section>`;
+    `<div class="panel-backdrop"></div><section data-open-panel="${panel}" class="game-panel ${panel === "map" ? "wide" : ""}" role="dialog" aria-modal="true" aria-label="${title}"><div class="panel-heading">${icon(ic)}<h2>${title}</h2><span>${sim.online ? "LIVE" : "PAUSED"}</span><button id="close-panel" aria-label="Close window">${icon("x")}</button></div><div class="panel-body">${body}</div><div class="panel-footer">${icon("sparkles")} MOSSVALE <span>ESC to return to adventure</span></div></section>`;
+  for(const retainedInput of retained){const element=document.getElementById(retainedInput.id) as HTMLInputElement|HTMLSelectElement|HTMLTextAreaElement|null;if(element){element.value=retainedInput.value;if(retainedInput.focused)element.focus();}}
   $("#close-panel").onclick = closePanel;
   $(".panel-backdrop").onclick = closePanel;
   document.querySelectorAll<HTMLElement>("[data-stat]").forEach(
@@ -276,22 +294,32 @@ function renderPanel() {
         renderPanel();
       }),
   );
-  if (panel === "inventory")
-    document.querySelectorAll<HTMLElement>("[data-item]").forEach(
-      (b) =>
-        (b.onclick = () => {
-          const name = b.dataset.item!;
-          $("#item-detail").innerHTML =
-            name === "sword"
-              ? `<strong>${sim.job.weapon} +${s.weapon}</strong><p>Equipped · ${sim.damage} attack. Refine it at the forge.</p>`
-              : `<strong>${name}</strong><p>${descriptions[name]}</p>${name.includes("potion") ? '<button class="primary-button" id="use-item">Use potion</button>' : ""}`;
-          if (document.getElementById("use-item"))
-            $("#use-item").onclick = () => {
-              sim.usePotion(name === "Blue potion");
-              renderPanel();
-            };
-        }),
-    );
+  if(panel==='inventory') {
+    $('#bag-filter').onchange=e=>{inventoryFilter=(e.target as HTMLSelectElement).value;renderPanel()};
+    $('#bag-sort').onchange=e=>{inventorySort=(e.target as HTMLSelectElement).value;renderPanel()};
+    document.querySelectorAll<HTMLElement>('[data-item]').forEach(button=>{const show=()=>{
+      const key=button.dataset.item!, item=s.items.find(i=>i.id===key||i.name===key),gear=item?.gearId?gearById(item.gearId):undefined;
+      if(gear&&item) {
+        const worn=s.items.find(i=>i.id===s.equipped[gear.slot]),current=worn?.gearId?gearById(worn.gearId):undefined;
+        $('#item-detail').innerHTML=`<strong>${gear.name} +${item.refine||0} · ${gear.rarity} · Lv ${gear.level}</strong><p>${gear.description}</p><div class="equipment-compare">${Array.from(new Set([...Object.keys(gear.bonuses),...Object.keys(current?.bonuses||{}),...(item.refine||worn?.refine?['atk']:[])])).map(stat=>{const value=(gear.bonuses[stat as keyof Bonuses]||0)+(stat==='atk'&&gear.slot==='weapon'?(item.refine||0)*7:0),old=(current?.bonuses[stat as keyof Bonuses]||0)+(stat==='atk'&&current?.slot==='weapon'?(worn?.refine||0)*7:0),difference=value-old;return `<span>${stat.toUpperCase()} +${value} <b class="${difference>=0?'positive':'negative'}">${difference>=0?'+':''}${difference} vs equipped</b></span>`}).join('')}</div><button class="primary-button" id="equip-item" ${s.level<gear.level||(gear.job&&gear.job!==s.job)?'disabled':''}>${s.equipped[gear.slot]===item.id?'Equipped':'Equip'}</button>`;
+        $('#equip-item').onclick=()=>{sim.equip(item.id!);renderPanel()};
+      } else {
+        const name=item?.name||key;
+        const sources=(Object.keys(catalogSpecies) as (keyof typeof catalogSpecies)[]).filter(k=>catalogSpecies[k].drop===name);
+        $('#item-detail').innerHTML=key==='sword'?`<strong>${sim.job.weapon} +${sim.refinement}</strong><p>Equipped · ${sim.damage.toFixed(1)} attack. Refine it at the forge.</p>`:`<strong>${name}</strong><p>${descriptions[name]||'A crafting material.'}</p>${sources.length?`<p>Dropped by: ${sources.join(', ')}</p>`:''}${name.includes('potion')?'<button class="primary-button" id="use-item">Use potion</button>':''}`;
+        if(document.getElementById('use-item'))$('#use-item').onclick=()=>{sim.usePotion(name==='Blue potion');renderPanel()};
+      }
+    };button.onclick=show;button.onmouseenter=show;button.onfocus=show;});
+  }
+  document.querySelectorAll<HTMLElement>('[data-craft]').forEach(b=>b.onclick=()=>{sim.craft(b.dataset.craft!);renderPanel()});
+  document.querySelectorAll<HTMLElement>('[data-unequip]').forEach(b=>b.onclick=()=>{sim.unequip(b.dataset.unequip as GearSlot);renderPanel()});
+  document.querySelectorAll<HTMLElement>('[data-travel]').forEach(b=>b.onclick=()=>{if(sim.travel(b.dataset.travel as ZoneId))closePanel()});
+  document.querySelectorAll<HTMLElement>('[data-claim-quest]').forEach(b=>b.onclick=()=>{sim.claimQuest(b.dataset.claimQuest!);renderPanel()});
+  if(panel==='report')$('#submit-bug').onclick=()=>{sim.communityAction('reportBug',($('#bug-text') as HTMLTextAreaElement).value);closePanel()};
+  document.querySelectorAll<HTMLElement>('[data-community]').forEach(b=>b.onclick=()=>sim.communityAction(b.dataset.community!,...(b.dataset.id?[b.dataset.id]:[])));
+  if(document.getElementById('set-trade-offer'))$('#set-trade-offer').onclick=()=>{const item=($('#trade-item') as HTMLSelectElement).value;sim.communityAction('tradeOffer',$('#set-trade-offer').dataset.id,{item,count:item?Number(($('#trade-count') as HTMLInputElement).value):0,gold:Number(($('#trade-gold') as HTMLInputElement).value)});};
+  if(document.getElementById('list-market'))$('#list-market').onclick=()=>sim.communityAction('marketList',($('#market-item') as HTMLSelectElement).value,Number(($('#market-count') as HTMLInputElement).value),Number(($('#market-price') as HTMLInputElement).value));
+  if(panel==='journal')$('#skip-tutorial').onclick=()=>{sim.toggleTutorial();renderPanel()};
   if (panel === "forge")
     $("#refine").onclick = () => {
       sim.upgrade();
@@ -351,8 +379,13 @@ function renderPanel() {
     void fetch('/api/operations').then(async response=>{
       if(!response.ok)throw new Error('Operator report unavailable');
       const report=await response.json(); const output=document.getElementById('operations-report');
-      if(output) output.textContent=JSON.stringify({revision:report.revision,players:report.players,ledger:report.ledger},null,2);
+      if(output) output.textContent=JSON.stringify({revision:report.revision,maintenance:report.maintenance,players:report.players,ledger:report.ledger,metrics:report.metrics,reports:report.reports,balance:report.balance},null,2);
+      const select=document.getElementById('restore-backup');if(select){select.replaceChildren(...report.backups.map((b:{id:string;at:number;revision:number})=>{const option=document.createElement('option');option.value=b.id;option.textContent=new Date(b.at).toLocaleString()+' · revision '+b.revision;return option;}));}
     }).catch(()=>{const output=document.getElementById('operations-report');if(output)output.textContent='Could not load realm report. Reopen to retry.';});
+    const operate=async(input:Record<string,unknown>)=>{const response=await fetch('/api/operations',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(input)});const data=await response.json();sim.onEvent(response.ok?'Realm operation saved.':data.error||'Operation failed.');if(response.ok)renderPanel();};
+    $('#maintenance-on').onclick=()=>void operate({action:'maintenance',enabled:true});$('#maintenance-off').onclick=()=>void operate({action:'maintenance',enabled:false});
+    $('#restore-realm').onclick=()=>void operate({action:'restore',backupId:($('#restore-backup') as HTMLSelectElement).value});
+    $('#update-balance').onclick=()=>void operate({action:'balance',kind:($('#balance-kind') as HTMLSelectElement).value,values:{[($('#balance-stat') as HTMLSelectElement).value]:Number(($('#balance-value') as HTMLInputElement).value)}});
     $("#backup-realm").onclick=async()=>{
       const response=await fetch('/api/operations',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});
       sim.onEvent(response.ok?'Server backup created.':'Backup unavailable. Try again.');
@@ -377,11 +410,13 @@ function renderPanel() {
       toggleMusic();
       renderPanel();
     };
+    $("#graphics-quality").onchange=()=>world.setQuality(($("#graphics-quality") as HTMLSelectElement).value as "auto"|"high"|"low");
     $("#zoom").oninput = (e) => {
       world.zoom = Number((e.target as HTMLInputElement).value);
       world.resize();
     };
   }
+  if(document.getElementById("open-journal"))$("#open-journal").onclick=()=>openPanel("journal");
   $("#close-panel").focus();
 }
 function closePanel() {
@@ -511,13 +546,13 @@ function toggleMusic() {
     audio ??= new AudioContext();
     void audio.resume();
     let n = 0;
-    const notes = [261.63, 329.63, 392, 523.25, 440, 392, 329.63, 293.66];
+    const notes = sim.zone.music;
     const play = () => {
       if (!music || !audio) return;
       const osc = audio.createOscillator(),
         gain = audio.createGain();
-      osc.type = "sine";
-      osc.frequency.value = notes[n++ % notes.length];
+      osc.type = sim.save.zone==='ruins'?'triangle':'sine';
+      osc.frequency.value = sim.zone.music[n++ % sim.zone.music.length];
       gain.gain.setValueAtTime(0, audio.currentTime);
       gain.gain.linearRampToValueAtTime(0.025, audio.currentTime + 0.1);
       gain.gain.exponentialRampToValueAtTime(0.001, audio.currentTime + 1.8);
@@ -525,7 +560,7 @@ function toggleMusic() {
       gain.connect(audio.destination);
       osc.start();
       osc.stop(audio.currentTime + 2);
-      musicTimer = window.setTimeout(play, 650);
+      musicTimer = window.setTimeout(play,sim.save.zone==='frost'?850:sim.save.zone==='ruins'?500:650);
     };
     play();
   } else clearTimeout(musicTimer);
@@ -537,9 +572,9 @@ function drawMap(canvas: HTMLCanvasElement) {
     h = canvas.height;
   const x = (v: number) => (v / 32 + 0.5) * w,
     z = (v: number) => (v / 32 + 0.5) * h;
-  c.fillStyle = "#83c76a";
+  c.fillStyle = "#"+sim.zone.ground.toString(16).padStart(6,"0");
   c.fillRect(0, 0, w, h);
-  c.fillStyle = "#d8c994";
+  c.fillStyle = "#"+sim.zone.path.toString(16).padStart(6,"0");
   c.fillRect(x(-1.5), 0, (w * 3) / 32, h);
   c.fillRect(0, z(0.5), w, (h * 3) / 32);
   c.fillStyle = "#38c875";
@@ -649,6 +684,8 @@ function frame(now: number) {
   if (hudClock > 0.08) {
     hudClock = 0;
     $(".save-indicator").textContent = sim.connection;
+    $(".realm").childNodes[1].textContent = " "+sim.zone.name.toUpperCase()+" ";
+    $(".map-title").childNodes[1].textContent = " "+sim.zone.name+" ";
     $(".realm small").textContent = sim.online ? `CHANNEL 01 · ${sim.remotePlayers.length + 1} ONLINE` : "PRACTICE · DEVICE SAVE";
     $(".chat-tabs span").textContent = sim.online ? "REALM CHAT" : "LOCAL ADVENTURE";
     const chatInput = $("#chat-input") as HTMLInputElement;
@@ -679,6 +716,8 @@ function frame(now: number) {
     $("#blue-count").textContent = String(
       s.items.find((i) => i.name === "Blue potion")?.count || 0,
     );
+    const nextHint=[['move','Walk with WASD or click the path.'],['attack','Defeat a creature. Step away from red attack warnings.'],['collect','Walk to a drop and press F.'],['craft','Gather materials and craft equipment in Forge.'],['equip','Equip your crafted gear in Bag.'],['travel','Reach the north portal and open Map to travel.']].find(([id])=>!s.tutorial.includes(id));
+    $('.quest-tracker p').textContent=!s.tutorial.includes('skip')&&nextHint?nextHint[1]:'Visit NPC guides for your next adventure.';
     $("#coords").textContent = `${Math.round(sim.x)}, ${Math.round(sim.z)}`;
     $("#quest-progress").textContent = `${Math.min(5, s.kills)}/5`;
     $("#quest-fill").style.width = Math.min(100, (s.kills / 5) * 100) + "%";
@@ -712,6 +751,7 @@ function frame(now: number) {
     $("#target-hud").hidden = !target;
     if (target) {
       $("#target-name").textContent = target.kind;
+      $("#target-hud small").textContent = `Lv ${species[target.kind].level} · ${species[target.kind].boss?"Boss":"Wild monster"}`;
       $("#target-fill").style.width =
         (target.hp / species[target.kind].hp) * 100 + "%";
     }
@@ -724,6 +764,7 @@ animationFrame = requestAnimationFrame(frame);
 Object.defineProperty(window, "mossvale", {
   value: {
     snapshot: () => ({
+      zone:sim.save.zone,equipped:{...sim.save.equipped},tutorial:[...sim.save.tutorial],community:structuredClone(sim.community),
       job: sim.save.job,
       hotbar: [...sim.save.hotbar],
       unlockedSkills: sim.unlockedSkills.map((skill) => skill.id),

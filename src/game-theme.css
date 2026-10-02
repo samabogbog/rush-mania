@@ -1313,3 +1313,28 @@ h2.center {
 body:has(.game-panel) .touch-controls { visibility:hidden; }
 #operations-report { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 360px; overflow: auto; background: #fff2cb; padding: 12px; border: 2px solid #734f33; border-radius: 8px; font-size: 12px; }
 .peer-label span { color: #fff9dc; background: #7861c2; }
+.npc-label { padding: 3px 7px; background: #fff3c5; border: 2px solid #815035; border-radius: 6px; color: #5b3a2b; font-size: 10px; font-weight: 900; }
+.bag-controls { display:flex; gap:12px; margin: 0 0 12px; }
+.bag-controls label { display:flex; gap:6px; align-items:center; font-weight:800; }
+.bag-controls select { padding:4px 7px; border:2px solid #795037; border-radius:5px; background:#fff5cf; color:#583d2c; }
+.recipe-card { display:flex; gap:12px; padding:12px 0; border-bottom:2px solid #e1bd86; }
+.recipe-card>.game-icon { width:52px; height:52px; flex-shrink:0; }
+.recipe-card>span { width:52px; flex-shrink:0; }
+.recipe-card>span .game-icon { width:52px; height:52px; }
+.recipe-card p,.quest-card p,.area-list p { font-size:12px; margin:5px 0; }
+.recipe-card small,.quest-card small { display:block; color:#805740; }
+.recipe-material { display:inline-block; padding:3px 6px; background:#ffdccb; border-radius:4px; margin:4px 4px 4px 0; font-size:11px; }
+.recipe-material.ready { background:#d8ed9e; }
+.recipe-card button,.quest-card button,.area-list button,#skip-tutorial { padding:7px 12px; margin:5px 0; border:2px solid #69492e; border-bottom-width:4px; border-radius:6px; background:#ffc851; color:#51392a; font-weight:900; cursor:pointer; }
+.recipe-card button:disabled,.quest-card button:disabled,.area-list button:disabled { opacity:.55; cursor:default; }
+.equipment-compare { display:grid; gap:6px; margin:10px 0; }
+.equipment-compare span { display:flex; flex-wrap:wrap; justify-content:space-between; gap:5px; }
+.positive { color:#268346; } .negative { color:#c54454; }
+.area-list article,.quest-card { padding:12px; background:#fff3cb; border:2px solid #bc8b5b; border-radius:8px; margin:10px 0; }
+.area-list h3,.quest-card h3 { margin:0; }
+.area-list h3 small { color:#916146; font-size:10px; display:block; }
+.area-materials { display:flex; flex-wrap:wrap; gap:4px; margin:7px 0; }
+.area-materials span { font-size:10px; padding:3px 6px; background:#e3edaa; border-radius:4px; }
+.tutorial-steps { padding-left:25px; font-size:12px; line-height:1.8; }
+.tutorial-steps .done { color:#28874d; }
+.community-shortcuts{display:flex;gap:6px;margin-bottom:8px;justify-content:flex-end}.community-shortcuts button{display:flex;align-items:center;gap:4px;background:#aee7cb;border:2px solid #65422e;border-radius:5px;padding:4px 8px;font-weight:900;box-shadow:0 3px #65422e}.community-shortcuts .game-icon{width:25px;height:25px}.community-row{display:flex;align-items:center;gap:6px;margin:8px 0;flex-wrap:wrap}.party-members{display:grid;gap:7px;background:#d2ecc0;padding:12px;border:2px solid #795638;border-radius:6px}.panel-body label{display:inline-flex;align-items:center;gap:5px;margin:6px}.panel-body input[type=number]{width:82px}.trade-offers{background:#d8c5f1;border:2px solid #765689;padding:6px 12px;border-radius:5px}

@@ -2,6 +2,8 @@ import { classes, type ClassId } from "../game/classes";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { Primitives } from "./primitives";
 import { species, type Kind } from "../simulation";
+import { zones } from "../game/content";
+import {zoneObstacles} from "../game/map-data";
 export type Obstacle = { x: number; z: number; r: number };
 export function buildMap(factory: Primitives, blocking: Obstacle[]) {
   const mesh = factory.mesh.bind(factory),
@@ -212,14 +214,14 @@ export function creature(factory: Primitives, kind: Kind) {
     box = factory.box.bind(factory),
     ball = factory.ball.bind(factory);
   const g = factory.group();
-  if (kind === "Dewdrop") {
+  if (species[kind].family === "slime") {
     const body = ball(0.57, species[kind].color, 0, 0.5, 0, g, 0.82);
     body.scaling.x = 1.12;
     ball(0.16, 0xc8fff1, -0.2, 0.7, 0.3, g, 0.4);
     ball(0.06, 0x273747, -0.2, 0.5, 0.46, g);
     ball(0.06, 0x273747, 0.2, 0.5, 0.46, g);
     box(0.1, 0.03, 0.04, 0x406876, 0, 0.35, 0.5, g);
-  } else if (kind === "Wildcap") {
+  } else if (species[kind].family === "cap") {
     mesh(
       { kind: "cylinder", top: 0.24, bottom: 0.28, h: 0.65, n: 7 },
       0xf4dab7,
@@ -230,7 +232,7 @@ export function creature(factory: Primitives, kind: Kind) {
     );
     const cap = mesh(
       { kind: "sphere", r: 0.66, half: true },
-      0xff597a,
+      species[kind].color,
       0,
       0.65,
       0,
@@ -241,8 +243,24 @@ export function creature(factory: Primitives, kind: Kind) {
     ball(0.09, 0xffe8bf, 0.3, 0.9, 0, g, 0.3);
     ball(0.045, 0x493650, -0.1, 0.42, 0.25, g);
     ball(0.045, 0x493650, 0.1, 0.42, 0.25, g);
+  } else if(species[kind].family==='beast') {
+    ball(.55,species[kind].color,0,.7,0,g,1.05);ball(.45,species[kind].color,0,1.4,.1,g);
+    for(const side of [-1,1]){ball(.14,species[kind].color,side*.3,1.93,.08,g,1.8);ball(.08,0x3c324c,side*.18,1.45,.48,g);ball(.2,0x74476c,side*.23,.17,.15,g);ball(.12,species[kind].color,side*.5,.8,.15,g);}
+    ball(.13,0xffd4e2,0,1.29,.53,g);
+  } else if(species[kind].family==='insect') {
+    ball(.5,species[kind].color,0,.85,0,g,.85);box(.2,.08,.95,0x4b345c,0,.98,0,g);
+    ball(.32,species[kind].color,0,1.22,.32,g);
+    for(const side of [-1,1]){ball(.45,0xe1faff,side*.56,1.05,-.08,g,.2);ball(.06,0x352f49,side*.13,1.23,.62,g);box(.04,.35,.04,0x714967,side*.2,1.62,.29,g);ball(.07,0xffb849,side*.2,1.85,.29,g);}
+  } else if(species[kind].family==='wisp') {
+    ball(.57,species[kind].color,0,.9,0,g,1.1);mesh({kind:'cone',r:.3,h:.7,n:6},species[kind].color,0,.3,0,g);
+    ball(.25,0xebffdf,0,1.0,.5,g,.55);for(const side of [-1,1]){ball(.05,0x433461,side*.14,1.02,.69,g);ball(.16,species[kind].color,side*.63,.9,0,g);}
+  } else if(species[kind].family==='golem') {
+    box(.85,.9,.6,species[kind].color,0,.9,0,g);box(.7,.55,.55,0xd7cfeb,0,1.65,0,g);
+    for(const side of [-1,1]){box(.35,.6,.45,species[kind].color,side*.24,.35,0,g);box(.32,.7,.4,species[kind].color,side*.68,.95,0,g);ball(.07,0xffdc77,side*.18,1.68,.31,g);}
+    const core=mesh({kind:'gem',r:.22},0xffdf76,0,1.1,.34,g);core.material=factory.material(0xffdf76,true);
+    if(species[kind].boss){g.scaling.setAll(1.8);for(const side of [-1,1])mesh({kind:'cone',r:.2,h:.65,n:4},0xffe398,side*.35,2.08,0,g).rotation.z=side*.4;}
   } else {
-    ball(0.45, 0xa2e534, 0, 0.65, 0, g, 1.2);
+    ball(0.45, species[kind].color, 0, 0.65, 0, g, 1.2);
     mesh(
       { kind: "cone", r: 0.34, h: 0.6, n: 5 },
       0x38d771,
@@ -259,4 +277,32 @@ export function creature(factory: Primitives, kind: Kind) {
     ball(0.16, 0x667958, 0.2, 0.14, 0, g);
   }
   return g;
+}
+
+/** Area art stays outside rules; identical collision proxies are imported by the server. */
+export function buildZoneMap(factory:Primitives,blocking:Obstacle[],zone:import('../game/content').ZoneId) {
+ if(zone==='glade'){buildMap(factory,blocking);return;}
+ const data=zones[zone],box=factory.box.bind(factory),ball=factory.ball.bind(factory),mesh=factory.mesh.bind(factory);
+ blocking.push(...zoneObstacles(zone));
+ for(let x=-18;x<=18;x+=2)for(let z=-18;z<=18;z+=2){const tile=mesh({kind:'plane',w:2,h:2},(x+z)%4?data.ground:data.ground^0x040a05,x,.002,z);tile.rotation.x=-Math.PI/2;}
+ for(const [w,h,x,z] of [[3.4,30,0,0],[30,3,0,2]]){const path=mesh({kind:'plane',w,h},data.path,x,.012,z);path.rotation.x=-Math.PI/2;}
+ for(const obstacle of blocking) {
+   if(zone==='town')continue;
+   const g=factory.group('terrain-prop');g.position.set(obstacle.x,0,obstacle.z);
+   if(zone==='orchard'){box(.22,1.4,.22,0x9c6138,0,.7,0,g);ball(.8,0x78ca46,0,1.8,0,g);ball(.15,0xff5e68,.5,1.6,.3,g);ball(.15,0xff7c45,-.4,1.9,.2,g);}
+   else if(zone==='marsh'){ball(.7,0x69ad9c,0,.36,0,g,.5);mesh({kind:'cone',r:.32,h:1.5,n:5},0x87f4d3,0,1.1,0,g);}
+   else if(zone==='frost'){ball(.8,0x83a4c9,0,.48,0,g,.7);ball(.58,0xe9faff,0,.85,0,g,.35);}
+   else {box(1,1.45,1,0x675c93,0,.75,0,g);box(1.13,.14,1.13,0xc6aff1,0,1.5,0,g);}
+ }
+ for(let i=0;i<30;i++) {
+   const angle=i/30*Math.PI*2,x=Math.cos(angle)*18.5,z=Math.sin(angle)*18.5,g=factory.group('area-border');g.position.set(x,0,z);
+   if(zone==='ruins'){box(1.8,3,1.8,0x6b5a96,0,1.5,0,g);box(2,.2,2,0xc4a7e9,0,3,0,g);}
+   else if(zone==='frost'){mesh({kind:'cone',r:1.9,h:4,n:5},0x88a8cb,0,2,0,g);mesh({kind:'cone',r:.95,h:2,n:5},0xf0faff,0,3.1,0,g);}
+   else {box(.28,2,.28,0x96603d,0,1,0,g);ball(1.35,zone==='orchard'?0xeeb445:zone==='marsh'?0x35a9a0:0x44b873,0,2.7,0,g);ball(.9,data.accent,.65,2.6,0,g);}
+ }
+ if(zone==='town') {
+  for(const [x,z] of [[-8,-7],[8,-7],[-8,7],[8,7]]){const g=factory.group('cottage');g.position.set(x,0,z);box(3.3,2.3,3,0xffebc9,0,1.15,0,g);box(3.7,.3,3.5,0xe66b85,0,2.45,0,g);mesh({kind:'cone',r:2.65,h:1.5,n:4},0xf3979c,0,3.1,0,g).rotation.y=Math.PI/4;box(.8,1.3,.07,0x96643e,0,.65,1.55,g);box(.65,.65,.08,0x78d6ef,-1,1.3,1.55,g);box(.65,.65,.08,0x78d6ef,1,1.3,1.55,g);}
+  const fountain=factory.group('fountain');fountain.position.set(0,0,6);mesh({kind:'cylinder',top:1.7,bottom:1.7,h:.5,n:12},0xf2ce94,0,.25,0,fountain);mesh({kind:'cylinder',top:1.4,bottom:1.4,h:.1,n:12},0x60d9ef,0,.53,0,fountain);box(.3,1.1,.3,0xffe8c0,0,1,0,fountain);ball(.25,0x7cddff,0,1.7,0,fountain);}
+ if(zone==='marsh')for(const [x,z] of [[-8,-4],[8,6]]){const pool=mesh({kind:'disc',r:3.1,n:18},0x499fe9,x,.02,z);pool.rotation.x=-Math.PI/2;const bridge=box(6.5,.15,.8,0xc99c68,x,.15,z);bridge.isPickable=false;}
+ const portal=factory.group('travel-portal');portal.position.set(0,0,-12.8);box(.4,2.8,.5,0x9670c2,-1.2,1.4,0,portal);box(.4,2.8,.5,0x9670c2,1.2,1.4,0,portal);box(3,.35,.5,0xd7b4f7,0,2.9,0,portal);const light=mesh({kind:'disc',r:1.1,n:24},data.accent,0,1.5,0,portal);light.material=factory.material(data.accent,true,.8);
 }

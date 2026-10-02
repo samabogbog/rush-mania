@@ -1,3 +1,4 @@
+import {operations} from './operations';
 import { D1RealmStore, type Database } from './store';
 import { GameError, transact } from './realm';
 interface Env { ADMIN_EMAIL?: string; DB: Database; ASSETS?: { fetch(request:Request):Promise<Response> } }
@@ -20,14 +21,7 @@ export default {
       const admin=!!env.ADMIN_EMAIL && request.headers.get('oai-authenticated-user-email')===env.ADMIN_EMAIL;
       if(url.pathname==='/api/operations') {
         if(!admin)throw new GameError('Operator access required',403);
-        const row=await new D1RealmStore(env.DB).read();if(!row)throw new GameError('Realm not initialized',404);
-        if(request.method==='POST') {
-          const backupId=crypto.randomUUID();
-          await env.DB.prepare('INSERT INTO backups (id, revision, state, created_at) VALUES (?, ?, ?, ?)').bind(backupId,row.revision,JSON.stringify(row.realm),Date.now()).run();
-          return Response.json({backupId,revision:row.revision},{headers});
-        }
-        const players=Object.values(row.realm.players);
-        return Response.json({revision:row.revision,players:players.map(p=>({id:p.id,name:p.name,level:p.actor.save.level,job:p.actor.save.job,gold:p.actor.save.gold,kills:p.actor.save.kills,lastSeen:p.lastSeen})),ledger:row.realm.ledger.slice(-100),backup:row.realm}, {headers});
+        return Response.json(await operations(env.DB,input as Record<string,unknown>,request.method==='POST'),{headers});
       }
       const snapshot=await transact(new D1RealmStore(env.DB),{id,name:'Adventurer '+id.slice(-4)},input);
       snapshot.admin=admin;

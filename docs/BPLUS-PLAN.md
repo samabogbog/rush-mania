@@ -64,7 +64,9 @@
 
 **เพิ่มใน online foundation:** Worker/D1 schema & migrations, dispatcher identity, server-owned character/clock/actions, shared monster state, remote-player silhouettes, realm chat, session/replay protection, optimistic persistence, reconnect queue, Practice separation; tests สำหรับ authority/parallel writes/replay และ browser/network interruption
 
-**ยังต้องทำก่อนเรียก B+:** rigged GLB animation production, 4 farming areas+town+dungeon, 24–26 differentiated monster types, quest chains, gear/build/crafting depth, friends/party/team skills, trade/market escrow, tutorial/compare/filter, complete area audio, measured target-device/concurrency budgets, tuning/audit/restore drill and funnel telemetry. การมี server ในรุ่นแรกไม่ทำให้รายการนี้เสร็จเอง
+**เพิ่มใน alpha 0.2:** เมือง+ฟาร์ม 4 แห่ง+party dungeon, มอนสเตอร์ 26 ชนิด, GLB original rigs 29 ตัว/6 clips, gear 18 แบบ/craft/equip/refine, quests/tutorial, inventory filter/sort/compare, party/friends/team buffs/rewards, confirmed trade/market escrow, area music/monster sounds, quality modes, owner maintenance/backup/restore/tuning/bug reports/command metrics
+
+**ยังต้องผ่านก่อนเรียก B+:** human playtest ความสนุกและความชัดของท่า, art/animation polish, progression/monster/build/economy balance ระยะยาว, FPS บนเครื่องเป้าหมายจริง, network/concurrency/soak บน Sites D1 จริงและหลายบัญชีที่ได้รับสิทธิ์, restore drill production, retention/funnel cohort metrics เชิงลึกและแนวปฏิบัติดูแลเกม รายละเอียดสถานะและหลักฐานอยู่ใน [BPLUS-IMPLEMENTATION.md](BPLUS-IMPLEMENTATION.md)
 
 ## สิ่งที่ต้องวัดใน playtest
 

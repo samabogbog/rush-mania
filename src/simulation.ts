@@ -7,43 +7,11 @@ import {
   type ClassId,
   type Skill,
 } from "./game/classes";
-export type Kind = "Dewdrop" | "Wildcap" | "Leafling";
-export const species: Record<
-  Kind,
-  {
-    hp: number;
-    xp: number;
-    color: number;
-    drop: string;
-    icon: string;
-    defense: number;
-  }
-> = {
-  Dewdrop: {
-    defense: 8,
-    hp: 55,
-    xp: 24,
-    color: 0x35d8f4,
-    drop: "Dew jelly",
-    icon: "💧",
-  },
-  Wildcap: {
-    defense: 18,
-    hp: 85,
-    xp: 38,
-    color: 0xd89878,
-    drop: "Forest mushroom",
-    icon: "🍄",
-  },
-  Leafling: {
-    defense: 12,
-    hp: 70,
-    xp: 30,
-    color: 0x9bab69,
-    drop: "Verdant leaf",
-    icon: "🌿",
-  },
-};
+import { species, zones, isZone, questDefinitions, type Kind, type ZoneId, type AttackShape } from "./game/content";
+import { equipment, gearById, gearByName, type GearSlot, type Bonuses } from "./game/equipment";
+import { zoneObstacles } from "./game/map-data";
+export { species } from "./game/content";
+export type { Kind } from "./game/content";
 export type Monster = {
   id: number;
   kind: Kind;
@@ -63,10 +31,15 @@ export type Monster = {
   windup: number;
   aggro: boolean;
   owner?: string;
+  facingX?: number; facingZ?: number; pattern?: number; shape?: AttackShape;
 };
-export type Item = { name: string; icon: string; count: number };
+export type Item = { name: string; icon: string; count: number; id?:string; gearId?:string; refine?:number };
 export type Save = {
   version: number;
+  zone: ZoneId;
+  equipped: Record<GearSlot, string | null>;
+  quests: Record<string,{progress:number;claimed:boolean}>;
+  tutorial: string[];
   job: ClassId;
   hotbar: (string | null)[];
   level: number;
@@ -83,7 +56,11 @@ export type Save = {
   items: Item[];
 };
 const defaults: Save = {
-  version: 2,
+  version: 3,
+  zone: "glade",
+  equipped: {weapon:null,armor:null,accessory:null},
+  quests: {},
+  tutorial: [],
   job: "swordsman",
   hotbar: ["swordsman-1", "swordsman-2", null, null],
   level: 1,
@@ -124,6 +101,10 @@ export class Simulation {
   } | null = null;
   actionTime = 0;
   hurtTime = 0;
+  deathTime = 0;
+  onSupport?: (skill: Skill) => void;
+  balance:Record<string,Partial<Pick<(typeof species)[Kind],"hp"|"atk"|"defense"|"xp"|"gold">>> = {};
+  monsterSpec(kind:Kind){return {...species[kind],...this.balance[kind]};}
   monsters: Monster[] = [];
   loot: { x: number; z: number; name: string; icon: string }[] = [];
   obstacles: { x: number; z: number; r: number }[] = [];
@@ -142,7 +123,11 @@ export class Simulation {
       this.save = structuredClone(defaults);
     }
     this.save.job = isClass(this.save.job) ? this.save.job : "swordsman";
-    this.save.version = 2;
+    this.save.version = 3;
+    this.save.zone = isZone(this.save.zone) ? this.save.zone : "glade";
+    this.save.equipped = {...defaults.equipped,...this.save.equipped};
+    this.save.quests = this.save.quests || {};
+    this.save.tutorial = Array.isArray(this.save.tutorial) ? this.save.tutorial : [];
     this.save.level = Math.max(
       1,
       Math.min(MAX_LEVEL, Math.floor(Number(this.save.level) || 1)),
@@ -167,64 +152,86 @@ export class Simulation {
       Math.min(this.maxHp, Number(this.save.hp) || this.maxHp),
     );
     this.save.mp = Math.max(0, Math.min(this.maxMp, Number(this.save.mp) || 0));
-    const positions = [
-      [-3, 4],
-      [4, 3],
-      [-6, -1],
-      [7, -3],
-      [2, -5],
-      [-9, 7],
-      [9, 5.5],
-      [-4, -7],
-      [11, 1],
-      [-11, -4],
-      [5, 10],
-      [-1, 10],
-      [-8, -10],
-      [10, -9],
-      [0, -11],
-    ];
-    positions.forEach(([x, z], id) => {
-      const kind = (["Dewdrop", "Wildcap", "Leafling"] as Kind[])[id % 3];
-      this.monsters.push({
-        id,
-        kind,
-        x,
-        z,
-        hp: species[kind].hp,
-        alive: true,
-        respawn: 0,
-        attack: 0,
-        homeX: x,
-        homeZ: z,
-        stun: 0,
-        slow: 0,
-        poison: 0,
-        poisonTimer: 0,
-        poisonDamage: 0,
-        windup: 0,
-        aggro: false,
-      });
-    });
+    this.populateZone(this.save.zone);
   }
+  populateZone(zone: ZoneId) {
+    const positions=[[-3,4],[4,3],[-6,-1],[7,-3],[2,-5],[-9,7],[9,5.5],[-4,-7],[11,1],[-11,-4],[5,10],[-1,10],[-8,-10],[10,-9],[0,-11]];
+    const kinds=zones[zone].species;
+    this.monsters=[];
+    if(kinds.length) {
+      const entries=zone==='glade' ? [...positions.map((pos,id)=>({pos,kind:kinds[id%3]})),{pos:[-11,11],kind:kinds[3]},{pos:[11,11],kind:kinds[4]}] : zone==='ruins' ? [...positions.map((pos,id)=>({pos,kind:kinds[id%5]})),{pos:[0,-7],kind:kinds[5]}] : positions.map((pos,id)=>({pos,kind:kinds[id%kinds.length]}));
+      for(const {pos:[x,z],kind} of entries) this.monsters.push({id:this.monsters.length,kind,x,z,hp:this.monsterSpec(kind).hp,alive:true,respawn:0,attack:0,homeX:x,homeZ:z,stun:0,slow:0,poison:0,poisonTimer:0,poisonDamage:0,windup:0,aggro:false,pattern:0});
+    }
+    this.obstacles=zoneObstacles(zone);
+  }
+  get zone() { return zones[this.save.zone]; }
+  get refinement() {return this.save.items.find(i=>i.id===this.save.equipped.weapon)?.refine || (this.save.equipped.weapon?0:this.save.weapon);}
+  get gearBonuses(): Bonuses {
+    const out:Bonuses={};
+    for(const id of Object.values(this.save.equipped)) {
+      const item=this.save.items.find(i=>i.id===id&&i.count===1), gear=item?.gearId?gearById(item.gearId):undefined;
+      if(gear && (!gear.job || gear.job===this.save.job)) for(const [key,value] of Object.entries(gear.bonuses)) out[key as keyof Bonuses]=(out[key as keyof Bonuses]||0)+value;
+    }
+    return out;
+  }
+  get agility() { return this.save.stats.agi+(this.gearBonuses.agi||0); }
+  toggleTutorial(){if(this.save.tutorial.includes('skip'))this.save.tutorial=this.save.tutorial.filter(s=>s!=='skip');else this.save.tutorial.push('skip');this.persist();}
+  markTutorial(step:string) {if(!this.save.tutorial.includes(step))this.save.tutorial.push(step)}
+  progressQuest(kind:string,amount=1) {
+    for(const quest of questDefinitions) if(quest.kind===kind && (kind==='craft'||quest.zone===this.save.zone)) {
+      const state=this.save.quests[quest.id] ??= {progress:0,claimed:false};state.progress=Math.min(quest.target,state.progress+amount);
+    }
+  }
+  claimQuest(id:string) {
+    const quest=questDefinitions.find(q=>q.id===id), state=this.save.quests[id];
+    if(!quest||!state||state.claimed||state.progress<quest.target)return false;
+    if(!this.addItem(quest.item,"🌿",quest.count))return false;state.claimed=true;this.save.gold+=quest.gold;this.addExperience(quest.xp);this.onEvent(`Quest complete: ${quest.name}`,"reward");this.persist();return true;
+  }
+  travel(zone:ZoneId,allowDungeon=false) {
+    if(!isZone(zone)||zone===this.save.zone)return false;
+    if(this.target!==null||this.cast||this.monsters.some(m=>m.alive&&m.aggro&&(!this.actorId||m.owner===this.actorId))){this.onEvent("Leave combat before travelling.");return false;}
+    if(this.save.level<zones[zone].level){this.onEvent(`Reach Lv ${zones[zone].level} to enter ${zones[zone].name}.`);return false;}
+    if(zone==='ruins'&&this.online&&!allowDungeon){this.onEvent("Gather a party of 2–4 before entering the ruins.");return false;}
+    if(Math.hypot(this.x,this.z+11)>3){this.onEvent("Walk to the glowing north portal to travel.");this.goTo(0,-11);return false;}
+    this.save.zone=zone;this.populateZone(zone);this.x=0;this.z=-9;this.clearTarget();this.destination=null;this.route=[];this.auto=false;this.loot=[];this.onEvent(`Arrived in ${zones[zone].name}`,"zone");this.markTutorial('travel');this.persist();return true;
+  }
+  interact(id:string) {
+    const npc=this.zone.npcs.find(n=>n.id===id);if(!npc)return;
+    if(Math.hypot(this.x-npc.x,this.z-npc.z)>3){this.goTo(npc.x,npc.z);this.onEvent("Walk closer to speak with "+npc.name);return;}
+    this.markTutorial("talk");this.onEvent(npc.panel,"npc");this.persist();
+  }
+  craft(id:string) {
+    const gear=gearById(id);
+    if(!gear||this.save.level<gear.level){this.onEvent("You have not reached this recipe’s level.");return false;}
+    if(this.save.items.filter(i=>i.count>0).length>=60){this.onEvent("Make room in your bag first.");return false;}
+    if(this.save.gold<gear.cost||gear.materials.some(([name,count])=>(this.save.items.find(i=>i.name===name)?.count||0)<count)){this.onEvent("Gather the recipe’s materials and zeny first.");return false;}
+    this.save.gold-=gear.cost;for(const [name,count] of gear.materials)this.save.items.find(i=>i.name===name)!.count-=count;
+    this.addItem(gear.name,gear.icon);this.progressQuest('craft');this.markTutorial('craft');this.onEvent(`Crafted ${gear.name}`,"reward");this.persist();return true;
+  }
+  equip(id:string) {
+    const item=this.save.items.find(i=>i.id===id&&i.count===1),gear=item?.gearId?gearById(item.gearId):undefined;
+    if(!gear||this.save.level<gear.level||(gear.job&&gear.job!==this.save.job)){this.onEvent("This equipment does not match your class or level.");return false;}
+    this.save.equipped[gear.slot]=id;this.save.hp=Math.min(this.maxHp,this.save.hp);this.save.mp=Math.min(this.maxMp,this.save.mp);this.markTutorial('equip');this.onEvent(`Equipped ${gear.name}`,"reward");this.persist();return true;
+  }
+  unequip(slot:GearSlot) { if(!['weapon','armor','accessory'].includes(slot))return;this.save.equipped[slot]=null;this.save.hp=Math.min(this.maxHp,this.save.hp);this.save.mp=Math.min(this.maxMp,this.save.mp);this.persist(); }
   get maxHp() {
-    return 100 + this.save.stats.vit * 4 + (this.save.level - 1) * 12;
+    return 100 + (this.save.stats.vit+(this.gearBonuses.vit||0)) * 4 + (this.save.level - 1) * 12+(this.gearBonuses.hp||0);
   }
   get maxMp() {
-    return 60 + (this.save.level - 1) * 8;
+    return 60 + (this.save.level - 1) * 8+(this.gearBonuses.mp||0);
   }
   get maxXp() {
     return 80 + this.save.level * 40;
   }
   get damage() {
     const primary =
-      this.save.job === "archer" ? this.save.stats.agi : this.save.stats.str;
+      this.save.job === "archer" ? this.agility : this.save.stats.str+(this.gearBonuses.str||0);
     return (
-      12 + primary * 2 + this.save.weapon * 7 + (this.save.level - 1) * 1.5
+      12 + primary * 2 + this.refinement * 7 + (this.save.level - 1) * 1.5+(this.gearBonuses.atk||0)
     );
   }
   get defense() {
-    return this.save.stats.vit * 2 + this.save.level * 0.5;
+    return (this.save.stats.vit+(this.gearBonuses.vit||0)) * 2 + this.save.level * 0.5+(this.gearBonuses.def||0);
   }
   get job() {
     return classes[this.save.job];
@@ -247,6 +254,8 @@ export class Simulation {
     }
     if (job === this.save.job) return true;
     this.save.job = job;
+    const worn=this.save.items.find(i=>i.id===this.save.equipped.weapon);
+    if(worn?.gearId&&gearById(worn.gearId)?.job!==job)this.save.equipped.weapon=null;
     this.save.hotbar = [skills[job][0].id, skills[job][1].id, null, null];
     this.skillCooldowns = {};
     this.cooldowns.fill(0);
@@ -296,14 +305,19 @@ export class Simulation {
     this.storage?.setItem("mossvale-save", JSON.stringify(this.save));
   }
   addItem(name: string, icon: string, count = 1) {
+    const gear=gearByName(name);
+    const existing=!gear&&this.save.items.find(i=>i.name===name);if(!existing&&this.save.items.filter(i=>i.count>0).length+(gear?count:1)>60){this.onEvent("Bag full. Make room before collecting.");return false;}
+    if(gear){for(let n=0;n<count;n++)this.save.items.push({id:crypto.randomUUID(),gearId:gear.id,refine:0,name,icon:gear.icon,count:1});return true;}
     const item = this.save.items.find((i) => i.name === name);
     if (item) item.count += count;
     else this.save.items.push({ name, icon, count });
+    return true;
   }
   usePotion(blue = false) {
     const item = this.save.items.find(
       (i) => i.name === (blue ? "Blue potion" : "Red potion"),
     );
+    if(this.deathTime>0)return;
     if (!item?.count) {
       this.onEvent("No potions left. Visit the village merchant.");
       return;
@@ -344,10 +358,12 @@ export class Simulation {
   }
   actorId = "";
   enemyFilter: (monster: Monster) => boolean = () => true;
-  onKill?: (monster: Monster) => void;
+  onKill?: (monster: Monster) => boolean | void;
   admin = false;
   online = false;
   connection = "Practice · saved on this device";
+  community: import("../server/protocol").Snapshot["community"];
+  communityAction(_type:string,..._args:unknown[]){this.onEvent("Community features require the online realm.");}
   remotePlayers: { id: string; name: string; job: ClassId; x: number; z: number; hp: number; maxHp: number }[] = [];
   goTo(x: number, z: number) {
     if (!Number.isFinite(x) || !Number.isFinite(z)) return;
@@ -359,18 +375,18 @@ export class Simulation {
     if (!["Red potion", "Blue potion"].includes(name)) return;
     const blue = name === "Blue potion", cost = blue ? 20 : 15;
     if (this.save.gold < cost) { this.onEvent("Not enough zeny"); return; }
-    this.save.gold -= cost; this.addItem(name, blue ? "💠" : "🧪"); this.persist(); this.onEvent("Potion added to your bag", "reward");
+    if(!this.addItem(name, blue ? "💠" : "🧪"))return;this.save.gold -= cost; this.persist(); this.onEvent("Potion added to your bag", "reward");
   }
   sell() {
     let count = 0;
-    this.save.items = this.save.items.filter(i => { if (!i.name.includes("potion")) { count += i.count; return false; } return true; });
+    this.save.items = this.save.items.filter(i => { if (!i.name.includes("potion") && !i.gearId) { count += i.count; return false; } return true; });
     this.save.gold += count * 6; this.persist(); this.onEvent(count ? `Sold ${count} materials for ${count * 6} z` : "Gather monster drops to sell them.", "reward");
   }
   hit(m: Monster, amount: number) {
     if (!m.alive) return;
     const variance = 0.9 + this.random() * 0.2;
     const critical =
-      this.random() < Math.min(0.35, 0.05 + this.save.stats.agi * 0.002);
+      this.random() < Math.min(0.35, 0.05 + this.agility * 0.002);
     amount = Math.max(
       1,
       Math.round(
@@ -379,30 +395,35 @@ export class Simulation {
             variance *
             (critical ? 1.5 : 1) *
             (1 + (this.fury.time > 0 ? this.fury.power : 0)),
-          species[m.kind].defense,
+          this.monsterSpec(m.kind).defense,
         ),
       ),
     );
     m.aggro = true;
     m.owner = this.actorId;
     this.actionTime = 0.25;
+    this.markTutorial("attack");
     m.hp -= amount;
     this.onEvent(String(amount), "damage", m.x, m.z);
     if (m.hp <= 0) {
       m.alive = false;
       m.respawn = 13;
-      this.onKill?.(m);
-      this.addExperience(species[m.kind].xp);
-      this.save.gold += 8;
+      const shared=this.onKill?.(m);
+      if(!shared){
+      this.addExperience(this.monsterSpec(m.kind).xp);
+      this.save.gold += this.monsterSpec(m.kind).gold;
+      this.progressQuest("kills");if(this.monsterSpec(m.kind).boss)this.progressQuest("boss");this.markTutorial("attack");
       this.save.kills++;
       this.loot.push({
         x: m.x,
         z: m.z,
-        name: species[m.kind].drop,
-        icon: species[m.kind].icon,
+        name: this.monsterSpec(m.kind).drop,
+        icon: this.monsterSpec(m.kind).icon,
       });
+      this.loot=this.loot.slice(-40);
+      }
       this.onEvent(
-        `Defeated ${m.kind} · +${species[m.kind].xp} EXP · +8 z`,
+        `Defeated ${m.kind} · +${this.monsterSpec(m.kind).xp} EXP · +${this.monsterSpec(m.kind).gold} z`,
         "reward",
       );
       this.target = null;
@@ -438,6 +459,7 @@ export class Simulation {
       this.onEvent(`${skill.name} unlocks at level ${skill.level}.`);
       return false;
     }
+    if(this.deathTime>0)return false;
     const self = ["heal", "guard", "fury"].includes(skill.effect);
     if (!self && this.target === null) this.nearest();
     const target = this.monsters.find(
@@ -456,6 +478,7 @@ export class Simulation {
       this.onEvent("Not enough mana.");
       return false;
     }
+    this.markTutorial("skill");
     this.save.mp -= skill.mp;
     this.skillCooldowns[id] = skill.cooldown;
     if (skill.cast)
@@ -475,6 +498,7 @@ export class Simulation {
       (monster) => monster.id === targetId && monster.alive,
     );
     this.actionTime = 0.35;
+    if(["heal","guard","fury"].includes(skill.effect))this.onSupport?.(skill);
     if (skill.effect === "heal") {
       this.save.hp = Math.min(
         this.maxHp,
@@ -535,19 +559,21 @@ export class Simulation {
     let count = 0;
     this.loot = this.loot.filter((l) => {
       if (Math.hypot(l.x - this.x, l.z - this.z) < 3.2) {
-        this.addItem(l.name, l.icon);
+        if(!this.addItem(l.name, l.icon))return true;
         count++;
         return false;
       }
       return true;
     });
     if (count) {
+      this.markTutorial("collect");
       this.onEvent(`Picked up ${count} item${count > 1 ? "s" : ""}`, "reward");
       this.persist();
     } else this.onEvent("No drops nearby. Walk closer to the glowing loot.");
   }
   upgrade() {
-    const cost = 60 + this.save.weapon * 40;
+    const cost = 60 + this.refinement * 40;
+    if(this.refinement>=20){this.onEvent("Refinement limit reached (+20).");return;}
     if (this.save.gold < cost) {
       this.onEvent(
         `You need ${cost} z to refine your ${this.job.weapon.toLowerCase()}`,
@@ -555,8 +581,10 @@ export class Simulation {
       return;
     }
     this.save.gold -= cost;
-    this.save.weapon++;
-    this.onEvent(`${this.job.weapon} refined to +${this.save.weapon}`, "level");
+    const equipped=this.save.items.find(i=>i.id===this.save.equipped.weapon);
+    if(equipped)equipped.refine=(equipped.refine||0)+1;else this.save.weapon++;
+    this.markTutorial("refine");
+    this.onEvent(`${this.job.weapon} refined to +${this.refinement}`, "level");
     this.persist();
   }
   stat(key: "str" | "vit" | "agi") {
@@ -655,6 +683,7 @@ export class Simulation {
   }
   tick(dt: number, dx: number, dz: number) {
     if (this.paused) return;
+    if(this.deathTime>0){this.deathTime=Math.max(0,this.deathTime-dt);if(this.deathTime===0){this.save.hp=this.maxHp;this.save.mp=this.maxMp;this.x=0;this.z=2;this.onEvent("Rescued at camp", "level");this.persist();}return;}
     this.time += dt;
     this.routeTimer -= dt;
     this.attackTimer -= dt;
@@ -684,6 +713,7 @@ export class Simulation {
     }
     this.save.mp = Math.min(this.maxMp, this.save.mp + dt * 0.7);
     if (dx || dz) {
+      this.markTutorial("move");
       this.target = null;
       this.destination = null;
       const len = Math.hypot(dx, dz);
@@ -714,6 +744,7 @@ export class Simulation {
           } else this.route = [];
           const nd = Math.hypot(next.x - this.x, next.z - this.z);
           if (nd > 0.02) {
+            this.markTutorial("move");
             const movement = Math.min(nd, dt * 4.4);
             this.x += ((next.x - this.x) / nd) * movement;
             this.z += ((next.z - this.z) / nd) * movement;
@@ -721,7 +752,7 @@ export class Simulation {
         } else if (m && this.attackTimer <= 0 && !this.cast) {
           this.hit(m, this.damage);
           this.attackTimer =
-            this.job.speed / (1 + (this.save.stats.agi - 5) * 0.04);
+            this.job.speed / (1 + (this.agility - 5) * 0.04);
         } else if (!m) this.destination = null;
       } else if (this.auto) this.nearest();
     }
@@ -740,7 +771,7 @@ export class Simulation {
         m.respawn -= dt;
         if (m.respawn <= 0) {
           m.alive = true;
-          m.hp = species[m.kind].hp;
+          m.hp = this.monsterSpec(m.kind).hp;
           m.x = m.homeX;
           m.z = m.homeZ;
           m.stun = m.slow = m.poison = m.windup = 0;
@@ -765,9 +796,11 @@ export class Simulation {
         if (m.windup > 0) {
           m.windup -= dt;
           if (m.windup <= 0) {
-            if (d < 2.2) {
-              const atk =
-                (7 + Math.floor(m.id / 5)) * (0.9 + this.random() * 0.2);
+            const spec=this.monsterSpec(m.kind),range=spec.boss?(m.shape==='line'?6:m.shape==='cone'?4:3.5):spec.range;
+            const rx=this.x-m.x,rz=this.z-m.z,forward=rx*(m.facingX??0)+rz*(m.facingZ??1),side=Math.abs(rx*(m.facingZ??1)-rz*(m.facingX??0));
+            const connects=m.shape==='line'?forward>=0&&forward<=range&&side<.9:m.shape==='cone'?d<=range&&(d<.01||forward/d>.65):d<range;
+            if (connects) {
+              const atk = spec.atk * (0.9 + this.random() * 0.2);
               const amount = Math.max(
                 1,
                 Math.round(
@@ -779,11 +812,17 @@ export class Simulation {
               this.hurtTime = 0.25;
               this.onEvent(`−${amount}`, "hurt", this.x, this.z);
             } else this.onEvent("Dodged!", "reward");
-            m.attack = 1.4;
+            if(m.shape==='line') {
+              const nx=m.x+(m.facingX??0)*range*.6,nz=m.z+(m.facingZ??1)*range*.6;
+              if(Math.abs(nx)<14&&Math.abs(nz)<13&&!this.blocked(nx,nz)){m.x=nx;m.z=nz;}
+            }
+            m.attack = spec.boss?2.2:1.4;
           }
         } else {
-          if (d > 1.6) {
-            const step = dt * (m.slow > 0 ? 0.7 : 1.4);
+          const spec=this.monsterSpec(m.kind);
+          if (d > Math.min(spec.range*.75,2.2)) {
+            const speed=spec.family==='beast'?2:spec.family==='golem'?1:1.4;
+            const step = dt * (m.slow > 0 ? speed*.5 : speed);
             const nx = m.x + ((this.x - m.x) / d) * step,
               nz = m.z + ((this.z - m.z) / d) * step;
             if (!this.blocked(nx, nz)) {
@@ -792,7 +831,11 @@ export class Simulation {
             }
           }
           m.attack -= dt;
-          if (d < 2.2 && m.attack <= 0) m.windup = 0.65;
+          if (d < spec.range+.2 && m.attack <= 0) {
+            m.shape=spec.boss?(['circle','line','cone'] as const)[(m.pattern||0)%3]:spec.shape;
+            m.pattern=(m.pattern||0)+1;m.windup=spec.windup;this.onEvent(m.kind,"telegraph",m.x,m.z);
+            m.facingX=(this.x-m.x)/(d||1);m.facingZ=(this.z-m.z)/(d||1);
+          }
         }
       } else {
         m.aggro = false;
@@ -802,10 +845,7 @@ export class Simulation {
       }
     }
     if (this.save.hp <= 0) {
-      this.save.hp = this.maxHp;
-      this.save.mp = this.maxMp;
-      this.x = 0;
-      this.z = 2;
+      this.save.hp = 0;this.deathTime=1.2;
       this.target = null;
       this.cast = null;
       this.destination = null;

@@ -1,5 +1,7 @@
 /** Only this boundary is shared by the DOM HUD and the rendering engine. */
 export interface GameWorld {
+  quality:"auto"|"high"|"low";
+  setQuality(quality:"auto"|"high"|"low"):void;
   angle: number;
   zoom: number;
   blocking: { x: number; z: number; r: number }[];
