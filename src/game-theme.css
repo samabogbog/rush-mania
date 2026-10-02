@@ -1338,3 +1338,65 @@ body:has(.game-panel) .touch-controls { visibility:hidden; }
 .tutorial-steps { padding-left:25px; font-size:12px; line-height:1.8; }
 .tutorial-steps .done { color:#28874d; }
 .community-shortcuts{display:flex;gap:6px;margin-bottom:8px;justify-content:flex-end}.community-shortcuts button{display:flex;align-items:center;gap:4px;background:#aee7cb;border:2px solid #65422e;border-radius:5px;padding:4px 8px;font-weight:900;box-shadow:0 3px #65422e}.community-shortcuts .game-icon{width:25px;height:25px}.community-row{display:flex;align-items:center;gap:6px;margin:8px 0;flex-wrap:wrap}.party-members{display:grid;gap:7px;background:#d2ecc0;padding:12px;border:2px solid #795638;border-radius:6px}.panel-body label{display:inline-flex;align-items:center;gap:5px;margin:6px}.panel-body input[type=number]{width:82px}.trade-offers{background:#d8c5f1;border:2px solid #765689;padding:6px 12px;border-radius:5px}
+/* Six equipment slots and three 8×6 inventory pages. */
+.game-panel.bag-panel { width:min(950px,calc(100vw - 24px)); }
+.bag-layout { display:grid;grid-template-columns:210px minmax(0,1fr);gap:22px; }
+.worn-equipment { padding:0 16px 0 0;border-right:2px solid #dec18d; }
+.worn-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px; }
+.worn-slot { display:grid;justify-items:center;gap:5px;min-width:0; }
+.worn-slot label { font-size:11px;font-weight:900;color:#947147;text-transform:uppercase; }
+.worn-slot .item { width:70px;height:70px; }
+.worn-slot .remove-gear { font-size:10px;padding:3px 10px;background:#efdeb5;border:1px solid #ba975d;border-radius:3px;color:#745231; }
+.empty-slot-caption { font-size:10px;color:#aa8c5b; }
+.worn-empty .game-icon { opacity:.26;filter:grayscale(1); }
+.worn-summary { display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:18px;font-size:11px;font-weight:900; }
+.worn-summary span { display:flex;justify-content:space-between;background:#eddbac;padding:6px;border-radius:3px; }
+.bag-hint { font-size:11px;line-height:1.5;color:#937045; }
+.bag-panel .inventory-grid { display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px;margin-top:14px; }
+.bag-panel .inventory-grid .item { height:auto;width:100%;aspect-ratio:1;min-width:0;padding:3px; }
+.bag-pages { display:flex;align-items:center;justify-content:center;gap:8px;margin-top:18px; }
+.bag-pages button { width:34px;height:32px;background:#f0dbac;border:2px solid #b7945e;border-radius:4px;font-weight:900; }
+.bag-pages button[aria-current="page"] { background:#ffd55b;border-color:#906638;box-shadow:0 2px #c4943e; }
+.bag-pages span { margin-left:8px;font-size:10px;font-weight:900;color:#a27b47; }
+.item.rarity-common { --rarity-color:#aa986f; }
+.item.rarity-rare,.item-tooltip.rarity-rare { --rarity-color:#3889d8; }
+.item.rarity-epic,.item-tooltip.rarity-epic { --rarity-color:#a35ad2; }
+.item.rarity-legend,.item-tooltip.rarity-legend { --rarity-color:#e6a320; }
+.item:not(.empty) { border-color:var(--rarity-color,#c69e60); }
+.item.rarity-rare { background:#cfebf8; }
+.item.rarity-epic { background:#e5cef8; }
+.item.rarity-legend { background:#ffe38b; }
+.item.equipped small { background:#b9ee8b; }
+.item-tooltip { position:fixed;z-index:100;pointer-events:none;width:min(330px,calc(100vw - 16px));max-height:calc(100vh - 16px);overflow:hidden;background:#fff1cc;border:3px solid var(--rarity-color,#8a603a);border-radius:7px;box-shadow:0 5px #70502c,0 10px 26px #33251444;padding:14px;color:#6c492b;font-family:Nunito,sans-serif;font-size:12px;line-height:1.4; }
+.item-tooltip[hidden] { display:none; }
+.tooltip-title { display:flex;align-items:center;gap:10px; }
+.tooltip-title .game-icon { width:48px;height:48px;flex:0 0 48px; }
+.tooltip-title strong { display:block;font-size:15px; }
+.tooltip-title small { display:block;color:var(--rarity-color,#a47c4a);font-weight:900;font-size:10px; }
+.item-tooltip p { margin:7px 0;color:#977346; }
+.tooltip-section { margin-top:9px;padding-top:8px;border-top:1px solid #dfc18b;font-size:9px;letter-spacing:1px;font-weight:900;color:#9c7847; }
+.item-tooltip .equipment-compare { gap:3px;margin:5px 0;font-size:11px; }
+.item-tooltip .equipment-compare span { flex-wrap:nowrap; }
+.item-tooltip .equipment-compare em { margin-left:auto;font-style:normal;font-weight:900; }
+.tooltip-instruction { font-weight:900;color:#4c863d!important; }
+.drop-source { display:block;margin-top:9px;color:#b07d31;font-size:10px; }
+.secondary-character-stats { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;font-size:11px; }
+.secondary-character-stats span { display:flex;justify-content:space-between;background:#efdfb7;border-radius:3px;padding:7px; }
+@media(max-width:650px) {
+ .game-panel.bag-panel { width:calc(100vw - 16px); }
+ .bag-panel .panel-body { padding:12px; }
+ .bag-layout { grid-template-columns:1fr;gap:14px; }
+ .worn-equipment { padding:0 0 12px;border-right:0;border-bottom:2px solid #dec18d; }
+ .worn-grid { grid-template-columns:repeat(6,minmax(0,1fr));gap:5px; }
+ .worn-slot .item { width:100%;height:auto;aspect-ratio:1; }
+ .worn-slot label { font-size:8px; }
+ .worn-slot .remove-gear { padding:3px;font-size:8px; }
+ .worn-summary { margin-top:12px;grid-template-columns:repeat(4,1fr);font-size:9px;gap:4px; }
+ .bag-hint { margin-bottom:0;font-size:10px; }
+ .bag-panel .inventory-grid { gap:4px; }
+ .bag-panel .inventory-grid .item { padding:0; }
+ .bag-panel .item b { font-size:8px;bottom:1px;right:1px; }
+ .bag-controls { gap:8px;font-size:11px; }
+}
+.set-progress { display:flex;justify-content:space-between;margin-top:7px;font-size:11px;font-weight:900;color:#56833f; }
+.set-bonus { display:block;margin-top:3px;color:#658b43;font-size:10px; }

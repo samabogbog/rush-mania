@@ -8,7 +8,7 @@ import {
   type Skill,
 } from "./game/classes";
 import { species, zones, isZone, questDefinitions, type Kind, type ZoneId, type AttackShape } from "./game/content";
-import { equipment, gearById, gearByName, type GearSlot, type Bonuses } from "./game/equipment";
+import { equipment, gearById, gearByName, type GearSlot, type Bonuses, type Rarity, BAG_CAPACITY, gearSlots, itemBonuses, rollGear, rollEquipmentDrop, setBonuses, gearSets } from "./game/equipment";
 import { zoneObstacles } from "./game/map-data";
 export { species } from "./game/content";
 export type { Kind } from "./game/content";
@@ -33,7 +33,7 @@ export type Monster = {
   owner?: string;
   facingX?: number; facingZ?: number; pattern?: number; shape?: AttackShape;
 };
-export type Item = { name: string; icon: string; count: number; id?:string; gearId?:string; refine?:number };
+export type Item = { name: string; icon: string; count: number; id?:string; gearId?:string; refine?:number; rarity?:Rarity; secondary?:Bonuses };
 export type Save = {
   version: number;
   zone: ZoneId;
@@ -56,9 +56,9 @@ export type Save = {
   items: Item[];
 };
 const defaults: Save = {
-  version: 3,
+  version: 4,
   zone: "glade",
-  equipped: {weapon:null,armor:null,accessory:null},
+  equipped: {weapon:null,helmet:null,armor:null,gloves:null,boots:null,accessory:null},
   quests: {},
   tutorial: [],
   job: "swordsman",
@@ -108,7 +108,7 @@ export class Simulation {
   balance:Record<string,Partial<Pick<(typeof species)[Kind],"hp"|"atk"|"defense"|"xp"|"gold">>> = {};
   monsterSpec(kind:Kind){return {...species[kind],...this.balance[kind]};}
   monsters: Monster[] = [];
-  loot: { x: number; z: number; name: string; icon: string }[] = [];
+  loot: { x: number; z: number; name: string; icon: string; item?:Item }[] = [];
   obstacles: { x: number; z: number; r: number }[] = [];
   route: { x: number; z: number }[] = [];
   routeTimer = 0;
@@ -125,7 +125,7 @@ export class Simulation {
       this.save = structuredClone(defaults);
     }
     this.save.job = isClass(this.save.job) ? this.save.job : "swordsman";
-    this.save.version = 3;
+    this.save.version = 4;
     this.save.zone = isZone(this.save.zone) ? this.save.zone : "glade";
     this.save.equipped = {...defaults.equipped,...this.save.equipped};
     this.save.quests = this.save.quests || {};
@@ -168,14 +168,28 @@ export class Simulation {
   }
   get zone() { return zones[this.save.zone]; }
   get refinement() {return this.save.items.find(i=>i.id===this.save.equipped.weapon)?.refine || (this.save.equipped.weapon?0:this.save.weapon);}
+  private bonusCache?:{save:Save;key:string;value:Bonuses};
   get gearBonuses(): Bonuses {
-    const out:Bonuses={};
+    const key=this.save.job+':'+Object.values(this.save.equipped).join(',');
+    if(this.bonusCache?.save===this.save&&this.bonusCache.key===key)return this.bonusCache.value;
+    const out:Bonuses={},sets=new Map<string,number>();
     for(const id of Object.values(this.save.equipped)) {
       const item=this.save.items.find(i=>i.id===id&&i.count===1), gear=item?.gearId?gearById(item.gearId):undefined;
-      if(gear && (!gear.job || gear.job===this.save.job)) for(const [key,value] of Object.entries(gear.bonuses)) out[key as keyof Bonuses]=(out[key as keyof Bonuses]||0)+value;
+      if(gear?.setId&&(!gear.job||gear.job===this.save.job))sets.set(gear.setId,(sets.get(gear.setId)||0)+1);
+      if(gear && (!gear.job || gear.job===this.save.job)) for(const [key,value] of Object.entries(itemBonuses(item!))) out[key as keyof Bonuses]=(out[key as keyof Bonuses]||0)+value;
     }
-    return out;
+    for(const [id,count] of sets)for(const [stat,value] of Object.entries(setBonuses(id,count)))out[stat as keyof Bonuses]=(out[stat as keyof Bonuses]||0)+value;
+    this.bonusCache={save:this.save,key,value:out};return out;
   }
+  get activeSets(){return gearSets.map(set=>({set,pieces:Object.values(this.save.equipped).filter(id=>this.save.items.some(i=>i.id===id&&gearById(i.gearId||'')?.setId===set.id)).length})).filter(s=>s.pieces>0)}
+  get criticalChance(){return Math.min(.6,.05+this.agility*.002+(this.gearBonuses.critChance||0)/100)}
+  get criticalMultiplier(){return 1.5+(this.gearBonuses.critDamage||0)/100}
+  get movementSpeed(){return 4.4*(1+Math.min(.5,(this.gearBonuses.moveSpeed||0)/100))}
+  get attackInterval(){return this.job.speed/((1+(this.agility-5)*.04)*(1+Math.min(1,(this.gearBonuses.attackSpeed||0)/100)))}
+  get cooldownMultiplier(){return 1-Math.min(.4,(this.gearBonuses.cooldownReduction||0)/100)}
+  get healingMultiplier(){return 1+Math.min(1,(this.gearBonuses.healingBonus||0)/100)}
+  addEquipmentItem(item:Item){if(this.save.items.some(i=>i.id===item.id))return false;if(this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY){this.onEvent('Bag full. Make room before collecting.');return false;}this.save.items.push(structuredClone(item));return true;}
+  rollEquipmentLoot(monster:Monster):Item|undefined {const rolled=rollEquipmentDrop(this.monsterSpec(monster.kind).level,!!this.monsterSpec(monster.kind).boss,this.random);if(!rolled)return;const gear=gearById(rolled.gearId!)!;return {...rolled,name:gear.name,icon:gear.icon,count:1};}
   get agility() { return this.save.stats.agi+(this.gearBonuses.agi||0); }
   toggleTutorial(){if(this.save.tutorial.includes('skip'))this.save.tutorial=this.save.tutorial.filter(s=>s!=='skip');else this.save.tutorial.push('skip');this.persist();}
   markTutorial(step:string) {if(!this.save.tutorial.includes(step))this.save.tutorial.push(step)}
@@ -204,7 +218,7 @@ export class Simulation {
   }
   craft(id:string) {
     const gear=gearById(id);
-    if(!gear||this.save.level<gear.level){this.onEvent("You have not reached this recipe’s level.");return false;}
+    if(!gear||gear.dropOnly||this.save.level<gear.level){this.onEvent("You have not reached this recipe’s level.");return false;}
     if(this.save.items.filter(i=>i.count>0).length>=60){this.onEvent("Make room in your bag first.");return false;}
     if(this.save.gold<gear.cost||gear.materials.some(([name,count])=>(this.save.items.find(i=>i.name===name)?.count||0)<count)){this.onEvent("Gather the recipe’s materials and zeny first.");return false;}
     this.save.gold-=gear.cost;for(const [name,count] of gear.materials)this.save.items.find(i=>i.name===name)!.count-=count;
@@ -215,7 +229,7 @@ export class Simulation {
     if(!gear||this.save.level<gear.level||(gear.job&&gear.job!==this.save.job)){this.onEvent("This equipment does not match your class or level.");return false;}
     this.save.equipped[gear.slot]=id;this.save.hp=Math.min(this.maxHp,this.save.hp);this.save.mp=Math.min(this.maxMp,this.save.mp);this.markTutorial('equip');this.onEvent(`Equipped ${gear.name}`,"reward");this.persist();return true;
   }
-  unequip(slot:GearSlot) { if(!['weapon','armor','accessory'].includes(slot))return;this.save.equipped[slot]=null;this.save.hp=Math.min(this.maxHp,this.save.hp);this.save.mp=Math.min(this.maxMp,this.save.mp);this.persist(); }
+  unequip(slot:GearSlot) { if(!gearSlots.includes(slot))return;this.save.equipped[slot]=null;this.save.hp=Math.min(this.maxHp,this.save.hp);this.save.mp=Math.min(this.maxMp,this.save.mp);this.persist(); }
   get maxHp() {
     return 100 + (this.save.stats.vit+(this.gearBonuses.vit||0)) * 4 + (this.save.level - 1) * 12+(this.gearBonuses.hp||0);
   }
@@ -257,7 +271,7 @@ export class Simulation {
     if (job === this.save.job) return true;
     this.save.job = job;
     const worn=this.save.items.find(i=>i.id===this.save.equipped.weapon);
-    if(worn?.gearId&&gearById(worn.gearId)?.job!==job)this.save.equipped.weapon=null;
+    if(worn?.gearId&&gearById(worn.gearId)?.job&&gearById(worn.gearId)?.job!==job)this.save.equipped.weapon=null;
     this.save.hotbar = [skills[job][0].id, skills[job][1].id, null, null];
     this.skillCooldowns = {};
     this.cooldowns.fill(0);
@@ -308,8 +322,8 @@ export class Simulation {
   }
   addItem(name: string, icon: string, count = 1) {
     const gear=gearByName(name);
-    const existing=!gear&&this.save.items.find(i=>i.name===name);if(!existing&&this.save.items.filter(i=>i.count>0).length+(gear?count:1)>60){this.onEvent("Bag full. Make room before collecting.");return false;}
-    if(gear){for(let n=0;n<count;n++)this.save.items.push({id:crypto.randomUUID(),gearId:gear.id,refine:0,name,icon:gear.icon,count:1});return true;}
+    const existing=!gear&&this.save.items.find(i=>i.name===name);if(!existing&&this.save.items.filter(i=>i.count>0).length+(gear?count:1)>BAG_CAPACITY){this.onEvent("Bag full. Make room before collecting.");return false;}
+    if(gear){for(let n=0;n<count;n++)this.save.items.push({...rollGear(gear.id,gear.rarity,this.random),name,icon:gear.icon,count:1});return true;}
     const item = this.save.items.find((i) => i.name === name);
     if (item) item.count += count;
     else this.save.items.push({ name, icon, count });
@@ -329,16 +343,16 @@ export class Simulation {
         this.onEvent("Mana is already full");
         return;
       }
-      this.save.mp = Math.min(this.maxMp, this.save.mp + 40);
+      this.save.mp = Math.min(this.maxMp, this.save.mp + 40*this.healingMultiplier);
     } else {
       if (this.save.hp >= this.maxHp) {
         this.onEvent("Health is already full");
         return;
       }
-      this.save.hp = Math.min(this.maxHp, this.save.hp + 65);
+      this.save.hp = Math.min(this.maxHp, this.save.hp + 65*this.healingMultiplier);
     }
     item.count--;
-    this.onEvent(blue ? "Mana restored +40" : "Health restored +65", "heal");
+    this.onEvent(`${blue?"Mana":"Health"} restored +${Math.round((blue?40:65)*this.healingMultiplier)}`, "heal");
     this.persist();
   }
   select(id: number) {
@@ -384,20 +398,20 @@ export class Simulation {
     this.save.items = this.save.items.filter(i => { if (!i.name.includes("potion") && !i.gearId) { count += i.count; return false; } return true; });
     this.save.gold += count * 6; this.persist(); this.onEvent(count ? `Sold ${count} materials for ${count * 6} z` : "Gather monster drops to sell them.", "reward");
   }
-  hit(m: Monster, amount: number) {
+  hit(m: Monster, amount: number, skill=false) {
     if (!m.alive) return;
     const variance = 0.9 + this.random() * 0.2;
     const critical =
-      this.random() < Math.min(0.35, 0.05 + this.agility * 0.002);
+      this.random() < this.criticalChance;
     amount = Math.max(
       1,
       Math.round(
         damageAfterDefense(
           amount *
             variance *
-            (critical ? 1.5 : 1) *
+            (critical ? this.criticalMultiplier : 1) * (1+(this.gearBonuses.damageBonus||0)/100) * (skill?1+(this.gearBonuses.skillDamage||0)/100:1) *
             (1 + (this.fury.time > 0 ? this.fury.power : 0)),
-          this.monsterSpec(m.kind).defense,
+          this.monsterSpec(m.kind).defense*(1-Math.min(.6,(this.gearBonuses.armorPen||0)/100)),
         ),
       ),
     );
@@ -405,15 +419,18 @@ export class Simulation {
     m.owner = this.actorId;
     this.actionTime = 0.25;
     this.markTutorial("attack");
+    const dealt=Math.min(Math.max(0,m.hp),amount);
     m.hp -= amount;
+    if(this.save.hp>0)this.save.hp=Math.min(this.maxHp,this.save.hp+dealt*Math.min(.25,(this.gearBonuses.lifesteal||0)/100));
     this.onEvent(String(amount), "damage", m.x, m.z);
     if (m.hp <= 0) {
       m.alive = false;
       m.respawn = 13;
+      const xpReward=Math.round(this.monsterSpec(m.kind).xp*(1+(this.gearBonuses.expBonus||0)/100)),goldReward=Math.round(this.monsterSpec(m.kind).gold*(1+(this.gearBonuses.goldBonus||0)/100));
       const shared=this.onKill?.(m);
       if(!shared){
-      this.addExperience(this.monsterSpec(m.kind).xp);
-      this.save.gold += this.monsterSpec(m.kind).gold;
+      this.addExperience(xpReward);
+      this.save.gold += goldReward;
       this.progressQuest("kills");if(this.monsterSpec(m.kind).boss)this.progressQuest("boss");this.markTutorial("attack");
       this.save.kills++;
       this.loot.push({
@@ -422,10 +439,11 @@ export class Simulation {
         name: this.monsterSpec(m.kind).drop,
         icon: this.monsterSpec(m.kind).icon,
       });
+      const equipmentDrop=this.rollEquipmentLoot(m);if(equipmentDrop)this.loot.push({x:m.x,z:m.z,name:equipmentDrop.name,icon:equipmentDrop.icon,item:equipmentDrop});
       this.loot=this.loot.slice(-40);
       }
       this.onEvent(
-        `Defeated ${m.kind} · +${this.monsterSpec(m.kind).xp} EXP · +${this.monsterSpec(m.kind).gold} z`,
+        shared?`Defeated ${m.kind} · Party rewards shared`:`Defeated ${m.kind} · +${xpReward} EXP · +${goldReward} z`,
         "reward",
       );
       this.target = null;
@@ -482,7 +500,7 @@ export class Simulation {
     }
     this.markTutorial("skill");
     this.save.mp -= skill.mp;
-    this.skillCooldowns[id] = skill.cooldown;
+    this.skillCooldowns[id] = skill.cooldown*this.cooldownMultiplier;
     if (skill.cast)
       this.cast = {
         skillId: id,
@@ -504,7 +522,7 @@ export class Simulation {
     if (skill.effect === "heal") {
       this.save.hp = Math.min(
         this.maxHp,
-        this.save.hp + this.maxHp * skill.power,
+        this.save.hp + this.maxHp * skill.power*this.healingMultiplier,
       );
       this.onEvent(`${skill.name} · health restored`, "heal");
     } else if (skill.effect === "guard" || skill.effect === "fury") {
@@ -527,13 +545,13 @@ export class Simulation {
               (skill.radius || 3) &&
             this.direct(enemy.x, enemy.z)
           ) {
-            this.hit(enemy, this.damage * skill.power);
+            this.hit(enemy, this.damage * skill.power,true);
             if (skill.duration) enemy.slow = skill.duration;
           }
         }
         this.onEvent(skill.name, "whirl", center.x, center.z);
       } else {
-        this.hit(monster, this.damage * skill.power);
+        this.hit(monster, this.damage * skill.power,true);
         if (monster.alive) {
           if (skill.effect === "stun") {
             monster.stun = skill.duration || 2;
@@ -561,7 +579,7 @@ export class Simulation {
     let count = 0;
     this.loot = this.loot.filter((l) => {
       if (Math.hypot(l.x - this.x, l.z - this.z) < 3.2) {
-        if(!this.addItem(l.name, l.icon))return true;
+        if(!(l.item?this.addEquipmentItem(l.item):this.addItem(l.name,l.icon)))return true;
         count++;
         return false;
       }
@@ -713,14 +731,15 @@ export class Simulation {
         }
       }
     }
-    this.save.mp = Math.min(this.maxMp, this.save.mp + dt * 0.7);
+    this.save.mp = Math.min(this.maxMp, this.save.mp + dt * (0.7+(this.gearBonuses.mpRegen||0)));
+    this.save.hp=Math.min(this.maxHp,this.save.hp+dt*(this.gearBonuses.hpRegen||0));
     if (dx || dz) {
       this.markTutorial("move");
       this.target = null;
       this.destination = null;
       const len = Math.hypot(dx, dz);
-      this.x += (dx / len) * dt * 4.4;
-      this.z += (dz / len) * dt * 4.4;
+      this.x += (dx / len) * dt * this.movementSpeed;
+      this.z += (dz / len) * dt * this.movementSpeed;
     } else {
       const m = this.monsters.find((e) => e.id === this.target && e.alive);
       const dest = m || this.destination;
@@ -747,14 +766,14 @@ export class Simulation {
           const nd = Math.hypot(next.x - this.x, next.z - this.z);
           if (nd > 0.02) {
             this.markTutorial("move");
-            const movement = Math.min(nd, dt * 4.4);
+            const movement = Math.min(nd, dt * this.movementSpeed);
             this.x += ((next.x - this.x) / nd) * movement;
             this.z += ((next.z - this.z) / nd) * movement;
           }
         } else if (m && this.attackTimer <= 0 && !this.cast) {
           this.hit(m, this.damage);
           this.attackTimer =
-            this.job.speed / (1 + (this.agility - 5) * 0.04);
+            this.attackInterval;
         } else if (!m) this.destination = null;
       } else if (this.auto) this.nearest();
     }
@@ -786,7 +805,7 @@ export class Simulation {
       if (m.poison > 0) {
         m.poisonTimer -= dt;
         if (m.poisonTimer <= 0) {
-          this.hit(m, m.poisonDamage);
+          this.hit(m, m.poisonDamage,true);
           m.poisonTimer += 1;
         }
         m.poison = Math.max(0, m.poison - dt);
@@ -801,13 +820,13 @@ export class Simulation {
             const spec=this.monsterSpec(m.kind),range=spec.boss?(m.shape==='line'?6:m.shape==='cone'?4:3.5):spec.range;
             const rx=this.x-m.x,rz=this.z-m.z,forward=rx*(m.facingX??0)+rz*(m.facingZ??1),side=Math.abs(rx*(m.facingZ??1)-rz*(m.facingX??0));
             const connects=m.shape==='line'?forward>=0&&forward<=range&&side<.9:m.shape==='cone'?d<=range&&(d<.01||forward/d>.65):d<range;
-            if (connects) {
+            if (connects && this.random()>=Math.min(.35,(this.gearBonuses.dodgeChance||0)/100)) {
               const atk = spec.atk * (0.9 + this.random() * 0.2);
               const amount = Math.max(
                 1,
                 Math.round(
                   damageAfterDefense(atk, this.defense) *
-                    (1 - (this.guard.time > 0 ? this.guard.power : 0)),
+                    (1 - (this.guard.time > 0 ? this.guard.power : 0)) * (1-Math.min(.6,(this.gearBonuses.damageReduction||0)/100)),
                 ),
               );
               this.save.hp -= amount;

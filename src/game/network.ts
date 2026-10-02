@@ -45,11 +45,11 @@ export class NetworkSimulation extends Simulation {
     if(input[0]!==this.input[0]||input[1]!==this.input[1]){this.input=input;this.schedule(0);}
     if(!this.view)return;
     // Presentation only. Authoritative coordinates, damage and items stay in server snapshots.
-    const length=Math.hypot(...input),lead=Math.min(.15,this.rtt/2000)*4.4;
+    const length=Math.hypot(...input),lead=Math.min(.15,this.rtt/2000)*this.movementSpeed;
     const targetX=this.x+(length?input[0]/length*lead:0),targetZ=this.z+(length?input[1]/length*lead:0);
     const blend=1-Math.exp(-dt*(length?3:16));
     this.view.x+=(targetX-this.view.x)*blend;this.view.z+=(targetZ-this.view.z)*blend;
-    if(length&&performance.now()-this.receivedAt<1000&&this.save.hp>0&&this.deathTime<=0){const nx=this.view.x+input[0]/length*4.4*dt,nz=this.view.z+input[1]/length*4.4*dt;const blocked=Math.abs(nx)>14||Math.abs(nz)>13||this.obstacles.some(o=>Math.hypot(nx-o.x,nz-o.z)<o.r+.3);if(!blocked&&Math.hypot(nx-this.x,nz-this.z)<=1.6){this.view.x=nx;this.view.z=nz;}}
+    if(length&&performance.now()-this.receivedAt<1000&&this.save.hp>0&&this.deathTime<=0){const nx=this.view.x+input[0]/length*this.movementSpeed*dt,nz=this.view.z+input[1]/length*this.movementSpeed*dt;const blocked=Math.abs(nx)>14||Math.abs(nz)>13||this.obstacles.some(o=>Math.hypot(nx-o.x,nz-o.z)<o.r+.3);if(!blocked&&Math.hypot(nx-this.x,nz-this.z)<=1.6){this.view.x=nx;this.view.z=nz;}}
   }
   override persist(){} // Durable save belongs to the server; browser cannot submit a character object.
   override select(id:number){this.send('select',id)}

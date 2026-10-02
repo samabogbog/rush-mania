@@ -1,7 +1,8 @@
 import {communityCommand,communitySnapshot,partyOf,shareKill} from './community';
 import { Simulation, type Save } from '../src/simulation';
 import { zoneObstacles } from '../src/game/map-data';
-import {isZone, species, type ZoneId} from '../src/game/content';
+import {isZone, type ZoneId} from '../src/game/content';
+import {isGearSlot} from '../src/game/equipment';
 import { isClass } from '../src/game/classes';
 import { capture, type Command, type Player, type Realm, type Snapshot } from './protocol';
 import type { RealmStore } from './store';
@@ -22,7 +23,7 @@ function hydrate(player:Player, realm:Realm) {
 }
 function support(realm:Realm,player:Player,sim:Simulation,actors:{p:Player;sim:Simulation}[]) {
  sim.onSupport=skill=>{if(skill.effect==='guard'&&sim.save.job==='swordsman')for(const monster of sim.monsters)if(monster.alive&&Math.hypot(monster.x-sim.x,monster.z-sim.z)<5){monster.owner=player.id;monster.aggro=true;}const party=partyOf(realm,player.id);if(!party)return;for(const friend of actors){if(friend.p.id===player.id||!party.members.includes(friend.p.id)||friend.p.room!==player.room||friend.sim.save.hp<=0||Math.hypot(friend.sim.x-sim.x,friend.sim.z-sim.z)>8)continue;
-  if(skill.effect==='heal')friend.sim.save.hp=Math.min(friend.sim.maxHp,friend.sim.save.hp+friend.sim.maxHp*skill.power*.6);
+  if(skill.effect==='heal')friend.sim.save.hp=Math.min(friend.sim.maxHp,friend.sim.save.hp+friend.sim.maxHp*skill.power*.6*friend.sim.healingMultiplier);
   else if(skill.effect==='guard'||skill.effect==='fury'){const buff=skill.effect==='guard'?friend.sim.guard:friend.sim.fury;buff.time=skill.duration||6;buff.power=skill.power*.7;}
   friend.sim.onEvent(player.name+' shared '+skill.name,'reward');
  }};
@@ -44,7 +45,8 @@ function advance(realm:Realm,now:number) {
     sim.enemyFilter=m=>ownership.get(m)===p.id;support(realm,p,sim,sims);
     sim.onKill=(monster)=> {
       if(shareKill(realm,p,monster,sims,now))return true;
-      realm.ledger.push({id:crypto.randomUUID(),player:p.id,action:`kill:${monster.kind}`,at:now,goldDelta:species[monster.kind].gold});
+      const gold=Math.round(sim.monsterSpec(monster.kind).gold*(1+(sim.gearBonuses.goldBonus||0)/100));
+      realm.ledger.push({id:crypto.randomUUID(),player:p.id,action:`kill:${monster.kind}`,at:now,goldDelta:gold});
     };
   }
   // Server clock only. No offline farming or long catch-up bursts after inactivity.
@@ -95,7 +97,7 @@ function execute(player:Player,realm:Realm,command:Command,now:number) {
     case 'interact':if(typeof a!=='string')throw new GameError('Invalid NPC');sim.interact(a);break;
     case 'craft':if(typeof a!=='string')throw new GameError('Invalid recipe');sim.craft(a);break;
     case 'equip':if(typeof a!=='string')throw new GameError('Invalid equipment');sim.equip(a);break;
-    case 'unequip':if(a!=='weapon'&&a!=='armor'&&a!=='accessory')throw new GameError('Invalid equipment slot');sim.unequip(a);break;
+    case 'unequip':if(!isGearSlot(a))throw new GameError('Invalid equipment slot');sim.unequip(a);break;
     case 'claimQuest':if(typeof a!=='string')throw new GameError('Invalid quest');sim.claimQuest(a);break;
     case 'travel': {
       if(!isZone(a))throw new GameError('Invalid area');

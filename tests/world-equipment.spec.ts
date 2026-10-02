@@ -46,5 +46,5 @@ test('v1 online realm and v2 character saves migrate without losing gold, kills 
  const realm=freshRealm(1000);realm.monsters=sim.monsters;delete realm.rooms;realm.version=1;
  realm.players.hero={id:'hero',name:'Sprout',actor:capture(sim),lastSeen:0,input:[0,0],inputAt:0,acknowledged:[],events:[],serial:0,session:{id:'legacy',sequence:0}};
  for(const key of ['zone','equipped','quests','tutorial'])delete (realm.players.hero.actor.save as any)[key];realm.players.hero.actor.save.version=2;store.realm=realm;
- const s=await transact(store,identity,{connect:true},2000);expect(s.player.actor.save.gold).toBe(333);expect(s.player.actor.save.kills).toBe(7);expect(s.player.actor.save.zone).toBe('glade');expect(s.player.actor.save.equipped).toEqual({weapon:null,armor:null,accessory:null});expect(store.realm!.version).toBe(2);expect(store.realm!.monsters).toBeUndefined();
+ const s=await transact(store,identity,{connect:true},2000);expect(s.player.actor.save.gold).toBe(333);expect(s.player.actor.save.kills).toBe(7);expect(s.player.actor.save.zone).toBe('glade');expect(s.player.actor.save.equipped).toEqual({weapon:null,helmet:null,armor:null,gloves:null,boots:null,accessory:null});expect(store.realm!.version).toBe(2);expect(store.realm!.monsters).toBeUndefined();
 });
