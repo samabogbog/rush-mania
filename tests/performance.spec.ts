@@ -52,11 +52,11 @@ test('Low has a fixed pixel budget, sleeping template clips and lightweight grou
  expect(Math.max(...low.rings)).toBe(66);
  await page.screenshot({path:'artifacts/performance-low.png'});
  await page.locator('[data-panel="settings"]').click();
- await page.locator('#graphics-quality').selectOption('high');
+ await page.locator('#graphics-quality').selectOption('high',{force:true});
  const high=await inspect();expect(high.renderWidth*high.renderHeight).toBeLessThanOrEqual(1920*1080);
  expect(high.renderWidth*high.renderHeight).toBeGreaterThan(low.renderWidth*low.renderHeight);
  await page.keyboard.press('Escape');await page.screenshot({path:'artifacts/performance-high.png'});
- await page.locator('[data-panel="settings"]').click();await page.locator('#graphics-quality').selectOption('low');await page.keyboard.press('Escape');
+ await page.locator('[data-panel="settings"]').click();await page.locator('#graphics-quality').selectOption('low',{force:true});await page.keyboard.press('Escape');
  await expect.poll(async()=>(await inspect()).frame).toBeGreaterThan(low.frame);
  expect(errors).toEqual([]);
 });

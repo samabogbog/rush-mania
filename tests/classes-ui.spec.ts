@@ -33,7 +33,8 @@ test("choose classes, assign unlocked skills, cast spells and retain the loadout
   await page.keyboard.press("k");
   await expect(page.locator(".skill-card")).toHaveCount(10);
   await expect(page.locator(".skill-locked")).toHaveCount(8);
-  await page.getByLabel("Hotbar slot for Fire Bolt").selectOption("2");
+  await page.getByRole("combobox",{name:"Hotbar slot for Fire Bolt"}).click();
+  await page.getByRole("option",{name:"Key 5",exact:true}).click();
   await page.locator('[data-assign="mage-1"]').click();
   await expect(page.locator('.loadout-slot[data-hotbar="2"]')).toContainText(
     "Fire Bolt",
