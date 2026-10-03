@@ -28,10 +28,12 @@ Effective caps: critical chance 60%, lifesteal 25%, movement-speed bonus 50%, at
 
 Inventory has three pages of 8 × 6 cells, for 144 item slots. Stacks occupy one cell; equipped items retain their inventory cell and display an E badge. Six worn slots appear alongside the bag. Click gear to equip; use the worn-slot remove button to unequip. Gear checks level and class. Hover or keyboard focus opens the floating comparison tooltip. Filtering and sorting apply across all three pages.
 
-Online rolls originate on the server. Equipment receives its UUID and affixes before collection. Collection, save/reload, trading and market transfers preserve that exact instance; a full bag leaves it on the ground without rerolling. Replayed collection commands do not duplicate equipment. Party equipment uses the existing round-robin loot recipient. Save version 5 retains older saves and normalizes HP-regeneration affixes. No D1 schema migration is required.
+Online rolls originate on the server. Equipment receives its UUID and affixes before collection. Collection, save/reload, trading and market transfers preserve that exact instance; a full bag leaves it on the ground without rerolling. Replayed collection commands do not duplicate equipment. Party equipment uses the existing round-robin loot recipient. Save version 6 retains older saves and normalizes HP-regeneration affixes and clamps equipment refinement to +10. No D1 schema migration is required.
 
 ## Verification
 
 Craft recipes use categorized eight-column grids with selected-recipe stats, materials and a craft action. The character info button opens secondary stats on hover, keyboard focus or click; click pins it for touch use. Forty generated set icons are normalized to 128×128 PNGs with 16px minimum margins (`tools/prepare_set_icons.py`).
 
 `tests/regen-crafting.spec.ts` verifies percent regeneration, affix caps, save normalization and 144-slot crafting. `tests/craft-ui.spec.ts` covers recipe categories, actual crafting, info disclosure and mobile layout. `tests/equipment-drops.spec.ts` exercises tier/rarity rolls, capacity, collection identity, persistence, damage, lifesteal, regeneration, sets, rewards, avoidance and server authority. `tests/inventory-ui.spec.ts` verifies 48 cells per page, three pages, hover comparison, one-click equip/unequip and mobile layout. Economy tests preserve rolls during transfers. Existing progression, online, world, UI and performance checks remain part of the regression suite.
+
+Refinement now applies cumulative base-stat percentages to all six gear slots. See [Refinement](REFINEMENT.md) for stones, success chances, failure outcomes and migration.

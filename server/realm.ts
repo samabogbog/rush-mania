@@ -1,3 +1,4 @@
+import {isStoneTier} from '../src/game/refinement';
 import {communityCommand,communitySnapshot,partyOf,shareKill} from './community';
 import { Simulation, type Save } from '../src/simulation';
 import { zoneObstacles } from '../src/game/map-data';
@@ -86,7 +87,7 @@ function execute(player:Player,realm:Realm,command:Command,now:number) {
     case 'castSkill':if(typeof a!=='string')throw new GameError('Invalid skill');sim.castSkill(a);break;
     case 'usePotion':sim.usePotion(a===true);break;
     case 'collect':sim.collect();break;
-    case 'upgrade':if(sim.refinement>=20)throw new GameError('Refinement cap reached');sim.upgrade();break;
+    case 'upgrade':if(typeof a!=='string'||!isStoneTier(command.args[1]))throw new GameError('Invalid refinement');sim.upgrade(a,command.args[1]);break;
     case 'stat':if(a!=='str'&&a!=='vit'&&a!=='agi')throw new GameError('Invalid attribute');sim.stat(a);break;
     case 'claim':sim.claim();break;
     case 'setClass':if(!isClass(a))throw new GameError('Invalid class');sim.setClass(a);break;

@@ -1,3 +1,4 @@
+import {refineBonus} from './refinement';
 import type {ClassId} from './classes';
 export const gearSlots=['weapon','helmet','armor','gloves','boots','accessory'] as const;
 export type GearSlot=typeof gearSlots[number];
@@ -66,12 +67,11 @@ for(const set of gearSets){
 }
 export type GearInstance={id?:string;gearId?:string;refine?:number;rarity?:Rarity;secondary?:Bonuses};
 export const itemRarity=(item:GearInstance):Rarity=>item.rarity||gearById(item.gearId||'')?.rarity||'common';
-export function itemBonuses(item:GearInstance,refinement=false):Bonuses {
+export function itemBonuses(item:GearInstance,refinement=true):Bonuses {
  const gear=gearById(item.gearId||'');if(!gear)return {};
  const multiplier=gear.dropOnly?({common:1,rare:1.1,epic:1.25,legend:1.45}[itemRarity(item)]):1;
- const out:Bonuses={};for(const [key,value] of Object.entries(gear.bonuses))out[key as keyof Bonuses]=Math.round(value*multiplier);
+ const out:Bonuses={};for(const [key,value] of Object.entries(gear.bonuses))out[key as keyof Bonuses]=Math.round(Math.round(value*multiplier)*(refinement?1+refineBonus(item.refine||0)/100:1)*100)/100;
  for(const [key,value] of Object.entries(normalizeSecondary(item.secondary)||{}))out[key as keyof Bonuses]=(out[key as keyof Bonuses]||0)+value;
- if(refinement&&gear.slot==='weapon')out.atk=(out.atk||0)+(item.refine||0)*7;
  return out;
 }
 const affixRanges:Record<SecondaryStat,[number,number]>={critChance:[1,5],critDamage:[5,18],damageBonus:[2,7],skillDamage:[3,10],lifesteal:[1,4],hpRegen:[.1,.5],mpRegen:[.2,1],attackSpeed:[2,8],moveSpeed:[2,6],armorPen:[2,8],damageReduction:[1,5],dodgeChance:[1,4],expBonus:[3,9],goldBonus:[3,10],healingBonus:[3,9],cooldownReduction:[2,6]};

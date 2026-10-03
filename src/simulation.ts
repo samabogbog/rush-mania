@@ -1,3 +1,4 @@
+import {refineLevel,refineCost,rollRefinement,rollStoneDrop,refineStones,isStoneTier,type StoneTier} from './game/refinement';
 import {
   classes,
   skills,
@@ -35,6 +36,7 @@ export type Monster = {
 };
 export type Item = { name: string; icon: string; count: number; id?:string; gearId?:string; refine?:number; rarity?:Rarity; secondary?:Bonuses };
 export type Save = {
+  legacyBasicRefine?:boolean;
   version: number;
   zone: ZoneId;
   equipped: Record<GearSlot, string | null>;
@@ -56,7 +58,7 @@ export type Save = {
   items: Item[];
 };
 const defaults: Save = {
-  version: 5,
+  version: 6,
   zone: "glade",
   equipped: {weapon:null,helmet:null,armor:null,gloves:null,boots:null,accessory:null},
   quests: {},
@@ -115,8 +117,10 @@ export class Simulation {
   onEvent: (text: string, type?: string, x?: number, z?: number) => void =
     () => {};
   constructor(private random: () => number = Math.random, initial?: Save, private storage: Pick<Storage, "getItem" | "setItem"> | null = typeof localStorage === "undefined" ? null : localStorage) {
+    let loadedVersion=0;
     try {
       const s = initial ?? JSON.parse(this.storage?.getItem("mossvale-save") || "null");
+      loadedVersion=Number(s?.version||0);
       this.save =
         s?.level && s?.stats && Array.isArray(s.items)
           ? { ...structuredClone(defaults), ...s }
@@ -125,10 +129,23 @@ export class Simulation {
       this.save = structuredClone(defaults);
     }
     this.save.job = isClass(this.save.job) ? this.save.job : "swordsman";
-    this.save.version = 5;
+    const legacyRefine=(loadedVersion<6||this.save.legacyBasicRefine)&&this.save.weapon>0;
+    this.save.version = 6;
+    this.save.weapon=refineLevel(this.save.weapon);
+    for(const item of this.save.items)if(item.gearId)item.refine=refineLevel(item.refine);
     for(const item of this.save.items)if(item.secondary)item.secondary=normalizeSecondary(item.secondary);
     this.save.zone = isZone(this.save.zone) ? this.save.zone : "glade";
     this.save.equipped = {...defaults.equipped,...this.save.equipped};
+    // Preserve the old basic-weapon investment as a real starter weapon.
+    if(legacyRefine&&!this.save.equipped.weapon){
+      if(this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY)this.save.legacyBasicRefine=true;
+      else {
+      const id={swordsman:'sprout-blade',mage:'bloom-staff',archer:'willow-bow'}[this.save.job],definition=gearById(id)!;
+      const item={...rollGear(id,'common',()=>0),name:definition.name,icon:definition.icon,count:1,refine:this.save.weapon};
+      this.save.items.push(item);this.save.equipped.weapon=item.id!;
+      delete this.save.legacyBasicRefine;
+      }
+    }
     this.save.quests = this.save.quests || {};
     this.save.tutorial = Array.isArray(this.save.tutorial) ? this.save.tutorial : [];
     this.save.level = Math.max(
@@ -171,7 +188,7 @@ export class Simulation {
   get refinement() {return this.save.items.find(i=>i.id===this.save.equipped.weapon)?.refine || (this.save.equipped.weapon?0:this.save.weapon);}
   private bonusCache?:{save:Save;key:string;value:Bonuses};
   get gearBonuses(): Bonuses {
-    const key=this.save.job+':'+Object.values(this.save.equipped).join(',');
+    const key=this.save.job+':'+Object.values(this.save.equipped).map(id=>id+':'+(this.save.items.find(i=>i.id===id)?.refine||0)).join(',');
     if(this.bonusCache?.save===this.save&&this.bonusCache.key===key)return this.bonusCache.value;
     const out:Bonuses={},sets=new Map<string,number>();
     for(const id of Object.values(this.save.equipped)) {
@@ -190,7 +207,8 @@ export class Simulation {
   get cooldownMultiplier(){return 1-Math.min(.4,(this.gearBonuses.cooldownReduction||0)/100)}
   get hpRegenPercent(){return .5+(this.gearBonuses.hpRegen||0)}
   get healingMultiplier(){return 1+Math.min(1,(this.gearBonuses.healingBonus||0)/100)}
-  addEquipmentItem(item:Item){if(this.save.items.some(i=>i.id===item.id))return false;if(this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY){this.onEvent('Bag full. Make room before collecting.');return false;}this.save.items.push({...structuredClone(item),secondary:normalizeSecondary(item.secondary)});return true;}
+  addEquipmentItem(item:Item){if(this.save.items.some(i=>i.id===item.id))return false;if(this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY){this.onEvent('Bag full. Make room before collecting.');return false;}this.save.items.push({...structuredClone(item),secondary:normalizeSecondary(item.secondary),refine:refineLevel(item.refine)});return true;}
+  rollStoneLoot(monster:Monster){const tier=rollStoneDrop(!!this.monsterSpec(monster.kind).boss,this.random);return tier?refineStones[tier]:undefined;}
   rollEquipmentLoot(monster:Monster):Item|undefined {const rolled=rollEquipmentDrop(this.monsterSpec(monster.kind).level,!!this.monsterSpec(monster.kind).boss,this.random);if(!rolled)return;const gear=gearById(rolled.gearId!)!;return {...rolled,name:gear.name,icon:gear.icon,count:1};}
   get agility() { return this.save.stats.agi+(this.gearBonuses.agi||0); }
   toggleTutorial(){if(this.save.tutorial.includes('skip'))this.save.tutorial=this.save.tutorial.filter(s=>s!=='skip');else this.save.tutorial.push('skip');this.persist();}
@@ -219,6 +237,13 @@ export class Simulation {
     this.markTutorial("talk");this.onEvent(npc.panel,"npc");this.persist();
   }
   craft(id:string) {
+    if(id==='rare-refine-stone'){
+      const common=this.save.items.find(i=>i.name===refineStones.common.name&&i.count>=5);
+      if(!common){this.onEvent('Need 5 Common refine stones.');return false;}
+      const rare=this.save.items.find(i=>i.name===refineStones.rare.name&&i.count>0);
+      if(!rare&&this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY&&common.count>5){this.onEvent('Bag full.');return false;}
+      common.count-=5;this.addItem(refineStones.rare.name,refineStones.rare.icon);this.progressQuest('craft');this.persist();this.onEvent('Crafted 1 Rare refine stone','reward');return true;
+    }
     const gear=gearById(id);
     if(!gear||gear.dropOnly||this.save.level<gear.level){this.onEvent("You have not reached this recipe’s level.");return false;}
     if(this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY){this.onEvent("Make room in your bag first.");return false;}
@@ -245,7 +270,7 @@ export class Simulation {
     const primary =
       this.save.job === "archer" ? this.agility : this.save.stats.str+(this.gearBonuses.str||0);
     return (
-      12 + primary * 2 + this.refinement * 7 + (this.save.level - 1) * 1.5+(this.gearBonuses.atk||0)
+      12 + primary * 2 + (this.save.level - 1) * 1.5+(this.gearBonuses.atk||0)
     );
   }
   get defense() {
@@ -397,7 +422,7 @@ export class Simulation {
   }
   sell() {
     let count = 0;
-    this.save.items = this.save.items.filter(i => { if (!i.name.includes("potion") && !i.gearId) { count += i.count; return false; } return true; });
+    this.save.items = this.save.items.filter(i => { if (!i.name.includes("potion") && !i.gearId&&!Object.values(refineStones).some(stone=>stone.name===i.name)) { count += i.count; return false; } return true; });
     this.save.gold += count * 6; this.persist(); this.onEvent(count ? `Sold ${count} materials for ${count * 6} z` : "Gather monster drops to sell them.", "reward");
   }
   hit(m: Monster, amount: number, skill=false) {
@@ -441,6 +466,7 @@ export class Simulation {
         name: this.monsterSpec(m.kind).drop,
         icon: this.monsterSpec(m.kind).icon,
       });
+      const stone=rollStoneDrop(!!this.monsterSpec(m.kind).boss,this.random);if(stone)this.loot.push({x:m.x,z:m.z,name:refineStones[stone].name,icon:refineStones[stone].icon});
       const equipmentDrop=this.rollEquipmentLoot(m);if(equipmentDrop)this.loot.push({x:m.x,z:m.z,name:equipmentDrop.name,icon:equipmentDrop.icon,item:equipmentDrop});
       this.loot=this.loot.slice(-40);
       }
@@ -593,21 +619,19 @@ export class Simulation {
       this.persist();
     } else this.onEvent("No drops nearby. Walk closer to the glowing loot.");
   }
-  upgrade() {
-    const cost = 60 + this.refinement * 40;
-    if(this.refinement>=20){this.onEvent("Refinement limit reached (+20).");return;}
-    if (this.save.gold < cost) {
-      this.onEvent(
-        `You need ${cost} z to refine your ${this.job.weapon.toLowerCase()}`,
-      );
-      return;
-    }
-    this.save.gold -= cost;
-    const equipped=this.save.items.find(i=>i.id===this.save.equipped.weapon);
-    if(equipped)equipped.refine=(equipped.refine||0)+1;else this.save.weapon++;
-    this.markTutorial("refine");
-    this.onEvent(`${this.job.weapon} refined to +${this.refinement}`, "level");
-    this.persist();
+  upgrade(id:string=this.save.equipped.weapon||'',tier:StoneTier='common') {
+    if(!isStoneTier(tier))return false;
+    const item=this.save.items.find(i=>i.id===id&&i.gearId&&i.count===1);
+    if(!item||!gearById(item.gearId!)){this.onEvent('Choose an equipment item to refine.');return false;}
+    const current=refineLevel(item.refine),cost=refineCost(current),stone=this.save.items.find(i=>i.name===refineStones[tier].name&&i.count>0);
+    if(current>=10){this.onEvent('Refinement limit reached (+10).');return false;}
+    if(!stone||this.save.gold<cost){this.onEvent(`Need 1 ${refineStones[tier].name} and ${cost} z.`);return false;}
+    this.save.gold-=cost;stone.count--;
+    const result=rollRefinement(current,tier,this.random);item.refine=result.level;
+    this.save.hp=Math.min(this.save.hp,this.maxHp);this.save.mp=Math.min(this.save.mp,this.maxMp);
+    this.markTutorial('refine');this.persist();
+    this.onEvent(result.success?`${item.name}: +${current} → +${result.level}`:result.downgraded?`Refine failed · ${item.name}: +${current} → +${result.level}`:`Refine failed · ${item.name} stays +${current}`,result.success?'reward':'system');
+    return true;
   }
   stat(key: "str" | "vit" | "agi") {
     if (this.save.points > 0) {

@@ -19,7 +19,7 @@ test('HP affixes stay at or below 0.5%/s for every item tier and combine with ba
  sim.addEquipmentItem({...rollGear(definition.id,'rare'),name:definition.name,icon:definition.icon,count:1,secondary:{hpRegen:.5}});
  sim.equip(sim.save.items.find(i=>i.gearId===definition.id)!.id!);expect(sim.hpRegenPercent).toBe(1);sim.save.hp=100;sim.tick(1,0,0);expect(sim.save.hp).toBeCloseTo(100+sim.maxHp*.01);expect(formatStat('hpRegen',.25)).toBe('0.25%/s');
  const legacy=structuredClone(sim.save);legacy.version=4;legacy.items.find(i=>i.gearId===definition.id)!.secondary!.hpRegen=3;
- const loaded=new Simulation(()=>.5,legacy,null);expect(loaded.save.version).toBe(5);expect(loaded.save.items.find(i=>i.gearId===definition.id)!.secondary!.hpRegen).toBe(.5);expect(loaded.hpRegenPercent).toBe(1);
+ const loaded=new Simulation(()=>.5,legacy,null);expect(loaded.save.version).toBe(6);expect(loaded.save.items.find(i=>i.gearId===definition.id)!.secondary!.hpRegen).toBe(.5);expect(loaded.hpRegenPercent).toBe(1);
 });
 
 test('crafting uses the new bag capacity and rejects a full bag before charging anything',()=>{

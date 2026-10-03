@@ -1,3 +1,4 @@
+import {type StoneTier} from './refinement';
 import { Simulation } from '../simulation';
 import type { ZoneId } from './content';
 import type { GearSlot } from './equipment';
@@ -61,7 +62,7 @@ export class NetworkSimulation extends Simulation {
   override castSkill(id:string){this.send('castSkill',id);return true}
   override usePotion(blue=false){this.send('usePotion',blue)}
   override collect(){this.send('collect')}
-  override upgrade(){this.send('upgrade')}
+  override upgrade(id:string=this.save.equipped.weapon||'',tier:StoneTier='common'){this.send('upgrade',id,tier);return true}
   override stat(key:'str'|'vit'|'agi'){this.send('stat',key)}
   override claim(){this.send('claim')}
   override setClass(job:ClassId){this.send('setClass',job);return true}

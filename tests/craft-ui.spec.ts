@@ -8,7 +8,7 @@ const fixture=()=>{
 test('craft recipes use eight-column categorized slots, inspect materials and craft through the selected recipe',async({page})=>{
  await page.addInitScript(save=>{localStorage.setItem('mossvale-save',JSON.stringify(save));localStorage.setItem('mossvale-quality','low')},fixture());
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('/?practice=1');await page.locator('[data-panel="forge"]').click();
- await expect(page.locator('.craft-group')).toHaveCount(3);await expect(page.locator('.recipe-card')).toHaveCount(0);
+ await expect(page.locator('.craft-group')).toHaveCount(4);await expect(page.locator('.recipe-card')).toHaveCount(0);
  const columns=await page.locator('.craft-grid').first().evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length);expect(columns).toBe(8);
  await page.locator('[data-recipe="sprout-blade"]').click();await expect(page.getByLabel('Recipe details')).toContainText('Dew jelly');await expect(page.locator('[data-craft="sprout-blade"]')).toBeEnabled();
  const broken=await page.locator('.craft-panel img').evaluateAll(images=>images.filter(i=>!(i as HTMLImageElement).complete||!(i as HTMLImageElement).naturalWidth).map(i=>i.getAttribute('src')));expect(broken).toEqual([]);

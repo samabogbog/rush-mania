@@ -1,3 +1,4 @@
+import {Simulation} from '../src/simulation';
 import { test, expect, type Page } from "@playwright/test";
 const snapshot = (page: Page) =>
   page.evaluate(() => (window as any).mossvale.snapshot());
@@ -6,6 +7,8 @@ test("complete adventure loop, windows, upgrades and persistent progress", async
 }) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
+  const seeded=new Simulation(()=>.5,undefined,null);seeded.addItem('Sprout Blade','swords');seeded.equip(seeded.save.items.find(i=>i.gearId==='sprout-blade')!.id!);seeded.addItem('Common refine stone','ice-shard',2);
+  await page.addInitScript(save=>{if(!localStorage.getItem('mossvale-save'))localStorage.setItem('mossvale-save',JSON.stringify(save))},seeded.save);
   await page.goto("/");
   await page.waitForFunction(
     () => (window as any).mossvale?.snapshot().drawCalls > 0,
@@ -44,7 +47,7 @@ test("complete adventure loop, windows, upgrades and persistent progress", async
   );
   await page.keyboard.press("f");
   expect(
-    (await snapshot(page)).items.some((i: any) => !i.name.includes("potion")),
+    (await snapshot(page)).items.some((i: any) => !i.name.includes("potion")&&!i.name.includes("refine stone")&&!i.gearId),
   ).toBeTruthy();
   await page.keyboard.press("i");
   await expect(page.getByRole("dialog", { name: "Inventory" })).toBeVisible();
@@ -55,9 +58,9 @@ test("complete adventure loop, windows, upgrades and persistent progress", async
   await page.keyboard.press("Escape");
   await page.getByRole("button", { name: "Forge", exact: true }).click();
   const before = await snapshot(page);
-  await page.getByRole("button", { name: /Refine weapon/ }).click();
+  await page.getByRole("button", { name: /Refine equipment/ }).click();
   const refined = await snapshot(page);
-  expect(refined.weapon).toBe(before.weapon + 1);
+  expect(refined.items.find((i:any)=>i.gearId==='sprout-blade').refine).toBe(1);
   expect(refined.gold).toBe(before.gold - 60);
   await page.keyboard.press("Escape");
   await page.keyboard.press("c");
@@ -103,7 +106,7 @@ test("complete adventure loop, windows, upgrades and persistent progress", async
   );
   const reloaded = await snapshot(page);
   expect(reloaded.kills).toBe(completed.kills);
-  expect(reloaded.weapon).toBe(completed.weapon);
+  expect(reloaded.items.find((i:any)=>i.gearId==='sprout-blade').refine).toBe(completed.items.find((i:any)=>i.gearId==='sprout-blade').refine);
   expect(reloaded.gold).toBe(completed.gold);
   expect(errors).toEqual([]);
   expect(reloaded.drawCalls).toBeLessThan(200);

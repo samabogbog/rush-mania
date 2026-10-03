@@ -13,9 +13,9 @@ test('crafting consumes exact ingredients, creates unique weapons and keeps refi
  expect(sim.craft('sprout-blade')).toBe(false);expect(sim.save).toEqual(before);
  sim.addItem('Dew jelly','💧',8);sim.addItem('Verdant leaf','🌿',6);expect(sim.craft('sprout-blade')).toBe(true);
  const first=sim.save.items.find(i=>i.gearId==='sprout-blade')!;expect(sim.save.gold).toBe(160);const damage=sim.damage;
- expect(sim.equip(first.id!)).toBe(true);expect(sim.damage).toBe(damage+16);sim.upgrade();expect(first.refine).toBe(1);expect(sim.save.gold).toBe(100);expect(sim.damage).toBe(damage+23);
+ expect(sim.equip(first.id!)).toBe(true);expect(sim.damage).toBe(damage+16);sim.addItem('Common refine stone','ice-shard');sim.upgrade();expect(first.refine).toBe(1);expect(sim.save.gold).toBe(100);expect(sim.damage).toBeCloseTo(damage+17.6);
  expect(sim.craft('sprout-blade')).toBe(true);const second=sim.save.items.filter(i=>i.gearId==='sprout-blade')[1];expect(second.id).not.toBe(first.id);
- sim.equip(second.id!);expect(sim.damage).toBe(damage+16);sim.equip(first.id!);expect(sim.damage).toBe(damage+23);
+ sim.equip(second.id!);expect(sim.damage).toBe(damage+16);sim.equip(first.id!);expect(sim.damage).toBeCloseTo(damage+17.6);
  sim.sell();expect(sim.save.items.find(i=>i.id===first.id)?.count).toBe(1);expect(sim.save.items.find(i=>i.id===second.id)?.count).toBe(1);
  sim.setClass('mage');expect(sim.save.equipped.weapon).toBeNull();expect(sim.equip(first.id!)).toBe(false);
 });

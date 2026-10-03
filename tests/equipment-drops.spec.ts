@@ -13,7 +13,7 @@ test('monster gear drops retain their exact identity and rolls through a full ba
  const sim=new Simulation(()=>0,undefined,null),m=sim.monsters[0];sim.x=m.x;sim.z=m.z;sim.hit(m,99999);
  const drop=sim.loot.find(l=>l.item)!.item!;expect(drop.gearId).toMatch(/^thornwood-/);
  sim.save.items.push(...Array.from({length:BAG_CAPACITY-2},(_,i)=>({name:'material-'+i,icon:'leaf',count:1})));sim.collect();expect(sim.loot.some(l=>l.item?.id===drop.id)).toBe(true);
- sim.save.items.splice(-2);sim.collect();expect(sim.save.items.find(i=>i.id===drop.id)).toEqual(drop);sim.collect();expect(sim.save.items.filter(i=>i.id===drop.id)).toHaveLength(1);
+ sim.save.items.splice(-3);sim.collect();expect(sim.save.items.find(i=>i.id===drop.id)).toEqual(drop);sim.collect();expect(sim.save.items.filter(i=>i.id===drop.id)).toHaveLength(1);
  const loaded=new Simulation(()=>.999,structuredClone(sim.save),null);expect(loaded.save.items.find(i=>i.id===drop.id)).toEqual(drop);
 });
 test('damage bonuses and penetration affect damage, while lifesteal counts actual damage rather than overkill',()=>{
