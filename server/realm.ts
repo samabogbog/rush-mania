@@ -1,3 +1,5 @@
+import {itemCatalog,itemCategory} from '../src/game/items';
+import {rollGear,rarityOrder,BAG_CAPACITY,type Rarity} from '../src/game/equipment';
 import {isStoneTier} from '../src/game/refinement';
 import {communityCommand,communitySnapshot,partyOf,shareKill} from './community';
 import { Simulation, type Save } from '../src/simulation';
@@ -64,7 +66,7 @@ function advance(realm:Realm,now:number) {
 
   realm.time=now; realm.ledger=realm.ledger.slice(-500);
 }
-function execute(player:Player,realm:Realm,command:Command,now:number) {
+function execute(player:Player,realm:Realm,command:Command,now:number,admin=false) {
   if(!command || typeof command.id!=='string' || typeof command.type!=='string' || !Array.isArray(command.args)) throw new GameError('Invalid command');
   const [session,sequenceString]=command.id.split(':'); const sequence=Number(sequenceString);
   if(session!==player.session.id) throw new GameError('This character was opened in another session. Reconnect to continue.',409);
@@ -78,6 +80,18 @@ function execute(player:Player,realm:Realm,command:Command,now:number) {
   const handled=communityCommand(realm,player,command.type,command.args,now,command.id);
   if(handled)sim.save=player.actor.save;
   else switch(command.type) {
+    case 'adminSpawn': {
+      if(!admin)throw new GameError('Admin access required',403);
+      const entry=itemCatalog.find(i=>i.id===a),rarity=command.args[2],refine=command.args[3];
+      if(!entry||!integer(b,1,entry.gearId?20:9999)||typeof rarity!=='string'||!rarityOrder.includes(rarity as Rarity)||!integer(refine,0,10))throw new GameError('Invalid spawn request');
+      const existing=!entry.gearId&&sim.save.items.find(i=>i.name===entry.name&&i.count>0);
+      const slots=sim.save.items.filter(i=>i.count>0).length+(entry.gearId?b as number:existing?0:1);
+      if(slots>BAG_CAPACITY) {sim.onEvent('Bag full. Nothing spawned.');break;}
+      if(entry.gearId)for(let n=0;n<(b as number);n++)sim.addEquipmentItem({...rollGear(entry.gearId,rarity as Rarity),refine:refine as number,name:entry.name,icon:entry.icon,count:1,category:itemCategory(entry)});
+      else sim.addItem(entry.name,entry.icon,b as number);
+      realm.ledger.push({id:command.id,player:player.id,action:`adminSpawn:${entry.id}:${b}:${rarity}:+${refine}`,at:now,goldDelta:0});
+      sim.onEvent(`Admin spawned ${b} × ${entry.name}`,'reward');break;
+    }
     case 'select': if(integer(a,0,sim.monsters.length-1)) sim.select(a as number); else throw new GameError('Invalid target'); break;
     case 'goTo': if(typeof a==='number'&&typeof b==='number'&&Number.isFinite(a)&&Number.isFinite(b)) sim.goTo(a,b); else throw new GameError('Invalid position');break;
     case 'nearest':sim.nearest();break;
@@ -121,7 +135,7 @@ function execute(player:Player,realm:Realm,command:Command,now:number) {
   realm.metrics??={};realm.metrics[command.type]=(realm.metrics[command.type]||0)+1;
   player.actor=capture(sim);player.session.sequence=sequence;player.acknowledged=[command.id];
 }
-export async function transact(store:RealmStore,identity:{id:string;name:string},input:{connect?:boolean;commands?:Command[];movement?:unknown}={},now=Date.now()):Promise<Snapshot> {
+export async function transact(store:RealmStore,identity:{id:string;name:string;admin?:boolean},input:{connect?:boolean;commands?:Command[];movement?:unknown}={},now=Date.now()):Promise<Snapshot> {
   for(let retry=0;retry<8;retry++) {
     let row=await store.read();
     if(!row){await store.create(freshRealm(now));row=await store.read()}
@@ -144,7 +158,7 @@ export async function transact(store:RealmStore,identity:{id:string;name:string}
     }
     if(input.commands) {
       if(!Array.isArray(input.commands)||input.commands.length>8)throw new GameError('Too many commands');
-      for(const command of input.commands)execute(player,realm,command,now);
+      for(const command of input.commands)execute(player,realm,command,now,identity.admin===true);
     }
     player.lastSeen=now;realm.ledger=realm.ledger.slice(-500);
     if(await store.commit(revision,realm)) return {balance:realm.balance||{},community:communitySnapshot(realm,player,now),player:structuredClone(player),monsters:structuredClone(roomFor(realm,player.room||player.actor.save.zone,player.actor.save.zone).monsters),peers:Object.values(realm.players).filter(p=>p.id!==identity.id&&p.room===player.room&&now-p.lastSeen<10_000).map(p=>({id:p.id,name:p.name,job:p.actor.save.job,x:p.actor.x,z:p.actor.z,hp:p.actor.save.hp,maxHp:100+p.actor.save.stats.vit*4+(p.actor.save.level-1)*12})),chat:structuredClone(realm.chat),revision:revision+1,serverTime:now};

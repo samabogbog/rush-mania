@@ -1,3 +1,4 @@
+import {itemCategory,type ItemCategory} from './game/items';
 import {refineLevel,refineCost,rollRefinement,rollStoneDrop,refineStones,isStoneTier,type StoneTier} from './game/refinement';
 import {
   classes,
@@ -34,7 +35,7 @@ export type Monster = {
   owner?: string;
   facingX?: number; facingZ?: number; pattern?: number; shape?: AttackShape;
 };
-export type Item = { name: string; icon: string; count: number; id?:string; gearId?:string; refine?:number; rarity?:Rarity; secondary?:Bonuses };
+export type Item = { category?:ItemCategory; name: string; icon: string; count: number; id?:string; gearId?:string; refine?:number; rarity?:Rarity; secondary?:Bonuses };
 export type Save = {
   legacyBasicRefine?:boolean;
   version: number;
@@ -146,6 +147,7 @@ export class Simulation {
       delete this.save.legacyBasicRefine;
       }
     }
+    for(const item of this.save.items)item.category=itemCategory(item);
     this.save.quests = this.save.quests || {};
     this.save.tutorial = Array.isArray(this.save.tutorial) ? this.save.tutorial : [];
     this.save.level = Math.max(
@@ -207,9 +209,9 @@ export class Simulation {
   get cooldownMultiplier(){return 1-Math.min(.4,(this.gearBonuses.cooldownReduction||0)/100)}
   get hpRegenPercent(){return .5+(this.gearBonuses.hpRegen||0)}
   get healingMultiplier(){return 1+Math.min(1,(this.gearBonuses.healingBonus||0)/100)}
-  addEquipmentItem(item:Item){if(this.save.items.some(i=>i.id===item.id))return false;if(this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY){this.onEvent('Bag full. Make room before collecting.');return false;}this.save.items.push({...structuredClone(item),secondary:normalizeSecondary(item.secondary),refine:refineLevel(item.refine)});return true;}
+  addEquipmentItem(item:Item){if(this.save.items.some(i=>i.id===item.id))return false;if(this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY){this.onEvent('Bag full. Make room before collecting.');return false;}this.save.items.push({...structuredClone(item),category:itemCategory(item),secondary:normalizeSecondary(item.secondary),refine:refineLevel(item.refine)});return true;}
   rollStoneLoot(monster:Monster){const tier=rollStoneDrop(!!this.monsterSpec(monster.kind).boss,this.random);return tier?refineStones[tier]:undefined;}
-  rollEquipmentLoot(monster:Monster):Item|undefined {const rolled=rollEquipmentDrop(this.monsterSpec(monster.kind).level,!!this.monsterSpec(monster.kind).boss,this.random);if(!rolled)return;const gear=gearById(rolled.gearId!)!;return {...rolled,name:gear.name,icon:gear.icon,count:1};}
+  rollEquipmentLoot(monster:Monster):Item|undefined {const rolled=rollEquipmentDrop(this.monsterSpec(monster.kind).level,!!this.monsterSpec(monster.kind).boss,this.random);if(!rolled)return;const gear=gearById(rolled.gearId!)!;return {...rolled,name:gear.name,category:itemCategory({name:gear.name}),icon:gear.icon,count:1};}
   get agility() { return this.save.stats.agi+(this.gearBonuses.agi||0); }
   toggleTutorial(){if(this.save.tutorial.includes('skip'))this.save.tutorial=this.save.tutorial.filter(s=>s!=='skip');else this.save.tutorial.push('skip');this.persist();}
   markTutorial(step:string) {if(!this.save.tutorial.includes(step))this.save.tutorial.push(step)}
@@ -350,10 +352,10 @@ export class Simulation {
   addItem(name: string, icon: string, count = 1) {
     const gear=gearByName(name);
     const existing=!gear&&this.save.items.find(i=>i.name===name);if(!existing&&this.save.items.filter(i=>i.count>0).length+(gear?count:1)>BAG_CAPACITY){this.onEvent("Bag full. Make room before collecting.");return false;}
-    if(gear){for(let n=0;n<count;n++)this.save.items.push({...rollGear(gear.id,gear.rarity,this.random),name,icon:gear.icon,count:1});return true;}
+    if(gear){for(let n=0;n<count;n++)this.save.items.push({...rollGear(gear.id,gear.rarity,this.random),name,category:itemCategory({name}),icon:gear.icon,count:1});return true;}
     const item = this.save.items.find((i) => i.name === name);
     if (item) item.count += count;
-    else this.save.items.push({ name, icon, count });
+    else this.save.items.push({ name, icon, count, category:itemCategory({name}) });
     return true;
   }
   usePotion(blue = false) {
@@ -403,6 +405,7 @@ export class Simulation {
   enemyFilter: (monster: Monster) => boolean = () => true;
   onKill?: (monster: Monster) => boolean | void;
   admin = false;
+  spawnItem(id:string,count:number,rarity:Rarity='common',refine=0){if(!this.admin||!this.online)this.onEvent('Admin spawning requires an authorized online account.');}
   online = false;
   connection = "Practice · saved on this device";
   community: import("../server/protocol").Snapshot["community"];

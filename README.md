@@ -6,9 +6,11 @@
 
 เวอร์ชัน 0.4 เปลี่ยนตีบวกเป็น +0 ถึง +10 พร้อมโบนัสสถานะหลักสะสมสูงสุด +145%, หิน Common/Rare, การสุ่มสำเร็จและลดระดับ คราฟต์ Common 5 ก้อนเป็น Rare 1 ก้อนได้ใน Forge → Materials ดู [Refinement](docs/REFINEMENT.md)
 
+เพิ่มหมวดหมู่ไอเท็มและแท็บกระเป๋า พร้อมเมนูเสกของแอดมิน (Settings → Admin: spawn items) และ SQLite แบบบันทึกถาวร: เปิด `npm run dev:server` คู่กับ `npm run dev` แล้วเข้า `http://localhost:5173/?online=1` บัญชีทดสอบ local เริ่มต้นเป็นแอดมิน ฐานข้อมูลอยู่ที่ `.local/game.sqlite` ส่วน Sites ใช้ D1 ซึ่งมีพื้นฐานเป็น SQLite ดู [คู่มือระบบไอเท็ม แอดมิน และ SQLite](docs/ITEMS-ADMIN-SQLITE.md)
+
 ## เริ่มเล่นบน Windows
 
-1. ติดตั้ง Node.js 22.12 ขึ้นไป (แนะนำ Node.js 24 LTS)
+1. ติดตั้ง Node.js 22.13 ขึ้นไป (แนะนำ Node.js 24 LTS)
 2. แตกไฟล์โปรเจกต์ แล้วเปิด PowerShell ในโฟลเดอร์ที่มี `package.json`
 3. รัน:
 

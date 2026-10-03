@@ -1476,3 +1476,7 @@ body:has(.game-panel) .touch-controls { visibility:hidden; }
  .secondary-popover { padding:10px; }
  .secondary-popover .secondary-character-stats { grid-template-columns:1fr;gap:4px;max-height:320px;overflow-y:auto; }
 }
+
+.item-category-tabs{display:flex;flex-wrap:wrap;gap:5px;flex:1}.item-category-tabs button{padding:6px 9px;font-size:11px}.item-category-tabs button[aria-selected="true"]{background:#ffc944;border-color:#bb772d;color:#56331f}.item-category-tabs small{opacity:.7}.bag-controls{flex-wrap:wrap}#spawn-form{display:grid;gap:16px}#spawn-form label{display:flex;justify-content:space-between;align-items:center;gap:12px}#spawn-form select{max-width:70%}#spawn-equipment{display:grid;gap:14px}#spawn-equipment[hidden]{display:none}#spawn-preview{display:flex;align-items:center;gap:14px;background:#fff1cc;border:2px solid #ddb579;border-radius:12px;padding:12px}#spawn-preview .game-icon{width:70px;height:70px}#spawn-form input{width:100px}
+
+.item-category-tabs button{background:#f7e1ab;border:2px solid #ba925c;border-radius:7px;color:#694529;box-shadow:0 2px 0 #b38a53;font-weight:900;cursor:pointer}.item-category-tabs button:hover{background:#ffe08a}.item-category-tabs button[aria-selected="true"]{box-shadow:inset 0 -2px 0 #d9982f;background:#ffc944}

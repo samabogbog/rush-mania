@@ -23,7 +23,7 @@ export default {
         if(!admin)throw new GameError('Operator access required',403);
         return Response.json(await operations(env.DB,input as Record<string,unknown>,request.method==='POST'),{headers});
       }
-      const snapshot=await transact(new D1RealmStore(env.DB),{id,name:'Adventurer '+id.slice(-4)},input);
+      const snapshot=await transact(new D1RealmStore(env.DB),{id,name:'Adventurer '+id.slice(-4),admin},input);
       snapshot.admin=admin;
       return Response.json(snapshot,{headers});
     }catch(error) {

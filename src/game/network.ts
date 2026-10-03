@@ -1,7 +1,7 @@
 import {type StoneTier} from './refinement';
 import { Simulation } from '../simulation';
 import type { ZoneId } from './content';
-import type { GearSlot } from './equipment';
+import type { Rarity, GearSlot } from './equipment';
 import type { ClassId } from './classes';
 import { actorFields, type Command, type Snapshot } from '../../server/protocol';
 export class NetworkSimulation extends Simulation {
@@ -52,6 +52,7 @@ export class NetworkSimulation extends Simulation {
     this.view.x+=(targetX-this.view.x)*blend;this.view.z+=(targetZ-this.view.z)*blend;
     if(length&&performance.now()-this.receivedAt<1000&&this.save.hp>0&&this.deathTime<=0){const nx=this.view.x+input[0]/length*this.movementSpeed*dt,nz=this.view.z+input[1]/length*this.movementSpeed*dt;const blocked=Math.abs(nx)>14||Math.abs(nz)>13||this.obstacles.some(o=>Math.hypot(nx-o.x,nz-o.z)<o.r+.3);if(!blocked&&Math.hypot(nx-this.x,nz-this.z)<=1.6){this.view.x=nx;this.view.z=nz;}}
   }
+  override spawnItem(id:string,count:number,rarity:Rarity='common',refine=0){if(this.admin)this.send('adminSpawn',id,count,rarity,refine);}
   override persist(){} // Durable save belongs to the server; browser cannot submit a character object.
   override select(id:number){this.send('select',id)}
   override nearest(){this.send('nearest')}
