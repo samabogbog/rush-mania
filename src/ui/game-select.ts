@@ -11,9 +11,14 @@ function open(select:HTMLSelectElement,button:HTMLButtonElement){
  const list=document.createElement('div');list.className='game-select-menu';list.id=button.getAttribute('aria-controls')!;list.role='listbox';list.setAttribute('aria-label',button.getAttribute('aria-label')!);
  const enabled=Array.from(select.options).filter(o=>!o.disabled);
  enabled.forEach((option,index)=>{const row=document.createElement('div');row.role='option';row.id=list.id+'-'+index;row.dataset.value=option.value;row.textContent=option.text;row.setAttribute('aria-selected',String(option.selected));row.onpointerdown=e=>{e.preventDefault();e.stopPropagation();commit(index)};row.onpointermove=()=>highlight(index);list.append(row)});
- document.body.append(list);const rect=button.getBoundingClientRect(),width=Math.min(innerWidth-16,Math.max(rect.width,220));list.style.width=width+'px';list.style.left=Math.max(8,Math.min(innerWidth-width-8,rect.left))+'px';
- const below=innerHeight-rect.bottom-12,above=rect.top-12,height=Math.min(280,Math.max(below,above));list.style.maxHeight=height+'px';list.style.top=(below>=Math.min(280,list.scrollHeight)?rect.bottom+5:Math.max(8,rect.top-Math.min(height,list.scrollHeight)-5))+'px';
- active={select,button,list,index:Math.max(0,enabled.findIndex(o=>o.selected))};button.setAttribute('aria-expanded','true');highlight(active.index);
+ document.body.append(list);
+
+ active={select,button,list,index:Math.max(0,enabled.findIndex(o=>o.selected))};button.setAttribute('aria-expanded','true');positionGameSelect();highlight(active.index);
+}
+function positionGameSelect(){
+ if(!active)return;const {button,list}=active,rect=button.getBoundingClientRect();
+ const width=Math.min(innerWidth-16,Math.max(rect.width,220));list.style.width=width+'px';list.style.left=Math.max(8,Math.min(innerWidth-width-8,rect.left))+'px';
+ const below=innerHeight-rect.bottom-12,above=rect.top-12,height=Math.min(280,Math.max(40,below,above));list.style.maxHeight=height+'px';list.style.top=(below>=Math.min(280,list.scrollHeight)?rect.bottom+5:Math.max(8,rect.top-Math.min(height,list.scrollHeight)-5))+'px';
 }
 export function enhanceGameSelects(root:ParentNode=document){root.querySelectorAll<HTMLSelectElement>('select').forEach(select=>{
  const previous=widgets.get(select);if(previous){sync(select,previous);return;}
@@ -35,5 +40,5 @@ export function observeGameSelects(){
  const observer=new MutationObserver(()=>{if(active&&!active.select.isConnected)closeGameSelect();enhanceGameSelects();});observer.observe(document.getElementById('panel-root')!,{childList:true,subtree:true});
  // Do not re-write DOM on every scan: changing textContent unnecessarily would trigger the observer again.
  window.addEventListener('resize',closeGameSelect);document.addEventListener('pointerdown',e=>{if(active&&!active.list.contains(e.target as Node)&&!active.button.contains(e.target as Node))closeGameSelect()});
- document.addEventListener('scroll',e=>{if(active&&!active.list.contains(e.target as Node))closeGameSelect()},true);
+ document.addEventListener('scroll',e=>{if(active&&!active.list.contains(e.target as Node))positionGameSelect()},true);
 }

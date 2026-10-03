@@ -18,7 +18,7 @@ function roomFor(realm:Realm,id:string,zone:ZoneId) {
 }
 function hydrate(player:Player, realm:Realm) {
   const sim=new Simulation(Math.random,player.actor.save as Save,null), normalizedSave=sim.save;
-  Object.assign(sim,structuredClone(player.actor));sim.save=normalizedSave;sim.online=true;sim.balance=realm.balance||{};
+  Object.assign(sim,structuredClone(player.actor));sim.save=normalizedSave;sim.cooldowns=Array.from({length:10},(_,n)=>n<6?sim.skillCooldowns[sim.save.hotbar[n]||'']||0:sim.auxiliaryCooldown||0);sim.online=true;sim.balance=realm.balance||{};
   player.room ||= sim.save.zone;
   sim.monsters=roomFor(realm,player.room,sim.save.zone).monsters;sim.obstacles=zoneObstacles(sim.save.zone);sim.actorId=player.id;
   sim.onEvent=(text,type='system',x,z)=>{player.events.push({id:++player.serial,text,type,x,z});player.events=player.events.slice(-40)};
@@ -105,7 +105,11 @@ function execute(player:Player,realm:Realm,command:Command,now:number,admin=fals
     case 'stat':if(a!=='str'&&a!=='vit'&&a!=='agi')throw new GameError('Invalid attribute');sim.stat(a);break;
     case 'claim':sim.claim();break;
     case 'setClass':if(!isClass(a))throw new GameError('Invalid class');sim.setClass(a);break;
-    case 'assignSkill':if(!integer(a,0,3)||typeof b!=='string')throw new GameError('Invalid assignment');sim.assignSkill(a as number,b);break;
+    case 'chooseSkill':if(typeof a!=='string')throw new GameError('Invalid skill choice');sim.chooseSkill(a);break;
+    case 'resetSkills':sim.resetSkills();break;
+    case 'assignAuxiliary':if(!integer(a,0,3)||(b!==null&&typeof b!=='string'))throw new GameError('Invalid auxiliary assignment');sim.assignAuxiliary(a as number,b as string|null);break;
+    case 'useAuxiliary':if(!integer(a,0,3))throw new GameError('Invalid auxiliary slot');sim.useAuxiliary(a as number);break;
+    case 'assignSkill':if(!integer(a,0,5)||typeof b!=='string')throw new GameError('Invalid assignment');sim.assignSkill(a as number,b);break;
     case 'buy':if(typeof a!=='string')throw new GameError('Invalid item');sim.buy(a);break;
     case 'sell':sim.sell();break;
     case 'toggleTutorial':sim.toggleTutorial();break;

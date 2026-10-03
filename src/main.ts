@@ -13,7 +13,7 @@ import { World } from "./world";
 import { FeedbackAudio } from "./game/audio";
 import { zones, species as catalogSpecies, questDefinitions, type ZoneId } from "./game/content";
 import { equipment, gearById, gearByName, type GearSlot, type Bonuses, gearSlots, BAG_CAPACITY, itemBonuses, itemRarity, rarityLabels, rarityOrder, statLabels, formatStat, gearSets, setBonuses } from "./game/equipment";
-import { classes, MAX_LEVEL, type ClassId } from "./game/classes";
+import { classes, MAX_LEVEL, skillBranches, auxiliaryItems, isAuxiliaryItem, type ClassId } from "./game/classes";
 import type { GameWorld } from "./render/contracts";
 const iconAliases: Record<string, string> = {
   sprout: "sprout",
@@ -78,7 +78,7 @@ app.innerHTML = `<canvas id="game" aria-label="3D game world: click the ground t
 <div id="target-hud" hidden><div><span id="target-name">Dewdrop</span><small>Lv. 1 · Wild monster</small></div><div class="target-bar"><i id="target-fill"></i></div><button id="untarget" title="Clear target">${icon("x")}</button></div>
 <nav class="side-menu" aria-label="Game menus"><button data-panel="inventory" title="Inventory (I)">${icon("backpack")}<span>Bag</span><kbd>I</kbd></button><button data-panel="skills" title="Skills (K)">${icon("wand-sparkles")}<span>Skills</span><kbd>K</kbd></button><button data-panel="character" title="Character (C)">${icon("user-round")}<span>Hero</span><kbd>C</kbd></button><button data-panel="forge" title="Upgrade equipment">${icon("anvil")}<span>Forge</span></button><button data-panel="shop" title="Potion merchant">${icon("store")}<span>Shop</span></button></nav>
 <div class="chat"><div class="chat-tabs"><button class="active" data-chat="world">World</button><button data-chat="combat">Combat</button><span>LOCAL ADVENTURE</span><button id="chat-hide" aria-label="Hide activity log">${icon("chevron-down")}</button></div><div id="chat-log"><p><b class="system">System</b> Welcome to Mossvale, adventurer.</p><p><b class="guide">Guide</b> Click a monster to begin your adventure!</p></div><div class="chat-input">${icon("message-circle")}<input id="chat-input" placeholder="Leave a local note…" maxlength="100" aria-label="Local note"><span>↵</span></div></div>
-<div class="bottom-center"><div id="combat-state" aria-live="polite"></div><div class="control-hint"><span>${icon("mouse-pointer-2")} Click to move & attack</span><b>·</b><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> to walk</span></div><div class="action-bar"><button class="target-action" id="nearest" title="Select nearest monster (Tab)">${icon("crosshair")}<kbd>TAB</kbd></button><div class="action-divider"></div><button class="skill-slot gold" data-skill="0" title="Power Strike (1)"><kbd>1</kbd>${icon("swords")}<small>Strike</small><span class="cooldown"></span></button><button class="skill-slot purple" data-skill="1" title="Whirlwind (2)"><kbd>2</kbd>${icon("wind")}<small>Whirlwind</small><span class="cooldown"></span></button><button class="skill-slot red" data-skill="2" title="Red potion (3)"><kbd>3</kbd>${icon("flask-conical")}<small>Heal</small><span class="count" id="red-count">8</span><span class="cooldown"></span></button><button class="skill-slot blue" data-skill="3" title="Blue potion (4)"><kbd>4</kbd>${icon("droplets")}<small>Mana</small><span class="count" id="blue-count">4</span><span class="cooldown"></span></button><button class="skill-slot purple" data-skill="4" title="Skill slot 3 (5)"><kbd>5</kbd>${icon("sparkles")}<small>Slot 3</small><span class="cooldown"></span></button><button class="skill-slot gold" data-skill="5" title="Skill slot 4 (6)"><kbd>6</kbd>${icon("sparkles")}<small>Slot 4</small><span class="cooldown"></span></button><div class="action-divider"></div><button class="loot-action" id="loot" title="Pick up nearby loot (F)">${icon("hand")}<kbd>F</kbd><small>Pick up</small></button><button id="auto" title="Auto-select and attack monsters">${icon("repeat-2")}<small>Auto</small></button></div><div class="experience"><span>BASE EXP</span><div><i id="exp-fill"></i></div><b id="exp-text">0 / 120</b></div></div>
+<div class="bottom-center"><div id="combat-state" aria-live="polite"></div><div class="control-hint"><span>${icon("mouse-pointer-2")} Click to move & attack</span><b>·</b><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> to walk</span></div><div class="action-bar"><button class="target-action" id="nearest" title="Select nearest monster (Tab)">${icon('crosshair')}<kbd>TAB</kbd></button><div class="action-divider"></div><div class="skill-hotbar" aria-label="Six skill slots">${Array.from({length:6},(_,n)=>`<button class="skill-slot gold" data-skill="${n}" data-hotbar="${n}" title="Skill ${n+1}"><kbd>${n+1}</kbd>${icon('plus')}<small>Empty</small><span class="cooldown"></span></button>`).join('')}</div><div class="action-divider"></div><div class="aux-hotbar" aria-label="Four auxiliary item slots">${Array.from({length:4},(_,n)=>`<button class="aux-slot" data-aux="${n}"><kbd>${[7,8,9,0][n]}</kbd>${icon('plus')}<small>Empty</small><span class="count"></span><span class="cooldown"></span></button>`).join('')}</div><button class="loot-action" id="loot" title="Pick up nearby loot (F)">${icon('hand')}<kbd>F</kbd><small>Loot</small></button><button id="auto" title="Auto-select and attack monsters">${icon('repeat-2')}<small>Auto</small></button></div><div class="experience"><span>BASE EXP</span><div><i id="exp-fill"></i></div><b id="exp-text">0 / 120</b></div></div>
 <div class="bottom-right"><div class="community-shortcuts"><button data-panel="community" title="Party & friends">${icon("hero")} Party</button><button data-panel="market" title="Player market">${icon("store")} Market</button></div><div class="wallet">${icon("coins")}<b id="gold">120</b><span>z</span></div><div class="utility"><button id="camera" title="Reset camera">${icon("focus")}</button><button data-panel="settings" title="Settings">${icon("settings-2")}</button><button data-panel="help" title="How to play">${icon("circle-help")}</button></div><span class="save-indicator"><i></i> Adventure saved locally</span></div>
 <aside id="item-tooltip" class="item-tooltip" role="tooltip" hidden></aside><aside id="secondary-popover" class="secondary-popover" role="region" aria-label="Secondary stats" hidden></aside><div id="toast" role="status"></div><div id="panel-root"></div><div class="touch-controls"><button data-touch="up" aria-label="Walk up"><span class="arrow-up">${icon("arrow-down")}</span></button><button data-touch="left" aria-label="Walk left"><span class="arrow-left">${icon("arrow-right")}</span></button><button data-touch="down" aria-label="Walk down">${icon("arrow-down")}</button><button data-touch="right" aria-label="Walk right">${icon("arrow-right")}</button></div>`;
 async function boot(){
@@ -212,6 +212,7 @@ function hideItemTooltip(){const tip=document.getElementById('item-tooltip');if(
 function secondaryStatsMarkup(){return `<div class="secondary-character-stats">${Object.entries({critChance:sim.criticalChance*100,critDamage:sim.criticalMultiplier*100,damageBonus:sim.gearBonuses.damageBonus||0,skillDamage:sim.gearBonuses.skillDamage||0,lifesteal:Math.min(25,sim.gearBonuses.lifesteal||0),hpRegen:sim.hpRegenPercent,mpRegen:.7+(sim.gearBonuses.mpRegen||0),attackSpeed:Math.min(100,sim.gearBonuses.attackSpeed||0),moveSpeed:Math.min(50,sim.gearBonuses.moveSpeed||0),armorPen:Math.min(60,sim.gearBonuses.armorPen||0),damageReduction:Math.min(60,sim.gearBonuses.damageReduction||0),dodgeChance:Math.min(35,sim.gearBonuses.dodgeChance||0),expBonus:sim.gearBonuses.expBonus||0,goldBonus:sim.gearBonuses.goldBonus||0,healingBonus:Math.min(100,sim.gearBonuses.healingBonus||0),cooldownReduction:Math.min(40,sim.gearBonuses.cooldownReduction||0)}).map(([key,value])=>`<span>${statLabels[key as keyof Bonuses]}<b>${formatStat(key as keyof Bonuses,value)}</b></span>`).join('')}</div>`;}
 
 function renderPanel() {
+  document.body.classList.toggle('hotbar-editing',panel==='skills'||panel==='inventory');
   closeGameSelect();
   hideItemTooltip();
   clearTimeout(secondaryHideTimer);
@@ -224,6 +225,7 @@ function renderPanel() {
     return;
   }
   sim.paused = true;
+  const oldScroll=document.querySelector<HTMLElement>('.panel-body')?.scrollTop||0;
   const retained=Array.from(document.querySelectorAll<HTMLInputElement|HTMLSelectElement|HTMLTextAreaElement>(`[data-open-panel="${panel}"] input[id],[data-open-panel="${panel}"] select[id],[data-open-panel="${panel}"] textarea[id]`)).map(e=>({id:e.id,value:e.value,focused:document.activeElement===e}));
   const s = sim.save;
   const [ic, baseTitle] = titles[panel];
@@ -238,23 +240,9 @@ function renderPanel() {
     body = `<div class="character-card"><div class="portrait">${portrait}</div><div><h2>Sprout</h2><span>Level ${s.level} / ${MAX_LEVEL} · ${sim.job.name}</span><p>${sim.job.role}</p></div></div><div class="class-picker">${(Object.entries(classes) as [ClassId, (typeof classes)[ClassId]][]).map(([id, job]) => `<button data-class="${id}" aria-pressed="${s.job === id}" ${sim.target !== null ? "disabled" : ""}>${icon(job.icon)}<strong>${job.name}</strong><small>${job.role}</small></button>`).join("")}</div><div class="stat-pair"><span>Max HP <b>${sim.maxHp}</b></span><span>Max MP <b>${sim.maxMp}</b></span><span>Attack <b>${sim.damage.toFixed(1)} <small class="refine-gain">(+${Math.round(characterRefineAttack()*100)/100})</small></b></span><span>Defense <b>${sim.defense}</b></span></div><div class="secondary-disclosure"><span>Combat details</span><button id="secondary-info" class="info-button" aria-label="Show secondary stats" aria-expanded="false" aria-controls="secondary-popover">i</button></div><div class="section-label">ATTRIBUTES <span>${s.points} points available</span></div>${(["str", "vit", "agi"] as const).map((k, i) => `<div class="stat-row"><span>${[s.job === "mage" ? "Focus" : "Strength", "Vitality", "Agility"][i]}<small>${[s.job === "archer" ? "Melee strength" : "Increase attack power", "Increase health and defense", s.job === "archer" ? "Increase bow attack, attack speed and critical chance" : "Increase attack speed and critical chance"][i]}</small></span><b>${s.stats[k]}</b><button data-stat="${k}" ${s.points ? "" : "disabled"}>${icon("plus")}</button></div>`).join("")}<div class="section-label">EQUIPMENT</div>${gearSlots.map(slot=>{const item=s.items.find(i=>i.id===s.equipped[slot]);return `<div class="stat-row"><span>${slot}<small>${item?.name||'Basic class equipment'}</small></span>${item?`<button data-unequip="${slot}">Remove</button>`:''}</div>`}).join('')}<div class="panel-note">Change class outside combat. Each equipment item keeps its own refinement. Each level grants 3 attribute points. Skills unlock at levels 10, 20 … 100.</div>`;
   }
   if (panel === "skills") {
-    body = `<div class="panel-sub"><span>${sim.job.name.toUpperCase()} SKILLS</span><span>${sim.unlockedSkills.length} / 10 unlocked</span></div><div class="loadout-grid">${s.hotbar
-      .map((id, index) => {
-        const skill = sim.skillList.find((skill) => skill.id === id);
-        return `<div class="loadout-slot" data-hotbar="${index}"><kbd>${[1, 2, 5, 6][index]}</kbd>${icon(skill?.icon || "plus")}<strong>${skill?.name || "Empty slot"}</strong><small>Drop a skill here</small></div>`;
-      })
-      .join(
-        "",
-      )}</div><p class="muted">Drag an unlocked skill into a slot, or choose a slot and press Assign.</p>${sim.skillList
-      .map((skill) => {
-        const unlocked = s.level >= skill.level;
-        return `<article class="skill-card ${unlocked ? "" : "skill-locked"}" data-skill-id="${skill.id}" draggable="${unlocked}"><span class="skill-art purple">${icon(skill.icon)}</span><div><h3>${skill.name} <small>LV ${skill.level}</small></h3><p>${skill.description}${["heal","guard","fury"].includes(skill.effect)?" Shares a reduced effect with party allies within 8m.":""}</p><span>${skill.mp} MP · ${skill.cooldown}s cooldown · ${skill.range}m range${skill.cast ? " · " + skill.cast + "s cast" : ""}</span><div class="skill-assignment"><select aria-label="Hotbar slot for ${skill.name}" data-slot-for="${skill.id}" ${unlocked ? "" : "disabled"}>${[1, 2, 5, 6].map((key, index) => `<option value="${index}">Key ${key}</option>`).join("")}</select><button data-assign="${skill.id}" ${unlocked ? "" : "disabled"}>${unlocked ? "Assign" : "Unlock at Lv " + skill.level}</button></div></div></article>`;
-      })
-      .join(
-        "",
-      )}<div class="panel-note">Damage = ATK × (100 / (DEF + 100)). Damage rolls vary by ±10%, with a critical chance influenced by AGI. Moving interrupts a cast; mana and cooldown remain spent.</div>`;
+    const choices=s.skillChoices[s.job],branches=skillBranches[s.job];
+    body=`<div class="panel-sub"><span>${sim.job.name.toUpperCase()} · TWO PATHS</span><span>${sim.unlockedSkills.length} / 10 learned</span></div><div class="section-label">SKILLS · KEYS 1–6</div><div class="loadout-grid">${s.hotbar.map((id,n)=>{const skill=sim.skillList.find(k=>k.id===id);return `<div class="loadout-slot" data-hotbar="${n}"><kbd>${n+1}</kbd>${icon(skill?.icon||'plus')}<strong>${skill?.name||'Empty'}</strong><small>Skills only</small>${id?`<button data-clear-skill="${n}" aria-label="Clear skill slot ${n+1}">×</button>`:''}</div>`}).join('')}</div><div class="section-label">AUXILIARY · KEYS 7–0</div><div class="auxiliary-loadout">${s.auxiliary.map((name,n)=>`<label class="auxiliary-loadout-slot" data-aux="${n}"><kbd>${[7,8,9,0][n]}</kbd>${icon(name?auxiliaryItems[name].icon:'plus')}<select id="auxiliary-${n}" aria-label="Auxiliary slot ${n+1}"><option value="">Empty</option>${Object.keys(auxiliaryItems).map(item=>`<option value="${item}" ${name===item?'selected':''}>${item} · ${s.items.find(i=>i.name===item)?.count||0}</option>`).join('')}</select></label>`).join('')}</div><p class="muted">Choose one skill at each level milestone. Mix either path; learn stages in order. Drag learned skills to 1–6. Drag recovery items from Bag to 7–0. Other buff-item types are reserved for a future update.</p><button id="reset-skills">Reset this class's choices · free during prototype</button><div class="skill-branch-headings"><strong>${branches[0]}</strong><strong>${branches[1]}</strong></div><div class="skill-tree">${Array.from({length:10},(_,stage)=>`<section class="skill-stage" aria-label="Skill stage ${stage+1}"><h3>STAGE ${stage+1} · LEVEL ${(stage+1)*10} · PICK ONE</h3><div class="skill-options">${[0,1].map(branch=>{const skill=sim.skillList.find(k=>k.stage===stage+1&&k.branch===branch)!,learned=choices[stage]===skill.id,eligible=s.level>=skill.level&&!choices[stage]&&(stage===0||!!choices[stage-1]);return `<article class="skill-card ${learned?'skill-learned':'skill-locked'}" data-skill-id="${skill.id}" draggable="${learned}"><span class="skill-art purple">${icon(skill.icon)}</span><div><h3>${skill.name} <small>LV ${skill.level}</small></h3><p>${skill.description}${['heal','guard','fury'].includes(skill.effect)?' Shares support with nearby party members.':''}</p><span>${skill.mp} MP · ${skill.cooldown}s · ${skill.range}m</span>${learned?`<strong class="learned-tag">✓ Learned</strong><div class="skill-assignment"><select aria-label="Hotbar slot for ${skill.name}" data-slot-for="${skill.id}">${[1,2,3,4,5,6].map((key,n)=>`<option value="${n}">Key ${key}</option>`).join('')}</select><button data-assign="${skill.id}">Assign</button></div>`:`<button data-learn="${skill.id}" ${eligible?'':'disabled'}>${choices[stage]?'Other path chosen':s.level<skill.level?'Requires Lv '+skill.level:stage>0&&!choices[stage-1]?'Choose previous stage':'Learn '+skill.name}</button>`}</div></article>`}).join('')}</div></section>`).join('')}</div><div class="panel-note">Six skill slots accept learned skills only. Four auxiliary slots accept approved recovery items only; potions share a 2s cooldown. Reset outside combat after cooldowns and buffs expire. Choice progress is saved separately for each class.</div>`;
   }
-
   if (panel === "forge") {
     const refineItems=s.items.filter(i=>i.gearId&&gearById(i.gearId)&&i.id&&i.count===1);
     if(!refineItems.some(i=>i.id===selectedRefine))selectedRefine=refineItems.find(i=>i.id===s.equipped.weapon)?.id||refineItems[0]?.id||'';
@@ -296,8 +284,8 @@ function renderPanel() {
       ["Mouse", "Click ground to walk; click a monster to attack"],
       ["W A S D", "Move your character"],
       ["Tab / Space", "Select the nearest monster / attack"],
-      ["1 / 2 / 5 / 6", "Assigned class skills (unlock every 10 levels)"],
-      ["3 / 4", "Health potion / Mana potion"],
+      ["1–6", "Assigned class skills (unlock every 10 levels)"],
+      ["7 / 8", "Health potion / Mana potion"],
       ["F", "Pick up nearby drops"],
       ["I / K / C", "Inventory / Skills / Character"],
       ["M / Esc", "Map / close window"],
@@ -327,7 +315,7 @@ function renderPanel() {
     body = `<h3>Make yourself at home.</h3><div class="setting-row"><span>Sound effects</span><button id="sfx-panel">${feedback.enabled ? "On" : "Off"}</button></div><div class="setting-row"><span>Ambient music</span><button id="sound-panel">${music ? "On" : "Off"}</button></div><div class="setting-row"><span>Graphics quality</span><select id="graphics-quality">${["auto","high","low"].map(q=>`<option ${world.quality===q?"selected":""}>${q}</option>`).join("")}</select></div><div class="setting-row"><span>Camera zoom</span><input id="zoom" type="range" min="0.65" max="1.6" step="0.05" value="${world.zoom}" aria-label="Camera zoom"></div><div class="panel-note">Graphics: ${world.diagnostics.drawCalls} draw calls · ${world.diagnostics.fps.toFixed(0)} FPS · p95 ${world.diagnostics.frameP95.toFixed(1)} ms</div>${sim.admin ? '<button data-panel="admin" class="primary-button">Admin: spawn items</button><button id="realm-tools" class="primary-button">Realm operations</button>' : ""}<button data-panel="report">Report a bug</button><button id="save-now" class="primary-button">${icon("save")} ${sim.online ? "Check server connection" : "Save adventure"}</button><div class="panel-note">Mossvale v0.4 · Babylon.js alpha<br>All characters and environments are original procedural assets.<br>${sim.online ? "Server-authoritative realm · Sites account" : "Practice mode · local save"}</div>`;
   }
   $("#panel-root").innerHTML =
-    `<div class="panel-backdrop"></div><section data-open-panel="${panel}" class="game-panel ${panel === "map" ? "wide" : panel === "inventory" ? "bag-panel" : panel === "forge" ? "craft-panel" : ""}" role="dialog" aria-modal="true" aria-label="${title}"><div class="panel-heading">${icon(ic)}<h2>${title}</h2><span>${sim.online ? "LIVE" : "PAUSED"}</span><button id="close-panel" aria-label="Close window">${icon("x")}</button></div><div class="panel-body">${body}</div><div class="panel-footer">${icon("sparkles")} MOSSVALE <span>ESC to return to adventure</span></div></section>`;
+    `<div class="panel-backdrop"></div><section data-open-panel="${panel}" class="game-panel ${panel === "map" ? "wide" : panel === "inventory" ? "bag-panel" : panel === "forge" ? "craft-panel" : panel === "skills" ? "skills-panel" : ""}" role="dialog" aria-modal="true" aria-label="${title}"><div class="panel-heading">${icon(ic)}<h2>${title}</h2><span>${sim.online ? "LIVE" : "PAUSED"}</span><button id="close-panel" aria-label="Close window">${icon("x")}</button></div><div class="panel-body">${body}</div><div class="panel-footer">${icon("sparkles")} MOSSVALE <span>ESC to return to adventure</span></div></section>`;
   for(const retainedInput of retained){const element=document.getElementById(retainedInput.id) as HTMLInputElement|HTMLSelectElement|HTMLTextAreaElement|null;if(element){element.value=retainedInput.value;if(retainedInput.focused)element.focus();}}
   document.querySelectorAll<HTMLElement>(".game-panel [data-panel]").forEach(b=>b.onclick=()=>openPanel(b.dataset.panel!));
   $("#close-panel").onclick = closePanel;
@@ -345,6 +333,7 @@ function renderPanel() {
     document.querySelectorAll<HTMLElement>('[data-bag-page]').forEach(button=>button.onclick=()=>{inventoryPage=Number(button.dataset.bagPage);renderPanel()});
     document.querySelectorAll<HTMLElement>('[data-item]').forEach(button=>{
       const item=s.items.find(i=>(i.id||i.name)===button.dataset.item)!,gear=item.gearId?gearById(item.gearId):undefined;
+      if(isAuxiliaryItem(item.name)){button.draggable=true;button.ondragstart=e=>{document.body.classList.add('dragging-hotbar');e.dataTransfer?.setData('application/x-mossvale-item',item.name);hideItemTooltip()};}
       let tipWidth=0,tipHeight=0;
       const position=(x:number,y:number)=>{const tip=$('#item-tooltip');tip.style.left=`${Math.max(8,Math.min(innerWidth-tipWidth-8,x+16))}px`;tip.style.top=`${Math.max(8,Math.min(innerHeight-tipHeight-8,y+16))}px`;};
       const show=(event?:MouseEvent)=>{
@@ -399,6 +388,12 @@ function renderPanel() {
         refreshHotbar();
       }),
   );
+  document.querySelectorAll<HTMLElement>('[data-learn]').forEach(button=>button.onclick=()=>{sim.chooseSkill(button.dataset.learn!);renderPanel();refreshHotbar()});
+  document.querySelectorAll<HTMLElement>('[data-clear-skill]').forEach(button=>button.onclick=()=>{sim.assignSkill(Number(button.dataset.clearSkill),'');renderPanel();refreshHotbar()});
+  if(panel==='skills'){
+    $('#reset-skills').onclick=()=>{sim.resetSkills();renderPanel();refreshHotbar()};
+    for(let n=0;n<4;n++)$('#auxiliary-'+n).onchange=e=>{sim.assignAuxiliary(n,(e.target as HTMLSelectElement).value||null);refreshHotbar()};
+  }
   document.querySelectorAll<HTMLElement>("[data-assign]").forEach(
     (button) =>
       (button.onclick = () => {
@@ -415,8 +410,7 @@ function renderPanel() {
   document.querySelectorAll<HTMLElement>("[data-skill-id]").forEach(
     (card) =>
       (card.ondragstart = (event) => {
-        if (card.draggable)
-          event.dataTransfer?.setData("text/plain", card.dataset.skillId!);
+        if (card.draggable){document.body.classList.add('dragging-hotbar');event.dataTransfer?.setData("text/plain", card.dataset.skillId!); }
       }),
   );
   bindSkillDrops();
@@ -490,6 +484,8 @@ function renderPanel() {
   }
   if(document.getElementById("open-journal"))$("#open-journal").onclick=()=>openPanel("journal");
   enhanceGameSelects();
+  bindSkillDrops();
+  $(".panel-body").scrollTop=oldScroll;
   $("#close-panel").focus();
 }
 function closePanel() {
@@ -502,6 +498,8 @@ function openPanel(name: string) {
   panel = panel === name ? "" : name;
   renderPanel();
 }
+document.addEventListener("dragend",()=>document.body.classList.remove("dragging-hotbar"));
+document.addEventListener("drop",()=>document.body.classList.remove("dragging-hotbar"));
 observeGameSelects();
 const keys = new Set<string>();
 window.addEventListener("keydown", (e) => {
@@ -538,6 +536,7 @@ window.addEventListener("keydown", (e) => {
     e.preventDefault();
     if (k === "tab" || sim.target === null) sim.nearest();
   } else if ("123456".includes(k)) sim.skill(Number(k) - 1);
+  else if("7890".includes(k))sim.useAuxiliary("7890".indexOf(k));
   else if (k === "f") sim.collect();
   keys.add(k);
 });
@@ -555,7 +554,8 @@ document
   .forEach((b) => (b.onclick = () => openPanel(b.dataset.panel!)));
 document
   .querySelectorAll<HTMLElement>("[data-skill]")
-  .forEach((b) => (b.onclick = () => sim.skill(Number(b.dataset.skill))));
+  .forEach((b) => (b.onclick = () => {if(!panel)sim.skill(Number(b.dataset.skill))}));
+document.querySelectorAll<HTMLElement>(".action-bar [data-aux]").forEach(b=>b.onclick=()=>{if(!panel)sim.useAuxiliary(Number(b.dataset.aux))});
 $("#nearest").onclick = () => sim.nearest();
 $("#loot").onclick = () => sim.collect();
 $("#auto").onclick = () => {
@@ -697,20 +697,22 @@ function bindSkillDrops() {
       }
     };
   });
+  document.querySelectorAll<HTMLElement>('[data-aux]').forEach(slot=>{slot.ondragover=e=>e.preventDefault();slot.ondrop=e=>{e.preventDefault();const name=e.dataTransfer?.getData('application/x-mossvale-item')||e.dataTransfer?.getData('text/plain');if(isAuxiliaryItem(name)&&sim.assignAuxiliary(Number(slot.dataset.aux),name)){renderPanel();refreshHotbar()}};});
+
 }
 function refreshHotbar() {
-  const signature = `${sim.save.job}:${sim.save.level}:${sim.save.hotbar.join(",")}`;
+  const signature = `${sim.save.job}:${sim.save.level}:${sim.save.hotbar.join(",")}:${sim.save.auxiliary.join(",")}:${sim.save.skillChoices[sim.save.job].join(",")}`;
   if (signature === hotbarSignature) return;
   hotbarSignature = signature;
   $("#class-name").textContent = sim.job.name.toUpperCase();
-  [0, 1, 4, 5].forEach((key, index) => {
+  [0,1,2,3,4,5].forEach((key, index) => {
     const button = document.querySelector<HTMLButtonElement>(
       `.action-bar [data-skill="${key}"]`,
     )!;
     const skill = sim.skillList.find(
       (skill) => skill.id === sim.save.hotbar[index],
     );
-    const locked = !skill || sim.save.level < skill.level;
+    const locked = !skill || !sim.unlockedSkills.some(k=>k.id===skill.id);
     button.classList.toggle("locked", locked);
     button.dataset.hotbar = String(index);
     button.title = skill
@@ -718,6 +720,7 @@ function refreshHotbar() {
       : "Assign a skill in the Skills window";
     button.innerHTML = `<kbd>${key + 1}</kbd>${icon(skill?.icon || "plus")}<small>${skill?.name || "Empty"}</small><span class="cooldown">${locked && skill ? "Lv " + skill.level : ""}</span>`;
   });
+  document.querySelectorAll<HTMLElement>('.action-bar [data-aux]').forEach(button=>{const n=Number(button.dataset.aux),name=sim.save.auxiliary[n];button.title=name||'Assign an approved item in Skills';button.classList.toggle('locked',!name);button.innerHTML=`<kbd>${[7,8,9,0][n]}</kbd>${icon(name?auxiliaryItems[name].icon:'plus')}<small>${name==='Red potion'?'HP':name==='Blue potion'?'MP':'Empty'}</small><span class="count"></span><span class="cooldown"></span>`;});
   bindSkillDrops();
 }
 refreshHotbar();
@@ -784,12 +787,7 @@ function frame(now: number) {
           .join(" · ");
     $("#gold").textContent = s.gold.toLocaleString();
     $("#level-badge").textContent = String(s.level);
-    $("#red-count").textContent = String(
-      s.items.find((i) => i.name === "Red potion")?.count || 0,
-    );
-    $("#blue-count").textContent = String(
-      s.items.find((i) => i.name === "Blue potion")?.count || 0,
-    );
+    document.querySelectorAll<HTMLElement>('.action-bar [data-aux]').forEach(button=>{const n=Number(button.dataset.aux),name=s.auxiliary[n];button.querySelector('.count')!.textContent=name?String(s.items.find(i=>i.name===name)?.count||0):'';const cd=button.querySelector<HTMLElement>('.cooldown')!;cd.textContent=sim.cooldowns[n+6]>0?String(Math.ceil(sim.cooldowns[n+6])):'';cd.classList.toggle('cooling',sim.cooldowns[n+6]>0);});
     const nextHint=[['move','Walk with WASD or click the path.'],['attack','Defeat a creature. Step away from red attack warnings.'],['collect','Walk to a drop and press F.'],['craft','Gather materials and craft equipment in Forge.'],['equip','Equip your crafted gear in Bag.'],['travel','Reach the north portal and open Map to travel.']].find(([id])=>!s.tutorial.includes(id));
     $('.quest-tracker p').textContent=!s.tutorial.includes('skip')&&nextHint?nextHint[1]:'Visit NPC guides for your next adventure.';
     $("#coords").textContent = `${Math.round(sim.x)}, ${Math.round(sim.z)}`;
@@ -810,12 +808,12 @@ function frame(now: number) {
             : b.classList.contains("locked")
               ? sim.skillList.find(
                   (skill) =>
-                    skill.id === sim.save.hotbar[[0, 1, 4, 5].indexOf(i)],
+                    skill.id === sim.save.hotbar[i],
                 )?.level
                 ? "Lv " +
                   sim.skillList.find(
                     (skill) =>
-                      skill.id === sim.save.hotbar[[0, 1, 4, 5].indexOf(i)],
+                      skill.id === sim.save.hotbar[i],
                   )!.level
                 : ""
               : "";
@@ -840,7 +838,7 @@ Object.defineProperty(window, "mossvale", {
     snapshot: () => ({
       zone:sim.save.zone,equipped:{...sim.save.equipped},tutorial:[...sim.save.tutorial],community:structuredClone(sim.community),
       job: sim.save.job,
-      hotbar: [...sim.save.hotbar],
+      hotbar: [...sim.save.hotbar],auxiliary:[...sim.save.auxiliary],skillChoices:structuredClone(sim.save.skillChoices),
       unlockedSkills: sim.unlockedSkills.map((skill) => skill.id),
       defense: sim.defense,
       cooldowns: [...sim.cooldowns],

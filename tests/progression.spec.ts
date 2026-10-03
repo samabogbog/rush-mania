@@ -33,10 +33,12 @@ test("migrates legacy saves, preserves progress, and caps levels at 100", () => 
   expect(sim.unlockedSkills).toHaveLength(0);
   sim.addExperience(1);
   expect(sim.save.level).toBe(10);
+  expect(sim.chooseSkill("swordsman-1")).toBe(true);
   expect(sim.unlockedSkills.map((skill) => skill.level)).toEqual([10]);
   sim.addExperience(1_000_000);
   expect(sim.save.level).toBe(MAX_LEVEL);
   expect(sim.save.xp).toBe(0);
+  for(let n=2;n<=10;n++)sim.chooseSkill(`swordsman-${n}`);
   expect(sim.unlockedSkills).toHaveLength(10);
   sim.persist();
   expect(new Simulation().save).toEqual(sim.save);
@@ -46,7 +48,7 @@ test("defense formula mitigates damage for both combatants and attack rolls vary
   expect(damageAfterDefense(100, 0)).toBe(100);
   expect(damageAfterDefense(100, 100)).toBe(50);
   expect(damageAfterDefense(100, 300)).toBe(25);
-  const sim = new Simulation(() => 0.5);
+  const sim = new Simulation(() => 0.5,undefined,null);
   const monster = sim.monsters[0];
   sim.hit(monster, 108);
   expect(monster.hp).toBe(-45); // 108 ATK vs 8 DEF = 100.
@@ -57,14 +59,14 @@ test("defense formula mitigates damage for both combatants and attack rolls vary
   expect(weak.monsters[0].hp).toBeGreaterThan(strong.monsters[0].hp);
 });
 
-test("all three classes expose ten gated usable skills and respect mana and cooldowns", () => {
+test("all three classes expose twenty gated selectable skills and respect mana and cooldowns", () => {
   for (const job of Object.keys(classes) as ClassId[]) {
-    expect(skills[job]).toHaveLength(10);
-    expect(skills[job].map((skill) => skill.level)).toEqual([
+    expect(skills[job]).toHaveLength(20);
+    expect(skills[job].filter(skill=>skill.branch===0).map((skill) => skill.level)).toEqual([
       10, 20, 30, 40, 50, 60, 70, 80, 90, 100,
     ]);
     for (const skill of skills[job]) {
-      const sim = new Simulation(() => 0.5);
+      const sim = new Simulation(() => 0.5,undefined,null);
       sim.setClass(job);
       const monster = sim.monsters[0];
       monster.x = sim.x + 1;
@@ -74,6 +76,7 @@ test("all three classes expose ten gated usable skills and respect mana and cool
       sim.save.mp = sim.maxMp;
       expect(sim.castSkill(skill.id)).toBe(false);
       sim.save.level = skill.level;
+      for(let stage=1;stage<=skill.stage;stage++)sim.chooseSkill(skills[job].find(s=>s.stage===stage&&s.branch===skill.branch)!.id);
       sim.save.mp = 0;
       expect(sim.castSkill(skill.id)).toBe(false);
       sim.save.mp = sim.maxMp;
@@ -94,16 +97,17 @@ test("all three classes expose ten gated usable skills and respect mana and cool
 });
 
 test("skill assignment prevents duplicate slots, keeps cooldowns, and cancels casts when moving", () => {
-  const sim = new Simulation(() => 0.5);
+  const sim = new Simulation(() => 0.5,undefined,null);
   sim.setClass("mage");
   sim.save.level = 30;
+  for(let n=1;n<=3;n++)sim.chooseSkill(`mage-${n}`);
   sim.save.mp = sim.maxMp;
   expect(sim.assignSkill(0, "mage-3")).toBe(true);
   expect(sim.assignSkill(1, "mage-3")).toBe(true);
   expect(sim.save.hotbar.filter((id) => id === "mage-3")).toHaveLength(1);
   expect(sim.assignSkill(2, "mage-10")).toBe(false);
   expect(sim.assignSkill(2, "archer-1")).toBe(false);
-  expect(sim.assignSkill(4, "mage-1")).toBe(false);
+  expect(sim.assignSkill(6, "mage-1")).toBe(false);
   const monster = sim.monsters[0];
   monster.x = 1;
   monster.z = 2;
@@ -116,7 +120,7 @@ test("skill assignment prevents duplicate slots, keeps cooldowns, and cancels ca
 });
 
 test("monster attacks are telegraphed and can be avoided by moving out of range", () => {
-  const sim = new Simulation(() => 0.5);
+  const sim = new Simulation(() => 0.5,undefined,null);
   const monster = sim.monsters[0];
   monster.x = 1;
   monster.z = 2;

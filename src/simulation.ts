@@ -2,6 +2,7 @@ import {itemCategory,type ItemCategory} from './game/items';
 import {refineLevel,refineCost,rollRefinement,rollStoneDrop,refineStones,isStoneTier,type StoneTier} from './game/refinement';
 import {
   classes,
+  isAuxiliaryItem,
   skills,
   MAX_LEVEL,
   isClass,
@@ -45,6 +46,8 @@ export type Save = {
   tutorial: string[];
   job: ClassId;
   hotbar: (string | null)[];
+  auxiliary:(string|null)[];
+  skillChoices:Record<ClassId,(string|null)[]>;
   level: number;
   xp: number;
   gold: number;
@@ -59,13 +62,15 @@ export type Save = {
   items: Item[];
 };
 const defaults: Save = {
-  version: 6,
+  version: 7,
   zone: "glade",
   equipped: {weapon:null,helmet:null,armor:null,gloves:null,boots:null,accessory:null},
   quests: {},
   tutorial: [],
   job: "swordsman",
-  hotbar: ["swordsman-1", "swordsman-2", null, null],
+  hotbar: Array(6).fill(null),
+  auxiliary:["Red potion","Blue potion",null,null],
+  skillChoices:{swordsman:Array(10).fill(null),mage:Array(10).fill(null),archer:Array(10).fill(null)},
   level: 1,
   xp: 0,
   gold: 120,
@@ -94,7 +99,8 @@ export class Simulation {
   time = 0;
   paused = false;
   auto = false;
-  cooldowns = [0, 0, 0, 0, 0, 0];
+  cooldowns = Array(10).fill(0) as number[];
+  auxiliaryCooldown=0;
   skillCooldowns: Record<string, number> = {};
   guard = { time: 0, power: 0 };
   fury = { time: 0, power: 0 };
@@ -131,7 +137,7 @@ export class Simulation {
     }
     this.save.job = isClass(this.save.job) ? this.save.job : "swordsman";
     const legacyRefine=(loadedVersion<6||this.save.legacyBasicRefine)&&this.save.weapon>0;
-    this.save.version = 6;
+    this.save.version = 7;
     this.save.weapon=refineLevel(this.save.weapon);
     for(const item of this.save.items)if(item.gearId)item.refine=refineLevel(item.refine);
     for(const item of this.save.items)if(item.secondary)item.secondary=normalizeSecondary(item.secondary);
@@ -158,17 +164,20 @@ export class Simulation {
       this.save.level === MAX_LEVEL
         ? 0
         : Math.max(0, Number(this.save.xp) || 0);
-    const available = skills[this.save.job];
-    const used = new Set<string>();
-    this.save.hotbar = Array.from({ length: 4 }, (_, index) => {
-      const id = Array.isArray(this.save.hotbar)
-        ? this.save.hotbar[index]
-        : available[index]?.id;
-      if (!id || !available.some((skill) => skill.id === id) || used.has(id))
-        return null;
-      used.add(id);
-      return id;
-    });
+    const previousChoices=this.save.skillChoices;
+    this.save.skillChoices={swordsman:[],mage:[],archer:[]};
+    for(const job of Object.keys(classes) as ClassId[]){
+      let gap=false;
+      this.save.skillChoices[job]=Array.from({length:10},(_,n)=>{
+        const legacy=loadedVersion>0&&loadedVersion<7;
+        const id=legacy&&this.save.level>=(n+1)*10?skills[job].find(k=>k.branch===0&&k.stage===n+1)!.id:previousChoices?.[job]?.[n];
+        const valid=!gap&&skills[job].some(k=>k.id===id&&k.stage===n+1&&k.level<=this.save.level);
+        if(!valid)gap=true;return valid?id!:null;
+      });
+    }
+    const available = this.unlockedSkills,used=new Set<string>();
+    this.save.hotbar=Array.from({length:6},(_,index)=>{const id=this.save.hotbar?.[index];if(!id||!available.some(k=>k.id===id)||used.has(id))return null;used.add(id);return id;});
+    const aux=this.save.auxiliary;this.save.auxiliary=Array.from({length:4},(_,n)=>isAuxiliaryItem(aux?.[n])?aux[n]:null);
     this.save.hp = Math.max(
       1,
       Math.min(this.maxHp, Number(this.save.hp) || this.maxHp),
@@ -285,7 +294,7 @@ export class Simulation {
     return skills[this.save.job];
   }
   get unlockedSkills() {
-    return this.skillList.filter((skill) => this.save.level >= skill.level);
+    return this.skillList.filter(skill=>this.save.level>=skill.level&&this.save.skillChoices[this.save.job].includes(skill.id));
   }
   setClass(job: ClassId) {
     if (
@@ -301,30 +310,40 @@ export class Simulation {
     this.save.job = job;
     const worn=this.save.items.find(i=>i.id===this.save.equipped.weapon);
     if(worn?.gearId&&gearById(worn.gearId)?.job&&gearById(worn.gearId)?.job!==job)this.save.equipped.weapon=null;
-    this.save.hotbar = [skills[job][0].id, skills[job][1].id, null, null];
-    this.skillCooldowns = {};
-    this.cooldowns.fill(0);
+    this.save.hotbar = Array.from({length:6},(_,n)=>this.unlockedSkills[n]?.id||null);
+    this.refreshCooldowns();
     this.guard.time = this.fury.time = 0;
     this.persist();
     this.onEvent(`You are now a ${this.job.name}.`, "level");
     return true;
   }
   assignSkill(slot: number, id: string) {
+    if(id===''&&Number.isInteger(slot)&&slot>=0&&slot<6){this.save.hotbar[slot]=null;this.refreshCooldowns();this.persist();return true;}
     const skill = this.skillList.find((skill) => skill.id === id);
     if (
       !skill ||
-      this.save.level < skill.level ||
+      !this.unlockedSkills.some(k=>k.id===id) ||
       !Number.isInteger(slot) ||
       slot < 0 ||
-      slot > 3
+      slot > 5
     )
       return false;
     const previous = this.save.hotbar.indexOf(id);
     if (previous >= 0) this.save.hotbar[previous] = this.save.hotbar[slot];
     this.save.hotbar[slot] = id;
-    this.persist();
+    this.refreshCooldowns();this.persist();
     return true;
   }
+  chooseSkill(id:string){
+    const skill=this.skillList.find(k=>k.id===id);if(!skill||this.save.level<skill.level||this.save.skillChoices[this.save.job][skill.stage-1]||skill.stage>1&&!this.save.skillChoices[this.save.job][skill.stage-2])return false;
+    this.save.skillChoices[this.save.job][skill.stage-1]=id;const slot=this.save.hotbar.indexOf(null);if(slot>=0)this.save.hotbar[slot]=id;this.onEvent(`Learned ${skill.name}`,'reward');this.persist();return true;
+  }
+  resetSkills(){
+    if(this.target!==null||this.cast||this.guard.time>0||this.fury.time>0||Object.values(this.skillCooldowns).some(c=>c>0)||this.monsters.some(m=>m.alive&&m.aggro&&(!this.actorId||m.owner===this.actorId))){this.onEvent('Leave combat and wait for skill cooldowns and buffs before resetting.');return false;}
+    this.save.skillChoices[this.save.job]=Array(10).fill(null);this.save.hotbar=Array(6).fill(null);this.refreshCooldowns();this.persist();this.onEvent('Skill choices reset. Select one skill at each stage.');return true;
+  }
+  assignAuxiliary(slot:number,name:string|null){if(!Number.isInteger(slot)||slot<0||slot>3||name!==null&&!isAuxiliaryItem(name))return false;const previous=name?this.save.auxiliary.indexOf(name):-1;if(previous>=0)this.save.auxiliary[previous]=this.save.auxiliary[slot];this.save.auxiliary[slot]=name;this.persist();return true;}
+  useAuxiliary(slot:number){if(this.paused||!Number.isInteger(slot)||slot<0||slot>3)return false;const name=this.save.auxiliary[slot];if(!isAuxiliaryItem(name)){this.onEvent('Assign a recovery item in the Skills window.');return false;}return this.usePotion(name==='Blue potion');}
   addExperience(amount: number) {
     if (this.save.level >= MAX_LEVEL) {
       this.save.xp = 0;
@@ -362,27 +381,29 @@ export class Simulation {
     const item = this.save.items.find(
       (i) => i.name === (blue ? "Blue potion" : "Red potion"),
     );
-    if(this.deathTime>0)return;
+    if(this.deathTime>0||this.save.hp<=0||this.auxiliaryCooldown>0)return false;
     if (!item?.count) {
       this.onEvent("No potions left. Visit the village merchant.");
-      return;
+      return false;
     }
     if (blue) {
       if (this.save.mp >= this.maxMp) {
         this.onEvent("Mana is already full");
-        return;
+        return false;
       }
       this.save.mp = Math.min(this.maxMp, this.save.mp + 40*this.healingMultiplier);
     } else {
       if (this.save.hp >= this.maxHp) {
         this.onEvent("Health is already full");
-        return;
+        return false;
       }
       this.save.hp = Math.min(this.maxHp, this.save.hp + 65*this.healingMultiplier);
     }
     item.count--;
+    this.auxiliaryCooldown=2;this.refreshCooldowns();
     this.onEvent(`${blue?"Mana":"Health"} restored +${Math.round((blue?40:65)*this.healingMultiplier)}`, "heal");
     this.persist();
+    return true;
   }
   select(id: number) {
     if (this.monsters[id]?.alive) {
@@ -481,22 +502,7 @@ export class Simulation {
       this.persist();
     }
   }
-  skill(n: number) {
-    if (this.paused || this.cooldowns[n] > 0) return;
-    if (n === 2 || n === 3) {
-      this.usePotion(n === 3);
-      this.cooldowns[n] = 2;
-      return;
-    }
-    const slot = [0, 1, 4, 5].indexOf(n);
-    if (slot < 0) return;
-    const id = this.save.hotbar[slot];
-    if (!id) {
-      this.onEvent("Assign a skill in the Skills window.");
-      return;
-    }
-    this.castSkill(id);
-  }
+  skill(n:number){if(this.paused||!Number.isInteger(n)||n<0||n>5||this.cooldowns[n]>0)return;const id=this.save.hotbar[n];if(!id){this.onEvent('Learn and assign a skill in the Skills window.');return;}this.castSkill(id);}
   castSkill(id: string) {
     const skill = this.skillList.find((skill) => skill.id === id);
     if (
@@ -506,7 +512,7 @@ export class Simulation {
       (this.skillCooldowns[id] || 0) > 0
     )
       return false;
-    if (this.save.level < skill.level) {
+    if (!this.unlockedSkills.some(k=>k.id===id)) {
       this.onEvent(`${skill.name} unlocks at level ${skill.level}.`);
       return false;
     }
@@ -600,7 +606,8 @@ export class Simulation {
     } else this.onEvent("Cast missed: target moved out of range.");
   }
   private refreshCooldowns() {
-    [0, 1, 4, 5].forEach(
+    for(let n=6;n<10;n++)this.cooldowns[n]=this.auxiliaryCooldown;
+    [0,1,2,3,4,5].forEach(
       (key, index) =>
         (this.cooldowns[key] =
           this.skillCooldowns[this.save.hotbar[index] || ""] || 0),
@@ -736,6 +743,7 @@ export class Simulation {
     this.time += dt;
     this.routeTimer -= dt;
     this.attackTimer -= dt;
+    this.auxiliaryCooldown=Math.max(0,this.auxiliaryCooldown-dt);
     this.cooldowns = this.cooldowns.map((c) => Math.max(0, c - dt));
     for (const id of Object.keys(this.skillCooldowns))
       this.skillCooldowns[id] = Math.max(0, this.skillCooldowns[id] - dt);

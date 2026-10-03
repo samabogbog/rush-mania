@@ -4,6 +4,8 @@ export type SkillEffect =
   "hit" | "area" | "heal" | "guard" | "fury" | "stun" | "slow" | "poison";
 export type Skill = {
   id: string;
+  stage:number;
+  branch:0|1;
   name: string;
   icon: string;
   level: number;
@@ -70,6 +72,8 @@ const make = (
   extra: Partial<Skill> = {},
 ): Skill => ({
   id: `${job}-${index}`,
+  stage:index,
+  branch:0,
   name,
   icon,
   effect,
@@ -444,6 +448,21 @@ export const skills: Record<ClassId, Skill[]> = {
     ),
   ],
 };
+export const skillBranches:Record<ClassId,[string,string]>={swordsman:['Vanguard','Sentinel'],mage:['Elementalist','Verdant Warden'],archer:['Marksman','Trapper']};
+const alternative:Record<ClassId,[string,string,SkillEffect,number,number,number,Partial<Skill>][]>= {
+ swordsman:[
+ ['Bulwark','shield','guard',.35,8,9,{duration:4}],['Concussion','shield','stun',1.1,14,8,{duration:2.5}],['Field Recovery','heart','heal',.22,16,14,{}],['Sweeping Challenge','wind','area',1.1,19,7,{radius:5}],['Fortress Stance','shield','guard',.65,24,18,{duration:7}],['Crushing Advance','anvil','slow',2.4,26,11,{duration:5}],['Battle Renewal','heart','heal',.4,32,22,{}],['Rallying Standard','sparkles','fury',.5,30,22,{duration:12}],['Unbreakable','shield','guard',.8,40,25,{duration:8}],['Guardian Quake','anvil','area',3.5,44,20,{radius:6,duration:5,cast:.4}]],
+ mage:[
+ ['Bramble Bolt','leaf','slow',1.4,9,5,{duration:3}],['Restoring Dew','heart','heal',.18,15,11,{}],['Spore Hex','mushroom','poison',1,16,10,{duration:7}],['Thorn Burst','leaf','area',1.35,20,7,{radius:4,duration:2}],['Living Shelter','shield','guard',.5,22,14,{duration:8}],['Moonbeam','sparkles','stun',2.4,28,12,{duration:3,cast:.5}],['Verdant Renewal','heart','heal',.48,38,24,{}],['Spirit Surge','sparkles','fury',.55,32,22,{duration:12}],['Root Prison','leaf','slow',3.5,38,16,{duration:10,cast:.6}],['Worldtree Bloom','heart','heal',.7,65,35,{cast:.8}]],
+ archer:[
+ ['Snaring Arrow','leaf','slow',1.2,8,5,{duration:4}],['Venom Dart','flask-conical','poison',.9,14,8,{duration:6}],['Scatter Volley','wind','area',1.4,18,7,{radius:4}],['Herbal Tonic','heart','heal',.2,16,14,{}],['Stalker Focus','crosshair','fury',.4,22,16,{duration:9}],['Shock Arrow','sparkles','stun',2.2,25,12,{duration:3}],['Camouflage Guard','shield','guard',.6,30,18,{duration:8}],['Entangling Volley','leaf','area',2.4,34,12,{radius:5,duration:5}],['Toxic Fang','flask-conical','poison',2.6,36,16,{duration:12}],['Wild Hunt','crosshair','fury',.8,48,28,{duration:14}]]
+};
+for(const job of Object.keys(classes) as ClassId[])alternative[job].forEach(([name,icon,effect,power,mp,cooldown,extra],index)=>{
+ const detail=effect==='heal'?`Restore ${Math.round(power*100)}% max HP.`:effect==='guard'?`Reduce damage by ${Math.round(power*100)}% for ${extra.duration}s.`:effect==='fury'?`Increase attack by ${Math.round(power*100)}% for ${extra.duration}s.`:effect==='area'?`Deal ${power}× ATK in a ${extra.radius}m area.${extra.duration?' Slow enemies for '+extra.duration+'s.':''}`:`Deal ${power}× ATK and ${effect==='poison'?'poison':effect==='slow'?'slow':'stun'} the target for ${extra.duration}s.`;
+ skills[job].push(make(job,index+1,name,icon,effect,power,mp,cooldown,detail,{...extra,id:`${job}-b-${index+1}`,branch:1}));
+});
+export const auxiliaryItems:Record<string,{resource:'hp'|'mp';icon:string}>={'Red potion':{resource:'hp',icon:'health-potion'},'Blue potion':{resource:'mp',icon:'mana-potion'}};
+export const isAuxiliaryItem=(name:unknown):name is string=>typeof name==='string'&&Object.hasOwn(auxiliaryItems,name);
 export function isClass(value: unknown): value is ClassId {
   return typeof value === "string" && Object.hasOwn(classes, value);
 }

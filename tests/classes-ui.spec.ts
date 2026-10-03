@@ -7,7 +7,7 @@ test("choose classes, assign unlocked skills, cast spells and retain the loadout
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   const save = new Simulation().save;
-  save.level = 20;
+  save.level = 20;save.version=6;
   save.gold = 12000;
   save.hp = 348;
   save.mp = 212;
@@ -31,10 +31,10 @@ test("choose classes, assign unlocked skills, cast spells and retain the loadout
   await page.screenshot({ path: "artifacts/class-picker.png" });
   await page.keyboard.press("Escape");
   await page.keyboard.press("k");
-  await expect(page.locator(".skill-card")).toHaveCount(10);
-  await expect(page.locator(".skill-locked")).toHaveCount(8);
+  await expect(page.locator(".skill-card")).toHaveCount(20);
+  await expect(page.locator(".skill-locked")).toHaveCount(18);
   await page.getByRole("combobox",{name:"Hotbar slot for Fire Bolt"}).click();
-  await page.getByRole("option",{name:"Key 5",exact:true}).click();
+  await page.getByRole("option",{name:"Key 3",exact:true}).click();
   await page.locator('[data-assign="mage-1"]').click();
   await expect(page.locator('.loadout-slot[data-hotbar="2"]')).toContainText(
     "Fire Bolt",
@@ -42,7 +42,7 @@ test("choose classes, assign unlocked skills, cast spells and retain the loadout
   await page.screenshot({ path: "artifacts/class-skills.png" });
   await page.keyboard.press("Escape");
   await page.keyboard.press("Tab");
-  await page.keyboard.press("5");
+  await page.keyboard.press("3");
   await page.waitForFunction(
     () => (window as any).mossvale.snapshot().skillCooldowns["mage-1"] > 0,
   );
@@ -82,7 +82,7 @@ test("mobile progression menus and six hotkeys stay inside the viewport", async 
     .boundingBox();
   expect(dialog!.width).toBeLessThanOrEqual(390);
   await page.locator('[data-skill-id="mage-10"]').scrollIntoViewIfNeeded();
-  await expect(page.locator('[data-assign="mage-10"]')).toBeDisabled();
+  await expect(page.locator('[data-learn="mage-10"]')).toBeDisabled();
   await page.screenshot({ path: "artifacts/mobile-class-skills.png" });
   const missing = await page
     .locator("img")
