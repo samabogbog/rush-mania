@@ -15,11 +15,11 @@ test('party membership requires invitation, friends require acceptance and dunge
  b=await send('b',b,'partyLeave');expect(b.player.room).toBe('town');expect(b.player.actor.save.zone).toBe('town');
 });
 test('trade changes clear confirmations and repeated confirmations cannot duplicate unique equipment or gold',async()=>{
- const {store,send,...initial}=await setup();let {a,b}=initial;store.realm!.players.a.actor.save.items.push({id:'blade-unique',name:'Sprout Blade',gearId:'sprout-blade',refine:3,rarity:'legend',secondary:{lifesteal:3,critChance:4,hpRegen:2},icon:'swords',count:1});
+ const {store,send,...initial}=await setup();let {a,b}=initial;store.realm!.players.a.actor.save.items.push({id:'blade-unique',name:'Sprout Blade',gearId:'sprout-blade',refine:3,rarity:'legend',secondary:{lifesteal:3,critChance:4,hpRegen:.2},icon:'swords',count:1});
  a=await send('a',a,'tradeInvite',['b']);const id=a.community!.trade!.id;b=await send('b',b,'tradeAccept',[id]);
  a=await send('a',a,'tradeOffer',[id,{item:'blade-unique',count:1,gold:0}]);b=await send('b',b,'tradeOffer',[id,{item:'',count:0,gold:40}]);a=await send('a',a,'tradeConfirm',[id]);expect(a.community!.trade!.confirmed).toEqual(['a']);
  b=await send('b',b,'tradeOffer',[id,{item:'',count:0,gold:35}]);expect(b.community!.trade!.confirmed).toEqual([]);
- a=await send('a',a,'tradeConfirm',[id]);b=await send('b',b,'tradeConfirm',[id]);expect(b.community!.trade).toBeNull();expect(b.player.actor.save.gold).toBe(85);expect(b.player.actor.save.items.find(i=>i.id==='blade-unique')!.refine).toBe(3);expect(b.player.actor.save.items.find(i=>i.id==='blade-unique')!.secondary).toEqual({lifesteal:3,critChance:4,hpRegen:2});expect(b.player.actor.save.items.find(i=>i.id==='blade-unique')!.rarity).toBe('legend');expect(store.realm!.players.a.actor.save.gold).toBe(155);
+ a=await send('a',a,'tradeConfirm',[id]);b=await send('b',b,'tradeConfirm',[id]);expect(b.community!.trade).toBeNull();expect(b.player.actor.save.gold).toBe(85);expect(b.player.actor.save.items.find(i=>i.id==='blade-unique')!.refine).toBe(3);expect(b.player.actor.save.items.find(i=>i.id==='blade-unique')!.secondary).toEqual({lifesteal:3,critChance:4,hpRegen:.2});expect(b.player.actor.save.items.find(i=>i.id==='blade-unique')!.rarity).toBe('legend');expect(store.realm!.players.a.actor.save.gold).toBe(155);
  b=await send('b',b,'tradeConfirm',[id]);expect(b.player.actor.save.gold).toBe(85);expect(b.player.actor.save.items.filter(i=>i.id==='blade-unique')).toHaveLength(1);
 });
 test('market escrow, sales fee, replay protection and rollback on full bags keep total inventory consistent',async()=>{

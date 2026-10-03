@@ -1,6 +1,6 @@
 import {GameError} from './realm';
 import {Simulation,type Item} from '../src/simulation';
-import {BAG_CAPACITY} from '../src/game/equipment';
+import {BAG_CAPACITY,normalizeSecondary} from '../src/game/equipment';
 import {species} from '../src/game/content';
 import type {Player,Realm} from './protocol';
 export type Party={id:string;leader:string;members:string[];invites:string[];lootCursor:number};
@@ -18,7 +18,7 @@ function available(player:Player,key:string,count:number) {
 }
 function receive(player:Player,item:Item) {
  const items=player.actor.save.items,stack=!item.gearId&&items.find(i=>i.name===item.name);
- if(stack)stack.count+=item.count;else {if(items.filter(i=>i.count>0).length>=BAG_CAPACITY)reject('Recipient bag is full');items.push(structuredClone(item));}
+ if(stack)stack.count+=item.count;else {if(items.filter(i=>i.count>0).length>=BAG_CAPACITY)reject('Recipient bag is full');items.push({...structuredClone(item),secondary:normalizeSecondary(item.secondary)});}
 }
 function remove(player:Player,item:Item,count:number){item.count-=count;player.actor.save.items=player.actor.save.items.filter(i=>i.count>0)}
 function ledger(r:Realm,id:string,player:string,action:string,at:number,goldDelta:number){r.ledger.push({id,player,action,at,goldDelta})}

@@ -16,6 +16,7 @@ test('online peer, safe chat, network interruption and server save survive reloa
  await expect(a.locator('#chat-log')).toContainText('Hello <img onerror=alert(1)>');expect(await a.locator('#chat-log img').count()).toBe(0);
  await a.screenshot({path:'artifacts/online-peer.png',timeout:20000});
  await second.close();
+ await a.keyboard.press('c');await a.getByRole('button',{name:'Show secondary stats'}).click();await expect(a.locator('#secondary-popover')).toBeVisible();await a.waitForTimeout(700);await expect(a.locator('#secondary-popover')).toBeVisible();await expect(a.locator('#secondary-popover')).toContainText('0.5%/s');await a.keyboard.press('Escape');
  const original=await state(a);await a.getByRole('button',{name:'Shop',exact:true}).click();
  await first.setOffline(true);await a.getByRole('button',{name:'Buy · 15 z'}).click();
  await expect(a.locator('.save-indicator')).toContainText('Reconnecting');expect((await state(a)).gold).toBe(original.gold);

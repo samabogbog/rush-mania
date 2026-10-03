@@ -8,7 +8,7 @@ import {
   type Skill,
 } from "./game/classes";
 import { species, zones, isZone, questDefinitions, type Kind, type ZoneId, type AttackShape } from "./game/content";
-import { equipment, gearById, gearByName, type GearSlot, type Bonuses, type Rarity, BAG_CAPACITY, gearSlots, itemBonuses, rollGear, rollEquipmentDrop, setBonuses, gearSets } from "./game/equipment";
+import { equipment, gearById, gearByName, type GearSlot, type Bonuses, type Rarity, BAG_CAPACITY, gearSlots, itemBonuses, normalizeSecondary, rollGear, rollEquipmentDrop, setBonuses, gearSets } from "./game/equipment";
 import { zoneObstacles } from "./game/map-data";
 export { species } from "./game/content";
 export type { Kind } from "./game/content";
@@ -56,7 +56,7 @@ export type Save = {
   items: Item[];
 };
 const defaults: Save = {
-  version: 4,
+  version: 5,
   zone: "glade",
   equipped: {weapon:null,helmet:null,armor:null,gloves:null,boots:null,accessory:null},
   quests: {},
@@ -125,7 +125,8 @@ export class Simulation {
       this.save = structuredClone(defaults);
     }
     this.save.job = isClass(this.save.job) ? this.save.job : "swordsman";
-    this.save.version = 4;
+    this.save.version = 5;
+    for(const item of this.save.items)if(item.secondary)item.secondary=normalizeSecondary(item.secondary);
     this.save.zone = isZone(this.save.zone) ? this.save.zone : "glade";
     this.save.equipped = {...defaults.equipped,...this.save.equipped};
     this.save.quests = this.save.quests || {};
@@ -187,8 +188,9 @@ export class Simulation {
   get movementSpeed(){return 4.4*(1+Math.min(.5,(this.gearBonuses.moveSpeed||0)/100))}
   get attackInterval(){return this.job.speed/((1+(this.agility-5)*.04)*(1+Math.min(1,(this.gearBonuses.attackSpeed||0)/100)))}
   get cooldownMultiplier(){return 1-Math.min(.4,(this.gearBonuses.cooldownReduction||0)/100)}
+  get hpRegenPercent(){return .5+(this.gearBonuses.hpRegen||0)}
   get healingMultiplier(){return 1+Math.min(1,(this.gearBonuses.healingBonus||0)/100)}
-  addEquipmentItem(item:Item){if(this.save.items.some(i=>i.id===item.id))return false;if(this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY){this.onEvent('Bag full. Make room before collecting.');return false;}this.save.items.push(structuredClone(item));return true;}
+  addEquipmentItem(item:Item){if(this.save.items.some(i=>i.id===item.id))return false;if(this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY){this.onEvent('Bag full. Make room before collecting.');return false;}this.save.items.push({...structuredClone(item),secondary:normalizeSecondary(item.secondary)});return true;}
   rollEquipmentLoot(monster:Monster):Item|undefined {const rolled=rollEquipmentDrop(this.monsterSpec(monster.kind).level,!!this.monsterSpec(monster.kind).boss,this.random);if(!rolled)return;const gear=gearById(rolled.gearId!)!;return {...rolled,name:gear.name,icon:gear.icon,count:1};}
   get agility() { return this.save.stats.agi+(this.gearBonuses.agi||0); }
   toggleTutorial(){if(this.save.tutorial.includes('skip'))this.save.tutorial=this.save.tutorial.filter(s=>s!=='skip');else this.save.tutorial.push('skip');this.persist();}
@@ -219,7 +221,7 @@ export class Simulation {
   craft(id:string) {
     const gear=gearById(id);
     if(!gear||gear.dropOnly||this.save.level<gear.level){this.onEvent("You have not reached this recipe’s level.");return false;}
-    if(this.save.items.filter(i=>i.count>0).length>=60){this.onEvent("Make room in your bag first.");return false;}
+    if(this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY){this.onEvent("Make room in your bag first.");return false;}
     if(this.save.gold<gear.cost||gear.materials.some(([name,count])=>(this.save.items.find(i=>i.name===name)?.count||0)<count)){this.onEvent("Gather the recipe’s materials and zeny first.");return false;}
     this.save.gold-=gear.cost;for(const [name,count] of gear.materials)this.save.items.find(i=>i.name===name)!.count-=count;
     this.addItem(gear.name,gear.icon);this.progressQuest('craft');this.markTutorial('craft');this.onEvent(`Crafted ${gear.name}`,"reward");this.persist();return true;
@@ -732,7 +734,7 @@ export class Simulation {
       }
     }
     this.save.mp = Math.min(this.maxMp, this.save.mp + dt * (0.7+(this.gearBonuses.mpRegen||0)));
-    this.save.hp=Math.min(this.maxHp,this.save.hp+dt*(this.gearBonuses.hpRegen||0));
+    this.save.hp=Math.min(this.maxHp,this.save.hp+dt*this.maxHp*this.hpRegenPercent/100);
     if (dx || dz) {
       this.markTutorial("move");
       this.target = null;

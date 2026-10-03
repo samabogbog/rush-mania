@@ -25,8 +25,8 @@ test('damage bonuses and penetration affect damage, while lifesteal counts actua
 });
 test('regen, movement, cooldown and healing bonuses affect gameplay; no HP is created by equipping',()=>{
  const sim=new Simulation(()=>.5,undefined,null);sim.save.level=100;sim.setClass('mage');sim.populateZone('town');sim.save.hp=50;sim.save.mp=0;
- gear(sim,'field-coat',{hpRegen:4,mpRegen:2,moveSpeed:25,attackSpeed:20,cooldownReduction:20,healingBonus:25});expect(sim.save.hp).toBe(50);
- sim.tick(1,0,0);expect(sim.save.hp).toBe(54);expect(sim.save.mp).toBeCloseTo(2.7);sim.tick(.1,1,0);expect(sim.x).toBeCloseTo(.55);
+ gear(sim,'field-coat',{hpRegen:.4,mpRegen:2,moveSpeed:25,attackSpeed:20,cooldownReduction:20,healingBonus:25});expect(sim.save.hp).toBe(50);
+ sim.tick(1,0,0);expect(sim.save.hp).toBeCloseTo(50+sim.maxHp*.009);expect(sim.save.mp).toBeCloseTo(2.7);sim.tick(.1,1,0);expect(sim.x).toBeCloseTo(.55);
  const heal=sim.skillList.find(s=>s.effect==='heal')!;sim.save.mp=sim.maxMp;sim.save.hp=1;expect(sim.castSkill(heal.id)).toBe(true);expect(sim.skillCooldowns[heal.id]).toBeCloseTo(heal.cooldown*.8);expect(sim.save.hp).toBeCloseTo(Math.min(sim.maxHp,1+sim.maxHp*heal.power*1.25));
 });
 test('set thresholds activate at two, four and six pieces and disappear on removal',()=>{
@@ -40,7 +40,7 @@ test('EXP and zeny bonuses apply to rewards; drop-only gear cannot be crafted fo
 });
 test('critical bonuses, damage reduction and dodge change combat outcomes',()=>{
  const normal=new Simulation(()=>.2,undefined,null),critical=new Simulation(()=>.2,undefined,null);gear(critical,'field-coat',{critChance:30,critDamage:50});for(const sim of [normal,critical])sim.balance.Dewdrop={defense:0};normal.hit(normal.monsters[0],10);critical.hit(critical.monsters[0],10);expect(critical.monsters[0].hp).toBeLessThan(normal.monsters[0].hp);
- const damaged=(secondary:Item['secondary'],rng:number)=>{const sim=new Simulation(()=>rng,undefined,null);gear(sim,'field-coat',secondary);const m=sim.monsters[0];m.x=sim.x;m.z=sim.z;m.windup=.1;m.aggro=true;sim.target=m.id;sim.attackTimer=100;const hp=sim.save.hp;sim.tick(.2,0,0);return hp-sim.save.hp;};
+ const damaged=(secondary:Item['secondary'],rng:number)=>{const sim=new Simulation(()=>rng,undefined,null);gear(sim,'field-coat',secondary);const m=sim.monsters[0];m.x=sim.x;m.z=sim.z;m.windup=.1;m.aggro=true;sim.target=m.id;sim.attackTimer=100;sim.save.hp=sim.maxHp;const hp=sim.save.hp;sim.tick(.2,0,0);return hp-sim.save.hp;};
  expect(damaged({damageReduction:60},.5)).toBeLessThan(damaged({},.5));expect(damaged({dodgeChance:35},.2)).toBe(0);
 });
 test('server creates rolled equipment, ignores forged items and acknowledges collection only once',async()=>{

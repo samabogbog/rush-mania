@@ -1,0 +1,482 @@
+[
+  {
+    "name": "thornwood-blade",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      76,
+      96
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "thornwood-staff",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      75,
+      96
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "thornwood-bow",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      84,
+      96
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "thornwood-helmet",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      88,
+      96
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "thornwood-coat",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      96,
+      91
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "thornwood-gloves",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      96,
+      82
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "thornwood-boots",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      96,
+      88
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "thornwood-charm",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      79,
+      96
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "suncrest-blade",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      78,
+      96
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "suncrest-staff",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      75,
+      96
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "suncrest-bow",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      77,
+      96
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "suncrest-helmet",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      96,
+      96
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "suncrest-coat",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      96,
+      93
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "suncrest-gloves",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      96,
+      82
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "suncrest-boots",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      96,
+      87
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "suncrest-charm",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      81,
+      96
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "moonveil-blade",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      75,
+      96
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "moonveil-staff",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      79,
+      96
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "moonveil-bow",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      81,
+      96
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "moonveil-helmet",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      90,
+      96
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "moonveil-coat",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      96,
+      95
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "moonveil-gloves",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      96,
+      85
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "moonveil-boots",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      96,
+      90
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "moonveil-charm",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      65,
+      96
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "frostguard-blade",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      77,
+      96
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "frostguard-staff",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      74,
+      96
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "frostguard-bow",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      71,
+      96
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "frostguard-helmet",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      93,
+      96
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "frostguard-coat",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      96,
+      92
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "frostguard-gloves",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      96,
+      83
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "frostguard-boots",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      96,
+      90
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "frostguard-charm",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      69,
+      96
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "starfall-blade",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      78,
+      96
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "starfall-staff",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      69,
+      96
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "starfall-bow",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      79,
+      96
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "starfall-helmet",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      87,
+      96
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "starfall-coat",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      96,
+      92
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "starfall-gloves",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      96,
+      84
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "starfall-boots",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      96,
+      92
+    ],
+    "minimumPadding": 16
+  },
+  {
+    "name": "starfall-charm",
+    "canvas": [
+      128,
+      128
+    ],
+    "content": [
+      86,
+      96
+    ],
+    "minimumPadding": 16
+  }
+]
