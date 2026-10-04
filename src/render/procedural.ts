@@ -1,10 +1,11 @@
 import { classes, type ClassId } from "../game/classes";
+import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode.js";
 import { Primitives } from "./primitives";
 import { species, type Kind } from "../simulation";
 import { zones } from "../game/content";
-import {zoneObstacles} from "../game/map-data";
-import { meadowGround, roundTree, flowerPatch, roundedPortal, townGarden, meadowPatch, fountainRipples } from './environment-art';
+import {PORTAL_POSITION, WORLD_SIZE, GROVE_OFFSETS, zoneObstacles} from "../game/map-data";
+import { meadowGround, roundTree, flowerPatch, roundedPortal, townGarden, meadowPatch, fountainRipples, gardenPath } from './environment-art';
 export type Obstacle = { x: number; z: number; r: number };
 export function buildMap(factory: Primitives, blocking: Obstacle[]) {
   const mesh = factory.mesh.bind(factory),
@@ -15,7 +16,7 @@ export function buildMap(factory: Primitives, blocking: Obstacle[]) {
     seed = (seed * 16807) % 2147483647;
     return (seed - 1) / 2147483646;
   };
-  meadowGround(factory,0x82cc79,0xe9d5a1);
+
   for(const [x,z,r,c] of [[-9,-7,4,0x88cf7d],[8,-8,4,0x7bc672],[-7,10,3,0x8bd281],[11,6,3.5,0x7bc672]])meadowPatch(factory,x,z,r,c);
   for(const [x,z] of [[-8,-9],[6,-10],[-9,6],[10,6],[-13,-5],[13,10]]) flowerPatch(factory,x,z,Math.abs(x+z));
   const beds = [
@@ -67,12 +68,6 @@ export function buildMap(factory: Primitives, blocking: Obstacle[]) {
     for (let i = 0; i < w; i++)
       for (let j = 0; j < d; j++) wall(x + i * 1.12, z + j * 1.12);
   });
-  for (let i = 0; i < 38; i++) {
-    const a = (i / 38) * Math.PI * 2,
-      x = Math.cos(a) * (18 + rand() * 3),
-      z = Math.sin(a) * (18 + rand() * 3);
-    roundTree(factory,x,z,i%3===0?0x61c888:0x42b476,.9+rand()*.25);
-  }
   for (const [x, z] of [
     [-12, -9],
     [12, 10],
@@ -94,7 +89,7 @@ export function buildMap(factory: Primitives, blocking: Obstacle[]) {
     }
   }
   // Starting camp: portal, market stall, noticeboard and a lantern-lit path.
-  roundedPortal(factory,0,-14.8,0xb39bff);
+  roundedPortal(factory,PORTAL_POSITION.x,PORTAL_POSITION.z,0xb39bff);
   const stall = factory.group();
   stall.position.set(-4, 0, -14);
   box(2.2, 0.8, 1, 0x8f6372, 0, 0.45, 0, stall);
@@ -229,24 +224,21 @@ export function creature(factory: Primitives, kind: Kind) {
 
 /** Area art stays outside rules; identical collision proxies are imported by the server. */
 export function buildZoneMap(factory:Primitives,blocking:Obstacle[],zone:import('../game/content').ZoneId) {
- if(zone==='glade'){buildMap(factory,blocking);return;}
  const data=zones[zone],box=factory.box.bind(factory),ball=factory.ball.bind(factory),mesh=factory.mesh.bind(factory);
  blocking.push(...zoneObstacles(zone));
  meadowGround(factory,data.ground,data.path);
+ if(zone==='glade'){buildMap(factory,[]);}
  if(zone!=='ruins'&&zone!=='frost')for(const [x,z] of [[-5,-9],[5,10],[-12,6]])flowerPatch(factory,x,z,Math.abs(x+z));
  for(const obstacle of blocking) {
-   if(zone==='town')continue;
+   if([-32,0,32].some(sx=>[-32,0,32].some(sz=>(sx!==0||sz!==0)&&GROVE_OFFSETS.some(([dx,dz])=>Math.abs(obstacle.x-sx-dx)<.01&&Math.abs(obstacle.z-sz-dz)<.01))))continue;
+   if(zone==='glade'&&Math.abs(obstacle.x)<16&&Math.abs(obstacle.z)<16)continue;
+   if(zone==='town'&&Math.abs(obstacle.x)<16&&Math.abs(obstacle.z)<16)continue;
    const g=factory.group('terrain-prop');g.position.set(obstacle.x,0,obstacle.z);
    if(zone==='orchard'){roundTree(factory,obstacle.x,obstacle.z,0x87c958,.65,true);}
    else if(zone==='marsh'){ball(.7,0x69ad9c,0,.36,0,g,.5);mesh({kind:'cone',r:.32,h:1.5,n:5},0x87f4d3,0,1.1,0,g);}
+   else if(zone==='glade'||zone==='town'){ball(obstacle.r*.8,0xaab6a2,0,.3,0,g,.6);ball(obstacle.r*.4,0x7cab6d,0,.5,0,g,.2);}
    else if(zone==='frost'){ball(.8,0x83a4c9,0,.48,0,g,.7);ball(.58,0xe9faff,0,.85,0,g,.35);}
    else {box(1,1.45,1,0x675c93,0,.75,0,g);box(1.13,.14,1.13,0xc6aff1,0,1.5,0,g);}
- }
- for(let i=0;i<30;i++) {
-   const angle=i/30*Math.PI*2,x=Math.cos(angle)*18.5,z=Math.sin(angle)*18.5,g=factory.group('area-border');g.position.set(x,0,z);
-   if(zone==='ruins'){box(1.8,3,1.8,0x6b5a96,0,1.5,0,g);box(2,.2,2,0xc4a7e9,0,3,0,g);}
-   else if(zone==='frost'){mesh({kind:'cone',r:1.9,h:4,n:5},0x88a8cb,0,2,0,g);mesh({kind:'cone',r:.95,h:2,n:5},0xf0faff,0,3.1,0,g);}
-   else {roundTree(factory,x,z,zone==='orchard'?0xeeb445:zone==='marsh'?0x35a9a0:0x44b873,1,zone==='orchard');}
  }
  if(zone==='town') {
   townGarden(factory);
@@ -281,5 +273,49 @@ export function buildZoneMap(factory:Primitives,blocking:Obstacle[],zone:import(
   }
   const fountain=factory.group('fountain');fountain.position.set(0,0,6);mesh({kind:'cylinder',top:1.7,bottom:1.7,h:.5,n:32},0xf2ce94,0,.25,0,fountain);mesh({kind:'cylinder',top:1.4,bottom:1.4,h:.1,n:32},0x60d9ef,0,.53,0,fountain);box(.3,1.1,.3,0xffe8c0,0,1,0,fountain);ball(.25,0x7cddff,0,1.7,0,fountain);fountainRipples(factory,0,6);}
  if(zone==='marsh')for(const [x,z] of [[-8,-4],[8,6]]){const pool=mesh({kind:'disc',r:3.1,n:18},0x499fe9,x,.02,z);pool.rotation.x=-Math.PI/2;const bridge=box(6.5,.15,.8,0xc99c68,x,.15,z);bridge.isPickable=false;}
- roundedPortal(factory,0,-12.8,data.accent);
+ if(zone!=='glade')roundedPortal(factory,PORTAL_POSITION.x,PORTAL_POSITION.z,data.accent);
+ buildExpandedLandscape(factory,zone);
+}
+
+/** Each outer sector is baked independently: off-screen sectors can be culled. */
+function buildExpandedLandscape(f:Primitives,zone:import('../game/content').ZoneId){
+ const data=zones[zone],half=WORLD_SIZE/2;
+ // Connected cross promenades and two parallel lanes expose all nine sectors.
+ for(const offset of [-32,0,32]){
+  gardenPath(f,[-half,offset+2],[half,offset+2],3,data.path);
+  gardenPath(f,[offset,-half],[offset,half],3,data.path);
+ }
+ for(const sx of [-32,0,32])for(const sz of [-32,0,32]){
+  if(sx===0&&sz===0)continue;
+  const before=new Set(f.scene.meshes);
+  const shade=zone==='frost'?0xd6edf5:zone==='ruins'?0x9a85b4:zone==='marsh'?0x4cae9d:zone==='orchard'?0x91c96b:0x86c87b;
+  meadowPatch(f,sx-5,sz-6,10,shade,data.ground);
+  meadowPatch(f,sx+7,sz+6,8,shade,data.ground);
+  // Irregular interior groves, clear roads and elite arenas at sector centers.
+  for(const [i,[dx,dz]] of GROVE_OFFSETS.entries()){
+   const x=sx+dx,z=sz+dz;
+   if(zone==='frost'){
+    f.mesh({kind:'cone',r:1.15,h:3.4,n:7},0x7daac4,x,1.7,z);
+    f.mesh({kind:'cone',r:.85,h:2.3,n:7},0xeaf9ff,x,2.3,z);
+   }else if(zone==='ruins'){
+    f.mesh({kind:'cylinder',top:.55,bottom:.7,h:2.2+(i%3)*.5,n:8},0x7c7398,x,1.1,z);
+    f.ball(.72,0xb4a5cc,x,2.4,z,undefined,.25,6);
+   }else roundTree(f,x,z,zone==='orchard'?0xe0b35c:zone==='marsh'?0x409e98:0x4aaa71,.8+(i%3)*.12,zone==='orchard');
+  }
+  if(zone==='marsh'){
+   const pool=f.mesh({kind:'disc',r:4,n:20},0x57aab4,sx+8,.021,sz-7);pool.rotation.x=-Math.PI/2;
+   gardenPath(f,[sx+3,sz-7],[sx+13,sz-7],1.2,0xcba375);
+  }else if(zone!=='frost'&&zone!=='ruins'){
+   flowerPatch(f,sx-7,sz+6,Math.abs(sx+sz)+4);
+   flowerPatch(f,sx+6,sz-8,Math.abs(sx-sz)+7);
+  }
+  // Boss / lieutenant plazas are square insets, not circular boundary walls.
+  if(sz===32&&Math.abs(sx)===32){
+   const plaza=f.mesh({kind:'plane',w:8,h:8},data.path,sx,.035,sz);plaza.rotation.x=-Math.PI/2;
+   for(const x of [-4,4]){f.mesh({kind:'cylinder',top:.12,bottom:.18,h:2,n:8},0xb19d73,sx+x,1,sz-4);const gem=f.mesh({kind:'gem',r:.3},data.accent,sx+x,2.1,sz-4);gem.material=f.material(data.accent,true);}
+  }
+  const included=new Set(f.scene.meshes.filter((m):m is import('@babylonjs/core/Meshes/mesh').Mesh=>m instanceof Mesh&&!before.has(m)));
+  // The dummy exclusion belongs to this sector and is disposed after the bake.
+  const sentinel=new Mesh('sector-exclusion',f.scene);f.mergeStatic(sentinel,included);sentinel.dispose();
+ }
 }

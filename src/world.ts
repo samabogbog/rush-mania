@@ -1,3 +1,4 @@
+import { WORLD_SIZE, WORLD_BOUNDS, PORTAL_POSITION } from './game/map-data';
 import { skillRecoveryDuration } from './render/skill-choreography';
 import { castVisualTransition, type CastSnapshot } from "./render/skill-timing";
 import { SkillVFX, type SkillMotion } from "./render/skill-vfx";
@@ -135,7 +136,7 @@ export class World implements GameWorld {
     this.skillVFX = new SkillVFX(this.scene);
     this.observedCooldowns={...sim.skillCooldowns};
     this.ground = this.factory.mesh(
-      { kind: "plane", w: 80, h: 80 },
+      { kind: "plane", w: WORLD_SIZE, h: WORLD_SIZE },
       0x79bc64,
       0,
       -0.04,
@@ -208,13 +209,13 @@ export class World implements GameWorld {
     this.ground.material=this.factory.material(zones[this.currentZone].ground);
     buildZoneMap(this.factory,this.blocking,this.currentZone);this.sim.obstacles=this.blocking;
     const included=new Set(this.scene.meshes.filter((m):m is Mesh=>m instanceof Mesh&&!oldMeshes.has(m)));
-    this.factory.mergeStatic(this.ground,included);
+    this.factory.mergeStatic(this.ground,new Set([...included].filter(m=>!m.isWorldMatrixFrozen)));
     for(const npc of zones[this.currentZone].npcs) {
       const node=this.factory.group('npc-'+npc.id);buildPlayer(this.factory,node,npc.panel==='forge'?'swordsman':npc.panel==='journal'?'mage':'archer');this.factory.mergeActor(node);node.position.set(npc.x,0,npc.z);
       for(const mesh of node.getChildMeshes())mesh.metadata={npcId:npc.id};
       const label=document.createElement('div');label.className='world-label npc-label';label.textContent=npc.name;this.labels.append(label);this.zoneLabels.push({label,x:npc.x,z:npc.z});
     }
-    const portalLabel=document.createElement('div');portalLabel.className='world-label npc-label';portalLabel.textContent='NORTH PORTAL · Open Map to travel';this.labels.append(portalLabel);this.zoneLabels.push({label:portalLabel,x:0,z:-12.5});
+    const portalLabel=document.createElement('div');portalLabel.className='world-label npc-label';portalLabel.textContent='NORTH PORTAL · Open Map to travel';this.labels.append(portalLabel);this.zoneLabels.push({label:portalLabel,x:PORTAL_POSITION.x,z:PORTAL_POSITION.z});
     this.mapMeshes=this.scene.meshes.filter((m):m is Mesh=>m instanceof Mesh&&!oldMeshes.has(m));
     this.mapNodes=this.scene.transformNodes.filter(n=>!oldNodes.has(n));
     for(const mesh of this.mapMeshes)if(mesh.getBoundingInfo().boundingBox.extendSizeWorld.y>.1)this.shadows.addShadowCaster(mesh);
@@ -228,8 +229,22 @@ export class World implements GameWorld {
       const actor=creature(this.factory,monster.kind);this.factory.mergeActor(actor);
       for(const mesh of actor.getChildMeshes()){mesh.metadata={monsterId:monster.id};this.shadows.addShadowCaster(mesh);}
       this.monsters.set(monster.id,actor);
-      this.models.attach(monster.kind,actor,root=>{for(const mesh of root.getChildMeshes()){mesh.metadata={monsterId:monster.id};this.shadows.addShadowCaster(mesh);}});
-      const spec=species[monster.kind],range=spec.boss?6:spec.range;
+      const spec=species[monster.kind];
+      const elite=spec.boss||spec.miniBoss;
+      this.models.attach(spec.modelKind||monster.kind,actor,root=>{
+        if(elite){
+          root.scaling.setAll(spec.boss?1.7:1.35);
+          this.models.recolor(root,spec.color);
+          const color=spec.boss?0xffd15c:0xbb9aff;
+          const aura=this.factory.ring(spec.boss?1.05:.8,color,root);aura.isPickable=false;
+          const crown=this.factory.group(monster.kind+'-crown');crown.parent=root;
+          const height=spec.family==='golem'?2.3:spec.family==='beast'?1.65:1.5;
+          const band=this.factory.mesh({kind:'cylinder',top:.35,bottom:.38,h:.13,n:8},color,0,height,0,crown);band.isPickable=false;
+          for(let i=0;i<(spec.boss?5:3);i++){const angle=i*Math.PI*2/(spec.boss?5:3),gem=this.factory.mesh({kind:'gem',r:spec.boss?.15:.12},color,Math.cos(angle)*.28,height+.18,Math.sin(angle)*.28,crown);gem.isPickable=false;}
+        }
+        for(const mesh of root.getChildMeshes()){mesh.metadata={monsterId:monster.id};this.shadows.addShadowCaster(mesh);}
+      });
+      const range=spec.boss?6:spec.range;
       const circle=this.factory.ring(spec.boss?3.5:range,0xff564f),line=this.factory.mesh({kind:'plane',w:1.8,h:range},0xff514f),cone=new Mesh('cone-warning',this.scene);
       line.rotation.x=-Math.PI/2;line.material=this.factory.material(0xff514f,true,.3);line.isPickable=false;
       const positions=[0,0,0],indices:number[]=[];for(let i=0;i<=24;i++){const angle=-.86+1.72*i/24;positions.push(Math.sin(angle)*(spec.boss?4:range),0,Math.cos(angle)*(spec.boss?4:range));if(i<24)indices.push(0,i+2,i+1);}
@@ -259,7 +274,7 @@ export class World implements GameWorld {
   }
   get diagnostics() {
     return {
-      engine: "Babylon.js",
+      engine: "Babylon.js",worldSize:WORLD_SIZE,worldBounds:WORLD_BOUNDS,modelsLoaded:this.models.loaded,modelsExpected:3+this.sim.monsters.length,
       previewHeld:this.previewHeld,vfx:this.skillVFX.diagnostics,sceneMeshes:this.scene.meshes.length,skillMotion:this.skillMotion,quality:this.quality,autoReduced:this.autoReduced,riggedActors:this.models.active,motionPoses:this.models.motionDiagnostics,modelErrors:this.models.errors,
       renderWidth:this.engine.getRenderWidth(),renderHeight:this.engine.getRenderHeight(),activeAnimations:this.scene.animatables.length,
       drawCalls: this.instrumentation.drawCallsCounter.current,
@@ -408,7 +423,7 @@ export class World implements GameWorld {
       0, // Authored hips/foot planting own vertical gait; root stays grounded.
       this.player.position.z+(renderZ-this.player.position.z)*heroBlend,
     );
-    const focus = new Vector3(this.player.position.x * 0.42, 0, this.player.position.z * 0.42);
+    const focus = new Vector3(Math.max(WORLD_BOUNDS.minX,Math.min(WORLD_BOUNDS.maxX,this.player.position.x)), 0, Math.max(WORLD_BOUNDS.minZ,Math.min(WORLD_BOUNDS.maxZ,this.player.position.z)));
     this.camera.position
       .copyFrom(focus)
       .addInPlace(
@@ -450,7 +465,7 @@ export class World implements GameWorld {
       actor.rotation.z =
         monster.stun > 0 ? Math.sin(this.sim.time * 12) * 0.1 : 0;
       if(updateLabels){const label=this.monsterLabels.get(monster.id)!;
-        const text=`${species[monster.kind].boss?"BOSS · ":""}${monster.kind} · Lv ${species[monster.kind].level}${monster.stun>0?" · Stunned":monster.poison>0?" · Poison":monster.slow>0?" · Slow":""}`;
+        const text=`${species[monster.kind].boss?"BOSS · ":species[monster.kind].miniBoss?"MINI-BOSS · ":""}${monster.kind} · Lv ${species[monster.kind].level}${monster.stun>0?" · Stunned":monster.poison>0?" · Poison":monster.slow>0?" · Slow":""}`;
         if(this.labelNames.get(monster.id)!==text){this.labelSpans.get(monster.id)!.textContent=text;this.labelNames.set(monster.id,text);}
         label.style.transform=`translate3d(${projected.x}px,${projected.y}px,0) translate(-50%,-100%)`;
         const display=monster.alive&&visible?'':'none';if(label.style.display!==display)label.style.display=display;

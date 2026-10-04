@@ -1,0 +1,2117 @@
+{
+  "fixturePositionOnly": {
+    "x": 19,
+    "z": 32
+  },
+  "actualWASD": true,
+  "noPlayerSelectionOrAttack": true,
+  "environment": "Headless Chromium ANGLE SwiftShader; not player hardware FPS",
+  "before": {
+    "zone": "frost",
+    "equipped": {
+      "weapon": null,
+      "helmet": null,
+      "armor": null,
+      "gloves": null,
+      "boots": null,
+      "accessory": null
+    },
+    "tutorial": [],
+    "job": "swordsman",
+    "hotbar": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "auxiliary": [
+      "Red potion",
+      "Blue potion",
+      null,
+      null
+    ],
+    "skillChoices": {
+      "swordsman": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "mage": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "archer": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "unlockedSkills": [],
+    "defense": 60,
+    "cooldowns": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "skillCooldowns": {},
+    "cast": null,
+    "renderX": 19,
+    "renderZ": 32,
+    "x": 19,
+    "z": 32,
+    "level": 100,
+    "hp": 1308,
+    "mp": 852,
+    "kills": 0,
+    "items": [
+      {
+        "name": "Red potion",
+        "icon": "🧪",
+        "count": 8,
+        "category": "consumable"
+      },
+      {
+        "name": "Blue potion",
+        "icon": "💠",
+        "count": 4,
+        "category": "consumable"
+      }
+    ],
+    "gold": 120,
+    "weapon": 0,
+    "target": null,
+    "loot": 0,
+    "paused": false,
+    "monsters": [
+      {
+        "id": 0,
+        "kind": "FrostCub",
+        "x": -6.665669461199913,
+        "z": 4.491181875601778,
+        "hp": 1230,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -7,
+        "homeZ": 4,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -350.0408500936638,
+          "y": -396.7192704355319
+        }
+      },
+      {
+        "id": 1,
+        "kind": "IceGolem",
+        "x": 0.5481255483395777,
+        "z": 10.057149636431514,
+        "hp": 1320,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 0,
+        "homeZ": 10,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -83.01488751142188,
+          "y": -237.90483372362678
+        }
+      },
+      {
+        "id": 2,
+        "kind": "Snowcap",
+        "x": -38.74202354345386,
+        "z": -28.42942571491483,
+        "hp": 1428,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -39,
+        "homeZ": -28,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -1537.379735328977,
+          "y": -1336.046980433293
+        }
+      },
+      {
+        "id": 3,
+        "kind": "PeakOwl",
+        "x": -26.269354999676438,
+        "z": -37.52118904436663,
+        "hp": 1536,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -26,
+        "homeZ": -37,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -1075.6912177779318,
+          "y": -1595.4633719629478
+        }
+      },
+      {
+        "id": 4,
+        "kind": "FrostWolf",
+        "x": -32.54904271139072,
+        "z": -22.133773570014174,
+        "hp": 1680,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -32,
+        "homeZ": -22,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -1308.1402482423316,
+          "y": -1156.4123702289671
+        }
+      },
+      {
+        "id": 5,
+        "kind": "FrostCub",
+        "x": -7.323943086292566,
+        "z": -27.623367292319113,
+        "hp": 1230,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -7,
+        "homeZ": -28,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -374.4075181443114,
+          "y": -1313.0476171882674
+        }
+      },
+      {
+        "id": 6,
+        "kind": "IceGolem",
+        "x": 6.198988318402891,
+        "z": -36.45923538913514,
+        "hp": 1320,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 6,
+        "homeZ": -37,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": 126.1575478850527,
+          "y": -1565.162518846868
+        }
+      },
+      {
+        "id": 7,
+        "kind": "Snowcap",
+        "x": 0.5389707808403759,
+        "z": -21.792279975316543,
+        "hp": 1428,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 0,
+        "homeZ": -22,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -83.35376054572052,
+          "y": -1146.6684918572132
+        }
+      },
+      {
+        "id": 8,
+        "kind": "PeakOwl",
+        "x": 25.383425992964323,
+        "z": -28.316301394241947,
+        "hp": 1536,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 25,
+        "homeZ": -28,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": 836.289029286243,
+          "y": -1332.8191903996326
+        }
+      },
+      {
+        "id": 9,
+        "kind": "FrostWolf",
+        "x": 37.87536111541643,
+        "z": -37.54951676999992,
+        "hp": 1680,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 38,
+        "homeZ": -37,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": 1298.6907188513906,
+          "y": -1596.2716504121045
+        }
+      },
+      {
+        "id": 10,
+        "kind": "FrostCub",
+        "x": 31.48188865355301,
+        "z": -22.27750896164639,
+        "hp": 1230,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 32,
+        "homeZ": -22,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": 1062.0298300800139,
+          "y": -1160.5135896823533
+        }
+      },
+      {
+        "id": 11,
+        "kind": "IceGolem",
+        "x": -39.43523462577995,
+        "z": 4.2496393062466815,
+        "hp": 1320,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -39,
+        "homeZ": 4,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -1563.0396489092795,
+          "y": -403.61123401534917
+        }
+      },
+      {
+        "id": 12,
+        "kind": "Snowcap",
+        "x": -25.952205197358133,
+        "z": -4.452729652752799,
+        "hp": 1428,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -26,
+        "homeZ": -5,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -1063.9515951334258,
+          "y": -651.9169884986705
+        }
+      },
+      {
+        "id": 13,
+        "kind": "PeakOwl",
+        "x": -31.51311809006823,
+        "z": 10.341743554855158,
+        "hp": 1536,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -32,
+        "homeZ": 10,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -1269.7944442923329,
+          "y": -229.7844807520984
+        }
+      },
+      {
+        "id": 14,
+        "kind": "FrostWolf",
+        "x": 25.478332034601372,
+        "z": 3.8220193141604337,
+        "hp": 1680,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 25,
+        "homeZ": 4,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": 839.8020729878577,
+          "y": -415.81256738415817
+        }
+      },
+      {
+        "id": 15,
+        "kind": "FrostCub",
+        "x": 38.03000589259967,
+        "z": -5.53407030477338,
+        "hp": 1230,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 38,
+        "homeZ": -5,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": 1304.415052635628,
+          "y": -682.7710131577592
+        }
+      },
+      {
+        "id": 16,
+        "kind": "IceGolem",
+        "x": 31.55409247132109,
+        "z": 9.600861851510052,
+        "hp": 1320,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 32,
+        "homeZ": 10,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": 1064.7025278647639,
+          "y": -250.9241487205254
+        }
+      },
+      {
+        "id": 17,
+        "kind": "Snowcap",
+        "x": -39.511855624498025,
+        "z": 36.10275978079526,
+        "hp": 1428,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -39,
+        "homeZ": 36,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -1565.8758531415388,
+          "y": 505.2577359565074
+        }
+      },
+      {
+        "id": 18,
+        "kind": "PeakOwl",
+        "x": -26.10720601969681,
+        "z": 27.510180841518316,
+        "hp": 1536,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -26,
+        "homeZ": 27,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -1069.689108291381,
+          "y": 260.0846334913186
+        }
+      },
+      {
+        "id": 19,
+        "kind": "FrostWolf",
+        "x": -31.60399169479224,
+        "z": 42.44854398936893,
+        "hp": 1680,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -32,
+        "homeZ": 42,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -1273.1582232384571,
+          "y": 686.3227704456209
+        }
+      },
+      {
+        "id": 20,
+        "kind": "FrostCub",
+        "x": -6.464865579409816,
+        "z": 35.97451786196034,
+        "hp": 1230,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -7,
+        "homeZ": 36,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -342.6078900838014,
+          "y": 501.598593651381
+        }
+      },
+      {
+        "id": 21,
+        "kind": "IceGolem",
+        "x": 6.182260417580816,
+        "z": 26.52391989474851,
+        "hp": 1320,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 6,
+        "homeZ": 27,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": 125.53834761486372,
+          "y": 231.94352965408626
+        }
+      },
+      {
+        "id": 22,
+        "kind": "Snowcap",
+        "x": -0.3381829728153755,
+        "z": 41.51102778074901,
+        "hp": 1428,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 0,
+        "homeZ": 42,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -115.82249927378507,
+          "y": 659.5725061648847
+        }
+      },
+      {
+        "id": 23,
+        "kind": "PeakOwl",
+        "x": 24.452297502384205,
+        "z": 35.94769447011795,
+        "hp": 1536,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 25,
+        "homeZ": 36,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": 801.8223607496251,
+          "y": 500.83323854168555
+        }
+      },
+      {
+        "id": 24,
+        "kind": "FrostWolf",
+        "x": 37.74633312803227,
+        "z": 27.432450622441134,
+        "hp": 1680,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 38,
+        "homeZ": 27,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": 1293.9146166076002,
+          "y": 257.86674767366964
+        }
+      },
+      {
+        "id": 25,
+        "kind": "FrostCub",
+        "x": 32.27358890592275,
+        "z": 42.519613666840165,
+        "hp": 1230,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 32,
+        "homeZ": 42,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": 1091.3354205058681,
+          "y": 688.3506102175869
+        }
+      },
+      {
+        "id": 26,
+        "kind": "FrostfangSovereign",
+        "x": 32.549308305427736,
+        "z": 32.12904630226755,
+        "hp": 26880,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 32,
+        "homeZ": 32,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": 1101.5414546332665,
+          "y": 391.87528480612457
+        }
+      },
+      {
+        "id": 27,
+        "kind": "IceboundSentinel",
+        "x": -31.680003817812498,
+        "z": 31.619834362517658,
+        "hp": 8400,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -32,
+        "homeZ": 32,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -1275.9718893172083,
+          "y": 377.3458784470946
+        }
+      }
+    ],
+    "destination": null,
+    "zoom": 1,
+    "engine": "Babylon.js",
+    "worldSize": 96,
+    "worldBounds": {
+      "minX": -46,
+      "maxX": 46,
+      "minZ": -46,
+      "maxZ": 46
+    },
+    "modelsLoaded": 31,
+    "modelsExpected": 31,
+    "previewHeld": false,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "drawCount": 0
+    },
+    "sceneMeshes": 199,
+    "skillMotion": null,
+    "quality": "low",
+    "autoReduced": false,
+    "riggedActors": 31,
+    "motionPoses": [],
+    "modelErrors": 0,
+    "renderWidth": 881,
+    "renderHeight": 587,
+    "activeAnimations": 151,
+    "drawCalls": 18,
+    "fps": 3.4854245880861847,
+    "frameP95": 953.8000000007451
+  },
+  "after": {
+    "zone": "frost",
+    "equipped": {
+      "weapon": null,
+      "helmet": null,
+      "armor": null,
+      "gloves": null,
+      "boots": null,
+      "accessory": null
+    },
+    "tutorial": [
+      "move"
+    ],
+    "job": "swordsman",
+    "hotbar": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "auxiliary": [
+      "Red potion",
+      "Blue potion",
+      null,
+      null
+    ],
+    "skillChoices": {
+      "swordsman": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "mage": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "archer": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "unlockedSkills": [],
+    "defense": 60,
+    "cooldowns": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "skillCooldowns": {},
+    "cast": null,
+    "renderX": 23.399559999999976,
+    "renderZ": 32,
+    "x": 23.399559999999976,
+    "z": 32,
+    "level": 100,
+    "hp": 885.321564,
+    "mp": 852,
+    "kills": 0,
+    "items": [
+      {
+        "name": "Red potion",
+        "icon": "🧪",
+        "count": 8,
+        "category": "consumable"
+      },
+      {
+        "name": "Blue potion",
+        "icon": "💠",
+        "count": 4,
+        "category": "consumable"
+      }
+    ],
+    "gold": 120,
+    "weapon": 0,
+    "target": null,
+    "loot": 0,
+    "paused": false,
+    "monsters": [
+      {
+        "id": 0,
+        "kind": "FrostCub",
+        "x": -7.488473303478708,
+        "z": 3.453740475784423,
+        "hp": 1230,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -7,
+        "homeZ": 4,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -543.3519936854358,
+          "y": -426.3207123793929
+        }
+      },
+      {
+        "id": 1,
+        "kind": "IceGolem",
+        "x": -0.47662380201499943,
+        "z": 9.650970790001898,
+        "hp": 1320,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 0,
+        "homeZ": 10,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -283.80124957166794,
+          "y": -249.49438426935154
+        }
+      },
+      {
+        "id": 2,
+        "kind": "Snowcap",
+        "x": -39.02656857504198,
+        "z": -27.830903049739042,
+        "hp": 1428,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -39,
+        "homeZ": -28,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -1710.7666813447179,
+          "y": -1318.969260257093
+        }
+      },
+      {
+        "id": 3,
+        "kind": "PeakOwl",
+        "x": -25.552086322702625,
+        "z": -36.468243845719364,
+        "hp": 1536,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -26,
+        "homeZ": -37,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -1211.9950099886255,
+          "y": -1565.4195582368793
+        }
+      },
+      {
+        "id": 4,
+        "kind": "FrostWolf",
+        "x": -31.489413839610723,
+        "z": -21.594478797626156,
+        "hp": 1680,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -32,
+        "homeZ": -22,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -1431.771229478071,
+          "y": -1141.0246067386317
+        }
+      },
+      {
+        "id": 5,
+        "kind": "FrostCub",
+        "x": -6.896171917692,
+        "z": -28.093548072838615,
+        "hp": 1230,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -7,
+        "homeZ": -28,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -521.4273552018996,
+          "y": -1326.4633427223723
+        }
+      },
+      {
+        "id": 6,
+        "kind": "IceGolem",
+        "x": 5.6016109441804804,
+        "z": -37.506609681302294,
+        "hp": 1320,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 6,
+        "homeZ": -37,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -58.809205611815045,
+          "y": -1595.047377219145
+        }
+      },
+      {
+        "id": 7,
+        "kind": "Snowcap",
+        "x": -0.534329133291835,
+        "z": -22.45389668512689,
+        "hp": 1428,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 0,
+        "homeZ": -22,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -285.93727112619615,
+          "y": -1165.5464821012763
+        }
+      },
+      {
+        "id": 8,
+        "kind": "PeakOwl",
+        "x": 24.820990530199314,
+        "z": -27.98387316989763,
+        "hp": 1536,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 25,
+        "homeZ": -28,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": 652.6156861966626,
+          "y": -1323.3339753454027
+        }
+      },
+      {
+        "id": 9,
+        "kind": "FrostWolf",
+        "x": 38.34089067468075,
+        "z": -36.5286765878918,
+        "hp": 1680,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 38,
+        "homeZ": -37,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": 1153.068547044785,
+          "y": -1567.1438930371298
+        }
+      },
+      {
+        "id": 10,
+        "kind": "FrostCub",
+        "x": 32.5473775049586,
+        "z": -21.50681257735897,
+        "hp": 1230,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 32,
+        "homeZ": -22,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": 938.6157619528628,
+          "y": -1138.5232157876503
+        }
+      },
+      {
+        "id": 11,
+        "kind": "IceGolem",
+        "x": -38.74939201846179,
+        "z": 4.061617191248028,
+        "hp": 1320,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -39,
+        "homeZ": 4,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -1700.5067090654693,
+          "y": -408.9760919459026
+        }
+      },
+      {
+        "id": 12,
+        "kind": "Snowcap",
+        "x": -26.276569364370484,
+        "z": -5.426603601616172,
+        "hp": 1428,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -26,
+        "homeZ": -5,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -1238.812486964343,
+          "y": -679.7046526144395
+        }
+      },
+      {
+        "id": 13,
+        "kind": "PeakOwl",
+        "x": -32.549470112141925,
+        "z": 9.47739298946223,
+        "hp": 1536,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -32,
+        "homeZ": 10,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -1471.0102910524113,
+          "y": -254.44710081442358
+        }
+      },
+      {
+        "id": 14,
+        "kind": "FrostWolf",
+        "x": 24.682809427178668,
+        "z": 3.8618720559033464,
+        "hp": 1680,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 25,
+        "homeZ": 4,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": 647.500772063953,
+          "y": -414.6754442452375
+        }
+      },
+      {
+        "id": 15,
+        "kind": "FrostCub",
+        "x": 38.20671251635193,
+        "z": -4.626654682862725,
+        "hp": 1230,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 38,
+        "homeZ": -5,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": 1148.101805982988,
+          "y": -656.8796125874044
+        }
+      },
+      {
+        "id": 16,
+        "kind": "IceGolem",
+        "x": 32.54056507129483,
+        "z": 10.541566615565337,
+        "hp": 1320,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 32,
+        "homeZ": 10,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": 938.3635927888944,
+          "y": -224.08290499880925
+        }
+      },
+      {
+        "id": 17,
+        "kind": "Snowcap",
+        "x": -38.62257540736718,
+        "z": 36.21187406520504,
+        "hp": 1428,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -39,
+        "homeZ": 36,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -1695.8124631651942,
+          "y": 508.37110713657665
+        }
+      },
+      {
+        "id": 18,
+        "kind": "PeakOwl",
+        "x": -26.13271831591312,
+        "z": 26.68738547640254,
+        "hp": 1536,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -26,
+        "homeZ": 27,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -1233.4876940319134,
+          "y": 236.60771302483192
+        }
+      },
+      {
+        "id": 19,
+        "kind": "FrostWolf",
+        "x": -32.52084061687041,
+        "z": 41.45031323889981,
+        "hp": 1680,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -32,
+        "homeZ": 42,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -1469.9505411533619,
+          "y": 657.8401307401004
+        }
+      },
+      {
+        "id": 20,
+        "kind": "FrostCub",
+        "x": -7.430104456656614,
+        "z": 35.71862047454221,
+        "hp": 1230,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -7,
+        "homeZ": 36,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -541.1914114278482,
+          "y": 494.2970422976593
+        }
+      },
+      {
+        "id": 21,
+        "kind": "IceGolem",
+        "x": 6.056067757478945,
+        "z": 27.245626748242344,
+        "hp": 1320,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 6,
+        "homeZ": 27,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -41.987024240899245,
+          "y": 252.53607929394596
+        }
+      },
+      {
+        "id": 22,
+        "kind": "Snowcap",
+        "x": 0.49069153395807324,
+        "z": 42.54680492237425,
+        "hp": 1428,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 0,
+        "homeZ": 42,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -247.99508813137172,
+          "y": 689.1264616268468
+        }
+      },
+      {
+        "id": 23,
+        "kind": "PeakOwl",
+        "x": 25.474175777056097,
+        "z": 36.34525317259537,
+        "hp": 1536,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 25,
+        "homeZ": 36,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": 676.7940027492958,
+          "y": 512.1768294690708
+        }
+      },
+      {
+        "id": 24,
+        "kind": "FrostWolf",
+        "x": 38.02170499750238,
+        "z": 26.826277248148887,
+        "hp": 1680,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 38,
+        "homeZ": 27,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": 1141.2535644207558,
+          "y": 240.5707288814898
+        }
+      },
+      {
+        "id": 25,
+        "kind": "FrostCub",
+        "x": 31.549278743342697,
+        "z": 41.4670212205908,
+        "hp": 1230,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 32,
+        "homeZ": 42,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": 901.6701206891192,
+          "y": 658.3168616186948
+        }
+      },
+      {
+        "id": 26,
+        "kind": "FrostfangSovereign",
+        "x": 21.99135240509799,
+        "z": 32.00697182337869,
+        "hp": 26880,
+        "alive": true,
+        "respawn": 0,
+        "attack": 1.233400000000005,
+        "homeX": 32,
+        "homeZ": 32,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": -0.008199999999999229,
+        "aggro": true,
+        "pattern": 2,
+        "owner": "",
+        "shape": "line",
+        "facingX": -0.999987744771621,
+        "facingZ": 0.004950788479370526,
+        "screen": {
+          "x": 547.8737517342325,
+          "y": 388.39211881690176
+        }
+      },
+      {
+        "id": 27,
+        "kind": "IceboundSentinel",
+        "x": -32.09904332681112,
+        "z": 32.09834169340042,
+        "hp": 8400,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -32,
+        "homeZ": 32,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "screen": {
+          "x": -1454.3372852674213,
+          "y": 390.99918645787164
+        }
+      }
+    ],
+    "destination": null,
+    "zoom": 1,
+    "engine": "Babylon.js",
+    "worldSize": 96,
+    "worldBounds": {
+      "minX": -46,
+      "maxX": 46,
+      "minZ": -46,
+      "maxZ": 46
+    },
+    "modelsLoaded": 31,
+    "modelsExpected": 31,
+    "previewHeld": false,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "drawCount": 0
+    },
+    "sceneMeshes": 199,
+    "skillMotion": null,
+    "quality": "low",
+    "autoReduced": false,
+    "riggedActors": 31,
+    "motionPoses": [],
+    "modelErrors": 0,
+    "renderWidth": 881,
+    "renderHeight": 587,
+    "activeAnimations": 158,
+    "drawCalls": 29,
+    "fps": 4.285610517905136,
+    "frameP95": 472.19999999925494
+  },
+  "observed": {
+    "agg": true,
+    "wind": true,
+    "hpLoss": true,
+    "samples": [
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 32.05742904151822,
+          "z": 31.95713619638785,
+          "aggro": true,
+          "windup": 0
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 31.5574351691324,
+          "z": 31.959611590627517,
+          "aggro": true,
+          "windup": 0
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 31.19063966435016,
+          "z": 31.961427539841736,
+          "aggro": true,
+          "windup": 0
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 30.757444973315085,
+          "z": 31.963572221410985,
+          "aggro": true,
+          "windup": 0
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 30.257451100929263,
+          "z": 31.966047615650652,
+          "aggro": true,
+          "windup": 0
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 29.790856819218817,
+          "z": 31.96835765355511,
+          "aggro": true,
+          "windup": 0
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 29.357462130634786,
+          "z": 31.970503325282053,
+          "aggro": true,
+          "windup": 0
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 28.924267439599713,
+          "z": 31.9726480068513,
+          "aggro": true,
+          "windup": 0
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 28.524272341691056,
+          "z": 31.974628322243035,
+          "aggro": true,
+          "windup": 0
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 28.09107765065598,
+          "z": 31.976773003812283,
+          "aggro": true,
+          "windup": 0
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 27.591083778270157,
+          "z": 31.97924839805195,
+          "aggro": true,
+          "windup": 1.65
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 27.591083778270157,
+          "z": 31.97924839805195,
+          "aggro": true,
+          "windup": 1.4499000000000002
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 27.591083778270157,
+          "z": 31.97924839805195,
+          "aggro": true,
+          "windup": 1.2333000000000005
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 27.591083778270157,
+          "z": 31.97924839805195,
+          "aggro": true,
+          "windup": 1.000000000000002
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 27.591083778270157,
+          "z": 31.97924839805195,
+          "aggro": true,
+          "windup": 0.7500000000000018
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 27.591083778270157,
+          "z": 31.97924839805195,
+          "aggro": true,
+          "windup": 0.5333000000000009
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 27.591083778270157,
+          "z": 31.97924839805195,
+          "aggro": true,
+          "windup": 0.3167000000000003
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 27.591083778270157,
+          "z": 31.97924839805195,
+          "aggro": true,
+          "windup": 0.11670000000000028
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 27.40768602587904,
+          "z": 31.98015637265906,
+          "aggro": true,
+          "windup": -0.008299999999999717
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 26.90769215349322,
+          "z": 31.982631766898727,
+          "aggro": true,
+          "windup": -0.008299999999999717
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 26.50769705558456,
+          "z": 31.984612082290464,
+          "aggro": true,
+          "windup": -0.008299999999999717
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 26.074502364549485,
+          "z": 31.986756763859727,
+          "aggro": true,
+          "windup": -0.008299999999999717
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 25.641307673514408,
+          "z": 31.98890144542899,
+          "aggro": true,
+          "windup": -0.008299999999999717
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 25.591308286275826,
+          "z": 31.989148984852957,
+          "aggro": true,
+          "windup": -0.008299999999999717
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 25.591308286275826,
+          "z": 31.989148984852957,
+          "aggro": true,
+          "windup": -0.008299999999999717
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 25.591308286275826,
+          "z": 31.989148984852957,
+          "aggro": true,
+          "windup": -0.008299999999999717
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 25.591308286275826,
+          "z": 31.989148984852957,
+          "aggro": true,
+          "windup": -0.008299999999999717
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 25.591308286275826,
+          "z": 31.989148984852957,
+          "aggro": true,
+          "windup": -0.008299999999999717
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 25.591308286275826,
+          "z": 31.989148984852957,
+          "aggro": true,
+          "windup": -0.008299999999999717
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 25.591308286275826,
+          "z": 31.989148984852957,
+          "aggro": true,
+          "windup": 1.5250000000000004
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 25.591308286275826,
+          "z": 31.989148984852957,
+          "aggro": true,
+          "windup": 1.325000000000001
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 25.591308286275826,
+          "z": 31.989148984852957,
+          "aggro": true,
+          "windup": 1.075000000000002
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 25.591308286275826,
+          "z": 31.989148984852957,
+          "aggro": true,
+          "windup": 0.8250000000000021
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 25.591308286275826,
+          "z": 31.989148984852957,
+          "aggro": true,
+          "windup": 0.7917000000000027
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 25.591308286275826,
+          "z": 31.989148984852957,
+          "aggro": true,
+          "windup": 0.5418000000000011
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 25.591308286275826,
+          "z": 31.989148984852957,
+          "aggro": true,
+          "windup": 0.3418000000000008
+        }
+      },
+      {
+        "hp": 1308,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 25.591308286275826,
+          "z": 31.989148984852957,
+          "aggro": true,
+          "windup": 0.14180000000000076
+        }
+      },
+      {
+        "hp": 879.2177819999999,
+        "target": null,
+        "x": 23.399559999999976,
+        "z": 32,
+        "monster": {
+          "x": 21.99135240509799,
+          "z": 32.00697182337869,
+          "aggro": true,
+          "windup": -0.008199999999999229
+        }
+      }
+    ]
+  },
+  "lifecycle": null
+}

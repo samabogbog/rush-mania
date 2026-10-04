@@ -1,7 +1,11 @@
 export type Family='slime'|'cap'|'plant'|'beast'|'insect'|'wisp'|'golem';
 export type AttackShape='circle'|'line'|'cone';
-export type MonsterSpec={hp:number;xp:number;color:number;drop:string;icon:string;defense:number;atk:number;gold:number;level:number;family:Family;shape:AttackShape;windup:number;range:number;boss?:boolean};
+export type MonsterSpec={hp:number;xp:number;color:number;drop:string;icon:string;defense:number;atk:number;gold:number;level:number;family:Family;shape:AttackShape;windup:number;range:number;boss?:boolean;miniBoss?:boolean;tier?:'boss'|'mini';modelKind?:string;aggroRadius?:number;leashRadius?:number};
 function monster(level:number,family:Family,color:number,drop:string,shape:AttackShape='circle',extra:Partial<MonsterSpec>={}):MonsterSpec{return {level,family,color,drop,shape,hp:60+level*18,xp:20+level*12,defense:8+level*1.4,atk:7+level*2.4,gold:6+Math.floor(level*.6),icon:'🌿',windup:shape==='line'?1.1:.8,range:shape==='line'?5:shape==='cone'?3.6:2.2,...extra}}
+function elite(level:number,family:Family,color:number,drop:string,boss:boolean):MonsterSpec {
+ const base=monster(level,family,color,drop,'cone');
+ return {...base,tier:boss?'boss':'mini',modelKind:({slime:'Dewdrop',cap:'Wildcap',plant:'Leafling',beast:'RibbonHare',insect:'Sunbee',wisp:'GlowWisp',golem:'IceGolem'} as const)[family],hp:base.hp*(boss?16:5),atk:base.atk*(boss?3:1.8),defense:base.defense*(boss?3:1.8),xp:base.xp*(boss?12:4),gold:base.gold*(boss?12:4),range:boss?4:3.2,windup:boss?1.65:1.25,boss,miniBoss:!boss,aggroRadius:boss?10:8,leashRadius:boss?17:14,icon:boss?'👑':'◆'};
+}
 export const species={
  Dewdrop:monster(1,'slime',0x35d8f4,'Dew jelly','circle',{hp:55,xp:24,defense:8,atk:7,gold:8,icon:'💧',windup:.65}),
  Wildcap:monster(2,'cap',0xff597a,'Forest mushroom','circle',{hp:85,xp:38,defense:18,atk:8,gold:8,icon:'🍄',windup:.65}),
@@ -28,18 +32,29 @@ export const species={
  ShadeWisp:monster(50,'wisp',0xce73ef,'Shade essence','cone'),
  StoneWarden:monster(55,'golem',0xa9aed6,'Warden stone','circle',{defense:160}),
  VineBeast:monster(60,'beast',0xa4e54e,'Living vine','line'),
- RootheartGuardian:monster(65,'golem',0xffb14d,'Rootheart core','circle',{hp:16000,xp:6500,gold:600,defense:150,atk:210,range:3.5,windup:1.5,boss:true}),
+ TownWildwoodKing:elite(8,'beast',0xffb45a,'Soft fur',true),
+ TownBrambleCaptain:elite(8,'plant',0x8ae34a,'Verdant leaf',false),
+ MooncapMonarch:elite(15,'cap',0xe477f5,'Forest mushroom',true),
+ DewdropMatriarch:elite(15,'slime',0x35d8f4,'Dew jelly',false),
+ AmberAntlerKing:elite(35,'beast',0xeb9754,'Amber antler',true),
+ HoneyHiveMarshal:elite(35,'insect',0xffcb34,'Golden honey',false),
+ CrystalShellSovereign:elite(60,'golem',0x4de29e,'River shell',true),
+ MarshWispHerald:elite(60,'wisp',0x66eeff,'Wisp essence',false),
+ FrostfangSovereign:elite(90,'beast',0xc4deff,'Frost fang',true),
+ IceboundSentinel:elite(90,'golem',0x65cbff,'Ice shard',false),
+ RootheartGuardian:elite(65,'golem',0xffb14d,'Rootheart core',true),
+ RuinShadeHerald:elite(65,'wisp',0xce73ef,'Shade essence',false),
 } satisfies Record<string,MonsterSpec>;
 export type Kind=keyof typeof species;
 export type ZoneId='town'|'glade'|'orchard'|'marsh'|'frost'|'ruins';
 export type Zone={name:string;level:number;maxLevel:number;description:string;ground:number;path:number;accent:number;species:Kind[];music:number[];npcs:{id:string;name:string;x:number;z:number;panel:string}[]};
 export const zones:Record<ZoneId,Zone>={
- town:{name:'Sprout Town',level:1,maxLevel:100,description:'A safe home: merchants, crafting, quests and party supplies.',ground:0x86d877,path:0xf2d898,accent:0xf08d94,species:[],music:[523,659,784,659,587,698,880,784],npcs:[{id:'merchant',name:'Mallow · Merchant',x:-4,z:-8,panel:'shop'},{id:'forge',name:'Ember · Blacksmith',x:5,z:-7,panel:'forge'},{id:'guide',name:'Pip · Quest guide',x:0,z:-5,panel:'journal'}]},
- glade:{name:'Moonlit Glade',level:1,maxLevel:20,description:'Dew jelly, forest mushrooms and leaves for your first equipment.',ground:0x83c76a,path:0xd8c994,accent:0x53e795,species:['Dewdrop','Wildcap','Leafling','Sunbee','RibbonHare'],music:[392,494,587,740,659,587,494,440],npcs:[{id:'scout',name:'Fern · Scout',x:3,z:-11,panel:'journal'}]},
- orchard:{name:'Amber Orchard',level:20,maxLevel:40,description:'Dodge charging beasts; gather amber materials for critical builds.',ground:0xb5db58,path:0xf3cb81,accent:0xff9348,species:['Applesprout','AmberBoar','Honeybug','Sporeguard','OrchardStag'],music:[440,554,659,880,740,659,554,494],npcs:[{id:'farmer',name:'Clover · Orchard keeper',x:-3,z:-11,panel:'journal'}]},
- marsh:{name:'Crystal Marsh',level:40,maxLevel:65,description:'Wisp essence and crystal dust strengthen mana and defensive builds.',ground:0x64cab3,path:0xc6d5ad,accent:0x8cecff,species:['GlowWisp','MarshTurtle','ReedSprite','PuddleJelly','CrystalMoth'],music:[330,392,494,659,587,494,392,370],npcs:[{id:'witch',name:'Luma · Crystal scholar',x:3,z:-11,panel:'journal'}]},
- frost:{name:'Frostpeak Trail',level:65,maxLevel:100,description:'Watch the windups. Frost materials forge late-game weapons.',ground:0xc9ebff,path:0xe5d9cb,accent:0x83bcff,species:['FrostCub','IceGolem','Snowcap','PeakOwl','FrostWolf'],music:[294,440,587,698,659,587,440,330],npcs:[{id:'ranger',name:'Flurry · Ranger',x:-3,z:-11,panel:'journal'}]},
- ruins:{name:'Rootheart Ruins',level:40,maxLevel:100,description:'Party dungeon for 2–4 adventurers. Defeat the Rootheart Guardian.',ground:0x8a89bd,path:0xc9b8d8,accent:0xd385ff,species:['Rootling','RuinSentinel','ShadeWisp','StoneWarden','VineBeast','RootheartGuardian'],music:[262,311,392,523,466,392,349,311],npcs:[{id:'warden',name:'Rune · Dungeon warden',x:3,z:-11,panel:'journal'}]},
+ town:{name:'Sprout Town',level:1,maxLevel:100,description:'A safe central town with merchants and quests; powerful guardians roam the outer wilds.',ground:0x86d877,path:0xf2d898,accent:0xf08d94,species:['TownWildwoodKing','TownBrambleCaptain'],music:[523,659,784,659,587,698,880,784],npcs:[{id:'merchant',name:'Mallow · Merchant',x:-4,z:-8,panel:'shop'},{id:'forge',name:'Ember · Blacksmith',x:5,z:-7,panel:'forge'},{id:'guide',name:'Pip · Quest guide',x:0,z:-5,panel:'journal'}]},
+ glade:{name:'Moonlit Glade',level:1,maxLevel:20,description:'Dew jelly, forest mushrooms and leaves for your first equipment.',ground:0x83c76a,path:0xd8c994,accent:0x53e795,species:['Dewdrop','Wildcap','Leafling','Sunbee','RibbonHare','MooncapMonarch','DewdropMatriarch'],music:[392,494,587,740,659,587,494,440],npcs:[{id:'scout',name:'Fern · Scout',x:3,z:-11,panel:'journal'}]},
+ orchard:{name:'Amber Orchard',level:20,maxLevel:40,description:'Dodge charging beasts; gather amber materials for critical builds.',ground:0xb5db58,path:0xf3cb81,accent:0xff9348,species:['Applesprout','AmberBoar','Honeybug','Sporeguard','OrchardStag','AmberAntlerKing','HoneyHiveMarshal'],music:[440,554,659,880,740,659,554,494],npcs:[{id:'farmer',name:'Clover · Orchard keeper',x:-3,z:-11,panel:'journal'}]},
+ marsh:{name:'Crystal Marsh',level:40,maxLevel:65,description:'Wisp essence and crystal dust strengthen mana and defensive builds.',ground:0x64cab3,path:0xc6d5ad,accent:0x8cecff,species:['GlowWisp','MarshTurtle','ReedSprite','PuddleJelly','CrystalMoth','CrystalShellSovereign','MarshWispHerald'],music:[330,392,494,659,587,494,392,370],npcs:[{id:'witch',name:'Luma · Crystal scholar',x:3,z:-11,panel:'journal'}]},
+ frost:{name:'Frostpeak Trail',level:65,maxLevel:100,description:'Watch the windups. Frost materials forge late-game weapons.',ground:0xc9ebff,path:0xe5d9cb,accent:0x83bcff,species:['FrostCub','IceGolem','Snowcap','PeakOwl','FrostWolf','FrostfangSovereign','IceboundSentinel'],music:[294,440,587,698,659,587,440,330],npcs:[{id:'ranger',name:'Flurry · Ranger',x:-3,z:-11,panel:'journal'}]},
+ ruins:{name:'Rootheart Ruins',level:40,maxLevel:100,description:'Party dungeon for 2–4 adventurers. Defeat the Rootheart Guardian.',ground:0x8a89bd,path:0xc9b8d8,accent:0xd385ff,species:['Rootling','RuinSentinel','ShadeWisp','StoneWarden','VineBeast','RootheartGuardian','RuinShadeHerald'],music:[262,311,392,523,466,392,349,311],npcs:[{id:'warden',name:'Rune · Dungeon warden',x:3,z:-11,panel:'journal'}]},
 };
 export function isZone(value:unknown):value is ZoneId {return typeof value==='string'&&Object.hasOwn(zones,value)}
 export const questDefinitions=[

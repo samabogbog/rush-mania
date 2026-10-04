@@ -12,7 +12,7 @@ import {
 } from "./game/classes";
 import { species, zones, isZone, questDefinitions, type Kind, type ZoneId, type AttackShape } from "./game/content";
 import { equipment, gearById, gearByName, type GearSlot, type Bonuses, type Rarity, BAG_CAPACITY, gearSlots, itemBonuses, normalizeSecondary, rollGear, rollEquipmentDrop, setBonuses, gearSets } from "./game/equipment";
-import { zoneObstacles } from "./game/map-data";
+import { zoneObstacles, zoneSpawns, WORLD_BOUNDS, PORTAL_POSITION, protectedPosition } from "./game/map-data";
 export { species } from "./game/content";
 export type { Kind } from "./game/content";
 export type Monster = {
@@ -34,6 +34,7 @@ export type Monster = {
   windup: number;
   aggro: boolean;
   owner?: string;
+  returning?: boolean;
   facingX?: number; facingZ?: number; pattern?: number; shape?: AttackShape;
 };
 export type Item = { category?:ItemCategory; name: string; icon: string; count: number; id?:string; gearId?:string; refine?:number; rarity?:Rarity; secondary?:Bonuses };
@@ -186,13 +187,7 @@ export class Simulation {
     this.populateZone(this.save.zone);
   }
   populateZone(zone: ZoneId) {
-    const positions=[[-3,4],[4,3],[-6,-1],[7,-3],[2,-5],[-9,7],[9,5.5],[-4,-7],[11,1],[-11,-4],[5,10],[-1,10],[-8,-10],[10,-9],[0,-11]];
-    const kinds=zones[zone].species;
-    this.monsters=[];
-    if(kinds.length) {
-      const entries=zone==='glade' ? [...positions.map((pos,id)=>({pos,kind:kinds[id%3]})),{pos:[-11,11],kind:kinds[3]},{pos:[11,11],kind:kinds[4]}] : zone==='ruins' ? [...positions.map((pos,id)=>({pos,kind:kinds[id%5]})),{pos:[0,-7],kind:kinds[5]}] : positions.map((pos,id)=>({pos,kind:kinds[id%kinds.length]}));
-      for(const {pos:[x,z],kind} of entries) this.monsters.push({id:this.monsters.length,kind,x,z,hp:this.monsterSpec(kind).hp,alive:true,respawn:0,attack:0,homeX:x,homeZ:z,stun:0,slow:0,poison:0,poisonTimer:0,poisonDamage:0,windup:0,aggro:false,pattern:0});
-    }
+    this.monsters=zoneSpawns(zone).map(({kind,x,z},id)=>({id,kind,x,z,hp:this.monsterSpec(kind).hp,alive:true,respawn:0,attack:0,homeX:x,homeZ:z,stun:0,slow:0,poison:0,poisonTimer:0,poisonDamage:0,windup:0,aggro:false,pattern:0}));
     this.obstacles=zoneObstacles(zone);
   }
   get zone() { return zones[this.save.zone]; }
@@ -239,7 +234,7 @@ export class Simulation {
     if(this.target!==null||this.cast||this.monsters.some(m=>m.alive&&m.aggro&&(!this.actorId||m.owner===this.actorId))){this.onEvent("Leave combat before travelling.");return false;}
     if(this.save.level<zones[zone].level){this.onEvent(`Reach Lv ${zones[zone].level} to enter ${zones[zone].name}.`);return false;}
     if(zone==='ruins'&&this.online&&!allowDungeon){this.onEvent("Gather a party of 2–4 before entering the ruins.");return false;}
-    if(Math.hypot(this.x,this.z+11)>3){this.onEvent("Walk to the glowing north portal to travel.");this.goTo(0,-11);return false;}
+    if(Math.hypot(this.x-PORTAL_POSITION.x,this.z-PORTAL_POSITION.z)>3){this.onEvent("Walk to the glowing north portal to travel.");this.goTo(PORTAL_POSITION.x,PORTAL_POSITION.z);return false;}
     this.save.zone=zone;this.populateZone(zone);this.x=0;this.z=-9;this.clearTarget();this.destination=null;this.route=[];this.auto=false;this.loot=[];this.onEvent(`Arrived in ${zones[zone].name}`,"zone");this.markTutorial('travel');this.persist();return true;
   }
   interact(id:string) {
@@ -445,7 +440,7 @@ export class Simulation {
   remotePlayers: { id: string; name: string; job: ClassId; x: number; z: number; hp: number; maxHp: number }[] = [];
   goTo(x: number, z: number) {
     if (!Number.isFinite(x) || !Number.isFinite(z)) return;
-    this.target = null; this.destination = { x: Math.max(-14, Math.min(14, x)), z: Math.max(-13, Math.min(13, z)) }; this.route = []; this.routeTimer = 0;
+    this.target = null; this.destination = { x: Math.max(WORLD_BOUNDS.minX, Math.min(WORLD_BOUNDS.maxX, x)), z: Math.max(WORLD_BOUNDS.minZ, Math.min(WORLD_BOUNDS.maxZ, z)) }; this.route = []; this.routeTimer = 0;
   }
   clearTarget() { this.target = null; }
   setAuto(enabled: boolean) { this.auto = enabled; }
@@ -487,7 +482,7 @@ export class Simulation {
     this.onEvent(String(amount), "damage", m.x, m.z);
     if (m.hp <= 0) {
       m.alive = false;
-      m.respawn = 13;
+      m.respawn = this.monsterSpec(m.kind).boss?180:this.monsterSpec(m.kind).miniBoss?60:13;
       const xpReward=this.monsterSpec(m.kind).xp*(1+(this.gearBonuses.expBonus||0)/100),goldReward=Math.round(this.monsterSpec(m.kind).gold*(1+(this.gearBonuses.goldBonus||0)/100));
       const shared=this.onKill?.(m);
       if(!shared){
@@ -698,7 +693,7 @@ export class Simulation {
       parent = new Map<string, string>();
     let found = "";
     let loops = 0;
-    while (open.length && loops++ < 2200) {
+    while (open.length && loops++ < 6500) {
       open.sort((a, b) => a.f - b.f);
       const p = open.shift()!,
         pk = key(p.x, p.z);
@@ -719,8 +714,8 @@ export class Simulation {
         const nx = p.x + dx,
           nz = p.z + dz;
         if (
-          Math.abs(nx * step) > 14 ||
-          Math.abs(nz * step) > 13 ||
+          Math.abs(nx * step) > WORLD_BOUNDS.maxX ||
+          Math.abs(nz * step) > WORLD_BOUNDS.maxZ ||
           this.blocked(nx * step, nz * step)
         )
           continue;
@@ -832,8 +827,8 @@ export class Simulation {
         this.z = c.z + ((this.z - c.z) / (dist || 1)) * (c.r + 0.3);
       }
     }
-    this.x = Math.max(-14, Math.min(14, this.x));
-    this.z = Math.max(-13, Math.min(13, this.z));
+    this.x = Math.max(WORLD_BOUNDS.minX, Math.min(WORLD_BOUNDS.maxX, this.x));
+    this.z = Math.max(WORLD_BOUNDS.minZ, Math.min(WORLD_BOUNDS.maxZ, this.z));
     for (const m of this.monsters) {
       if (!this.enemyFilter(m)) continue;
       if (!m.alive) {
@@ -844,7 +839,7 @@ export class Simulation {
           m.x = m.homeX;
           m.z = m.homeZ;
           m.stun = m.slow = m.poison = m.windup = 0;
-          m.aggro = false;
+          m.aggro = false;m.owner=undefined;m.returning=false;
         }
         continue;
       }
@@ -861,7 +856,18 @@ export class Simulation {
       }
       if (m.stun > 0) continue;
       const d = Math.hypot(m.x - this.x, m.z - this.z);
-      if ((m.id === this.target || m.aggro) && d < 8) {
+      const spec=this.monsterSpec(m.kind),elite=!!(spec.boss||spec.miniBoss);
+      const safe=protectedPosition(this.save.zone,this.x,this.z);
+      if(elite&&!m.aggro&&!m.returning&&d<(spec.aggroRadius||8)&&!safe&&this.save.hp>0){m.aggro=true;m.owner=this.actorId;}
+      if((m.aggro||m.id===this.target)&&(safe||this.save.hp<=0||d>(elite?22:8)||Math.hypot(m.x-m.homeX,m.z-m.homeZ)>(spec.leashRadius||10))){m.returning=true;m.aggro=false;m.owner=undefined;m.windup=0;}
+      if(m.returning){
+        const homeDistance=Math.hypot(m.x-m.homeX,m.z-m.homeZ),step=Math.min(homeDistance,dt*4);
+        m.hp=Math.min(spec.hp,m.hp+spec.hp*dt*.25);m.stun=m.slow=m.poison=0;
+        if(homeDistance<.15){m.x=m.homeX;m.z=m.homeZ;m.hp=spec.hp;m.returning=false;}
+        else {const nx=m.x+(m.homeX-m.x)/homeDistance*step,nz=m.z+(m.homeZ-m.z)/homeDistance*step;if(!this.blocked(nx,nz)){m.x=nx;m.z=nz;}else {m.x=m.homeX;m.z=m.homeZ;m.hp=spec.hp;m.returning=false;}}
+        continue;
+      }
+      if ((m.id === this.target || m.aggro) && !safe && d < (elite?22:8)) {
         if (m.windup > 0) {
           m.windup -= dt;
           if (m.windup <= 0) {
@@ -883,7 +889,7 @@ export class Simulation {
             } else this.onEvent("Dodged!", "reward");
             if(m.shape==='line') {
               const nx=m.x+(m.facingX??0)*range*.6,nz=m.z+(m.facingZ??1)*range*.6;
-              if(Math.abs(nx)<14&&Math.abs(nz)<13&&!this.blocked(nx,nz)){m.x=nx;m.z=nz;}
+              if(Math.abs(nx)<WORLD_BOUNDS.maxX&&Math.abs(nz)<WORLD_BOUNDS.maxZ&&!this.blocked(nx,nz)){m.x=nx;m.z=nz;}
             }
             m.attack = spec.boss?2.2:1.4;
           }
@@ -894,7 +900,7 @@ export class Simulation {
             const step = dt * (m.slow > 0 ? speed*.5 : speed);
             const nx = m.x + ((this.x - m.x) / d) * step,
               nz = m.z + ((this.z - m.z) / d) * step;
-            if (!this.blocked(nx, nz)) {
+            if (!this.blocked(nx, nz)&&!protectedPosition(this.save.zone,nx,nz)) {
               m.x = nx;
               m.z = nz;
             }

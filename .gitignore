@@ -47,3 +47,7 @@ artifacts/dynamic-skills/review/*
 !artifacts/dynamic-skills/review/*.md
 !artifacts/dynamic-skills/review/*.txt
 !artifacts/dynamic-skills/final-runtime-sha256.txt
+
+# Expanded-world raw video remains local; curated PNG/JSON/Markdown proof is retained.
+artifacts/expanded-world/video/
+artifacts/expanded-world/*.webm

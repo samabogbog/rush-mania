@@ -1,0 +1,306 @@
+[
+  {
+    "fixturePositionOnly": {
+      "x": -40,
+      "z": -40
+    },
+    "movement": {
+      "key": "d",
+      "before": {
+        "x": -40,
+        "z": -40
+      },
+      "after": {
+        "x": -37.87348000000001,
+        "z": -40
+      }
+    },
+    "modelErrors": 0,
+    "riggedActors": 32,
+    "monsters": 29,
+    "sceneMeshes": 205,
+    "drawCalls": 17,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "drawCount": 0
+    }
+  },
+  {
+    "fixturePositionOnly": {
+      "x": 0,
+      "z": -40
+    },
+    "movement": {
+      "key": "d",
+      "before": {
+        "x": 0,
+        "z": -40
+      },
+      "after": {
+        "x": 2.126959999999999,
+        "z": -40
+      }
+    },
+    "modelErrors": 0,
+    "riggedActors": 32,
+    "monsters": 29,
+    "sceneMeshes": 205,
+    "drawCalls": 21,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "drawCount": 0
+    }
+  },
+  {
+    "fixturePositionOnly": {
+      "x": 40,
+      "z": -40
+    },
+    "movement": {
+      "key": "d",
+      "before": {
+        "x": 40,
+        "z": -40
+      },
+      "after": {
+        "x": 40.953039999999994,
+        "z": -40
+      }
+    },
+    "modelErrors": 0,
+    "riggedActors": 32,
+    "monsters": 29,
+    "sceneMeshes": 205,
+    "drawCalls": 7,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "drawCount": 0
+    }
+  },
+  {
+    "fixturePositionOnly": {
+      "x": -40,
+      "z": 0
+    },
+    "movement": {
+      "key": "d",
+      "before": {
+        "x": -40,
+        "z": 0
+      },
+      "after": {
+        "x": -37.65348000000001,
+        "z": 0
+      }
+    },
+    "modelErrors": 0,
+    "riggedActors": 32,
+    "monsters": 29,
+    "sceneMeshes": 205,
+    "drawCalls": 9,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "drawCount": 0
+    }
+  },
+  {
+    "fixturePositionOnly": {
+      "x": 0,
+      "z": 0
+    },
+    "movement": {
+      "key": "d",
+      "before": {
+        "x": 0,
+        "z": 0
+      },
+      "after": {
+        "x": 0.7334799999999994,
+        "z": 0
+      }
+    },
+    "modelErrors": 0,
+    "riggedActors": 32,
+    "monsters": 29,
+    "sceneMeshes": 205,
+    "drawCalls": 17,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "drawCount": 0
+    }
+  },
+  {
+    "actualMapClickWalk": true,
+    "position": {
+      "x": 25.16181760841183,
+      "z": 0.3444191518691522
+    }
+  },
+  {
+    "fixturePositionOnly": {
+      "x": 40,
+      "z": 0
+    },
+    "movement": {
+      "key": "d",
+      "before": {
+        "x": 40,
+        "z": 0
+      },
+      "after": {
+        "x": 42.19955999999999,
+        "z": 0
+      }
+    },
+    "modelErrors": 0,
+    "riggedActors": 32,
+    "monsters": 29,
+    "sceneMeshes": 205,
+    "drawCalls": 19,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "drawCount": 0
+    }
+  },
+  {
+    "fixturePositionOnly": {
+      "x": -40,
+      "z": 40
+    },
+    "movement": {
+      "key": "d",
+      "before": {
+        "x": -40,
+        "z": 40
+      },
+      "after": {
+        "x": -37.80044000000001,
+        "z": 40
+      }
+    },
+    "modelErrors": 0,
+    "riggedActors": 32,
+    "monsters": 29,
+    "sceneMeshes": 205,
+    "drawCalls": 24,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "drawCount": 0
+    }
+  },
+  {
+    "fixturePositionOnly": {
+      "x": 0,
+      "z": 40
+    },
+    "movement": {
+      "key": "d",
+      "before": {
+        "x": 0,
+        "z": 40
+      },
+      "after": {
+        "x": 2.05348,
+        "z": 40
+      }
+    },
+    "modelErrors": 0,
+    "riggedActors": 32,
+    "monsters": 29,
+    "sceneMeshes": 205,
+    "drawCalls": 19,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "drawCount": 0
+    }
+  },
+  {
+    "fixturePositionOnly": {
+      "x": 40,
+      "z": 40
+    },
+    "movement": {
+      "key": "d",
+      "before": {
+        "x": 40,
+        "z": 40
+      },
+      "after": {
+        "x": 40.95347999999999,
+        "z": 40
+      }
+    },
+    "modelErrors": 0,
+    "riggedActors": 32,
+    "monsters": 29,
+    "sceneMeshes": 205,
+    "drawCalls": 26,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "drawCount": 0
+    }
+  }
+]

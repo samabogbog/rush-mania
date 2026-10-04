@@ -1,3 +1,4 @@
+import {WORLD_BOUNDS} from './map-data';
 import {type StoneTier} from './refinement';
 import { Simulation } from '../simulation';
 import type { ZoneId } from './content';
@@ -50,7 +51,7 @@ export class NetworkSimulation extends Simulation {
     const targetX=this.x+(length?input[0]/length*lead:0),targetZ=this.z+(length?input[1]/length*lead:0);
     const blend=1-Math.exp(-dt*(length?3:16));
     this.view.x+=(targetX-this.view.x)*blend;this.view.z+=(targetZ-this.view.z)*blend;
-    if(length&&performance.now()-this.receivedAt<1000&&this.save.hp>0&&this.deathTime<=0){const nx=this.view.x+input[0]/length*this.movementSpeed*dt,nz=this.view.z+input[1]/length*this.movementSpeed*dt;const blocked=Math.abs(nx)>14||Math.abs(nz)>13||this.obstacles.some(o=>Math.hypot(nx-o.x,nz-o.z)<o.r+.3);if(!blocked&&Math.hypot(nx-this.x,nz-this.z)<=1.6){this.view.x=nx;this.view.z=nz;}}
+    if(length&&performance.now()-this.receivedAt<1000&&this.save.hp>0&&this.deathTime<=0){const nx=this.view.x+input[0]/length*this.movementSpeed*dt,nz=this.view.z+input[1]/length*this.movementSpeed*dt;const blocked=nx<WORLD_BOUNDS.minX||nx>WORLD_BOUNDS.maxX||nz<WORLD_BOUNDS.minZ||nz>WORLD_BOUNDS.maxZ||this.obstacles.some(o=>Math.hypot(nx-o.x,nz-o.z)<o.r+.3);if(!blocked&&Math.hypot(nx-this.x,nz-this.z)<=1.6){this.view.x=nx;this.view.z=nz;}}
   }
   override spawnItem(id:string,count:number,rarity:Rarity='common',refine=0){if(this.admin)this.send('adminSpawn',id,count,rarity,refine);}
   override persist(){} // Durable save belongs to the server; browser cannot submit a character object.

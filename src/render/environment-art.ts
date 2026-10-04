@@ -4,7 +4,7 @@ import { Primitives } from './primitives';
 
 /** Small, deterministic art vocabulary. Static geometry is palette-baked by mergeStatic. */
 export function meadowGround(f:Primitives,color:number,pathColor:number) {
- const ground=f.mesh({kind:'plane',w:42,h:42},color,0,0,0);ground.rotation.x=-Math.PI/2;
+ const ground=f.mesh({kind:'plane',w:32,h:32},color,0,0,0);ground.rotation.x=-Math.PI/2;
  // A continuous ribbon has no repeated tile seams and subtly wanders through the playfield.
  for(const horizontal of [false,true]) {
   const positions:number[]=[],indices:number[]=[],normals:number[]=[],uvs:number[]=[];

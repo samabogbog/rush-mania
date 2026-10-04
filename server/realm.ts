@@ -3,24 +3,36 @@ import {rollGear,rarityOrder,BAG_CAPACITY,type Rarity} from '../src/game/equipme
 import {isStoneTier} from '../src/game/refinement';
 import {communityCommand,communitySnapshot,partyOf,shareKill} from './community';
 import { Simulation, type Save } from '../src/simulation';
-import { zoneObstacles } from '../src/game/map-data';
+import { zoneObstacles, protectedPosition } from '../src/game/map-data';
 import {isZone, type ZoneId} from '../src/game/content';
 import {isGearSlot} from '../src/game/equipment';
 import { isClass } from '../src/game/classes';
 import { capture, type Command, type Player, type Realm, type Snapshot } from './protocol';
 import type { RealmStore } from './store';
 export class GameError extends Error { constructor(message:string,public status=400){super(message)} }
-export function freshRealm(now:number):Realm { const sim=new Simulation(Math.random,undefined,null); return {version:2,time:now,players:{},rooms:{glade:{zone:'glade',monsters:sim.monsters}},chat:[],ledger:[]}; }
+export const ROOM_LAYOUT_REVISION=1;
+export function freshRealm(now:number):Realm { const sim=new Simulation(Math.random,undefined,null); return {version:2,time:now,players:{},rooms:{glade:{zone:'glade',monsters:sim.monsters,layoutRevision:ROOM_LAYOUT_REVISION}},chat:[],ledger:[]}; }
 function roomFor(realm:Realm,id:string,zone:ZoneId) {
   if(!realm.rooms) {realm.rooms={glade:{zone:'glade',monsters:realm.monsters||new Simulation(Math.random,undefined,null).monsters}};delete realm.monsters;realm.version=2;}
-  if(!realm.rooms[id]) {const sim=new Simulation(Math.random,undefined,null);sim.populateZone(zone);realm.rooms[id]={zone,monsters:sim.monsters};}
+  const room=realm.rooms[id];
+  if(!room||room.layoutRevision!==ROOM_LAYOUT_REVISION) {
+    const sim=new Simulation(Math.random,undefined,null);sim.balance=realm.balance||{};sim.populateZone(zone);
+    realm.rooms[id]={zone,monsters:sim.monsters,layoutRevision:ROOM_LAYOUT_REVISION};
+    if(room)for(const player of Object.values(realm.players))if((player.room||player.actor.save.zone)===id){
+      // World content changes retire target IDs, never player progress or account data.
+      Object.assign(player.actor,{target:null,cast:null,destination:null,route:[],routeTimer:0,auto:false,loot:[]});
+      player.input=[0,0];player.inputAt=0;
+      player.session={id:crypto.randomUUID(),sequence:0};player.acknowledged=[];
+    }
+  }
   return realm.rooms[id];
 }
 function hydrate(player:Player, realm:Realm) {
+  player.room ||= player.actor.save.zone;
+  const room=roomFor(realm,player.room,player.actor.save.zone);
   const sim=new Simulation(Math.random,player.actor.save as Save,null), normalizedSave=sim.save;
   Object.assign(sim,structuredClone(player.actor));sim.save=normalizedSave;sim.cooldowns=Array.from({length:10},(_,n)=>n<6?sim.skillCooldowns[sim.save.hotbar[n]||'']||0:sim.auxiliaryCooldown||0);sim.online=true;sim.balance=realm.balance||{};
-  player.room ||= sim.save.zone;
-  sim.monsters=roomFor(realm,player.room,sim.save.zone).monsters;sim.obstacles=zoneObstacles(sim.save.zone);sim.actorId=player.id;
+  sim.monsters=room.monsters;sim.obstacles=zoneObstacles(sim.save.zone);sim.actorId=player.id;
   sim.onEvent=(text,type='system',x,z)=>{player.events.push({id:++player.serial,text,type,x,z});player.events=player.events.slice(-40)};
   return sim;
 }
@@ -32,6 +44,8 @@ function support(realm:Realm,player:Player,sim:Simulation,actors:{p:Player;sim:S
  }};
 }
 function advance(realm:Realm,now:number) {
+  if(!realm.rooms)roomFor(realm,'glade','glade');
+  for(const [id,room] of Object.entries(realm.rooms||{}))roomFor(realm,id,room.zone);
   for(const id of Object.keys(realm.rooms||{}))if(id.startsWith('dungeon:')&&!realm.community?.parties.some(p=>'dungeon:'+p.id===id))delete realm.rooms![id];
   const active=Object.values(realm.players).filter(p=>now-p.lastSeen<10_000);
   const sims=active.map(p=>({p,sim:hydrate(p,realm)}));
@@ -39,8 +53,9 @@ function advance(realm:Realm,now:number) {
   for(const room of Object.values(realm.rooms||{})) {
     const occupants=sims.filter(({p})=>p.room&&realm.rooms?.[p.room]===room);
     for(const m of room.monsters) {
-      if(m.owner&&!occupants.some(({p})=>p.id===m.owner)){m.owner=undefined;m.aggro=false;m.windup=0;}
-      const owner=occupants.find(({p})=>p.id===m.owner) ?? occupants.find(({sim})=>sim.target===m.id) ?? occupants[0];
+      if(m.owner&&!occupants.some(({p,sim})=>p.id===m.owner&&sim.save.hp>0&&sim.deathTime<=0)){m.owner=undefined;m.aggro=false;m.windup=0;m.returning=true;}
+      const nearest=occupants.filter(({sim})=>sim.save.hp>0&&sim.deathTime<=0&&!protectedPosition(room.zone,sim.x,sim.z)).sort((a,b)=>Math.hypot(a.sim.x-m.x,a.sim.z-m.z)-Math.hypot(b.sim.x-m.x,b.sim.z-m.z))[0];
+      const owner=occupants.find(({p})=>p.id===m.owner) ?? occupants.find(({sim})=>sim.target===m.id) ?? nearest ?? occupants[0];
       if(owner)ownership.set(m,owner.p.id);
     }
   }

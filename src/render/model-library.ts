@@ -76,6 +76,20 @@ export class ModelLibrary {
   if(idleAim&&group){group.pause();group.goToFrame(group.to);}
   if(pose&&group){group.speedRatio=pose.speed;if(context?.frozen){group.pause();group.goToFrame(group.from+(group.to-group.from)*pose.clipProgress);}}
  }
+ /** Palette variants reuse a loaded family rig while staying consistent across quality changes. */
+ recolor(target:TransformNode,color:number){
+  for(const mesh of target.getChildMeshes()){
+   const original=this.originals.get(mesh) as PBRMaterial|undefined;if(!original)continue;
+   const material=original.clone(target.name+'-elite-palette')!;
+   material.albedoColor=Color3.FromInts(color>>16&255,color>>8&255,color&255);
+   this.originals.set(mesh,material);this.applyMaterial(mesh,material);
+   target.onDisposeObservable.addOnce(()=>{
+    const lowMaterial=this.simple.get(material);this.simple.delete(material);
+    if(lowMaterial&&lowMaterial!==material)lowMaterial.dispose();
+    material.dispose();
+   });
+  }
+ }
  setLowQuality(low:boolean){this.low=low;for(const [mesh,original] of this.originals){if(mesh.isDisposed()){this.originals.delete(mesh);continue;}this.applyMaterial(mesh,original);}}
  private applyMaterial(mesh:AbstractMesh,original:Material){
   if(!this.low){if(mesh.material!==original){const colors=this.vertexColors.get(mesh);if(colors)mesh.setVerticesData('color',colors.linear,false,colors.stride);}mesh.material=original;return;}

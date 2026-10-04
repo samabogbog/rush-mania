@@ -1,3 +1,4 @@
+import { WORLD_BOUNDS, PORTAL_POSITION } from './game/map-data';
 import {enhanceGameSelects,observeGameSelects,closeGameSelect} from './ui/game-select';
 import {EXP_CHARM,EXP_TOME,itemCategories,itemCategory,itemCatalog} from './game/items';
 import {refineBonus,refineChance,refineLevel,refineCost,refineSuccess,refineStones,type StoneTier} from './game/refinement';
@@ -273,7 +274,7 @@ function renderPanel() {
       )}<div class="section-label">SELL GATHERED MATERIALS</div><button id="sell" class="primary-button">Sell all monster drops · 6 z each</button><div class="panel-note">Your wallet: ${s.gold} z</div>`;
   }
   if (panel === "map") {
-    body = `<canvas id="large-map" width="480" height="360"></canvas><div class="map-legend"><span><i style="background:#edce78"></i>You</span><span><i style="background:#ee91a6"></i>Monsters</span><span><i style="background:#8decd3"></i>Camp</span></div><p class="muted center">Click the map to walk. Reach the glowing north portal to change area.</p><div class="area-list">${(Object.entries(zones) as [ZoneId,(typeof zones)[ZoneId]][]).map(([id,zone])=>`<article><h3>${zone.name} <small>${id==='town'?'SAFE TOWN':id==='ruins'?'PARTY DUNGEON':'Lv '+zone.level+'–'+zone.maxLevel}</small></h3><p>${zone.description}</p><div class="area-materials">${zone.species.map(kind=>`<span>${kind} · ${catalogSpecies[kind].drop}</span>`).join('')}</div><button data-travel="${id}" ${id===s.zone||s.level<zone.level?'disabled':''}>${id===s.zone?'Current area':s.level<zone.level?'Reach Lv '+zone.level:'Travel'}</button></article>`).join('')}</div>`;
+    body = `<canvas id="large-map" width="480" height="360"></canvas><div class="map-legend" style="flex-wrap:wrap"><span><i style="background:#edce78"></i>You</span><span><i style="background:#ff596d"></i>Monsters</span><span><i style="background:#ffbf45;border-radius:0;transform:rotate(45deg)"></i>Boss</span><span><i style="background:#c997ff;border-radius:0;transform:rotate(45deg)"></i>Mini-boss</span><span><i style="background:#8decd3"></i>Camp</span></div><p class="muted center">Click the map to walk. Reach the glowing north portal to change area.</p><div class="area-list">${(Object.entries(zones) as [ZoneId,(typeof zones)[ZoneId]][]).map(([id,zone])=>`<article><h3>${zone.name} <small>${id==='town'?'SAFE CENTER':id==='ruins'?'PARTY DUNGEON':'Lv '+zone.level+'–'+zone.maxLevel}</small></h3><p>${zone.description}</p><div class="area-materials">${zone.species.map(kind=>`<span>${kind} · ${catalogSpecies[kind].drop}</span>`).join('')}</div><button data-travel="${id}" ${id===s.zone||s.level<zone.level?'disabled':''}>${id===s.zone?'Current area':s.level<zone.level?'Reach Lv '+zone.level:'Travel'}</button></article>`).join('')}</div>`;
   }
   if(panel==='journal') {
     const steps=[['move','Walk with WASD or click the ground.'],['attack','Select a creature and defeat it. Read the red windup and step away.'],['collect','Walk to a drop and press F to collect it.'],['talk','Speak to an NPC near the north camp or in Sprout Town.'],['craft','Open Forge, gather a recipe’s materials and craft equipment.'],['equip','Open Bag and equip what you crafted.'],['refine','Refine your weapon at the forge.'],['travel','Use the north portal to visit a new area.'],['skill','Reach Lv10, assign your first skill, and use it.']];
@@ -294,7 +295,7 @@ function renderPanel() {
       .map(([key, desc]) => `<div><kbd>${key}</kbd><span>${desc}</span></div>`)
       .join(
         "",
-      )}</div><div class="panel-note">${sim.online ? "Online realm. Progress is saved on the server. The world continues while windows are open." : "Practice mode. Progress is saved in this browser. Opening a window pauses the world."} Monsters respawn after 13 seconds.</div>`;
+      )}</div><div class="panel-note">${sim.online ? "Online realm. Progress is saved on the server. The world continues while windows are open." : "Practice mode. Progress is saved in this browser. Opening a window pauses the world."} Respawns: regular monsters 13 seconds · mini-bosses 60 seconds · bosses 180 seconds.</div>`;
   }
   if (panel === 'admin') {
     body=sim.admin?`<p class="panel-note">Testing tools · items are generated and saved by the server. Every grant is recorded.</p><form id="spawn-form"><label>Category <select id="spawn-category">${Object.entries(itemCategories).map(([id,name])=>`<option value="${id}">${name}</option>`).join('')}</select></label><label>Item <select id="spawn-item"></select></label><div id="spawn-preview"></div><label>Quantity <input id="spawn-count" type="number" min="1" max="20" value="1" required></label><div id="spawn-equipment"><label>Rarity <select id="spawn-rarity">${rarityOrder.map(r=>`<option value="${r}">${rarityLabels[r]}</option>`).join('')}</select></label><label>Refinement <input id="spawn-refine" type="number" min="0" max="10" value="0" required></label></div><button class="primary-button" type="submit">${icon('chest')} Spawn into my bag</button></form><button data-panel="inventory">Open inventory</button>`:'<p>Admin access required.</p>';
@@ -431,7 +432,7 @@ function renderPanel() {
     drawMap($("#large-map") as HTMLCanvasElement);
     $("#large-map").onclick = (e) => {
       const r = $("#large-map").getBoundingClientRect();
-      sim.goTo(((e.clientX - r.left) / r.width - 0.5) * 32, ((e.clientY - r.top) / r.height - 0.5) * 32);
+      sim.goTo(WORLD_BOUNDS.minX+(e.clientX-r.left)/r.width*(WORLD_BOUNDS.maxX-WORLD_BOUNDS.minX),WORLD_BOUNDS.minZ+(e.clientY-r.top)/r.height*(WORLD_BOUNDS.maxZ-WORLD_BOUNDS.minZ));
       closePanel();
     };
   }
@@ -644,38 +645,22 @@ function drawMap(canvas: HTMLCanvasElement) {
   const c = canvas.getContext("2d")!,
     w = canvas.width,
     h = canvas.height;
-  const x = (v: number) => (v / 32 + 0.5) * w,
-    z = (v: number) => (v / 32 + 0.5) * h;
-  c.fillStyle = "#"+sim.zone.ground.toString(16).padStart(6,"0");
-  c.fillRect(0, 0, w, h);
-  c.fillStyle = "#"+sim.zone.path.toString(16).padStart(6,"0");
-  c.fillRect(x(-1.5), 0, (w * 3) / 32, h);
-  c.fillRect(0, z(0.5), w, (h * 3) / 32);
-  c.fillStyle = "#38c875";
-  [
-    [-9, -6],
-    [-7, 5],
-    [8, -6],
-    [9, 5],
-    [-5, -11],
-    [5, 11],
-    [-12, 10],
-    [13, -11],
-  ].forEach(([xx, zz]) => c.fillRect(x(xx), z(zz), w * 0.075, h * 0.06));
-  c.fillStyle = "#9498d1";
-  world.blocking.forEach((b) =>
-    c.fillRect(x(b.x) - w / 64, z(b.z) - h / 64, w / 32, h / 32),
-  );
-  c.fillStyle = "#c78aff";
-  c.fillRect(x(-1), z(-15), w / 16, h / 20);
-  sim.monsters
-    .filter((m) => m.alive)
-    .forEach((m) => {
-      c.beginPath();
-      c.fillStyle = m.id === sim.target ? "#ffe189" : "#ff596d";
-      c.arc(x(m.x), z(m.z), w < 200 ? 2 : 4, 0, Math.PI * 2);
-      c.fill();
-    });
+  const sizeX=WORLD_BOUNDS.maxX-WORLD_BOUNDS.minX,sizeZ=WORLD_BOUNDS.maxZ-WORLD_BOUNDS.minZ;
+  const x=(v:number)=>(v-WORLD_BOUNDS.minX)/sizeX*w,z=(v:number)=>(v-WORLD_BOUNDS.minZ)/sizeZ*h;
+  c.fillStyle='#'+sim.zone.ground.toString(16).padStart(6,'0');c.fillRect(0,0,w,h);
+  c.fillStyle='#'+sim.zone.path.toString(16).padStart(6,'0');
+  for(const lane of [-32,0,32]){c.fillRect(x(lane-1.5),0,w*3/sizeX,h);c.fillRect(0,z(lane+.5),w,h*3/sizeZ);}
+  c.strokeStyle='rgba(255,255,255,.17)';c.lineWidth=1;
+  for(const edge of [-16,16]){c.beginPath();c.moveTo(x(edge),0);c.lineTo(x(edge),h);c.moveTo(0,z(edge));c.lineTo(w,z(edge));c.stroke();}
+  c.fillStyle='#9498b1';world.blocking.forEach(b=>{c.beginPath();c.arc(x(b.x),z(b.z),Math.max(1,b.r*w/sizeX),0,Math.PI*2);c.fill();});
+  c.fillStyle='#bd8bff';c.fillRect(x(PORTAL_POSITION.x)-3,z(PORTAL_POSITION.z)-3,6,6);
+  for(const npc of sim.zone.npcs){c.fillStyle='#79fff0';c.fillRect(x(npc.x)-2,z(npc.z)-2,4,4);if(w>=200){c.font='11px Nunito';c.fillText(npc.name,x(npc.x)+5,z(npc.z));}}
+  for(const m of sim.monsters.filter(m=>m.alive)){
+    const spec=species[m.kind],elite=spec.boss||spec.miniBoss,r=spec.boss?6:spec.miniBoss?4.5:w<200?2:3;
+    c.fillStyle=m.id===sim.target?'#fff4a9':spec.boss?'#ffbf45':spec.miniBoss?'#c997ff':'#ff596d';c.beginPath();
+    if(elite){c.moveTo(x(m.x),z(m.z)-r);c.lineTo(x(m.x)+r,z(m.z));c.lineTo(x(m.x),z(m.z)+r);c.lineTo(x(m.x)-r,z(m.z));c.closePath();}else c.arc(x(m.x),z(m.z),r,0,Math.PI*2);
+    c.fill();if(elite){c.strokeStyle='#352543';c.stroke();if(w>=200){c.font='bold 11px Nunito';c.fillText((spec.boss?'BOSS · ':'MINI · ')+m.kind,x(m.x)+8,z(m.z)+3);}}
+  }
   c.beginPath();
   c.fillStyle = "#ffe297";
   c.arc(x(sim.x), z(sim.z), w < 200 ? 4 : 7, 0, Math.PI * 2);
@@ -824,7 +809,7 @@ function frame(now: number) {
     $("#target-hud").hidden = !target;
     if (target) {
       $("#target-name").textContent = target.kind;
-      $("#target-hud small").textContent = `Lv ${species[target.kind].level} · ${species[target.kind].boss?"Boss":"Wild monster"}`;
+      $("#target-hud small").textContent = `Lv ${species[target.kind].level} · ${species[target.kind].boss?"Boss":species[target.kind].miniBoss?"Mini-boss":"Wild monster"}`;
       $("#target-fill").style.width =
         (target.hp / species[target.kind].hp) * 100 + "%";
     }

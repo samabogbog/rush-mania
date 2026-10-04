@@ -1,0 +1,23 @@
+# Expanded square world review
+
+Runtime is frozen and the final TypeScript/Vite/Worker build passed. This review concerns the requested world expansion and elite encounters, not a whole-game art score or launch-readiness rating.
+
+## Delivered behavior
+
+All six zones use a 3 × 3 arrangement of 32-unit layout blocks: physical ground is 96 × 96, with walkable square bounds −46…46 on each axis. The old ground, meadow, UI convention and movement bounds had different sizes; the new layout implements the requested approximate ninefold expansion rather than claiming an exact measured ninefold increase over every old surface. Circular perimeter rock/tree walls are removed. Sector roads, groves and themed ground preserve landmarks; camera tracking, collision, minimap and map-click destinations use the expanded world.
+
+Each zone has one boss and one miniboss. Relative to the same-level normal-stat formula, bosses have 16× HP and 3× ATK/DEF; minibosses have 5× HP and 1.8× ATK/DEF. Boss/miniboss proximity aggression radii are 10/8 units, leash radii 17/14, and respawn delays 180/60 simulation seconds. Existing telegraphs warn before damage. Returning elites release their target and recover at home. Town's central hub, NPCs and portal are protected; town elites live in the outer sectors. Gold/purple map markers identify elite tiers. Existing GLB families are reused with larger scale, palette variations and volumetric crowns/auras; these are not newly commissioned unique creature meshes.
+
+Shared server rules own online enemies and targets. A one-time room-layout revision replaces old persisted spawn layouts while preserving player saves, accounts, currency, inventory, quests, buffs and cooldowns. Old active sessions may need refresh/reconnection once. Repeated polls do not reset elite damage or respawn timers. No SQL schema or hosting audience change was required.
+
+## Evidence and limits
+
+The targeted rules, migration, authority and progression checks passed in two runs: 24 checks plus 13 corrected encounter/lifecycle fixtures, 37 unique checks. The initial combined run's eight failures were incorrect test kill damage assumptions; final fixtures explicitly use lethal test damage. Browser fixture map projection was corrected to the actual displayed playable bounds. Runtime was unchanged throughout the final browser checks.
+
+Browser evidence under `artifacts/expanded-world/` distinguishes test-only initial coordinates from actual WASD/map-click movement. Every map was checked after GLB completion with zero model errors. Nine glade sectors, outer movement in the other five maps, real map walking, all four movement boundaries, NPC canvas interaction, portal travel, safe town hub, miniboss proximity windup and repeated zone travel passed. Overhead images are explicitly render-only geometry previews; their DOM labels use the normal gameplay camera projection and are not evidence for label placement. Normal-camera combat and travel screenshots provide gameplay evidence.
+
+Repeated visits retained identical warm resource counts: glade 164 materials / 45 textures / 205 meshes; town 164 / 18 / 71. Boss palette low-quality materials are released when actors are disposed. Browser checks use headless Chromium ANGLE SwiftShader; no real-player hardware FPS claim is made. Boss death, respawn and all twelve elite encounters are covered in simulation tests; browser captures must not be described as actual boss kills.
+
+Controller opened the six-map contact sheet, normal-camera frost boss, glade miniboss and portal-travel frames. The square sector layouts, absence of circular perimeter enclosure, distinct zone palettes, elite crowns and real encounter warning were accepted for this task. Remaining normal-camera low/high boss checks are recorded in `browser-final-part2.log`; their final outcome is appended below before publication.
+
+Final browser outcome: all 14 unique cases passed on the frozen runtime across the initial six valid passes, the five-case final fixture batch, and the three-case final boss batch. Glade low/high and frost low/high each observed unselected proximity aggression, windup and real HP loss. Glade low completed real map-click escape and leash reset; frost high observed natural player death and normal camp rescue. Final logs: `browser-final-part1.log` (5 passed), `browser-final-part2.log` (3 passed); earlier `browser.log` supplies the other five map movement cases and frost-low encounter. Build and runtime hashes are recorded separately. Controller additionally opened high-quality glade combat and frost rescue frames before accepting publication.
