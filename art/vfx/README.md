@@ -1,0 +1,11 @@
+# Illustrated VFX textures
+
+Twelve original OpenAI `image_gen` effects authored on 2026-10-04 for the Mossvale production-quality visual pass. These are effect sprites, not skill/menu icons: filled luminous energy bodies, feathered alpha edges, no outline badges or lettering. Source retained as `effects-atlas.png` (3 columns × 4 rows), delivered sprites in `public/textures/vfx/`.
+
+Each PNG is RGBA 384×384, with the visible artwork normalized inside 320×320 and transparent gutters. `manifest.json` includes source cell, asset URL, SHA-256 and measured transparent/translucent/near-opaque alpha pixel counts. These effects have semi-transparent glow and strong near-opaque cores; alpha is intentionally not binary. Twelve unique hashes and all three alpha ranges are mechanically verified by `python tools/art/extract_vfx_sprites.py` (Pillow authoring dependency only).
+
+Suggested runtime placement: worldtree and lotus upright crossed billboards, rune circle and shockwave horizontal ground planes, fire comet and spectral arrow oriented along travel, remaining energy sprites camera-facing quads. Use additive blending selectively for energy sparks; tree/flower silhouettes should preserve colour with alpha blending. Avoid excessive additive stacking that turns all artwork white or emits opaque rectangular backplates.
+
+Review `contact-sheet.png` on a dark blue in-game-like backdrop. Source generation yields broad soft glow bodies; higher-tier composition should combine these authored bodies with animated rings, light pulses and trails, not substitute tiny wire lines for the central spectacle. Pool and dispose textures/materials in runtime ownership, respect graphics-quality budgets.
+
+Review revision: source-cell bleed was rejected in ice, lotus, impact and arrow. These four effects were regenerated in `effects-clean-atlas.png` with larger separation, and the extraction manifest now refers to those repaired cells. `repair-alpha-review.png` verifies the four delivered PNGs on both checkerboard and solid white: no neighboring purple/gold/green fragments or dark rectangular backplates. Original 3×4 atlas remains provenance only; the manifest determines actual source per delivered sprite.

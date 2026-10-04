@@ -6,3 +6,19 @@ test-results/
 
 ref.mp4
 .local/
+
+# Review recordings remain local; source packages retain representative PNG proof.
+artifacts/production/video/
+artifacts/production/*.webm
+artifacts/chibi-*-motions.webm
+# Superseded close-up and motion-phase review iterations stay local.
+artifacts/chibi-*-v3-*
+artifacts/chibi-*-v4-*
+artifacts/chibi-swordsman-closeup.png
+artifacts/chibi-mage-closeup.png
+artifacts/chibi-archer-closeup.png
+# Basic-skill QA captures are local; final ultimate, scene and HUD PNGs are packaged.
+artifacts/production/*-low-*-1.png
+artifacts/production/*-high-*-1.png
+artifacts/production/*-low-*-1-impact.png
+artifacts/production/*-high-*-1-impact.png

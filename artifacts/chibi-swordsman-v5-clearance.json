@@ -1,0 +1,570 @@
+[
+  {
+    "clip": "walk",
+    "frame": 0,
+    "left": 0.07488206028938293,
+    "right": 0.003000010270625353,
+    "minimumEllipsoidRadiusSquared": 1.3378731065804157,
+    "insideVertices": 0
+  },
+  {
+    "clip": "walk",
+    "frame": 3,
+    "left": 0.05909718573093414,
+    "right": 0.0029999709222465754,
+    "minimumEllipsoidRadiusSquared": 1.2844972780523731,
+    "insideVertices": 0
+  },
+  {
+    "clip": "walk",
+    "frame": 6,
+    "left": 0.003000023774802685,
+    "right": 0.010796169750392437,
+    "minimumEllipsoidRadiusSquared": 1.1916606441002924,
+    "insideVertices": 0
+  },
+  {
+    "clip": "walk",
+    "frame": 9,
+    "left": 0.0030000279657542706,
+    "right": 0.05543731898069382,
+    "minimumEllipsoidRadiusSquared": 1.1500057224022644,
+    "insideVertices": 0
+  },
+  {
+    "clip": "walk",
+    "frame": 12,
+    "left": 0.00300000817514956,
+    "right": 0.06888867914676666,
+    "minimumEllipsoidRadiusSquared": 1.1640638358940387,
+    "insideVertices": 0
+  },
+  {
+    "clip": "walk",
+    "frame": 15,
+    "left": 0.003000010270625353,
+    "right": 0.07488206028938293,
+    "minimumEllipsoidRadiusSquared": 1.171436733298053,
+    "insideVertices": 0
+  },
+  {
+    "clip": "walk",
+    "frame": 18,
+    "left": 0.0029999709222465754,
+    "right": 0.059097178280353546,
+    "minimumEllipsoidRadiusSquared": 1.1640637090793509,
+    "insideVertices": 0
+  },
+  {
+    "clip": "walk",
+    "frame": 21,
+    "left": 0.010796175338327885,
+    "right": 0.003000004915520549,
+    "minimumEllipsoidRadiusSquared": 1.1500059459454737,
+    "insideVertices": 0
+  },
+  {
+    "clip": "walk",
+    "frame": 24,
+    "left": 0.05543731898069382,
+    "right": 0.0030000279657542706,
+    "minimumEllipsoidRadiusSquared": 1.191660638071686,
+    "insideVertices": 0
+  },
+  {
+    "clip": "walk",
+    "frame": 27,
+    "left": 0.06888867169618607,
+    "right": 0.0029999578837305307,
+    "minimumEllipsoidRadiusSquared": 1.2844973672184279,
+    "insideVertices": 0
+  },
+  {
+    "clip": "walk",
+    "frame": 30,
+    "left": 0.07488206028938293,
+    "right": 0.003000010270625353,
+    "minimumEllipsoidRadiusSquared": 1.3378731065804157,
+    "insideVertices": 0
+  },
+  {
+    "clip": "attack-heavy",
+    "frame": 0,
+    "left": 0.0029999997932463884,
+    "right": 0.0029999997932463884,
+    "minimumEllipsoidRadiusSquared": 1.2053232074652027,
+    "insideVertices": 0
+  },
+  {
+    "clip": "attack-heavy",
+    "frame": 3,
+    "left": 0.002999968361109495,
+    "right": 0.015097837895154953,
+    "minimumEllipsoidRadiusSquared": 1.6905862012824444,
+    "insideVertices": 0
+  },
+  {
+    "clip": "attack-heavy",
+    "frame": 6,
+    "left": 0.0030000077094882727,
+    "right": 0.02399812638759613,
+    "minimumEllipsoidRadiusSquared": 2.246313659346601,
+    "insideVertices": 0
+  },
+  {
+    "clip": "attack-heavy",
+    "frame": 9,
+    "left": 0.002999965799972415,
+    "right": 0.0352642647922039,
+    "minimumEllipsoidRadiusSquared": 2.618408049685676,
+    "insideVertices": 0
+  },
+  {
+    "clip": "attack-heavy",
+    "frame": 12,
+    "left": 0.029685262590646744,
+    "right": 0.003000001423060894,
+    "minimumEllipsoidRadiusSquared": 3.2245997249161324,
+    "insideVertices": 0
+  },
+  {
+    "clip": "attack-heavy",
+    "frame": 15,
+    "left": 0.04174983128905296,
+    "right": 0.0029999916441738605,
+    "minimumEllipsoidRadiusSquared": 3.158865831090993,
+    "insideVertices": 0
+  },
+  {
+    "clip": "attack-heavy",
+    "frame": 18,
+    "left": 0.027761884033679962,
+    "right": 0.0029999827966094017,
+    "minimumEllipsoidRadiusSquared": 2.923194092335084,
+    "insideVertices": 0
+  },
+  {
+    "clip": "attack-heavy",
+    "frame": 21,
+    "left": 0.009800491854548454,
+    "right": 0.002999977208673954,
+    "minimumEllipsoidRadiusSquared": 2.288840483907696,
+    "insideVertices": 0
+  },
+  {
+    "clip": "attack-heavy",
+    "frame": 24,
+    "left": 0.003023019526153803,
+    "right": 0.0029999823309481144,
+    "minimumEllipsoidRadiusSquared": 1.4150573966733213,
+    "insideVertices": 0
+  },
+  {
+    "clip": "attack-heavy",
+    "frame": 27,
+    "left": 0.0029999997932463884,
+    "right": 0.0029999997932463884,
+    "minimumEllipsoidRadiusSquared": 1.2053232074652027,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill",
+    "frame": 0,
+    "left": 0.0029999997932463884,
+    "right": 0.0029999997932463884,
+    "minimumEllipsoidRadiusSquared": 1.2053232074652027,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill",
+    "frame": 3,
+    "left": 0.0029999834951013327,
+    "right": 0.013684101402759552,
+    "minimumEllipsoidRadiusSquared": 1.6303939709326438,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill",
+    "frame": 6,
+    "left": 0.0029999930411577225,
+    "right": 0.020713508129119873,
+    "minimumEllipsoidRadiusSquared": 2.052223895250652,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill",
+    "frame": 9,
+    "left": 0.0030000063125044107,
+    "right": 0.03412725776433945,
+    "minimumEllipsoidRadiusSquared": 2.594367046723387,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill",
+    "frame": 12,
+    "left": 0.0030000340193510056,
+    "right": 0.008118956349790096,
+    "minimumEllipsoidRadiusSquared": 3.02620030529132,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill",
+    "frame": 15,
+    "left": 0.046614278107881546,
+    "right": 0.0030000456608831882,
+    "minimumEllipsoidRadiusSquared": 3.209493291433777,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill",
+    "frame": 18,
+    "left": 0.03522279113531113,
+    "right": 0.002999956486746669,
+    "minimumEllipsoidRadiusSquared": 3.065149867761016,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill",
+    "frame": 21,
+    "left": 0.024636240676045418,
+    "right": 0.003000023541972041,
+    "minimumEllipsoidRadiusSquared": 2.866775952244837,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill",
+    "frame": 24,
+    "left": 0.0060220565646886826,
+    "right": 0.0030000011902302504,
+    "minimumEllipsoidRadiusSquared": 1.8337028510156634,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill",
+    "frame": 27,
+    "left": 0.003017658134922385,
+    "right": 0.0029999923426657915,
+    "minimumEllipsoidRadiusSquared": 1.3858161911369034,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill",
+    "frame": 30,
+    "left": 0.0029999997932463884,
+    "right": 0.0029999997932463884,
+    "minimumEllipsoidRadiusSquared": 1.2053232074652027,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-ultimate",
+    "frame": 0,
+    "left": 0.0029999997932463884,
+    "right": 0.0029999997932463884,
+    "minimumEllipsoidRadiusSquared": 1.2053232074652027,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-ultimate",
+    "frame": 3,
+    "left": 0.0030000254046171904,
+    "right": 0.009172094985842705,
+    "minimumEllipsoidRadiusSquared": 1.444393955514494,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-ultimate",
+    "frame": 6,
+    "left": 0.0030000151600688696,
+    "right": 0.017731474712491035,
+    "minimumEllipsoidRadiusSquared": 1.8326598981832765,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-ultimate",
+    "frame": 9,
+    "left": 0.0030000072438269854,
+    "right": 0.02499525249004364,
+    "minimumEllipsoidRadiusSquared": 2.170136706091126,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-ultimate",
+    "frame": 12,
+    "left": 0.003000040538609028,
+    "right": 0.03651561215519905,
+    "minimumEllipsoidRadiusSquared": 2.2934370275965166,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-ultimate",
+    "frame": 15,
+    "left": 0.0030000489205121994,
+    "right": 0.035374175757169724,
+    "minimumEllipsoidRadiusSquared": 2.433263515579145,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-ultimate",
+    "frame": 18,
+    "left": 0.015712795779109,
+    "right": 0.002999988617375493,
+    "minimumEllipsoidRadiusSquared": 3.183217567320561,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-ultimate",
+    "frame": 21,
+    "left": 0.046614278107881546,
+    "right": 0.0030000456608831882,
+    "minimumEllipsoidRadiusSquared": 3.216018443117773,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-ultimate",
+    "frame": 24,
+    "left": 0.03969969227910042,
+    "right": 0.002999982563778758,
+    "minimumEllipsoidRadiusSquared": 3.146127349192342,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-ultimate",
+    "frame": 27,
+    "left": 0.02903253771364689,
+    "right": 0.0029999862890690565,
+    "minimumEllipsoidRadiusSquared": 2.9242567404145547,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-ultimate",
+    "frame": 30,
+    "left": 0.021679986268281937,
+    "right": 0.0030000268016010523,
+    "minimumEllipsoidRadiusSquared": 2.7957892884889874,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-ultimate",
+    "frame": 33,
+    "left": 0.00835163053125143,
+    "right": 0.002999986754730344,
+    "minimumEllipsoidRadiusSquared": 2.0754169358954506,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-ultimate",
+    "frame": 36,
+    "left": 0.003037504618987441,
+    "right": 0.002999990712851286,
+    "minimumEllipsoidRadiusSquared": 1.4966056511613828,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-ultimate",
+    "frame": 39,
+    "left": 0.003006520215421915,
+    "right": 0.0030000002589076757,
+    "minimumEllipsoidRadiusSquared": 1.2936878386655186,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-ultimate",
+    "frame": 42,
+    "left": 0.0029999997932463884,
+    "right": 0.0029999997932463884,
+    "minimumEllipsoidRadiusSquared": 1.2053232074652027,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-heal",
+    "frame": 0,
+    "left": 0.002999996766448021,
+    "right": 0.002999996766448021,
+    "minimumEllipsoidRadiusSquared": 1.2068987003895066,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-heal",
+    "frame": 3,
+    "left": 0.002999996766448021,
+    "right": 0.002999996766448021,
+    "minimumEllipsoidRadiusSquared": 1.3420553457723552,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-heal",
+    "frame": 6,
+    "left": 0.002999996766448021,
+    "right": 0.002999996766448021,
+    "minimumEllipsoidRadiusSquared": 1.6990049033666816,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-heal",
+    "frame": 9,
+    "left": 0.002999996766448021,
+    "right": 0.002999996766448021,
+    "minimumEllipsoidRadiusSquared": 2.100395584940766,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-heal",
+    "frame": 12,
+    "left": 0.002999996766448021,
+    "right": 0.002999996766448021,
+    "minimumEllipsoidRadiusSquared": 2.2773497084811396,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-heal",
+    "frame": 15,
+    "left": 0.002999996766448021,
+    "right": 0.002999996766448021,
+    "minimumEllipsoidRadiusSquared": 2.2487455760180466,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-heal",
+    "frame": 18,
+    "left": 0.002999996766448021,
+    "right": 0.002999996766448021,
+    "minimumEllipsoidRadiusSquared": 2.212130972475337,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-heal",
+    "frame": 21,
+    "left": 0.002999996766448021,
+    "right": 0.002999996766448021,
+    "minimumEllipsoidRadiusSquared": 2.1030214464428196,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-heal",
+    "frame": 24,
+    "left": 0.002999996766448021,
+    "right": 0.002999996766448021,
+    "minimumEllipsoidRadiusSquared": 2.0199770793563148,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-heal",
+    "frame": 27,
+    "left": 0.002999996766448021,
+    "right": 0.002999996766448021,
+    "minimumEllipsoidRadiusSquared": 1.987959557038283,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-heal",
+    "frame": 30,
+    "left": 0.002999996766448021,
+    "right": 0.002999996766448021,
+    "minimumEllipsoidRadiusSquared": 1.5831223205373748,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-heal",
+    "frame": 33,
+    "left": 0.002999996766448021,
+    "right": 0.002999996766448021,
+    "minimumEllipsoidRadiusSquared": 1.289280540749578,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-heal",
+    "frame": 36,
+    "left": 0.002999996766448021,
+    "right": 0.002999996766448021,
+    "minimumEllipsoidRadiusSquared": 1.2068987003895066,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-guard",
+    "frame": 0,
+    "left": 0.002999996766448021,
+    "right": 0.002999996766448021,
+    "minimumEllipsoidRadiusSquared": 1.2068987003895066,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-guard",
+    "frame": 3,
+    "left": 0.002999996766448021,
+    "right": 0.002999996766448021,
+    "minimumEllipsoidRadiusSquared": 1.3546669327870005,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-guard",
+    "frame": 6,
+    "left": 0.002999996766448021,
+    "right": 0.002999996766448021,
+    "minimumEllipsoidRadiusSquared": 1.7599378046673533,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-guard",
+    "frame": 9,
+    "left": 0.002999996766448021,
+    "right": 0.002999996766448021,
+    "minimumEllipsoidRadiusSquared": 2.116042565607682,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-guard",
+    "frame": 12,
+    "left": 0.002999996766448021,
+    "right": 0.002999996766448021,
+    "minimumEllipsoidRadiusSquared": 2.1310566692361017,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-guard",
+    "frame": 15,
+    "left": 0.002999996766448021,
+    "right": 0.002999996766448021,
+    "minimumEllipsoidRadiusSquared": 2.123155692495514,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-guard",
+    "frame": 18,
+    "left": 0.002999996766448021,
+    "right": 0.002999996766448021,
+    "minimumEllipsoidRadiusSquared": 2.1310564904916887,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-guard",
+    "frame": 21,
+    "left": 0.002999996766448021,
+    "right": 0.002999996766448021,
+    "minimumEllipsoidRadiusSquared": 2.1160426787216977,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-guard",
+    "frame": 24,
+    "left": 0.002999996766448021,
+    "right": 0.002999996766448021,
+    "minimumEllipsoidRadiusSquared": 1.75993789706087,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-guard",
+    "frame": 27,
+    "left": 0.002999996766448021,
+    "right": 0.002999996766448021,
+    "minimumEllipsoidRadiusSquared": 1.3546668530962471,
+    "insideVertices": 0
+  },
+  {
+    "clip": "skill-guard",
+    "frame": 30,
+    "left": 0.002999996766448021,
+    "right": 0.002999996766448021,
+    "minimumEllipsoidRadiusSquared": 1.2068987003895066,
+    "insideVertices": 0
+  }
+]

@@ -1,14 +1,14 @@
-import { Color3 } from "@babylonjs/core/Maths/math.color";
-import { Mesh } from "@babylonjs/core/Meshes/mesh";
-import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
-import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
-import { Scene } from "@babylonjs/core/scene";
-import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
-import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
+import { Color3 } from "@babylonjs/core/Maths/math.color.js";
+import { Mesh } from "@babylonjs/core/Meshes/mesh.js";
+import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData.js";
+import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder.js";
+import { Scene } from "@babylonjs/core/scene.js";
+import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial.js";
+import { TransformNode } from "@babylonjs/core/Meshes/transformNode.js";
 export type Shape =
   | { kind: "box"; w: number; h: number; d: number }
   | { kind: "plane"; w: number; h: number }
-  | { kind: "sphere"; r: number; half?: boolean }
+  | { kind: "sphere"; r: number; half?: boolean; segments?: number }
   | { kind: "cone"; r: number; h: number; n: number }
   | { kind: "cylinder"; top: number; bottom: number; h: number; n: number }
   | { kind: "disc"; r: number; n: number }
@@ -70,12 +70,12 @@ export class Primitives {
         m = shape.half
           ? MeshBuilder.CreateSphere(
               name,
-              { diameter: shape.r * 2, segments: 8, slice: 0.5 },
+              { diameter: shape.r * 2, segments: 12, slice: 0.5 },
               this.scene,
             )
-          : MeshBuilder.CreateIcoSphere(
+          : MeshBuilder.CreateSphere(
               name,
-              { radius: shape.r, subdivisions: 1, flat: true },
+              { diameter: shape.r * 2, segments: shape.segments ?? (shape.r < .15 ? 6 : 12) },
               this.scene,
             );
         break;
@@ -148,8 +148,9 @@ export class Primitives {
     z: number,
     p?: TransformNode,
     s = 1,
+    segments?: number,
   ) {
-    const m = this.mesh({ kind: "sphere", r }, color, x, y, z, p);
+    const m = this.mesh({ kind: "sphere", r, segments }, color, x, y, z, p);
     m.scaling.y = s;
     return m;
   }
@@ -204,8 +205,9 @@ export class Primitives {
       if (!(m instanceof Mesh) || m === exclude || (included && !included.has(m)) || m.metadata?.npcId) continue;
       m.computeWorldMatrix(true);
       const original=m.material as StandardMaterial;
-      const color=original.diffuseColor,colors:number[]=[];
-      for(let vertex=0;vertex<m.getTotalVertices();vertex++)colors.push(color.r,color.g,color.b,1);
+      const color=original.diffuseColor,colors:number[]=[],paint=m.getVerticesData("color");
+      // Preserve authored ground gradients while still baking the material palette.
+      for(let vertex=0;vertex<m.getTotalVertices();vertex++)colors.push(color.r*(paint?.[vertex*4]??1),color.g*(paint?.[vertex*4+1]??1),color.b*(paint?.[vertex*4+2]??1),paint?.[vertex*4+3]??1);
       m.setVerticesData("color",colors);
       const mat=this.material(0xffffff,original.disableLighting,original.alpha);m.material=mat;
       const group = groups.get(mat) ?? [];

@@ -1,0 +1,37 @@
+{
+  "asset": "mage",
+  "revision": "chibi-rounded-5-clearance-grounded",
+  "joints": 13,
+  "clips": [
+    {
+      "clip": "idle",
+      "startSeconds": 2.194,
+      "durationSeconds": 1
+    },
+    {
+      "clip": "walk",
+      "startSeconds": 3.21,
+      "durationSeconds": 1.1
+    },
+    {
+      "clip": "attack",
+      "startSeconds": 4.316,
+      "durationSeconds": 0.7
+    },
+    {
+      "clip": "skill",
+      "startSeconds": 5.028,
+      "durationSeconds": 1.1
+    },
+    {
+      "clip": "skill-ultimate",
+      "startSeconds": 6.135,
+      "durationSeconds": 1.5
+    },
+    {
+      "clip": "death",
+      "startSeconds": 7.65,
+      "durationSeconds": 1
+    }
+  ]
+}

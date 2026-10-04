@@ -1,6 +1,8 @@
+import { castVisualTransition, type CastSnapshot } from "./render/skill-timing";
+import { SkillVFX, type SkillMotion } from "./render/skill-vfx";
 import { ModelLibrary } from "./render/model-library";
 import { zones, type ZoneId } from "./game/content";
-import { classes, type ClassId } from "./game/classes";
+import { classes, type ClassId, type Skill } from "./game/classes";
 import "@babylonjs/core/Culling/ray";
 import { Camera } from "@babylonjs/core/Cameras/camera";
 import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
@@ -57,7 +59,13 @@ export class World implements GameWorld {
   private readonly selection: Mesh;
   private readonly destination: TransformNode;
   private readonly loot: Mesh[] = [];
-  private effects: { mesh: TransformNode; time: number }[] = [];
+  private readonly skillVFX: SkillVFX;
+  private observedCooldowns: Record<string,number> = {};
+  private previousCast:CastSnapshot|null=null;
+  private previousAction=0;
+  private previewHeld=false;
+  private skillSequence: {preview:boolean;skill:Skill;remaining:number;total:number;released:boolean;x:number;z:number;tx:number;tz:number}|null=null;
+  private skillMotion: SkillMotion|null=null;
   private readonly events = new AbortController();
   private readonly peers = new Map<string, {node: TransformNode; label: HTMLDivElement; job:ClassId}>();
   private lastX = 0;
@@ -121,6 +129,8 @@ export class World implements GameWorld {
     shadows.normalBias = 0.05;
     this.factory = new Primitives(this.scene);
     this.models = new ModelLibrary(this.scene);
+    this.skillVFX = new SkillVFX(this.scene);
+    this.observedCooldowns={...sim.skillCooldowns};
     this.ground = this.factory.mesh(
       { kind: "plane", w: 80, h: 80 },
       0x79bc64,
@@ -227,7 +237,7 @@ export class World implements GameWorld {
   }
 
   setQuality(quality:"auto"|"high"|"low") {this.quality=quality;this.autoReduced=false;this.frameTimes=[];this.lastFrame=performance.now();localStorage.setItem("mossvale-quality",quality);this.applyQuality();this.resize();}
-  private applyQuality(){const low=this.quality==='low'||this.autoReduced;this.scene.shadowsEnabled=!low;this.models.setLowQuality(low);this.shadows.getShadowMap()?.resize(this.quality==='high'?1024:512);}
+  private applyQuality(){const low=this.quality==='low'||this.autoReduced;this.scene.shadowsEnabled=!low;this.models.setLowQuality(low);this.skillVFX.setLowQuality(low);this.shadows.getShadowMap()?.resize(this.quality==='high'?1024:512);}
 
   private updateOutfit() {
     const model=this.heroModels.get(this.sim.save.job)!,nodes=model.getChildTransformNodes(false),spine=nodes.find(n=>n.name.endsWith('-spine')),hand=nodes.find(n=>n.name.endsWith('-right-hand'));
@@ -245,7 +255,7 @@ export class World implements GameWorld {
   get diagnostics() {
     return {
       engine: "Babylon.js",
-      quality:this.quality,autoReduced:this.autoReduced,riggedActors:this.models.active,modelErrors:this.models.errors,
+      previewHeld:this.previewHeld,vfx:this.skillVFX.diagnostics,sceneMeshes:this.scene.meshes.length,skillMotion:this.skillMotion,quality:this.quality,autoReduced:this.autoReduced,riggedActors:this.models.active,modelErrors:this.models.errors,
       renderWidth:this.engine.getRenderWidth(),renderHeight:this.engine.getRenderHeight(),activeAnimations:this.scene.animatables.length,
       drawCalls: this.instrumentation.drawCallsCounter.current,
       fps: this.frameTimes.length ? 1000 / (this.frameTimes.reduce((a,b)=>a+b,0) / this.frameTimes.length) : 0,
@@ -308,49 +318,87 @@ export class World implements GameWorld {
   }
 
   effect(type: string, x: number, z: number) {
-    const mesh = this.factory.group("combat-effect");
-    mesh.position.set(x, 0.12, z);
-    if (type === "whirl") {
-      this.factory.ring(3.6, 0xb298ff, mesh);
-      this.factory.ring(2.6, 0xc5ffed, mesh);
-    } else if (type === "strike") {
-      this.factory.ring(1.2, 0xffd675, mesh);
-      this.factory.ball(0.35, 0xffd675, 0, 0.8, 0, mesh).material =
-        this.factory.material(0xffd675, true);
-    } else this.factory.ring(1, 0xcfff95, mesh);
-    this.effects.push({ mesh, time: 0.6 });
+    // Skills are detected from authoritative cooldown changes, including self buffs.
+    // Existing strike events remain for basic attacks, without duplicate skill bursts.
+    if(type==='level'){const skill=this.sim.skillList.find(s=>s.effect==='heal');if(skill)this.skillVFX.release(skill,this.sim.save.job,x,z,x,z);}
+    else if(!this.skillSequence)this.skillVFX.basic(this.sim.save.job,x,z);
+  }
+
+  /** Render-only preview: no learned skills, damage, inventory or cooldown mutations. */
+  previewSkill(id:string,age?:number) {
+    if(this.sim.online)return false;
+    const skill=this.sim.skillList.find(s=>s.id===id);if(!skill)return false;
+    const target=this.sim.monsters.find(m=>m.id===this.sim.target&&m.alive);
+    if(age!==undefined){
+      if(!Number.isFinite(age)||age<0||age>1)return false;
+      this.skillVFX.clear();this.skillSequence=null;this.previewHeld=true;
+      this.skillVFX.release(skill,this.sim.save.job,this.player.position.x,this.player.position.z,target?.x??this.sim.x+2,target?.z??this.sim.z+2);
+      this.skillVFX.update(age);
+      this.skillMotion={job:this.sim.save.job,stage:skill.stage,branch:skill.branch,effect:skill.effect,phase:'release',progress:age};
+    }else this.beginSkillVisual(skill,target?.x??this.sim.x+2,target?.z??this.sim.z+2,true);
+    return true;
+  }
+  clearSkillPreview(){if(this.sim.online)return false;this.previewHeld=false;this.skillVFX.clear();this.skillSequence=null;this.skillMotion=null;return true;}
+  private beginSkillVisual(skill:Skill,tx:number,tz:number,preview=false) {
+    if(this.previewHeld){this.skillVFX.clear();this.previewHeld=false;}
+    const total=preview?(skill.cast||.18):(this.sim.cast?.total||.001),remaining=preview?total:(this.sim.cast?.remaining||0);
+    this.skillSequence={preview,skill,remaining,total,released:false,x:this.player.position.x,z:this.player.position.z,tx,tz};
+    this.skillVFX.anticipation(skill,this.sim.save.job,this.player.position.x,this.player.position.z);
+  }
+  private updateSkillVisual(dt:number) {
+    const cast=this.sim.cast,transition=castVisualTransition(this.previousCast,cast,this.previousAction,this.sim.actionTime,dt);
+    if(transition==='start'&&cast){const skill=this.sim.skillList.find(s=>s.id===cast.skillId),target=this.sim.monsters.find(m=>m.id===cast.targetId);if(skill)this.beginSkillVisual(skill,target?.x??this.sim.x+1,target?.z??this.sim.z+1);}
+    if(transition==='cancel'&&this.skillSequence&&!this.skillSequence.preview){this.skillSequence=null;this.skillMotion=null;this.skillVFX.clear();}
+    for(const [id,cooldown] of Object.entries(this.sim.skillCooldowns)){
+      if(cooldown>(this.observedCooldowns[id]||0)+.05&&(!cast||cast.skillId!==id)&&transition!=='cancel'){
+        const skill=this.sim.skillList.find(s=>s.id===id);if(skill){const target=this.sim.monsters.find(m=>m.id===this.sim.target);this.beginSkillVisual(skill,target?.x??this.sim.x+1,target?.z??this.sim.z+1);}
+      }
+    }
+    this.previousCast=cast?{...cast}:null;this.previousAction=this.sim.actionTime;
+    this.observedCooldowns={...this.sim.skillCooldowns};
+    const sequence=this.skillSequence;
+    if(sequence){
+      if(sequence.preview||sequence.released)sequence.remaining-=dt;
+      else sequence.remaining=cast?.skillId===sequence.skill.id?cast.remaining:0;
+      if((sequence.preview?sequence.remaining<=0:(!cast||transition==='release'))&&!sequence.released){sequence.released=true;sequence.remaining=.55+sequence.skill.stage*.025;this.skillVFX.release(sequence.skill,this.sim.save.job,sequence.x,sequence.z,sequence.tx,sequence.tz);}
+      const phase=!sequence.released?'anticipation':sequence.remaining>.35?'release':'recovery';
+      this.skillMotion={job:this.sim.save.job,stage:sequence.skill.stage,branch:sequence.skill.branch,effect:sequence.skill.effect,phase,progress:!sequence.released?1-Math.max(0,sequence.remaining)/sequence.total:1-Math.max(0,sequence.remaining)/(.55+sequence.skill.stage*.025)};
+      if(sequence.released&&sequence.remaining<=0){this.skillSequence=null;this.skillMotion=null;}
+    }
+    if(!this.previewHeld)this.skillVFX.update(dt);
   }
 
   update(dt: number) {
     if (!this.ready || this.disposed) return;
-    if(this.currentZone!==this.sim.save.zone){this.rebuildMap();this.rebuildMonsters();this.loot.splice(0).forEach(m=>m.dispose());}
+    if(this.currentZone!==this.sim.save.zone){this.previewHeld=false;this.skillVFX.clear();this.skillSequence=null;this.skillMotion=null;this.rebuildMap();this.rebuildMonsters();this.loot.splice(0).forEach(m=>m.dispose());}
     const frameNow=performance.now();
     this.frameTimes.push(frameNow-this.lastFrame);this.lastFrame=frameNow;if(this.frameTimes.length>120)this.frameTimes.shift();
     if(this.quality==="auto"&&!this.autoReduced&&this.frameTimes.length>=12&&this.frameTimes.slice(-10).reduce((a,b)=>a+b,0)/10>40){this.autoReduced=true;this.applyQuality();this.resize();}
     this.labelClock+=dt;const updateLabels=this.labelClock>=1/(this.quality==='low'||this.autoReduced?20:30)||dt===0;if(updateLabels)this.labelClock=0;
     this.visualTime+=dt;
+    this.updateSkillVisual(dt);
     const renderX=this.sim.renderX,renderZ=this.sim.renderZ;
     const facingX=renderX-(this.sim.online?this.player.position.x:this.lastX);
     const facingZ=renderZ-(this.sim.online?this.player.position.z:this.lastZ);
     const moving = Math.hypot(facingX,facingZ) > 0.015;
     const blend=this.sim.online && dt>0 ? 1-Math.exp(-dt*16) : 1;
-    if (moving)
-      this.player.rotation.y = Math.atan2(
-        facingX,
-        facingZ,
-      );
+    const sequence=this.skillSequence;
+    const attacking=sequence&&!['heal','guard','fury'].includes(sequence.skill.effect);
+    const facing=attacking?Math.atan2(sequence.tx-renderX,sequence.tz-renderZ):moving?Math.atan2(facingX,facingZ):this.player.rotation.y;
+    const angularDelta=Math.atan2(Math.sin(facing-this.player.rotation.y),Math.cos(facing-this.player.rotation.y));
+    this.player.rotation.y+=angularDelta*(dt>0?1-Math.exp(-dt*18):1);
     for (const [id, model] of this.heroModels)
-      {model.setEnabled(id === this.sim.save.job);this.models.animate(model,moving,this.sim.save.hp,this.sim.actionTime>0,!!this.sim.cast,dt);}
+      {model.setEnabled(id === this.sim.save.job);this.models.setSkillMotion(model,id===this.sim.save.job?this.skillMotion:null);this.models.animate(model,moving,this.sim.save.hp,this.sim.actionTime>0,!!this.sim.cast,dt);}
     this.updateOutfit();
     this.player.rotation.z =
-      this.sim.actionTime > 0 ? Math.sin(this.sim.actionTime * 18) * 0.12 : 0;
+      this.sim.hurtTime > 0 ? Math.sin(this.sim.hurtTime * 18) * 0.035 : 0;
     this.player.scaling.setAll(this.sim.hurtTime > 0 ? 0.96 : 1);
     this.lastX = renderX;
     this.lastZ = renderZ;
     const heroBlend=Math.hypot(facingX,facingZ)>6?1:blend;
     this.player.position.set(
       this.player.position.x+(renderX-this.player.position.x)*heroBlend,
-      moving ? Math.abs(Math.sin(this.visualTime * 12)) * 0.06 : 0,
+      0, // Authored hips/foot planting own vertical gait; root stays grounded.
       this.player.position.z+(renderZ-this.player.position.z)*heroBlend,
     );
     const focus = new Vector3(this.player.position.x * 0.42, 0, this.player.position.z * 0.42);
@@ -422,16 +470,6 @@ export class World implements GameWorld {
       );
       this.loot[index].rotation.y += dt;
     });
-    this.effects = this.effects.filter((effect) => {
-      effect.time -= dt;
-      effect.mesh.scaling.scaleInPlace(1 + dt * 1.5);
-      effect.mesh.rotation.y += dt * 3;
-      if (effect.time <= 0) {
-        effect.mesh.dispose();
-        return false;
-      }
-      return true;
-    });
     for(const [id,peer] of this.peers) if(!this.sim.remotePlayers.some(p=>p.id===id && p.job===peer.job)) {peer.node.dispose();peer.label.remove();this.peers.delete(id);}
     for(const player of this.sim.remotePlayers) {
       let peer=this.peers.get(player.id);
@@ -459,6 +497,7 @@ export class World implements GameWorld {
     this.disposed = true;
     this.events.abort();
     this.instrumentation.dispose();
+    this.skillVFX.dispose();
     this.models.dispose();
     this.scene.dispose();
     this.engine.dispose();

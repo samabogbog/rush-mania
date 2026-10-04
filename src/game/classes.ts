@@ -461,6 +461,9 @@ for(const job of Object.keys(classes) as ClassId[])alternative[job].forEach(([na
  const detail=effect==='heal'?`Restore ${Math.round(power*100)}% max HP.`:effect==='guard'?`Reduce damage by ${Math.round(power*100)}% for ${extra.duration}s.`:effect==='fury'?`Increase attack by ${Math.round(power*100)}% for ${extra.duration}s.`:effect==='area'?`Deal ${power}× ATK in a ${extra.radius}m area.${extra.duration?' Slow enemies for '+extra.duration+'s.':''}`:`Deal ${power}× ATK and ${effect==='poison'?'poison':effect==='slow'?'slow':'stun'} the target for ${extra.duration}s.`;
  skills[job].push(make(job,index+1,name,icon,effect,power,mp,cooldown,detail,{...extra,id:`${job}-b-${index+1}`,branch:1}));
 });
+// Each skill has bespoke, normalized artwork. Keep IDs stable across save versions.
+for (const job of Object.keys(skills) as ClassId[])
+  for (const skill of skills[job]) skill.icon = `skill-${skill.id}`;
 export const auxiliaryItems:Record<string,{resource:'hp'|'mp';icon:string}>={'Red potion':{resource:'hp',icon:'health-potion'},'Blue potion':{resource:'mp',icon:'mana-potion'}};
 export const isAuxiliaryItem=(name:unknown):name is string=>typeof name==='string'&&Object.hasOwn(auxiliaryItems,name);
 export function isClass(value: unknown): value is ClassId {

@@ -1,0 +1,12 @@
+{
+  "mage-10": {
+    "purple_pixels": 17297,
+    "foliage_green_pixels": 280,
+    "nearly_white_pixels": 290
+  },
+  "mage-b-10": {
+    "purple_pixels": 3652,
+    "foliage_green_pixels": 8010,
+    "nearly_white_pixels": 37
+  }
+}

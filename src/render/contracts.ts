@@ -8,6 +8,8 @@ export interface GameWorld {
   readonly diagnostics: { engine: string; drawCalls: number; fps:number; frameP95:number };
   resize(): void;
   project(x: number, z: number, y?: number): { x: number; y: number };
+  previewSkill(id:string,age?:number):boolean;
+  clearSkillPreview():boolean;
   effect(type: string, x: number, z: number): void;
   update(dt: number): void;
   dispose(): void;

@@ -10,11 +10,12 @@ import type {AbstractMesh} from '@babylonjs/core/Meshes/abstractMesh';
 import type {Scene} from '@babylonjs/core/scene';
 import type {TransformNode} from '@babylonjs/core/Meshes/transformNode';
 import type {AnimationGroup} from '@babylonjs/core/Animations/animationGroup';
-export type Motion='idle'|'walk'|'attack'|'skill'|'hurt'|'death';
+export type Motion='idle'|'walk'|'run'|'attack'|'attack-heavy'|'skill'|'skill-heal'|'skill-guard'|'skill-ultimate'|'hurt'|'death';
+export type SkillMotionContext={stage:number;effect:string;phase:'anticipation'|'release'|'recovery';progress:number;job?:string;branch?:number};
 /** One downloaded mesh/rig per kind; instances have independent skeletons and clips. */
 export class ModelLibrary {
  private cache=new Map<string,Promise<AssetContainer>>();
- private actors=new Map<TransformNode,{clips:Map<string,AnimationGroup>;motion:Motion;remaining:number;hp:number;suspended:boolean}>();
+ private actors=new Map<TransformNode,{clips:Map<string,AnimationGroup>;motion:Motion;remaining:number;hp:number;suspended:boolean;skillMotion?:SkillMotionContext|null}>();
  private low=false;private originals=new Map<AbstractMesh,Material>();private vertexColors=new Map<AbstractMesh,{linear:number[];gamma:number[];stride:number}>();private simple=new Map<Material,StandardMaterial>();
  private closed=false;loaded=0;errors=0;
  get active(){return this.actors.size}
@@ -28,7 +29,8 @@ export class ModelLibrary {
    for(const root of instance.rootNodes)root.parent=target;
    for(const mesh of fallback)mesh.dispose();
    target.scaling.setAll(1);
-   const clips=new Map(instance.animationGroups.map(g=>[g.name.replace(/^.*-(idle|walk|attack|skill|hurt|death)$/,'$1'),g]));
+   const clips=new Map(instance.animationGroups.map(g=>[g.name.replace(/^.*-(idle|walk|run|attack-heavy|attack|skill-ultimate|skill-guard|skill-heal|skill|hurt|death)$/,'$1'),g]));
+   for(const group of clips.values())for(const entry of group.targetedAnimations){entry.animation.enableBlending=true;entry.animation.blendingSpeed=.16;}
    this.actors.set(target,{clips,motion:'idle',remaining:0,hp:NaN,suspended:false});if(target.isEnabled())clips.get('idle')?.start(true);
    const actorMeshes=target.getChildMeshes();
    for(const mesh of actorMeshes)if(mesh.material?.getClassName()==='PBRMaterial'){this.originals.set(mesh,mesh.material);this.applyMaterial(mesh,mesh.material);}
@@ -36,16 +38,19 @@ export class ModelLibrary {
    target.onDisposeObservable.addOnce(()=>{this.actors.delete(target);for(const mesh of actorMeshes){this.originals.delete(mesh);this.vertexColors.delete(mesh);}instance.dispose();});
   }).catch(()=>{if(!this.closed)this.errors++;});
  }
+ setSkillMotion(target:TransformNode,context:SkillMotionContext|null){const actor=this.actors.get(target);if(actor){if(!context&&actor.skillMotion)actor.remaining=0;actor.skillMotion=context;}}
  animate(target:TransformNode,moving:boolean,hp:number,action:boolean,casting:boolean,dt:number,visible=true) {
   const actor=this.actors.get(target);if(!actor)return;
   const active=target.isEnabled()&&visible;
   if(!active){if(!actor.suspended){actor.clips.forEach(g=>g.stop());actor.suspended=true;}return;}
   if(actor.suspended){actor.suspended=false;actor.clips.get(actor.motion)?.start(actor.motion==='idle'||actor.motion==='walk');}
   const damaged=hp<actor.hp;actor.hp=hp;actor.remaining=Math.max(0,actor.remaining-dt);
-  const next:Motion=hp<=0?'death':damaged?'hurt':casting?'skill':action?'attack':actor.remaining>0?actor.motion:moving?'walk':'idle';
+  const context=actor.skillMotion;
+  const skillMotion:Motion=context?.stage&&context.stage>=8?'skill-ultimate':context?.effect==='heal'?'skill-heal':context?.effect==='guard'?'skill-guard':context?.job==='swordsman'&&context.stage>=4?'attack-heavy':'skill';
+  const next:Motion=hp<=0?'death':damaged?'hurt':casting?skillMotion:context?skillMotion:action?'attack':actor.remaining>0?actor.motion:moving?'walk':'idle';
   if(next===actor.motion)return;
   actor.clips.forEach(g=>g.stop());actor.motion=next;
-  actor.remaining=next==='hurt'?.32:next==='attack'?.45:next==='skill'?.8:0;
+  actor.remaining=next==='hurt'?.32:next==='attack'?.45:next.startsWith('skill')?1.2:next==='attack-heavy'?.9:0;
   actor.clips.get(next)?.start(next==='idle'||next==='walk');
  }
  setLowQuality(low:boolean){this.low=low;for(const [mesh,original] of this.originals){if(mesh.isDisposed()){this.originals.delete(mesh);continue;}this.applyMaterial(mesh,original);}}

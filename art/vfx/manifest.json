@@ -1,0 +1,198 @@
+{
+  "version": 1,
+  "provenance": "Original OpenAI image_gen artwork 2026-10-04",
+  "sprites": [
+    {
+      "name": "star-glint",
+      "path": "/textures/vfx/star-glint.png",
+      "source": "art/vfx/effects-atlas.png",
+      "cell": 0,
+      "size": [
+        384,
+        384
+      ],
+      "alpha": {
+        "transparent": 69324,
+        "translucent": 78132,
+        "near_opaque": 16200
+      },
+      "sha256": "60c516395c0878220cdb17cf0572f454b212bca1267b3c1f9ef383bde5daae05"
+    },
+    {
+      "name": "energy-flare",
+      "path": "/textures/vfx/energy-flare.png",
+      "source": "art/vfx/effects-atlas.png",
+      "cell": 1,
+      "size": [
+        384,
+        384
+      ],
+      "alpha": {
+        "transparent": 61599,
+        "translucent": 85857,
+        "near_opaque": 26169
+      },
+      "sha256": "a61753044a9072bf94e5a7257de4796188aeefdf412779c807ca39e5d7e4999f"
+    },
+    {
+      "name": "fire-comet",
+      "path": "/textures/vfx/fire-comet.png",
+      "source": "art/vfx/effects-atlas.png",
+      "cell": 2,
+      "size": [
+        384,
+        384
+      ],
+      "alpha": {
+        "transparent": 71587,
+        "translucent": 75869,
+        "near_opaque": 26301
+      },
+      "sha256": "02f6366120521ea1b6af85b16e96033715a2341c3e7de5c08bc568c882290517"
+    },
+    {
+      "name": "ice-burst",
+      "path": "/textures/vfx/ice-burst.png",
+      "source": "art/vfx/effects-clean-atlas.png",
+      "cell": 0,
+      "size": [
+        384,
+        384
+      ],
+      "alpha": {
+        "transparent": 75829,
+        "translucent": 71627,
+        "near_opaque": 33306
+      },
+      "sha256": "56462a4c722ff2ab476c6ecc35e101b64dd112f10e288a2426486608fba3b65f"
+    },
+    {
+      "name": "lightning-bolt",
+      "path": "/textures/vfx/lightning-bolt.png",
+      "source": "art/vfx/effects-atlas.png",
+      "cell": 4,
+      "size": [
+        384,
+        384
+      ],
+      "alpha": {
+        "transparent": 53430,
+        "translucent": 94026,
+        "near_opaque": 30197
+      },
+      "sha256": "0c0edabd67bcaf6be3a297db7a094a95fceea467a4ec9b346ced0405dcb540db"
+    },
+    {
+      "name": "crescent-ribbon",
+      "path": "/textures/vfx/crescent-ribbon.png",
+      "source": "art/vfx/effects-atlas.png",
+      "cell": 5,
+      "size": [
+        384,
+        384
+      ],
+      "alpha": {
+        "transparent": 75621,
+        "translucent": 71835,
+        "near_opaque": 21824
+      },
+      "sha256": "06f23d43c8c6b9fd3b86af9828b2fe5da3167d05066a8c2466778416b3e14548"
+    },
+    {
+      "name": "rune-circle",
+      "path": "/textures/vfx/rune-circle.png",
+      "source": "art/vfx/effects-atlas.png",
+      "cell": 6,
+      "size": [
+        384,
+        384
+      ],
+      "alpha": {
+        "transparent": 56766,
+        "translucent": 90690,
+        "near_opaque": 46233
+      },
+      "sha256": "637fb1264d1bf56f250b6303a7f8fc64e47c1864562aeec4e9b6d71eb7ef43e1"
+    },
+    {
+      "name": "leaf-petals",
+      "path": "/textures/vfx/leaf-petals.png",
+      "source": "art/vfx/effects-atlas.png",
+      "cell": 7,
+      "size": [
+        384,
+        384
+      ],
+      "alpha": {
+        "transparent": 55243,
+        "translucent": 92213,
+        "near_opaque": 17697
+      },
+      "sha256": "67aee6a97b9a90f84fd987c44e6417449ea9dd495740351db6b8bb396216ffd5"
+    },
+    {
+      "name": "worldtree",
+      "path": "/textures/vfx/worldtree.png",
+      "source": "art/vfx/effects-atlas.png",
+      "cell": 8,
+      "size": [
+        384,
+        384
+      ],
+      "alpha": {
+        "transparent": 49727,
+        "translucent": 97729,
+        "near_opaque": 50802
+      },
+      "sha256": "2321de98912c988dbc1b6fa696563af14b6f0b8033d8641d491434ce918666e1"
+    },
+    {
+      "name": "healing-lotus",
+      "path": "/textures/vfx/healing-lotus.png",
+      "source": "art/vfx/effects-clean-atlas.png",
+      "cell": 1,
+      "size": [
+        384,
+        384
+      ],
+      "alpha": {
+        "transparent": 85381,
+        "translucent": 62075,
+        "near_opaque": 34060
+      },
+      "sha256": "a98cadb258b5cfd90efb629696054ab1636989dfa924aa53c41b4a13f5f37238"
+    },
+    {
+      "name": "impact-shockwave",
+      "path": "/textures/vfx/impact-shockwave.png",
+      "source": "art/vfx/effects-clean-atlas.png",
+      "cell": 2,
+      "size": [
+        384,
+        384
+      ],
+      "alpha": {
+        "transparent": 97753,
+        "translucent": 49703,
+        "near_opaque": 24088
+      },
+      "sha256": "3f040c0b66e16f441300380ef1de03b2ca3d4afe78dc8e3a7e400d0067b75672"
+    },
+    {
+      "name": "spectral-arrow",
+      "path": "/textures/vfx/spectral-arrow.png",
+      "source": "art/vfx/effects-clean-atlas.png",
+      "cell": 3,
+      "size": [
+        384,
+        384
+      ],
+      "alpha": {
+        "transparent": 106182,
+        "translucent": 41274,
+        "near_opaque": 11343
+      },
+      "sha256": "4c4c27be4d0e7d892ec8abeaa688b239a83989eaa3c8f1c66fb9a7e1ad3b6182"
+    }
+  ]
+}

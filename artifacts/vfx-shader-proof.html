@@ -1,0 +1,5 @@
+<!doctype html><html><body style="margin:0"><canvas id="c" width="640" height="480" style="width:640px;height:480px"></canvas><script type="module">
+import {Engine} from '@babylonjs/core/Engines/engine.js';import {Scene} from '@babylonjs/core/scene.js';import {FreeCamera} from '@babylonjs/core/Cameras/freeCamera.js';import {Vector3} from '@babylonjs/core/Maths/math.vector.js';import {Color4} from '@babylonjs/core/Maths/math.color.js';import {SkillVFX} from '/src/render/skill-vfx.ts';import {skills} from '/src/game/classes.ts';
+const engine=new Engine(document.querySelector('canvas'),false);const scene=new Scene(engine);scene.clearColor=new Color4(.85,.79,.55,1);const camera=new FreeCamera('proof',new Vector3(0,5,7),scene);camera.setTarget(new Vector3(0,1.5,0));camera.mode=1;camera.orthoLeft=-4;camera.orthoRight=4;camera.orthoTop=3;camera.orthoBottom=-3;
+const vfx=new SkillVFX(scene);const name=new URL(location.href).searchParams.get('skill')||'mage-10';vfx.release(skills.mage.find(s=>s.id===name),'mage',0,0,0,0);vfx.update(.3);await scene.whenReadyAsync();scene.render();scene.render();window.proof={ready:true,vfx:vfx.diagnostics};
+</script></body></html>

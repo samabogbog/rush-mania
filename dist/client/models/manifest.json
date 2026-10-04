@@ -1,14 +1,19 @@
 {
   "swordsman": {
     "file": "/models/swordsman.glb",
-    "bytes": 42612,
+    "bytes": 690184,
     "type": "hero",
-    "joints": 7,
+    "joints": 13,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -16,18 +21,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 552
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 9049
   },
   "mage": {
     "file": "/models/mage.glb",
-    "bytes": 44660,
+    "bytes": 675016,
     "type": "hero",
-    "joints": 7,
+    "joints": 13,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -35,18 +47,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 588
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 8897
   },
   "archer": {
     "file": "/models/archer.glb",
-    "bytes": 45444,
+    "bytes": 731612,
     "type": "hero",
-    "joints": 7,
+    "joints": 14,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -54,18 +73,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 600
+    "artRevision": "chibi-rounded-6-archery-ik",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 9473
   },
   "Dewdrop": {
     "file": "/models/Dewdrop.glb",
-    "bytes": 25616,
+    "bytes": 267044,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -73,18 +99,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 264
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 3438
   },
   "Wildcap": {
     "file": "/models/Wildcap.glb",
-    "bytes": 41612,
+    "bytes": 316668,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -92,18 +125,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 505
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 4180
   },
   "Leafling": {
     "file": "/models/Leafling.glb",
-    "bytes": 36216,
+    "bytes": 286684,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -111,18 +151,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 446
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 3739
   },
   "Sunbee": {
     "file": "/models/Sunbee.glb",
-    "bytes": 42368,
+    "bytes": 371180,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -130,18 +177,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 552
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 5001
   },
   "RibbonHare": {
     "file": "/models/RibbonHare.glb",
-    "bytes": 48564,
+    "bytes": 357452,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -149,18 +203,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 660
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 4797
   },
   "Applesprout": {
     "file": "/models/Applesprout.glb",
-    "bytes": 36216,
+    "bytes": 286684,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -168,18 +229,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 446
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 3739
   },
   "AmberBoar": {
     "file": "/models/AmberBoar.glb",
-    "bytes": 48564,
+    "bytes": 357452,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -187,18 +255,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 660
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 4797
   },
   "Honeybug": {
     "file": "/models/Honeybug.glb",
-    "bytes": 42368,
+    "bytes": 371180,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -206,18 +281,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 552
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 5001
   },
   "Sporeguard": {
     "file": "/models/Sporeguard.glb",
-    "bytes": 41612,
+    "bytes": 316668,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -225,18 +307,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 505
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 4180
   },
   "OrchardStag": {
     "file": "/models/OrchardStag.glb",
-    "bytes": 48564,
+    "bytes": 357452,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -244,18 +333,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 660
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 4797
   },
   "GlowWisp": {
     "file": "/models/GlowWisp.glb",
-    "bytes": 32984,
+    "bytes": 271348,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -263,18 +359,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 390
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 3508
   },
   "MarshTurtle": {
     "file": "/models/MarshTurtle.glb",
-    "bytes": 27124,
+    "bytes": 285380,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -282,18 +385,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 288
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 3720
   },
   "ReedSprite": {
     "file": "/models/ReedSprite.glb",
-    "bytes": 36216,
+    "bytes": 286684,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -301,18 +411,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 446
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 3739
   },
   "PuddleJelly": {
     "file": "/models/PuddleJelly.glb",
-    "bytes": 25616,
+    "bytes": 267044,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -320,18 +437,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 264
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 3438
   },
   "CrystalMoth": {
     "file": "/models/CrystalMoth.glb",
-    "bytes": 42368,
+    "bytes": 371180,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -339,18 +463,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 552
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 5001
   },
   "FrostCub": {
     "file": "/models/FrostCub.glb",
-    "bytes": 48564,
+    "bytes": 357452,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -358,18 +489,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 660
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 4797
   },
   "IceGolem": {
     "file": "/models/IceGolem.glb",
-    "bytes": 27124,
+    "bytes": 285380,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -377,18 +515,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 288
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 3720
   },
   "Snowcap": {
     "file": "/models/Snowcap.glb",
-    "bytes": 41612,
+    "bytes": 316668,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -396,18 +541,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 505
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 4180
   },
   "PeakOwl": {
     "file": "/models/PeakOwl.glb",
-    "bytes": 32984,
+    "bytes": 271348,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -415,18 +567,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 390
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 3508
   },
   "FrostWolf": {
     "file": "/models/FrostWolf.glb",
-    "bytes": 48564,
+    "bytes": 357452,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -434,18 +593,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 660
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 4797
   },
   "Rootling": {
     "file": "/models/Rootling.glb",
-    "bytes": 36216,
+    "bytes": 286684,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -453,18 +619,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 446
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 3739
   },
   "RuinSentinel": {
     "file": "/models/RuinSentinel.glb",
-    "bytes": 27124,
+    "bytes": 285380,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -472,18 +645,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 288
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 3720
   },
   "ShadeWisp": {
     "file": "/models/ShadeWisp.glb",
-    "bytes": 32984,
+    "bytes": 271348,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -491,18 +671,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 390
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 3508
   },
   "StoneWarden": {
     "file": "/models/StoneWarden.glb",
-    "bytes": 27124,
+    "bytes": 285380,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -510,18 +697,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 288
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 3720
   },
   "VineBeast": {
     "file": "/models/VineBeast.glb",
-    "bytes": 48564,
+    "bytes": 357452,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -529,18 +723,25 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 660
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 4797
   },
   "RootheartGuardian": {
     "file": "/models/RootheartGuardian.glb",
-    "bytes": 29848,
+    "bytes": 294052,
     "type": "monster",
     "joints": 7,
     "clips": [
       "idle",
       "walk",
+      "run",
       "attack",
+      "attack-heavy",
       "skill",
+      "skill-heal",
+      "skill-guard",
+      "skill-ultimate",
       "hurt",
       "death"
     ],
@@ -548,6 +749,8 @@
     "units": "meters",
     "forward": "+Z",
     "materials": 1,
-    "vertices": 332
+    "artRevision": "chibi-rounded-5-clearance-grounded",
+    "style": "smooth pastel chibi, original authored geometry",
+    "vertices": 3860
   }
 }

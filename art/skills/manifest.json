@@ -1,0 +1,1091 @@
+{
+  "version": 1,
+  "source": "OpenAI image_gen original artwork",
+  "normalization": {
+    "size": 192,
+    "max_content": 138,
+    "min_padding_percent": 14
+  },
+  "skills": [
+    {
+      "id": "swordsman-1",
+      "icon": "skill-swordsman-1",
+      "path": "public/icons/skill-swordsman-1.png",
+      "source": "art/skills/swordsman-atlas.png",
+      "cell": 0,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        30,
+        27,
+        162,
+        165
+      ],
+      "sha256": "0597cffb1787d2b7e4aec9ef8e1dc5c77e3f1ccf80b9e63b30596eca4d9dbe43"
+    },
+    {
+      "id": "swordsman-2",
+      "icon": "skill-swordsman-2",
+      "path": "public/icons/skill-swordsman-2.png",
+      "source": "art/skills/swordsman-atlas.png",
+      "cell": 1,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        27,
+        165,
+        164
+      ],
+      "sha256": "f704b910c62846ad3065ca50bb013c53d3c95a7703ed4bfc8cff30e7cbf15b8c"
+    },
+    {
+      "id": "swordsman-3",
+      "icon": "skill-swordsman-3",
+      "path": "public/icons/skill-swordsman-3.png",
+      "source": "art/skills/swordsman-atlas.png",
+      "cell": 2,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        27,
+        165,
+        164
+      ],
+      "sha256": "571cd63bbfaf639d5cc0776ca737b099b31c0d1a87300418eec5db9f2af15889"
+    },
+    {
+      "id": "swordsman-4",
+      "icon": "skill-swordsman-4",
+      "path": "public/icons/skill-swordsman-4.png",
+      "source": "art/skills/swordsman-atlas.png",
+      "cell": 3,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        27,
+        165,
+        164
+      ],
+      "sha256": "cff9925e507d3d6cfb4021a03d9f8a7cf1a953d395f7e7f7f4bdf6524fdca477"
+    },
+    {
+      "id": "swordsman-5",
+      "icon": "skill-swordsman-5",
+      "path": "public/icons/skill-swordsman-5.png",
+      "source": "art/skills/swordsman-atlas.png",
+      "cell": 4,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        27,
+        164,
+        165
+      ],
+      "sha256": "b589b5e683f161624b4e6cf3dc20bdf9077d7c4855f0decfc90a752a5af813f3"
+    },
+    {
+      "id": "swordsman-6",
+      "icon": "skill-swordsman-6",
+      "path": "public/icons/skill-swordsman-6.png",
+      "source": "art/skills/swordsman-atlas.png",
+      "cell": 5,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        27,
+        165,
+        164
+      ],
+      "sha256": "80b57b62cae07811a3ea3b7dbf479be4b2d810afd429d05d6d48552f44dc775d"
+    },
+    {
+      "id": "swordsman-7",
+      "icon": "skill-swordsman-7",
+      "path": "public/icons/skill-swordsman-7.png",
+      "source": "art/skills/swordsman-atlas.png",
+      "cell": 6,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        27,
+        165,
+        165
+      ],
+      "sha256": "5774c21b7fc3966ffa5bae2f038dec40dc4185c6d2db9ada91827166e440ab3b"
+    },
+    {
+      "id": "swordsman-8",
+      "icon": "skill-swordsman-8",
+      "path": "public/icons/skill-swordsman-8.png",
+      "source": "art/skills/swordsman-atlas.png",
+      "cell": 7,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        28,
+        27,
+        163,
+        165
+      ],
+      "sha256": "6300092f3ff077ec9da52b4a10df2826db5b38c4b22aaf56df63c64ae51e3dbd"
+    },
+    {
+      "id": "swordsman-9",
+      "icon": "skill-swordsman-9",
+      "path": "public/icons/skill-swordsman-9.png",
+      "source": "art/skills/swordsman-atlas.png",
+      "cell": 8,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        28,
+        27,
+        163,
+        164
+      ],
+      "sha256": "7363d7ad9631acec978a33fa4c1b7a725adbca4cd53cbced76aa1d52a85d37ee"
+    },
+    {
+      "id": "swordsman-10",
+      "icon": "skill-swordsman-10",
+      "path": "public/icons/skill-swordsman-10.png",
+      "source": "art/skills/swordsman-atlas.png",
+      "cell": 9,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        31,
+        27,
+        161,
+        165
+      ],
+      "sha256": "e3179c8e33358b487d39f6cce130698c2152419b0202cbe425ddfce606daf3f3"
+    },
+    {
+      "id": "swordsman-b-1",
+      "icon": "skill-swordsman-b-1",
+      "path": "public/icons/skill-swordsman-b-1.png",
+      "source": "art/skills/swordsman-atlas.png",
+      "cell": 10,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        31,
+        165,
+        160
+      ],
+      "sha256": "b7983e514c949d40edcbacf33fb65430f306ecb3b88370f76452b35ba239ddbc"
+    },
+    {
+      "id": "swordsman-b-2",
+      "icon": "skill-swordsman-b-2",
+      "path": "public/icons/skill-swordsman-b-2.png",
+      "source": "art/skills/swordsman-atlas.png",
+      "cell": 11,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        28,
+        27,
+        164,
+        165
+      ],
+      "sha256": "bb3bb22e08a7480b6a6d359bb0b97a567ce0bbec27e7a606cd9c1c3e536cf12f"
+    },
+    {
+      "id": "swordsman-b-3",
+      "icon": "skill-swordsman-b-3",
+      "path": "public/icons/skill-swordsman-b-3.png",
+      "source": "art/skills/swordsman-atlas.png",
+      "cell": 12,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        28,
+        27,
+        163,
+        165
+      ],
+      "sha256": "cc0f8b57e72dc385ad38b1fbd794978d6f394c09a4a09835a5b9af0b645b517c"
+    },
+    {
+      "id": "swordsman-b-4",
+      "icon": "skill-swordsman-b-4",
+      "path": "public/icons/skill-swordsman-b-4.png",
+      "source": "art/skills/swordsman-atlas.png",
+      "cell": 13,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        30,
+        27,
+        162,
+        165
+      ],
+      "sha256": "5dd6b99123f3ff1584acca645585d981302fcf03210d1da0773f4a603c2f11b0"
+    },
+    {
+      "id": "swordsman-b-5",
+      "icon": "skill-swordsman-b-5",
+      "path": "public/icons/skill-swordsman-b-5.png",
+      "source": "art/skills/swordsman-atlas.png",
+      "cell": 14,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        31,
+        27,
+        161,
+        165
+      ],
+      "sha256": "57acf1c1fcf8f4292080c43e784ac9cd12cf0263c006d0d61cabfdd84a48421b"
+    },
+    {
+      "id": "swordsman-b-6",
+      "icon": "skill-swordsman-b-6",
+      "path": "public/icons/skill-swordsman-b-6.png",
+      "source": "art/skills/swordsman-atlas.png",
+      "cell": 15,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        32,
+        27,
+        160,
+        165
+      ],
+      "sha256": "a74f267eaf301533cd8805d21c0ba03d221f34df7afcead8d461b382a15a57ad"
+    },
+    {
+      "id": "swordsman-b-7",
+      "icon": "skill-swordsman-b-7",
+      "path": "public/icons/skill-swordsman-b-7.png",
+      "source": "art/skills/swordsman-atlas.png",
+      "cell": 16,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        27,
+        165,
+        164
+      ],
+      "sha256": "21c30519bb4c7c7f0781c4ac934459d6435a1d0b1470832ed4d9bf5cf624e8f8"
+    },
+    {
+      "id": "swordsman-b-8",
+      "icon": "skill-swordsman-b-8",
+      "path": "public/icons/skill-swordsman-b-8.png",
+      "source": "art/skills/swordsman-atlas.png",
+      "cell": 17,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        28,
+        27,
+        164,
+        165
+      ],
+      "sha256": "221fa562717842a2c7d9b961431736e384a80e21afb18d7cb937176a8d446395"
+    },
+    {
+      "id": "swordsman-b-9",
+      "icon": "skill-swordsman-b-9",
+      "path": "public/icons/skill-swordsman-b-9.png",
+      "source": "art/skills/swordsman-atlas.png",
+      "cell": 18,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        28,
+        165,
+        163
+      ],
+      "sha256": "cabd64a261b50d1f606af7c6215c07556a876f22bfad10e77b535f16a9d729c9"
+    },
+    {
+      "id": "swordsman-b-10",
+      "icon": "skill-swordsman-b-10",
+      "path": "public/icons/skill-swordsman-b-10.png",
+      "source": "art/skills/swordsman-atlas.png",
+      "cell": 19,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        27,
+        165,
+        164
+      ],
+      "sha256": "f164ff98a1f13c93977f84742769952b0559676825cdbd0c45114a17288cabdf"
+    },
+    {
+      "id": "mage-1",
+      "icon": "skill-mage-1",
+      "path": "public/icons/skill-mage-1.png",
+      "source": "art/skills/mage-atlas.png",
+      "cell": 0,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        28,
+        165,
+        163
+      ],
+      "sha256": "1020635d3bc12e8e3dcd06e80ffd49e7bbe26230d879876cb75b23bfbcfa0d90"
+    },
+    {
+      "id": "mage-2",
+      "icon": "skill-mage-2",
+      "path": "public/icons/skill-mage-2.png",
+      "source": "art/skills/mage-atlas.png",
+      "cell": 1,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        28,
+        165,
+        164
+      ],
+      "sha256": "a2de8a0302a23e70f0f0d60abd229886249b1000a77ec8a67a35b9cabc6d9e35"
+    },
+    {
+      "id": "mage-3",
+      "icon": "skill-mage-3",
+      "path": "public/icons/skill-mage-3.png",
+      "source": "art/skills/mage-atlas.png",
+      "cell": 2,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        29,
+        165,
+        161
+      ],
+      "sha256": "4cf08dd5c42017ab4e4f65d49bf749a9876e2b026e2bc45858f8aa24bdd6920e"
+    },
+    {
+      "id": "mage-4",
+      "icon": "skill-mage-4",
+      "path": "public/icons/skill-mage-4.png",
+      "source": "art/skills/mage-atlas.png",
+      "cell": 3,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        29,
+        165,
+        163
+      ],
+      "sha256": "34f9a58058166fa1ef0232d7402d39ec02ad00f393dea0e173c417342debfa05"
+    },
+    {
+      "id": "mage-5",
+      "icon": "skill-mage-5",
+      "path": "public/icons/skill-mage-5.png",
+      "source": "art/skills/mage-atlas.png",
+      "cell": 4,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        30,
+        27,
+        161,
+        165
+      ],
+      "sha256": "4a1fa41d393cffed57b50d2beab82fbf63363c09ce36ec1ec103ead74957f305"
+    },
+    {
+      "id": "mage-6",
+      "icon": "skill-mage-6",
+      "path": "public/icons/skill-mage-6.png",
+      "source": "art/skills/mage-atlas.png",
+      "cell": 5,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        28,
+        27,
+        164,
+        165
+      ],
+      "sha256": "42fb07e5c1aeda7278f56533f1a417fcc6d1ad7079e44c73c684ca6c68160a3d"
+    },
+    {
+      "id": "mage-7",
+      "icon": "skill-mage-7",
+      "path": "public/icons/skill-mage-7.png",
+      "source": "art/skills/mage-atlas.png",
+      "cell": 6,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        29,
+        165,
+        162
+      ],
+      "sha256": "5336ff7e3733b2ca91736c4997ee5b45e635133a4231d9138dfbaaa3464647a7"
+    },
+    {
+      "id": "mage-8",
+      "icon": "skill-mage-8",
+      "path": "public/icons/skill-mage-8.png",
+      "source": "art/skills/mage-atlas.png",
+      "cell": 7,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        29,
+        165,
+        163
+      ],
+      "sha256": "1f533f5473f351ef7e133258b0e9626e8ded8ccac4dedd19f157e0f7f2f8ae9a"
+    },
+    {
+      "id": "mage-9",
+      "icon": "skill-mage-9",
+      "path": "public/icons/skill-mage-9.png",
+      "source": "art/skills/mage-atlas.png",
+      "cell": 8,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        34,
+        27,
+        157,
+        165
+      ],
+      "sha256": "14634a2d0e4aabf6b00666326db7a8bf03412308f56c7b2e82460a856c0945b2"
+    },
+    {
+      "id": "mage-10",
+      "icon": "skill-mage-10",
+      "path": "public/icons/skill-mage-10.png",
+      "source": "art/skills/mage-atlas.png",
+      "cell": 9,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        29,
+        27,
+        162,
+        165
+      ],
+      "sha256": "6018ac8561a114a09a91f45b586abbd8647d2f14ad56de5f111609e537e73a59"
+    },
+    {
+      "id": "mage-b-1",
+      "icon": "skill-mage-b-1",
+      "path": "public/icons/skill-mage-b-1.png",
+      "source": "art/skills/nature-readability-atlas.png",
+      "cell": 0,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        27,
+        164,
+        165
+      ],
+      "sha256": "fc5e8c2f70157c382d027fc1f45ecbcf138de25a66263fc5b99cf23ba7423de2"
+    },
+    {
+      "id": "mage-b-2",
+      "icon": "skill-mage-b-2",
+      "path": "public/icons/skill-mage-b-2.png",
+      "source": "art/skills/mage-atlas.png",
+      "cell": 11,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        28,
+        27,
+        164,
+        165
+      ],
+      "sha256": "9cd9aec5a425565821c31c92e180f9ffbce73bc3732e5fc09d50b864818b9c95"
+    },
+    {
+      "id": "mage-b-3",
+      "icon": "skill-mage-b-3",
+      "path": "public/icons/skill-mage-b-3.png",
+      "source": "art/skills/mage-atlas.png",
+      "cell": 12,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        34,
+        27,
+        159,
+        165
+      ],
+      "sha256": "029c139ac613b9569bb5af3b8dfdec897748f9ebb41ec8f25e682f4e24b7aeed"
+    },
+    {
+      "id": "mage-b-4",
+      "icon": "skill-mage-b-4",
+      "path": "public/icons/skill-mage-b-4.png",
+      "source": "art/skills/mage-atlas.png",
+      "cell": 13,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        27,
+        162,
+        165
+      ],
+      "sha256": "9f385075b31e20cf688425c50c816660cb0d93e4fed3ad2c3a0513228164b87c"
+    },
+    {
+      "id": "mage-b-5",
+      "icon": "skill-mage-b-5",
+      "path": "public/icons/skill-mage-b-5.png",
+      "source": "art/skills/mage-atlas.png",
+      "cell": 14,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        28,
+        165,
+        163
+      ],
+      "sha256": "7887f92aedb383208cff7464df87a57f0cc6a5bd2c48e5a2dcdf704c4095644a"
+    },
+    {
+      "id": "mage-b-6",
+      "icon": "skill-mage-b-6",
+      "path": "public/icons/skill-mage-b-6.png",
+      "source": "art/skills/mage-atlas.png",
+      "cell": 15,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        27,
+        165,
+        165
+      ],
+      "sha256": "43a90fa96aee5e7d762e4101cf4298d8d7bacfd543d427e1b4a6b8d976664705"
+    },
+    {
+      "id": "mage-b-7",
+      "icon": "skill-mage-b-7",
+      "path": "public/icons/skill-mage-b-7.png",
+      "source": "art/skills/mage-atlas.png",
+      "cell": 16,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        30,
+        27,
+        162,
+        165
+      ],
+      "sha256": "9f789596360133b84cfb3099cca4b3e8da367a4e7a22c9d0c3ee7ca068a74be3"
+    },
+    {
+      "id": "mage-b-8",
+      "icon": "skill-mage-b-8",
+      "path": "public/icons/skill-mage-b-8.png",
+      "source": "art/skills/mage-atlas.png",
+      "cell": 17,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        27,
+        165,
+        164
+      ],
+      "sha256": "c1663383db7a00eb98ac0672003ac91239fbd49e4453fa8781f6a83386a17007"
+    },
+    {
+      "id": "mage-b-9",
+      "icon": "skill-mage-b-9",
+      "path": "public/icons/skill-mage-b-9.png",
+      "source": "art/skills/nature-readability-atlas.png",
+      "cell": 1,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        27,
+        165,
+        165
+      ],
+      "sha256": "e9e34be6a0a78557cfaa94d2bb1c6c5ddd11a851300c719002565821c3c4054b"
+    },
+    {
+      "id": "mage-b-10",
+      "icon": "skill-mage-b-10",
+      "path": "public/icons/skill-mage-b-10.png",
+      "source": "art/skills/mage-atlas.png",
+      "cell": 19,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        31,
+        27,
+        160,
+        165
+      ],
+      "sha256": "c0a730279a98ba099c06e5107443cb32316c05265d19848857bd81b1fd0d322e"
+    },
+    {
+      "id": "archer-1",
+      "icon": "skill-archer-1",
+      "path": "public/icons/skill-archer-1.png",
+      "source": "art/skills/archer-atlas.png",
+      "cell": 0,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        29,
+        165,
+        162
+      ],
+      "sha256": "41fd977ca20b02c98f267a9cba35ab96c813fc3983769d1a0b76b596441515c4"
+    },
+    {
+      "id": "archer-2",
+      "icon": "skill-archer-2",
+      "path": "public/icons/skill-archer-2.png",
+      "source": "art/skills/archer-atlas.png",
+      "cell": 1,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        28,
+        165,
+        163
+      ],
+      "sha256": "a0dcb08b686405c244be8c64e7889159b0ac3788cf4129d4f35dc0371f6d5d08"
+    },
+    {
+      "id": "archer-3",
+      "icon": "skill-archer-3",
+      "path": "public/icons/skill-archer-3.png",
+      "source": "art/skills/archer-atlas.png",
+      "cell": 2,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        32,
+        165,
+        160
+      ],
+      "sha256": "6ae1e4ec47389578da041d9a634f011b1519452e439584e0bf61228b7d01be6c"
+    },
+    {
+      "id": "archer-4",
+      "icon": "skill-archer-4",
+      "path": "public/icons/skill-archer-4.png",
+      "source": "art/skills/archer-atlas.png",
+      "cell": 3,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        28,
+        27,
+        164,
+        165
+      ],
+      "sha256": "519fae3693ccbdcf574d5a57c2771f5a20b993a5e87575dae75b7f0b0a417740"
+    },
+    {
+      "id": "archer-5",
+      "icon": "skill-archer-5",
+      "path": "public/icons/skill-archer-5.png",
+      "source": "art/skills/archer-atlas.png",
+      "cell": 4,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        30,
+        27,
+        161,
+        165
+      ],
+      "sha256": "bb9d5a8453b891599f29c4094131c9129ef675aa948d14b22112ed13b840180c"
+    },
+    {
+      "id": "archer-6",
+      "icon": "skill-archer-6",
+      "path": "public/icons/skill-archer-6.png",
+      "source": "art/skills/archer-atlas.png",
+      "cell": 5,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        30,
+        27,
+        162,
+        165
+      ],
+      "sha256": "4c9cf6b2a6fd2707e2abaa9886e7980a5374936b25732f8bf1ed7d8f6d4fb2cc"
+    },
+    {
+      "id": "archer-7",
+      "icon": "skill-archer-7",
+      "path": "public/icons/skill-archer-7.png",
+      "source": "art/skills/archer-atlas.png",
+      "cell": 6,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        30,
+        27,
+        161,
+        165
+      ],
+      "sha256": "9e82ccb2d19c5dcbd41b4338885c3ca2d2ae72bee8711ad8164897a1c0d1c0d3"
+    },
+    {
+      "id": "archer-8",
+      "icon": "skill-archer-8",
+      "path": "public/icons/skill-archer-8.png",
+      "source": "art/skills/archer-atlas.png",
+      "cell": 7,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        34,
+        27,
+        158,
+        165
+      ],
+      "sha256": "d97a9d29bd68f78c5deca5cf0c325fd0633ba8fb7746141bad8f91fca2485837"
+    },
+    {
+      "id": "archer-9",
+      "icon": "skill-archer-9",
+      "path": "public/icons/skill-archer-9.png",
+      "source": "art/skills/archer-atlas.png",
+      "cell": 8,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        31,
+        27,
+        160,
+        165
+      ],
+      "sha256": "645c2e6b241f9c5d1bf9fdd9a6bf7d095c47803ad4c741be00eb07b88486d148"
+    },
+    {
+      "id": "archer-10",
+      "icon": "skill-archer-10",
+      "path": "public/icons/skill-archer-10.png",
+      "source": "art/skills/archer-atlas.png",
+      "cell": 9,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        29,
+        27,
+        163,
+        165
+      ],
+      "sha256": "d7ec40970ae793090de0e5c7611c19f1da3ca686485ddaaf7d952f73feba7d40"
+    },
+    {
+      "id": "archer-b-1",
+      "icon": "skill-archer-b-1",
+      "path": "public/icons/skill-archer-b-1.png",
+      "source": "art/skills/nature-readability-atlas.png",
+      "cell": 2,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        30,
+        165,
+        161
+      ],
+      "sha256": "52f9e384d51014f26e324911474983eb98e2d20265c092cc21b87605dee4cd42"
+    },
+    {
+      "id": "archer-b-2",
+      "icon": "skill-archer-b-2",
+      "path": "public/icons/skill-archer-b-2.png",
+      "source": "art/skills/archer-atlas.png",
+      "cell": 11,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        33,
+        27,
+        158,
+        165
+      ],
+      "sha256": "93a21c538287327981428df2d7cc979bbcc4c47ea5bf91c990fa7db3c80ba14e"
+    },
+    {
+      "id": "archer-b-3",
+      "icon": "skill-archer-b-3",
+      "path": "public/icons/skill-archer-b-3.png",
+      "source": "art/skills/archer-atlas.png",
+      "cell": 12,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        32,
+        27,
+        160,
+        165
+      ],
+      "sha256": "e3cf4158946fb760ed26bd52995aa6c0e55c1aae7eb7186359475f1d93877b91"
+    },
+    {
+      "id": "archer-b-4",
+      "icon": "skill-archer-b-4",
+      "path": "public/icons/skill-archer-b-4.png",
+      "source": "art/skills/archer-atlas.png",
+      "cell": 13,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        31,
+        27,
+        160,
+        165
+      ],
+      "sha256": "5b0ef231abda0fa18b98b9ed19381ccf1b1b955f1768f8662d2ab8cfd9e838d2"
+    },
+    {
+      "id": "archer-b-5",
+      "icon": "skill-archer-b-5",
+      "path": "public/icons/skill-archer-b-5.png",
+      "source": "art/skills/archer-atlas.png",
+      "cell": 14,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        30,
+        27,
+        162,
+        165
+      ],
+      "sha256": "ebc06dfa0f71284d43cd1225b7cec5313f14fc56e604ac8fae48072f866d8b13"
+    },
+    {
+      "id": "archer-b-6",
+      "icon": "skill-archer-b-6",
+      "path": "public/icons/skill-archer-b-6.png",
+      "source": "art/skills/archer-atlas.png",
+      "cell": 15,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        33,
+        27,
+        159,
+        165
+      ],
+      "sha256": "7049405c7304d81bd145011edc468ff2c7d60a928533090a7697186d6b9498f2"
+    },
+    {
+      "id": "archer-b-7",
+      "icon": "skill-archer-b-7",
+      "path": "public/icons/skill-archer-b-7.png",
+      "source": "art/skills/archer-atlas.png",
+      "cell": 16,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        30,
+        165,
+        161
+      ],
+      "sha256": "5d1abffc5ad1029f20c17ab282dd690d307ff3bd805c8d2263f8b074c44dc9bc"
+    },
+    {
+      "id": "archer-b-8",
+      "icon": "skill-archer-b-8",
+      "path": "public/icons/skill-archer-b-8.png",
+      "source": "art/skills/nature-readability-atlas.png",
+      "cell": 3,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        30,
+        165,
+        161
+      ],
+      "sha256": "95eecd836cc1c5a57dc7d6a555ebcd9e1849dc3b2218c551688fec2ae58c5f1d"
+    },
+    {
+      "id": "archer-b-9",
+      "icon": "skill-archer-b-9",
+      "path": "public/icons/skill-archer-b-9.png",
+      "source": "art/skills/archer-atlas.png",
+      "cell": 18,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        29,
+        165,
+        163
+      ],
+      "sha256": "0e7822857a7d276598d067614e4a9d1ab70fe7ab967f65dacceb8fea108e7715"
+    },
+    {
+      "id": "archer-b-10",
+      "icon": "skill-archer-b-10",
+      "path": "public/icons/skill-archer-b-10.png",
+      "source": "art/skills/archer-atlas.png",
+      "cell": 19,
+      "dimensions": [
+        192,
+        192
+      ],
+      "visible_bounds": [
+        27,
+        31,
+        165,
+        161
+      ],
+      "sha256": "aa22dd03dbd1199088067d1cc76033570181e84bba35fa96dc1f24ad9685caa3"
+    }
+  ]
+}

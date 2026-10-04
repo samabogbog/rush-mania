@@ -835,6 +835,8 @@ animationFrame = requestAnimationFrame(frame);
 // Read-only diagnostic snapshot for automated playtesting; no gameplay cheats.
 Object.defineProperty(window, "mossvale", {
   value: {
+    previewSkill: (id:string,age?:number) => world.previewSkill(id,age),
+    clearSkillPreview: () => world.clearSkillPreview(),
     snapshot: () => ({
       zone:sim.save.zone,equipped:{...sim.save.equipped},tutorial:[...sim.save.tutorial],community:structuredClone(sim.community),
       job: sim.save.job,

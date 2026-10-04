@@ -1514,3 +1514,39 @@ body.dragging-hotbar .bottom-center{z-index:110}body.dragging-hotbar .skill-hotb
 body.hotbar-editing .bottom-center{z-index:110}body.hotbar-editing .action-bar .target-action,body.hotbar-editing .action-bar .loot-action,body.hotbar-editing .action-bar #auto{pointer-events:none;opacity:.4}
 body.hotbar-editing .game-panel{top:12px;transform:translateX(-50%);max-height:calc(100dvh - 130px)}
 @media(max-width:800px){body.hotbar-editing .game-panel{top:8px;max-height:calc(100dvh - 150px)}}
+
+/* Mobile HUD zones: top identity/map, right menus, movement above the full-width hotbar. */
+@media(max-width:800px){
+ .bottom-center{bottom:max(8px,env(safe-area-inset-bottom));width:calc(100vw - 16px)}
+ .bottom-right{bottom:145px;right:8px;display:grid;grid-template-columns:1fr auto;gap:7px;width:174px;align-items:center}
+ .community-shortcuts{grid-column:1/-1;margin:0;gap:6px;justify-content:stretch}
+ .community-shortcuts button{flex:1;justify-content:center;min-height:38px;padding:4px;font-size:10px;gap:4px}
+ .community-shortcuts .game-icon{width:23px;height:23px}
+ .bottom-right .wallet{margin:0;padding:6px;min-height:33px;box-sizing:border-box;gap:4px}
+ .bottom-right .wallet .game-icon{width:19px;height:19px}
+ .bottom-right .wallet b{font-size:11px}
+ .bottom-right .utility{margin:0;gap:5px}
+ .bottom-right .utility button{width:33px;height:33px;padding:5px;box-sizing:border-box}
+ .bottom-right .save-indicator{display:none}
+ .touch-controls{bottom:145px;left:8px;grid-template-columns:repeat(3,38px);gap:5px}
+ .touch-controls button{height:38px}
+ .side-menu{bottom:245px;right:8px;grid-template-columns:repeat(3,36px)}
+ .control-hint{display:none}
+ .action-bar .skill-hotbar .skill-slot{height:46px}
+ .action-bar .aux-slot,.action-bar .loot-action,.action-bar #auto{height:40px}
+ .action-bar .target-action{height:91px}
+ .action-bar .skill-hotbar .game-icon{width:27px;height:27px}
+ .action-bar .aux-slot>.game-icon{width:25px;height:25px}
+}
+@media(max-width:600px){
+ .world-heading{top:107px;left:8px;transform:none;text-align:left;max-width:198px}
+ .wordmark{display:none}
+ .realm{margin:0;padding:5px 8px;font-size:7px;max-width:180px}
+ .quest-tracker{top:143px;right:8px;width:145px;padding:8px}
+ .quest-tracker strong{font-size:10px;margin-top:8px}
+ .quest-objective{margin-top:8px}
+}
+@media(max-width:800px) and (max-height:620px){
+ .bottom-right{bottom:140px}.touch-controls{bottom:140px}.side-menu{bottom:235px}
+ .quest-tracker{display:none}
+}
