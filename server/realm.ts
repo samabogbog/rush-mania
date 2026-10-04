@@ -1,4 +1,4 @@
-import {EXP_TOME,EXP_TEST_GRANT_COUNT,itemCatalog,itemCategory} from '../src/game/items';
+import {EXP_CHARM,EXP_TOME,EXP_TEST_GRANT_COUNT,itemCatalog,itemCategory} from '../src/game/items';
 import {rollGear,rarityOrder,BAG_CAPACITY,type Rarity} from '../src/game/equipment';
 import {isStoneTier} from '../src/game/refinement';
 import {communityCommand,communitySnapshot,partyOf,shareKill} from './community';
@@ -161,16 +161,18 @@ export async function transact(store:RealmStore,identity:{id:string;name:string;
     if(now-player.lastSeen>10_000) {player.actor.target=null;player.actor.destination=null;player.actor.auto=false;}
     if(input.connect) {
       player.session={id:crypto.randomUUID(),sequence:0};
-      if(identity.admin===true&&!player.expTestGrant) {
+      if(identity.admin===true&&player.expTestGrant?.version!==2) {
         const sim=hydrate(player,realm);
-        const hasStack=sim.save.items.some(i=>i.name===EXP_TOME.name&&i.count>0);
+        const hasStack=sim.save.items.some(i=>i.name===EXP_CHARM.name&&i.count>0);
         const hasSpace=hasStack||sim.save.items.filter(i=>i.count>0).length<BAG_CAPACITY;
-        if(hasSpace&&sim.addItem(EXP_TOME.name,EXP_TOME.icon,EXP_TEST_GRANT_COUNT)) {
-          player.expTestGrant={version:1,count:EXP_TEST_GRANT_COUNT,at:now};
-          realm.ledger.push({id:`exp-test-grant-v1:${player.id}`,player:player.id,action:`adminTestGrant:${EXP_TOME.id}:${EXP_TEST_GRANT_COUNT}`,at:now,goldDelta:0});
-          sim.onEvent(`Testing grant: ${EXP_TEST_GRANT_COUNT} × EXP Tome added to Bag`,'reward');
-        } else sim.onEvent('EXP testing grant pending. Free a Bag slot and reconnect.');
-        player.actor=capture(sim);
+        if(hasSpace&&sim.addItem(EXP_CHARM.name,EXP_CHARM.icon,EXP_TEST_GRANT_COUNT)) {
+          player.expTestGrant={version:2,count:1,at:now};
+          realm.ledger.push({id:`exp-test-grant-v2:${player.id}`,player:player.id,action:`adminTestGrant:${EXP_CHARM.id}:1`,at:now,goldDelta:0});
+          sim.onEvent('Testing grant: EXP Charm added to Bag · equip in auxiliary slot for EXP ×9999','reward');
+          player.actor=capture(sim);
+        } else {
+          sim.onEvent('EXP Charm grant pending. Free a Bag slot and reconnect.');
+        }
       }
     }
     if(input.movement!==undefined) {

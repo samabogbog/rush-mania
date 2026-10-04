@@ -1,3 +1,4 @@
+import {EXP_CHARM} from './items';
 export const MAX_LEVEL = 100;
 export type ClassId = "swordsman" | "mage" | "archer";
 export type SkillEffect =
@@ -464,7 +465,7 @@ for(const job of Object.keys(classes) as ClassId[])alternative[job].forEach(([na
 // Each skill has bespoke, normalized artwork. Keep IDs stable across save versions.
 for (const job of Object.keys(skills) as ClassId[])
   for (const skill of skills[job]) skill.icon = `skill-${skill.id}`;
-export const auxiliaryItems:Record<string,{resource:'hp'|'mp';icon:string}>={'Red potion':{resource:'hp',icon:'health-potion'},'Blue potion':{resource:'mp',icon:'mana-potion'}};
+export const auxiliaryItems:Record<string,{resource:'hp'|'mp'|'passive';icon:string}>={[EXP_CHARM.name]:{resource:'passive',icon:EXP_CHARM.icon},'Red potion':{resource:'hp',icon:'health-potion'},'Blue potion':{resource:'mp',icon:'mana-potion'}};
 export const isAuxiliaryItem=(name:unknown):name is string=>typeof name==='string'&&Object.hasOwn(auxiliaryItems,name);
 export function isClass(value: unknown): value is ClassId {
   return typeof value === "string" && Object.hasOwn(classes, value);

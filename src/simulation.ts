@@ -1,4 +1,4 @@
-import {EXP_TOME,itemCategory,type ItemCategory} from './game/items';
+import {EXP_CHARM,EXP_TOME,itemCategory,type ItemCategory} from './game/items';
 import {refineLevel,refineCost,rollRefinement,rollStoneDrop,refineStones,isStoneTier,type StoneTier} from './game/refinement';
 import {
   classes,
@@ -342,14 +342,15 @@ export class Simulation {
     if(this.target!==null||this.cast||this.guard.time>0||this.fury.time>0||Object.values(this.skillCooldowns).some(c=>c>0)||this.monsters.some(m=>m.alive&&m.aggro&&(!this.actorId||m.owner===this.actorId))){this.onEvent('Leave combat and wait for skill cooldowns and buffs before resetting.');return false;}
     this.save.skillChoices[this.save.job]=Array(10).fill(null);this.save.hotbar=Array(6).fill(null);this.refreshCooldowns();this.persist();this.onEvent('Skill choices reset. Select one skill at each stage.');return true;
   }
-  assignAuxiliary(slot:number,name:string|null){if(!Number.isInteger(slot)||slot<0||slot>3||name!==null&&!isAuxiliaryItem(name))return false;const previous=name?this.save.auxiliary.indexOf(name):-1;if(previous>=0)this.save.auxiliary[previous]=this.save.auxiliary[slot];this.save.auxiliary[slot]=name;this.persist();return true;}
-  useAuxiliary(slot:number){if(this.paused||!Number.isInteger(slot)||slot<0||slot>3)return false;const name=this.save.auxiliary[slot];if(!isAuxiliaryItem(name)){this.onEvent('Assign a recovery item in the Skills window.');return false;}return this.usePotion(name==='Blue potion');}
-  addExperience(amount: number) {
+  assignAuxiliary(slot:number,name:string|null){if(!Number.isInteger(slot)||slot<0||slot>3||name!==null&&!isAuxiliaryItem(name)||name===EXP_CHARM.name&&!this.save.items.some(i=>i.name===name&&i.count>0))return false;const previous=name?this.save.auxiliary.indexOf(name):-1;if(previous>=0)this.save.auxiliary[previous]=this.save.auxiliary[slot];this.save.auxiliary[slot]=name;this.persist();return true;}
+  useAuxiliary(slot:number){if(this.paused||!Number.isInteger(slot)||slot<0||slot>3)return false;const name=this.save.auxiliary[slot];if(!isAuxiliaryItem(name)){this.onEvent('Assign a recovery item in the Skills window.');return false;}if(name===EXP_CHARM.name)return false;return this.usePotion(name==='Blue potion');}
+  get experienceMultiplier(){return this.save.auxiliary.includes(EXP_CHARM.name)&&this.save.items.some(i=>i.name===EXP_CHARM.name&&i.count>0)?EXP_CHARM.multiplier:1;}
+  addExperience(amount: number, gameplay = true) {
     if (this.save.level >= MAX_LEVEL) {
       this.save.xp = 0;
       return;
     }
-    this.save.xp += Math.max(0, amount);
+    this.save.xp += Math.round(Math.max(0, Number.isFinite(amount)?amount:0)*(gameplay?this.experienceMultiplier:1));
     while (this.save.level < MAX_LEVEL && this.save.xp >= this.maxXp) {
       this.save.xp -= this.maxXp;
       this.save.level++;
@@ -384,7 +385,7 @@ export class Simulation {
     if(this.deathTime>0||this.save.hp<=0)return false;
     const item=this.save.items.find(i=>i.name===EXP_TOME.name&&i.count>0);
     if(!item){this.onEvent('No EXP Tomes in your bag.');return false;}
-    item.count--;this.addExperience(EXP_TOME.experience);
+    item.count--;this.addExperience(EXP_TOME.experience,false);
     this.onEvent(`Used EXP Tome · +${EXP_TOME.experience} EXP`,'reward');this.persist();return true;
   }
   usePotion(blue = false) {
@@ -456,7 +457,7 @@ export class Simulation {
   }
   sell() {
     let count = 0;
-    this.save.items = this.save.items.filter(i => { if (!i.name.includes("potion") && !i.gearId&&!Object.values(refineStones).some(stone=>stone.name===i.name)) { count += i.count; return false; } return true; });
+    this.save.items = this.save.items.filter(i => { if (i.name!==EXP_CHARM.name&&i.name!==EXP_TOME.name&&!i.name.includes("potion") && !i.gearId&&!Object.values(refineStones).some(stone=>stone.name===i.name)) { count += i.count; return false; } return true; });
     this.save.gold += count * 6; this.persist(); this.onEvent(count ? `Sold ${count} materials for ${count * 6} z` : "Gather monster drops to sell them.", "reward");
   }
   hit(m: Monster, amount: number, skill=false) {
@@ -487,7 +488,7 @@ export class Simulation {
     if (m.hp <= 0) {
       m.alive = false;
       m.respawn = 13;
-      const xpReward=Math.round(this.monsterSpec(m.kind).xp*(1+(this.gearBonuses.expBonus||0)/100)),goldReward=Math.round(this.monsterSpec(m.kind).gold*(1+(this.gearBonuses.goldBonus||0)/100));
+      const xpReward=this.monsterSpec(m.kind).xp*(1+(this.gearBonuses.expBonus||0)/100),goldReward=Math.round(this.monsterSpec(m.kind).gold*(1+(this.gearBonuses.goldBonus||0)/100));
       const shared=this.onKill?.(m);
       if(!shared){
       this.addExperience(xpReward);
@@ -505,7 +506,7 @@ export class Simulation {
       this.loot=this.loot.slice(-40);
       }
       this.onEvent(
-        shared?`Defeated ${m.kind} · Party rewards shared`:`Defeated ${m.kind} · +${xpReward} EXP · +${goldReward} z`,
+        shared?`Defeated ${m.kind} · Party rewards shared`:`Defeated ${m.kind} · +${Math.round(xpReward*this.experienceMultiplier)} EXP · +${goldReward} z`,
         "reward",
       );
       this.target = null;
