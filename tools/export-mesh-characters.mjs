@@ -8,7 +8,7 @@ import {createHash} from 'node:crypto';
 const directory='art/characters-mesh/kaykit';
 const source='https://github.com/KayKit-Game-Assets/KayKit-Character-Pack-Adventures-1.0';
 const pin='672074b73ba276876a19e8816ecdc5241817ab47';
-const common={idle:'Idle',walk:'Walking_A',run:'Running_A',hurt:'Hit_A',death:'Death_A'};
+const common={idle:'Idle',walk:'Walking_A',run:'Running_A',jump:'Jump_Full_Short',land:'Jump_Land',dodge:'Dodge_Backward',spin:'2H_Melee_Attack_Spin',hurt:'Hit_A',death:'Death_A'};
 const classes={
  swordsman:{source:'Knight',props:['Knight_Helmet','Knight_Cape','1H_Sword','Badge_Shield'],clips:{...common,attack:'1H_Melee_Attack_Slice_Diagonal','attack-heavy':'1H_Melee_Attack_Chop',skill:'1H_Melee_Attack_Stab','skill-heal':'Use_Item','skill-guard':'Block','skill-ultimate':'1H_Melee_Attack_Slice_Horizontal'}},
  mage:{source:'Mage',props:['Mage_Hat','Mage_Cape','2H_Staff'],clips:{...common,attack:'Spellcast_Shoot','attack-heavy':'Spellcast_Long',skill:'Spellcast_Raise','skill-heal':'Spellcast_Raise','skill-guard':'Spellcasting','skill-ultimate':'Spellcast_Long'}},
@@ -23,7 +23,15 @@ for(const [id,configuration] of Object.entries(classes)){
   const clip=originals.find(a=>a.getName()===name);if(!clip)throw Error(`Missing ${id} source clip ${name}`);
   const exported=doc.createAnimation(alias);
   for(const channel of clip.listChannels()){
-   const sampler=channel.getSampler();usedSamplers.add(sampler);exported.addSampler(sampler);
+   let sampler=channel.getSampler();
+   // Acrobatic root trajectory belongs to render choreography, while all joint
+   // rotations and hips crouch/tuck channels remain authored.
+   if(['jump','land','dodge','spin'].includes(alias)&&channel.getTargetNode()?.getName()==='root'&&channel.getTargetPath()==='translation'){
+    const values=new Float32Array(sampler.getOutput().getArray());for(let i=0;i<values.length;i+=3){values[i]=values[0];values[i+1]=values[1];values[i+2]=values[2];}
+    const output=doc.createAccessor().setType('VEC3').setArray(values).setBuffer(sampler.getOutput().getBuffer());
+    sampler=doc.createAnimationSampler().setInput(sampler.getInput()).setOutput(output).setInterpolation(sampler.getInterpolation());
+   }
+   usedSamplers.add(sampler);exported.addSampler(sampler);
    exported.addChannel(doc.createAnimationChannel().setSampler(sampler).setTargetNode(channel.getTargetNode()).setTargetPath(channel.getTargetPath()));
   }
  }
@@ -41,8 +49,8 @@ for(const [id,configuration] of Object.entries(classes)){
  revisions[id]=createHash('sha256').update(await readFile(out)).digest('hex').slice(0,16);
  const meshNodes=root.listNodes().filter(n=>n.getMesh()),vertices=root.listMeshes().reduce((s,m)=>s+m.listPrimitives().reduce((n,p)=>n+p.getAttribute('POSITION').getCount(),0),0);
  const triangles=root.listMeshes().reduce((s,m)=>s+m.listPrimitives().reduce((n,p)=>n+(p.getIndices()?.getCount()??p.getAttribute('POSITION').getCount())/3,0),0);
- manifest[id]={file:`/models/${id}.glb`,bytes:(await readFile(out)).length,type:'hero',joints:root.listSkins()[0].listJoints().length,clips:Object.keys(configuration.clips),motionAliases:configuration.clips,origin:'KayKit Adventurers modeled and rigged mesh; curated source clips and props',author:'Kay Lousberg',license:'CC0-1.0',source,sourceCommit:pin,sourceFile:`${configuration.source}.glb`,sourceSha256:createHash('sha256').update(original).digest('hex'),units:'meters',forward:'+Z',scale:.82,materials:root.listMaterials().length,textures:root.listTextures().length,vertices,triangles,renderMeshes:meshNodes.length,props:configuration.props,artRevision:'kaykit-mesh-1',style:'authored stylized low-poly mesh with gradient atlas'};
- console.log(`${id}: ${manifest[id].bytes} bytes, ${vertices} vertices, ${triangles} triangles, ${meshNodes.length} render meshes, 11 motion aliases`);
+ manifest[id]={file:`/models/${id}.glb`,bytes:(await readFile(out)).length,type:'hero',joints:root.listSkins()[0].listJoints().length,clips:Object.keys(configuration.clips),motionAliases:configuration.clips,origin:'KayKit Adventurers modeled and rigged mesh; curated source clips and props',author:'Kay Lousberg',license:'CC0-1.0',source,sourceCommit:pin,sourceFile:`${configuration.source}.glb`,sourceSha256:createHash('sha256').update(original).digest('hex'),units:'meters',forward:'+Z',scale:.82,materials:root.listMaterials().length,textures:root.listTextures().length,vertices,triangles,renderMeshes:meshNodes.length,props:configuration.props,artRevision:'kaykit-mesh-acrobatics-2',rootMotionPolicy:'acrobatics root translation fixed to first frame; joint channels preserved',style:'authored stylized low-poly mesh with gradient atlas'};
+ console.log(`${id}: ${manifest[id].bytes} bytes, ${vertices} vertices, ${triangles} triangles, ${meshNodes.length} render meshes, ${Object.keys(configuration.clips).length} motion aliases`);
 }
 await writeFile('public/models/manifest.json',JSON.stringify(manifest,null,2)+'\n');
 await writeFile('src/render/model-revisions.ts',`// Generated by tools/export-mesh-characters.mjs from exported GLB content.\nexport const MODEL_ASSET_REVISIONS:Record<string,string> = ${JSON.stringify(revisions,null,2)};\n`);

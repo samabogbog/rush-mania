@@ -12,10 +12,12 @@ upstream asset collection is needed to reproduce the playable exports.
 Run `node tools/export-mesh-characters.mjs` from the project root. It selects
 Knight → swordsman, Mage → mage, Rogue → archer with a two-handed crossbow;
 retains fitted garments and selected props; removes overlapping alternatives;
-aliases eleven source animations; and applies a common 0.82 scale. Exact aliases,
+aliases fifteen source animations; and applies a common 0.82 scale. Exact aliases,
 source SHA256, author/license/pin and budgets are in public/models/manifest.json.
-The one-handed swordsman ultimate uses a horizontal sword sweep, not a
-two-handed spin. Archer guard uses in-place Block; no Dodge_Backward root travel.
+Additional choreography aliases preserve Jump_Full_Short, Jump_Land,
+Dodge_Backward and 2H_Melee_Attack_Spin channels. The sword spin is a stylized
+one-handed variant of the source two-handed motion. Skill choreography adds
+hip-pivot local launch/spin/flip offsets; it never moves the simulation actor.
 Locomotion and death source channels are preserved. The archer uses a crossbow
 rather than a longbow. Mage heal shares its raised-staff casting source clip.
 

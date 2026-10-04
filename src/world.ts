@@ -1,3 +1,4 @@
+import { skillRecoveryDuration } from './render/skill-choreography';
 import { castVisualTransition, type CastSnapshot } from "./render/skill-timing";
 import { SkillVFX, type SkillMotion } from "./render/skill-vfx";
 import { ModelLibrary } from "./render/model-library";
@@ -64,6 +65,8 @@ export class World implements GameWorld {
   private previousCast:CastSnapshot|null=null;
   private previousAction=0;
   private previewHeld=false;
+  private visualJob:string|null=null;
+  private visualHP=Infinity;
   private skillSequence: {preview:boolean;skill:Skill;remaining:number;total:number;released:boolean;x:number;z:number;tx:number;tz:number}|null=null;
   private skillMotion: SkillMotion|null=null;
   private readonly events = new AbortController();
@@ -257,7 +260,7 @@ export class World implements GameWorld {
   get diagnostics() {
     return {
       engine: "Babylon.js",
-      previewHeld:this.previewHeld,vfx:this.skillVFX.diagnostics,sceneMeshes:this.scene.meshes.length,skillMotion:this.skillMotion,quality:this.quality,autoReduced:this.autoReduced,riggedActors:this.models.active,modelErrors:this.models.errors,
+      previewHeld:this.previewHeld,vfx:this.skillVFX.diagnostics,sceneMeshes:this.scene.meshes.length,skillMotion:this.skillMotion,quality:this.quality,autoReduced:this.autoReduced,riggedActors:this.models.active,motionPoses:this.models.motionDiagnostics,modelErrors:this.models.errors,
       renderWidth:this.engine.getRenderWidth(),renderHeight:this.engine.getRenderHeight(),activeAnimations:this.scene.animatables.length,
       drawCalls: this.instrumentation.drawCallsCounter.current,
       fps: this.frameTimes.length ? 1000 / (this.frameTimes.reduce((a,b)=>a+b,0) / this.frameTimes.length) : 0,
@@ -336,7 +339,7 @@ export class World implements GameWorld {
       this.skillVFX.clear();this.skillSequence=null;this.previewHeld=true;
       this.skillVFX.release(skill,this.sim.save.job,this.player.position.x,this.player.position.z,target?.x??this.sim.x+2,target?.z??this.sim.z+2);
       this.skillVFX.update(age);
-      this.skillMotion={job:this.sim.save.job,stage:skill.stage,branch:skill.branch,effect:skill.effect,phase:'release',progress:age};
+      this.skillMotion={job:this.sim.save.job,stage:skill.stage,branch:skill.branch,effect:skill.effect,skillId:skill.id,duration:skillRecoveryDuration(skill.stage),frozen:true,phase:age>skillRecoveryDuration(skill.stage)*.72?'recovery':'release',progress:Math.min(1,age/skillRecoveryDuration(skill.stage))};
     }else this.beginSkillVisual(skill,target?.x??this.sim.x+2,target?.z??this.sim.z+2,true);
     return true;
   }
@@ -362,9 +365,9 @@ export class World implements GameWorld {
     if(sequence){
       if(sequence.preview||sequence.released)sequence.remaining-=dt;
       else sequence.remaining=cast?.skillId===sequence.skill.id?cast.remaining:0;
-      if((sequence.preview?sequence.remaining<=0:(!cast||transition==='release'))&&!sequence.released){sequence.released=true;sequence.remaining=.55+sequence.skill.stage*.025;this.skillVFX.release(sequence.skill,this.sim.save.job,sequence.x,sequence.z,sequence.tx,sequence.tz);}
-      const phase=!sequence.released?'anticipation':sequence.remaining>.35?'release':'recovery';
-      this.skillMotion={job:this.sim.save.job,stage:sequence.skill.stage,branch:sequence.skill.branch,effect:sequence.skill.effect,phase,progress:!sequence.released?1-Math.max(0,sequence.remaining)/sequence.total:1-Math.max(0,sequence.remaining)/(.55+sequence.skill.stage*.025)};
+      if((sequence.preview?sequence.remaining<=0:(!cast||transition==='release'))&&!sequence.released){sequence.released=true;sequence.remaining=skillRecoveryDuration(sequence.skill.stage);this.skillVFX.release(sequence.skill,this.sim.save.job,sequence.x,sequence.z,sequence.tx,sequence.tz);}
+      const phase=!sequence.released?'anticipation':sequence.remaining>skillRecoveryDuration(sequence.skill.stage)*.28?'release':'recovery';
+      this.skillMotion={skillId:sequence.skill.id,duration:sequence.released?skillRecoveryDuration(sequence.skill.stage):sequence.total,job:this.sim.save.job,stage:sequence.skill.stage,branch:sequence.skill.branch,effect:sequence.skill.effect,phase,progress:!sequence.released?1-Math.max(0,sequence.remaining)/sequence.total:1-Math.max(0,sequence.remaining)/skillRecoveryDuration(sequence.skill.stage)};
       if(sequence.released&&sequence.remaining<=0){this.skillSequence=null;this.skillMotion=null;}
     }
     if(!this.previewHeld)this.skillVFX.update(dt);
@@ -378,6 +381,8 @@ export class World implements GameWorld {
     if(this.quality==="auto"&&!this.autoReduced&&this.frameTimes.length>=12&&this.frameTimes.slice(-10).reduce((a,b)=>a+b,0)/10>40){this.autoReduced=true;this.applyQuality();this.resize();}
     this.labelClock+=dt;const updateLabels=this.labelClock>=1/(this.quality==='low'||this.autoReduced?20:30)||dt===0;if(updateLabels)this.labelClock=0;
     this.visualTime+=dt;
+    if(this.visualJob!==this.sim.save.job||this.sim.save.hp<this.visualHP||this.sim.save.hp<=0){this.previewHeld=false;this.skillVFX.clear();this.skillSequence=null;this.skillMotion=null;}
+    this.visualJob=this.sim.save.job;this.visualHP=this.sim.save.hp;
     this.updateSkillVisual(dt);
     const renderX=this.sim.renderX,renderZ=this.sim.renderZ;
     const facingX=renderX-(this.sim.online?this.player.position.x:this.lastX);

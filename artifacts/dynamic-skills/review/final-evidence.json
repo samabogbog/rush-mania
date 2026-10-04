@@ -1,0 +1,1585 @@
+{
+  "status": "final requested checks passed; runtime and QA evidence frozen; unpublished",
+  "runtimeHashes": "final-runtime-sha256.txt",
+  "targetedPasses": 20,
+  "grounding": [
+    {
+      "id": "archer-10",
+      "mode": "frozen",
+      "requestedProgress": 0.68,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 0,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.68,
+        "skillId": "archer-10",
+        "duration": 0.48,
+        "frozen": true
+      },
+      "bodyMinY": 0.6306426445418563,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 1.1099475069165532,
+          "maxY": 2.0516855158632237,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.5513670904505474
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-10",
+      "mode": "frozen",
+      "requestedProgress": 0.72,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 0,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.72,
+        "skillId": "archer-10",
+        "duration": 0.48,
+        "frozen": true
+      },
+      "bodyMinY": 0.3151716021869792,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.9332257918744933,
+          "maxY": 1.6835777408106967,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.551366836065361
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-10",
+      "mode": "frozen",
+      "requestedProgress": 0.76,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 0,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.76,
+        "skillId": "archer-10",
+        "duration": 0.48,
+        "frozen": true
+      },
+      "bodyMinY": 0.08034199975655038,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.7059327360468581,
+          "maxY": 1.3349959930928852,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.5513665597750184
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-10",
+      "mode": "frozen",
+      "requestedProgress": 0.8,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 0,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.8,
+        "skillId": "archer-10",
+        "duration": 0.48,
+        "frozen": true
+      },
+      "bodyMinY": -0.0029901772756075603,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.6359003928293807,
+          "maxY": 1.0933346941851754,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.5513667681875086
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-10",
+      "mode": "frozen",
+      "requestedProgress": 0.84,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 0,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.84,
+        "skillId": "archer-10",
+        "duration": 0.48,
+        "frozen": true
+      },
+      "bodyMinY": -0.0029717596873330967,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.6503451713751752,
+          "maxY": 1.0510181967554029,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.5513664405420259
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-10",
+      "mode": "frozen",
+      "requestedProgress": 0.9,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 0,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.9,
+        "skillId": "archer-10",
+        "duration": 0.48,
+        "frozen": true
+      },
+      "bodyMinY": -0.0029717579690429615,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.6533197789239664,
+          "maxY": 0.9895686986931266,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.551366512568742
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-10",
+      "mode": "frozen",
+      "requestedProgress": 1,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 0,
+        "effect": "area",
+        "phase": "release",
+        "progress": 1,
+        "skillId": "archer-10",
+        "duration": 0.48,
+        "frozen": true
+      },
+      "bodyMinY": -0.002971713484420573,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.5859455754890096,
+          "maxY": 0.9472841803747118,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.5513663773045627
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-10",
+      "mode": "live",
+      "requestedProgress": 0.68,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 0,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.6856249999992238,
+        "skillId": "archer-10",
+        "duration": 0.48,
+        "frozen": false
+      },
+      "bodyMinY": 0.6170416482928935,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.9622697907760474,
+          "maxY": 1.799351911306216,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.5513673423583325
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-10",
+      "mode": "live",
+      "requestedProgress": 0.72,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 0,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.7897916666658904,
+        "skillId": "archer-10",
+        "duration": 0.48,
+        "frozen": false
+      },
+      "bodyMinY": -0.002950412414378156,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.6477050053698518,
+          "maxY": 1.04970134003593,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.5513668140691409
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-10",
+      "mode": "live",
+      "requestedProgress": 0.76,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 0,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.7897916666658904,
+        "skillId": "archer-10",
+        "duration": 0.48,
+        "frozen": false
+      },
+      "bodyMinY": -0.002950412414378156,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.6477050053698518,
+          "maxY": 1.04970134003593,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.5513668140691409
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-10",
+      "mode": "live",
+      "requestedProgress": 0.8,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 0,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.8939583333325571,
+        "skillId": "archer-10",
+        "duration": 0.48,
+        "frozen": false
+      },
+      "bodyMinY": -0.002971713484420573,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.5859455754890096,
+          "maxY": 0.9472841803747118,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.5513663773045627
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-10",
+      "mode": "live",
+      "requestedProgress": 0.84,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 0,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.8939583333325571,
+        "skillId": "archer-10",
+        "duration": 0.48,
+        "frozen": false
+      },
+      "bodyMinY": -0.002971713484420573,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.5859455754890096,
+          "maxY": 0.9472841803747118,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.5513663773045627
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-10",
+      "mode": "live",
+      "requestedProgress": 0.9,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 0,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.9981249999992238,
+        "skillId": "archer-10",
+        "duration": 0.48,
+        "frozen": false
+      },
+      "bodyMinY": -0.002971713484420573,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.5859455754890096,
+          "maxY": 0.9472841803747118,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.5513663773045627
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-10",
+      "mode": "live",
+      "requestedProgress": 1,
+      "context": null,
+      "bodyMinY": -0.002971713484420782,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.5859455754890096,
+          "maxY": 0.9472841803747118,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.5513663773045627
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-b-10",
+      "mode": "frozen",
+      "requestedProgress": 0.68,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 1,
+        "effect": "fury",
+        "phase": "release",
+        "progress": 0.68,
+        "skillId": "archer-b-10",
+        "duration": 0.48,
+        "frozen": true
+      },
+      "bodyMinY": -0.0022637055896208274,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.5628880884828007,
+          "maxY": 0.9554490959784686,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.5513671546641358
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-b-10",
+      "mode": "frozen",
+      "requestedProgress": 0.72,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 1,
+        "effect": "fury",
+        "phase": "release",
+        "progress": 0.72,
+        "skillId": "archer-b-10",
+        "duration": 0.48,
+        "frozen": true
+      },
+      "bodyMinY": -0.0037354401825130086,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.6501231467042909,
+          "maxY": 1.0522107889549015,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.5513668350173604
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-b-10",
+      "mode": "frozen",
+      "requestedProgress": 0.76,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 1,
+        "effect": "fury",
+        "phase": "release",
+        "progress": 0.76,
+        "skillId": "archer-b-10",
+        "duration": 0.48,
+        "frozen": true
+      },
+      "bodyMinY": -0.011980704697806627,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.6292253491089388,
+          "maxY": 1.1101616780916408,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.5513665996129398
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-b-10",
+      "mode": "frozen",
+      "requestedProgress": 0.8,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 1,
+        "effect": "fury",
+        "phase": "release",
+        "progress": 0.8,
+        "skillId": "archer-b-10",
+        "duration": 0.48,
+        "frozen": true
+      },
+      "bodyMinY": -0.018956312290856814,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.6477814070730992,
+          "maxY": 1.0535307587703022,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.5513667884966235
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-b-10",
+      "mode": "frozen",
+      "requestedProgress": 0.84,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 1,
+        "effect": "fury",
+        "phase": "release",
+        "progress": 0.84,
+        "skillId": "archer-b-10",
+        "duration": 0.48,
+        "frozen": true
+      },
+      "bodyMinY": -0.022440781736257867,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.6533641569401845,
+          "maxY": 0.9984468489223619,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.5513664716224767
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-b-10",
+      "mode": "frozen",
+      "requestedProgress": 0.9,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 1,
+        "effect": "fury",
+        "phase": "release",
+        "progress": 0.9,
+        "skillId": "archer-b-10",
+        "duration": 0.48,
+        "frozen": true
+      },
+      "bodyMinY": -0.02111733682584059,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.6566497058829228,
+          "maxY": 0.9632966334327747,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.5513664532323088
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-b-10",
+      "mode": "frozen",
+      "requestedProgress": 1,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 1,
+        "effect": "fury",
+        "phase": "release",
+        "progress": 1,
+        "skillId": "archer-b-10",
+        "duration": 0.48,
+        "frozen": true
+      },
+      "bodyMinY": -0.002971713484420781,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.5859455754890096,
+          "maxY": 0.9472841803747118,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.5513663773045627
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-b-10",
+      "mode": "live",
+      "requestedProgress": 0.68,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 1,
+        "effect": "fury",
+        "phase": "release",
+        "progress": 0.7291666666666666,
+        "skillId": "archer-b-10",
+        "duration": 0.48,
+        "frozen": false
+      },
+      "bodyMinY": -0.004791594090356996,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.6504822598345713,
+          "maxY": 1.0472761007039835,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.5513666831924009
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-b-10",
+      "mode": "live",
+      "requestedProgress": 0.72,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 1,
+        "effect": "fury",
+        "phase": "release",
+        "progress": 0.7291666666666666,
+        "skillId": "archer-b-10",
+        "duration": 0.48,
+        "frozen": false
+      },
+      "bodyMinY": -0.004791594090356996,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.6504822598345713,
+          "maxY": 1.0472761007039835,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.5513666831924009
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-b-10",
+      "mode": "live",
+      "requestedProgress": 0.76,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 1,
+        "effect": "fury",
+        "phase": "release",
+        "progress": 0.8333333333333333,
+        "skillId": "archer-b-10",
+        "duration": 0.48,
+        "frozen": false
+      },
+      "bodyMinY": -0.022097512553434173,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.5208457198965827,
+          "maxY": 0.9355159416628606,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.551366379192227
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-b-10",
+      "mode": "live",
+      "requestedProgress": 0.8,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 1,
+        "effect": "fury",
+        "phase": "release",
+        "progress": 0.8333333333333333,
+        "skillId": "archer-b-10",
+        "duration": 0.48,
+        "frozen": false
+      },
+      "bodyMinY": -0.022097512553434173,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.5208457198965827,
+          "maxY": 0.9355159416628606,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.551366379192227
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-b-10",
+      "mode": "live",
+      "requestedProgress": 0.84,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 1,
+        "effect": "fury",
+        "phase": "release",
+        "progress": 0.9374999999999999,
+        "skillId": "archer-b-10",
+        "duration": 0.48,
+        "frozen": false
+      },
+      "bodyMinY": -0.0162915040799978,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.5417675423767341,
+          "maxY": 0.9393647641232894,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.5513664019026355
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-b-10",
+      "mode": "live",
+      "requestedProgress": 0.9,
+      "context": {
+        "job": "archer",
+        "stage": 10,
+        "branch": 1,
+        "effect": "fury",
+        "phase": "release",
+        "progress": 0.9374999999999999,
+        "skillId": "archer-b-10",
+        "duration": 0.48,
+        "frozen": false
+      },
+      "bodyMinY": -0.0162915040799978,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.5417675423767341,
+          "maxY": 0.9393647641232894,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.5513664019026355
+        }
+      ],
+      "modelErrors": 0
+    },
+    {
+      "id": "archer-b-10",
+      "mode": "live",
+      "requestedProgress": 1,
+      "context": null,
+      "bodyMinY": -0.002971713484420782,
+      "crossbow": [
+        {
+          "name": "archer-2H_Crossbow",
+          "skeletonName": null,
+          "parentName": "archer-handslot.r",
+          "minY": 0.5859455754890096,
+          "maxY": 0.9472841803747118,
+          "isEnabled": true,
+          "isVisible": true,
+          "visibility": 1,
+          "parentEnabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "matrixDeterminant": 0.5513663773045627
+        }
+      ],
+      "modelErrors": 0
+    }
+  ],
+  "genuineGameplayCurrent": {
+    "real-swordsman-b1-low": {
+      "stages": [
+        {
+          "id": "swordsman-b-1",
+          "mpBefore": 852,
+          "mpAccepted": 844,
+          "cooldownAccepted": 9,
+          "castTotal": null,
+          "hpBefore": 664.4633459999999,
+          "hpResolved": 669.0419999999998,
+          "killsBefore": 0,
+          "killsResolved": 0,
+          "targetBefore": null,
+          "targetResolved": null,
+          "combatState": "Guard 4s",
+          "modelErrors": 0
+        },
+        {
+          "id": "swordsman-b-10",
+          "mpBefore": 845.4000700000033,
+          "mpAccepted": 801.4000700000033,
+          "cooldownAccepted": 20,
+          "castTotal": {
+            "skillId": "swordsman-b-10",
+            "targetId": 0,
+            "remaining": 0.4,
+            "total": 0.4
+          },
+          "hpBefore": 677.5439999999998,
+          "hpResolved": 684.0839999999997,
+          "killsBefore": 0,
+          "killsResolved": 2,
+          "targetBefore": {
+            "id": 0,
+            "kind": "Dewdrop",
+            "x": -2.476350312125217,
+            "z": 4.341885482548866,
+            "hp": 55,
+            "alive": true,
+            "respawn": 0,
+            "attack": 0,
+            "homeX": -3,
+            "homeZ": 4,
+            "stun": 0,
+            "slow": 0,
+            "poison": 0,
+            "poisonTimer": 0,
+            "poisonDamage": 0,
+            "windup": 0,
+            "aggro": false,
+            "pattern": 0,
+            "screen": {
+              "x": 525.4367591172984,
+              "y": 474.93060433547845
+            }
+          },
+          "targetResolved": {
+            "id": 0,
+            "kind": "Dewdrop",
+            "x": -2.450364799407278,
+            "z": 4.318438667652471,
+            "hp": -518,
+            "alive": false,
+            "respawn": 12.374999999999991,
+            "attack": -0.025,
+            "homeX": -3,
+            "homeZ": 4,
+            "stun": 0,
+            "slow": 5,
+            "poison": 0,
+            "poisonTimer": 0,
+            "poisonDamage": 0,
+            "windup": 0.29999999999999966,
+            "aggro": true,
+            "pattern": 1,
+            "shape": "circle",
+            "facingX": 0.7275416660478667,
+            "facingZ": -0.6564632746870497,
+            "owner": "",
+            "screen": {
+              "x": 527.6683229764685,
+              "y": 473.3784865414139
+            }
+          },
+          "combatState": "Guard 1s",
+          "modelErrors": 0
+        }
+      ],
+      "postRecoveryDx": 1.1,
+      "errors": []
+    },
+    "real-mage-b0-high": {
+      "stages": [
+        {
+          "id": "mage-1",
+          "mpBefore": 852,
+          "mpAccepted": 840,
+          "cooldownAccepted": 4,
+          "castTotal": {
+            "skillId": "mage-1",
+            "targetId": 0,
+            "remaining": 0.35,
+            "total": 0.35
+          },
+          "hpBefore": 665.6627819999999,
+          "hpResolved": 671.8757819999998,
+          "killsBefore": 0,
+          "killsResolved": 1,
+          "targetBefore": {
+            "id": 0,
+            "kind": "Dewdrop",
+            "x": -2.6785735098355494,
+            "z": 4.496240376783522,
+            "hp": 55,
+            "alive": true,
+            "respawn": 0,
+            "attack": 0,
+            "homeX": -3,
+            "homeZ": 4,
+            "stun": 0,
+            "slow": 0,
+            "poison": 0,
+            "poisonTimer": 0,
+            "poisonDamage": 0,
+            "windup": 0,
+            "aggro": false,
+            "pattern": 0,
+            "screen": {
+              "x": 500.793574088237,
+              "y": 492.5171273079693
+            }
+          },
+          "targetResolved": {
+            "id": 0,
+            "kind": "Dewdrop",
+            "x": -2.3457102890572044,
+            "z": 4.186035482797198,
+            "hp": -281,
+            "alive": false,
+            "respawn": 12.374999999999991,
+            "attack": -0.32500000000000007,
+            "homeX": -3,
+            "homeZ": 4,
+            "stun": 0,
+            "slow": 0,
+            "poison": 0,
+            "poisonTimer": 0,
+            "poisonDamage": 0,
+            "windup": 0,
+            "aggro": true,
+            "pattern": 0,
+            "owner": "",
+            "screen": {
+              "x": 513.1218414774434,
+              "y": 483.6660134992503
+            }
+          },
+          "combatState": "",
+          "modelErrors": 0
+        },
+        {
+          "id": "mage-10",
+          "mpBefore": 841.2016200000028,
+          "mpAccepted": 781.2016200000028,
+          "cooldownAccepted": 28,
+          "castTotal": {
+            "skillId": "mage-10",
+            "targetId": 1,
+            "remaining": 1,
+            "total": 1
+          },
+          "hpBefore": 676.8893459999998,
+          "hpResolved": 683.5379099999998,
+          "killsBefore": 1,
+          "killsResolved": 2,
+          "targetBefore": {
+            "id": 1,
+            "kind": "Wildcap",
+            "x": 4.436454735422911,
+            "z": 2.835269690326714,
+            "hp": 85,
+            "alive": true,
+            "respawn": 0,
+            "attack": 0,
+            "homeX": 4,
+            "homeZ": 3,
+            "stun": 0,
+            "slow": 0,
+            "poison": 0,
+            "poisonTimer": 0,
+            "poisonDamage": 0,
+            "windup": 0,
+            "aggro": false,
+            "pattern": 0,
+            "screen": {
+              "x": 764.3131377221919,
+              "y": 445.12444955278374
+            }
+          },
+          "targetResolved": {
+            "id": 1,
+            "kind": "Wildcap",
+            "x": 3.0721839317581003,
+            "z": 2.578412781002188,
+            "hp": -693,
+            "alive": false,
+            "respawn": 12.975,
+            "attack": -0.9915999999999991,
+            "homeX": 4,
+            "homeZ": 3,
+            "stun": 0,
+            "slow": 0,
+            "poison": 0,
+            "poisonTimer": 0,
+            "poisonDamage": 0,
+            "windup": 0,
+            "aggro": true,
+            "pattern": 0,
+            "owner": "",
+            "screen": {
+              "x": 713.7845896310611,
+              "y": 437.7955202513413
+            }
+          },
+          "combatState": "",
+          "modelErrors": 0
+        }
+      ],
+      "postRecoveryDx": 1.1000000000000003,
+      "errors": []
+    },
+    "real-archer-b1-high": {
+      "stages": [
+        {
+          "id": "archer-b-1",
+          "mpBefore": 852,
+          "mpAccepted": 844,
+          "cooldownAccepted": 5,
+          "castTotal": null,
+          "hpBefore": 664.028436,
+          "hpResolved": 669.260436,
+          "killsBefore": 0,
+          "killsResolved": 1,
+          "targetBefore": {
+            "id": 0,
+            "kind": "Dewdrop",
+            "x": -2.718788209447016,
+            "z": 4.510079263849959,
+            "hp": 55,
+            "alive": true,
+            "respawn": 0,
+            "attack": 0,
+            "homeX": -3,
+            "homeZ": 4,
+            "stun": 0,
+            "slow": 0,
+            "poison": 0,
+            "poisonTimer": 0,
+            "poisonDamage": 0,
+            "windup": 0,
+            "aggro": false,
+            "pattern": 0,
+            "screen": {
+              "x": 499.3041407749755,
+              "y": 492.9119939486498
+            }
+          },
+          "targetResolved": {
+            "id": 0,
+            "kind": "Dewdrop",
+            "x": -2.718788209447016,
+            "z": 4.510079263849959,
+            "hp": -122,
+            "alive": false,
+            "respawn": 12.199999999999989,
+            "attack": 0,
+            "homeX": -3,
+            "homeZ": 4,
+            "stun": 0,
+            "slow": 0,
+            "poison": 0,
+            "poisonTimer": 0,
+            "poisonDamage": 0,
+            "windup": 0,
+            "aggro": true,
+            "pattern": 0,
+            "owner": "",
+            "screen": {
+              "x": 499.3041407749755,
+              "y": 492.9119939486498
+            }
+          },
+          "combatState": "",
+          "modelErrors": 0
+        },
+        {
+          "id": "archer-b-10",
+          "mpBefore": 845.260000000003,
+          "mpAccepted": 797.260000000003,
+          "cooldownAccepted": 28,
+          "castTotal": null,
+          "hpBefore": 675.800436,
+          "hpResolved": 682.340436,
+          "killsBefore": 1,
+          "killsResolved": 1,
+          "targetBefore": null,
+          "targetResolved": null,
+          "combatState": "Attack boost 13s",
+          "modelErrors": 0
+        }
+      ],
+      "postRecoveryDx": 1.1000000000000003,
+      "errors": []
+    }
+  },
+  "archerPreview": {
+    "records": 80,
+    "skillCount": 20,
+    "modelErrors": 0,
+    "activeMax": 24,
+    "poolMax": 39,
+    "resets": [
+      {
+        "kind": "cancel",
+        "result": [
+          {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "hurt",
+        "result": [
+          {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "death",
+        "result": [
+          {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "hidden",
+        "result": [
+          {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      }
+    ],
+    "errors": []
+  },
+  "carriedVisualEvidence": [
+    "Sword contact and motion strips",
+    "Mage contact and motion strips"
+  ],
+  "renderer": "Headless Chromium ANGLE SwiftShader software renderer; not real player hardware FPS",
+  "performance": {
+    "measurements": {
+      "environment": "Headless Chromium ANGLE SwiftShader software renderer; not player hardware FPS",
+      "results": [
+        {
+          "quality": "low",
+          "idle": {
+            "frames": 30,
+            "frameP50": 297.2000000011176,
+            "frameP95": 379.5,
+            "meanFps": 3.558296761949946,
+            "drawCallsMin": 31,
+            "drawCallsMax": 31,
+            "sceneMeshesMax": 123,
+            "activeVfxMax": 0,
+            "poolMax": 0,
+            "materialsMax": 0,
+            "modelErrorsMax": 0
+          },
+          "burst": {
+            "frames": 30,
+            "frameP50": 296.90000000037253,
+            "frameP95": 338.30000000074506,
+            "meanFps": 3.3965852995793964,
+            "drawCallsMin": 34,
+            "drawCallsMax": 34,
+            "sceneMeshesMax": 131,
+            "activeVfxMax": 6,
+            "poolMax": 6,
+            "materialsMax": 3,
+            "modelErrorsMax": 0
+          }
+        },
+        {
+          "quality": "high",
+          "idle": {
+            "frames": 30,
+            "frameP50": 784.8000000007451,
+            "frameP95": 866.9000000003725,
+            "meanFps": 1.269599441376246,
+            "drawCallsMin": 60,
+            "drawCallsMax": 60,
+            "sceneMeshesMax": 131,
+            "activeVfxMax": 0,
+            "poolMax": 6,
+            "materialsMax": 3,
+            "modelErrorsMax": 0
+          },
+          "burst": {
+            "frames": 30,
+            "frameP50": 788.7999999988824,
+            "frameP95": 809.4000000003725,
+            "meanFps": 1.2660257762848448,
+            "drawCallsMin": 64,
+            "drawCallsMax": 64,
+            "sceneMeshesMax": 142,
+            "activeVfxMax": 17,
+            "poolMax": 17,
+            "materialsMax": 3,
+            "modelErrorsMax": 0
+          }
+        }
+      ],
+      "errors": []
+    },
+    "poolRecords": 180,
+    "skills": 60,
+    "poolMax": 84,
+    "activeMax": 26,
+    "materialsMax": 31,
+    "gameplayUnchanged": true,
+    "repeatBounds": [
+      {
+        "repeat": 0,
+        "poolMin": 25,
+        "poolMax": 84,
+        "materialsMax": 31
+      },
+      {
+        "repeat": 1,
+        "poolMin": 43,
+        "poolMax": 84,
+        "materialsMax": 31
+      },
+      {
+        "repeat": 2,
+        "poolMin": 43,
+        "poolMax": 84,
+        "materialsMax": 31
+      }
+    ]
+  },
+  "cancellation": {
+    "cast": {
+      "skillId": "mage-10",
+      "targetId": 0,
+      "remaining": 1,
+      "total": 1
+    },
+    "mpBefore": 852,
+    "mpAccepted": 792,
+    "cooldownAccepted": 28,
+    "dx": 1.1000000000000003,
+    "castAfter": null,
+    "motionAfter": null,
+    "targetHpAccepted": 55,
+    "targetHpCancelled": 55,
+    "targetHpSettled": 55,
+    "immediateVfx": {
+      "active": 3,
+      "pooled": 8,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "ring",
+        "star",
+        "spark"
+      ],
+      "materials": 3,
+      "drawCount": 3
+    },
+    "settledVfx": {
+      "active": 0,
+      "pooled": 8,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "ring",
+        "star",
+        "spark"
+      ],
+      "materials": 3,
+      "drawCount": 0
+    },
+    "note": "Immediate snapshot residual anticipation expires; bounded zero-active observation and unchanged target HP establish no release burst."
+  },
+  "zoneReset": {
+    "zone": "town",
+    "skillMotion": null,
+    "motionPoses": [],
+    "modelErrors": 0,
+    "riggedActors": 20,
+    "vfx": {
+      "active": 0,
+      "pooled": 8,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "ring",
+        "star",
+        "spark"
+      ],
+      "materials": 3,
+      "drawCount": 0
+    }
+  },
+  "errors": []
+}

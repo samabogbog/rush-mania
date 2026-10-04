@@ -30,3 +30,20 @@ art/vendor-candidates/kaykit-adventurers/
 # Rejected authored candidate keeps its .blend source and PNG review proof, not backups/exports.
 art/characters-mesh/swordsman-candidate.blend1
 art/characters-mesh/swordsman-candidate.glb
+# Dynamic skill raw captures stay local; curated evidence and compact summaries are packaged.
+artifacts/dynamic-skills/*
+!artifacts/dynamic-skills/contact-*.png
+!artifacts/dynamic-skills/motion-*.png
+!artifacts/dynamic-skills/multiview-*.png
+!artifacts/dynamic-skills/real-*-high-stage10-accepted.png
+!artifacts/dynamic-skills/real-*-high-stage10-recovered.png
+!artifacts/dynamic-skills/summary.json
+
+# Compact final dynamic-skill proof; full raw files remain local.
+!artifacts/dynamic-skills/review/
+artifacts/dynamic-skills/review/*
+!artifacts/dynamic-skills/review/*.png
+!artifacts/dynamic-skills/review/*.json
+!artifacts/dynamic-skills/review/*.md
+!artifacts/dynamic-skills/review/*.txt
+!artifacts/dynamic-skills/final-runtime-sha256.txt
