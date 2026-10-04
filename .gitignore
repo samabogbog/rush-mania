@@ -22,3 +22,11 @@ artifacts/production/*-low-*-1.png
 artifacts/production/*-high-*-1.png
 artifacts/production/*-low-*-1-impact.png
 artifacts/production/*-high-*-1-impact.png
+# Full mesh-character review movies remain local; final PNG/JSON evidence is retained.
+artifacts/mesh-characters/video/
+artifacts/mesh-characters/*.webm
+# Only the three canonical CC0 character sources are packaged; full upstream clone is local.
+art/vendor-candidates/kaykit-adventurers/
+# Rejected authored candidate keeps its .blend source and PNG review proof, not backups/exports.
+art/characters-mesh/swordsman-candidate.blend1
+art/characters-mesh/swordsman-candidate.glb

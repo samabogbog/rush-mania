@@ -10,18 +10,19 @@ import type {AbstractMesh} from '@babylonjs/core/Meshes/abstractMesh';
 import type {Scene} from '@babylonjs/core/scene';
 import type {TransformNode} from '@babylonjs/core/Meshes/transformNode';
 import type {AnimationGroup} from '@babylonjs/core/Animations/animationGroup';
+import {MODEL_ASSET_REVISIONS} from './model-revisions';
 export type Motion='idle'|'walk'|'run'|'attack'|'attack-heavy'|'skill'|'skill-heal'|'skill-guard'|'skill-ultimate'|'hurt'|'death';
 export type SkillMotionContext={stage:number;effect:string;phase:'anticipation'|'release'|'recovery';progress:number;job?:string;branch?:number};
 /** One downloaded mesh/rig per kind; instances have independent skeletons and clips. */
 export class ModelLibrary {
  private cache=new Map<string,Promise<AssetContainer>>();
  private actors=new Map<TransformNode,{clips:Map<string,AnimationGroup>;motion:Motion;remaining:number;hp:number;suspended:boolean;skillMotion?:SkillMotionContext|null}>();
- private low=false;private originals=new Map<AbstractMesh,Material>();private vertexColors=new Map<AbstractMesh,{linear:number[];gamma:number[];stride:number}>();private simple=new Map<Material,StandardMaterial>();
+ private low=false;private originals=new Map<AbstractMesh,Material>();private vertexColors=new Map<AbstractMesh,{linear:number[];gamma:number[];stride:number}>();private simple=new Map<Material,Material>();
  private closed=false;loaded=0;errors=0;
  get active(){return this.actors.size}
  constructor(private scene:Scene){}
  attach(id:string,target:TransformNode,decorate:(root:TransformNode)=>void=()=>{}) {
-  let promise=this.cache.get(id);if(!promise){promise=LoadAssetContainerAsync('/models/'+id+'.glb',this.scene,{pluginOptions:{gltf:{animationStartMode:0}}}).then(container=>{container.animationGroups.forEach(g=>g.stop());return container;});this.cache.set(id,promise);}
+  let promise=this.cache.get(id);if(!promise){const revision=MODEL_ASSET_REVISIONS[id];promise=LoadAssetContainerAsync('/models/'+id+'.glb'+(revision?'?v='+revision:''),this.scene,{pluginOptions:{gltf:{animationStartMode:0}}}).then(container=>{container.animationGroups.forEach(g=>g.stop());return container;});this.cache.set(id,promise);}
   const fallback=target.getChildMeshes();
   void promise.then(container=>{
    if(this.closed||target.isDisposed())return;
@@ -56,8 +57,16 @@ export class ModelLibrary {
  setLowQuality(low:boolean){this.low=low;for(const [mesh,original] of this.originals){if(mesh.isDisposed()){this.originals.delete(mesh);continue;}this.applyMaterial(mesh,original);}}
  private applyMaterial(mesh:AbstractMesh,original:Material){
   if(!this.low){if(mesh.material!==original){const colors=this.vertexColors.get(mesh);if(colors)mesh.setVerticesData('color',colors.linear,false,colors.stride);}mesh.material=original;return;}
+  const pbrOriginal=original as PBRMaterial;
+  if(pbrOriginal.albedoTexture){
+   // glTF color atlases may use an sRGB GPU buffer. Keep the PBR color pipeline:
+   // StandardMaterial's diffuse sampler would consume its linear values as gamma.
+   let textured=this.simple.get(original);
+   if(!textured){const pbr=pbrOriginal.clone('low-'+original.name)!;pbr.maxSimultaneousLights=2;pbr.reflectionTexture=null;pbr.bumpTexture=null;textured=pbr;this.simple.set(original,textured);}
+   mesh.material=textured;return;
+  }
   let material=this.simple.get(original);
-  if(!material){const pbr=original as PBRMaterial;material=new StandardMaterial('low-'+original.name,this.scene);material.diffuseColor=pbr.albedoColor.toGammaSpace();material.emissiveColor=pbr.emissiveColor.toGammaSpace();material.specularColor=Color3.Black();material.alpha=pbr.alpha;material.backFaceCulling=pbr.backFaceCulling;material.maxSimultaneousLights=2;this.simple.set(original,material);}
+  if(!material){const pbr=original as PBRMaterial,standard=new StandardMaterial('low-'+original.name,this.scene);standard.diffuseColor=pbr.albedoColor.toGammaSpace();standard.emissiveColor=pbr.emissiveColor.toGammaSpace();standard.specularColor=Color3.Black();standard.alpha=pbr.alpha;standard.backFaceCulling=pbr.backFaceCulling;standard.maxSimultaneousLights=2;material=standard;this.simple.set(original,material);}
   if(mesh.material!==material){
    // GLTF/PBR vertex colors are linear; StandardMaterial consumes gamma colors.
    let colors=this.vertexColors.get(mesh);const buffer=mesh.getVerticesData('color');

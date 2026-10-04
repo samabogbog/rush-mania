@@ -61,6 +61,7 @@ export class NetworkSimulation extends Simulation {
   override setAuto(value:boolean){this.send('setAuto',value)}
   override skill(n:number){this.send('skill',n)}
   override castSkill(id:string){this.send('castSkill',id);return true}
+  override useItem(name:string){this.send('useItem',name);return true}
   override usePotion(blue=false){this.send('usePotion',blue);return true}
   override collect(){this.send('collect')}
   override upgrade(id:string=this.save.equipped.weapon||'',tier:StoneTier='common'){this.send('upgrade',id,tier);return true}

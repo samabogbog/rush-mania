@@ -1,4 +1,4 @@
-import {itemCatalog,itemCategory} from '../src/game/items';
+import {EXP_TOME,EXP_TEST_GRANT_COUNT,itemCatalog,itemCategory} from '../src/game/items';
 import {rollGear,rarityOrder,BAG_CAPACITY,type Rarity} from '../src/game/equipment';
 import {isStoneTier} from '../src/game/refinement';
 import {communityCommand,communitySnapshot,partyOf,shareKill} from './community';
@@ -99,6 +99,11 @@ function execute(player:Player,realm:Realm,command:Command,now:number,admin=fals
     case 'setAuto':if(typeof a!=='boolean') throw new GameError('Invalid auto setting');sim.setAuto(a);break;
     case 'skill':if(!integer(a,0,5))throw new GameError('Invalid hotbar slot');sim.skill(a as number);break;
     case 'castSkill':if(typeof a!=='string')throw new GameError('Invalid skill');sim.castSkill(a);break;
+    case 'useItem': {
+      if(command.args.length!==1||typeof a!=='string'||![EXP_TOME.name,'Red potion','Blue potion'].includes(a))throw new GameError('Invalid consumable');
+      if(sim.useItem(a)&&a===EXP_TOME.name)realm.ledger.push({id:command.id,player:player.id,action:`useItem:${EXP_TOME.id}:${EXP_TOME.experience}`,at:now,goldDelta:0});
+      break;
+    }
     case 'usePotion':sim.usePotion(a===true);break;
     case 'collect':sim.collect();break;
     case 'upgrade':if(typeof a!=='string'||!isStoneTier(command.args[1]))throw new GameError('Invalid refinement');sim.upgrade(a,command.args[1]);break;
@@ -154,7 +159,20 @@ export async function transact(store:RealmStore,identity:{id:string;name:string;
     }
     player.actor=capture(hydrate(player,realm));
     if(now-player.lastSeen>10_000) {player.actor.target=null;player.actor.destination=null;player.actor.auto=false;}
-    if(input.connect) player.session={id:crypto.randomUUID(),sequence:0};
+    if(input.connect) {
+      player.session={id:crypto.randomUUID(),sequence:0};
+      if(identity.admin===true&&!player.expTestGrant) {
+        const sim=hydrate(player,realm);
+        const hasStack=sim.save.items.some(i=>i.name===EXP_TOME.name&&i.count>0);
+        const hasSpace=hasStack||sim.save.items.filter(i=>i.count>0).length<BAG_CAPACITY;
+        if(hasSpace&&sim.addItem(EXP_TOME.name,EXP_TOME.icon,EXP_TEST_GRANT_COUNT)) {
+          player.expTestGrant={version:1,count:EXP_TEST_GRANT_COUNT,at:now};
+          realm.ledger.push({id:`exp-test-grant-v1:${player.id}`,player:player.id,action:`adminTestGrant:${EXP_TOME.id}:${EXP_TEST_GRANT_COUNT}`,at:now,goldDelta:0});
+          sim.onEvent(`Testing grant: ${EXP_TEST_GRANT_COUNT} × EXP Tome added to Bag`,'reward');
+        } else sim.onEvent('EXP testing grant pending. Free a Bag slot and reconnect.');
+        player.actor=capture(sim);
+      }
+    }
     if(input.movement!==undefined) {
       const m=input.movement;
       if(!Array.isArray(m)||m.length!==2||m.some(v=>typeof v!=='number'||!Number.isFinite(v)||Math.abs(v)>1)) throw new GameError('Invalid movement');

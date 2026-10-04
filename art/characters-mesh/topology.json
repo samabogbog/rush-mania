@@ -1,0 +1,10 @@
+{
+  "body_control_vertices": 357,
+  "body_control_faces": 343,
+  "body_connected_vertices": 357,
+  "body_components": 1,
+  "boundary_edges": 0,
+  "nonmanifold_edges": 0,
+  "method": "Explicit shared-vertex branched quad cage; no primitive fusion",
+  "status": "unrigged rejected-for-target review candidate"
+}

@@ -240,13 +240,15 @@ export class World implements GameWorld {
   private applyQuality(){const low=this.quality==='low'||this.autoReduced;this.scene.shadowsEnabled=!low;this.models.setLowQuality(low);this.skillVFX.setLowQuality(low);this.shadows.getShadowMap()?.resize(this.quality==='high'?1024:512);}
 
   private updateOutfit() {
-    const model=this.heroModels.get(this.sim.save.job)!,nodes=model.getChildTransformNodes(false),spine=nodes.find(n=>n.name.endsWith('-spine')),hand=nodes.find(n=>n.name.endsWith('-right-hand'));
+    const model=this.heroModels.get(this.sim.save.job)!,nodes=model.getChildTransformNodes(false),spine=nodes.find(n=>n.name.endsWith('-spine')),hand=nodes.find(n=>n.name.endsWith('-hand.r')||n.name.endsWith('-right-hand'));
     if(!spine||!hand)return;
     const key=this.sim.save.job+spine.uniqueId+JSON.stringify(this.sim.save.equipped)+this.sim.refinement;if(key===this.outfitKey)return;this.outfitKey=key;
     this.outfit.splice(0).forEach(n=>n.dispose());
     const equipped=(slot:string)=>this.sim.save.items.find(i=>i.id===this.sim.save.equipped[slot as keyof typeof this.sim.save.equipped]);
     const armor=equipped('armor'),accessory=equipped('accessory'),weapon=equipped('weapon');
-    if(armor){const coat=this.factory.group('equipped-armor');coat.parent=spine;this.outfit.push(coat);const color=armor.gearId==='root-plate'?0x6ad074:armor.gearId?.includes('wisp')||armor.gearId?.includes('shade')?0xab77e8:armor.gearId==='shell-vest'?0x50cdcc:0xf8b857;
+    // Authored mesh heroes already have fitted class garments. Keep legacy fallback
+    // overlays only for the old rig; boxes would obscure the modeled torso.
+    if(armor&&hand.name.endsWith('-right-hand')){const coat=this.factory.group('equipped-armor');coat.parent=spine;this.outfit.push(coat);const color=armor.gearId==='root-plate'?0x6ad074:armor.gearId?.includes('wisp')||armor.gearId?.includes('shade')?0xab77e8:armor.gearId==='shell-vest'?0x50cdcc:0xf8b857;
       this.factory.box(.66,.48,.12,color,0,-.02,.25,coat);this.factory.ball(.12,0xffe477,0,.1,.33,coat);}
     if(accessory){const charm=this.factory.group('equipped-charm');charm.parent=spine;this.outfit.push(charm);this.factory.mesh({kind:'gem',r:.1},accessory.gearId==='root-signet'?0xd49bf7:0x99ef6a,0,-.21,.35,charm);}
     if(weapon||this.sim.refinement){const rune=this.factory.group('equipped-weapon-rune');rune.parent=hand;this.outfit.push(rune);const gem=this.factory.mesh({kind:'gem',r:.12+Math.min(20,this.sim.refinement)*.004},weapon?.gearId?.includes('frost')?0x7eefff:0xffd55f,0,.25,0,rune);gem.material=this.factory.material(0xffd55f,true);}

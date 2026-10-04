@@ -1,4 +1,4 @@
-import {itemCategory,type ItemCategory} from './game/items';
+import {EXP_TOME,itemCategory,type ItemCategory} from './game/items';
 import {refineLevel,refineCost,rollRefinement,rollStoneDrop,refineStones,isStoneTier,type StoneTier} from './game/refinement';
 import {
   classes,
@@ -376,6 +376,16 @@ export class Simulation {
     if (item) item.count += count;
     else this.save.items.push({ name, icon, count, category:itemCategory({name}) });
     return true;
+  }
+  useItem(name:string) {
+    if(name==='Red potion'||name==='Blue potion')return this.usePotion(name==='Blue potion');
+    if(name!==EXP_TOME.name)return false;
+    if(this.save.level>=MAX_LEVEL){this.onEvent('Maximum level reached. EXP Tome kept.');return false;}
+    if(this.deathTime>0||this.save.hp<=0)return false;
+    const item=this.save.items.find(i=>i.name===EXP_TOME.name&&i.count>0);
+    if(!item){this.onEvent('No EXP Tomes in your bag.');return false;}
+    item.count--;this.addExperience(EXP_TOME.experience);
+    this.onEvent(`Used EXP Tome · +${EXP_TOME.experience} EXP`,'reward');this.persist();return true;
   }
   usePotion(blue = false) {
     const item = this.save.items.find(
