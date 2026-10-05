@@ -1,0 +1,32 @@
+{
+  "cap": 10,
+  "success": [
+    1,
+    1,
+    0.8,
+    0.6,
+    0.4,
+    0.2,
+    0.1,
+    0.06,
+    0.03,
+    0.01
+  ],
+  "bonusLinear": 19,
+  "rareMultiplier": 2,
+  "costBase": 60,
+  "costPerLevel": 40,
+  "downgradeChance": 0.15,
+  "rareDowngradeLevels": 1,
+  "stoneCraftCount": 5,
+  "stoneDropThresholds": {
+    "normal": [
+      0.03,
+      0.23
+    ],
+    "boss": [
+      0.2,
+      0.8
+    ]
+  }
+}

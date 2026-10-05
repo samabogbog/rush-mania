@@ -1,0 +1,692 @@
+{
+  "crafted": [
+    {
+      "id": "sprout-blade",
+      "name": "Sprout Blade",
+      "slot": "weapon",
+      "job": "swordsman",
+      "level": 1,
+      "rarity": "common",
+      "icon": "thornwood-blade",
+      "bonuses": {
+        "atk": 12,
+        "str": 2
+      },
+      "cost": 40,
+      "materials": [
+        [
+          "Dew jelly",
+          4
+        ],
+        [
+          "Verdant leaf",
+          3
+        ]
+      ],
+      "description": "A sturdy beginning for a frontline adventurer."
+    },
+    {
+      "id": "bloom-staff",
+      "name": "Bloom Staff",
+      "slot": "weapon",
+      "job": "mage",
+      "level": 1,
+      "rarity": "common",
+      "icon": "thornwood-staff",
+      "bonuses": {
+        "atk": 12,
+        "mp": 20,
+        "str": 2
+      },
+      "cost": 40,
+      "materials": [
+        [
+          "Verdant leaf",
+          4
+        ],
+        [
+          "Forest mushroom",
+          3
+        ]
+      ],
+      "description": "A light staff that gives your spells room to grow."
+    },
+    {
+      "id": "willow-bow",
+      "name": "Willow Bow",
+      "slot": "weapon",
+      "job": "archer",
+      "level": 1,
+      "rarity": "common",
+      "icon": "thornwood-bow",
+      "bonuses": {
+        "atk": 10,
+        "agi": 3
+      },
+      "cost": 40,
+      "materials": [
+        [
+          "Verdant leaf",
+          4
+        ],
+        [
+          "Dew jelly",
+          3
+        ]
+      ],
+      "description": "Quick attacks for a nimble hunter."
+    },
+    {
+      "id": "field-coat",
+      "name": "Field Coat",
+      "slot": "armor",
+      "level": 1,
+      "rarity": "common",
+      "icon": "field-coat",
+      "bonuses": {
+        "def": 10,
+        "hp": 30
+      },
+      "cost": 35,
+      "materials": [
+        [
+          "Soft fur",
+          3
+        ],
+        [
+          "Forest mushroom",
+          3
+        ]
+      ],
+      "description": "Balanced defense for your first expeditions."
+    },
+    {
+      "id": "leaf-charm",
+      "name": "Leaf Charm",
+      "slot": "accessory",
+      "level": 1,
+      "rarity": "common",
+      "icon": "leaf-charm",
+      "bonuses": {
+        "agi": 3
+      },
+      "cost": 35,
+      "materials": [
+        [
+          "Verdant leaf",
+          6
+        ],
+        [
+          "Honey drop",
+          2
+        ]
+      ],
+      "description": "A small charm for a faster, luckier build."
+    },
+    {
+      "id": "amber-cleaver",
+      "name": "Amber Cleaver",
+      "slot": "weapon",
+      "job": "swordsman",
+      "level": 20,
+      "rarity": "rare",
+      "icon": "suncrest-blade",
+      "bonuses": {
+        "atk": 38,
+        "str": 5
+      },
+      "cost": 240,
+      "materials": [
+        [
+          "Boar tusk",
+          6
+        ],
+        [
+          "Amber leaf",
+          5
+        ]
+      ],
+      "description": "Powerful strikes; pair it with a defensive coat."
+    },
+    {
+      "id": "amber-wand",
+      "name": "Amber Wand",
+      "slot": "weapon",
+      "job": "mage",
+      "level": 20,
+      "rarity": "rare",
+      "icon": "suncrest-staff",
+      "bonuses": {
+        "atk": 32,
+        "mp": 50,
+        "str": 5
+      },
+      "cost": 240,
+      "materials": [
+        [
+          "Amber spore",
+          6
+        ],
+        [
+          "Golden honey",
+          4
+        ]
+      ],
+      "description": "Enough mana to sustain an area-control build."
+    },
+    {
+      "id": "horn-bow",
+      "name": "Horn Bow",
+      "slot": "weapon",
+      "job": "archer",
+      "level": 20,
+      "rarity": "rare",
+      "icon": "suncrest-bow",
+      "bonuses": {
+        "atk": 32,
+        "agi": 7
+      },
+      "cost": 240,
+      "materials": [
+        [
+          "Amber antler",
+          5
+        ],
+        [
+          "Amber leaf",
+          6
+        ]
+      ],
+      "description": "Speed and critical hits over raw defense."
+    },
+    {
+      "id": "shell-vest",
+      "name": "Shell Vest",
+      "slot": "armor",
+      "level": 40,
+      "rarity": "rare",
+      "icon": "shell-vest",
+      "bonuses": {
+        "def": 50,
+        "vit": 6,
+        "hp": 150
+      },
+      "cost": 500,
+      "materials": [
+        [
+          "River shell",
+          8
+        ],
+        [
+          "Marsh reed",
+          6
+        ]
+      ],
+      "description": "A durable choice for tanking and risky solo fights."
+    },
+    {
+      "id": "wisp-robe",
+      "name": "Wisp Robe",
+      "slot": "armor",
+      "level": 40,
+      "rarity": "rare",
+      "icon": "wisp-robe",
+      "bonuses": {
+        "def": 20,
+        "mp": 100,
+        "str": 10
+      },
+      "cost": 500,
+      "materials": [
+        [
+          "Wisp essence",
+          8
+        ],
+        [
+          "Crystal dust",
+          6
+        ]
+      ],
+      "description": "Trade some defense for spell power and mana."
+    },
+    {
+      "id": "crystal-band",
+      "name": "Crystal Band",
+      "slot": "accessory",
+      "level": 40,
+      "rarity": "rare",
+      "icon": "sparkles",
+      "bonuses": {
+        "str": 8,
+        "mp": 60
+      },
+      "cost": 360,
+      "materials": [
+        [
+          "Crystal dust",
+          8
+        ],
+        [
+          "Crystal jelly",
+          6
+        ]
+      ],
+      "description": "Focus your offensive skills."
+    },
+    {
+      "id": "reed-feather",
+      "name": "Reed Feather",
+      "slot": "accessory",
+      "level": 40,
+      "rarity": "rare",
+      "icon": "wind",
+      "bonuses": {
+        "agi": 10,
+        "def": 10
+      },
+      "cost": 360,
+      "materials": [
+        [
+          "Marsh reed",
+          8
+        ],
+        [
+          "Crystal dust",
+          5
+        ]
+      ],
+      "description": "Attack speed and critical chance for agile builds."
+    },
+    {
+      "id": "frost-edge",
+      "name": "Frost Edge",
+      "slot": "weapon",
+      "job": "swordsman",
+      "level": 65,
+      "rarity": "epic",
+      "icon": "frostguard-blade",
+      "bonuses": {
+        "atk": 100,
+        "str": 15,
+        "def": 25
+      },
+      "cost": 1200,
+      "materials": [
+        [
+          "Frost fang",
+          8
+        ],
+        [
+          "Ice shard",
+          10
+        ]
+      ],
+      "description": "A reliable weapon for leading a dungeon party."
+    },
+    {
+      "id": "snow-staff",
+      "name": "Snow Staff",
+      "slot": "weapon",
+      "job": "mage",
+      "level": 65,
+      "rarity": "epic",
+      "icon": "frostguard-staff",
+      "bonuses": {
+        "atk": 95,
+        "str": 18,
+        "mp": 120
+      },
+      "cost": 1200,
+      "materials": [
+        [
+          "Snow spore",
+          8
+        ],
+        [
+          "Sky feather",
+          8
+        ]
+      ],
+      "description": "Strong area magic and a deep mana pool."
+    },
+    {
+      "id": "sky-bow",
+      "name": "Sky Bow",
+      "slot": "weapon",
+      "job": "archer",
+      "level": 65,
+      "rarity": "epic",
+      "icon": "frostguard-bow",
+      "bonuses": {
+        "atk": 90,
+        "agi": 20
+      },
+      "cost": 1200,
+      "materials": [
+        [
+          "Sky feather",
+          8
+        ],
+        [
+          "Frost fang",
+          8
+        ]
+      ],
+      "description": "An aggressive late-game critical build."
+    },
+    {
+      "id": "root-plate",
+      "name": "Rootheart Plate",
+      "slot": "armor",
+      "level": 65,
+      "rarity": "epic",
+      "icon": "root-plate",
+      "bonuses": {
+        "def": 100,
+        "hp": 350,
+        "vit": 10
+      },
+      "cost": 1600,
+      "materials": [
+        [
+          "Rootheart core",
+          2
+        ],
+        [
+          "Warden stone",
+          8
+        ]
+      ],
+      "description": "Survive the Guardian’s strongest attacks."
+    },
+    {
+      "id": "shade-mantle",
+      "name": "Shade Mantle",
+      "slot": "armor",
+      "level": 65,
+      "rarity": "epic",
+      "icon": "moon",
+      "bonuses": {
+        "def": 35,
+        "str": 20,
+        "agi": 10,
+        "mp": 100
+      },
+      "cost": 1600,
+      "materials": [
+        [
+          "Shade essence",
+          10
+        ],
+        [
+          "Living vine",
+          8
+        ]
+      ],
+      "description": "An offensive alternative to heavy plate."
+    },
+    {
+      "id": "root-signet",
+      "name": "Rootheart Signet",
+      "slot": "accessory",
+      "level": 65,
+      "rarity": "epic",
+      "icon": "root-signet",
+      "bonuses": {
+        "atk": 30,
+        "def": 30,
+        "mp": 60
+      },
+      "cost": 1200,
+      "materials": [
+        [
+          "Rootheart core",
+          1
+        ],
+        [
+          "Rune stone",
+          10
+        ]
+      ],
+      "description": "A trophy that strengthens every class."
+    }
+  ],
+  "sets": [
+    {
+      "id": "thornwood",
+      "name": "Thornwood",
+      "level": 10,
+      "armorIcon": "field-coat",
+      "charmIcon": "leaf-charm",
+      "theme": "The first treasures of Moonlit Glade."
+    },
+    {
+      "id": "suncrest",
+      "name": "Suncrest",
+      "level": 30,
+      "armorIcon": "shell-vest",
+      "charmIcon": "honey",
+      "theme": "Warm amber relics from the orchard."
+    },
+    {
+      "id": "moonveil",
+      "name": "Moonveil",
+      "level": 50,
+      "armorIcon": "wisp-robe",
+      "charmIcon": "wisp-essence",
+      "theme": "Moonlit threads from the crystal marsh."
+    },
+    {
+      "id": "frostguard",
+      "name": "Frostguard",
+      "level": 70,
+      "armorIcon": "root-plate",
+      "charmIcon": "ice-shard",
+      "theme": "Forged by the winds of Frostpeak."
+    },
+    {
+      "id": "starfall",
+      "name": "Starfall",
+      "level": 90,
+      "armorIcon": "root-plate",
+      "charmIcon": "root-signet",
+      "theme": "Ancient starlight held in the Rootheart ruins."
+    }
+  ],
+  "rarityMultiplier": {
+    "common": 1,
+    "rare": 1.1,
+    "epic": 1.25,
+    "legend": 1.45
+  },
+  "secondaryCounts": {
+    "common": 0,
+    "rare": 1,
+    "epic": 2,
+    "legend": 3
+  },
+  "affixRanges": {
+    "critChance": [
+      1,
+      5
+    ],
+    "critDamage": [
+      5,
+      18
+    ],
+    "damageBonus": [
+      2,
+      7
+    ],
+    "skillDamage": [
+      3,
+      10
+    ],
+    "lifesteal": [
+      1,
+      4
+    ],
+    "hpRegen": [
+      0.1,
+      0.5
+    ],
+    "mpRegen": [
+      0.2,
+      1
+    ],
+    "attackSpeed": [
+      2,
+      8
+    ],
+    "moveSpeed": [
+      2,
+      6
+    ],
+    "armorPen": [
+      2,
+      8
+    ],
+    "damageReduction": [
+      1,
+      5
+    ],
+    "dodgeChance": [
+      1,
+      4
+    ],
+    "expBonus": [
+      3,
+      9
+    ],
+    "goldBonus": [
+      3,
+      10
+    ],
+    "healingBonus": [
+      3,
+      9
+    ],
+    "cooldownReduction": [
+      2,
+      6
+    ]
+  },
+  "affixFactorBase": 0.65,
+  "affixLevelDivisor": 140,
+  "hpRegenPerPieceCap": 0.5,
+  "dropChance": {
+    "normal": 0.16,
+    "boss": 0.75
+  },
+  "rarityThresholds": {
+    "normal": [
+      0.7,
+      0.93,
+      0.99
+    ],
+    "boss": [
+      0.2,
+      0.6,
+      0.9
+    ]
+  },
+  "setBonuses": {
+    "hpLevel": 2,
+    "atkLevel": 0.4,
+    "defLevel": 0.3,
+    "damageBonus": 5,
+    "hpRegenMax": 0.5,
+    "hpRegenLevelDivisor": 90,
+    "moveSpeed": 5
+  },
+  "pieceFormulas": {
+    "blade": {
+      "atk": [
+        1.8,
+        14
+      ],
+      "str": [
+        0.1,
+        0
+      ]
+    },
+    "staff": {
+      "atk": [
+        1.7,
+        14
+      ],
+      "mp": [
+        2,
+        0
+      ],
+      "str": [
+        0.08333333333333333,
+        0
+      ]
+    },
+    "bow": {
+      "atk": [
+        1.6,
+        14
+      ],
+      "agi": [
+        0.125,
+        0
+      ]
+    },
+    "helmet": {
+      "def": [
+        0.4,
+        4
+      ],
+      "hp": [
+        2,
+        0
+      ]
+    },
+    "coat": {
+      "def": [
+        1.2,
+        10
+      ],
+      "hp": [
+        4,
+        0
+      ]
+    },
+    "gloves": {
+      "atk": [
+        0.35,
+        3
+      ],
+      "def": [
+        0.3,
+        2
+      ]
+    },
+    "boots": {
+      "def": [
+        0.4,
+        3
+      ],
+      "agi": [
+        0.06666666666666667,
+        0
+      ]
+    },
+    "charm": {
+      "hp": [
+        2,
+        0
+      ],
+      "mp": [
+        1,
+        0
+      ],
+      "str": [
+        0.05555555555555555,
+        0
+      ]
+    }
+  }
+}

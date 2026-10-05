@@ -1,8 +1,9 @@
+import {economy} from '../config/balance';
 import {equipment,gearById,gearByName} from './equipment';
 import {species,questDefinitions} from './content';
 import {refineStones} from './refinement';
-export const EXP_TOME={id:'consumable:exp-tome',name:'EXP Tome',icon:'help',experience:1000} as const;
-export const EXP_CHARM={id:'passive:exp-charm',name:'EXP Charm',icon:'help',multiplier:9999} as const;
+export const EXP_TOME=economy.expTome;
+export const EXP_CHARM=economy.expCharm;
 export const EXP_TEST_GRANT_COUNT=1;
 export const itemCategories={weapon:'Weapons',armor:'Armor',accessory:'Accessories',consumable:'Consumables',material:'Materials',refine:'Refine stones'} as const;
 export type ItemCategory=keyof typeof itemCategories;

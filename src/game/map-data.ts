@@ -1,3 +1,4 @@
+import {economy} from '../config/balance';
 /** Collision data shared by the server and Babylon, never supplied by a client. */
 export function gladeObstacles() {
   const out: { x: number; z: number; r: number }[] = [];
@@ -22,9 +23,9 @@ export const SECTOR_SIZE=32;
 export const WORLD_SIZE=SECTOR_SIZE*3;
 export const WORLD_BOUNDS={minX:-46,maxX:46,minZ:-46,maxZ:46} as const;
 export const PORTAL_POSITION={x:0,z:-11} as const;
-export const TOWN_SAFE_RADIUS=16;
+export const TOWN_SAFE_RADIUS=economy.map.townSafeRadius;
 export function protectedPosition(zone:ZoneId,x:number,z:number) {
- return (zone==='town'&&Math.hypot(x,z)<TOWN_SAFE_RADIUS)||Math.hypot(x-PORTAL_POSITION.x,z-PORTAL_POSITION.z)<5||zones[zone].npcs.some(n=>Math.hypot(x-n.x,z-n.z)<4);
+ return (zone==='town'&&Math.hypot(x,z)<TOWN_SAFE_RADIUS)||Math.hypot(x-PORTAL_POSITION.x,z-PORTAL_POSITION.z)<economy.map.portalSafeRadius||zones[zone].npcs.some(n=>Math.hypot(x-n.x,z-n.z)<economy.map.npcSafeRadius);
 }
 export function zoneSpawns(zone:ZoneId):{kind:Kind;x:number;z:number}[] {
  const regular=zones[zone].species.filter(k=>!species[k].boss&&!species[k].miniBoss);

@@ -1,0 +1,50 @@
+{
+  "bagCapacity": 144,
+  "redPotion": {
+    "heal": 65,
+    "cost": 15
+  },
+  "bluePotion": {
+    "heal": 40,
+    "cost": 20
+  },
+  "potionCooldown": 2,
+  "deathGold": 15,
+  "deathDelay": 1.2,
+  "expTome": {
+    "id": "consumable:exp-tome",
+    "name": "EXP Tome",
+    "icon": "help",
+    "experience": 1000
+  },
+  "expCharm": {
+    "id": "passive:exp-charm",
+    "name": "EXP Charm",
+    "icon": "help",
+    "multiplier": 9999
+  },
+  "party": {
+    "maxMembers": 4,
+    "rewardRadius": 30,
+    "supportRadius": 8,
+    "healFactor": 0.6,
+    "buffFactor": 0.7,
+    "dungeonMinMembers": 2,
+    "dungeonLevel": 40,
+    "tauntRadius": 5
+  },
+  "marketFee": 0.1,
+  "monsters": {
+    "respawnNormal": 13,
+    "respawnMini": 60,
+    "respawnBoss": 180,
+    "homeRegen": 0.25,
+    "attackRestBoss": 2.2,
+    "attackRestNormal": 1.4
+  },
+  "map": {
+    "townSafeRadius": 16,
+    "portalSafeRadius": 5,
+    "npcSafeRadius": 4
+  }
+}

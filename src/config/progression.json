@@ -1,0 +1,52 @@
+{
+  "maxLevel": 100,
+  "xpBase": 80,
+  "xpPerLevel": 40,
+  "pointsPerLevel": 3,
+  "initial": {
+    "gold": 120,
+    "hp": 120,
+    "mp": 60,
+    "stats": {
+      "str": 5,
+      "vit": 5,
+      "agi": 5
+    },
+    "points": 3,
+    "redPotions": 8,
+    "bluePotions": 4
+  },
+  "hpBase": 100,
+  "hpVit": 4,
+  "hpPerLevel": 12,
+  "mpBase": 60,
+  "mpPerLevel": 8,
+  "atkBase": 12,
+  "atkPrimary": 2,
+  "atkPerLevel": 1.5,
+  "defVit": 2,
+  "defPerLevel": 0.5,
+  "critBase": 0.05,
+  "critAgi": 0.002,
+  "critMultiplier": 1.5,
+  "moveBase": 4.4,
+  "attackAgiBase": 5,
+  "attackAgiFactor": 0.04,
+  "hpRegenPercent": 0.5,
+  "mpRegen": 0.7,
+  "defenseScale": 100,
+  "varianceBase": 0.9,
+  "varianceSpread": 0.2,
+  "poisonAtkFactor": 0.25,
+  "caps": {
+    "crit": 0.6,
+    "move": 0.5,
+    "attackSpeed": 1,
+    "cooldown": 0.4,
+    "healing": 1,
+    "armorPen": 0.6,
+    "lifesteal": 0.25,
+    "dodge": 0.35,
+    "damageReduction": 0.6
+  }
+}

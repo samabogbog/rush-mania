@@ -1,0 +1,3762 @@
+{
+  "equipment": [
+    {
+      "id": "sprout-blade",
+      "name": "Sprout Blade",
+      "slot": "weapon",
+      "job": "swordsman",
+      "level": 1,
+      "rarity": "common",
+      "icon": "thornwood-blade",
+      "bonuses": {
+        "atk": 12,
+        "str": 2
+      },
+      "cost": 40,
+      "materials": [
+        [
+          "Dew jelly",
+          4
+        ],
+        [
+          "Verdant leaf",
+          3
+        ]
+      ],
+      "description": "A sturdy beginning for a frontline adventurer."
+    },
+    {
+      "id": "bloom-staff",
+      "name": "Bloom Staff",
+      "slot": "weapon",
+      "job": "mage",
+      "level": 1,
+      "rarity": "common",
+      "icon": "thornwood-staff",
+      "bonuses": {
+        "atk": 12,
+        "mp": 20,
+        "str": 2
+      },
+      "cost": 40,
+      "materials": [
+        [
+          "Verdant leaf",
+          4
+        ],
+        [
+          "Forest mushroom",
+          3
+        ]
+      ],
+      "description": "A light staff that gives your spells room to grow."
+    },
+    {
+      "id": "willow-bow",
+      "name": "Willow Bow",
+      "slot": "weapon",
+      "job": "archer",
+      "level": 1,
+      "rarity": "common",
+      "icon": "thornwood-bow",
+      "bonuses": {
+        "atk": 10,
+        "agi": 3
+      },
+      "cost": 40,
+      "materials": [
+        [
+          "Verdant leaf",
+          4
+        ],
+        [
+          "Dew jelly",
+          3
+        ]
+      ],
+      "description": "Quick attacks for a nimble hunter."
+    },
+    {
+      "id": "field-coat",
+      "name": "Field Coat",
+      "slot": "armor",
+      "level": 1,
+      "rarity": "common",
+      "icon": "field-coat",
+      "bonuses": {
+        "def": 10,
+        "hp": 30
+      },
+      "cost": 35,
+      "materials": [
+        [
+          "Soft fur",
+          3
+        ],
+        [
+          "Forest mushroom",
+          3
+        ]
+      ],
+      "description": "Balanced defense for your first expeditions."
+    },
+    {
+      "id": "leaf-charm",
+      "name": "Leaf Charm",
+      "slot": "accessory",
+      "level": 1,
+      "rarity": "common",
+      "icon": "leaf-charm",
+      "bonuses": {
+        "agi": 3
+      },
+      "cost": 35,
+      "materials": [
+        [
+          "Verdant leaf",
+          6
+        ],
+        [
+          "Honey drop",
+          2
+        ]
+      ],
+      "description": "A small charm for a faster, luckier build."
+    },
+    {
+      "id": "amber-cleaver",
+      "name": "Amber Cleaver",
+      "slot": "weapon",
+      "job": "swordsman",
+      "level": 20,
+      "rarity": "rare",
+      "icon": "suncrest-blade",
+      "bonuses": {
+        "atk": 38,
+        "str": 5
+      },
+      "cost": 240,
+      "materials": [
+        [
+          "Boar tusk",
+          6
+        ],
+        [
+          "Amber leaf",
+          5
+        ]
+      ],
+      "description": "Powerful strikes; pair it with a defensive coat."
+    },
+    {
+      "id": "amber-wand",
+      "name": "Amber Wand",
+      "slot": "weapon",
+      "job": "mage",
+      "level": 20,
+      "rarity": "rare",
+      "icon": "suncrest-staff",
+      "bonuses": {
+        "atk": 32,
+        "mp": 50,
+        "str": 5
+      },
+      "cost": 240,
+      "materials": [
+        [
+          "Amber spore",
+          6
+        ],
+        [
+          "Golden honey",
+          4
+        ]
+      ],
+      "description": "Enough mana to sustain an area-control build."
+    },
+    {
+      "id": "horn-bow",
+      "name": "Horn Bow",
+      "slot": "weapon",
+      "job": "archer",
+      "level": 20,
+      "rarity": "rare",
+      "icon": "suncrest-bow",
+      "bonuses": {
+        "atk": 32,
+        "agi": 7
+      },
+      "cost": 240,
+      "materials": [
+        [
+          "Amber antler",
+          5
+        ],
+        [
+          "Amber leaf",
+          6
+        ]
+      ],
+      "description": "Speed and critical hits over raw defense."
+    },
+    {
+      "id": "shell-vest",
+      "name": "Shell Vest",
+      "slot": "armor",
+      "level": 40,
+      "rarity": "rare",
+      "icon": "shell-vest",
+      "bonuses": {
+        "def": 50,
+        "vit": 6,
+        "hp": 150
+      },
+      "cost": 500,
+      "materials": [
+        [
+          "River shell",
+          8
+        ],
+        [
+          "Marsh reed",
+          6
+        ]
+      ],
+      "description": "A durable choice for tanking and risky solo fights."
+    },
+    {
+      "id": "wisp-robe",
+      "name": "Wisp Robe",
+      "slot": "armor",
+      "level": 40,
+      "rarity": "rare",
+      "icon": "wisp-robe",
+      "bonuses": {
+        "def": 20,
+        "mp": 100,
+        "str": 10
+      },
+      "cost": 500,
+      "materials": [
+        [
+          "Wisp essence",
+          8
+        ],
+        [
+          "Crystal dust",
+          6
+        ]
+      ],
+      "description": "Trade some defense for spell power and mana."
+    },
+    {
+      "id": "crystal-band",
+      "name": "Crystal Band",
+      "slot": "accessory",
+      "level": 40,
+      "rarity": "rare",
+      "icon": "sparkles",
+      "bonuses": {
+        "str": 8,
+        "mp": 60
+      },
+      "cost": 360,
+      "materials": [
+        [
+          "Crystal dust",
+          8
+        ],
+        [
+          "Crystal jelly",
+          6
+        ]
+      ],
+      "description": "Focus your offensive skills."
+    },
+    {
+      "id": "reed-feather",
+      "name": "Reed Feather",
+      "slot": "accessory",
+      "level": 40,
+      "rarity": "rare",
+      "icon": "wind",
+      "bonuses": {
+        "agi": 10,
+        "def": 10
+      },
+      "cost": 360,
+      "materials": [
+        [
+          "Marsh reed",
+          8
+        ],
+        [
+          "Crystal dust",
+          5
+        ]
+      ],
+      "description": "Attack speed and critical chance for agile builds."
+    },
+    {
+      "id": "frost-edge",
+      "name": "Frost Edge",
+      "slot": "weapon",
+      "job": "swordsman",
+      "level": 65,
+      "rarity": "epic",
+      "icon": "frostguard-blade",
+      "bonuses": {
+        "atk": 100,
+        "str": 15,
+        "def": 25
+      },
+      "cost": 1200,
+      "materials": [
+        [
+          "Frost fang",
+          8
+        ],
+        [
+          "Ice shard",
+          10
+        ]
+      ],
+      "description": "A reliable weapon for leading a dungeon party."
+    },
+    {
+      "id": "snow-staff",
+      "name": "Snow Staff",
+      "slot": "weapon",
+      "job": "mage",
+      "level": 65,
+      "rarity": "epic",
+      "icon": "frostguard-staff",
+      "bonuses": {
+        "atk": 95,
+        "str": 18,
+        "mp": 120
+      },
+      "cost": 1200,
+      "materials": [
+        [
+          "Snow spore",
+          8
+        ],
+        [
+          "Sky feather",
+          8
+        ]
+      ],
+      "description": "Strong area magic and a deep mana pool."
+    },
+    {
+      "id": "sky-bow",
+      "name": "Sky Bow",
+      "slot": "weapon",
+      "job": "archer",
+      "level": 65,
+      "rarity": "epic",
+      "icon": "frostguard-bow",
+      "bonuses": {
+        "atk": 90,
+        "agi": 20
+      },
+      "cost": 1200,
+      "materials": [
+        [
+          "Sky feather",
+          8
+        ],
+        [
+          "Frost fang",
+          8
+        ]
+      ],
+      "description": "An aggressive late-game critical build."
+    },
+    {
+      "id": "root-plate",
+      "name": "Rootheart Plate",
+      "slot": "armor",
+      "level": 65,
+      "rarity": "epic",
+      "icon": "root-plate",
+      "bonuses": {
+        "def": 100,
+        "hp": 350,
+        "vit": 10
+      },
+      "cost": 1600,
+      "materials": [
+        [
+          "Rootheart core",
+          2
+        ],
+        [
+          "Warden stone",
+          8
+        ]
+      ],
+      "description": "Survive the Guardian’s strongest attacks."
+    },
+    {
+      "id": "shade-mantle",
+      "name": "Shade Mantle",
+      "slot": "armor",
+      "level": 65,
+      "rarity": "epic",
+      "icon": "moon",
+      "bonuses": {
+        "def": 35,
+        "str": 20,
+        "agi": 10,
+        "mp": 100
+      },
+      "cost": 1600,
+      "materials": [
+        [
+          "Shade essence",
+          10
+        ],
+        [
+          "Living vine",
+          8
+        ]
+      ],
+      "description": "An offensive alternative to heavy plate."
+    },
+    {
+      "id": "root-signet",
+      "name": "Rootheart Signet",
+      "slot": "accessory",
+      "level": 65,
+      "rarity": "epic",
+      "icon": "root-signet",
+      "bonuses": {
+        "atk": 30,
+        "def": 30,
+        "mp": 60
+      },
+      "cost": 1200,
+      "materials": [
+        [
+          "Rootheart core",
+          1
+        ],
+        [
+          "Rune stone",
+          10
+        ]
+      ],
+      "description": "A trophy that strengthens every class."
+    },
+    {
+      "id": "thornwood-blade",
+      "name": "Thornwood Blade",
+      "slot": "weapon",
+      "job": "swordsman",
+      "level": 10,
+      "rarity": "common",
+      "setId": "thornwood",
+      "dropOnly": true,
+      "icon": "thornwood-blade",
+      "bonuses": {
+        "atk": 32,
+        "str": 1
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "The first treasures of Moonlit Glade."
+    },
+    {
+      "id": "thornwood-staff",
+      "name": "Thornwood Staff",
+      "slot": "weapon",
+      "job": "mage",
+      "level": 10,
+      "rarity": "common",
+      "setId": "thornwood",
+      "dropOnly": true,
+      "icon": "thornwood-staff",
+      "bonuses": {
+        "atk": 31,
+        "mp": 20,
+        "str": 1
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "The first treasures of Moonlit Glade."
+    },
+    {
+      "id": "thornwood-bow",
+      "name": "Thornwood Bow",
+      "slot": "weapon",
+      "job": "archer",
+      "level": 10,
+      "rarity": "common",
+      "setId": "thornwood",
+      "dropOnly": true,
+      "icon": "thornwood-bow",
+      "bonuses": {
+        "atk": 30,
+        "agi": 2
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "The first treasures of Moonlit Glade."
+    },
+    {
+      "id": "thornwood-helmet",
+      "name": "Thornwood Helmet",
+      "slot": "helmet",
+      "level": 10,
+      "rarity": "common",
+      "setId": "thornwood",
+      "dropOnly": true,
+      "icon": "thornwood-helmet",
+      "bonuses": {
+        "def": 8,
+        "hp": 20
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "The first treasures of Moonlit Glade."
+    },
+    {
+      "id": "thornwood-coat",
+      "name": "Thornwood Coat",
+      "slot": "armor",
+      "level": 10,
+      "rarity": "common",
+      "setId": "thornwood",
+      "dropOnly": true,
+      "icon": "thornwood-coat",
+      "bonuses": {
+        "def": 22,
+        "hp": 40
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "The first treasures of Moonlit Glade."
+    },
+    {
+      "id": "thornwood-gloves",
+      "name": "Thornwood Gloves",
+      "slot": "gloves",
+      "level": 10,
+      "rarity": "common",
+      "setId": "thornwood",
+      "dropOnly": true,
+      "icon": "thornwood-gloves",
+      "bonuses": {
+        "atk": 7,
+        "def": 5
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "The first treasures of Moonlit Glade."
+    },
+    {
+      "id": "thornwood-boots",
+      "name": "Thornwood Boots",
+      "slot": "boots",
+      "level": 10,
+      "rarity": "common",
+      "setId": "thornwood",
+      "dropOnly": true,
+      "icon": "thornwood-boots",
+      "bonuses": {
+        "def": 7,
+        "agi": 1
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "The first treasures of Moonlit Glade."
+    },
+    {
+      "id": "thornwood-charm",
+      "name": "Thornwood Charm",
+      "slot": "accessory",
+      "level": 10,
+      "rarity": "common",
+      "setId": "thornwood",
+      "dropOnly": true,
+      "icon": "thornwood-charm",
+      "bonuses": {
+        "hp": 20,
+        "mp": 10,
+        "str": 1
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "The first treasures of Moonlit Glade."
+    },
+    {
+      "id": "suncrest-blade",
+      "name": "Suncrest Blade",
+      "slot": "weapon",
+      "job": "swordsman",
+      "level": 30,
+      "rarity": "common",
+      "setId": "suncrest",
+      "dropOnly": true,
+      "icon": "suncrest-blade",
+      "bonuses": {
+        "atk": 68,
+        "str": 3
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Warm amber relics from the orchard."
+    },
+    {
+      "id": "suncrest-staff",
+      "name": "Suncrest Staff",
+      "slot": "weapon",
+      "job": "mage",
+      "level": 30,
+      "rarity": "common",
+      "setId": "suncrest",
+      "dropOnly": true,
+      "icon": "suncrest-staff",
+      "bonuses": {
+        "atk": 65,
+        "mp": 60,
+        "str": 3
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Warm amber relics from the orchard."
+    },
+    {
+      "id": "suncrest-bow",
+      "name": "Suncrest Bow",
+      "slot": "weapon",
+      "job": "archer",
+      "level": 30,
+      "rarity": "common",
+      "setId": "suncrest",
+      "dropOnly": true,
+      "icon": "suncrest-bow",
+      "bonuses": {
+        "atk": 62,
+        "agi": 4
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Warm amber relics from the orchard."
+    },
+    {
+      "id": "suncrest-helmet",
+      "name": "Suncrest Helmet",
+      "slot": "helmet",
+      "level": 30,
+      "rarity": "common",
+      "setId": "suncrest",
+      "dropOnly": true,
+      "icon": "suncrest-helmet",
+      "bonuses": {
+        "def": 16,
+        "hp": 60
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Warm amber relics from the orchard."
+    },
+    {
+      "id": "suncrest-coat",
+      "name": "Suncrest Coat",
+      "slot": "armor",
+      "level": 30,
+      "rarity": "common",
+      "setId": "suncrest",
+      "dropOnly": true,
+      "icon": "suncrest-coat",
+      "bonuses": {
+        "def": 46,
+        "hp": 120
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Warm amber relics from the orchard."
+    },
+    {
+      "id": "suncrest-gloves",
+      "name": "Suncrest Gloves",
+      "slot": "gloves",
+      "level": 30,
+      "rarity": "common",
+      "setId": "suncrest",
+      "dropOnly": true,
+      "icon": "suncrest-gloves",
+      "bonuses": {
+        "atk": 14,
+        "def": 11
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Warm amber relics from the orchard."
+    },
+    {
+      "id": "suncrest-boots",
+      "name": "Suncrest Boots",
+      "slot": "boots",
+      "level": 30,
+      "rarity": "common",
+      "setId": "suncrest",
+      "dropOnly": true,
+      "icon": "suncrest-boots",
+      "bonuses": {
+        "def": 15,
+        "agi": 2
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Warm amber relics from the orchard."
+    },
+    {
+      "id": "suncrest-charm",
+      "name": "Suncrest Charm",
+      "slot": "accessory",
+      "level": 30,
+      "rarity": "common",
+      "setId": "suncrest",
+      "dropOnly": true,
+      "icon": "suncrest-charm",
+      "bonuses": {
+        "hp": 60,
+        "mp": 30,
+        "str": 2
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Warm amber relics from the orchard."
+    },
+    {
+      "id": "moonveil-blade",
+      "name": "Moonveil Blade",
+      "slot": "weapon",
+      "job": "swordsman",
+      "level": 50,
+      "rarity": "common",
+      "setId": "moonveil",
+      "dropOnly": true,
+      "icon": "moonveil-blade",
+      "bonuses": {
+        "atk": 104,
+        "str": 5
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Moonlit threads from the crystal marsh."
+    },
+    {
+      "id": "moonveil-staff",
+      "name": "Moonveil Staff",
+      "slot": "weapon",
+      "job": "mage",
+      "level": 50,
+      "rarity": "common",
+      "setId": "moonveil",
+      "dropOnly": true,
+      "icon": "moonveil-staff",
+      "bonuses": {
+        "atk": 99,
+        "mp": 100,
+        "str": 5
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Moonlit threads from the crystal marsh."
+    },
+    {
+      "id": "moonveil-bow",
+      "name": "Moonveil Bow",
+      "slot": "weapon",
+      "job": "archer",
+      "level": 50,
+      "rarity": "common",
+      "setId": "moonveil",
+      "dropOnly": true,
+      "icon": "moonveil-bow",
+      "bonuses": {
+        "atk": 94,
+        "agi": 7
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Moonlit threads from the crystal marsh."
+    },
+    {
+      "id": "moonveil-helmet",
+      "name": "Moonveil Helmet",
+      "slot": "helmet",
+      "level": 50,
+      "rarity": "common",
+      "setId": "moonveil",
+      "dropOnly": true,
+      "icon": "moonveil-helmet",
+      "bonuses": {
+        "def": 24,
+        "hp": 100
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Moonlit threads from the crystal marsh."
+    },
+    {
+      "id": "moonveil-coat",
+      "name": "Moonveil Coat",
+      "slot": "armor",
+      "level": 50,
+      "rarity": "common",
+      "setId": "moonveil",
+      "dropOnly": true,
+      "icon": "moonveil-coat",
+      "bonuses": {
+        "def": 70,
+        "hp": 200
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Moonlit threads from the crystal marsh."
+    },
+    {
+      "id": "moonveil-gloves",
+      "name": "Moonveil Gloves",
+      "slot": "gloves",
+      "level": 50,
+      "rarity": "common",
+      "setId": "moonveil",
+      "dropOnly": true,
+      "icon": "moonveil-gloves",
+      "bonuses": {
+        "atk": 21,
+        "def": 17
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Moonlit threads from the crystal marsh."
+    },
+    {
+      "id": "moonveil-boots",
+      "name": "Moonveil Boots",
+      "slot": "boots",
+      "level": 50,
+      "rarity": "common",
+      "setId": "moonveil",
+      "dropOnly": true,
+      "icon": "moonveil-boots",
+      "bonuses": {
+        "def": 23,
+        "agi": 4
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Moonlit threads from the crystal marsh."
+    },
+    {
+      "id": "moonveil-charm",
+      "name": "Moonveil Charm",
+      "slot": "accessory",
+      "level": 50,
+      "rarity": "common",
+      "setId": "moonveil",
+      "dropOnly": true,
+      "icon": "moonveil-charm",
+      "bonuses": {
+        "hp": 100,
+        "mp": 50,
+        "str": 3
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Moonlit threads from the crystal marsh."
+    },
+    {
+      "id": "frostguard-blade",
+      "name": "Frostguard Blade",
+      "slot": "weapon",
+      "job": "swordsman",
+      "level": 70,
+      "rarity": "common",
+      "setId": "frostguard",
+      "dropOnly": true,
+      "icon": "frostguard-blade",
+      "bonuses": {
+        "atk": 140,
+        "str": 7
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Forged by the winds of Frostpeak."
+    },
+    {
+      "id": "frostguard-staff",
+      "name": "Frostguard Staff",
+      "slot": "weapon",
+      "job": "mage",
+      "level": 70,
+      "rarity": "common",
+      "setId": "frostguard",
+      "dropOnly": true,
+      "icon": "frostguard-staff",
+      "bonuses": {
+        "atk": 133,
+        "mp": 140,
+        "str": 6
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Forged by the winds of Frostpeak."
+    },
+    {
+      "id": "frostguard-bow",
+      "name": "Frostguard Bow",
+      "slot": "weapon",
+      "job": "archer",
+      "level": 70,
+      "rarity": "common",
+      "setId": "frostguard",
+      "dropOnly": true,
+      "icon": "frostguard-bow",
+      "bonuses": {
+        "atk": 126,
+        "agi": 9
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Forged by the winds of Frostpeak."
+    },
+    {
+      "id": "frostguard-helmet",
+      "name": "Frostguard Helmet",
+      "slot": "helmet",
+      "level": 70,
+      "rarity": "common",
+      "setId": "frostguard",
+      "dropOnly": true,
+      "icon": "frostguard-helmet",
+      "bonuses": {
+        "def": 32,
+        "hp": 140
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Forged by the winds of Frostpeak."
+    },
+    {
+      "id": "frostguard-coat",
+      "name": "Frostguard Coat",
+      "slot": "armor",
+      "level": 70,
+      "rarity": "common",
+      "setId": "frostguard",
+      "dropOnly": true,
+      "icon": "frostguard-coat",
+      "bonuses": {
+        "def": 94,
+        "hp": 280
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Forged by the winds of Frostpeak."
+    },
+    {
+      "id": "frostguard-gloves",
+      "name": "Frostguard Gloves",
+      "slot": "gloves",
+      "level": 70,
+      "rarity": "common",
+      "setId": "frostguard",
+      "dropOnly": true,
+      "icon": "frostguard-gloves",
+      "bonuses": {
+        "atk": 28,
+        "def": 23
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Forged by the winds of Frostpeak."
+    },
+    {
+      "id": "frostguard-boots",
+      "name": "Frostguard Boots",
+      "slot": "boots",
+      "level": 70,
+      "rarity": "common",
+      "setId": "frostguard",
+      "dropOnly": true,
+      "icon": "frostguard-boots",
+      "bonuses": {
+        "def": 31,
+        "agi": 5
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Forged by the winds of Frostpeak."
+    },
+    {
+      "id": "frostguard-charm",
+      "name": "Frostguard Charm",
+      "slot": "accessory",
+      "level": 70,
+      "rarity": "common",
+      "setId": "frostguard",
+      "dropOnly": true,
+      "icon": "frostguard-charm",
+      "bonuses": {
+        "hp": 140,
+        "mp": 70,
+        "str": 4
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Forged by the winds of Frostpeak."
+    },
+    {
+      "id": "starfall-blade",
+      "name": "Starfall Blade",
+      "slot": "weapon",
+      "job": "swordsman",
+      "level": 90,
+      "rarity": "common",
+      "setId": "starfall",
+      "dropOnly": true,
+      "icon": "starfall-blade",
+      "bonuses": {
+        "atk": 176,
+        "str": 9
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Ancient starlight held in the Rootheart ruins."
+    },
+    {
+      "id": "starfall-staff",
+      "name": "Starfall Staff",
+      "slot": "weapon",
+      "job": "mage",
+      "level": 90,
+      "rarity": "common",
+      "setId": "starfall",
+      "dropOnly": true,
+      "icon": "starfall-staff",
+      "bonuses": {
+        "atk": 167,
+        "mp": 180,
+        "str": 8
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Ancient starlight held in the Rootheart ruins."
+    },
+    {
+      "id": "starfall-bow",
+      "name": "Starfall Bow",
+      "slot": "weapon",
+      "job": "archer",
+      "level": 90,
+      "rarity": "common",
+      "setId": "starfall",
+      "dropOnly": true,
+      "icon": "starfall-bow",
+      "bonuses": {
+        "atk": 158,
+        "agi": 12
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Ancient starlight held in the Rootheart ruins."
+    },
+    {
+      "id": "starfall-helmet",
+      "name": "Starfall Helmet",
+      "slot": "helmet",
+      "level": 90,
+      "rarity": "common",
+      "setId": "starfall",
+      "dropOnly": true,
+      "icon": "starfall-helmet",
+      "bonuses": {
+        "def": 40,
+        "hp": 180
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Ancient starlight held in the Rootheart ruins."
+    },
+    {
+      "id": "starfall-coat",
+      "name": "Starfall Coat",
+      "slot": "armor",
+      "level": 90,
+      "rarity": "common",
+      "setId": "starfall",
+      "dropOnly": true,
+      "icon": "starfall-coat",
+      "bonuses": {
+        "def": 118,
+        "hp": 360
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Ancient starlight held in the Rootheart ruins."
+    },
+    {
+      "id": "starfall-gloves",
+      "name": "Starfall Gloves",
+      "slot": "gloves",
+      "level": 90,
+      "rarity": "common",
+      "setId": "starfall",
+      "dropOnly": true,
+      "icon": "starfall-gloves",
+      "bonuses": {
+        "atk": 35,
+        "def": 29
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Ancient starlight held in the Rootheart ruins."
+    },
+    {
+      "id": "starfall-boots",
+      "name": "Starfall Boots",
+      "slot": "boots",
+      "level": 90,
+      "rarity": "common",
+      "setId": "starfall",
+      "dropOnly": true,
+      "icon": "starfall-boots",
+      "bonuses": {
+        "def": 39,
+        "agi": 6
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Ancient starlight held in the Rootheart ruins."
+    },
+    {
+      "id": "starfall-charm",
+      "name": "Starfall Charm",
+      "slot": "accessory",
+      "level": 90,
+      "rarity": "common",
+      "setId": "starfall",
+      "dropOnly": true,
+      "icon": "starfall-charm",
+      "bonuses": {
+        "hp": 180,
+        "mp": 90,
+        "str": 5
+      },
+      "cost": 0,
+      "materials": [],
+      "description": "Ancient starlight held in the Rootheart ruins."
+    }
+  ],
+  "gearSets": [
+    {
+      "id": "thornwood",
+      "name": "Thornwood",
+      "level": 10,
+      "armorIcon": "field-coat",
+      "charmIcon": "leaf-charm",
+      "theme": "The first treasures of Moonlit Glade."
+    },
+    {
+      "id": "suncrest",
+      "name": "Suncrest",
+      "level": 30,
+      "armorIcon": "shell-vest",
+      "charmIcon": "honey",
+      "theme": "Warm amber relics from the orchard."
+    },
+    {
+      "id": "moonveil",
+      "name": "Moonveil",
+      "level": 50,
+      "armorIcon": "wisp-robe",
+      "charmIcon": "wisp-essence",
+      "theme": "Moonlit threads from the crystal marsh."
+    },
+    {
+      "id": "frostguard",
+      "name": "Frostguard",
+      "level": 70,
+      "armorIcon": "root-plate",
+      "charmIcon": "ice-shard",
+      "theme": "Forged by the winds of Frostpeak."
+    },
+    {
+      "id": "starfall",
+      "name": "Starfall",
+      "level": 90,
+      "armorIcon": "root-plate",
+      "charmIcon": "root-signet",
+      "theme": "Ancient starlight held in the Rootheart ruins."
+    }
+  ],
+  "skills": {
+    "swordsman": [
+      {
+        "id": "swordsman-1",
+        "stage": 1,
+        "branch": 0,
+        "name": "Power Strike",
+        "icon": "skill-swordsman-1",
+        "effect": "hit",
+        "power": 1.8,
+        "mp": 10,
+        "cooldown": 4,
+        "description": "A heavy focused strike.",
+        "level": 10,
+        "range": 2.8
+      },
+      {
+        "id": "swordsman-2",
+        "stage": 2,
+        "branch": 0,
+        "name": "Whirlwind",
+        "icon": "skill-swordsman-2",
+        "effect": "area",
+        "power": 1.4,
+        "mp": 18,
+        "cooldown": 7,
+        "description": "Sweep every enemy around you.",
+        "level": 20,
+        "range": 2.8,
+        "radius": 4
+      },
+      {
+        "id": "swordsman-3",
+        "stage": 3,
+        "branch": 0,
+        "name": "Iron Guard",
+        "icon": "skill-swordsman-3",
+        "effect": "guard",
+        "power": 0.5,
+        "mp": 15,
+        "cooldown": 15,
+        "description": "Reduce incoming damage by 50% for 6 seconds.",
+        "level": 30,
+        "range": 2.8,
+        "duration": 6
+      },
+      {
+        "id": "swordsman-4",
+        "stage": 4,
+        "branch": 0,
+        "name": "Shield Bash",
+        "icon": "skill-swordsman-4",
+        "effect": "stun",
+        "power": 1.3,
+        "mp": 16,
+        "cooldown": 10,
+        "description": "Interrupt and stun a target for 2 seconds.",
+        "level": 40,
+        "range": 2.8,
+        "duration": 2
+      },
+      {
+        "id": "swordsman-5",
+        "stage": 5,
+        "branch": 0,
+        "name": "Second Wind",
+        "icon": "skill-swordsman-5",
+        "effect": "heal",
+        "power": 0.3,
+        "mp": 20,
+        "cooldown": 20,
+        "description": "Recover 30% of maximum health.",
+        "level": 50,
+        "range": 2.8
+      },
+      {
+        "id": "swordsman-6",
+        "stage": 6,
+        "branch": 0,
+        "name": "War Cry",
+        "icon": "skill-swordsman-6",
+        "effect": "fury",
+        "power": 0.35,
+        "mp": 24,
+        "cooldown": 18,
+        "description": "Increase attack by 35% for 8 seconds.",
+        "level": 60,
+        "range": 2.8,
+        "duration": 8
+      },
+      {
+        "id": "swordsman-7",
+        "stage": 7,
+        "branch": 0,
+        "name": "Cleave",
+        "icon": "skill-swordsman-7",
+        "effect": "area",
+        "power": 2.2,
+        "mp": 28,
+        "cooldown": 10,
+        "description": "A powerful sweep around your target.",
+        "level": 70,
+        "range": 2.8,
+        "radius": 3
+      },
+      {
+        "id": "swordsman-8",
+        "stage": 8,
+        "branch": 0,
+        "name": "Hamstring",
+        "icon": "skill-swordsman-8",
+        "effect": "slow",
+        "power": 2,
+        "mp": 25,
+        "cooldown": 12,
+        "description": "Slow a target for 5 seconds.",
+        "level": 80,
+        "range": 2.8,
+        "duration": 5
+      },
+      {
+        "id": "swordsman-9",
+        "stage": 9,
+        "branch": 0,
+        "name": "Earthbreaker",
+        "icon": "skill-swordsman-9",
+        "effect": "area",
+        "power": 3,
+        "mp": 35,
+        "cooldown": 15,
+        "description": "Shake the ground around you.",
+        "level": 90,
+        "range": 2.8,
+        "radius": 5
+      },
+      {
+        "id": "swordsman-10",
+        "stage": 10,
+        "branch": 0,
+        "name": "Meteor Blade",
+        "icon": "skill-swordsman-10",
+        "effect": "area",
+        "power": 4.5,
+        "mp": 50,
+        "cooldown": 25,
+        "description": "Unleash your strongest sweeping attack.",
+        "level": 100,
+        "range": 2.8,
+        "radius": 5,
+        "cast": 0.6
+      },
+      {
+        "id": "swordsman-b-1",
+        "stage": 1,
+        "branch": 1,
+        "name": "Bulwark",
+        "icon": "skill-swordsman-b-1",
+        "effect": "guard",
+        "power": 0.35,
+        "mp": 8,
+        "cooldown": 9,
+        "description": "Reduce damage by 35% for 4s.",
+        "level": 10,
+        "range": 2.8,
+        "duration": 4
+      },
+      {
+        "id": "swordsman-b-2",
+        "stage": 2,
+        "branch": 1,
+        "name": "Concussion",
+        "icon": "skill-swordsman-b-2",
+        "effect": "stun",
+        "power": 1.1,
+        "mp": 14,
+        "cooldown": 8,
+        "description": "Deal 1.1× ATK and stun the target for 2.5s.",
+        "level": 20,
+        "range": 2.8,
+        "duration": 2.5
+      },
+      {
+        "id": "swordsman-b-3",
+        "stage": 3,
+        "branch": 1,
+        "name": "Field Recovery",
+        "icon": "skill-swordsman-b-3",
+        "effect": "heal",
+        "power": 0.22,
+        "mp": 16,
+        "cooldown": 14,
+        "description": "Restore 22% max HP.",
+        "level": 30,
+        "range": 2.8
+      },
+      {
+        "id": "swordsman-b-4",
+        "stage": 4,
+        "branch": 1,
+        "name": "Sweeping Challenge",
+        "icon": "skill-swordsman-b-4",
+        "effect": "area",
+        "power": 1.1,
+        "mp": 19,
+        "cooldown": 7,
+        "description": "Deal 1.1× ATK in a 5m area.",
+        "level": 40,
+        "range": 2.8,
+        "radius": 5
+      },
+      {
+        "id": "swordsman-b-5",
+        "stage": 5,
+        "branch": 1,
+        "name": "Fortress Stance",
+        "icon": "skill-swordsman-b-5",
+        "effect": "guard",
+        "power": 0.65,
+        "mp": 24,
+        "cooldown": 18,
+        "description": "Reduce damage by 65% for 7s.",
+        "level": 50,
+        "range": 2.8,
+        "duration": 7
+      },
+      {
+        "id": "swordsman-b-6",
+        "stage": 6,
+        "branch": 1,
+        "name": "Crushing Advance",
+        "icon": "skill-swordsman-b-6",
+        "effect": "slow",
+        "power": 2.4,
+        "mp": 26,
+        "cooldown": 11,
+        "description": "Deal 2.4× ATK and slow the target for 5s.",
+        "level": 60,
+        "range": 2.8,
+        "duration": 5
+      },
+      {
+        "id": "swordsman-b-7",
+        "stage": 7,
+        "branch": 1,
+        "name": "Battle Renewal",
+        "icon": "skill-swordsman-b-7",
+        "effect": "heal",
+        "power": 0.4,
+        "mp": 32,
+        "cooldown": 22,
+        "description": "Restore 40% max HP.",
+        "level": 70,
+        "range": 2.8
+      },
+      {
+        "id": "swordsman-b-8",
+        "stage": 8,
+        "branch": 1,
+        "name": "Rallying Standard",
+        "icon": "skill-swordsman-b-8",
+        "effect": "fury",
+        "power": 0.5,
+        "mp": 30,
+        "cooldown": 22,
+        "description": "Increase attack by 50% for 12s.",
+        "level": 80,
+        "range": 2.8,
+        "duration": 12
+      },
+      {
+        "id": "swordsman-b-9",
+        "stage": 9,
+        "branch": 1,
+        "name": "Unbreakable",
+        "icon": "skill-swordsman-b-9",
+        "effect": "guard",
+        "power": 0.8,
+        "mp": 40,
+        "cooldown": 25,
+        "description": "Reduce damage by 80% for 8s.",
+        "level": 90,
+        "range": 2.8,
+        "duration": 8
+      },
+      {
+        "id": "swordsman-b-10",
+        "stage": 10,
+        "branch": 1,
+        "name": "Guardian Quake",
+        "icon": "skill-swordsman-b-10",
+        "effect": "area",
+        "power": 3.5,
+        "mp": 44,
+        "cooldown": 20,
+        "description": "Deal 3.5× ATK in a 6m area. Slow enemies for 5s.",
+        "level": 100,
+        "range": 2.8,
+        "radius": 6,
+        "duration": 5,
+        "cast": 0.4
+      }
+    ],
+    "mage": [
+      {
+        "id": "mage-1",
+        "stage": 1,
+        "branch": 0,
+        "name": "Fire Bolt",
+        "icon": "skill-mage-1",
+        "effect": "hit",
+        "power": 2,
+        "mp": 12,
+        "cooldown": 4,
+        "description": "Launch a burning bolt.",
+        "level": 10,
+        "range": 8,
+        "cast": 0.35
+      },
+      {
+        "id": "mage-2",
+        "stage": 2,
+        "branch": 0,
+        "name": "Frost Nova",
+        "icon": "skill-mage-2",
+        "effect": "area",
+        "power": 1.5,
+        "mp": 20,
+        "cooldown": 8,
+        "description": "Burst around the target and slow nearby enemies.",
+        "level": 20,
+        "range": 8,
+        "radius": 3,
+        "duration": 3,
+        "cast": 0.4
+      },
+      {
+        "id": "mage-3",
+        "stage": 3,
+        "branch": 0,
+        "name": "Arcane Barrier",
+        "icon": "skill-mage-3",
+        "effect": "guard",
+        "power": 0.6,
+        "mp": 18,
+        "cooldown": 16,
+        "description": "Reduce incoming damage by 60% for 5 seconds.",
+        "level": 30,
+        "range": 8,
+        "duration": 5
+      },
+      {
+        "id": "mage-4",
+        "stage": 4,
+        "branch": 0,
+        "name": "Lightning",
+        "icon": "skill-mage-4",
+        "effect": "stun",
+        "power": 1.6,
+        "mp": 22,
+        "cooldown": 10,
+        "description": "Stun a target for 2 seconds.",
+        "level": 40,
+        "range": 8,
+        "duration": 2,
+        "cast": 0.3
+      },
+      {
+        "id": "mage-5",
+        "stage": 5,
+        "branch": 0,
+        "name": "Vital Bloom",
+        "icon": "skill-mage-5",
+        "effect": "heal",
+        "power": 0.35,
+        "mp": 25,
+        "cooldown": 20,
+        "description": "Recover 35% of maximum health.",
+        "level": 50,
+        "range": 8
+      },
+      {
+        "id": "mage-6",
+        "stage": 6,
+        "branch": 0,
+        "name": "Arcane Focus",
+        "icon": "skill-mage-6",
+        "effect": "fury",
+        "power": 0.4,
+        "mp": 25,
+        "cooldown": 18,
+        "description": "Increase attack by 40% for 8 seconds.",
+        "level": 60,
+        "range": 8,
+        "duration": 8
+      },
+      {
+        "id": "mage-7",
+        "stage": 7,
+        "branch": 0,
+        "name": "Blizzard",
+        "icon": "skill-mage-7",
+        "effect": "area",
+        "power": 2.5,
+        "mp": 35,
+        "cooldown": 12,
+        "description": "Freeze the air around your target.",
+        "level": 70,
+        "range": 8,
+        "radius": 4,
+        "duration": 4,
+        "cast": 0.7
+      },
+      {
+        "id": "mage-8",
+        "stage": 8,
+        "branch": 0,
+        "name": "Venom Cloud",
+        "icon": "skill-mage-8",
+        "effect": "poison",
+        "power": 1.2,
+        "mp": 30,
+        "cooldown": 14,
+        "description": "A poisonous spell that damages over 6 seconds.",
+        "level": 80,
+        "range": 8,
+        "duration": 6
+      },
+      {
+        "id": "mage-9",
+        "stage": 9,
+        "branch": 0,
+        "name": "Starfall",
+        "icon": "skill-mage-9",
+        "effect": "area",
+        "power": 3.4,
+        "mp": 42,
+        "cooldown": 18,
+        "description": "Call falling stars onto a wide area.",
+        "level": 90,
+        "range": 8,
+        "radius": 5,
+        "cast": 0.8
+      },
+      {
+        "id": "mage-10",
+        "stage": 10,
+        "branch": 0,
+        "name": "Astral Storm",
+        "icon": "skill-mage-10",
+        "effect": "area",
+        "power": 5,
+        "mp": 60,
+        "cooldown": 28,
+        "description": "A devastating arcane storm.",
+        "level": 100,
+        "range": 8,
+        "radius": 6,
+        "cast": 1
+      },
+      {
+        "id": "mage-b-1",
+        "stage": 1,
+        "branch": 1,
+        "name": "Bramble Bolt",
+        "icon": "skill-mage-b-1",
+        "effect": "slow",
+        "power": 1.4,
+        "mp": 9,
+        "cooldown": 5,
+        "description": "Deal 1.4× ATK and slow the target for 3s.",
+        "level": 10,
+        "range": 8,
+        "duration": 3
+      },
+      {
+        "id": "mage-b-2",
+        "stage": 2,
+        "branch": 1,
+        "name": "Restoring Dew",
+        "icon": "skill-mage-b-2",
+        "effect": "heal",
+        "power": 0.18,
+        "mp": 15,
+        "cooldown": 11,
+        "description": "Restore 18% max HP.",
+        "level": 20,
+        "range": 8
+      },
+      {
+        "id": "mage-b-3",
+        "stage": 3,
+        "branch": 1,
+        "name": "Spore Hex",
+        "icon": "skill-mage-b-3",
+        "effect": "poison",
+        "power": 1,
+        "mp": 16,
+        "cooldown": 10,
+        "description": "Deal 1× ATK and poison the target for 7s.",
+        "level": 30,
+        "range": 8,
+        "duration": 7
+      },
+      {
+        "id": "mage-b-4",
+        "stage": 4,
+        "branch": 1,
+        "name": "Thorn Burst",
+        "icon": "skill-mage-b-4",
+        "effect": "area",
+        "power": 1.35,
+        "mp": 20,
+        "cooldown": 7,
+        "description": "Deal 1.35× ATK in a 4m area. Slow enemies for 2s.",
+        "level": 40,
+        "range": 8,
+        "radius": 4,
+        "duration": 2
+      },
+      {
+        "id": "mage-b-5",
+        "stage": 5,
+        "branch": 1,
+        "name": "Living Shelter",
+        "icon": "skill-mage-b-5",
+        "effect": "guard",
+        "power": 0.5,
+        "mp": 22,
+        "cooldown": 14,
+        "description": "Reduce damage by 50% for 8s.",
+        "level": 50,
+        "range": 8,
+        "duration": 8
+      },
+      {
+        "id": "mage-b-6",
+        "stage": 6,
+        "branch": 1,
+        "name": "Moonbeam",
+        "icon": "skill-mage-b-6",
+        "effect": "stun",
+        "power": 2.4,
+        "mp": 28,
+        "cooldown": 12,
+        "description": "Deal 2.4× ATK and stun the target for 3s.",
+        "level": 60,
+        "range": 8,
+        "duration": 3,
+        "cast": 0.5
+      },
+      {
+        "id": "mage-b-7",
+        "stage": 7,
+        "branch": 1,
+        "name": "Verdant Renewal",
+        "icon": "skill-mage-b-7",
+        "effect": "heal",
+        "power": 0.48,
+        "mp": 38,
+        "cooldown": 24,
+        "description": "Restore 48% max HP.",
+        "level": 70,
+        "range": 8
+      },
+      {
+        "id": "mage-b-8",
+        "stage": 8,
+        "branch": 1,
+        "name": "Spirit Surge",
+        "icon": "skill-mage-b-8",
+        "effect": "fury",
+        "power": 0.55,
+        "mp": 32,
+        "cooldown": 22,
+        "description": "Increase attack by 55% for 12s.",
+        "level": 80,
+        "range": 8,
+        "duration": 12
+      },
+      {
+        "id": "mage-b-9",
+        "stage": 9,
+        "branch": 1,
+        "name": "Root Prison",
+        "icon": "skill-mage-b-9",
+        "effect": "slow",
+        "power": 3.5,
+        "mp": 38,
+        "cooldown": 16,
+        "description": "Deal 3.5× ATK and slow the target for 10s.",
+        "level": 90,
+        "range": 8,
+        "duration": 10,
+        "cast": 0.6
+      },
+      {
+        "id": "mage-b-10",
+        "stage": 10,
+        "branch": 1,
+        "name": "Worldtree Bloom",
+        "icon": "skill-mage-b-10",
+        "effect": "heal",
+        "power": 0.7,
+        "mp": 65,
+        "cooldown": 35,
+        "description": "Restore 70% max HP.",
+        "level": 100,
+        "range": 8,
+        "cast": 0.8
+      }
+    ],
+    "archer": [
+      {
+        "id": "archer-1",
+        "stage": 1,
+        "branch": 0,
+        "name": "Power Shot",
+        "icon": "skill-archer-1",
+        "effect": "hit",
+        "power": 1.9,
+        "mp": 10,
+        "cooldown": 4,
+        "description": "A precise, powerful arrow.",
+        "level": 10,
+        "range": 9
+      },
+      {
+        "id": "archer-2",
+        "stage": 2,
+        "branch": 0,
+        "name": "Arrow Rain",
+        "icon": "skill-archer-2",
+        "effect": "area",
+        "power": 1.5,
+        "mp": 18,
+        "cooldown": 8,
+        "description": "Rain arrows around your target.",
+        "level": 20,
+        "range": 9,
+        "radius": 3
+      },
+      {
+        "id": "archer-3",
+        "stage": 3,
+        "branch": 0,
+        "name": "Evasive Stance",
+        "icon": "skill-archer-3",
+        "effect": "guard",
+        "power": 0.45,
+        "mp": 15,
+        "cooldown": 14,
+        "description": "Reduce incoming damage by 45% for 6 seconds.",
+        "level": 30,
+        "range": 9,
+        "duration": 6
+      },
+      {
+        "id": "archer-4",
+        "stage": 4,
+        "branch": 0,
+        "name": "Pinning Shot",
+        "icon": "skill-archer-4",
+        "effect": "stun",
+        "power": 1.4,
+        "mp": 18,
+        "cooldown": 10,
+        "description": "Pin a target for 2 seconds.",
+        "level": 40,
+        "range": 9,
+        "duration": 2
+      },
+      {
+        "id": "archer-5",
+        "stage": 5,
+        "branch": 0,
+        "name": "Field Remedy",
+        "icon": "skill-archer-5",
+        "effect": "heal",
+        "power": 0.25,
+        "mp": 18,
+        "cooldown": 18,
+        "description": "Recover 25% of maximum health.",
+        "level": 50,
+        "range": 9
+      },
+      {
+        "id": "archer-6",
+        "stage": 6,
+        "branch": 0,
+        "name": "Hunter Focus",
+        "icon": "skill-archer-6",
+        "effect": "fury",
+        "power": 0.3,
+        "mp": 22,
+        "cooldown": 16,
+        "description": "Increase attack by 30% for 10 seconds.",
+        "level": 60,
+        "range": 9,
+        "duration": 10
+      },
+      {
+        "id": "archer-7",
+        "stage": 7,
+        "branch": 0,
+        "name": "Piercing Volley",
+        "icon": "skill-archer-7",
+        "effect": "area",
+        "power": 2.2,
+        "mp": 28,
+        "cooldown": 10,
+        "description": "Piercing arrows strike nearby enemies.",
+        "level": 70,
+        "range": 9,
+        "radius": 3.5
+      },
+      {
+        "id": "archer-8",
+        "stage": 8,
+        "branch": 0,
+        "name": "Poison Arrow",
+        "icon": "skill-archer-8",
+        "effect": "poison",
+        "power": 1.1,
+        "mp": 24,
+        "cooldown": 12,
+        "description": "Poison a target for 8 seconds.",
+        "level": 80,
+        "range": 9,
+        "duration": 8
+      },
+      {
+        "id": "archer-9",
+        "stage": 9,
+        "branch": 0,
+        "name": "Crippling Shot",
+        "icon": "skill-archer-9",
+        "effect": "slow",
+        "power": 3,
+        "mp": 32,
+        "cooldown": 14,
+        "description": "A heavy arrow that slows for 6 seconds.",
+        "level": 90,
+        "range": 9,
+        "duration": 6
+      },
+      {
+        "id": "archer-10",
+        "stage": 10,
+        "branch": 0,
+        "name": "Sky Barrage",
+        "icon": "skill-archer-10",
+        "effect": "area",
+        "power": 4.5,
+        "mp": 48,
+        "cooldown": 24,
+        "description": "Cover the target area in a storm of arrows.",
+        "level": 100,
+        "range": 9,
+        "radius": 5,
+        "cast": 0.5
+      },
+      {
+        "id": "archer-b-1",
+        "stage": 1,
+        "branch": 1,
+        "name": "Snaring Arrow",
+        "icon": "skill-archer-b-1",
+        "effect": "slow",
+        "power": 1.2,
+        "mp": 8,
+        "cooldown": 5,
+        "description": "Deal 1.2× ATK and slow the target for 4s.",
+        "level": 10,
+        "range": 9,
+        "duration": 4
+      },
+      {
+        "id": "archer-b-2",
+        "stage": 2,
+        "branch": 1,
+        "name": "Venom Dart",
+        "icon": "skill-archer-b-2",
+        "effect": "poison",
+        "power": 0.9,
+        "mp": 14,
+        "cooldown": 8,
+        "description": "Deal 0.9× ATK and poison the target for 6s.",
+        "level": 20,
+        "range": 9,
+        "duration": 6
+      },
+      {
+        "id": "archer-b-3",
+        "stage": 3,
+        "branch": 1,
+        "name": "Scatter Volley",
+        "icon": "skill-archer-b-3",
+        "effect": "area",
+        "power": 1.4,
+        "mp": 18,
+        "cooldown": 7,
+        "description": "Deal 1.4× ATK in a 4m area.",
+        "level": 30,
+        "range": 9,
+        "radius": 4
+      },
+      {
+        "id": "archer-b-4",
+        "stage": 4,
+        "branch": 1,
+        "name": "Herbal Tonic",
+        "icon": "skill-archer-b-4",
+        "effect": "heal",
+        "power": 0.2,
+        "mp": 16,
+        "cooldown": 14,
+        "description": "Restore 20% max HP.",
+        "level": 40,
+        "range": 9
+      },
+      {
+        "id": "archer-b-5",
+        "stage": 5,
+        "branch": 1,
+        "name": "Stalker Focus",
+        "icon": "skill-archer-b-5",
+        "effect": "fury",
+        "power": 0.4,
+        "mp": 22,
+        "cooldown": 16,
+        "description": "Increase attack by 40% for 9s.",
+        "level": 50,
+        "range": 9,
+        "duration": 9
+      },
+      {
+        "id": "archer-b-6",
+        "stage": 6,
+        "branch": 1,
+        "name": "Shock Arrow",
+        "icon": "skill-archer-b-6",
+        "effect": "stun",
+        "power": 2.2,
+        "mp": 25,
+        "cooldown": 12,
+        "description": "Deal 2.2× ATK and stun the target for 3s.",
+        "level": 60,
+        "range": 9,
+        "duration": 3
+      },
+      {
+        "id": "archer-b-7",
+        "stage": 7,
+        "branch": 1,
+        "name": "Camouflage Guard",
+        "icon": "skill-archer-b-7",
+        "effect": "guard",
+        "power": 0.6,
+        "mp": 30,
+        "cooldown": 18,
+        "description": "Reduce damage by 60% for 8s.",
+        "level": 70,
+        "range": 9,
+        "duration": 8
+      },
+      {
+        "id": "archer-b-8",
+        "stage": 8,
+        "branch": 1,
+        "name": "Entangling Volley",
+        "icon": "skill-archer-b-8",
+        "effect": "area",
+        "power": 2.4,
+        "mp": 34,
+        "cooldown": 12,
+        "description": "Deal 2.4× ATK in a 5m area. Slow enemies for 5s.",
+        "level": 80,
+        "range": 9,
+        "radius": 5,
+        "duration": 5
+      },
+      {
+        "id": "archer-b-9",
+        "stage": 9,
+        "branch": 1,
+        "name": "Toxic Fang",
+        "icon": "skill-archer-b-9",
+        "effect": "poison",
+        "power": 2.6,
+        "mp": 36,
+        "cooldown": 16,
+        "description": "Deal 2.6× ATK and poison the target for 12s.",
+        "level": 90,
+        "range": 9,
+        "duration": 12
+      },
+      {
+        "id": "archer-b-10",
+        "stage": 10,
+        "branch": 1,
+        "name": "Wild Hunt",
+        "icon": "skill-archer-b-10",
+        "effect": "fury",
+        "power": 0.8,
+        "mp": 48,
+        "cooldown": 28,
+        "description": "Increase attack by 80% for 14s.",
+        "level": 100,
+        "range": 9,
+        "duration": 14
+      }
+    ]
+  },
+  "classes": {
+    "swordsman": {
+      "name": "Swordsman",
+      "role": "Close combat · defense and crowd control",
+      "icon": "swords",
+      "color": 15899463,
+      "range": 1.8,
+      "speed": 0.7,
+      "weapon": "Sword"
+    },
+    "mage": {
+      "name": "Mage",
+      "role": "Ranged magic · area damage and control",
+      "icon": "wand-sparkles",
+      "color": 11233517,
+      "range": 7,
+      "speed": 1,
+      "weapon": "Staff"
+    },
+    "archer": {
+      "name": "Archer",
+      "role": "Ranged physical · speed and damage over time",
+      "icon": "crosshair",
+      "color": 5621386,
+      "range": 8,
+      "speed": 0.8,
+      "weapon": "Bow"
+    }
+  },
+  "species": {
+    "Dewdrop": {
+      "level": 1,
+      "family": "slime",
+      "color": 3528948,
+      "drop": "Dew jelly",
+      "shape": "circle",
+      "hp": 55,
+      "xp": 24,
+      "defense": 8,
+      "atk": 7,
+      "gold": 8,
+      "icon": "💧",
+      "windup": 0.65,
+      "range": 2.2
+    },
+    "Wildcap": {
+      "level": 2,
+      "family": "cap",
+      "color": 16734586,
+      "drop": "Forest mushroom",
+      "shape": "circle",
+      "hp": 85,
+      "xp": 38,
+      "defense": 18,
+      "atk": 8,
+      "gold": 8,
+      "icon": "🍄",
+      "windup": 0.65,
+      "range": 2.2
+    },
+    "Leafling": {
+      "level": 2,
+      "family": "plant",
+      "color": 10675508,
+      "drop": "Verdant leaf",
+      "shape": "circle",
+      "hp": 70,
+      "xp": 30,
+      "defense": 12,
+      "atk": 8,
+      "gold": 8,
+      "icon": "🌿",
+      "windup": 0.65,
+      "range": 2.2
+    },
+    "Sunbee": {
+      "level": 5,
+      "family": "insect",
+      "color": 16761400,
+      "drop": "Honey drop",
+      "shape": "line",
+      "hp": 150,
+      "xp": 80,
+      "defense": 15,
+      "atk": 19,
+      "gold": 9,
+      "icon": "🌿",
+      "windup": 1.1,
+      "range": 5
+    },
+    "RibbonHare": {
+      "level": 7,
+      "family": "beast",
+      "color": 16756168,
+      "drop": "Soft fur",
+      "shape": "cone",
+      "hp": 186,
+      "xp": 104,
+      "defense": 17.799999999999997,
+      "atk": 23.8,
+      "gold": 10,
+      "icon": "🌿",
+      "windup": 0.8,
+      "range": 3.6
+    },
+    "Applesprout": {
+      "level": 20,
+      "family": "plant",
+      "color": 16011104,
+      "drop": "Amber leaf",
+      "shape": "circle",
+      "hp": 420,
+      "xp": 260,
+      "defense": 36,
+      "atk": 55,
+      "gold": 18,
+      "icon": "🌿",
+      "windup": 0.8,
+      "range": 2.2
+    },
+    "AmberBoar": {
+      "level": 24,
+      "family": "beast",
+      "color": 16751934,
+      "drop": "Boar tusk",
+      "shape": "line",
+      "hp": 492,
+      "xp": 308,
+      "defense": 41.599999999999994,
+      "atk": 64.6,
+      "gold": 20,
+      "icon": "🌿",
+      "windup": 1.1,
+      "range": 5
+    },
+    "Honeybug": {
+      "level": 26,
+      "family": "insect",
+      "color": 16763700,
+      "drop": "Golden honey",
+      "shape": "cone",
+      "hp": 528,
+      "xp": 332,
+      "defense": 44.4,
+      "atk": 69.4,
+      "gold": 21,
+      "icon": "🌿",
+      "windup": 0.8,
+      "range": 3.6
+    },
+    "Sporeguard": {
+      "level": 30,
+      "family": "cap",
+      "color": 12280810,
+      "drop": "Amber spore",
+      "shape": "circle",
+      "hp": 600,
+      "xp": 380,
+      "defense": 50,
+      "atk": 79,
+      "gold": 24,
+      "icon": "🌿",
+      "windup": 0.8,
+      "range": 2.2
+    },
+    "OrchardStag": {
+      "level": 35,
+      "family": "beast",
+      "color": 15439700,
+      "drop": "Amber antler",
+      "shape": "line",
+      "hp": 690,
+      "xp": 440,
+      "defense": 57,
+      "atk": 91,
+      "gold": 27,
+      "icon": "🌿",
+      "windup": 1.1,
+      "range": 5
+    },
+    "GlowWisp": {
+      "level": 40,
+      "family": "wisp",
+      "color": 6745855,
+      "drop": "Wisp essence",
+      "shape": "cone",
+      "hp": 780,
+      "xp": 500,
+      "defense": 64,
+      "atk": 103,
+      "gold": 30,
+      "icon": "🌿",
+      "windup": 0.8,
+      "range": 3.6
+    },
+    "MarshTurtle": {
+      "level": 44,
+      "family": "golem",
+      "color": 5104286,
+      "drop": "River shell",
+      "shape": "circle",
+      "hp": 852,
+      "xp": 548,
+      "defense": 120,
+      "atk": 112.6,
+      "gold": 32,
+      "icon": "🌿",
+      "windup": 0.8,
+      "range": 2.2
+    },
+    "ReedSprite": {
+      "level": 48,
+      "family": "plant",
+      "color": 5229498,
+      "drop": "Marsh reed",
+      "shape": "line",
+      "hp": 924,
+      "xp": 596,
+      "defense": 75.19999999999999,
+      "atk": 122.19999999999999,
+      "gold": 34,
+      "icon": "🌿",
+      "windup": 1.1,
+      "range": 5
+    },
+    "PuddleJelly": {
+      "level": 52,
+      "family": "slime",
+      "color": 10848255,
+      "drop": "Crystal jelly",
+      "shape": "circle",
+      "hp": 996,
+      "xp": 644,
+      "defense": 80.8,
+      "atk": 131.8,
+      "gold": 37,
+      "icon": "🌿",
+      "windup": 0.8,
+      "range": 2.2
+    },
+    "CrystalMoth": {
+      "level": 60,
+      "family": "insect",
+      "color": 13143807,
+      "drop": "Crystal dust",
+      "shape": "cone",
+      "hp": 1140,
+      "xp": 740,
+      "defense": 92,
+      "atk": 151,
+      "gold": 42,
+      "icon": "🌿",
+      "windup": 0.8,
+      "range": 3.6
+    },
+    "FrostCub": {
+      "level": 65,
+      "family": "beast",
+      "color": 11137023,
+      "drop": "Frost fur",
+      "shape": "circle",
+      "hp": 1230,
+      "xp": 800,
+      "defense": 99,
+      "atk": 163,
+      "gold": 45,
+      "icon": "🌿",
+      "windup": 0.8,
+      "range": 2.2
+    },
+    "IceGolem": {
+      "level": 70,
+      "family": "golem",
+      "color": 6671359,
+      "drop": "Ice shard",
+      "shape": "cone",
+      "hp": 1320,
+      "xp": 860,
+      "defense": 180,
+      "atk": 175,
+      "gold": 48,
+      "icon": "🌿",
+      "windup": 0.8,
+      "range": 3.6
+    },
+    "Snowcap": {
+      "level": 76,
+      "family": "cap",
+      "color": 14993407,
+      "drop": "Snow spore",
+      "shape": "circle",
+      "hp": 1428,
+      "xp": 932,
+      "defense": 114.39999999999999,
+      "atk": 189.4,
+      "gold": 51,
+      "icon": "🌿",
+      "windup": 0.8,
+      "range": 2.2
+    },
+    "PeakOwl": {
+      "level": 82,
+      "family": "wisp",
+      "color": 16772530,
+      "drop": "Sky feather",
+      "shape": "line",
+      "hp": 1536,
+      "xp": 1004,
+      "defense": 122.8,
+      "atk": 203.79999999999998,
+      "gold": 55,
+      "icon": "🌿",
+      "windup": 1.1,
+      "range": 5
+    },
+    "FrostWolf": {
+      "level": 90,
+      "family": "beast",
+      "color": 12902143,
+      "drop": "Frost fang",
+      "shape": "line",
+      "hp": 1680,
+      "xp": 1100,
+      "defense": 134,
+      "atk": 223,
+      "gold": 60,
+      "icon": "🌿",
+      "windup": 1.1,
+      "range": 5
+    },
+    "Rootling": {
+      "level": 40,
+      "family": "plant",
+      "color": 7978338,
+      "drop": "Ancient root",
+      "shape": "circle",
+      "hp": 780,
+      "xp": 500,
+      "defense": 64,
+      "atk": 103,
+      "gold": 30,
+      "icon": "🌿",
+      "windup": 0.8,
+      "range": 2.2
+    },
+    "RuinSentinel": {
+      "level": 45,
+      "family": "golem",
+      "color": 11900134,
+      "drop": "Rune stone",
+      "shape": "line",
+      "hp": 870,
+      "xp": 560,
+      "defense": 71,
+      "atk": 115,
+      "gold": 33,
+      "icon": "🌿",
+      "windup": 1.1,
+      "range": 5
+    },
+    "ShadeWisp": {
+      "level": 50,
+      "family": "wisp",
+      "color": 13530095,
+      "drop": "Shade essence",
+      "shape": "cone",
+      "hp": 960,
+      "xp": 620,
+      "defense": 78,
+      "atk": 127,
+      "gold": 36,
+      "icon": "🌿",
+      "windup": 0.8,
+      "range": 3.6
+    },
+    "StoneWarden": {
+      "level": 55,
+      "family": "golem",
+      "color": 11120342,
+      "drop": "Warden stone",
+      "shape": "circle",
+      "hp": 1050,
+      "xp": 680,
+      "defense": 160,
+      "atk": 139,
+      "gold": 39,
+      "icon": "🌿",
+      "windup": 0.8,
+      "range": 2.2
+    },
+    "VineBeast": {
+      "level": 60,
+      "family": "beast",
+      "color": 10806606,
+      "drop": "Living vine",
+      "shape": "line",
+      "hp": 1140,
+      "xp": 740,
+      "defense": 92,
+      "atk": 151,
+      "gold": 42,
+      "icon": "🌿",
+      "windup": 1.1,
+      "range": 5
+    },
+    "TownWildwoodKing": {
+      "level": 8,
+      "family": "beast",
+      "color": 16757850,
+      "drop": "Soft fur",
+      "shape": "cone",
+      "hp": 3264,
+      "xp": 1392,
+      "defense": 57.599999999999994,
+      "atk": 78.6,
+      "gold": 120,
+      "icon": "👑",
+      "windup": 1.65,
+      "range": 4,
+      "tier": "boss",
+      "modelKind": "RibbonHare",
+      "boss": true,
+      "miniBoss": false,
+      "aggroRadius": 10,
+      "leashRadius": 17
+    },
+    "TownBrambleCaptain": {
+      "level": 8,
+      "family": "plant",
+      "color": 9102154,
+      "drop": "Verdant leaf",
+      "shape": "cone",
+      "hp": 1020,
+      "xp": 464,
+      "defense": 34.56,
+      "atk": 47.16,
+      "gold": 40,
+      "icon": "◆",
+      "windup": 1.25,
+      "range": 3.2,
+      "tier": "mini",
+      "modelKind": "Leafling",
+      "boss": false,
+      "miniBoss": true,
+      "aggroRadius": 8,
+      "leashRadius": 14
+    },
+    "MooncapMonarch": {
+      "level": 15,
+      "family": "cap",
+      "color": 14972917,
+      "drop": "Forest mushroom",
+      "shape": "cone",
+      "hp": 5280,
+      "xp": 2400,
+      "defense": 87,
+      "atk": 129,
+      "gold": 180,
+      "icon": "👑",
+      "windup": 1.65,
+      "range": 4,
+      "tier": "boss",
+      "modelKind": "Wildcap",
+      "boss": true,
+      "miniBoss": false,
+      "aggroRadius": 10,
+      "leashRadius": 17
+    },
+    "DewdropMatriarch": {
+      "level": 15,
+      "family": "slime",
+      "color": 3528948,
+      "drop": "Dew jelly",
+      "shape": "cone",
+      "hp": 1650,
+      "xp": 800,
+      "defense": 52.2,
+      "atk": 77.4,
+      "gold": 60,
+      "icon": "◆",
+      "windup": 1.25,
+      "range": 3.2,
+      "tier": "mini",
+      "modelKind": "Dewdrop",
+      "boss": false,
+      "miniBoss": true,
+      "aggroRadius": 8,
+      "leashRadius": 14
+    },
+    "AmberAntlerKing": {
+      "level": 35,
+      "family": "beast",
+      "color": 15439700,
+      "drop": "Amber antler",
+      "shape": "cone",
+      "hp": 11040,
+      "xp": 5280,
+      "defense": 171,
+      "atk": 273,
+      "gold": 324,
+      "icon": "👑",
+      "windup": 1.65,
+      "range": 4,
+      "tier": "boss",
+      "modelKind": "RibbonHare",
+      "boss": true,
+      "miniBoss": false,
+      "aggroRadius": 10,
+      "leashRadius": 17
+    },
+    "HoneyHiveMarshal": {
+      "level": 35,
+      "family": "insect",
+      "color": 16763700,
+      "drop": "Golden honey",
+      "shape": "cone",
+      "hp": 3450,
+      "xp": 1760,
+      "defense": 102.60000000000001,
+      "atk": 163.8,
+      "gold": 108,
+      "icon": "◆",
+      "windup": 1.25,
+      "range": 3.2,
+      "tier": "mini",
+      "modelKind": "Sunbee",
+      "boss": false,
+      "miniBoss": true,
+      "aggroRadius": 8,
+      "leashRadius": 14
+    },
+    "CrystalShellSovereign": {
+      "level": 60,
+      "family": "golem",
+      "color": 5104286,
+      "drop": "River shell",
+      "shape": "cone",
+      "hp": 18240,
+      "xp": 8880,
+      "defense": 276,
+      "atk": 453,
+      "gold": 504,
+      "icon": "👑",
+      "windup": 1.65,
+      "range": 4,
+      "tier": "boss",
+      "modelKind": "IceGolem",
+      "boss": true,
+      "miniBoss": false,
+      "aggroRadius": 10,
+      "leashRadius": 17
+    },
+    "MarshWispHerald": {
+      "level": 60,
+      "family": "wisp",
+      "color": 6745855,
+      "drop": "Wisp essence",
+      "shape": "cone",
+      "hp": 5700,
+      "xp": 2960,
+      "defense": 165.6,
+      "atk": 271.8,
+      "gold": 168,
+      "icon": "◆",
+      "windup": 1.25,
+      "range": 3.2,
+      "tier": "mini",
+      "modelKind": "GlowWisp",
+      "boss": false,
+      "miniBoss": true,
+      "aggroRadius": 8,
+      "leashRadius": 14
+    },
+    "FrostfangSovereign": {
+      "level": 90,
+      "family": "beast",
+      "color": 12902143,
+      "drop": "Frost fang",
+      "shape": "cone",
+      "hp": 26880,
+      "xp": 13200,
+      "defense": 402,
+      "atk": 669,
+      "gold": 720,
+      "icon": "👑",
+      "windup": 1.65,
+      "range": 4,
+      "tier": "boss",
+      "modelKind": "RibbonHare",
+      "boss": true,
+      "miniBoss": false,
+      "aggroRadius": 10,
+      "leashRadius": 17
+    },
+    "IceboundSentinel": {
+      "level": 90,
+      "family": "golem",
+      "color": 6671359,
+      "drop": "Ice shard",
+      "shape": "cone",
+      "hp": 8400,
+      "xp": 4400,
+      "defense": 241.20000000000002,
+      "atk": 401.40000000000003,
+      "gold": 240,
+      "icon": "◆",
+      "windup": 1.25,
+      "range": 3.2,
+      "tier": "mini",
+      "modelKind": "IceGolem",
+      "boss": false,
+      "miniBoss": true,
+      "aggroRadius": 8,
+      "leashRadius": 14
+    },
+    "RootheartGuardian": {
+      "level": 65,
+      "family": "golem",
+      "color": 16757069,
+      "drop": "Rootheart core",
+      "shape": "cone",
+      "hp": 19680,
+      "xp": 9600,
+      "defense": 297,
+      "atk": 489,
+      "gold": 540,
+      "icon": "👑",
+      "windup": 1.65,
+      "range": 4,
+      "tier": "boss",
+      "modelKind": "IceGolem",
+      "boss": true,
+      "miniBoss": false,
+      "aggroRadius": 10,
+      "leashRadius": 17
+    },
+    "RuinShadeHerald": {
+      "level": 65,
+      "family": "wisp",
+      "color": 13530095,
+      "drop": "Shade essence",
+      "shape": "cone",
+      "hp": 6150,
+      "xp": 3200,
+      "defense": 178.20000000000002,
+      "atk": 293.40000000000003,
+      "gold": 180,
+      "icon": "◆",
+      "windup": 1.25,
+      "range": 3.2,
+      "tier": "mini",
+      "modelKind": "GlowWisp",
+      "boss": false,
+      "miniBoss": true,
+      "aggroRadius": 8,
+      "leashRadius": 14
+    }
+  },
+  "zones": {
+    "town": {
+      "name": "Sprout Town",
+      "level": 1,
+      "maxLevel": 100,
+      "description": "A safe central town with merchants and quests; powerful guardians roam the outer wilds.",
+      "ground": 8837239,
+      "path": 15915160,
+      "accent": 15764884,
+      "species": [
+        "TownWildwoodKing",
+        "TownBrambleCaptain"
+      ],
+      "music": [
+        523,
+        659,
+        784,
+        659,
+        587,
+        698,
+        880,
+        784
+      ],
+      "npcs": [
+        {
+          "id": "merchant",
+          "name": "Mallow · Merchant",
+          "x": -4,
+          "z": -8,
+          "panel": "shop"
+        },
+        {
+          "id": "forge",
+          "name": "Ember · Blacksmith",
+          "x": 5,
+          "z": -7,
+          "panel": "forge"
+        },
+        {
+          "id": "guide",
+          "name": "Pip · Quest guide",
+          "x": 0,
+          "z": -5,
+          "panel": "journal"
+        }
+      ]
+    },
+    "glade": {
+      "name": "Moonlit Glade",
+      "level": 1,
+      "maxLevel": 20,
+      "description": "Dew jelly, forest mushrooms and leaves for your first equipment.",
+      "ground": 8636266,
+      "path": 14207380,
+      "accent": 5498773,
+      "species": [
+        "Dewdrop",
+        "Wildcap",
+        "Leafling",
+        "Sunbee",
+        "RibbonHare",
+        "MooncapMonarch",
+        "DewdropMatriarch"
+      ],
+      "music": [
+        392,
+        494,
+        587,
+        740,
+        659,
+        587,
+        494,
+        440
+      ],
+      "npcs": [
+        {
+          "id": "scout",
+          "name": "Fern · Scout",
+          "x": 3,
+          "z": -11,
+          "panel": "journal"
+        }
+      ]
+    },
+    "orchard": {
+      "name": "Amber Orchard",
+      "level": 20,
+      "maxLevel": 40,
+      "description": "Dodge charging beasts; gather amber materials for critical builds.",
+      "ground": 11918168,
+      "path": 15977345,
+      "accent": 16749384,
+      "species": [
+        "Applesprout",
+        "AmberBoar",
+        "Honeybug",
+        "Sporeguard",
+        "OrchardStag",
+        "AmberAntlerKing",
+        "HoneyHiveMarshal"
+      ],
+      "music": [
+        440,
+        554,
+        659,
+        880,
+        740,
+        659,
+        554,
+        494
+      ],
+      "npcs": [
+        {
+          "id": "farmer",
+          "name": "Clover · Orchard keeper",
+          "x": -3,
+          "z": -11,
+          "panel": "journal"
+        }
+      ]
+    },
+    "marsh": {
+      "name": "Crystal Marsh",
+      "level": 40,
+      "maxLevel": 65,
+      "description": "Wisp essence and crystal dust strengthen mana and defensive builds.",
+      "ground": 6605491,
+      "path": 13030829,
+      "accent": 9235711,
+      "species": [
+        "GlowWisp",
+        "MarshTurtle",
+        "ReedSprite",
+        "PuddleJelly",
+        "CrystalMoth",
+        "CrystalShellSovereign",
+        "MarshWispHerald"
+      ],
+      "music": [
+        330,
+        392,
+        494,
+        659,
+        587,
+        494,
+        392,
+        370
+      ],
+      "npcs": [
+        {
+          "id": "witch",
+          "name": "Luma · Crystal scholar",
+          "x": 3,
+          "z": -11,
+          "panel": "journal"
+        }
+      ]
+    },
+    "frost": {
+      "name": "Frostpeak Trail",
+      "level": 65,
+      "maxLevel": 100,
+      "description": "Watch the windups. Frost materials forge late-game weapons.",
+      "ground": 13233151,
+      "path": 15063499,
+      "accent": 8633599,
+      "species": [
+        "FrostCub",
+        "IceGolem",
+        "Snowcap",
+        "PeakOwl",
+        "FrostWolf",
+        "FrostfangSovereign",
+        "IceboundSentinel"
+      ],
+      "music": [
+        294,
+        440,
+        587,
+        698,
+        659,
+        587,
+        440,
+        330
+      ],
+      "npcs": [
+        {
+          "id": "ranger",
+          "name": "Flurry · Ranger",
+          "x": -3,
+          "z": -11,
+          "panel": "journal"
+        }
+      ]
+    },
+    "ruins": {
+      "name": "Rootheart Ruins",
+      "level": 40,
+      "maxLevel": 100,
+      "description": "Party dungeon for 2–4 adventurers. Defeat the Rootheart Guardian.",
+      "ground": 9079229,
+      "path": 13220056,
+      "accent": 13862399,
+      "species": [
+        "Rootling",
+        "RuinSentinel",
+        "ShadeWisp",
+        "StoneWarden",
+        "VineBeast",
+        "RootheartGuardian",
+        "RuinShadeHerald"
+      ],
+      "music": [
+        262,
+        311,
+        392,
+        523,
+        466,
+        392,
+        349,
+        311
+      ],
+      "npcs": [
+        {
+          "id": "warden",
+          "name": "Rune · Dungeon warden",
+          "x": 3,
+          "z": -11,
+          "panel": "journal"
+        }
+      ]
+    }
+  },
+  "questDefinitions": [
+    {
+      "id": "fieldwork",
+      "name": "Woodland fieldwork",
+      "description": "Defeat 15 glade creatures. Pip needs a clear path for new adventurers.",
+      "target": 15,
+      "kind": "kills",
+      "zone": "glade",
+      "gold": 200,
+      "xp": 300,
+      "item": "Red potion",
+      "count": 4
+    },
+    {
+      "id": "first-craft",
+      "name": "Made with your own hands",
+      "description": "Craft any equipment at the forge.",
+      "target": 1,
+      "kind": "craft",
+      "zone": "town",
+      "gold": 120,
+      "xp": 200,
+      "item": "Blue potion",
+      "count": 4
+    },
+    {
+      "id": "amber",
+      "name": "Orchard trouble",
+      "description": "Defeat 12 creatures in Amber Orchard.",
+      "target": 12,
+      "kind": "kills",
+      "zone": "orchard",
+      "gold": 450,
+      "xp": 1600,
+      "item": "Amber spore",
+      "count": 3
+    },
+    {
+      "id": "crystals",
+      "name": "A light in the marsh",
+      "description": "Defeat 12 creatures in Crystal Marsh.",
+      "target": 12,
+      "kind": "kills",
+      "zone": "marsh",
+      "gold": 700,
+      "xp": 3500,
+      "item": "Crystal dust",
+      "count": 3
+    },
+    {
+      "id": "frost",
+      "name": "The long climb",
+      "description": "Defeat 15 creatures in Frostpeak Trail.",
+      "target": 15,
+      "kind": "kills",
+      "zone": "frost",
+      "gold": 1200,
+      "xp": 7000,
+      "item": "Frost fang",
+      "count": 3
+    },
+    {
+      "id": "guardian",
+      "name": "The Rootheart awakens",
+      "description": "Defeat the Rootheart Guardian with your party.",
+      "target": 1,
+      "kind": "boss",
+      "zone": "ruins",
+      "gold": 1800,
+      "xp": 8000,
+      "item": "Rootheart core",
+      "count": 1
+    }
+  ],
+  "maxGear": [
+    {
+      "id": "sprout-blade",
+      "name": "Sprout Blade",
+      "slot": "weapon",
+      "level": 1,
+      "stats": {
+        "atk": 29.4,
+        "str": 4.9
+      }
+    },
+    {
+      "id": "bloom-staff",
+      "name": "Bloom Staff",
+      "slot": "weapon",
+      "level": 1,
+      "stats": {
+        "atk": 29.4,
+        "mp": 49,
+        "str": 4.9
+      }
+    },
+    {
+      "id": "willow-bow",
+      "name": "Willow Bow",
+      "slot": "weapon",
+      "level": 1,
+      "stats": {
+        "atk": 24.5,
+        "agi": 7.35
+      }
+    },
+    {
+      "id": "field-coat",
+      "name": "Field Coat",
+      "slot": "armor",
+      "level": 1,
+      "stats": {
+        "def": 24.5,
+        "hp": 73.5
+      }
+    },
+    {
+      "id": "leaf-charm",
+      "name": "Leaf Charm",
+      "slot": "accessory",
+      "level": 1,
+      "stats": {
+        "agi": 7.35
+      }
+    },
+    {
+      "id": "amber-cleaver",
+      "name": "Amber Cleaver",
+      "slot": "weapon",
+      "level": 20,
+      "stats": {
+        "atk": 93.1,
+        "str": 12.25
+      }
+    },
+    {
+      "id": "amber-wand",
+      "name": "Amber Wand",
+      "slot": "weapon",
+      "level": 20,
+      "stats": {
+        "atk": 78.4,
+        "mp": 122.5,
+        "str": 12.25
+      }
+    },
+    {
+      "id": "horn-bow",
+      "name": "Horn Bow",
+      "slot": "weapon",
+      "level": 20,
+      "stats": {
+        "atk": 78.4,
+        "agi": 17.15
+      }
+    },
+    {
+      "id": "shell-vest",
+      "name": "Shell Vest",
+      "slot": "armor",
+      "level": 40,
+      "stats": {
+        "def": 122.5,
+        "vit": 14.7,
+        "hp": 367.5
+      }
+    },
+    {
+      "id": "wisp-robe",
+      "name": "Wisp Robe",
+      "slot": "armor",
+      "level": 40,
+      "stats": {
+        "def": 49,
+        "mp": 245,
+        "str": 24.5
+      }
+    },
+    {
+      "id": "crystal-band",
+      "name": "Crystal Band",
+      "slot": "accessory",
+      "level": 40,
+      "stats": {
+        "str": 19.6,
+        "mp": 147
+      }
+    },
+    {
+      "id": "reed-feather",
+      "name": "Reed Feather",
+      "slot": "accessory",
+      "level": 40,
+      "stats": {
+        "agi": 24.5,
+        "def": 24.5
+      }
+    },
+    {
+      "id": "frost-edge",
+      "name": "Frost Edge",
+      "slot": "weapon",
+      "level": 65,
+      "stats": {
+        "atk": 245,
+        "str": 36.75,
+        "def": 61.25
+      }
+    },
+    {
+      "id": "snow-staff",
+      "name": "Snow Staff",
+      "slot": "weapon",
+      "level": 65,
+      "stats": {
+        "atk": 232.75,
+        "str": 44.1,
+        "mp": 294
+      }
+    },
+    {
+      "id": "sky-bow",
+      "name": "Sky Bow",
+      "slot": "weapon",
+      "level": 65,
+      "stats": {
+        "atk": 220.5,
+        "agi": 49
+      }
+    },
+    {
+      "id": "root-plate",
+      "name": "Rootheart Plate",
+      "slot": "armor",
+      "level": 65,
+      "stats": {
+        "def": 245,
+        "hp": 857.5,
+        "vit": 24.5
+      }
+    },
+    {
+      "id": "shade-mantle",
+      "name": "Shade Mantle",
+      "slot": "armor",
+      "level": 65,
+      "stats": {
+        "def": 85.75,
+        "str": 49,
+        "agi": 24.5,
+        "mp": 245
+      }
+    },
+    {
+      "id": "root-signet",
+      "name": "Rootheart Signet",
+      "slot": "accessory",
+      "level": 65,
+      "stats": {
+        "atk": 73.5,
+        "def": 73.5,
+        "mp": 147
+      }
+    },
+    {
+      "id": "thornwood-blade",
+      "name": "Thornwood Blade",
+      "slot": "weapon",
+      "level": 10,
+      "stats": {
+        "atk": 112.7,
+        "str": 2.45
+      }
+    },
+    {
+      "id": "thornwood-staff",
+      "name": "Thornwood Staff",
+      "slot": "weapon",
+      "level": 10,
+      "stats": {
+        "atk": 110.25,
+        "mp": 71.05,
+        "str": 2.45
+      }
+    },
+    {
+      "id": "thornwood-bow",
+      "name": "Thornwood Bow",
+      "slot": "weapon",
+      "level": 10,
+      "stats": {
+        "atk": 107.8,
+        "agi": 7.35
+      }
+    },
+    {
+      "id": "thornwood-helmet",
+      "name": "Thornwood Helmet",
+      "slot": "helmet",
+      "level": 10,
+      "stats": {
+        "def": 29.4,
+        "hp": 71.05
+      }
+    },
+    {
+      "id": "thornwood-coat",
+      "name": "Thornwood Coat",
+      "slot": "armor",
+      "level": 10,
+      "stats": {
+        "def": 78.4,
+        "hp": 142.1
+      }
+    },
+    {
+      "id": "thornwood-gloves",
+      "name": "Thornwood Gloves",
+      "slot": "gloves",
+      "level": 10,
+      "stats": {
+        "atk": 24.5,
+        "def": 17.15
+      }
+    },
+    {
+      "id": "thornwood-boots",
+      "name": "Thornwood Boots",
+      "slot": "boots",
+      "level": 10,
+      "stats": {
+        "def": 24.5,
+        "agi": 2.45
+      }
+    },
+    {
+      "id": "thornwood-charm",
+      "name": "Thornwood Charm",
+      "slot": "accessory",
+      "level": 10,
+      "stats": {
+        "hp": 71.05,
+        "mp": 36.75,
+        "str": 2.45
+      }
+    },
+    {
+      "id": "suncrest-blade",
+      "name": "Suncrest Blade",
+      "slot": "weapon",
+      "level": 30,
+      "stats": {
+        "atk": 242.55,
+        "str": 9.8
+      }
+    },
+    {
+      "id": "suncrest-staff",
+      "name": "Suncrest Staff",
+      "slot": "weapon",
+      "level": 30,
+      "stats": {
+        "atk": 230.3,
+        "mp": 213.15,
+        "str": 9.8
+      }
+    },
+    {
+      "id": "suncrest-bow",
+      "name": "Suncrest Bow",
+      "slot": "weapon",
+      "level": 30,
+      "stats": {
+        "atk": 220.5,
+        "agi": 14.7
+      }
+    },
+    {
+      "id": "suncrest-helmet",
+      "name": "Suncrest Helmet",
+      "slot": "helmet",
+      "level": 30,
+      "stats": {
+        "def": 56.35,
+        "hp": 213.15
+      }
+    },
+    {
+      "id": "suncrest-coat",
+      "name": "Suncrest Coat",
+      "slot": "armor",
+      "level": 30,
+      "stats": {
+        "def": 164.15,
+        "hp": 426.3
+      }
+    },
+    {
+      "id": "suncrest-gloves",
+      "name": "Suncrest Gloves",
+      "slot": "gloves",
+      "level": 30,
+      "stats": {
+        "atk": 49,
+        "def": 39.2
+      }
+    },
+    {
+      "id": "suncrest-boots",
+      "name": "Suncrest Boots",
+      "slot": "boots",
+      "level": 30,
+      "stats": {
+        "def": 53.9,
+        "agi": 7.35
+      }
+    },
+    {
+      "id": "suncrest-charm",
+      "name": "Suncrest Charm",
+      "slot": "accessory",
+      "level": 30,
+      "stats": {
+        "hp": 213.15,
+        "mp": 107.8,
+        "str": 7.35
+      }
+    },
+    {
+      "id": "moonveil-blade",
+      "name": "Moonveil Blade",
+      "slot": "weapon",
+      "level": 50,
+      "stats": {
+        "atk": 369.95,
+        "str": 17.15
+      }
+    },
+    {
+      "id": "moonveil-staff",
+      "name": "Moonveil Staff",
+      "slot": "weapon",
+      "level": 50,
+      "stats": {
+        "atk": 352.8,
+        "mp": 355.25,
+        "str": 17.15
+      }
+    },
+    {
+      "id": "moonveil-bow",
+      "name": "Moonveil Bow",
+      "slot": "weapon",
+      "level": 50,
+      "stats": {
+        "atk": 333.2,
+        "agi": 24.5
+      }
+    },
+    {
+      "id": "moonveil-helmet",
+      "name": "Moonveil Helmet",
+      "slot": "helmet",
+      "level": 50,
+      "stats": {
+        "def": 85.75,
+        "hp": 355.25
+      }
+    },
+    {
+      "id": "moonveil-coat",
+      "name": "Moonveil Coat",
+      "slot": "armor",
+      "level": 50,
+      "stats": {
+        "def": 249.9,
+        "hp": 710.5
+      }
+    },
+    {
+      "id": "moonveil-gloves",
+      "name": "Moonveil Gloves",
+      "slot": "gloves",
+      "level": 50,
+      "stats": {
+        "atk": 73.5,
+        "def": 61.25
+      }
+    },
+    {
+      "id": "moonveil-boots",
+      "name": "Moonveil Boots",
+      "slot": "boots",
+      "level": 50,
+      "stats": {
+        "def": 80.85,
+        "agi": 14.7
+      }
+    },
+    {
+      "id": "moonveil-charm",
+      "name": "Moonveil Charm",
+      "slot": "accessory",
+      "level": 50,
+      "stats": {
+        "hp": 355.25,
+        "mp": 178.85,
+        "str": 9.8
+      }
+    },
+    {
+      "id": "frostguard-blade",
+      "name": "Frostguard Blade",
+      "slot": "weapon",
+      "level": 70,
+      "stats": {
+        "atk": 497.35,
+        "str": 24.5
+      }
+    },
+    {
+      "id": "frostguard-staff",
+      "name": "Frostguard Staff",
+      "slot": "weapon",
+      "level": 70,
+      "stats": {
+        "atk": 472.85,
+        "mp": 497.35,
+        "str": 22.05
+      }
+    },
+    {
+      "id": "frostguard-bow",
+      "name": "Frostguard Bow",
+      "slot": "weapon",
+      "level": 70,
+      "stats": {
+        "atk": 448.35,
+        "agi": 31.85
+      }
+    },
+    {
+      "id": "frostguard-helmet",
+      "name": "Frostguard Helmet",
+      "slot": "helmet",
+      "level": 70,
+      "stats": {
+        "def": 112.7,
+        "hp": 497.35
+      }
+    },
+    {
+      "id": "frostguard-coat",
+      "name": "Frostguard Coat",
+      "slot": "armor",
+      "level": 70,
+      "stats": {
+        "def": 333.2,
+        "hp": 994.7
+      }
+    },
+    {
+      "id": "frostguard-gloves",
+      "name": "Frostguard Gloves",
+      "slot": "gloves",
+      "level": 70,
+      "stats": {
+        "atk": 100.45,
+        "def": 80.85
+      }
+    },
+    {
+      "id": "frostguard-boots",
+      "name": "Frostguard Boots",
+      "slot": "boots",
+      "level": 70,
+      "stats": {
+        "def": 110.25,
+        "agi": 17.15
+      }
+    },
+    {
+      "id": "frostguard-charm",
+      "name": "Frostguard Charm",
+      "slot": "accessory",
+      "level": 70,
+      "stats": {
+        "hp": 497.35,
+        "mp": 249.9,
+        "str": 14.7
+      }
+    },
+    {
+      "id": "starfall-blade",
+      "name": "Starfall Blade",
+      "slot": "weapon",
+      "level": 90,
+      "stats": {
+        "atk": 624.75,
+        "str": 31.85
+      }
+    },
+    {
+      "id": "starfall-staff",
+      "name": "Starfall Staff",
+      "slot": "weapon",
+      "level": 90,
+      "stats": {
+        "atk": 592.9,
+        "mp": 639.45,
+        "str": 29.4
+      }
+    },
+    {
+      "id": "starfall-bow",
+      "name": "Starfall Bow",
+      "slot": "weapon",
+      "level": 90,
+      "stats": {
+        "atk": 561.05,
+        "agi": 41.65
+      }
+    },
+    {
+      "id": "starfall-helmet",
+      "name": "Starfall Helmet",
+      "slot": "helmet",
+      "level": 90,
+      "stats": {
+        "def": 142.1,
+        "hp": 639.45
+      }
+    },
+    {
+      "id": "starfall-coat",
+      "name": "Starfall Coat",
+      "slot": "armor",
+      "level": 90,
+      "stats": {
+        "def": 418.95,
+        "hp": 1278.9
+      }
+    },
+    {
+      "id": "starfall-gloves",
+      "name": "Starfall Gloves",
+      "slot": "gloves",
+      "level": 90,
+      "stats": {
+        "atk": 124.95,
+        "def": 102.9
+      }
+    },
+    {
+      "id": "starfall-boots",
+      "name": "Starfall Boots",
+      "slot": "boots",
+      "level": 90,
+      "stats": {
+        "def": 139.65,
+        "agi": 22.05
+      }
+    },
+    {
+      "id": "starfall-charm",
+      "name": "Starfall Charm",
+      "slot": "accessory",
+      "level": 90,
+      "stats": {
+        "hp": 639.45,
+        "mp": 320.95,
+        "str": 17.15
+      }
+    }
+  ],
+  "sets": [
+    {
+      "id": "thornwood",
+      "name": "Thornwood",
+      "level": 10,
+      "armorIcon": "field-coat",
+      "charmIcon": "leaf-charm",
+      "theme": "The first treasures of Moonlit Glade.",
+      "bonus": {
+        "hp": 20,
+        "atk": 4,
+        "def": 3,
+        "damageBonus": 5,
+        "hpRegen": 0.06,
+        "moveSpeed": 5
+      }
+    },
+    {
+      "id": "suncrest",
+      "name": "Suncrest",
+      "level": 30,
+      "armorIcon": "shell-vest",
+      "charmIcon": "honey",
+      "theme": "Warm amber relics from the orchard.",
+      "bonus": {
+        "hp": 60,
+        "atk": 12,
+        "def": 9,
+        "damageBonus": 5,
+        "hpRegen": 0.17,
+        "moveSpeed": 5
+      }
+    },
+    {
+      "id": "moonveil",
+      "name": "Moonveil",
+      "level": 50,
+      "armorIcon": "wisp-robe",
+      "charmIcon": "wisp-essence",
+      "theme": "Moonlit threads from the crystal marsh.",
+      "bonus": {
+        "hp": 100,
+        "atk": 20,
+        "def": 15,
+        "damageBonus": 5,
+        "hpRegen": 0.28,
+        "moveSpeed": 5
+      }
+    },
+    {
+      "id": "frostguard",
+      "name": "Frostguard",
+      "level": 70,
+      "armorIcon": "root-plate",
+      "charmIcon": "ice-shard",
+      "theme": "Forged by the winds of Frostpeak.",
+      "bonus": {
+        "hp": 140,
+        "atk": 28,
+        "def": 21,
+        "damageBonus": 5,
+        "hpRegen": 0.39,
+        "moveSpeed": 5
+      }
+    },
+    {
+      "id": "starfall",
+      "name": "Starfall",
+      "level": 90,
+      "armorIcon": "root-plate",
+      "charmIcon": "root-signet",
+      "theme": "Ancient starlight held in the Rootheart ruins.",
+      "bonus": {
+        "hp": 180,
+        "atk": 36,
+        "def": 27,
+        "damageBonus": 5,
+        "hpRegen": 0.5,
+        "moveSpeed": 5
+      }
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import {economy,progression} from '../src/config/balance';
 import {EXP_CHARM,EXP_TOME,EXP_TEST_GRANT_COUNT,itemCatalog,itemCategory} from '../src/game/items';
 import {rollGear,rarityOrder,BAG_CAPACITY,type Rarity} from '../src/game/equipment';
 import {isStoneTier} from '../src/game/refinement';
@@ -37,9 +38,9 @@ function hydrate(player:Player, realm:Realm) {
   return sim;
 }
 function support(realm:Realm,player:Player,sim:Simulation,actors:{p:Player;sim:Simulation}[]) {
- sim.onSupport=skill=>{if(skill.effect==='guard'&&sim.save.job==='swordsman')for(const monster of sim.monsters)if(monster.alive&&Math.hypot(monster.x-sim.x,monster.z-sim.z)<5){monster.owner=player.id;monster.aggro=true;}const party=partyOf(realm,player.id);if(!party)return;for(const friend of actors){if(friend.p.id===player.id||!party.members.includes(friend.p.id)||friend.p.room!==player.room||friend.sim.save.hp<=0||Math.hypot(friend.sim.x-sim.x,friend.sim.z-sim.z)>8)continue;
-  if(skill.effect==='heal')friend.sim.save.hp=Math.min(friend.sim.maxHp,friend.sim.save.hp+friend.sim.maxHp*skill.power*.6*friend.sim.healingMultiplier);
-  else if(skill.effect==='guard'||skill.effect==='fury'){const buff=skill.effect==='guard'?friend.sim.guard:friend.sim.fury;buff.time=skill.duration||6;buff.power=skill.power*.7;}
+ sim.onSupport=skill=>{if(skill.effect==='guard'&&sim.save.job==='swordsman')for(const monster of sim.monsters)if(monster.alive&&Math.hypot(monster.x-sim.x,monster.z-sim.z)<economy.party.tauntRadius){monster.owner=player.id;monster.aggro=true;}const party=partyOf(realm,player.id);if(!party)return;for(const friend of actors){if(friend.p.id===player.id||!party.members.includes(friend.p.id)||friend.p.room!==player.room||friend.sim.save.hp<=0||Math.hypot(friend.sim.x-sim.x,friend.sim.z-sim.z)>economy.party.supportRadius)continue;
+  if(skill.effect==='heal')friend.sim.save.hp=Math.min(friend.sim.maxHp,friend.sim.save.hp+friend.sim.maxHp*skill.power*economy.party.healFactor*friend.sim.healingMultiplier);
+  else if(skill.effect==='guard'||skill.effect==='fury'){const buff=skill.effect==='guard'?friend.sim.guard:friend.sim.fury;buff.time=skill.duration||6;buff.power=skill.power*economy.party.buffFactor;}
   friend.sim.onEvent(player.name+' shared '+skill.name,'reward');
  }};
 }
@@ -140,7 +141,7 @@ function execute(player:Player,realm:Realm,command:Command,now:number,admin=fals
     case 'claimQuest':if(typeof a!=='string')throw new GameError('Invalid quest');sim.claimQuest(a);break;
     case 'travel': {
       if(!isZone(a))throw new GameError('Invalid area');
-      if(a==='ruins'){const party=partyOf(realm,player.id);if(!party||party.members.length<2||party.members.length>4){sim.onEvent('Form a party of 2–4 adventurers to enter');break;};const members=party.members.map(id=>realm.players[id]);if(members.some(p=>p.actor.save.level<40)){sim.onEvent('All party members must be level 40');break;};if(sim.travel(a,true)){player.room='dungeon:'+party.id;sim.monsters=roomFor(realm,player.room,a).monsters;}}
+      if(a==='ruins'){const party=partyOf(realm,player.id);if(!party||party.members.length<economy.party.dungeonMinMembers||party.members.length>economy.party.maxMembers){sim.onEvent(`Form a party of ${economy.party.dungeonMinMembers}–${economy.party.maxMembers} adventurers to enter`);break;};const members=party.members.map(id=>realm.players[id]);if(members.some(p=>p.actor.save.level<economy.party.dungeonLevel)){sim.onEvent(`All party members must be level ${economy.party.dungeonLevel}`);break;};if(sim.travel(a,true)){player.room='dungeon:'+party.id;sim.monsters=roomFor(realm,player.room,a).monsters;}}
       else if(sim.travel(a)) {player.room=a;sim.monsters=roomFor(realm,a,a).monsters;}
       break;
     }
@@ -200,7 +201,7 @@ export async function transact(store:RealmStore,identity:{id:string;name:string;
       for(const command of input.commands)execute(player,realm,command,now,identity.admin===true);
     }
     player.lastSeen=now;realm.ledger=realm.ledger.slice(-500);
-    if(await store.commit(revision,realm)) return {balance:realm.balance||{},community:communitySnapshot(realm,player,now),player:structuredClone(player),monsters:structuredClone(roomFor(realm,player.room||player.actor.save.zone,player.actor.save.zone).monsters),peers:Object.values(realm.players).filter(p=>p.id!==identity.id&&p.room===player.room&&now-p.lastSeen<10_000).map(p=>({id:p.id,name:p.name,job:p.actor.save.job,x:p.actor.x,z:p.actor.z,hp:p.actor.save.hp,maxHp:100+p.actor.save.stats.vit*4+(p.actor.save.level-1)*12})),chat:structuredClone(realm.chat),revision:revision+1,serverTime:now};
+    if(await store.commit(revision,realm)) return {balance:realm.balance||{},community:communitySnapshot(realm,player,now),player:structuredClone(player),monsters:structuredClone(roomFor(realm,player.room||player.actor.save.zone,player.actor.save.zone).monsters),peers:Object.values(realm.players).filter(p=>p.id!==identity.id&&p.room===player.room&&now-p.lastSeen<10_000).map(p=>({id:p.id,name:p.name,job:p.actor.save.job,x:p.actor.x,z:p.actor.z,hp:p.actor.save.hp,maxHp:progression.hpBase+p.actor.save.stats.vit*progression.hpVit+(p.actor.save.level-1)*progression.hpPerLevel})),chat:structuredClone(realm.chat),revision:revision+1,serverTime:now};
   }
   throw new GameError('The realm is busy. Your commands can be retried safely.',503);
 }

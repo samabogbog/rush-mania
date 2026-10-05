@@ -1,0 +1,2724 @@
+{
+  "progression": {
+    "maxLevel": "number",
+    "xpBase": "number",
+    "xpPerLevel": "number",
+    "pointsPerLevel": "number",
+    "initial": {
+      "gold": "number",
+      "hp": "number",
+      "mp": "number",
+      "stats": {
+        "str": "number",
+        "vit": "number",
+        "agi": "number"
+      },
+      "points": "number",
+      "redPotions": "number",
+      "bluePotions": "number"
+    },
+    "hpBase": "number",
+    "hpVit": "number",
+    "hpPerLevel": "number",
+    "mpBase": "number",
+    "mpPerLevel": "number",
+    "atkBase": "number",
+    "atkPrimary": "number",
+    "atkPerLevel": "number",
+    "defVit": "number",
+    "defPerLevel": "number",
+    "critBase": "number",
+    "critAgi": "number",
+    "critMultiplier": "number",
+    "moveBase": "number",
+    "attackAgiBase": "number",
+    "attackAgiFactor": "number",
+    "hpRegenPercent": "number",
+    "mpRegen": "number",
+    "defenseScale": "number",
+    "varianceBase": "number",
+    "varianceSpread": "number",
+    "poisonAtkFactor": "number",
+    "caps": {
+      "crit": "number",
+      "move": "number",
+      "attackSpeed": "number",
+      "cooldown": "number",
+      "healing": "number",
+      "armorPen": "number",
+      "lifesteal": "number",
+      "dodge": "number",
+      "damageReduction": "number"
+    }
+  },
+  "equipment": {
+    "crafted": [
+      {
+        "id": "string",
+        "name": "string",
+        "slot": "string",
+        "job": "string",
+        "level": "number",
+        "rarity": "string",
+        "icon": "string",
+        "bonuses": {
+          "atk": "number",
+          "str": "number"
+        },
+        "cost": "number",
+        "materials": [
+          [
+            "string",
+            "number"
+          ],
+          [
+            "string",
+            "number"
+          ]
+        ],
+        "description": "string"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "slot": "string",
+        "job": "string",
+        "level": "number",
+        "rarity": "string",
+        "icon": "string",
+        "bonuses": {
+          "atk": "number",
+          "mp": "number",
+          "str": "number"
+        },
+        "cost": "number",
+        "materials": [
+          [
+            "string",
+            "number"
+          ],
+          [
+            "string",
+            "number"
+          ]
+        ],
+        "description": "string"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "slot": "string",
+        "job": "string",
+        "level": "number",
+        "rarity": "string",
+        "icon": "string",
+        "bonuses": {
+          "atk": "number",
+          "agi": "number"
+        },
+        "cost": "number",
+        "materials": [
+          [
+            "string",
+            "number"
+          ],
+          [
+            "string",
+            "number"
+          ]
+        ],
+        "description": "string"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "slot": "string",
+        "level": "number",
+        "rarity": "string",
+        "icon": "string",
+        "bonuses": {
+          "def": "number",
+          "hp": "number"
+        },
+        "cost": "number",
+        "materials": [
+          [
+            "string",
+            "number"
+          ],
+          [
+            "string",
+            "number"
+          ]
+        ],
+        "description": "string"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "slot": "string",
+        "level": "number",
+        "rarity": "string",
+        "icon": "string",
+        "bonuses": {
+          "agi": "number"
+        },
+        "cost": "number",
+        "materials": [
+          [
+            "string",
+            "number"
+          ],
+          [
+            "string",
+            "number"
+          ]
+        ],
+        "description": "string"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "slot": "string",
+        "job": "string",
+        "level": "number",
+        "rarity": "string",
+        "icon": "string",
+        "bonuses": {
+          "atk": "number",
+          "str": "number"
+        },
+        "cost": "number",
+        "materials": [
+          [
+            "string",
+            "number"
+          ],
+          [
+            "string",
+            "number"
+          ]
+        ],
+        "description": "string"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "slot": "string",
+        "job": "string",
+        "level": "number",
+        "rarity": "string",
+        "icon": "string",
+        "bonuses": {
+          "atk": "number",
+          "mp": "number",
+          "str": "number"
+        },
+        "cost": "number",
+        "materials": [
+          [
+            "string",
+            "number"
+          ],
+          [
+            "string",
+            "number"
+          ]
+        ],
+        "description": "string"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "slot": "string",
+        "job": "string",
+        "level": "number",
+        "rarity": "string",
+        "icon": "string",
+        "bonuses": {
+          "atk": "number",
+          "agi": "number"
+        },
+        "cost": "number",
+        "materials": [
+          [
+            "string",
+            "number"
+          ],
+          [
+            "string",
+            "number"
+          ]
+        ],
+        "description": "string"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "slot": "string",
+        "level": "number",
+        "rarity": "string",
+        "icon": "string",
+        "bonuses": {
+          "def": "number",
+          "vit": "number",
+          "hp": "number"
+        },
+        "cost": "number",
+        "materials": [
+          [
+            "string",
+            "number"
+          ],
+          [
+            "string",
+            "number"
+          ]
+        ],
+        "description": "string"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "slot": "string",
+        "level": "number",
+        "rarity": "string",
+        "icon": "string",
+        "bonuses": {
+          "def": "number",
+          "mp": "number",
+          "str": "number"
+        },
+        "cost": "number",
+        "materials": [
+          [
+            "string",
+            "number"
+          ],
+          [
+            "string",
+            "number"
+          ]
+        ],
+        "description": "string"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "slot": "string",
+        "level": "number",
+        "rarity": "string",
+        "icon": "string",
+        "bonuses": {
+          "str": "number",
+          "mp": "number"
+        },
+        "cost": "number",
+        "materials": [
+          [
+            "string",
+            "number"
+          ],
+          [
+            "string",
+            "number"
+          ]
+        ],
+        "description": "string"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "slot": "string",
+        "level": "number",
+        "rarity": "string",
+        "icon": "string",
+        "bonuses": {
+          "agi": "number",
+          "def": "number"
+        },
+        "cost": "number",
+        "materials": [
+          [
+            "string",
+            "number"
+          ],
+          [
+            "string",
+            "number"
+          ]
+        ],
+        "description": "string"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "slot": "string",
+        "job": "string",
+        "level": "number",
+        "rarity": "string",
+        "icon": "string",
+        "bonuses": {
+          "atk": "number",
+          "str": "number",
+          "def": "number"
+        },
+        "cost": "number",
+        "materials": [
+          [
+            "string",
+            "number"
+          ],
+          [
+            "string",
+            "number"
+          ]
+        ],
+        "description": "string"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "slot": "string",
+        "job": "string",
+        "level": "number",
+        "rarity": "string",
+        "icon": "string",
+        "bonuses": {
+          "atk": "number",
+          "str": "number",
+          "mp": "number"
+        },
+        "cost": "number",
+        "materials": [
+          [
+            "string",
+            "number"
+          ],
+          [
+            "string",
+            "number"
+          ]
+        ],
+        "description": "string"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "slot": "string",
+        "job": "string",
+        "level": "number",
+        "rarity": "string",
+        "icon": "string",
+        "bonuses": {
+          "atk": "number",
+          "agi": "number"
+        },
+        "cost": "number",
+        "materials": [
+          [
+            "string",
+            "number"
+          ],
+          [
+            "string",
+            "number"
+          ]
+        ],
+        "description": "string"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "slot": "string",
+        "level": "number",
+        "rarity": "string",
+        "icon": "string",
+        "bonuses": {
+          "def": "number",
+          "hp": "number",
+          "vit": "number"
+        },
+        "cost": "number",
+        "materials": [
+          [
+            "string",
+            "number"
+          ],
+          [
+            "string",
+            "number"
+          ]
+        ],
+        "description": "string"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "slot": "string",
+        "level": "number",
+        "rarity": "string",
+        "icon": "string",
+        "bonuses": {
+          "def": "number",
+          "str": "number",
+          "agi": "number",
+          "mp": "number"
+        },
+        "cost": "number",
+        "materials": [
+          [
+            "string",
+            "number"
+          ],
+          [
+            "string",
+            "number"
+          ]
+        ],
+        "description": "string"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "slot": "string",
+        "level": "number",
+        "rarity": "string",
+        "icon": "string",
+        "bonuses": {
+          "atk": "number",
+          "def": "number",
+          "mp": "number"
+        },
+        "cost": "number",
+        "materials": [
+          [
+            "string",
+            "number"
+          ],
+          [
+            "string",
+            "number"
+          ]
+        ],
+        "description": "string"
+      }
+    ],
+    "sets": [
+      {
+        "id": "string",
+        "name": "string",
+        "level": "number",
+        "armorIcon": "string",
+        "charmIcon": "string",
+        "theme": "string"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "level": "number",
+        "armorIcon": "string",
+        "charmIcon": "string",
+        "theme": "string"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "level": "number",
+        "armorIcon": "string",
+        "charmIcon": "string",
+        "theme": "string"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "level": "number",
+        "armorIcon": "string",
+        "charmIcon": "string",
+        "theme": "string"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "level": "number",
+        "armorIcon": "string",
+        "charmIcon": "string",
+        "theme": "string"
+      }
+    ],
+    "rarityMultiplier": {
+      "common": "number",
+      "rare": "number",
+      "epic": "number",
+      "legend": "number"
+    },
+    "secondaryCounts": {
+      "common": "number",
+      "rare": "number",
+      "epic": "number",
+      "legend": "number"
+    },
+    "affixRanges": {
+      "critChance": [
+        "number",
+        "number"
+      ],
+      "critDamage": [
+        "number",
+        "number"
+      ],
+      "damageBonus": [
+        "number",
+        "number"
+      ],
+      "skillDamage": [
+        "number",
+        "number"
+      ],
+      "lifesteal": [
+        "number",
+        "number"
+      ],
+      "hpRegen": [
+        "number",
+        "number"
+      ],
+      "mpRegen": [
+        "number",
+        "number"
+      ],
+      "attackSpeed": [
+        "number",
+        "number"
+      ],
+      "moveSpeed": [
+        "number",
+        "number"
+      ],
+      "armorPen": [
+        "number",
+        "number"
+      ],
+      "damageReduction": [
+        "number",
+        "number"
+      ],
+      "dodgeChance": [
+        "number",
+        "number"
+      ],
+      "expBonus": [
+        "number",
+        "number"
+      ],
+      "goldBonus": [
+        "number",
+        "number"
+      ],
+      "healingBonus": [
+        "number",
+        "number"
+      ],
+      "cooldownReduction": [
+        "number",
+        "number"
+      ]
+    },
+    "affixFactorBase": "number",
+    "affixLevelDivisor": "number",
+    "hpRegenPerPieceCap": "number",
+    "dropChance": {
+      "normal": "number",
+      "boss": "number"
+    },
+    "rarityThresholds": {
+      "normal": [
+        "number",
+        "number",
+        "number"
+      ],
+      "boss": [
+        "number",
+        "number",
+        "number"
+      ]
+    },
+    "setBonuses": {
+      "hpLevel": "number",
+      "atkLevel": "number",
+      "defLevel": "number",
+      "damageBonus": "number",
+      "hpRegenMax": "number",
+      "hpRegenLevelDivisor": "number",
+      "moveSpeed": "number"
+    },
+    "pieceFormulas": {
+      "blade": {
+        "atk": [
+          "number",
+          "number"
+        ],
+        "str": [
+          "number",
+          "number"
+        ]
+      },
+      "staff": {
+        "atk": [
+          "number",
+          "number"
+        ],
+        "mp": [
+          "number",
+          "number"
+        ],
+        "str": [
+          "number",
+          "number"
+        ]
+      },
+      "bow": {
+        "atk": [
+          "number",
+          "number"
+        ],
+        "agi": [
+          "number",
+          "number"
+        ]
+      },
+      "helmet": {
+        "def": [
+          "number",
+          "number"
+        ],
+        "hp": [
+          "number",
+          "number"
+        ]
+      },
+      "coat": {
+        "def": [
+          "number",
+          "number"
+        ],
+        "hp": [
+          "number",
+          "number"
+        ]
+      },
+      "gloves": {
+        "atk": [
+          "number",
+          "number"
+        ],
+        "def": [
+          "number",
+          "number"
+        ]
+      },
+      "boots": {
+        "def": [
+          "number",
+          "number"
+        ],
+        "agi": [
+          "number",
+          "number"
+        ]
+      },
+      "charm": {
+        "hp": [
+          "number",
+          "number"
+        ],
+        "mp": [
+          "number",
+          "number"
+        ],
+        "str": [
+          "number",
+          "number"
+        ]
+      }
+    }
+  },
+  "refinement": {
+    "cap": "number",
+    "success": [
+      "number",
+      "number",
+      "number",
+      "number",
+      "number",
+      "number",
+      "number",
+      "number",
+      "number",
+      "number"
+    ],
+    "bonusLinear": "number",
+    "rareMultiplier": "number",
+    "costBase": "number",
+    "costPerLevel": "number",
+    "downgradeChance": "number",
+    "rareDowngradeLevels": "number",
+    "stoneCraftCount": "number",
+    "stoneDropThresholds": {
+      "normal": [
+        "number",
+        "number"
+      ],
+      "boss": [
+        "number",
+        "number"
+      ]
+    }
+  },
+  "classes": {
+    "classes": {
+      "swordsman": {
+        "name": "string",
+        "role": "string",
+        "icon": "string",
+        "color": "number",
+        "range": "number",
+        "speed": "number",
+        "weapon": "string"
+      },
+      "mage": {
+        "name": "string",
+        "role": "string",
+        "icon": "string",
+        "color": "number",
+        "range": "number",
+        "speed": "number",
+        "weapon": "string"
+      },
+      "archer": {
+        "name": "string",
+        "role": "string",
+        "icon": "string",
+        "color": "number",
+        "range": "number",
+        "speed": "number",
+        "weapon": "string"
+      }
+    },
+    "skills": {
+      "swordsman": [
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "radius": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "radius": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "radius": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "radius": "number",
+          "cast": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "radius": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "radius": "number",
+          "duration": "number",
+          "cast": "number"
+        }
+      ],
+      "mage": [
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "cast": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "radius": "number",
+          "duration": "number",
+          "cast": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number",
+          "cast": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "radius": "number",
+          "duration": "number",
+          "cast": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "radius": "number",
+          "cast": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "radius": "number",
+          "cast": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "radius": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number",
+          "cast": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number",
+          "cast": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "cast": "number"
+        }
+      ],
+      "archer": [
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "radius": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "radius": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "radius": "number",
+          "cast": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "radius": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "radius": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number"
+        }
+      ]
+    },
+    "branches": {
+      "swordsman": [
+        "string",
+        "string"
+      ],
+      "mage": [
+        "string",
+        "string"
+      ],
+      "archer": [
+        "string",
+        "string"
+      ]
+    }
+  },
+  "content": {
+    "species": {
+      "Dewdrop": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number"
+      },
+      "Wildcap": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number"
+      },
+      "Leafling": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number"
+      },
+      "Sunbee": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number"
+      },
+      "RibbonHare": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number"
+      },
+      "Applesprout": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number"
+      },
+      "AmberBoar": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number"
+      },
+      "Honeybug": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number"
+      },
+      "Sporeguard": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number"
+      },
+      "OrchardStag": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number"
+      },
+      "GlowWisp": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number"
+      },
+      "MarshTurtle": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number"
+      },
+      "ReedSprite": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number"
+      },
+      "PuddleJelly": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number"
+      },
+      "CrystalMoth": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number"
+      },
+      "FrostCub": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number"
+      },
+      "IceGolem": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number"
+      },
+      "Snowcap": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number"
+      },
+      "PeakOwl": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number"
+      },
+      "FrostWolf": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number"
+      },
+      "Rootling": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number"
+      },
+      "RuinSentinel": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number"
+      },
+      "ShadeWisp": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number"
+      },
+      "StoneWarden": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number"
+      },
+      "VineBeast": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number"
+      },
+      "TownWildwoodKing": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number",
+        "tier": "string",
+        "modelKind": "string",
+        "boss": "boolean",
+        "miniBoss": "boolean",
+        "aggroRadius": "number",
+        "leashRadius": "number"
+      },
+      "TownBrambleCaptain": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number",
+        "tier": "string",
+        "modelKind": "string",
+        "boss": "boolean",
+        "miniBoss": "boolean",
+        "aggroRadius": "number",
+        "leashRadius": "number"
+      },
+      "MooncapMonarch": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number",
+        "tier": "string",
+        "modelKind": "string",
+        "boss": "boolean",
+        "miniBoss": "boolean",
+        "aggroRadius": "number",
+        "leashRadius": "number"
+      },
+      "DewdropMatriarch": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number",
+        "tier": "string",
+        "modelKind": "string",
+        "boss": "boolean",
+        "miniBoss": "boolean",
+        "aggroRadius": "number",
+        "leashRadius": "number"
+      },
+      "AmberAntlerKing": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number",
+        "tier": "string",
+        "modelKind": "string",
+        "boss": "boolean",
+        "miniBoss": "boolean",
+        "aggroRadius": "number",
+        "leashRadius": "number"
+      },
+      "HoneyHiveMarshal": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number",
+        "tier": "string",
+        "modelKind": "string",
+        "boss": "boolean",
+        "miniBoss": "boolean",
+        "aggroRadius": "number",
+        "leashRadius": "number"
+      },
+      "CrystalShellSovereign": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number",
+        "tier": "string",
+        "modelKind": "string",
+        "boss": "boolean",
+        "miniBoss": "boolean",
+        "aggroRadius": "number",
+        "leashRadius": "number"
+      },
+      "MarshWispHerald": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number",
+        "tier": "string",
+        "modelKind": "string",
+        "boss": "boolean",
+        "miniBoss": "boolean",
+        "aggroRadius": "number",
+        "leashRadius": "number"
+      },
+      "FrostfangSovereign": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number",
+        "tier": "string",
+        "modelKind": "string",
+        "boss": "boolean",
+        "miniBoss": "boolean",
+        "aggroRadius": "number",
+        "leashRadius": "number"
+      },
+      "IceboundSentinel": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number",
+        "tier": "string",
+        "modelKind": "string",
+        "boss": "boolean",
+        "miniBoss": "boolean",
+        "aggroRadius": "number",
+        "leashRadius": "number"
+      },
+      "RootheartGuardian": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number",
+        "tier": "string",
+        "modelKind": "string",
+        "boss": "boolean",
+        "miniBoss": "boolean",
+        "aggroRadius": "number",
+        "leashRadius": "number"
+      },
+      "RuinShadeHerald": {
+        "level": "number",
+        "family": "string",
+        "color": "number",
+        "drop": "string",
+        "shape": "string",
+        "hp": "number",
+        "xp": "number",
+        "defense": "number",
+        "atk": "number",
+        "gold": "number",
+        "icon": "string",
+        "windup": "number",
+        "range": "number",
+        "tier": "string",
+        "modelKind": "string",
+        "boss": "boolean",
+        "miniBoss": "boolean",
+        "aggroRadius": "number",
+        "leashRadius": "number"
+      }
+    },
+    "zones": {
+      "town": {
+        "name": "string",
+        "level": "number",
+        "maxLevel": "number",
+        "description": "string",
+        "ground": "number",
+        "path": "number",
+        "accent": "number",
+        "species": [
+          "string",
+          "string"
+        ],
+        "music": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ],
+        "npcs": [
+          {
+            "id": "string",
+            "name": "string",
+            "x": "number",
+            "z": "number",
+            "panel": "string"
+          },
+          {
+            "id": "string",
+            "name": "string",
+            "x": "number",
+            "z": "number",
+            "panel": "string"
+          },
+          {
+            "id": "string",
+            "name": "string",
+            "x": "number",
+            "z": "number",
+            "panel": "string"
+          }
+        ]
+      },
+      "glade": {
+        "name": "string",
+        "level": "number",
+        "maxLevel": "number",
+        "description": "string",
+        "ground": "number",
+        "path": "number",
+        "accent": "number",
+        "species": [
+          "string",
+          "string",
+          "string",
+          "string",
+          "string",
+          "string",
+          "string"
+        ],
+        "music": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ],
+        "npcs": [
+          {
+            "id": "string",
+            "name": "string",
+            "x": "number",
+            "z": "number",
+            "panel": "string"
+          }
+        ]
+      },
+      "orchard": {
+        "name": "string",
+        "level": "number",
+        "maxLevel": "number",
+        "description": "string",
+        "ground": "number",
+        "path": "number",
+        "accent": "number",
+        "species": [
+          "string",
+          "string",
+          "string",
+          "string",
+          "string",
+          "string",
+          "string"
+        ],
+        "music": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ],
+        "npcs": [
+          {
+            "id": "string",
+            "name": "string",
+            "x": "number",
+            "z": "number",
+            "panel": "string"
+          }
+        ]
+      },
+      "marsh": {
+        "name": "string",
+        "level": "number",
+        "maxLevel": "number",
+        "description": "string",
+        "ground": "number",
+        "path": "number",
+        "accent": "number",
+        "species": [
+          "string",
+          "string",
+          "string",
+          "string",
+          "string",
+          "string",
+          "string"
+        ],
+        "music": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ],
+        "npcs": [
+          {
+            "id": "string",
+            "name": "string",
+            "x": "number",
+            "z": "number",
+            "panel": "string"
+          }
+        ]
+      },
+      "frost": {
+        "name": "string",
+        "level": "number",
+        "maxLevel": "number",
+        "description": "string",
+        "ground": "number",
+        "path": "number",
+        "accent": "number",
+        "species": [
+          "string",
+          "string",
+          "string",
+          "string",
+          "string",
+          "string",
+          "string"
+        ],
+        "music": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ],
+        "npcs": [
+          {
+            "id": "string",
+            "name": "string",
+            "x": "number",
+            "z": "number",
+            "panel": "string"
+          }
+        ]
+      },
+      "ruins": {
+        "name": "string",
+        "level": "number",
+        "maxLevel": "number",
+        "description": "string",
+        "ground": "number",
+        "path": "number",
+        "accent": "number",
+        "species": [
+          "string",
+          "string",
+          "string",
+          "string",
+          "string",
+          "string",
+          "string"
+        ],
+        "music": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ],
+        "npcs": [
+          {
+            "id": "string",
+            "name": "string",
+            "x": "number",
+            "z": "number",
+            "panel": "string"
+          }
+        ]
+      }
+    },
+    "quests": [
+      {
+        "id": "string",
+        "name": "string",
+        "description": "string",
+        "target": "number",
+        "kind": "string",
+        "zone": "string",
+        "gold": "number",
+        "xp": "number",
+        "item": "string",
+        "count": "number"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "description": "string",
+        "target": "number",
+        "kind": "string",
+        "zone": "string",
+        "gold": "number",
+        "xp": "number",
+        "item": "string",
+        "count": "number"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "description": "string",
+        "target": "number",
+        "kind": "string",
+        "zone": "string",
+        "gold": "number",
+        "xp": "number",
+        "item": "string",
+        "count": "number"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "description": "string",
+        "target": "number",
+        "kind": "string",
+        "zone": "string",
+        "gold": "number",
+        "xp": "number",
+        "item": "string",
+        "count": "number"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "description": "string",
+        "target": "number",
+        "kind": "string",
+        "zone": "string",
+        "gold": "number",
+        "xp": "number",
+        "item": "string",
+        "count": "number"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "description": "string",
+        "target": "number",
+        "kind": "string",
+        "zone": "string",
+        "gold": "number",
+        "xp": "number",
+        "item": "string",
+        "count": "number"
+      }
+    ]
+  },
+  "economy": {
+    "bagCapacity": "number",
+    "redPotion": {
+      "heal": "number",
+      "cost": "number"
+    },
+    "bluePotion": {
+      "heal": "number",
+      "cost": "number"
+    },
+    "potionCooldown": "number",
+    "deathGold": "number",
+    "deathDelay": "number",
+    "expTome": {
+      "id": "string",
+      "name": "string",
+      "icon": "string",
+      "experience": "number"
+    },
+    "expCharm": {
+      "id": "string",
+      "name": "string",
+      "icon": "string",
+      "multiplier": "number"
+    },
+    "party": {
+      "maxMembers": "number",
+      "rewardRadius": "number",
+      "supportRadius": "number",
+      "healFactor": "number",
+      "buffFactor": "number",
+      "dungeonMinMembers": "number",
+      "dungeonLevel": "number",
+      "tauntRadius": "number"
+    },
+    "marketFee": "number",
+    "monsters": {
+      "respawnNormal": "number",
+      "respawnMini": "number",
+      "respawnBoss": "number",
+      "homeRegen": "number",
+      "attackRestBoss": "number",
+      "attackRestNormal": "number"
+    },
+    "map": {
+      "townSafeRadius": "number",
+      "portalSafeRadius": "number",
+      "npcSafeRadius": "number"
+    }
+  }
+}

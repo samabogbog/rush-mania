@@ -1,0 +1,59 @@
+id,name,level,slot,job,base_stats,max_primary_stats,craft_gold,materials
+sprout-blade,Sprout Blade,1,weapon,swordsman,"atk 12, str 2","atk 29.4, str 4.9",40,"[[""Dew jelly"", 4], [""Verdant leaf"", 3]]"
+bloom-staff,Bloom Staff,1,weapon,mage,"atk 12, mp 20, str 2","atk 29.4, mp 49, str 4.9",40,"[[""Verdant leaf"", 4], [""Forest mushroom"", 3]]"
+willow-bow,Willow Bow,1,weapon,archer,"atk 10, agi 3","atk 24.5, agi 7.35",40,"[[""Verdant leaf"", 4], [""Dew jelly"", 3]]"
+field-coat,Field Coat,1,armor,,"def 10, hp 30","def 24.5, hp 73.5",35,"[[""Soft fur"", 3], [""Forest mushroom"", 3]]"
+leaf-charm,Leaf Charm,1,accessory,,agi 3,agi 7.35,35,"[[""Verdant leaf"", 6], [""Honey drop"", 2]]"
+amber-cleaver,Amber Cleaver,20,weapon,swordsman,"atk 38, str 5","atk 93.1, str 12.25",240,"[[""Boar tusk"", 6], [""Amber leaf"", 5]]"
+amber-wand,Amber Wand,20,weapon,mage,"atk 32, mp 50, str 5","atk 78.4, mp 122.5, str 12.25",240,"[[""Amber spore"", 6], [""Golden honey"", 4]]"
+horn-bow,Horn Bow,20,weapon,archer,"atk 32, agi 7","atk 78.4, agi 17.15",240,"[[""Amber antler"", 5], [""Amber leaf"", 6]]"
+shell-vest,Shell Vest,40,armor,,"def 50, vit 6, hp 150","def 122.5, vit 14.7, hp 367.5",500,"[[""River shell"", 8], [""Marsh reed"", 6]]"
+wisp-robe,Wisp Robe,40,armor,,"def 20, mp 100, str 10","def 49, mp 245, str 24.5",500,"[[""Wisp essence"", 8], [""Crystal dust"", 6]]"
+crystal-band,Crystal Band,40,accessory,,"str 8, mp 60","str 19.6, mp 147",360,"[[""Crystal dust"", 8], [""Crystal jelly"", 6]]"
+reed-feather,Reed Feather,40,accessory,,"agi 10, def 10","agi 24.5, def 24.5",360,"[[""Marsh reed"", 8], [""Crystal dust"", 5]]"
+frost-edge,Frost Edge,65,weapon,swordsman,"atk 100, str 15, def 25","atk 245, str 36.75, def 61.25",1200,"[[""Frost fang"", 8], [""Ice shard"", 10]]"
+snow-staff,Snow Staff,65,weapon,mage,"atk 95, str 18, mp 120","atk 232.75, str 44.1, mp 294",1200,"[[""Snow spore"", 8], [""Sky feather"", 8]]"
+sky-bow,Sky Bow,65,weapon,archer,"atk 90, agi 20","atk 220.5, agi 49",1200,"[[""Sky feather"", 8], [""Frost fang"", 8]]"
+root-plate,Rootheart Plate,65,armor,,"def 100, hp 350, vit 10","def 245, hp 857.5, vit 24.5",1600,"[[""Rootheart core"", 2], [""Warden stone"", 8]]"
+shade-mantle,Shade Mantle,65,armor,,"def 35, str 20, agi 10, mp 100","def 85.75, str 49, agi 24.5, mp 245",1600,"[[""Shade essence"", 10], [""Living vine"", 8]]"
+root-signet,Rootheart Signet,65,accessory,,"atk 30, def 30, mp 60","atk 73.5, def 73.5, mp 147",1200,"[[""Rootheart core"", 1], [""Rune stone"", 10]]"
+thornwood-blade,Thornwood Blade,10,weapon,swordsman,"atk 32, str 1","atk 112.7, str 2.45",0,[]
+thornwood-staff,Thornwood Staff,10,weapon,mage,"atk 31, mp 20, str 1","atk 110.25, mp 71.05, str 2.45",0,[]
+thornwood-bow,Thornwood Bow,10,weapon,archer,"atk 30, agi 2","atk 107.8, agi 7.35",0,[]
+thornwood-helmet,Thornwood Helmet,10,helmet,,"def 8, hp 20","def 29.4, hp 71.05",0,[]
+thornwood-coat,Thornwood Coat,10,armor,,"def 22, hp 40","def 78.4, hp 142.1",0,[]
+thornwood-gloves,Thornwood Gloves,10,gloves,,"atk 7, def 5","atk 24.5, def 17.15",0,[]
+thornwood-boots,Thornwood Boots,10,boots,,"def 7, agi 1","def 24.5, agi 2.45",0,[]
+thornwood-charm,Thornwood Charm,10,accessory,,"hp 20, mp 10, str 1","hp 71.05, mp 36.75, str 2.45",0,[]
+suncrest-blade,Suncrest Blade,30,weapon,swordsman,"atk 68, str 3","atk 242.55, str 9.8",0,[]
+suncrest-staff,Suncrest Staff,30,weapon,mage,"atk 65, mp 60, str 3","atk 230.3, mp 213.15, str 9.8",0,[]
+suncrest-bow,Suncrest Bow,30,weapon,archer,"atk 62, agi 4","atk 220.5, agi 14.7",0,[]
+suncrest-helmet,Suncrest Helmet,30,helmet,,"def 16, hp 60","def 56.35, hp 213.15",0,[]
+suncrest-coat,Suncrest Coat,30,armor,,"def 46, hp 120","def 164.15, hp 426.3",0,[]
+suncrest-gloves,Suncrest Gloves,30,gloves,,"atk 14, def 11","atk 49, def 39.2",0,[]
+suncrest-boots,Suncrest Boots,30,boots,,"def 15, agi 2","def 53.9, agi 7.35",0,[]
+suncrest-charm,Suncrest Charm,30,accessory,,"hp 60, mp 30, str 2","hp 213.15, mp 107.8, str 7.35",0,[]
+moonveil-blade,Moonveil Blade,50,weapon,swordsman,"atk 104, str 5","atk 369.95, str 17.15",0,[]
+moonveil-staff,Moonveil Staff,50,weapon,mage,"atk 99, mp 100, str 5","atk 352.8, mp 355.25, str 17.15",0,[]
+moonveil-bow,Moonveil Bow,50,weapon,archer,"atk 94, agi 7","atk 333.2, agi 24.5",0,[]
+moonveil-helmet,Moonveil Helmet,50,helmet,,"def 24, hp 100","def 85.75, hp 355.25",0,[]
+moonveil-coat,Moonveil Coat,50,armor,,"def 70, hp 200","def 249.9, hp 710.5",0,[]
+moonveil-gloves,Moonveil Gloves,50,gloves,,"atk 21, def 17","atk 73.5, def 61.25",0,[]
+moonveil-boots,Moonveil Boots,50,boots,,"def 23, agi 4","def 80.85, agi 14.7",0,[]
+moonveil-charm,Moonveil Charm,50,accessory,,"hp 100, mp 50, str 3","hp 355.25, mp 178.85, str 9.8",0,[]
+frostguard-blade,Frostguard Blade,70,weapon,swordsman,"atk 140, str 7","atk 497.35, str 24.5",0,[]
+frostguard-staff,Frostguard Staff,70,weapon,mage,"atk 133, mp 140, str 6","atk 472.85, mp 497.35, str 22.05",0,[]
+frostguard-bow,Frostguard Bow,70,weapon,archer,"atk 126, agi 9","atk 448.35, agi 31.85",0,[]
+frostguard-helmet,Frostguard Helmet,70,helmet,,"def 32, hp 140","def 112.7, hp 497.35",0,[]
+frostguard-coat,Frostguard Coat,70,armor,,"def 94, hp 280","def 333.2, hp 994.7",0,[]
+frostguard-gloves,Frostguard Gloves,70,gloves,,"atk 28, def 23","atk 100.45, def 80.85",0,[]
+frostguard-boots,Frostguard Boots,70,boots,,"def 31, agi 5","def 110.25, agi 17.15",0,[]
+frostguard-charm,Frostguard Charm,70,accessory,,"hp 140, mp 70, str 4","hp 497.35, mp 249.9, str 14.7",0,[]
+starfall-blade,Starfall Blade,90,weapon,swordsman,"atk 176, str 9","atk 624.75, str 31.85",0,[]
+starfall-staff,Starfall Staff,90,weapon,mage,"atk 167, mp 180, str 8","atk 592.9, mp 639.45, str 29.4",0,[]
+starfall-bow,Starfall Bow,90,weapon,archer,"atk 158, agi 12","atk 561.05, agi 41.65",0,[]
+starfall-helmet,Starfall Helmet,90,helmet,,"def 40, hp 180","def 142.1, hp 639.45",0,[]
+starfall-coat,Starfall Coat,90,armor,,"def 118, hp 360","def 418.95, hp 1278.9",0,[]
+starfall-gloves,Starfall Gloves,90,gloves,,"atk 35, def 29","atk 124.95, def 102.9",0,[]
+starfall-boots,Starfall Boots,90,boots,,"def 39, agi 6","def 139.65, agi 22.05",0,[]
+starfall-charm,Starfall Charm,90,accessory,,"hp 180, mp 90, str 5","hp 639.45, mp 320.95, str 17.15",0,[]

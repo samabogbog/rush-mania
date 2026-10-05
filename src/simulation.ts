@@ -1,3 +1,4 @@
+import {progression,economy,refinement} from './config/balance';
 import {EXP_CHARM,EXP_TOME,itemCategory,type ItemCategory} from './game/items';
 import {refineLevel,refineCost,rollRefinement,rollStoneDrop,refineStones,isStoneTier,type StoneTier} from './game/refinement';
 import {
@@ -74,18 +75,18 @@ const defaults: Save = {
   skillChoices:{swordsman:Array(10).fill(null),mage:Array(10).fill(null),archer:Array(10).fill(null)},
   level: 1,
   xp: 0,
-  gold: 120,
-  hp: 120,
-  mp: 60,
+  gold: progression.initial.gold,
+  hp: progression.initial.hp,
+  mp: progression.initial.mp,
   kills: 0,
   questClaimed: false,
   weapon: 0,
-  stats: { str: 5, vit: 5, agi: 5 },
-  points: 3,
+  stats: {...progression.initial.stats},
+  points: progression.initial.points,
   skillLevel: 1,
   items: [
-    { name: "Red potion", icon: "🧪", count: 8 },
-    { name: "Blue potion", icon: "💠", count: 4 },
+    { name: "Red potion", icon: "🧪", count: progression.initial.redPotions },
+    { name: "Blue potion", icon: "💠", count: progression.initial.bluePotions },
   ],
 };
 export class Simulation {
@@ -206,13 +207,13 @@ export class Simulation {
     this.bonusCache={save:this.save,key,value:out};return out;
   }
   get activeSets(){return gearSets.map(set=>({set,pieces:Object.values(this.save.equipped).filter(id=>this.save.items.some(i=>i.id===id&&gearById(i.gearId||'')?.setId===set.id)).length})).filter(s=>s.pieces>0)}
-  get criticalChance(){return Math.min(.6,.05+this.agility*.002+(this.gearBonuses.critChance||0)/100)}
-  get criticalMultiplier(){return 1.5+(this.gearBonuses.critDamage||0)/100}
-  get movementSpeed(){return 4.4*(1+Math.min(.5,(this.gearBonuses.moveSpeed||0)/100))}
-  get attackInterval(){return this.job.speed/((1+(this.agility-5)*.04)*(1+Math.min(1,(this.gearBonuses.attackSpeed||0)/100)))}
-  get cooldownMultiplier(){return 1-Math.min(.4,(this.gearBonuses.cooldownReduction||0)/100)}
-  get hpRegenPercent(){return .5+(this.gearBonuses.hpRegen||0)}
-  get healingMultiplier(){return 1+Math.min(1,(this.gearBonuses.healingBonus||0)/100)}
+  get criticalChance(){return Math.min(progression.caps.crit,progression.critBase+this.agility*progression.critAgi+(this.gearBonuses.critChance||0)/100)}
+  get criticalMultiplier(){return progression.critMultiplier+(this.gearBonuses.critDamage||0)/100}
+  get movementSpeed(){return progression.moveBase*(1+Math.min(progression.caps.move,(this.gearBonuses.moveSpeed||0)/100))}
+  get attackInterval(){return this.job.speed/((1+(this.agility-progression.attackAgiBase)*progression.attackAgiFactor)*(1+Math.min(progression.caps.attackSpeed,(this.gearBonuses.attackSpeed||0)/100)))}
+  get cooldownMultiplier(){return 1-Math.min(progression.caps.cooldown,(this.gearBonuses.cooldownReduction||0)/100)}
+  get hpRegenPercent(){return progression.hpRegenPercent+(this.gearBonuses.hpRegen||0)}
+  get healingMultiplier(){return 1+Math.min(progression.caps.healing,(this.gearBonuses.healingBonus||0)/100)}
   addEquipmentItem(item:Item){if(this.save.items.some(i=>i.id===item.id))return false;if(this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY){this.onEvent('Bag full. Make room before collecting.');return false;}this.save.items.push({...structuredClone(item),category:itemCategory(item),secondary:normalizeSecondary(item.secondary),refine:refineLevel(item.refine)});return true;}
   rollStoneLoot(monster:Monster){const tier=rollStoneDrop(!!this.monsterSpec(monster.kind).boss,this.random);return tier?refineStones[tier]:undefined;}
   rollEquipmentLoot(monster:Monster):Item|undefined {const rolled=rollEquipmentDrop(this.monsterSpec(monster.kind).level,!!this.monsterSpec(monster.kind).boss,this.random);if(!rolled)return;const gear=gearById(rolled.gearId!)!;return {...rolled,name:gear.name,category:itemCategory({name:gear.name}),icon:gear.icon,count:1};}
@@ -244,11 +245,11 @@ export class Simulation {
   }
   craft(id:string) {
     if(id==='rare-refine-stone'){
-      const common=this.save.items.find(i=>i.name===refineStones.common.name&&i.count>=5);
-      if(!common){this.onEvent('Need 5 Common refine stones.');return false;}
+      const common=this.save.items.find(i=>i.name===refineStones.common.name&&i.count>=refinement.stoneCraftCount);
+      if(!common){this.onEvent(`Need ${refinement.stoneCraftCount} Common refine stones.`);return false;}
       const rare=this.save.items.find(i=>i.name===refineStones.rare.name&&i.count>0);
-      if(!rare&&this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY&&common.count>5){this.onEvent('Bag full.');return false;}
-      common.count-=5;this.addItem(refineStones.rare.name,refineStones.rare.icon);this.progressQuest('craft');this.persist();this.onEvent('Crafted 1 Rare refine stone','reward');return true;
+      if(!rare&&this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY&&common.count>refinement.stoneCraftCount){this.onEvent('Bag full.');return false;}
+      common.count-=refinement.stoneCraftCount;this.addItem(refineStones.rare.name,refineStones.rare.icon);this.progressQuest('craft');this.persist();this.onEvent('Crafted 1 Rare refine stone','reward');return true;
     }
     const gear=gearById(id);
     if(!gear||gear.dropOnly||this.save.level<gear.level){this.onEvent("You have not reached this recipe’s level.");return false;}
@@ -264,23 +265,23 @@ export class Simulation {
   }
   unequip(slot:GearSlot) { if(!gearSlots.includes(slot))return;this.save.equipped[slot]=null;this.save.hp=Math.min(this.maxHp,this.save.hp);this.save.mp=Math.min(this.maxMp,this.save.mp);this.persist(); }
   get maxHp() {
-    return 100 + (this.save.stats.vit+(this.gearBonuses.vit||0)) * 4 + (this.save.level - 1) * 12+(this.gearBonuses.hp||0);
+    return progression.hpBase + (this.save.stats.vit+(this.gearBonuses.vit||0)) * progression.hpVit + (this.save.level - 1) * progression.hpPerLevel+(this.gearBonuses.hp||0);
   }
   get maxMp() {
-    return 60 + (this.save.level - 1) * 8+(this.gearBonuses.mp||0);
+    return progression.mpBase + (this.save.level - 1) * progression.mpPerLevel+(this.gearBonuses.mp||0);
   }
   get maxXp() {
-    return 80 + this.save.level * 40;
+    return progression.xpBase + this.save.level * progression.xpPerLevel;
   }
   get damage() {
     const primary =
       this.save.job === "archer" ? this.agility : this.save.stats.str+(this.gearBonuses.str||0);
     return (
-      12 + primary * 2 + (this.save.level - 1) * 1.5+(this.gearBonuses.atk||0)
+      progression.atkBase + primary * progression.atkPrimary + (this.save.level - 1) * progression.atkPerLevel+(this.gearBonuses.atk||0)
     );
   }
   get defense() {
-    return (this.save.stats.vit+(this.gearBonuses.vit||0)) * 2 + this.save.level * 0.5+(this.gearBonuses.def||0);
+    return (this.save.stats.vit+(this.gearBonuses.vit||0)) * progression.defVit + this.save.level * progression.defPerLevel+(this.gearBonuses.def||0);
   }
   get job() {
     return classes[this.save.job];
@@ -349,7 +350,7 @@ export class Simulation {
     while (this.save.level < MAX_LEVEL && this.save.xp >= this.maxXp) {
       this.save.xp -= this.maxXp;
       this.save.level++;
-      this.save.points += 3;
+      this.save.points += progression.pointsPerLevel;
       this.save.hp = this.maxHp;
       this.save.mp = this.maxMp;
       this.onEvent(`Level up! You are now level ${this.save.level}`, "level");
@@ -397,17 +398,17 @@ export class Simulation {
         this.onEvent("Mana is already full");
         return false;
       }
-      this.save.mp = Math.min(this.maxMp, this.save.mp + 40*this.healingMultiplier);
+      this.save.mp = Math.min(this.maxMp, this.save.mp + economy.bluePotion.heal*this.healingMultiplier);
     } else {
       if (this.save.hp >= this.maxHp) {
         this.onEvent("Health is already full");
         return false;
       }
-      this.save.hp = Math.min(this.maxHp, this.save.hp + 65*this.healingMultiplier);
+      this.save.hp = Math.min(this.maxHp, this.save.hp + economy.redPotion.heal*this.healingMultiplier);
     }
     item.count--;
-    this.auxiliaryCooldown=2;this.refreshCooldowns();
-    this.onEvent(`${blue?"Mana":"Health"} restored +${Math.round((blue?40:65)*this.healingMultiplier)}`, "heal");
+    this.auxiliaryCooldown=economy.potionCooldown;this.refreshCooldowns();
+    this.onEvent(`${blue?"Mana":"Health"} restored +${Math.round((blue?economy.bluePotion.heal:economy.redPotion.heal)*this.healingMultiplier)}`, "heal");
     this.persist();
     return true;
   }
@@ -446,7 +447,7 @@ export class Simulation {
   setAuto(enabled: boolean) { this.auto = enabled; }
   buy(name: string) {
     if (!["Red potion", "Blue potion"].includes(name)) return;
-    const blue = name === "Blue potion", cost = blue ? 20 : 15;
+    const blue = name === "Blue potion", cost = blue ? economy.bluePotion.cost : economy.redPotion.cost;
     if (this.save.gold < cost) { this.onEvent("Not enough zeny"); return; }
     if(!this.addItem(name, blue ? "💠" : "🧪"))return;this.save.gold -= cost; this.persist(); this.onEvent("Potion added to your bag", "reward");
   }
@@ -457,7 +458,7 @@ export class Simulation {
   }
   hit(m: Monster, amount: number, skill=false) {
     if (!m.alive) return;
-    const variance = 0.9 + this.random() * 0.2;
+    const variance = progression.varianceBase + this.random() * progression.varianceSpread;
     const critical =
       this.random() < this.criticalChance;
     amount = Math.max(
@@ -468,7 +469,7 @@ export class Simulation {
             variance *
             (critical ? this.criticalMultiplier : 1) * (1+(this.gearBonuses.damageBonus||0)/100) * (skill?1+(this.gearBonuses.skillDamage||0)/100:1) *
             (1 + (this.fury.time > 0 ? this.fury.power : 0)),
-          this.monsterSpec(m.kind).defense*(1-Math.min(.6,(this.gearBonuses.armorPen||0)/100)),
+          this.monsterSpec(m.kind).defense*(1-Math.min(progression.caps.armorPen,(this.gearBonuses.armorPen||0)/100)),
         ),
       ),
     );
@@ -478,11 +479,11 @@ export class Simulation {
     this.markTutorial("attack");
     const dealt=Math.min(Math.max(0,m.hp),amount);
     m.hp -= amount;
-    if(this.save.hp>0)this.save.hp=Math.min(this.maxHp,this.save.hp+dealt*Math.min(.25,(this.gearBonuses.lifesteal||0)/100));
+    if(this.save.hp>0)this.save.hp=Math.min(this.maxHp,this.save.hp+dealt*Math.min(progression.caps.lifesteal,(this.gearBonuses.lifesteal||0)/100));
     this.onEvent(String(amount), "damage", m.x, m.z);
     if (m.hp <= 0) {
       m.alive = false;
-      m.respawn = this.monsterSpec(m.kind).boss?180:this.monsterSpec(m.kind).miniBoss?60:13;
+      m.respawn = this.monsterSpec(m.kind).boss?economy.monsters.respawnBoss:this.monsterSpec(m.kind).miniBoss?economy.monsters.respawnMini:economy.monsters.respawnNormal;
       const xpReward=this.monsterSpec(m.kind).xp*(1+(this.gearBonuses.expBonus||0)/100),goldReward=Math.round(this.monsterSpec(m.kind).gold*(1+(this.gearBonuses.goldBonus||0)/100));
       const shared=this.onKill?.(m);
       if(!shared){
@@ -604,7 +605,7 @@ export class Simulation {
           if (skill.effect === "poison") {
             monster.poison = skill.duration || 6;
             monster.poisonTimer = 1;
-            monster.poisonDamage = this.damage * 0.25;
+            monster.poisonDamage = this.damage * progression.poisonAtkFactor;
           }
         }
         this.onEvent(skill.name, "strike", monster.x, monster.z);
@@ -640,7 +641,7 @@ export class Simulation {
     const item=this.save.items.find(i=>i.id===id&&i.gearId&&i.count===1);
     if(!item||!gearById(item.gearId!)){this.onEvent('Choose an equipment item to refine.');return false;}
     const current=refineLevel(item.refine),cost=refineCost(current),stone=this.save.items.find(i=>i.name===refineStones[tier].name&&i.count>0);
-    if(current>=10){this.onEvent('Refinement limit reached (+10).');return false;}
+    if(current>=refinement.cap){this.onEvent(`Refinement limit reached (+${refinement.cap}).`);return false;}
     if(!stone||this.save.gold<cost){this.onEvent(`Need 1 ${refineStones[tier].name} and ${cost} z.`);return false;}
     this.save.gold-=cost;stone.count--;
     const result=rollRefinement(current,tier,this.random);item.refine=result.level;
@@ -774,7 +775,7 @@ export class Simulation {
         }
       }
     }
-    this.save.mp = Math.min(this.maxMp, this.save.mp + dt * (0.7+(this.gearBonuses.mpRegen||0)));
+    this.save.mp = Math.min(this.maxMp, this.save.mp + dt * (progression.mpRegen+(this.gearBonuses.mpRegen||0)));
     this.save.hp=Math.min(this.maxHp,this.save.hp+dt*this.maxHp*this.hpRegenPercent/100);
     if (dx || dz) {
       this.markTutorial("move");
@@ -862,7 +863,7 @@ export class Simulation {
       if((m.aggro||m.id===this.target)&&(safe||this.save.hp<=0||d>(elite?22:8)||Math.hypot(m.x-m.homeX,m.z-m.homeZ)>(spec.leashRadius||10))){m.returning=true;m.aggro=false;m.owner=undefined;m.windup=0;}
       if(m.returning){
         const homeDistance=Math.hypot(m.x-m.homeX,m.z-m.homeZ),step=Math.min(homeDistance,dt*4);
-        m.hp=Math.min(spec.hp,m.hp+spec.hp*dt*.25);m.stun=m.slow=m.poison=0;
+        m.hp=Math.min(spec.hp,m.hp+spec.hp*dt*economy.monsters.homeRegen);m.stun=m.slow=m.poison=0;
         if(homeDistance<.15){m.x=m.homeX;m.z=m.homeZ;m.hp=spec.hp;m.returning=false;}
         else {const nx=m.x+(m.homeX-m.x)/homeDistance*step,nz=m.z+(m.homeZ-m.z)/homeDistance*step;if(!this.blocked(nx,nz)){m.x=nx;m.z=nz;}else {m.x=m.homeX;m.z=m.homeZ;m.hp=spec.hp;m.returning=false;}}
         continue;
@@ -874,13 +875,13 @@ export class Simulation {
             const spec=this.monsterSpec(m.kind),range=spec.boss?(m.shape==='line'?6:m.shape==='cone'?4:3.5):spec.range;
             const rx=this.x-m.x,rz=this.z-m.z,forward=rx*(m.facingX??0)+rz*(m.facingZ??1),side=Math.abs(rx*(m.facingZ??1)-rz*(m.facingX??0));
             const connects=m.shape==='line'?forward>=0&&forward<=range&&side<.9:m.shape==='cone'?d<=range&&(d<.01||forward/d>.65):d<range;
-            if (connects && this.random()>=Math.min(.35,(this.gearBonuses.dodgeChance||0)/100)) {
-              const atk = spec.atk * (0.9 + this.random() * 0.2);
+            if (connects && this.random()>=Math.min(progression.caps.dodge,(this.gearBonuses.dodgeChance||0)/100)) {
+              const atk = spec.atk * (progression.varianceBase + this.random() * progression.varianceSpread);
               const amount = Math.max(
                 1,
                 Math.round(
                   damageAfterDefense(atk, this.defense) *
-                    (1 - (this.guard.time > 0 ? this.guard.power : 0)) * (1-Math.min(.6,(this.gearBonuses.damageReduction||0)/100)),
+                    (1 - (this.guard.time > 0 ? this.guard.power : 0)) * (1-Math.min(progression.caps.damageReduction,(this.gearBonuses.damageReduction||0)/100)),
                 ),
               );
               this.save.hp -= amount;
@@ -891,7 +892,7 @@ export class Simulation {
               const nx=m.x+(m.facingX??0)*range*.6,nz=m.z+(m.facingZ??1)*range*.6;
               if(Math.abs(nx)<WORLD_BOUNDS.maxX&&Math.abs(nz)<WORLD_BOUNDS.maxZ&&!this.blocked(nx,nz)){m.x=nx;m.z=nz;}
             }
-            m.attack = spec.boss?2.2:1.4;
+            m.attack = spec.boss?economy.monsters.attackRestBoss:economy.monsters.attackRestNormal;
           }
         } else {
           const spec=this.monsterSpec(m.kind);
@@ -920,14 +921,14 @@ export class Simulation {
       }
     }
     if (this.save.hp <= 0) {
-      this.save.hp = 0;this.deathTime=1.2;
+      this.save.hp = 0;this.deathTime=economy.deathDelay;
       this.target = null;
       this.cast = null;
       this.destination = null;
       this.route = [];
       this.guard.time = this.fury.time = 0;
-      this.save.gold = Math.max(0, this.save.gold - 15);
-      this.onEvent("Rescued at camp · 15 z recovery fee", "level");
+      this.save.gold = Math.max(0, this.save.gold - economy.deathGold);
+      this.onEvent(`Rescued at camp · ${economy.deathGold} z recovery fee`, "level");
       this.persist();
     }
   }
