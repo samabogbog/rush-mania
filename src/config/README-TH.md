@@ -4,11 +4,11 @@
 
 | ไฟล์ | ค่าแก้หลัก |
 | --- | --- |
-| progression.json | `xpBase`, `xpPerLevel`, `pointsPerLevel`, สูตร HP/MP/ATK/DEF, crit/regen, `caps`, ค่าเริ่มผู้เล่นใหม่ |
+| progression.json | `levels` ตาราง EXP 1–100, `pointsPerLevel`, สูตร HP/MP/ATK/DEF, crit/regen, `caps`, ค่าเริ่มผู้เล่นใหม่ |
 | classes.json | `classes` ระยะ/ช่วงโจมตี, `skills` 60 รายการ: MP, cooldown, power, range, radius, duration, cast, level |
 | equipment.json | `crafted` 18 สูตรเดิม, `sets` 5 เซ็ต, `pieceFormulas`, rarity, affix, โบนัสเซ็ต, ดรอป |
 | refinement.json | success 10 ขั้น, rareMultiplier, bonusLinear, cost, downgrade, stoneCraftCount และดรอปหิน |
-| content.json | `species` 37 มอนสเตอร์ **ค่าสุดท้ายต่อชนิด**, `zones` ระดับเข้า/รายชื่อมอนสเตอร์, `quests` รางวัล |
+| content.json | `normalBalance` checkpoints/multipliers, `species` identity/AI/legacy stats, `zones` ระดับเข้า/รายชื่อมอนสเตอร์, `quests` รางวัล |
 | economy.json | ยา/ราคา, EXP Tome/Charm, ตาย, party/support/dungeon/market, respawn/พักโจมตี/ฟื้นเมื่อกลับบ้าน, safe radius |
 | schema.json | รูปร่างข้อมูลสำหรับตรวจเมื่อเริ่มเกม ไม่ใช่ค่าบาลานซ์; ห้ามแก้เพื่อข้าม validation |
 | manifest.json | รายชื่อไฟล์และรุ่นรูปแบบสำหรับค้นหา |
@@ -20,17 +20,17 @@
 - `progression.critBase:0.05` คือ 5%, `critAgi:0.002` คือเพิ่ม 0.2 จุดเปอร์เซ็นต์ต่อ AGI; `caps.crit:0.6` คือ 60%. `caps` ทั้งหมดเป็น **สัดส่วน 0–1** (attackSpeed/healing 1 คือโบนัส 100%) ไม่ใช่หน่วยเดียวกับ affix
 - โอกาส `success`, `dropChance`, `downgradeChance`, `marketFee` เป็นสัดส่วน 0–1 เช่น 0.15=15%. `rarityThresholds` และ `stoneDropThresholds` เป็นขอบสะสม เรียงขึ้น (ไม่ใช่โอกาสแยกแต่ละ rarity)
 - `power` ของ hit/area/stun/slow/poison เป็นตัวคูณ ATK; heal เป็นสัดส่วน Max HP; guard/fury เป็นสัดส่วนลดดาเมจ/เพิ่ม ATK. Guard ต้องไม่เกิน 1
-- EXP ขั้นถัดไป = xpBase + level×xpPerLevel; ค่า HP/MP/ATK ต่อเลเวลใช้ (level−1), DEF ใช้ level
+- EXP ขั้นถัดไป = `levels[level-1].nextLevelXp` ตาม XLSX (Lv100 runtime=0); ค่า HP/MP/ATK ต่อเลเวลใช้ (level−1), DEF ใช้ level
 - `pieceFormulas` เก็บ `[ตัวคูณเลเวล,ค่าคงที่]`: ATK/DEF ปัด Math.round; STR/AGI ปัด Math.ceil; HP/MP ไม่ปัด. rarity ปัดหลักเป็นจำนวนเต็มก่อนตีบวก แล้วปัดสุดท้าย 2 ตำแหน่ง
 - refinement bonus = n×(bonusLinear+n)/2; success[n] เป็นโอกาสจาก +n ไป +(n+1). Rare คูณ rareMultiplier และ cap100%; downgrade เป็นโอกาส **เมื่อ fail แล้ว**
 
 ## ตัวอย่างแก้
 
-1. ให้ EXP เพิ่มต่อขั้น 50 แทน 40: `progression.json` → `xpPerLevel:50`; เซฟเดิมไม่ถูก reset
+1. เปลี่ยน EXP ขั้นถัดไป: `progression.json` → `levels[level-1].nextLevelXp`; เซฟเดิมไม่ถูก reset
 2. ให้ Red potion ฟื้น 80 ราคา 18: `economy.json` → `redPotion:{"heal":80,"cost":18}`. ร้านค้า tooltip และ simulation ใช้ค่าเดียวกัน
 3. เพิ่มโอกาสอุปกรณ์ปกติจาก16%เป็น20%: `equipment.json` → `dropChance.normal:0.2`; ไม่ต้องเปลี่ยน rarityThresholds
 4. ลด Fire Bolt ใช้ MP: หา id `mage-1` ใน `classes.json`, แก้ `mp`; คำบรรยายที่ใส่ตัวเลขเองควรแก้ `description` ด้วย
-5. เปลี่ยน Dewdrop HP: `content.json` → `species.Dewdrop.hp`. ค่ามอนสเตอร์ในไฟล์นี้เป็นค่าที่คำนวณแล้ว ไม่มีสูตร base/elite อีกชุดที่ต้องแก้; server admin override ยังมีลำดับเหนือ default นี้
+5. เปลี่ยน HP มอนสเตอร์: `content.json` → `normalBalance.checkpoints[].hp` และ elite multipliers. ค่า hp/atk/defense/xp/gold ใน species เป็น legacy snapshot สำหรับตรวจย้อนหลังและ migration ไม่ใช่ default runtime; server admin override ยังมีลำดับเหนือ default ใหม่
 
 ## เงื่อนไขร่วมและขอบเขต
 
@@ -57,3 +57,5 @@ validateConfiguration ใช้ได้ใน browser และ Worker ไม�
 เซฟเก่าคง version7 บัญชี เงิน อุปกรณ์ unique ID rarity ตีบวก และ secondary เดิม วัตถุดิบสามชนิดที่ไม่มี rarity เป็นCommon สแต็กชนิด/rarityเดียวกันรวมโดยรักษาจำนวน สแต็กต่างrarityแยกกันทั้ง Bag/Trade/Market/Admin/loot กางเกงแทนถุงมือใน6ช่องเดิม: gear ID ลงท้าย `-gloves` คงไว้เพื่ออ้างอิงเซฟ แต่แสดง Pants ไอคอน `gear-pants` และย้าย equipped.gloves ไปpants
 
 หมายเหตุ `docs/balance/catalog.json` เป็น snapshot ก่อนระบบนี้ ไม่ใช่ค่าคราฟต์ปัจจุบัน; tests ตรวจว่า ID อุปกรณ์เดิมคงอยู่และตรวจสูตร/บทบาทใหม่แยกกัน
+
+รายละเอียดไฟล์อัปโหลดและกติกาการ mapping: `docs/IMPORTED-BALANCE.md`.

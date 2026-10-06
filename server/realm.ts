@@ -6,20 +6,21 @@ import {isStoneTier} from '../src/game/refinement';
 import {communityCommand,communitySnapshot,partyOf,shareKill} from './community';
 import { Simulation, type Save } from '../src/simulation';
 import { zoneObstacles, protectedPosition } from '../src/game/map-data';
-import {isZone, type ZoneId} from '../src/game/content';
+import {species,isZone, type ZoneId} from '../src/game/content';
 import {isGearSlot} from '../src/game/equipment';
 import { isClass } from '../src/game/classes';
 import { capture, type Command, type Player, type Realm, type Snapshot } from './protocol';
 import type { RealmStore } from './store';
 export class GameError extends Error { constructor(message:string,public status=400){super(message)} }
 export const ROOM_LAYOUT_REVISION=1;
-export function freshRealm(now:number):Realm { const sim=new Simulation(Math.random,undefined,null); return {version:2,time:now,players:{},rooms:{glade:{zone:'glade',monsters:sim.monsters,layoutRevision:ROOM_LAYOUT_REVISION}},chat:[],ledger:[]}; }
+export const MONSTER_BALANCE_REVISION=2;
+export function freshRealm(now:number):Realm { const sim=new Simulation(Math.random,undefined,null); return {version:2,time:now,players:{},rooms:{glade:{zone:'glade',monsters:sim.monsters,layoutRevision:ROOM_LAYOUT_REVISION,balanceRevision:MONSTER_BALANCE_REVISION}},chat:[],ledger:[]}; }
 function roomFor(realm:Realm,id:string,zone:ZoneId) {
   if(!realm.rooms) {realm.rooms={glade:{zone:'glade',monsters:realm.monsters||new Simulation(Math.random,undefined,null).monsters}};delete realm.monsters;realm.version=2;}
   const room=realm.rooms[id];
   if(!room||room.layoutRevision!==ROOM_LAYOUT_REVISION) {
     const sim=new Simulation(Math.random,undefined,null);sim.balance=realm.balance||{};sim.populateZone(zone);
-    realm.rooms[id]={zone,monsters:sim.monsters,layoutRevision:ROOM_LAYOUT_REVISION};
+    realm.rooms[id]={zone,monsters:sim.monsters,layoutRevision:ROOM_LAYOUT_REVISION,balanceRevision:MONSTER_BALANCE_REVISION};
     if(room)for(const player of Object.values(realm.players))if((player.room||player.actor.save.zone)===id){
       // World content changes retire target IDs, never player progress or account data.
       Object.assign(player.actor,{target:null,cast:null,destination:null,route:[],routeTimer:0,auto:false,loot:[]});
@@ -27,7 +28,16 @@ function roomFor(realm:Realm,id:string,zone:ZoneId) {
       player.session={id:crypto.randomUUID(),sequence:0};player.acknowledged=[];
     }
   }
-  return realm.rooms[id];
+  const current=realm.rooms[id];
+  if(current.balanceRevision!==MONSTER_BALANCE_REVISION){
+    const sim=new Simulation(Math.random,undefined,null);sim.balance=realm.balance||{};
+    for(const monster of current.monsters){
+      const previousMax=realm.balance?.[monster.kind]?.hp??species[monster.kind].hp;
+      if(monster.alive)monster.hp=sim.monsterSpec(monster.kind).hp*Math.max(0,Math.min(1,monster.hp/previousMax));
+    }
+    current.balanceRevision=MONSTER_BALANCE_REVISION;
+  }
+  return current;
 }
 function hydrate(player:Player, realm:Realm) {
   player.room ||= player.actor.save.zone;

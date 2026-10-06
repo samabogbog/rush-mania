@@ -1,6 +1,6 @@
 import {isCraftMaterial,isRarity,materialRarity,materialKey,sameStack,gearRecipe,craftCost,materialCount,rollMaterialDrops} from './game/crafting';
 import {materialIcons} from './game/items';
-import {craftingConfig,progression,economy,refinement} from './config/balance';
+import {craftingConfig,progression,economy,refinement,contentConfig} from './config/balance';
 import {EXP_CHARM,EXP_TOME,itemCategory,type ItemCategory} from './game/items';
 import {refineLevel,refineCost,rollRefinement,rollStoneDrop,refineStones,isStoneTier,type StoneTier} from './game/refinement';
 import {
@@ -13,7 +13,7 @@ import {
   type ClassId,
   type Skill,
 } from "./game/classes";
-import { species, zones, isZone, questDefinitions, type Kind, type ZoneId, type AttackShape } from "./game/content";
+import { normalMonsterBalance, species, zones, isZone, questDefinitions, type Kind, type ZoneId, type AttackShape } from "./game/content";
 import { equipment, gearById, gearByName, type GearSlot, type Bonuses, type Rarity, BAG_CAPACITY, gearSlots, itemBonuses, normalizeSecondary, rollGear, rollEquipmentDrop, setBonuses, gearSets } from "./game/equipment";
 import { zoneObstacles, zoneSpawns, WORLD_BOUNDS, PORTAL_POSITION, protectedPosition } from "./game/map-data";
 export { species } from "./game/content";
@@ -119,7 +119,9 @@ export class Simulation {
   deathTime = 0;
   onSupport?: (skill: Skill) => void;
   balance:Record<string,Partial<Pick<(typeof species)[Kind],"hp"|"atk"|"defense"|"xp"|"gold">>> = {};
-  monsterSpec(kind:Kind){return {...species[kind],...this.balance[kind]};}
+  monsterSpec(kind:Kind){const base=species[kind],normal=normalMonsterBalance(base.level),tier=base.boss?contentConfig.normalBalance.boss:base.miniBoss?contentConfig.normalBalance.mini:{hp:1,atk:1,defense:1,gold:1,xp:1};return {...base,hp:normal.hp*tier.hp,atk:normal.atk*tier.atk,defense:normal.defense*tier.defense,gold:normal.gold*tier.gold,xp:progression.levels[base.level-1].monsterXp*tier.xp,...this.balance[kind]};}
+  hasLegacyDrop(monster:Monster){const spec=this.monsterSpec(monster.kind);return !!spec.boss||!isCraftMaterial(spec.drop);}
+
   monsters: Monster[] = [];
   loot: { x: number; z: number; name: string; icon: string; item?:Item }[] = [];
   obstacles: { x: number; z: number; r: number }[] = [];
@@ -222,8 +224,12 @@ export class Simulation {
   get hpRegenPercent(){return progression.hpRegenPercent+(this.gearBonuses.hpRegen||0)}
   get healingMultiplier(){return 1+Math.min(progression.caps.healing,(this.gearBonuses.healingBonus||0)/100)}
   addEquipmentItem(item:Item){if(this.save.items.some(i=>i.id===item.id))return false;if(this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY){this.onEvent('Bag full. Make room before collecting.');return false;}this.save.items.push({...structuredClone(item),category:itemCategory(item),secondary:normalizeSecondary(item.secondary),refine:refineLevel(item.refine)});return true;}
-  rollStoneLoot(monster:Monster){const tier=rollStoneDrop(!!this.monsterSpec(monster.kind).boss,this.random);return tier?refineStones[tier]:undefined;}
-  rollMaterialLoot(monster:Monster):Item[]{return rollMaterialDrops(!!this.monsterSpec(monster.kind).boss,this.random).map(drop=>({...drop,icon:materialIcons[drop.name],id:materialKey(drop.name,drop.rarity),category:'material'}));}
+  rollStoneLoot(monster:Monster){const spec=this.monsterSpec(monster.kind),tier=spec.boss?rollStoneDrop(true,this.random):this.random()<normalMonsterBalance(spec.level).drops.commonStone?'common':undefined;return tier?refineStones[tier]:undefined;}
+  rollMaterialLoot(monster:Monster):Item[]{
+    const spec=this.monsterSpec(monster.kind),rates=normalMonsterBalance(spec.level).drops;
+    const drops=spec.boss?rollMaterialDrops(true,this.random):(['shade','rune','sky'] as const).flatMap(key=>(['common','rare'] as const).flatMap(rarity=>this.random()<rates[`${key}_${rarity}`]?[{name:({shade:'Shade essence',rune:'Rune stone',sky:'Sky feather'} as const)[key],rarity,count:1}]:[]));
+    return drops.map(drop=>({...drop,icon:materialIcons[drop.name],id:materialKey(drop.name,drop.rarity),category:'material'}));
+  }
   rollEquipmentLoot(monster:Monster):Item|undefined {const rolled=rollEquipmentDrop(this.monsterSpec(monster.kind).level,!!this.monsterSpec(monster.kind).boss,this.random);if(!rolled)return;const gear=gearById(rolled.gearId!)!;return {...rolled,name:gear.name,category:itemCategory({name:gear.name}),icon:gear.icon,count:1};}
   get agility() { return this.save.stats.agi+(this.gearBonuses.agi||0); }
   toggleTutorial(){if(this.save.tutorial.includes('skip'))this.save.tutorial=this.save.tutorial.filter(s=>s!=='skip');else this.save.tutorial.push('skip');this.persist();}
@@ -291,7 +297,7 @@ export class Simulation {
     return progression.mpBase + (this.save.level - 1) * progression.mpPerLevel+(this.gearBonuses.mp||0);
   }
   get maxXp() {
-    return progression.xpBase + this.save.level * progression.xpPerLevel;
+    return this.save.level >= MAX_LEVEL ? 0 : progression.levels[this.save.level-1].nextLevelXp;
   }
   get damage() {
     const primary =
@@ -512,13 +518,13 @@ export class Simulation {
       this.save.gold += goldReward;
       this.progressQuest("kills");if(this.monsterSpec(m.kind).boss)this.progressQuest("boss");this.markTutorial("attack");
       this.save.kills++;
-      this.loot.push({
+      if(this.hasLegacyDrop(m))this.loot.push({
         x: m.x,
         z: m.z,
         name: this.monsterSpec(m.kind).drop,
         icon: this.monsterSpec(m.kind).icon,
       });
-      const stone=rollStoneDrop(!!this.monsterSpec(m.kind).boss,this.random);if(stone)this.loot.push({x:m.x,z:m.z,name:refineStones[stone].name,icon:refineStones[stone].icon});
+      const stone=this.rollStoneLoot(m);if(stone)this.loot.push({x:m.x,z:m.z,name:stone.name,icon:stone.icon});
       const equipmentDrop=this.rollEquipmentLoot(m);if(equipmentDrop)this.loot.push({x:m.x,z:m.z,name:equipmentDrop.name,icon:equipmentDrop.icon,item:equipmentDrop});
       for(const item of this.rollMaterialLoot(m))this.loot.push({x:m.x,z:m.z,name:item.name,icon:item.icon,item});
       this.loot=this.loot.slice(-40);

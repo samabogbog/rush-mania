@@ -11,7 +11,7 @@
       "defense": 8,
       "atk": 7,
       "gold": 8,
-      "icon": "💧",
+      "icon": "\ud83d\udca7",
       "windup": 0.65,
       "range": 2.2
     },
@@ -26,7 +26,7 @@
       "defense": 18,
       "atk": 8,
       "gold": 8,
-      "icon": "🍄",
+      "icon": "\ud83c\udf44",
       "windup": 0.65,
       "range": 2.2
     },
@@ -41,7 +41,7 @@
       "defense": 12,
       "atk": 8,
       "gold": 8,
-      "icon": "🌿",
+      "icon": "\ud83c\udf3f",
       "windup": 0.65,
       "range": 2.2
     },
@@ -56,7 +56,7 @@
       "defense": 15,
       "atk": 19,
       "gold": 9,
-      "icon": "🌿",
+      "icon": "\ud83c\udf3f",
       "windup": 1.1,
       "range": 5
     },
@@ -71,7 +71,7 @@
       "defense": 17.799999999999997,
       "atk": 23.8,
       "gold": 10,
-      "icon": "🌿",
+      "icon": "\ud83c\udf3f",
       "windup": 0.8,
       "range": 3.6
     },
@@ -86,7 +86,7 @@
       "defense": 36,
       "atk": 55,
       "gold": 18,
-      "icon": "🌿",
+      "icon": "\ud83c\udf3f",
       "windup": 0.8,
       "range": 2.2
     },
@@ -101,7 +101,7 @@
       "defense": 41.599999999999994,
       "atk": 64.6,
       "gold": 20,
-      "icon": "🌿",
+      "icon": "\ud83c\udf3f",
       "windup": 1.1,
       "range": 5
     },
@@ -116,7 +116,7 @@
       "defense": 44.4,
       "atk": 69.4,
       "gold": 21,
-      "icon": "🌿",
+      "icon": "\ud83c\udf3f",
       "windup": 0.8,
       "range": 3.6
     },
@@ -131,7 +131,7 @@
       "defense": 50,
       "atk": 79,
       "gold": 24,
-      "icon": "🌿",
+      "icon": "\ud83c\udf3f",
       "windup": 0.8,
       "range": 2.2
     },
@@ -146,7 +146,7 @@
       "defense": 57,
       "atk": 91,
       "gold": 27,
-      "icon": "🌿",
+      "icon": "\ud83c\udf3f",
       "windup": 1.1,
       "range": 5
     },
@@ -161,7 +161,7 @@
       "defense": 64,
       "atk": 103,
       "gold": 30,
-      "icon": "🌿",
+      "icon": "\ud83c\udf3f",
       "windup": 0.8,
       "range": 3.6
     },
@@ -176,7 +176,7 @@
       "defense": 120,
       "atk": 112.6,
       "gold": 32,
-      "icon": "🌿",
+      "icon": "\ud83c\udf3f",
       "windup": 0.8,
       "range": 2.2
     },
@@ -191,7 +191,7 @@
       "defense": 75.19999999999999,
       "atk": 122.19999999999999,
       "gold": 34,
-      "icon": "🌿",
+      "icon": "\ud83c\udf3f",
       "windup": 1.1,
       "range": 5
     },
@@ -206,7 +206,7 @@
       "defense": 80.8,
       "atk": 131.8,
       "gold": 37,
-      "icon": "🌿",
+      "icon": "\ud83c\udf3f",
       "windup": 0.8,
       "range": 2.2
     },
@@ -221,7 +221,7 @@
       "defense": 92,
       "atk": 151,
       "gold": 42,
-      "icon": "🌿",
+      "icon": "\ud83c\udf3f",
       "windup": 0.8,
       "range": 3.6
     },
@@ -236,7 +236,7 @@
       "defense": 99,
       "atk": 163,
       "gold": 45,
-      "icon": "🌿",
+      "icon": "\ud83c\udf3f",
       "windup": 0.8,
       "range": 2.2
     },
@@ -251,7 +251,7 @@
       "defense": 180,
       "atk": 175,
       "gold": 48,
-      "icon": "🌿",
+      "icon": "\ud83c\udf3f",
       "windup": 0.8,
       "range": 3.6
     },
@@ -266,7 +266,7 @@
       "defense": 114.39999999999999,
       "atk": 189.4,
       "gold": 51,
-      "icon": "🌿",
+      "icon": "\ud83c\udf3f",
       "windup": 0.8,
       "range": 2.2
     },
@@ -281,7 +281,7 @@
       "defense": 122.8,
       "atk": 203.79999999999998,
       "gold": 55,
-      "icon": "🌿",
+      "icon": "\ud83c\udf3f",
       "windup": 1.1,
       "range": 5
     },
@@ -296,7 +296,7 @@
       "defense": 134,
       "atk": 223,
       "gold": 60,
-      "icon": "🌿",
+      "icon": "\ud83c\udf3f",
       "windup": 1.1,
       "range": 5
     },
@@ -311,7 +311,7 @@
       "defense": 64,
       "atk": 103,
       "gold": 30,
-      "icon": "🌿",
+      "icon": "\ud83c\udf3f",
       "windup": 0.8,
       "range": 2.2
     },
@@ -326,7 +326,7 @@
       "defense": 71,
       "atk": 115,
       "gold": 33,
-      "icon": "🌿",
+      "icon": "\ud83c\udf3f",
       "windup": 1.1,
       "range": 5
     },
@@ -341,7 +341,7 @@
       "defense": 78,
       "atk": 127,
       "gold": 36,
-      "icon": "🌿",
+      "icon": "\ud83c\udf3f",
       "windup": 0.8,
       "range": 3.6
     },
@@ -356,7 +356,7 @@
       "defense": 160,
       "atk": 139,
       "gold": 39,
-      "icon": "🌿",
+      "icon": "\ud83c\udf3f",
       "windup": 0.8,
       "range": 2.2
     },
@@ -371,7 +371,7 @@
       "defense": 92,
       "atk": 151,
       "gold": 42,
-      "icon": "🌿",
+      "icon": "\ud83c\udf3f",
       "windup": 1.1,
       "range": 5
     },
@@ -386,7 +386,7 @@
       "defense": 57.599999999999994,
       "atk": 78.6,
       "gold": 120,
-      "icon": "👑",
+      "icon": "\ud83d\udc51",
       "windup": 1.65,
       "range": 4,
       "tier": "boss",
@@ -407,7 +407,7 @@
       "defense": 34.56,
       "atk": 47.16,
       "gold": 40,
-      "icon": "◆",
+      "icon": "\u25c6",
       "windup": 1.25,
       "range": 3.2,
       "tier": "mini",
@@ -428,7 +428,7 @@
       "defense": 87,
       "atk": 129,
       "gold": 180,
-      "icon": "👑",
+      "icon": "\ud83d\udc51",
       "windup": 1.65,
       "range": 4,
       "tier": "boss",
@@ -449,7 +449,7 @@
       "defense": 52.2,
       "atk": 77.4,
       "gold": 60,
-      "icon": "◆",
+      "icon": "\u25c6",
       "windup": 1.25,
       "range": 3.2,
       "tier": "mini",
@@ -470,7 +470,7 @@
       "defense": 171,
       "atk": 273,
       "gold": 324,
-      "icon": "👑",
+      "icon": "\ud83d\udc51",
       "windup": 1.65,
       "range": 4,
       "tier": "boss",
@@ -491,7 +491,7 @@
       "defense": 102.60000000000001,
       "atk": 163.8,
       "gold": 108,
-      "icon": "◆",
+      "icon": "\u25c6",
       "windup": 1.25,
       "range": 3.2,
       "tier": "mini",
@@ -512,7 +512,7 @@
       "defense": 276,
       "atk": 453,
       "gold": 504,
-      "icon": "👑",
+      "icon": "\ud83d\udc51",
       "windup": 1.65,
       "range": 4,
       "tier": "boss",
@@ -533,7 +533,7 @@
       "defense": 165.6,
       "atk": 271.8,
       "gold": 168,
-      "icon": "◆",
+      "icon": "\u25c6",
       "windup": 1.25,
       "range": 3.2,
       "tier": "mini",
@@ -554,7 +554,7 @@
       "defense": 402,
       "atk": 669,
       "gold": 720,
-      "icon": "👑",
+      "icon": "\ud83d\udc51",
       "windup": 1.65,
       "range": 4,
       "tier": "boss",
@@ -575,7 +575,7 @@
       "defense": 241.20000000000002,
       "atk": 401.40000000000003,
       "gold": 240,
-      "icon": "◆",
+      "icon": "\u25c6",
       "windup": 1.25,
       "range": 3.2,
       "tier": "mini",
@@ -596,7 +596,7 @@
       "defense": 297,
       "atk": 489,
       "gold": 540,
-      "icon": "👑",
+      "icon": "\ud83d\udc51",
       "windup": 1.65,
       "range": 4,
       "tier": "boss",
@@ -617,7 +617,7 @@
       "defense": 178.20000000000002,
       "atk": 293.40000000000003,
       "gold": 180,
-      "icon": "◆",
+      "icon": "\u25c6",
       "windup": 1.25,
       "range": 3.2,
       "tier": "mini",
@@ -654,21 +654,21 @@
       "npcs": [
         {
           "id": "merchant",
-          "name": "Mallow · Merchant",
+          "name": "Mallow \u00b7 Merchant",
           "x": -4,
           "z": -8,
           "panel": "shop"
         },
         {
           "id": "forge",
-          "name": "Ember · Blacksmith",
+          "name": "Ember \u00b7 Blacksmith",
           "x": 5,
           "z": -7,
           "panel": "forge"
         },
         {
           "id": "guide",
-          "name": "Pip · Quest guide",
+          "name": "Pip \u00b7 Quest guide",
           "x": 0,
           "z": -5,
           "panel": "journal"
@@ -705,7 +705,7 @@
       "npcs": [
         {
           "id": "scout",
-          "name": "Fern · Scout",
+          "name": "Fern \u00b7 Scout",
           "x": 3,
           "z": -11,
           "panel": "journal"
@@ -742,7 +742,7 @@
       "npcs": [
         {
           "id": "farmer",
-          "name": "Clover · Orchard keeper",
+          "name": "Clover \u00b7 Orchard keeper",
           "x": -3,
           "z": -11,
           "panel": "journal"
@@ -779,7 +779,7 @@
       "npcs": [
         {
           "id": "witch",
-          "name": "Luma · Crystal scholar",
+          "name": "Luma \u00b7 Crystal scholar",
           "x": 3,
           "z": -11,
           "panel": "journal"
@@ -816,7 +816,7 @@
       "npcs": [
         {
           "id": "ranger",
-          "name": "Flurry · Ranger",
+          "name": "Flurry \u00b7 Ranger",
           "x": -3,
           "z": -11,
           "panel": "journal"
@@ -827,7 +827,7 @@
       "name": "Rootheart Ruins",
       "level": 40,
       "maxLevel": 100,
-      "description": "Party dungeon for 2–4 adventurers. Defeat the Rootheart Guardian.",
+      "description": "Party dungeon for 2\u20134 adventurers. Defeat the Rootheart Guardian.",
       "ground": 9079229,
       "path": 13220056,
       "accent": 13862399,
@@ -853,7 +853,7 @@
       "npcs": [
         {
           "id": "warden",
-          "name": "Rune · Dungeon warden",
+          "name": "Rune \u00b7 Dungeon warden",
           "x": 3,
           "z": -11,
           "panel": "journal"
@@ -934,5 +934,167 @@
       "item": "Rootheart core",
       "count": 1
     }
-  ]
+  ],
+  "normalBalance": {
+    "checkpoints": [
+      {
+        "level": 10,
+        "hp": 216.0,
+        "atk": 36.0,
+        "defense": 18.0,
+        "gold": 10.0,
+        "drops": {
+          "commonStone": 0.02,
+          "shade_common": 0.045,
+          "rune_common": 0.015,
+          "sky_common": 0.03,
+          "shade_rare": 0,
+          "rune_rare": 0,
+          "sky_rare": 0
+        }
+      },
+      {
+        "level": 20,
+        "hp": 432.0,
+        "atk": 72.0,
+        "defense": 36.0,
+        "gold": 20.0,
+        "drops": {
+          "commonStone": 0.02,
+          "shade_common": 0.06,
+          "rune_common": 0.02,
+          "sky_common": 0.04,
+          "shade_rare": 0,
+          "rune_rare": 0,
+          "sky_rare": 0
+        }
+      },
+      {
+        "level": 30,
+        "hp": 660.0,
+        "atk": 110.0,
+        "defense": 55.0,
+        "gold": 30.0,
+        "drops": {
+          "commonStone": 0.025,
+          "shade_common": 0.075,
+          "rune_common": 0.025,
+          "sky_common": 0.05,
+          "shade_rare": 0,
+          "rune_rare": 0,
+          "sky_rare": 0
+        }
+      },
+      {
+        "level": 40,
+        "hp": 900.0,
+        "atk": 150.0,
+        "defense": 75.0,
+        "gold": 40.0,
+        "drops": {
+          "commonStone": 0.025,
+          "shade_common": 0.09,
+          "rune_common": 0.03,
+          "sky_common": 0.06,
+          "shade_rare": 0.0075,
+          "rune_rare": 0.0025,
+          "sky_rare": 0.005
+        }
+      },
+      {
+        "level": 50,
+        "hp": 1164.0,
+        "atk": 194.0,
+        "defense": 97.0,
+        "gold": 50.0,
+        "drops": {
+          "commonStone": 0.03,
+          "shade_common": 0.0825,
+          "rune_common": 0.0275,
+          "sky_common": 0.055,
+          "shade_rare": 0.015,
+          "rune_rare": 0.005,
+          "sky_rare": 0.01
+        }
+      },
+      {
+        "level": 60,
+        "hp": 1428.0,
+        "atk": 238.0,
+        "defense": 119.0,
+        "gold": 60.0,
+        "drops": {
+          "commonStone": 0.03,
+          "shade_common": 0.075,
+          "rune_common": 0.025,
+          "sky_common": 0.05,
+          "shade_rare": 0.0225,
+          "rune_rare": 0.0075,
+          "sky_rare": 0.015
+        }
+      },
+      {
+        "level": 70,
+        "hp": 1704.0,
+        "atk": 284.0,
+        "defense": 142.0,
+        "gold": 70.0,
+        "drops": {
+          "commonStone": 0.035,
+          "shade_common": 0.075,
+          "rune_common": 0.025,
+          "sky_common": 0.05,
+          "shade_rare": 0.03,
+          "rune_rare": 0.01,
+          "sky_rare": 0.02
+        }
+      },
+      {
+        "level": 80,
+        "hp": 1992.0,
+        "atk": 332.0,
+        "defense": 166.0,
+        "gold": 80.0,
+        "drops": {
+          "commonStone": 0.035,
+          "shade_common": 0.075,
+          "rune_common": 0.025,
+          "sky_common": 0.05,
+          "shade_rare": 0.0375,
+          "rune_rare": 0.0125,
+          "sky_rare": 0.025
+        }
+      },
+      {
+        "level": 90,
+        "hp": 2304.0,
+        "atk": 384.0,
+        "defense": 192.0,
+        "gold": 90.0,
+        "drops": {
+          "commonStone": 0.04,
+          "shade_common": 0.075,
+          "rune_common": 0.025,
+          "sky_common": 0.05,
+          "shade_rare": 0.045,
+          "rune_rare": 0.015,
+          "sky_rare": 0.03
+        }
+      }
+    ],
+    "boss": {
+      "hp": 16,
+      "atk": 3,
+      "defense": 3,
+      "gold": 12,
+      "xp": 12
+    },
+    "mini": {
+      "hp": 5,
+      "atk": 1.8,
+      "defense": 1.8,
+      "gold": 4,
+      "xp": 4
+    }
+  }
 }

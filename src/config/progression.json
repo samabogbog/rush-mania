@@ -1,7 +1,5 @@
 {
   "maxLevel": 100,
-  "xpBase": 80,
-  "xpPerLevel": 40,
   "pointsPerLevel": 3,
   "initial": {
     "gold": 120,
@@ -48,5 +46,607 @@
     "lifesteal": 0.25,
     "dodge": 0.35,
     "damageReduction": 0.6
-  }
+  },
+  "levels": [
+    {
+      "level": 1,
+      "monsterXp": 40,
+      "multiplier": 3.1,
+      "nextLevelXp": 124
+    },
+    {
+      "level": 2,
+      "monsterXp": 41.41059696,
+      "multiplier": 3.3,
+      "nextLevelXp": 136.654969968
+    },
+    {
+      "level": 3,
+      "monsterXp": 42.870938514589035,
+      "multiplier": 3.6,
+      "nextLevelXp": 154.33537865252052
+    },
+    {
+      "level": 4,
+      "monsterXp": 44.38277890311469,
+      "multiplier": 4,
+      "nextLevelXp": 177.53111561245876
+    },
+    {
+      "level": 5,
+      "monsterXp": 45.94793422804184,
+      "multiplier": 4.5,
+      "nextLevelXp": 206.76570402618827
+    },
+    {
+      "level": 6,
+      "monsterXp": 47.568284636550736,
+      "multiplier": 5.1,
+      "nextLevelXp": 242.59825164640873
+    },
+    {
+      "level": 7,
+      "monsterXp": 49.245776579069066,
+      "multiplier": 5.8,
+      "nextLevelXp": 285.62550415860056
+    },
+    {
+      "level": 8,
+      "monsterXp": 50.98242514745092,
+      "multiplier": 6.6,
+      "nextLevelXp": 336.48400597317607
+    },
+    {
+      "level": 9,
+      "monsterXp": 52.780316495611466,
+      "multiplier": 7.5,
+      "nextLevelXp": 395.852373717086
+    },
+    {
+      "level": 10,
+      "monsterXp": 54.64161034552515,
+      "multiplier": 8.5,
+      "nextLevelXp": 464.4536879369638
+    },
+    {
+      "level": 11,
+      "monsterXp": 56.56854258159771,
+      "multiplier": 9.6,
+      "nextLevelXp": 543.058008783338
+    },
+    {
+      "level": 12,
+      "monsterXp": 58.56342793652852,
+      "multiplier": 10.8,
+      "nextLevelXp": 632.4850217145081
+    },
+    {
+      "level": 13,
+      "monsterXp": 60.62866277188968,
+      "multiplier": 12.1,
+      "nextLevelXp": 733.6068195398651
+    },
+    {
+      "level": 14,
+      "monsterXp": 62.766727956762,
+      "multiplier": 13.5,
+      "nextLevelXp": 847.350827416287
+    },
+    {
+      "level": 15,
+      "monsterXp": 64.98019184788589,
+      "multiplier": 15,
+      "nextLevelXp": 974.7028777182884
+    },
+    {
+      "level": 16,
+      "monsterXp": 67.27171337490701,
+      "multiplier": 16.6,
+      "nextLevelXp": 1116.7104420234564
+    },
+    {
+      "level": 17,
+      "monsterXp": 69.64404523442289,
+      "multiplier": 18.3,
+      "nextLevelXp": 1274.486027789939
+    },
+    {
+      "level": 18,
+      "monsterXp": 72.10003719666737,
+      "multiplier": 20.1,
+      "nextLevelXp": 1449.2107476530143
+    },
+    {
+      "level": 19,
+      "monsterXp": 74.64263952880502,
+      "multiplier": 22,
+      "nextLevelXp": 1642.1380696337105
+    },
+    {
+      "level": 20,
+      "monsterXp": 77.27490653894773,
+      "multiplier": 24,
+      "nextLevelXp": 1854.5977569347456
+    },
+    {
+      "level": 21,
+      "monsterXp": 80.00000024515083,
+      "multiplier": 26.1,
+      "nextLevelXp": 2088.0000063984367
+    },
+    {
+      "level": 22,
+      "monsterXp": 82.82119417379606,
+      "multiplier": 28.3,
+      "nextLevelXp": 2343.8397951184284
+    },
+    {
+      "level": 23,
+      "monsterXp": 85.74187729192423,
+      "multiplier": 30.6,
+      "nextLevelXp": 2623.7014451328814
+    },
+    {
+      "level": 24,
+      "monsterXp": 88.76555807824126,
+      "multiplier": 33,
+      "nextLevelXp": 2929.2634165819613
+    },
+    {
+      "level": 25,
+      "monsterXp": 91.89586873768802,
+      "multiplier": 35.5,
+      "nextLevelXp": 3262.3033401879247
+    },
+    {
+      "level": 26,
+      "monsterXp": 95.13656956463656,
+      "multiplier": 38.1,
+      "nextLevelXp": 3624.703300412653
+    },
+    {
+      "level": 27,
+      "monsterXp": 98.49155345995419,
+      "multiplier": 40.8,
+      "nextLevelXp": 4018.455381166131
+    },
+    {
+      "level": 28,
+      "monsterXp": 101.96485060736141,
+      "multiplier": 43.6,
+      "nextLevelXp": 4445.667486480957
+    },
+    {
+      "level": 29,
+      "monsterXp": 105.56063331470138,
+      "multiplier": 46.5,
+      "nextLevelXp": 4908.569449133614
+    },
+    {
+      "level": 30,
+      "monsterXp": 109.28322102593619,
+      "multiplier": 49.5,
+      "nextLevelXp": 5409.519440783841
+    },
+    {
+      "level": 31,
+      "monsterXp": 113.13708550989104,
+      "multiplier": 52.6,
+      "nextLevelXp": 5951.010697820268
+    },
+    {
+      "level": 32,
+      "monsterXp": 117.12685623197885,
+      "multiplier": 55.8,
+      "nextLevelXp": 6535.678577744419
+    },
+    {
+      "level": 33,
+      "monsterXp": 121.2573259153585,
+      "multiplier": 59.1,
+      "nextLevelXp": 7166.307961597688
+    },
+    {
+      "level": 34,
+      "monsterXp": 125.53345629820686,
+      "multiplier": 62.5,
+      "nextLevelXp": 7845.841018637929
+    },
+    {
+      "level": 35,
+      "monsterXp": 129.96038409402044,
+      "multiplier": 66,
+      "nextLevelXp": 8577.38535020535
+    },
+    {
+      "level": 36,
+      "monsterXp": 134.5434271621069,
+      "multiplier": 69.6,
+      "nextLevelXp": 9364.222530482639
+    },
+    {
+      "level": 37,
+      "monsterXp": 139.28809089567812,
+      "multiplier": 73.3,
+      "nextLevelXp": 10209.817062653206
+    },
+    {
+      "level": 38,
+      "monsterXp": 144.2000748352193,
+      "multiplier": 77.1,
+      "nextLevelXp": 11117.825769795409
+    },
+    {
+      "level": 39,
+      "monsterXp": 149.28527951507763,
+      "multiplier": 81,
+      "nextLevelXp": 12092.107640721288
+    },
+    {
+      "level": 40,
+      "monsterXp": 154.54981355149562,
+      "multiplier": 85,
+      "nextLevelXp": 13136.734151877128
+    },
+    {
+      "level": 41,
+      "monsterXp": 160.0000009806033,
+      "multiplier": 89.1,
+      "nextLevelXp": 14256.000087371753
+    },
+    {
+      "level": 42,
+      "monsterXp": 165.6423888551842,
+      "multiplier": 93.3,
+      "nextLevelXp": 15454.434880188686
+    },
+    {
+      "level": 43,
+      "monsterXp": 171.48375510934073,
+      "multiplier": 97.6,
+      "nextLevelXp": 16736.814498671654
+    },
+    {
+      "level": 44,
+      "monsterXp": 177.53111670050626,
+      "multiplier": 102,
+      "nextLevelXp": 18108.17390345164
+    },
+    {
+      "level": 45,
+      "monsterXp": 183.79173803858475,
+      "multiplier": 106.5,
+      "nextLevelXp": 19573.820101109275
+    },
+    {
+      "level": 46,
+      "monsterXp": 190.27313971234335,
+      "multiplier": 111.1,
+      "nextLevelXp": 21139.345822041345
+    },
+    {
+      "level": 47,
+      "monsterXp": 196.98310752354053,
+      "multiplier": 115.8,
+      "nextLevelXp": 22810.643851225992
+    },
+    {
+      "level": 48,
+      "monsterXp": 203.929701839642,
+      "multiplier": 120.6,
+      "nextLevelXp": 24593.922041860824
+    },
+    {
+      "level": 49,
+      "monsterXp": 211.12126727635965,
+      "multiplier": 125.5,
+      "nextLevelXp": 26495.719043183137
+    },
+    {
+      "level": 50,
+      "monsterXp": 218.56644272164417,
+      "multiplier": 130.5,
+      "nextLevelXp": 28522.920775174563
+    },
+    {
+      "level": 51,
+      "monsterXp": 226.2741717131733,
+      "multiplier": 135.6,
+      "nextLevelXp": 30682.7776843063
+    },
+    {
+      "level": 52,
+      "monsterXp": 234.25371318180132,
+      "multiplier": 140.8,
+      "nextLevelXp": 32982.92281599763
+    },
+    {
+      "level": 53,
+      "monsterXp": 242.51465257387534,
+      "multiplier": 146.1,
+      "nextLevelXp": 35431.390741043186
+    },
+    {
+      "level": 54,
+      "monsterXp": 251.06691336577947,
+      "multiplier": 151.5,
+      "nextLevelXp": 38036.63737491559
+    },
+    {
+      "level": 55,
+      "monsterXp": 259.92076898453826,
+      "multiplier": 157,
+      "nextLevelXp": 40807.560730572506
+    },
+    {
+      "level": 56,
+      "monsterXp": 269.08685514879954,
+      "multiplier": 162.6,
+      "nextLevelXp": 43753.522647194804
+    },
+    {
+      "level": 57,
+      "monsterXp": 278.576182645021,
+      "multiplier": 168.3,
+      "nextLevelXp": 46884.37153915704
+    },
+    {
+      "level": 58,
+      "monsterXp": 288.4001505542078,
+      "multiplier": 174.1,
+      "nextLevelXp": 50210.466211487575
+    },
+    {
+      "level": 59,
+      "monsterXp": 298.5705599450905,
+      "multiplier": 180,
+      "nextLevelXp": 53742.700790116294
+    },
+    {
+      "level": 60,
+      "monsterXp": 309.0996280501916,
+      "multiplier": 186,
+      "nextLevelXp": 57492.53081733564
+    },
+    {
+      "level": 61,
+      "monsterXp": 320.0000029418099,
+      "multiplier": 192.1,
+      "nextLevelXp": 61472.00056512168
+    },
+    {
+      "level": 62,
+      "monsterXp": 331.2847787255526,
+      "multiplier": 198.3,
+      "nextLevelXp": 65693.77162127709
+    },
+    {
+      "level": 63,
+      "monsterXp": 342.96751126966603,
+      "multiplier": 204.6,
+      "nextLevelXp": 70171.15280577367
+    },
+    {
+      "level": 64,
+      "monsterXp": 355.06223448905996,
+      "multiplier": 211,
+      "nextLevelXp": 74918.13147719165
+    },
+    {
+      "level": 65,
+      "monsterXp": 367.5834772035868,
+      "multiplier": 217.5,
+      "nextLevelXp": 79949.40629178013
+    },
+    {
+      "level": 66,
+      "monsterXp": 380.54628059082705,
+      "multiplier": 224.1,
+      "nextLevelXp": 85280.42148040434
+    },
+    {
+      "level": 67,
+      "monsterXp": 393.9662162543453,
+      "multiplier": 230.8,
+      "nextLevelXp": 90927.4027115029
+    },
+    {
+      "level": 68,
+      "monsterXp": 407.8594049291223,
+      "multiplier": 237.6,
+      "nextLevelXp": 96907.39461115946
+    },
+    {
+      "level": 69,
+      "monsterXp": 422.2425358466331,
+      "multiplier": 244.5,
+      "nextLevelXp": 103238.30001450179
+    },
+    {
+      "level": 70,
+      "monsterXp": 437.13288678283186,
+      "multiplier": 251.5,
+      "nextLevelXp": 109938.92102588221
+    },
+    {
+      "level": 71,
+      "monsterXp": 452.54834481312906,
+      "multiplier": 258.6,
+      "nextLevelXp": 117029.00196867519
+    },
+    {
+      "level": 72,
+      "monsterXp": 468.50742779928987,
+      "multiplier": 265.8,
+      "nextLevelXp": 124529.27430905125
+    },
+    {
+      "level": 73,
+      "monsterXp": 485.0293066340673,
+      "multiplier": 273.1,
+      "nextLevelXp": 132461.5036417638
+    },
+    {
+      "level": 74,
+      "monsterXp": 502.1338282702904,
+      "multiplier": 280.5,
+      "nextLevelXp": 140848.53882981645
+    },
+    {
+      "level": 75,
+      "monsterXp": 519.8415395620713,
+      "multiplier": 288,
+      "nextLevelXp": 149714.36339387653
+    },
+    {
+      "level": 76,
+      "monsterXp": 538.1737119467707,
+      "multiplier": 295.6,
+      "nextLevelXp": 159084.14925146542
+    },
+    {
+      "level": 77,
+      "monsterXp": 557.1523669973715,
+      "multiplier": 303.3,
+      "nextLevelXp": 168984.31291030277
+    },
+    {
+      "level": 78,
+      "monsterXp": 576.8003028759539,
+      "multiplier": 311.1,
+      "nextLevelXp": 179442.57422470927
+    },
+    {
+      "level": 79,
+      "monsterXp": 597.1411217200514,
+      "multiplier": 319,
+      "nextLevelXp": 190488.01782869638
+    },
+    {
+      "level": 80,
+      "monsterXp": 618.1992579947838,
+      "multiplier": 327,
+      "nextLevelXp": 202151.1573642943
+    },
+    {
+      "level": 81,
+      "monsterXp": 640.0000078448263,
+      "multiplier": 335.1,
+      "nextLevelXp": 214464.0026288013
+    },
+    {
+      "level": 82,
+      "monsterXp": 662.5695594814736,
+      "multiplier": 343.3,
+      "nextLevelXp": 227460.12976998987
+    },
+    {
+      "level": 83,
+      "monsterXp": 685.9350246413012,
+      "multiplier": 351.6,
+      "nextLevelXp": 241174.75466388153
+    },
+    {
+      "level": 84,
+      "monsterXp": 710.1244711542148,
+      "multiplier": 360,
+      "nextLevelXp": 255644.80961551733
+    },
+    {
+      "level": 85,
+      "monsterXp": 735.1669566600084,
+      "multiplier": 368.5,
+      "nextLevelXp": 270909.0235292131
+    },
+    {
+      "level": 86,
+      "monsterXp": 761.0925635139349,
+      "multiplier": 377.1,
+      "nextLevelXp": 287008.0057011049
+    },
+    {
+      "level": 87,
+      "monsterXp": 787.932434923219,
+      "multiplier": 385.8,
+      "nextLevelXp": 303984.3333933779
+    },
+    {
+      "level": 88,
+      "monsterXp": 815.7188123579214,
+      "multiplier": 394.6,
+      "nextLevelXp": 321882.6433564358
+    },
+    {
+      "level": 89,
+      "monsterXp": 844.4850742810937,
+      "multiplier": 403.5,
+      "nextLevelXp": 340749.7274724213
+    },
+    {
+      "level": 90,
+      "monsterXp": 874.2657762447509,
+      "multiplier": 412.5,
+      "nextLevelXp": 360634.63270095974
+    },
+    {
+      "level": 91,
+      "monsterXp": 905.096692399823,
+      "multiplier": 421.6,
+      "nextLevelXp": 381588.7655157654
+    },
+    {
+      "level": 92,
+      "monsterXp": 937.0148584699542,
+      "multiplier": 430.8,
+      "nextLevelXp": 403666.00102885626
+    },
+    {
+      "level": 93,
+      "monsterXp": 970.058616240768,
+      "multiplier": 440.1,
+      "nextLevelXp": 426922.797007562
+    },
+    {
+      "level": 94,
+      "monsterXp": 1004.2676596180438,
+      "multiplier": 449.5,
+      "nextLevelXp": 451418.31299831066
+    },
+    {
+      "level": 95,
+      "monsterXp": 1039.683082310132,
+      "multiplier": 459,
+      "nextLevelXp": 477214.5347803506
+    },
+    {
+      "level": 96,
+      "monsterXp": 1076.3474271918847,
+      "multiplier": 468.6,
+      "nextLevelXp": 504376.40438211715
+    },
+    {
+      "level": 97,
+      "monsterXp": 1114.3047374094022,
+      "multiplier": 478.3,
+      "nextLevelXp": 532971.9559029171
+    },
+    {
+      "level": 98,
+      "monsterXp": 1153.6006092869848,
+      "multiplier": 488.1,
+      "nextLevelXp": 563072.4573929773
+    },
+    {
+      "level": 99,
+      "monsterXp": 1194.282247099844,
+      "multiplier": 498,
+      "nextLevelXp": 594752.5590557223
+    },
+    {
+      "level": 100,
+      "monsterXp": 1236.3985197783693,
+      "multiplier": 508,
+      "nextLevelXp": 628090.4480474116
+    }
+  ]
 }

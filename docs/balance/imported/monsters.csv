@@ -1,0 +1,22 @@
+id,tier,level,hp,atk,def,gold,drop/chance
+,normal,10,216,36,18,10,"refine stone:2.0%, Shade essence common:4.5%, rune stone common:1.5%, sky feather common:3.0%"
+,normal,20,432,72,36,20,"refine stone:2.0%, Shade essence common:6.0%, rune stone common:2.0%, sky feather common:4.0%"
+,normal,30,660,110,55,30,"refine stone:2.5%, Shade essence common:7.5%, rune stone common:2.5%, sky feather common:5.0%"
+,normal,40,900,150,75,40,"refine stone:2.5%, Shade essence common:9.0%, rune stone common:3.0%, sky feather common:6.0% Shade essence rare:0.75%, rune stone rare:0.25%, sky feather rare:0.5%"
+,normal,50,1164,194,97,50,"refine stone:3.0%, Shade essence common:8.25%, rune stone common:2.75%, sky feather common:5.5%, Shade essence rare:1.5%, rune stone rare:0.5%, sky feather rare:1.0%"
+,normal,60,1428,238,119,60,"refine stone:3.0%, Shade essence common:7.5%, rune stone common:2.5%, sky feather common:5.0%, Shade essence rare:2.25%, rune stone rare:0.75%, sky feather rare:1.5%"
+,normal,70,1704,284,142,70,"refine stone:3.5%, Shade essence common:7.5%, rune stone common:2.5%, sky feather common:5.0%, Shade essence rare:3.0%, rune stone rare:1.0%, sky feather rare:2.0%"
+,normal,80,1992,332,166,80,"refine stone:3.5%, Shade essence common:7.5%, rune stone common:2.5%, sky feather common:5.0%, Shade essence rare:3.75%, rune stone rare:1.25%, sky feather rare:2.5%"
+,normal,90,2304,384,192,90,"refine stone:4.0%, Shade essence common:7.5%, rune stone common:2.5%, sky feather common:5.0%, Shade essence rare:4.5%, rune stone rare:1.5%, sky feather rare:3.0%"
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,

@@ -23,7 +23,7 @@ test('failures pay once, reject missing resources and cap +10; lower max HP clam
 });
 test('stones drop from monsters, combine five to one without zeny, and are protected from bulk material sales',()=>{
  expect(rollStoneDrop(false,()=>.02)).toBe('rare');expect(rollStoneDrop(false,()=>.1)).toBe('common');expect(rollStoneDrop(false,()=>.9)).toBeUndefined();expect(rollStoneDrop(true,()=>.7)).toBe('common');
- const sim=new Simulation(()=>.1,undefined,null);sim.hit(sim.monsters[0],99999);expect(sim.loot.some(l=>l.name===refineStones.common.name)).toBe(true);
+ const sim=new Simulation(()=>.01,undefined,null);sim.hit(sim.monsters[0],99999);expect(sim.loot.some(l=>l.name===refineStones.common.name)).toBe(true);
  sim.addItem(refineStones.common.name,refineStones.common.icon,5);const gold=sim.save.gold;expect(sim.craft('rare-refine-stone')).toBe(true);expect(sim.save.gold).toBe(gold);expect(sim.save.items.find(i=>i.name===refineStones.rare.name)!.count).toBe(1);expect(sim.craft('rare-refine-stone')).toBe(false);sim.sell();expect(sim.save.items.find(i=>i.name===refineStones.rare.name)!.count).toBe(1);
 });
 test('old equipment above the new cap migrates to +10 without rerolling affixes or losing identity',()=>{

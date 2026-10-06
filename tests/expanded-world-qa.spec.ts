@@ -7,14 +7,14 @@ for(const zone of Object.keys(zones) as ZoneId[])for(const role of ['boss','mini
  let windup=false,damage=false;let lastHp=sim.save.hp;
  for(let n=0;n<180;n++){sim.tick(.025,0,0);windup ||=elite.windup>0;damage ||=sim.save.hp<lastHp;lastHp=sim.save.hp;if(damage)break;}
  expect(sim.target).toBeNull();expect(elite.aggro).toBe(true);expect(windup).toBe(true);expect(damage).toBe(true);
- elite.hp=species[elite.kind].hp/2;elite.x=elite.homeX+4;sim.x=0;sim.z=2;
+ elite.hp=sim.monsterSpec(elite.kind).hp/2;elite.x=elite.homeX+4;sim.x=0;sim.z=2;
  for(let n=0;n<240;n++)sim.tick(.025,0,0);
- expect(elite.aggro).toBe(false);expect(elite.returning).toBe(false);expect(elite.owner).toBeUndefined();expect(elite.windup).toBe(0);expect(elite.hp).toBe(species[elite.kind].hp);
+ expect(elite.aggro).toBe(false);expect(elite.returning).toBe(false);expect(elite.owner).toBeUndefined();expect(elite.windup).toBe(0);expect(elite.hp).toBe(sim.monsterSpec(elite.kind).hp);
  expect(Math.hypot(elite.x-elite.homeX,elite.z-elite.homeZ)).toBeLessThan(1);
  sim.hit(elite,1e9,true);const respawn=role==='boss'?180:60;expect(elite.alive).toBe(false);expect(elite.respawn).toBe(respawn);
  // Simulation time is advanced explicitly; no claim of waiting these durations in a browser.
  for(let n=0;n<respawn*40-2;n++)sim.tick(.025,0,0);expect(elite.alive).toBe(false);
- for(let n=0;n<4;n++)sim.tick(.025,0,0);expect(elite.alive).toBe(true);expect(elite.hp).toBe(species[elite.kind].hp);expect(elite.aggro).toBe(false);
+ for(let n=0;n<4;n++)sim.tick(.025,0,0);expect(elite.alive).toBe(true);expect(elite.hp).toBe(sim.monsterSpec(elite.kind).hp);expect(elite.aggro).toBe(false);
 });
 test('elite proximity can kill and normal rescue restores living player at camp',()=>{
  const sim=new Simulation(()=>.5,undefined,null);sim.save.zone='frost';sim.populateZone('frost');const boss=sim.monsters.find(m=>species[m.kind].boss)!;sim.monsters=[boss];sim.x=boss.x-2;sim.z=boss.z;sim.save.hp=1;

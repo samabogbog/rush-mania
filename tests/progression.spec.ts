@@ -35,7 +35,7 @@ test("migrates legacy saves, preserves progress, and caps levels at 100", () => 
   expect(sim.save.level).toBe(10);
   expect(sim.chooseSkill("swordsman-1")).toBe(true);
   expect(sim.unlockedSkills.map((skill) => skill.level)).toEqual([10]);
-  sim.addExperience(1_000_000);
+  sim.addExperience(100_000_000);
   expect(sim.save.level).toBe(MAX_LEVEL);
   expect(sim.save.xp).toBe(0);
   for(let n=2;n<=10;n++)sim.chooseSkill(`swordsman-${n}`);
@@ -51,7 +51,7 @@ test("defense formula mitigates damage for both combatants and attack rolls vary
   const sim = new Simulation(() => 0.5,undefined,null);
   const monster = sim.monsters[0];
   sim.hit(monster, 108);
-  expect(monster.hp).toBe(-45); // 108 ATK vs 8 DEF = 100.
+  expect(monster.hp).toBe(21.6-106); // Uploaded Lv1 DEF 1.8 rounds 108 ATK to 106 damage.
   const weak = new Simulation(() => 0.2),
     strong = new Simulation(() => 0.8);
   weak.hit(weak.monsters[0], 30);
@@ -115,7 +115,7 @@ test("skill assignment prevents duplicate slots, keeps cooldowns, and cancels ca
   expect(sim.castSkill("mage-1")).toBe(true);
   sim.tick(0.1, 1, 0);
   expect(sim.cast).toBeNull();
-  expect(monster.hp).toBe(55);
+  expect(monster.hp).toBe(sim.monsterSpec(monster.kind).hp);
   expect(sim.skillCooldowns["mage-1"]).toBeGreaterThan(0);
 });
 

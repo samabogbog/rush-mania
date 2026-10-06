@@ -1,8 +1,6 @@
 {
   "progression": {
     "maxLevel": "number",
-    "xpBase": "number",
-    "xpPerLevel": "number",
     "pointsPerLevel": "number",
     "initial": {
       "gold": "number",
@@ -49,7 +47,609 @@
       "lifesteal": "number",
       "dodge": "number",
       "damageReduction": "number"
-    }
+    },
+    "levels": [
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      },
+      {
+        "level": "number",
+        "monsterXp": "number",
+        "multiplier": "number",
+        "nextLevelXp": "number"
+      }
+    ]
   },
   "equipment": {
     "crafted": [
@@ -2669,7 +3269,169 @@
         "item": "string",
         "count": "number"
       }
-    ]
+    ],
+    "normalBalance": {
+      "checkpoints": [
+        {
+          "level": "number",
+          "hp": "number",
+          "atk": "number",
+          "defense": "number",
+          "gold": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "hp": "number",
+          "atk": "number",
+          "defense": "number",
+          "gold": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "hp": "number",
+          "atk": "number",
+          "defense": "number",
+          "gold": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "hp": "number",
+          "atk": "number",
+          "defense": "number",
+          "gold": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "hp": "number",
+          "atk": "number",
+          "defense": "number",
+          "gold": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "hp": "number",
+          "atk": "number",
+          "defense": "number",
+          "gold": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "hp": "number",
+          "atk": "number",
+          "defense": "number",
+          "gold": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "hp": "number",
+          "atk": "number",
+          "defense": "number",
+          "gold": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "hp": "number",
+          "atk": "number",
+          "defense": "number",
+          "gold": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        }
+      ],
+      "boss": {
+        "hp": "number",
+        "atk": "number",
+        "defense": "number",
+        "gold": "number",
+        "xp": "number"
+      },
+      "mini": {
+        "hp": "number",
+        "atk": "number",
+        "defense": "number",
+        "gold": "number",
+        "xp": "number"
+      }
+    }
   },
   "economy": {
     "bagCapacity": "number",

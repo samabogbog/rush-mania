@@ -765,10 +765,10 @@ function frame(now: number) {
     $("#hp-fill").style.width = (s.hp / sim.maxHp) * 100 + "%";
     $("#mp-fill").style.width = (s.mp / sim.maxMp) * 100 + "%";
     $("#xp-fill").style.width = $("#exp-fill").style.width =
-      (s.level === MAX_LEVEL ? 100 : (s.xp / sim.maxXp) * 100) + "%";
+      (s.level === MAX_LEVEL ? 100 : Math.min(100,(s.xp / sim.maxXp) * 100)) + "%";
     document.querySelector('.experience>span')!.textContent=sim.experienceMultiplier>1?'EXP ×'+EXP_CHARM.multiplier:'BASE EXP';
     $("#exp-text").textContent =
-      s.level === MAX_LEVEL ? "MAX LEVEL" : `${s.xp} / ${sim.maxXp}`;
+      s.level === MAX_LEVEL ? "MAX LEVEL" : `${Math.round(s.xp).toLocaleString()} / ${Math.ceil(sim.maxXp).toLocaleString()}`;
     refreshHotbar();
     $("#combat-state").textContent = sim.cast
       ? `Casting ${sim.skillList.find((skill) => skill.id === sim.cast!.skillId)?.name} · ${sim.cast.remaining.toFixed(1)}s`
@@ -818,7 +818,7 @@ function frame(now: number) {
       $("#target-name").textContent = target.kind;
       $("#target-hud small").textContent = `Lv ${species[target.kind].level} · ${species[target.kind].boss?"Boss":species[target.kind].miniBoss?"Mini-boss":"Wild monster"}`;
       $("#target-fill").style.width =
-        (target.hp / species[target.kind].hp) * 100 + "%";
+        (target.hp / sim.monsterSpec(target.kind).hp) * 100 + "%";
     }
     drawMap($("#mini") as HTMLCanvasElement);
   }

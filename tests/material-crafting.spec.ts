@@ -29,7 +29,7 @@ test('legacy gloves become Pants while unique ID, equipped reference, refinement
 });
 test('all maps normal and boss material rolls include each ingredient and all four rarities',()=>{
  for(const boss of [false,true])for(let n=0;n<3;n++)for(const roll of [0,.8,.96,.999]){const values=[0,n/3+.01,roll];const drops=rollMaterialDrops(boss,()=>values.shift()!);expect(drops).toHaveLength(1);expect(drops[0].name).toBe(craftingMaterials[n]);expect(drops[0].count).toBe(boss?3:1);expect(rarityOrder).toContain(drops[0].rarity);}
- for(const zone of ['glade','marsh','orchard','frost','ruins'] as const){const s=prepared();s.populateZone(zone);const m=s.monsters[0];const before=s.loot.length;s.hit(m,9999999);expect(s.loot.slice(before).some(l=>l.item&&craftingMaterials.includes(l.name)&&l.item.rarity)).toBe(true);}
+ for(const zone of ['glade','marsh','orchard','frost','ruins'] as const){const s=prepared();s.populateZone(zone);s.random=()=>0;const m=s.monsters[0];const before=s.loot.length;s.hit(m,9999999);expect(s.loot.slice(before).some(l=>l.item&&craftingMaterials.includes(l.name)&&l.item.rarity)).toBe(true);}
 });
 test('server validates craft and upgrade rarity, deduplicates replay and spawns material rarity authoritatively',async()=>{
  const db=memory(),user={id:'a',name:'A',admin:true};let snap=await transact(db,user,{connect:true},1000);const row=(await db.read())!,save=row.realm.players.a.actor.save;save.level=100;save.gold=10000;for(const [name,count] of gearRecipe(gearById('starfall-blade')!))save.items.push({name,count,icon:'leaf',rarity:'epic',id:materialKey(name,'epic')});await db.commit(row.revision,row.realm);
