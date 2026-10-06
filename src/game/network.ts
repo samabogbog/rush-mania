@@ -1,3 +1,4 @@
+import {requireGameAccount} from '../ui/account-auth';
 import {WORLD_BOUNDS} from './map-data';
 import {type StoneTier} from './refinement';
 import { Simulation } from '../simulation';
@@ -37,7 +38,7 @@ export class NetworkSimulation extends Simulation {
     try {
       const response=await fetch('/api/game',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({commands:this.queue.slice(0,8),movement:this.sentInput}),signal:AbortSignal.timeout(8000)});
       const body=await response.json();
-      if(!response.ok){if(response.status===409||response.status===401){this.stopped=true;this.connection=body.error;this.onEvent(body.error);return;}throw new Error(body.error)}
+      if(!response.ok){if(response.status===409||response.status===401){this.stopped=true;this.connection=body.error;this.onEvent(body.error);if(response.status===401)location.reload();return;}throw new Error(body.error)}
       this.rtt=performance.now()-started;this.accept(body as Snapshot);
     }catch {this.retry++;this.connection=`Reconnecting… (${this.queue.length} pending)`;}
     finally{this.running=false;const changed=this.input[0]!==this.sentInput[0]||this.input[1]!==this.sentInput[1];this.schedule(this.retry?Math.min(4000,200*2**Math.min(4,this.retry)):this.queue.length||changed?0:Math.max(0,200-(performance.now()-started)));}
@@ -90,7 +91,8 @@ export class NetworkSimulation extends Simulation {
 }
 export class RealmConnectionError extends Error{constructor(message:string,public status:number){super(message)}}
 export async function startSimulation():Promise<Simulation> {
-  if(import.meta.env.DEV&&!new URLSearchParams(location.search).has('online') || new URLSearchParams(location.search).get('practice')==='1')return new Simulation();
+  if(new URLSearchParams(location.search).get('practice')==='1')return new Simulation();
+  await requireGameAccount();
   const response=await fetch('/api/game',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({connect:true}),signal:AbortSignal.timeout(10000)});
   if(!response.ok)throw new RealmConnectionError('Cannot connect to the online realm. Your character is kept on the server.',response.status);
   return new NetworkSimulation(await response.json());

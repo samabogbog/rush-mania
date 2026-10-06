@@ -1,12 +1,14 @@
 # Mossvale Online — Web RPG Prototype
 
+เพิ่มระบบสมัครสมาชิก/ล็อกอินด้วยชื่อผู้ใช้และรหัสผ่าน พร้อมออกจากระบบใน Settings บัญชีและเซสชันเก็บใน SQLite/D1 ดู [คู่มือบัญชีเกม](docs/GAME-ACCOUNTS.md) โหมด local ต้องเปิดทั้ง `npm run dev` และ `npm run dev:server`; เล่นออฟไลน์ด้วย `?practice=1`
+
 ต้นแบบเกม RPG 3D low poly สำหรับเล่นบนเว็บ สร้างด้วย Babylon.js, TypeScript และ Vite
 
 เวอร์ชัน 0.3.1 เพิ่มอุปกรณ์ดรอป 5 เซ็ต (Lv10/30/50/70/90), rarity 4 ระดับ, สถานะรอง 16 แบบ และกระเป๋า 8×6 ช่อง ×3 หน้า พร้อมช่องอุปกรณ์ที่สวมใส่และ tooltip เปรียบเทียบ หน้าคราฟต์เป็นกริดแยกหมวด พร้อมไอคอนอุปกรณ์เซ็ตใหม่ 40 ภาพ และปุ่ม ⓘ ดูสถานะรอง ฟื้นฟู HP เริ่มต้น 0.5%/วินาที + โบนัสไอเท็มสูงสุดชิ้นละ 0.5%/วินาที ดูรายละเอียดและอัตราดรอปใน [Equipment](docs/EQUIPMENT.md)
 
 เวอร์ชัน 0.4 เปลี่ยนตีบวกเป็น +0 ถึง +10 พร้อมโบนัสสถานะหลักสะสมสูงสุด +145%, หิน Common/Rare, การสุ่มสำเร็จและลดระดับ คราฟต์ Common 5 ก้อนเป็น Rare 1 ก้อนได้ใน Forge → Materials ดู [Refinement](docs/REFINEMENT.md)
 
-เพิ่มหมวดหมู่ไอเท็มและแท็บกระเป๋า พร้อมเมนูเสกของแอดมิน (Settings → Admin: spawn items) และ SQLite แบบบันทึกถาวร: เปิด `npm run dev:server` คู่กับ `npm run dev` แล้วเข้า `http://localhost:5173/?online=1` บัญชีทดสอบ local เริ่มต้นเป็นแอดมิน ฐานข้อมูลอยู่ที่ `.local/game.sqlite` ส่วน Sites ใช้ D1 ซึ่งมีพื้นฐานเป็น SQLite ดู [คู่มือระบบไอเท็ม แอดมิน และ SQLite](docs/ITEMS-ADMIN-SQLITE.md)
+เพิ่มหมวดหมู่ไอเท็มและแท็บกระเป๋า พร้อมเมนูเสกของแอดมิน (Settings → Admin: spawn items) และ SQLite แบบบันทึกถาวร: เปิด `npm run dev:server` คู่กับ `npm run dev` แล้วเข้า `http://localhost:5173/?online=1` สมัครบัญชีเกมก่อนเล่น โดยบัญชีแรกของ identity local เริ่มต้นได้รับสิทธิ์แอดมิน ฐานข้อมูลอยู่ที่ `.local/game.sqlite` ส่วน Sites ใช้ D1 ซึ่งมีพื้นฐานเป็น SQLite ดู [คู่มือระบบไอเท็ม แอดมิน และ SQLite](docs/ITEMS-ADMIN-SQLITE.md)
 
 ปรับ HUD ให้กระชับและชิดขอบจอสำหรับ 1200×800 ลดขนาดหน้าต่างเมนู เพิ่มค่าโบนัสตีบวกหลังสถานะหลัก เช่น `ATK 245 (+145)` และใช้ดรอปดาวน์แบบเกมร่วมกันทุกหน้า รองรับเมาส์ คีย์บอร์ด และมือถือ
 
@@ -53,7 +55,7 @@ py -m http.server 8080 --directory dist/client
 - เมือง Sprout Town, พื้นที่ฟาร์ม Glade/Orchard/Marsh/Frost และดันเจียน Rootheart Ruins; มอนสเตอร์ 26 ชนิดพร้อมท่าเตือน circle/line/cone
 - ตัวละคร 3 ตัวและมอนสเตอร์ 26 ชนิดเป็น GLB ที่สร้างเอง มีโครงกระดูก 7 จุด และท่า idle/walk/attack/skill/hurt/death; อุปกรณ์เพิ่มชิ้นส่วนบนตัวละคร
 - อุปกรณ์ 18 แบบ, คราฟต์ด้วยวัสดุตามพื้นที่, สวมใส่ 3 ช่อง, ตีบวกแยกตามไอเท็ม, เควส 6 ชุดและ tutorial ตามการเล่น
-- Online ใช้ตัวตน Sites และเซฟ D1; เซิร์ฟเวอร์ตัดสินการเดิน ดาเมจ การดรอป เงิน ไอเท็ม และธุรกรรม
+- Online ใช้บัญชีเกมและเซฟ D1 โดยบัญชีแรกผูกกับตัวละคร Sites เดิม; เซิร์ฟเวอร์ตัดสินการเดิน ดาเมจ การดรอป เงิน ไอเท็ม และธุรกรรม
 - Party/Friends: เชิญและยอมรับ, EXP/เงินแบ่งเท่ากัน, วัสดุผลัดกันรับ; ดันเจียนเป็น instance ของปาร์ตี้ 2–4 คน Lv40+
 - สกิล heal/guard/fury ช่วยเพื่อนใกล้ตัว; นักดาบใช้ guard ดึงความสนใจมอนสเตอร์, นักเวทคุมพื้นที่, นักธนูทำดาเมจระยะไกล/poison
 - แลกไอเท็ม/เงินด้วยการยืนยันสองฝ่าย; เปลี่ยนข้อเสนอจะยกเลิกการยืนยัน; ตลาดเก็บของไว้กับเซิร์ฟเวอร์และคิดค่าขาย 10%
@@ -157,7 +159,7 @@ npm run dev:server
 npm run dev
 ```
 
-เปิด `http://localhost:5173/?online=1` ตัวจำลอง local ใช้ SQLite ใน `.local/game.sqlite` และ identity cookie เฉพาะ loopback; **ตัวจำลองไม่ได้ถูก bundle เข้าสู่ Worker production** โหมด Vite ปกติยังเป็น Practice เพื่อรักษาเซฟและการทดสอบเดิม
+เปิด `http://localhost:5173/?online=1` ตัวจำลอง local ใช้ SQLite ใน `.local/game.sqlite` และ identity cookie เฉพาะ loopback; **ตัวจำลองไม่ได้ถูก bundle เข้าสู่ Worker production** โหมด Vite ปกติเปิดหน้าสมัคร/ล็อกอินบัญชีเกม; ใช้ `?practice=1` เพื่อเปิดเซฟออฟไลน์เดิม
 
 `db/schema.ts` เป็นแหล่ง schema; `npm run db:generate` สร้าง Drizzle migration ใหม่; production migrations ใช้ใน Sites publish ก่อน Worker upload ไม่แก้ migration ที่นำไปใช้แล้ว
 
