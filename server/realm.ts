@@ -5,14 +5,14 @@ import {rollGear,rarityOrder,BAG_CAPACITY,type Rarity} from '../src/game/equipme
 import {isStoneTier} from '../src/game/refinement';
 import {communityCommand,communitySnapshot,partyOf,shareKill} from './community';
 import { Simulation, type Save } from '../src/simulation';
-import { zoneObstacles, protectedPosition } from '../src/game/map-data';
+import { zoneObstacles, protectedPosition, insideMonsterGroup, zoneMonsterGroups } from '../src/game/map-data';
 import {species,isZone, type ZoneId} from '../src/game/content';
 import {isGearSlot} from '../src/game/equipment';
 import { isClass } from '../src/game/classes';
 import { capture, type Command, type Player, type Realm, type Snapshot } from './protocol';
 import type { RealmStore } from './store';
 export class GameError extends Error { constructor(message:string,public status=400){super(message)} }
-export const ROOM_LAYOUT_REVISION=1;
+export const ROOM_LAYOUT_REVISION=2;
 export const MONSTER_BALANCE_REVISION=2;
 export function freshRealm(now:number):Realm { const sim=new Simulation(Math.random,undefined,null); return {version:2,time:now,players:{},rooms:{glade:{zone:'glade',monsters:sim.monsters,layoutRevision:ROOM_LAYOUT_REVISION,balanceRevision:MONSTER_BALANCE_REVISION}},chat:[],ledger:[]}; }
 function roomFor(realm:Realm,id:string,zone:ZoneId) {
@@ -20,10 +20,17 @@ function roomFor(realm:Realm,id:string,zone:ZoneId) {
   const room=realm.rooms[id];
   if(!room||room.layoutRevision!==ROOM_LAYOUT_REVISION) {
     const sim=new Simulation(Math.random,undefined,null);sim.balance=realm.balance||{};sim.populateZone(zone);
+    if(room){
+      const remaining=[...room.monsters];
+      for(const m of sim.monsters){const index=remaining.findIndex(old=>old.kind===m.kind);if(index<0)continue;const old=remaining.splice(index,1)[0];
+        const max=sim.monsterSpec(m.kind).hp,oldMax=room.balanceRevision===MONSTER_BALANCE_REVISION?max:(realm.balance?.[m.kind]?.hp??species[m.kind].hp);
+        Object.assign(m,{hp:old.alive?max*Math.max(0,Math.min(1,old.hp/oldMax)):0,alive:old.alive,respawn:old.respawn,attack:old.attack,stun:old.stun,slow:old.slow,poison:old.poison,poisonTimer:old.poisonTimer,poisonDamage:old.poisonDamage});
+      }
+    }
     realm.rooms[id]={zone,monsters:sim.monsters,layoutRevision:ROOM_LAYOUT_REVISION,balanceRevision:MONSTER_BALANCE_REVISION};
     if(room)for(const player of Object.values(realm.players))if((player.room||player.actor.save.zone)===id){
       // World content changes retire target IDs, never player progress or account data.
-      Object.assign(player.actor,{target:null,cast:null,destination:null,route:[],routeTimer:0,auto:false,loot:[]});
+      Object.assign(player.actor,{target:null,cast:null,destination:null,route:[],routeTimer:0,auto:false});
       player.input=[0,0];player.inputAt=0;
       player.session={id:crypto.randomUUID(),sequence:0};player.acknowledged=[];
     }
@@ -62,15 +69,32 @@ function advance(realm:Realm,now:number) {
   const active=Object.values(realm.players).filter(p=>now-p.lastSeen<10_000);
   const sims=active.map(p=>({p,sim:hydrate(p,realm)}));
   const ownership=new Map<object,string>();
+  const assignOwnership=()=>{
+  ownership.clear();
   for(const room of Object.values(realm.rooms||{})) {
     const occupants=sims.filter(({p})=>p.room&&realm.rooms?.[p.room]===room);
+    const groupOwners=new Map<string,typeof occupants[number]>();
+    for(const group of zoneMonsterGroups(room.zone)){
+      let nearest:typeof occupants[number]|undefined,distance=Infinity;
+      for(const actor of occupants){const sim=actor.sim;if(sim.save.hp<=0||sim.deathTime>0||!insideMonsterGroup(room.zone,group.id,sim.x,sim.z))continue;
+        const d=Math.hypot(sim.x-group.x,sim.z-group.z);if(d<distance||(d===distance&&nearest&&actor.p.id.localeCompare(nearest.p.id)<0)){nearest=actor;distance=d;}
+      }
+      if(nearest)groupOwners.set(group.id,nearest);
+    }
     for(const m of room.monsters) {
-      if(m.owner&&!occupants.some(({p,sim})=>p.id===m.owner&&sim.save.hp>0&&sim.deathTime<=0)){m.owner=undefined;m.aggro=false;m.windup=0;m.returning=true;}
+      if(m.groupId){
+        const owner=groupOwners.get(m.groupId);
+        if(owner){m.owner=owner.p.id;m.aggro=m.alive;m.returning=false;m.territoryAggro=true;ownership.set(m,owner.p.id);continue;}
+        if(m.territoryAggro){m.returning=true;m.windup=0;m.owner=undefined;m.aggro=false;m.territoryAggro=false;}
+      }
+      if(m.owner&&!occupants.some(({p,sim})=>p.id===m.owner&&sim.save.hp>0&&sim.deathTime<=0&&!protectedPosition(room.zone,sim.x,sim.z))){m.owner=undefined;m.aggro=false;m.windup=0;m.returning=true;}
       const nearest=occupants.filter(({sim})=>sim.save.hp>0&&sim.deathTime<=0&&!protectedPosition(room.zone,sim.x,sim.z)).sort((a,b)=>Math.hypot(a.sim.x-m.x,a.sim.z-m.z)-Math.hypot(b.sim.x-m.x,b.sim.z-m.z))[0];
-      const owner=occupants.find(({p})=>p.id===m.owner) ?? occupants.find(({sim})=>sim.target===m.id) ?? nearest ?? occupants[0];
+      const owner=occupants.find(({p})=>p.id===m.owner) ?? occupants.find(({sim})=>sim.target===m.id&&sim.save.hp>0&&sim.deathTime<=0&&!protectedPosition(room.zone,sim.x,sim.z)) ?? nearest ?? occupants[0];
       if(owner)ownership.set(m,owner.p.id);
     }
   }
+  };
+  assignOwnership();
   for(const {p,sim} of sims) {
     sim.enemyFilter=m=>ownership.get(m)===p.id;support(realm,p,sim,sims);
     sim.onKill=(monster)=> {
@@ -83,6 +107,7 @@ function advance(realm:Realm,now:number) {
   let remaining=Math.max(0,Math.min(0.5,(now-realm.time)/1000));
   while(remaining>0.00001) {
     const dt=Math.min(0.025,remaining);
+    assignOwnership();
     for(const {p,sim} of sims) {
       const input=now-p.inputAt<500?p.input:[0,0];
       sim.tick(dt,input[0],input[1]);

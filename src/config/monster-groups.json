@@ -1,0 +1,235 @@
+{
+  "radius": 2.8,
+  "runSpeed": 4.6,
+  "spawnRadius": 4.8,
+  "maps": {
+    "town": [
+      {
+        "id": "town-1",
+        "x": 0,
+        "z": 24,
+        "count": 6
+      },
+      {
+        "id": "town-2",
+        "x": -32,
+        "z": -32,
+        "count": 7
+      },
+      {
+        "id": "town-3",
+        "x": 32,
+        "z": -32,
+        "count": 8
+      },
+      {
+        "id": "town-4",
+        "x": -32,
+        "z": 0,
+        "count": 6
+      },
+      {
+        "id": "town-5",
+        "x": 32,
+        "z": 0,
+        "count": 7
+      },
+      {
+        "id": "town-6",
+        "x": 0,
+        "z": -32,
+        "count": 8
+      }
+    ],
+    "glade": [
+      {
+        "id": "glade-1",
+        "x": 0,
+        "z": 18,
+        "count": 6
+      },
+      {
+        "id": "glade-2",
+        "x": -32,
+        "z": -32,
+        "count": 7
+      },
+      {
+        "id": "glade-3",
+        "x": 32,
+        "z": -32,
+        "count": 8
+      },
+      {
+        "id": "glade-4",
+        "x": -32,
+        "z": 0,
+        "count": 6
+      },
+      {
+        "id": "glade-5",
+        "x": 32,
+        "z": 0,
+        "count": 7
+      },
+      {
+        "id": "glade-6",
+        "x": 0,
+        "z": 32,
+        "count": 8
+      }
+    ],
+    "orchard": [
+      {
+        "id": "orchard-1",
+        "x": 0,
+        "z": 18,
+        "count": 6
+      },
+      {
+        "id": "orchard-2",
+        "x": -32,
+        "z": -32,
+        "count": 7
+      },
+      {
+        "id": "orchard-3",
+        "x": 32,
+        "z": -32,
+        "count": 8
+      },
+      {
+        "id": "orchard-4",
+        "x": -32,
+        "z": 0,
+        "count": 6
+      },
+      {
+        "id": "orchard-5",
+        "x": 32,
+        "z": 0,
+        "count": 7
+      },
+      {
+        "id": "orchard-6",
+        "x": 0,
+        "z": 32,
+        "count": 8
+      }
+    ],
+    "marsh": [
+      {
+        "id": "marsh-1",
+        "x": 0,
+        "z": 18,
+        "count": 6
+      },
+      {
+        "id": "marsh-2",
+        "x": -32,
+        "z": -32,
+        "count": 7
+      },
+      {
+        "id": "marsh-3",
+        "x": 32,
+        "z": -32,
+        "count": 8
+      },
+      {
+        "id": "marsh-4",
+        "x": -32,
+        "z": 0,
+        "count": 6
+      },
+      {
+        "id": "marsh-5",
+        "x": 32,
+        "z": 0,
+        "count": 7
+      },
+      {
+        "id": "marsh-6",
+        "x": 0,
+        "z": 32,
+        "count": 8
+      }
+    ],
+    "frost": [
+      {
+        "id": "frost-1",
+        "x": 0,
+        "z": 18,
+        "count": 6
+      },
+      {
+        "id": "frost-2",
+        "x": -32,
+        "z": -32,
+        "count": 7
+      },
+      {
+        "id": "frost-3",
+        "x": 32,
+        "z": -32,
+        "count": 8
+      },
+      {
+        "id": "frost-4",
+        "x": -32,
+        "z": 0,
+        "count": 6
+      },
+      {
+        "id": "frost-5",
+        "x": 32,
+        "z": 0,
+        "count": 7
+      },
+      {
+        "id": "frost-6",
+        "x": 0,
+        "z": 32,
+        "count": 8
+      }
+    ],
+    "ruins": [
+      {
+        "id": "ruins-1",
+        "x": 0,
+        "z": 18,
+        "count": 6
+      },
+      {
+        "id": "ruins-2",
+        "x": -32,
+        "z": -32,
+        "count": 7
+      },
+      {
+        "id": "ruins-3",
+        "x": 32,
+        "z": -32,
+        "count": 8
+      },
+      {
+        "id": "ruins-4",
+        "x": -32,
+        "z": 0,
+        "count": 6
+      },
+      {
+        "id": "ruins-5",
+        "x": 32,
+        "z": 0,
+        "count": 7
+      },
+      {
+        "id": "ruins-6",
+        "x": 0,
+        "z": 32,
+        "count": 8
+      }
+    ]
+  }
+}

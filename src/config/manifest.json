@@ -1,1 +1,19 @@
-{"formatVersion": 1, "files": ["progression.json", "classes.json", "equipment.json", "refinement.json", "content.json", "economy.json", "crafting.json"], "validation": "schema.json", "documentation": "README-TH.md", "reload": "rebuild-and-restart-client-and-server"}
+{
+  "formatVersion": 1,
+  "files": [
+    "progression.json",
+    "classes.json",
+    "equipment.json",
+    "refinement.json",
+    "content.json",
+    "economy.json",
+    "crafting.json",
+    "monster-groups.json"
+  ],
+  "validation": "schema.json",
+  "documentation": "README-TH.md",
+  "reload": "rebuild-and-restart-client-and-server",
+  "additionalValidation": {
+    "monster-groups.json": "src/game/map-data.ts:validateMonsterGroupConfig"
+  }
+}

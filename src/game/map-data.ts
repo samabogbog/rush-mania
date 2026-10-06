@@ -1,3 +1,5 @@
+import monsterGroupConfig from '../config/monster-groups.json' with {type:'json'};
+export {monsterGroupConfig};
 import {economy} from '../config/balance';
 /** Collision data shared by the server and Babylon, never supplied by a client. */
 export function gladeObstacles() {
@@ -27,12 +29,27 @@ export const TOWN_SAFE_RADIUS=economy.map.townSafeRadius;
 export function protectedPosition(zone:ZoneId,x:number,z:number) {
  return (zone==='town'&&Math.hypot(x,z)<TOWN_SAFE_RADIUS)||Math.hypot(x-PORTAL_POSITION.x,z-PORTAL_POSITION.z)<economy.map.portalSafeRadius||zones[zone].npcs.some(n=>Math.hypot(x-n.x,z-n.z)<economy.map.npcSafeRadius);
 }
-export function zoneSpawns(zone:ZoneId):{kind:Kind;x:number;z:number}[] {
- const regular=zones[zone].species.filter(k=>!species[k].boss&&!species[k].miniBoss);
- const out:{kind:Kind;x:number;z:number}[]=[];
- for(const [col,row] of [[0,0],[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]])for(let n=0;n<3;n++) {
-  const x=col*SECTOR_SIZE+[-7,6,0][n],z=row*SECTOR_SIZE+[4,-5,10][n];
-  if(regular.length&&!protectedPosition(zone,x,z)&&!zoneObstacles(zone).some(o=>Math.hypot(x-o.x,z-o.z)<o.r+1))out.push({kind:regular[(out.length)%regular.length],x,z});
+/** Editable normal packs; town uses beginner glade species outside its safe hub. */
+export function validateMonsterGroupConfig(config:typeof monsterGroupConfig){
+ for(const key of ['radius','spawnRadius','runSpeed'] as const)if(!Number.isFinite(config[key])||config[key]<=0)throw new Error(`Invalid monster group ${key}`);
+ const ids=new Set<string>();
+ for(const groups of Object.values(config.maps))for(const g of groups){
+  if(!g.id||ids.has(g.id))throw new Error('Invalid monster group duplicate ID');ids.add(g.id);
+  if(!Number.isFinite(g.x)||!Number.isFinite(g.z))throw new Error('Invalid monster group center');
+  if(!Number.isSafeInteger(g.count)||g.count<6||g.count>8)throw new Error('Invalid monster group count');
+ }
+}
+validateMonsterGroupConfig(monsterGroupConfig);
+const cachedGroups=Object.fromEntries(Object.entries(monsterGroupConfig.maps).map(([zone,groups])=>[zone,groups.map(g=>Object.freeze({...g,radius:monsterGroupConfig.radius}))])) as unknown as Record<ZoneId,readonly Readonly<{id:string;x:number;z:number;count:number;radius:number}>[]>;
+export function zoneMonsterGroups(zone:ZoneId) {return cachedGroups[zone];}
+export function monsterGroup(zone:ZoneId,id?:string){return id?zoneMonsterGroups(zone).find(g=>g.id===id):undefined;}
+export function insideMonsterGroup(zone:ZoneId,id:string|undefined,x:number,z:number){const g=monsterGroup(zone,id);return !!g&&!protectedPosition(zone,x,z)&&Math.hypot(x-g.x,z-g.z)<=g.radius;}
+export function zoneSpawns(zone:ZoneId):{kind:Kind;x:number;z:number;groupId?:string}[] {
+ const regular=zones[zone==='town'?'glade':zone].species.filter(k=>!species[k].boss&&!species[k].miniBoss);
+ const out:{kind:Kind;x:number;z:number;groupId?:string}[]=[];
+ for(const [index,g] of zoneMonsterGroups(zone).entries())for(let n=0;n<g.count;n++){
+  const angle=n/g.count*Math.PI*2,x=g.x+Math.cos(angle)*monsterGroupConfig.spawnRadius,z=g.z+Math.sin(angle)*monsterGroupConfig.spawnRadius;
+  out.push({kind:regular[index%regular.length],x,z,groupId:g.id});
  }
  for(const kind of zones[zone].species)if(species[kind].boss||species[kind].miniBoss)out.push({kind,x:species[kind].boss?32:-32,z:32});
  return out;

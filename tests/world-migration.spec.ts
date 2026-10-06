@@ -24,7 +24,7 @@ test('persisted zones and party rooms reconcile once without changing accounts o
  player.actor.destination={x:12,z:12};player.actor.route=[{x:8,z:8}];player.actor.loot=[{x:0,z:0,name:'stale',icon:'?'}];
  const result=await transact(store,identity,{},1000);
  expect(result.player.actor.save).toEqual(saved);expect(result.player.session.id).not.toBe(initial.player.session.id);
- expect(result.player.actor.target).toBeNull();expect(result.player.actor.cast).toBeNull();expect(result.player.actor.destination).toBeNull();expect(result.player.actor.route).toEqual([]);expect(result.player.actor.loot).toEqual([]);expect(result.player.actor.auto).toBe(false);
+ expect(result.player.actor.target).toBeNull();expect(result.player.actor.cast).toBeNull();expect(result.player.actor.destination).toBeNull();expect(result.player.actor.route).toEqual([]);expect(result.player.actor.loot).toEqual([{x:0,z:0,name:'stale',icon:'?'}]);expect(result.player.actor.auto).toBe(false);
  for(const room of Object.values(store.realm!.rooms!)){expect(room.layoutRevision).toBe(ROOM_LAYOUT_REVISION);expect(room.monsters.filter(m=>species[m.kind].boss)).toHaveLength(1);expect(room.monsters.filter(m=>species[m.kind].miniBoss)).toHaveLength(1);}
  expect(store.realm!.rooms!.glade.monsters.find(m=>m.kind==='MooncapMonarch')!.hp).toBe(43210);
  const damaged=store.realm!.rooms!.orchard.monsters[0];damaged.hp=17;

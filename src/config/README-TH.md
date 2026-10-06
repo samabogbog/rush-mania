@@ -9,6 +9,7 @@
 | equipment.json | `crafted` 18 สูตรเดิม, `sets` 5 เซ็ต, `pieceFormulas`, rarity, affix, โบนัสเซ็ต, ดรอป |
 | refinement.json | success 10 ขั้น, rareMultiplier, bonusLinear, cost, downgrade, stoneCraftCount และดรอปหิน |
 | content.json | `normalBalance` checkpoints/multipliers, `species` identity/AI/legacy stats, `zones` ระดับเข้า/รายชื่อมอนสเตอร์, `quests` รางวัล |
+| monster-groups.json | รัศมีเขต/จุดเกิด, ความเร็ววิ่ง, ตำแหน่งและจำนวน6–8ตัวต่อกลุ่ม; ตรวจด้วย `validateMonsterGroupConfig` ใน map-data.ts |
 | economy.json | ยา/ราคา, EXP Tome/Charm, ตาย, party/support/dungeon/market, respawn/พักโจมตี/ฟื้นเมื่อกลับบ้าน, safe radius |
 | schema.json | รูปร่างข้อมูลสำหรับตรวจเมื่อเริ่มเกม ไม่ใช่ค่าบาลานซ์; ห้ามแก้เพื่อข้าม validation |
 | manifest.json | รายชื่อไฟล์และรุ่นรูปแบบสำหรับค้นหา |
@@ -38,7 +39,7 @@
 
 สูตรเซ็ตขึ้นกับ `sets[].level` และ pieceFormulas; gear level, zone level, skill level และ dungeonLevel ไม่เปลี่ยนตามกันอัตโนมัติ ให้ตรวจความสัมพันธ์ทุกครั้ง. ค่าเริ่ม HP/MP/gold/stats/potions ใช้เฉพาะผู้เล่นใหม่ ไม่เขียนทับเซฟเดิม. ค่าเริ่ม HP/MP ควรไม่เกินสูตร max ของผู้เล่นใหม่. คำบรรยาย prose ใน JSON แก้ด้วยมือเมื่อมีเลขระบุ (ตัวเลข runtime และ preview อ่าน config)
 
-server authoritative และ monster overrides เดิมคงอยู่. Collision/ขนาด terrain/ตำแหน่ง spawn/แอนิเมชัน/VFX/ความเร็ว AI ทางเดิน/ข้อจำกัดระบบตลาดและเครือข่ายไม่ใช่บาลานซ์ในไฟล์นี้. เปลี่ยนการต่อสู้ต้องทดสอบทั้ง practice และ online; JSON ไม่รับ code/formula executable
+server authoritative และ monster overrides เดิมคงอยู่. ตำแหน่งกลุ่มและความเร็ววิ่งแก้ใน monster-groups.json; Collision/ขนาด terrain/แอนิเมชัน/VFX/ข้อจำกัดระบบตลาดและเครือข่ายไม่ใช่บาลานซ์ในไฟล์นี้. เปลี่ยนการต่อสู้ต้องทดสอบทั้ง practice และ online; JSON ไม่รับ code/formula executable
 
 validateConfiguration ใช้ได้ใน browser และ Worker ไม่ต้อง Node ตรวจ key ที่สะกดผิด รูปร่าง/จำนวนรายการ ตัวเลข finite/nonnegative (ยกเว้น x/z), probability, threshold, divisor, จำนวนเต็ม และอ้างอิง zone/species. ผิดจะหยุด import พร้อม path ชัดเจน. ทดสอบ: `npx tsc --noEmit` และ `npx playwright test tests/balance-config.spec.ts`; golden catalog ใน docs/balance/catalog.json ตรวจ default ทั้งหมดเหมือนเดิม
 

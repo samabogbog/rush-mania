@@ -1,0 +1,27 @@
+{
+  "fixture": {
+    "level": 30,
+    "practice": true
+  },
+  "group": {
+    "id": "glade-1",
+    "x": 0,
+    "z": 18,
+    "count": 6,
+    "radius": 2.8
+  },
+  "arrival": {
+    "x": 0,
+    "z": 17.87695999999995,
+    "kills": 0,
+    "gold": 120
+  },
+  "farmed": {
+    "x": 0,
+    "z": 17.87695999999995,
+    "kills": 12,
+    "gold": 132,
+    "hp": 468
+  },
+  "pageErrors": []
+}

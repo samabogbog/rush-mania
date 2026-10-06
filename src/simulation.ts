@@ -15,7 +15,7 @@ import {
 } from "./game/classes";
 import { normalMonsterBalance, species, zones, isZone, questDefinitions, type Kind, type ZoneId, type AttackShape } from "./game/content";
 import { equipment, gearById, gearByName, type GearSlot, type Bonuses, type Rarity, BAG_CAPACITY, gearSlots, itemBonuses, normalizeSecondary, rollGear, rollEquipmentDrop, setBonuses, gearSets } from "./game/equipment";
-import { zoneObstacles, zoneSpawns, WORLD_BOUNDS, PORTAL_POSITION, protectedPosition } from "./game/map-data";
+import { zoneObstacles, zoneSpawns, WORLD_BOUNDS, PORTAL_POSITION, protectedPosition, insideMonsterGroup, zoneMonsterGroups, monsterGroupConfig } from "./game/map-data";
 export { species } from "./game/content";
 export type { Kind } from "./game/content";
 export type Monster = {
@@ -37,6 +37,8 @@ export type Monster = {
   windup: number;
   aggro: boolean;
   owner?: string;
+  groupId?: string;
+  territoryAggro?: boolean;
   returning?: boolean;
   facingX?: number; facingZ?: number; pattern?: number; shape?: AttackShape;
 };
@@ -197,7 +199,7 @@ export class Simulation {
     this.populateZone(this.save.zone);
   }
   populateZone(zone: ZoneId) {
-    this.monsters=zoneSpawns(zone).map(({kind,x,z},id)=>({id,kind,x,z,hp:this.monsterSpec(kind).hp,alive:true,respawn:0,attack:0,homeX:x,homeZ:z,stun:0,slow:0,poison:0,poisonTimer:0,poisonDamage:0,windup:0,aggro:false,pattern:0}));
+    this.monsters=zoneSpawns(zone).map(({kind,x,z,groupId},id)=>({id,kind,x,z,groupId,hp:this.monsterSpec(kind).hp,alive:true,respawn:0,attack:0,homeX:x,homeZ:z,stun:0,slow:0,poison:0,poisonTimer:0,poisonDamage:0,windup:0,aggro:false,pattern:0}));
     this.obstacles=zoneObstacles(zone);
   }
   get zone() { return zones[this.save.zone]; }
@@ -448,7 +450,8 @@ export class Simulation {
     }
   }
   nearest() {
-    const living = this.monsters.filter((m) => m.alive);
+    const group=zoneMonsterGroups(this.save.zone).find(g=>insideMonsterGroup(this.save.zone,g.id,this.x,this.z));
+    const living = this.monsters.filter((m) => m.alive&&(!group||m.groupId===group.id));
     living.sort(
       (a, b) =>
         Math.hypot(a.x - this.x, a.z - this.z) -
@@ -501,6 +504,8 @@ export class Simulation {
       ),
     );
     m.aggro = true;
+    m.territoryAggro=insideMonsterGroup(this.save.zone,m.groupId,this.x,this.z);
+    m.returning=false;
     m.owner = this.actorId;
     this.actionTime = 0.25;
     this.markTutorial("attack");
@@ -821,6 +826,7 @@ export class Simulation {
           dist > (m ? this.job.range : 0.15) ||
           (m && !this.direct(m.x, m.z))
         ) {
+          if(m&&zoneMonsterGroups(this.save.zone).some(g=>insideMonsterGroup(this.save.zone,g.id,this.x,this.z))) { /* Hold position while the pack runs into attack range. */ } else {
           let next: { x: number; z: number } = dest;
           if (!this.direct(dest.x, dest.z)) {
             if (this.routeTimer <= 0 || !this.route.length) {
@@ -841,6 +847,7 @@ export class Simulation {
             const movement = Math.min(nd, dt * this.movementSpeed);
             this.x += ((next.x - this.x) / nd) * movement;
             this.z += ((next.z - this.z) / nd) * movement;
+          }
           }
         } else if (m && this.attackTimer <= 0 && !this.cast) {
           this.hit(m, this.damage);
@@ -868,9 +875,9 @@ export class Simulation {
           m.x = m.homeX;
           m.z = m.homeZ;
           m.stun = m.slow = m.poison = m.windup = 0;
-          m.aggro = false;m.owner=undefined;m.returning=false;
+          m.aggro = false;m.owner=undefined;m.returning=false;m.territoryAggro=false;
         }
-        continue;
+        if(!m.alive)continue;
       }
       m.stun = Math.max(0, m.stun - dt);
       m.slow = Math.max(0, m.slow - dt);
@@ -887,16 +894,21 @@ export class Simulation {
       const d = Math.hypot(m.x - this.x, m.z - this.z);
       const spec=this.monsterSpec(m.kind),elite=!!(spec.boss||spec.miniBoss);
       const safe=protectedPosition(this.save.zone,this.x,this.z);
+      const inGroup=insideMonsterGroup(this.save.zone,m.groupId,this.x,this.z)&&this.save.hp>0&&this.deathTime<=0;
+      if(m.groupId){
+        if(inGroup){m.aggro=true;m.owner=this.actorId;m.returning=false;m.territoryAggro=true;}
+        else if(m.territoryAggro){m.returning=true;m.aggro=false;m.owner=undefined;m.windup=0;m.territoryAggro=false;}
+      }
       if(elite&&!m.aggro&&!m.returning&&d<(spec.aggroRadius||8)&&!safe&&this.save.hp>0){m.aggro=true;m.owner=this.actorId;}
-      if((m.aggro||m.id===this.target)&&(safe||this.save.hp<=0||d>(elite?22:8)||Math.hypot(m.x-m.homeX,m.z-m.homeZ)>(spec.leashRadius||10))){m.returning=true;m.aggro=false;m.owner=undefined;m.windup=0;}
+      if((m.aggro||m.id===this.target)&&(safe||this.save.hp<=0||(!m.territoryAggro&&d>(elite?22:8))||Math.hypot(m.x-m.homeX,m.z-m.homeZ)>(m.territoryAggro?14:(spec.leashRadius||10)))){m.returning=true;m.aggro=false;m.owner=undefined;m.windup=0;}
       if(m.returning){
         const homeDistance=Math.hypot(m.x-m.homeX,m.z-m.homeZ),step=Math.min(homeDistance,dt*4);
-        m.hp=Math.min(spec.hp,m.hp+spec.hp*dt*economy.monsters.homeRegen);m.stun=m.slow=m.poison=0;
-        if(homeDistance<.15){m.x=m.homeX;m.z=m.homeZ;m.hp=spec.hp;m.returning=false;}
-        else {const nx=m.x+(m.homeX-m.x)/homeDistance*step,nz=m.z+(m.homeZ-m.z)/homeDistance*step;if(!this.blocked(nx,nz)){m.x=nx;m.z=nz;}else {m.x=m.homeX;m.z=m.homeZ;m.hp=spec.hp;m.returning=false;}}
+        if(!m.groupId)m.hp=Math.min(spec.hp,m.hp+spec.hp*dt*economy.monsters.homeRegen);m.stun=m.slow=m.poison=0;
+        if(homeDistance<.15){m.x=m.homeX;m.z=m.homeZ;if(!m.groupId)m.hp=spec.hp;m.returning=false;}
+        else {const nx=m.x+(m.homeX-m.x)/homeDistance*step,nz=m.z+(m.homeZ-m.z)/homeDistance*step;if(!this.blocked(nx,nz)){m.x=nx;m.z=nz;}else {m.x=m.homeX;m.z=m.homeZ;if(!m.groupId)m.hp=spec.hp;m.returning=false;}}
         continue;
       }
-      if ((m.id === this.target || m.aggro) && !safe && d < (elite?22:8)) {
+      if ((m.id === this.target || m.aggro) && !safe && d < (m.territoryAggro?14:elite?22:8)) {
         if (m.windup > 0) {
           m.windup -= dt;
           if (m.windup <= 0) {
@@ -924,8 +936,8 @@ export class Simulation {
           }
         } else {
           const spec=this.monsterSpec(m.kind);
-          if (d > Math.min(spec.range*.75,2.2)) {
-            const speed=spec.family==='beast'?2:spec.family==='golem'?1:1.4;
+          if (d > (m.territoryAggro?1.1:Math.min(spec.range*.75,2.2))) {
+            const speed=m.territoryAggro?monsterGroupConfig.runSpeed:spec.family==='beast'?2:spec.family==='golem'?1:1.4;
             const step = dt * (m.slow > 0 ? speed*.5 : speed);
             const nx = m.x + ((this.x - m.x) / d) * step,
               nz = m.z + ((this.z - m.z) / d) * step;

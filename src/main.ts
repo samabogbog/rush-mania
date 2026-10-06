@@ -1,6 +1,6 @@
 import {craftingMaterials,isCraftMaterial,materialCount,materialRarity,gearRecipe,craftCost} from './game/crafting';
 import {craftingConfig,economy,refinement,equipmentConfig,progression} from './config/balance';
-import { WORLD_BOUNDS, PORTAL_POSITION } from './game/map-data';
+import { WORLD_BOUNDS, PORTAL_POSITION, zoneMonsterGroups, insideMonsterGroup } from './game/map-data';
 import {enhanceGameSelects,observeGameSelects,closeGameSelect} from './ui/game-select';
 import {EXP_CHARM,EXP_TOME,itemCategories,itemCategory,itemCatalog} from './game/items';
 import {refineBonus,refineChance,refineLevel,refineCost,refineSuccess,refineStones,type StoneTier} from './game/refinement';
@@ -279,7 +279,7 @@ function renderPanel() {
       )}<div class="section-label">SELL GATHERED MATERIALS</div><button id="sell" class="primary-button">Sell all monster drops · 6 z each</button><div class="panel-note">Your wallet: ${s.gold} z</div>`;
   }
   if (panel === "map") {
-    body = `<canvas id="large-map" width="480" height="360"></canvas><div class="map-legend" style="flex-wrap:wrap"><span><i style="background:#edce78"></i>You</span><span><i style="background:#ff596d"></i>Monsters</span><span><i style="background:#ffbf45;border-radius:0;transform:rotate(45deg)"></i>Boss</span><span><i style="background:#c997ff;border-radius:0;transform:rotate(45deg)"></i>Mini-boss</span><span><i style="background:#8decd3"></i>Camp</span></div><p class="muted center">Click the map to walk. Reach the glowing north portal to change area.</p><div class="area-list">${(Object.entries(zones) as [ZoneId,(typeof zones)[ZoneId]][]).map(([id,zone])=>`<article><h3>${zone.name} <small>${id==='town'?'SAFE CENTER':id==='ruins'?'PARTY DUNGEON':'Lv '+zone.level+'–'+zone.maxLevel}</small></h3><p>${zone.description}</p><div class="area-materials">${zone.species.map(kind=>`<span>${kind} · ${catalogSpecies[kind].drop}</span>`).join('')}</div><button data-travel="${id}" ${id===s.zone||s.level<zone.level?'disabled':''}>${id===s.zone?'Current area':s.level<zone.level?'Reach Lv '+zone.level:'Travel'}</button></article>`).join('')}</div>`;
+    body = `<canvas id="large-map" width="480" height="360"></canvas><div class="map-legend" style="flex-wrap:wrap"><span><i style="background:#edce78"></i>You</span><span><i style="background:#ff596d"></i>Monsters</span><span><i style="background:#ffbf45;border-radius:0;transform:rotate(45deg)"></i>Boss</span><span><i style="background:#c997ff;border-radius:0;transform:rotate(45deg)"></i>Mini-boss</span><span><i style="background:#ffae50"></i>Rush territory</span><span><i style="background:#8decd3"></i>Camp</span></div><p class="muted center">Click the map to walk. Reach the glowing north portal to change area.</p><div class="area-list">${(Object.entries(zones) as [ZoneId,(typeof zones)[ZoneId]][]).map(([id,zone])=>`<article><h3>${zone.name} <small>${id==='town'?'SAFE CENTER':id==='ruins'?'PARTY DUNGEON':'Lv '+zone.level+'–'+zone.maxLevel}</small></h3><p>${zone.description}</p><div class="area-materials">${zone.species.map(kind=>`<span>${kind} · ${catalogSpecies[kind].drop}</span>`).join('')}</div><button data-travel="${id}" ${id===s.zone||s.level<zone.level?'disabled':''}>${id===s.zone?'Current area':s.level<zone.level?'Reach Lv '+zone.level:'Travel'}</button></article>`).join('')}</div>`;
   }
   if(panel==='journal') {
     const steps=[['move','Walk with WASD or click the ground.'],['attack','Select a creature and defeat it. Read the red windup and step away.'],['collect','Walk to a drop and press F to collect it.'],['talk','Speak to an NPC near the north camp or in Sprout Town.'],['craft','Open Forge, gather a recipe’s materials and craft equipment.'],['equip','Open Bag and equip what you crafted.'],['refine','Refine your weapon at the forge.'],['travel','Use the north portal to visit a new area.'],['skill','Reach Lv10, assign your first skill, and use it.']];
@@ -661,6 +661,13 @@ function drawMap(canvas: HTMLCanvasElement) {
   c.strokeStyle='rgba(255,255,255,.17)';c.lineWidth=1;
   for(const edge of [-16,16]){c.beginPath();c.moveTo(x(edge),0);c.lineTo(x(edge),h);c.moveTo(0,z(edge));c.lineTo(w,z(edge));c.stroke();}
   c.fillStyle='#9498b1';world.blocking.forEach(b=>{c.beginPath();c.arc(x(b.x),z(b.z),Math.max(1,b.r*w/sizeX),0,Math.PI*2);c.fill();});
+  for(const group of zoneMonsterGroups(sim.save.zone)){
+    const active=sim.save.hp>0&&insideMonsterGroup(sim.save.zone,group.id,sim.x,sim.z);
+    c.beginPath();c.ellipse(x(group.x),z(group.z),Math.max(2,group.radius*w/sizeX),Math.max(2,group.radius*h/sizeZ),0,0,Math.PI*2);
+    c.fillStyle=active?'rgba(255,121,80,.72)':'rgba(255,174,80,.55)';c.fill();
+    c.strokeStyle=active?'#fff1a0':'#ffc15b';c.lineWidth=active?2:1;c.stroke();
+    if(w>=200){c.font='bold 10px Nunito';c.fillStyle='#fff1a0';c.fillText('Rush · '+group.count,x(group.x)+group.radius*w/sizeX+3,z(group.z)-3);}
+  }
   c.fillStyle='#bd8bff';c.fillRect(x(PORTAL_POSITION.x)-3,z(PORTAL_POSITION.z)-3,6,6);
   for(const npc of sim.zone.npcs){c.fillStyle='#79fff0';c.fillRect(x(npc.x)-2,z(npc.z)-2,4,4);if(w>=200){c.font='11px Nunito';c.fillText(npc.name,x(npc.x)+5,z(npc.z));}}
   for(const m of sim.monsters.filter(m=>m.alive)){

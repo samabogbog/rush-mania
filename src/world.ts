@@ -1,4 +1,4 @@
-import { WORLD_SIZE, WORLD_BOUNDS, PORTAL_POSITION } from './game/map-data';
+import { WORLD_SIZE, WORLD_BOUNDS, PORTAL_POSITION, zoneMonsterGroups, insideMonsterGroup } from './game/map-data';
 import { skillRecoveryDuration } from './render/skill-choreography';
 import { castVisualTransition, type CastSnapshot } from "./render/skill-timing";
 import { SkillVFX, type SkillMotion } from "./render/skill-vfx";
@@ -18,6 +18,8 @@ import { Engine } from "@babylonjs/core/Engines/engine";
 import { Scene } from "@babylonjs/core/scene";
 import { SceneInstrumentation } from "@babylonjs/core/Instrumentation/sceneInstrumentation";
 import { ShadowGenerator } from "@babylonjs/core/Lights/Shadows/shadowGenerator";
+import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
+import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
@@ -47,6 +49,8 @@ export class World implements GameWorld {
   private outfitKey="";private outfit:TransformNode[]=[];
   private readonly shadows: ShadowGenerator;
   private currentZone: ZoneId | null=null;
+  private farmTerritories: {group:ReturnType<typeof zoneMonsterGroups>[number];root:TransformNode;fill:Mesh;border:Mesh;active:boolean}[]=[];
+  private territoryMaterials: StandardMaterial[]=[];
   private mapMeshes: Mesh[]=[];
   private mapNodes: TransformNode[]=[];
   private zoneLabels: {label:HTMLDivElement;x:number;z:number}[]=[];
@@ -200,7 +204,39 @@ export class World implements GameWorld {
     this.update(0);
   }
 
+  private clearTerritories() {
+    for(const territory of this.farmTerritories)territory.root.dispose();
+    this.farmTerritories=[];
+    for(const material of this.territoryMaterials)material.dispose();
+    this.territoryMaterials=[];
+  }
+  private buildTerritories() {
+    const makeMaterial=(name:string,color:string,alpha:number)=>{
+      const material=new StandardMaterial(name,this.scene);
+      material.diffuseColor=Color3.FromHexString(color);material.emissiveColor=material.diffuseColor.scale(.36);
+      material.specularColor=Color3.Black();material.alpha=alpha;
+      this.territoryMaterials.push(material);return material;
+    };
+    const fill=makeMaterial('farm-amber-fill','#ffae50',.32),border=makeMaterial('farm-amber-border','#ffc15b',1);
+    makeMaterial('farm-active-fill','#ff7950',.52);makeMaterial('farm-active-border','#fff1a0',1);
+    for(const group of zoneMonsterGroups(this.sim.save.zone)){
+      const root=new TransformNode('farm-territory-'+group.id,this.scene);root.position.set(group.x,0,group.z);
+      const disc=MeshBuilder.CreateCylinder('farm-ground-'+group.id,{diameter:group.radius*2,height:.025,tessellation:48},this.scene);
+      disc.parent=root;disc.position.y=.026;disc.material=fill;disc.isPickable=false;
+      const ring=MeshBuilder.CreateTorus('farm-border-'+group.id,{diameter:group.radius*2,thickness:.11,tessellation:48},this.scene);
+      ring.parent=root;ring.position.y=.065;ring.material=border;ring.isPickable=false;
+      // Short gem markers make the ground territory legible among grass without blocking movement.
+      for(let i=0;i<4;i++){
+        const angle=Math.PI/4+i*Math.PI/2;
+        const gem=MeshBuilder.CreatePolyhedron('farm-marker-'+group.id+'-'+i,{type:1,size:.15},this.scene);
+        gem.parent=root;gem.position.set(Math.cos(angle)*group.radius,.22,Math.sin(angle)*group.radius);
+        gem.scaling.y=1.6;gem.material=border;gem.isPickable=false;
+      }
+      this.farmTerritories.push({group,root,fill:disc,border:ring,active:false});
+    }
+  }
   private rebuildMap() {
+    this.clearTerritories();
     for(const mesh of this.mapMeshes){this.shadows.removeShadowCaster(mesh);mesh.dispose();}
     for(const node of this.mapNodes)node.dispose();
     for(const entry of this.zoneLabels)entry.label.remove();this.zoneLabels=[];
@@ -219,6 +255,7 @@ export class World implements GameWorld {
     this.mapMeshes=this.scene.meshes.filter((m):m is Mesh=>m instanceof Mesh&&!oldMeshes.has(m));
     this.mapNodes=this.scene.transformNodes.filter(n=>!oldNodes.has(n));
     for(const mesh of this.mapMeshes)if(mesh.getBoundingInfo().boundingBox.extendSizeWorld.y>.1)this.shadows.addShadowCaster(mesh);
+    this.buildTerritories();
   }
   private rebuildMonsters() {
     for(const node of this.monsters.values()){for(const mesh of node.getChildMeshes())this.shadows.removeShadowCaster(mesh);node.dispose();}
@@ -274,7 +311,7 @@ export class World implements GameWorld {
   }
   get diagnostics() {
     return {
-      engine: "Babylon.js",worldSize:WORLD_SIZE,worldBounds:WORLD_BOUNDS,modelsLoaded:this.models.loaded,modelsExpected:3+this.sim.monsters.length,
+      engine: "Babylon.js",territoriesCount:this.farmTerritories.length,activeGroupId:this.farmTerritories.find(t=>t.active)?.group.id??null,groupCenters:this.farmTerritories.map(t=>({...t.group,visible:t.root.isEnabled()})),worldSize:WORLD_SIZE,worldBounds:WORLD_BOUNDS,modelsLoaded:this.models.loaded,modelsExpected:3+this.sim.monsters.length,
       previewHeld:this.previewHeld,vfx:this.skillVFX.diagnostics,sceneMeshes:this.scene.meshes.length,skillMotion:this.skillMotion,quality:this.quality,autoReduced:this.autoReduced,riggedActors:this.models.active,motionPoses:this.models.motionDiagnostics,modelErrors:this.models.errors,
       renderWidth:this.engine.getRenderWidth(),renderHeight:this.engine.getRenderHeight(),activeAnimations:this.scene.animatables.length,
       drawCalls: this.instrumentation.drawCallsCounter.current,
@@ -400,6 +437,12 @@ export class World implements GameWorld {
     this.visualJob=this.sim.save.job;this.visualHP=this.sim.save.hp;
     this.updateSkillVisual(dt);
     const renderX=this.sim.renderX,renderZ=this.sim.renderZ;
+    for(const territory of this.farmTerritories){
+      const active=this.sim.save.hp>0&&insideMonsterGroup(this.sim.save.zone,territory.group.id,this.sim.x,this.sim.z);
+      if(active!==territory.active){territory.active=active;territory.fill.material=this.territoryMaterials[active?2:0];territory.border.material=this.territoryMaterials[active?3:1];}
+      // Whole territories are culled together; geometry and materials are allocated only on zone changes.
+      territory.root.setEnabled(Math.hypot(territory.group.x-renderX,territory.group.z-renderZ)<40);
+    }
     const facingX=renderX-(this.sim.online?this.player.position.x:this.lastX);
     const facingZ=renderZ-(this.sim.online?this.player.position.z:this.lastZ);
     const moving = Math.hypot(facingX,facingZ) > 0.015;
@@ -519,6 +562,7 @@ export class World implements GameWorld {
     if (this.disposed) return;
     this.disposed = true;
     this.events.abort();
+    this.clearTerritories();
     this.instrumentation.dispose();
     this.skillVFX.dispose();
     this.models.dispose();
