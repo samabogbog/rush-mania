@@ -1,3 +1,4 @@
+import craftingData from './crafting.json' with {type:'json'};
 import progressionData from './progression.json' with {type:'json'};
 import equipmentData from './equipment.json' with {type:'json'};
 import refinementData from './refinement.json' with {type:'json'};
@@ -18,9 +19,15 @@ export function validateBalance(value:unknown, shape:unknown, path='balance'):vo
   for(const [key,s] of Object.entries(shape))validateBalance((value as Record<string,unknown>)[key],s,`${path}.${key}`);
  }
 }
-const data={progression:progressionData,equipment:equipmentData,refinement:refinementData,classes:classData,content:contentData,economy:economyData};
+const data={crafting:craftingData,progression:progressionData,equipment:equipmentData,refinement:refinementData,classes:classData,content:contentData,economy:economyData};
 export function validateConfiguration(config:typeof data){
  validateBalance(config,schema);
+ if(config.crafting.materials.join('|')!=='Shade essence|Sky feather|Rune stone')throw new Error('Invalid balance config crafting.materials: fixed three-material identity');
+ if(config.crafting.upgradeCount!==5)throw new Error('Invalid balance config crafting.upgradeCount: requires 5 to 1');
+ for(const [key,value] of Object.entries(config.crafting.recipe))if(!Number.isSafeInteger(value)||value<1)throw new Error('Invalid balance config crafting.recipe.'+key);
+ for(const [key,value] of Object.entries(config.crafting.dropCount))if(!Number.isSafeInteger(value)||value<1)throw new Error('Invalid balance config crafting.dropCount.'+key);
+ if(config.crafting.primary.offense.primaryLevelDivisor<=0)throw new Error('Invalid balance config crafting.primary.offense.primaryLevelDivisor');
+
  const unique=(list:{id:string}[],path:string)=>{const ids=new Set<string>();for(const item of list){if(ids.has(item.id))throw new Error(`Invalid balance config ${path}: duplicate id ${item.id}`);ids.add(item.id);}};
  unique(config.equipment.crafted,'equipment.crafted');unique(config.equipment.sets,'equipment.sets');unique(config.content.quests,'content.quests');
  if(config.economy.bagCapacity!==144)throw new Error('Invalid balance config economy.bagCapacity: fixed 144-slot UI contract');
@@ -33,8 +40,8 @@ export function validateConfiguration(config:typeof data){
  positive(config.refinement.stoneCraftCount,'refinement.stoneCraftCount');
  for(const [path,v] of Object.entries(config.progression.initial.stats))if(!Number.isInteger(v))throw new Error(`Invalid balance config progression.initial.stats.${path}: expected integer`);
  const probability=(v:number,path:string)=>{if(v>1)throw new Error(`Invalid balance config ${path}: probability exceeds 1`)};
- for(const [key,v] of Object.entries(config.equipment.dropChance))probability(v,`equipment.dropChance.${key}`);
- for(const [key,list] of Object.entries({...config.equipment.rarityThresholds,...Object.fromEntries(Object.entries(config.refinement.stoneDropThresholds).map(([k,v])=>['stone-'+k,v]))})){let last=0;for(const v of list){probability(v,key);if(v<last)throw new Error(`Invalid balance config ${key}: thresholds must ascend`);last=v;}}
+ for(const [key,v] of Object.entries({...config.equipment.dropChance,...config.crafting.dropChance}))probability(v,`equipment.dropChance.${key}`);
+ for(const [key,list] of Object.entries({...config.equipment.rarityThresholds,...Object.fromEntries(Object.entries(config.crafting.rarityThresholds).map(([k,v])=>['material-'+k,v])),...Object.fromEntries(Object.entries(config.refinement.stoneDropThresholds).map(([k,v])=>['stone-'+k,v]))})){let last=0;for(const v of list){probability(v,key);if(v<last)throw new Error(`Invalid balance config ${key}: thresholds must ascend`);last=v;}}
  config.refinement.success.forEach(v=>probability(v,'refinement.success'));
  probability(config.economy.marketFee,'economy.marketFee');
  for(const [key,v] of Object.entries(config.progression.caps))if(key!=='attackSpeed'&&key!=='healing')probability(v,`progression.caps.${key}`);
@@ -49,6 +56,7 @@ export function validateConfiguration(config:typeof data){
  for(const n of [config.progression.maxLevel,config.economy.bagCapacity,config.refinement.cap])if(!Number.isInteger(n)||n<1)throw new Error('Invalid balance config: level/capacity/cap must be positive integers');
 }
 validateConfiguration(data);
+export const craftingConfig=craftingData;
 export const progression=progressionData;
 export const equipmentConfig=equipmentData;
 export const refinement=refinementData;

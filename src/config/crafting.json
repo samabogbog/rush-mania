@@ -1,0 +1,47 @@
+{
+  "materials": [
+    "Shade essence",
+    "Sky feather",
+    "Rune stone"
+  ],
+  "upgradeCount": 5,
+  "recipe": {
+    "levelDivisor": 10,
+    "essenceBase": 2,
+    "partnerBase": 1,
+    "zenyPerLevel": 12
+  },
+  "dropChance": {
+    "normal": 0.65,
+    "boss": 1
+  },
+  "dropCount": {
+    "normal": 1,
+    "boss": 3
+  },
+  "rarityThresholds": {
+    "normal": [
+      0.75,
+      0.95,
+      0.995
+    ],
+    "boss": [
+      0.4,
+      0.75,
+      0.95
+    ]
+  },
+  "primary": {
+    "offense": {
+      "atkPerLevel": 1.5,
+      "atkBase": 4,
+      "primaryLevelDivisor": 10
+    },
+    "defense": {
+      "defPerLevel": 0.7,
+      "defBase": 2,
+      "hpPerLevel": 5,
+      "hpBase": 10
+    }
+  }
+}

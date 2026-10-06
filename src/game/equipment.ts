@@ -1,7 +1,7 @@
-import {equipmentConfig as config, economy} from '../config/balance';
+import {equipmentConfig as config, economy,craftingConfig as crafting} from '../config/balance';
 import {refineBonus} from './refinement';
 import type {ClassId} from './classes';
-export const gearSlots=['weapon','helmet','armor','gloves','boots','accessory'] as const;
+export const gearSlots=['weapon','helmet','armor','pants','boots','accessory'] as const;
 export type GearSlot=typeof gearSlots[number];
 export const isGearSlot=(value:unknown):value is GearSlot=>typeof value==='string'&&gearSlots.includes(value as GearSlot);
 export const BAG_CAPACITY=economy.bagCapacity;
@@ -35,18 +35,24 @@ for(const set of gearSets){
   {slot:'weapon',suffix:'Bow',job:'archer',icon:'crosshair',bonuses:{}},
   {slot:'helmet',suffix:'Helmet',icon:'gear-helmet',bonuses:{}},
   {slot:'armor',suffix:'Coat',icon:set.armorIcon,bonuses:{}},
-  {slot:'gloves',suffix:'Gloves',icon:'gear-gloves',bonuses:{}},
+  {slot:'pants',suffix:'Gloves',icon:'gear-pants',bonuses:{}},
   {slot:'boots',suffix:'Boots',icon:'gear-boots',bonuses:{}},
   {slot:'accessory',suffix:'Charm',icon:set.charmIcon,bonuses:{}},
  ];
  for(const piece of pieces){const formulas=config.pieceFormulas[piece.suffix.toLowerCase() as keyof typeof config.pieceFormulas] as Record<string,number[]>;piece.bonuses={};for(const [stat,[slope,base]] of Object.entries(formulas))piece.bonuses[stat as keyof Bonuses]=['str','agi'].includes(stat)?Math.ceil(lv/(1/slope)+base):stat==='atk'||stat==='def'?Math.round(lv*slope+base):lv*slope+base;}
- for(const piece of pieces)equipment.push({id:`${set.id}-${piece.suffix.toLowerCase()}`,name:`${set.name} ${piece.suffix}`,slot:piece.slot,job:piece.job,level:lv,rarity:'common',setId:set.id,dropOnly:true,icon:`${set.id}-${piece.suffix.toLowerCase()}`,bonuses:piece.bonuses,cost:0,materials:[],description:set.theme});
+ for(const piece of pieces)equipment.push({id:`${set.id}-${piece.suffix.toLowerCase()}`,name:`${set.name} ${piece.slot==='pants'?'Pants':piece.suffix}`,slot:piece.slot,job:piece.job,level:lv,rarity:'common',setId:set.id,dropOnly:true,icon:piece.slot==='pants'?'gear-pants':`${set.id}-${piece.suffix.toLowerCase()}`,bonuses:piece.bonuses,cost:0,materials:[],description:set.theme});
+}
+for(const gear of equipment){
+ const offensive=gear.slot==='weapon'||gear.slot==='accessory',o=crafting.primary.offense,d=crafting.primary.defense;
+ if(offensive){const atk=gear.bonuses.atk||Math.round(gear.level*o.atkPerLevel+o.atkBase);gear.bonuses={atk,...(gear.slot==='accessory'?{}:gear.job==='archer'?{agi:Math.ceil(gear.level/o.primaryLevelDivisor)}:{str:Math.ceil(gear.level/o.primaryLevelDivisor)})};}
+ else gear.bonuses={def:gear.bonuses.def||Math.round(gear.level*d.defPerLevel+d.defBase),hp:gear.bonuses.hp||gear.level*d.hpPerLevel+d.hpBase};
+ const tier=Math.floor(gear.level/crafting.recipe.levelDivisor);gear.materials=[['Shade essence',crafting.recipe.essenceBase+tier],[offensive?'Rune stone':'Sky feather',crafting.recipe.partnerBase+tier]];gear.cost=gear.level*crafting.recipe.zenyPerLevel;
 }
 export type GearInstance={id?:string;gearId?:string;refine?:number;rarity?:Rarity;secondary?:Bonuses};
 export const itemRarity=(item:GearInstance):Rarity=>item.rarity||gearById(item.gearId||'')?.rarity||'common';
 export function itemBonuses(item:GearInstance,refinement=true):Bonuses {
  const gear=gearById(item.gearId||'');if(!gear)return {};
- const multiplier=gear.dropOnly?config.rarityMultiplier[itemRarity(item)]:1;
+ const multiplier=config.rarityMultiplier[itemRarity(item)];
  const out:Bonuses={};for(const [key,value] of Object.entries(gear.bonuses))out[key as keyof Bonuses]=Math.round(Math.round(value*multiplier)*(refinement?1+refineBonus(item.refine||0)/100:1)*100)/100;
  for(const [key,value] of Object.entries(normalizeSecondary(item.secondary)||{}))out[key as keyof Bonuses]=(out[key as keyof Bonuses]||0)+value;
  return out;

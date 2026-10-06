@@ -14,7 +14,7 @@ test('failure downgrade is conditional: Common resets to zero, Rare loses one le
  expect(rollRefinement(1,'common',()=>.999).level).toBe(2);expect(rollRefinement(2,'rare',()=>.999).level).toBe(3);
 });
 test('refining armor consumes one stone and zeny, updates cached stats, and leaves secondary affixes intact',()=>{
- const {sim,item}=setup([.1]);const hp=sim.maxHp,def=sim.defense;expect(sim.upgrade(item.id!,'common')).toBe(true);expect(item.refine).toBe(1);expect(sim.maxHp).toBe(hp+3);expect(sim.defense).toBe(def+1);expect(item.secondary).toEqual({critChance:5});expect(sim.save.gold).toBe(9940);expect(sim.save.items.find(i=>i.name===refineStones.common.name)!.count).toBe(19);
+ const {sim,item}=setup([.1]);const hp=sim.maxHp,def=sim.defense;expect(sim.upgrade(item.id!,'common')).toBe(true);expect(item.refine).toBe(1);expect(sim.maxHp).toBeCloseTo(hp+3.3);expect(sim.defense).toBeCloseTo(def+1.1);expect(item.secondary).toEqual({critChance:5});expect(sim.save.gold).toBe(9940);expect(sim.save.items.find(i=>i.name===refineStones.common.name)!.count).toBe(19);
 });
 test('failures pay once, reject missing resources and cap +10; lower max HP clamps current HP',()=>{
  const {sim,item}=setup([.999,0]);item.refine=8;sim.save.hp=sim.maxHp;expect(sim.upgrade(item.id!,'rare')).toBe(true);expect(item.refine).toBe(7);expect(sim.save.hp).toBeLessThanOrEqual(sim.maxHp);expect(sim.save.gold).toBe(9620);

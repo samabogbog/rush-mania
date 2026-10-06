@@ -2720,5 +2720,52 @@
       "portalSafeRadius": "number",
       "npcSafeRadius": "number"
     }
+  },
+  "crafting": {
+    "materials": [
+      "string",
+      "string",
+      "string"
+    ],
+    "upgradeCount": "number",
+    "recipe": {
+      "levelDivisor": "number",
+      "essenceBase": "number",
+      "partnerBase": "number",
+      "zenyPerLevel": "number"
+    },
+    "dropChance": {
+      "normal": "number",
+      "boss": "number"
+    },
+    "dropCount": {
+      "normal": "number",
+      "boss": "number"
+    },
+    "rarityThresholds": {
+      "normal": [
+        "number",
+        "number",
+        "number"
+      ],
+      "boss": [
+        "number",
+        "number",
+        "number"
+      ]
+    },
+    "primary": {
+      "offense": {
+        "atkPerLevel": "number",
+        "atkBase": "number",
+        "primaryLevelDivisor": "number"
+      },
+      "defense": {
+        "defPerLevel": "number",
+        "defBase": "number",
+        "hpPerLevel": "number",
+        "hpBase": "number"
+      }
+    }
   }
 }

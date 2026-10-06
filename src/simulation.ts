@@ -1,4 +1,6 @@
-import {progression,economy,refinement} from './config/balance';
+import {isCraftMaterial,isRarity,materialRarity,materialKey,sameStack,gearRecipe,craftCost,materialCount,rollMaterialDrops} from './game/crafting';
+import {materialIcons} from './game/items';
+import {craftingConfig,progression,economy,refinement} from './config/balance';
 import {EXP_CHARM,EXP_TOME,itemCategory,type ItemCategory} from './game/items';
 import {refineLevel,refineCost,rollRefinement,rollStoneDrop,refineStones,isStoneTier,type StoneTier} from './game/refinement';
 import {
@@ -66,7 +68,7 @@ export type Save = {
 const defaults: Save = {
   version: 7,
   zone: "glade",
-  equipped: {weapon:null,helmet:null,armor:null,gloves:null,boots:null,accessory:null},
+  equipped: {weapon:null,helmet:null,armor:null,pants:null,boots:null,accessory:null},
   quests: {},
   tutorial: [],
   job: "swordsman",
@@ -141,10 +143,15 @@ export class Simulation {
     const legacyRefine=(loadedVersion<6||this.save.legacyBasicRefine)&&this.save.weapon>0;
     this.save.version = 7;
     this.save.weapon=refineLevel(this.save.weapon);
+    for(const item of this.save.items)if(isCraftMaterial(item.name)&&!item.gearId){item.rarity=isRarity(item.rarity)?item.rarity:'common';item.id=materialKey(item.name,item.rarity);}
     for(const item of this.save.items)if(item.gearId)item.refine=refineLevel(item.refine);
     for(const item of this.save.items)if(item.secondary)item.secondary=normalizeSecondary(item.secondary);
+    const materialStacks=new Map<string,Item>();this.save.items=this.save.items.filter(item=>{if(!isCraftMaterial(item.name)||item.gearId)return true;const key=materialKey(item.name,materialRarity(item)),existing=materialStacks.get(key);if(existing){existing.count+=item.count;return false;}materialStacks.set(key,item);return true;});
     this.save.zone = isZone(this.save.zone) ? this.save.zone : "glade";
-    this.save.equipped = {...defaults.equipped,...this.save.equipped};
+    const oldEquipped=this.save.equipped as typeof this.save.equipped&{gloves?:string|null};
+    this.save.equipped = {...defaults.equipped,...oldEquipped,pants:oldEquipped.pants||oldEquipped.gloves||null};
+    delete (this.save.equipped as typeof oldEquipped).gloves;
+    for(const item of this.save.items){const gear=gearById(item.gearId||'');if(gear?.slot==='pants'){item.name=gear.name;item.icon=gear.icon;}}
     // Preserve the old basic-weapon investment as a real starter weapon.
     if(legacyRefine&&!this.save.equipped.weapon){
       if(this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY)this.save.legacyBasicRefine=true;
@@ -216,6 +223,7 @@ export class Simulation {
   get healingMultiplier(){return 1+Math.min(progression.caps.healing,(this.gearBonuses.healingBonus||0)/100)}
   addEquipmentItem(item:Item){if(this.save.items.some(i=>i.id===item.id))return false;if(this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY){this.onEvent('Bag full. Make room before collecting.');return false;}this.save.items.push({...structuredClone(item),category:itemCategory(item),secondary:normalizeSecondary(item.secondary),refine:refineLevel(item.refine)});return true;}
   rollStoneLoot(monster:Monster){const tier=rollStoneDrop(!!this.monsterSpec(monster.kind).boss,this.random);return tier?refineStones[tier]:undefined;}
+  rollMaterialLoot(monster:Monster):Item[]{return rollMaterialDrops(!!this.monsterSpec(monster.kind).boss,this.random).map(drop=>({...drop,icon:materialIcons[drop.name],id:materialKey(drop.name,drop.rarity),category:'material'}));}
   rollEquipmentLoot(monster:Monster):Item|undefined {const rolled=rollEquipmentDrop(this.monsterSpec(monster.kind).level,!!this.monsterSpec(monster.kind).boss,this.random);if(!rolled)return;const gear=gearById(rolled.gearId!)!;return {...rolled,name:gear.name,category:itemCategory({name:gear.name}),icon:gear.icon,count:1};}
   get agility() { return this.save.stats.agi+(this.gearBonuses.agi||0); }
   toggleTutorial(){if(this.save.tutorial.includes('skip'))this.save.tutorial=this.save.tutorial.filter(s=>s!=='skip');else this.save.tutorial.push('skip');this.persist();}
@@ -243,7 +251,16 @@ export class Simulation {
     if(Math.hypot(this.x-npc.x,this.z-npc.z)>3){this.goTo(npc.x,npc.z);this.onEvent("Walk closer to speak with "+npc.name);return;}
     this.markTutorial("talk");this.onEvent(npc.panel,"npc");this.persist();
   }
-  craft(id:string) {
+  upgradeMaterial(name:string,rarity:Rarity){
+    if(!isCraftMaterial(name)||!isRarity(rarity)||rarity==='legend')return false;
+    const next=(['common','rare','epic','legend'] as Rarity[])[(['common','rare','epic','legend'] as Rarity[]).indexOf(rarity)+1];
+    const source=this.save.items.find(i=>i.name===name&&materialRarity(i)===rarity&&i.count>=craftingConfig.upgradeCount);
+    if(!source)return false;
+    if(!this.save.items.some(i=>sameStack(i,{name,rarity:next})&&i.count>0)&&this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY&&source.count>craftingConfig.upgradeCount)return false;
+    source.count-=craftingConfig.upgradeCount;this.addItem(name,materialIcons[name],1,next);this.persist();this.onEvent(`Upgraded ${name} · ${next}`,'reward');return true;
+  }
+  craft(id:string,rarity:Rarity='common') {
+    if(!isRarity(rarity))return false;
     if(id==='rare-refine-stone'){
       const common=this.save.items.find(i=>i.name===refineStones.common.name&&i.count>=refinement.stoneCraftCount);
       if(!common){this.onEvent(`Need ${refinement.stoneCraftCount} Common refine stones.`);return false;}
@@ -252,11 +269,14 @@ export class Simulation {
       common.count-=refinement.stoneCraftCount;this.addItem(refineStones.rare.name,refineStones.rare.icon);this.progressQuest('craft');this.persist();this.onEvent('Crafted 1 Rare refine stone','reward');return true;
     }
     const gear=gearById(id);
-    if(!gear||gear.dropOnly||this.save.level<gear.level){this.onEvent("You have not reached this recipe’s level.");return false;}
-    if(this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY){this.onEvent("Make room in your bag first.");return false;}
-    if(this.save.gold<gear.cost||gear.materials.some(([name,count])=>(this.save.items.find(i=>i.name===name)?.count||0)<count)){this.onEvent("Gather the recipe’s materials and zeny first.");return false;}
-    this.save.gold-=gear.cost;for(const [name,count] of gear.materials)this.save.items.find(i=>i.name===name)!.count-=count;
-    this.addItem(gear.name,gear.icon);this.progressQuest('craft');this.markTutorial('craft');this.onEvent(`Crafted ${gear.name}`,"reward");this.persist();return true;
+    if(!gear||this.save.level<gear.level){this.onEvent("You have not reached this recipe’s level.");return false;}
+    const recipe=gearRecipe(gear),cost=craftCost(gear);
+    if(this.save.gold<cost||recipe.some(([name,count])=>materialCount(this.save.items,name,rarity)<count)){this.onEvent("Gather matching-rarity materials and zeny first.");return false;}
+    const freed=recipe.reduce((n,[name,count])=>n+this.save.items.filter(i=>i.count>0&&i.name===name&&materialRarity(i)===rarity).filter((i,idx,all)=>all.slice(0,idx+1).reduce((v,x)=>v+x.count,0)<=count).length,0);
+    if(this.save.items.filter(i=>i.count>0).length-freed>=BAG_CAPACITY){this.onEvent("Make room in your bag first.");return false;}
+    const item={...rollGear(gear.id,rarity,this.random),name:gear.name,icon:gear.icon,count:1};
+    this.save.gold-=cost;for(const [name,count] of recipe){let remaining=count;for(const stack of this.save.items.filter(i=>i.name===name&&materialRarity(i)===rarity)){const used=Math.min(remaining,stack.count);stack.count-=used;remaining-=used;}}
+    this.addEquipmentItem(item);this.progressQuest('craft');this.markTutorial('craft');this.onEvent(`Crafted ${gear.name}`,"reward");this.persist();return true;
   }
   equip(id:string) {
     const item=this.save.items.find(i=>i.id===id&&i.count===1),gear=item?.gearId?gearById(item.gearId):undefined;
@@ -365,13 +385,14 @@ export class Simulation {
   persist() {
     this.storage?.setItem("mossvale-save", JSON.stringify(this.save));
   }
-  addItem(name: string, icon: string, count = 1) {
+  addItem(name: string, icon: string, count = 1, rarity:Rarity='common') {
+    if(!isRarity(rarity))return false;
     const gear=gearByName(name);
-    const existing=!gear&&this.save.items.find(i=>i.name===name);if(!existing&&this.save.items.filter(i=>i.count>0).length+(gear?count:1)>BAG_CAPACITY){this.onEvent("Bag full. Make room before collecting.");return false;}
+    const existing=!gear&&this.save.items.find(i=>sameStack(i,{name,rarity}));if(!existing&&this.save.items.filter(i=>i.count>0).length+(gear?count:1)>BAG_CAPACITY){this.onEvent("Bag full. Make room before collecting.");return false;}
     if(gear){for(let n=0;n<count;n++)this.save.items.push({...rollGear(gear.id,gear.rarity,this.random),name,category:itemCategory({name}),icon:gear.icon,count:1});return true;}
-    const item = this.save.items.find((i) => i.name === name);
+    const item = this.save.items.find((i) => sameStack(i,{name,rarity}));
     if (item) item.count += count;
-    else this.save.items.push({ name, icon, count, category:itemCategory({name}) });
+    else this.save.items.push({ name, icon, count, category:itemCategory({name}),...(isCraftMaterial(name)?{rarity,id:materialKey(name,rarity)}:{}) });
     return true;
   }
   useItem(name:string) {
@@ -499,6 +520,7 @@ export class Simulation {
       });
       const stone=rollStoneDrop(!!this.monsterSpec(m.kind).boss,this.random);if(stone)this.loot.push({x:m.x,z:m.z,name:refineStones[stone].name,icon:refineStones[stone].icon});
       const equipmentDrop=this.rollEquipmentLoot(m);if(equipmentDrop)this.loot.push({x:m.x,z:m.z,name:equipmentDrop.name,icon:equipmentDrop.icon,item:equipmentDrop});
+      for(const item of this.rollMaterialLoot(m))this.loot.push({x:m.x,z:m.z,name:item.name,icon:item.icon,item});
       this.loot=this.loot.slice(-40);
       }
       this.onEvent(
@@ -624,7 +646,7 @@ export class Simulation {
     let count = 0;
     this.loot = this.loot.filter((l) => {
       if (Math.hypot(l.x - this.x, l.z - this.z) < 3.2) {
-        if(!(l.item?this.addEquipmentItem(l.item):this.addItem(l.name,l.icon)))return true;
+        if(!(l.item?(l.item.gearId?this.addEquipmentItem(l.item):this.addItem(l.item.name,l.item.icon,l.item.count,materialRarity(l.item))):this.addItem(l.name,l.icon)))return true;
         count++;
         return false;
       }

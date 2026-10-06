@@ -1550,3 +1550,5 @@ body.hotbar-editing .game-panel{top:12px;transform:translateX(-50%);max-height:c
  .bottom-right{bottom:140px}.touch-controls{bottom:140px}.side-menu{bottom:235px}
  .quest-tracker{display:none}
 }
+
+.material-upgrades{background:#ffedc3;border:2px solid #c1a16a;border-radius:6px;padding:12px;margin-bottom:16px}.material-upgrade-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:8px 0;font-size:11px}.material-upgrade-row>.game-icon{width:32px;height:32px}.material-upgrade-row button{padding:7px;border:1px solid #b79360;background:#efdbad;border-radius:4px}.material-upgrade-row button:disabled{opacity:.45}.material-upgrade-row strong{min-width:95px}

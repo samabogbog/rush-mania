@@ -41,3 +41,19 @@
 server authoritative และ monster overrides เดิมคงอยู่. Collision/ขนาด terrain/ตำแหน่ง spawn/แอนิเมชัน/VFX/ความเร็ว AI ทางเดิน/ข้อจำกัดระบบตลาดและเครือข่ายไม่ใช่บาลานซ์ในไฟล์นี้. เปลี่ยนการต่อสู้ต้องทดสอบทั้ง practice และ online; JSON ไม่รับ code/formula executable
 
 validateConfiguration ใช้ได้ใน browser และ Worker ไม่ต้อง Node ตรวจ key ที่สะกดผิด รูปร่าง/จำนวนรายการ ตัวเลข finite/nonnegative (ยกเว้น x/z), probability, threshold, divisor, จำนวนเต็ม และอ้างอิง zone/species. ผิดจะหยุด import พร้อม path ชัดเจน. ทดสอบ: `npx tsc --noEmit` และ `npx playwright test tests/balance-config.spec.ts`; golden catalog ใน docs/balance/catalog.json ตรวจ default ทั้งหมดเหมือนเดิม
+
+## วัตถุดิบและการคราฟต์แยก rarity
+
+`crafting.json` เป็นจุดปรับใหม่: มอนสเตอร์ปกติทุกแผนที่มีโอกาสดรอปวัตถุดิบ 65% ครั้งละ 1 ชิ้น บอส 100% ครั้งละ 3 ชิ้น เลือก Shade essence / Sky feather / Rune stone เท่ากันทั้งสามชนิด ไม่ต้องไปพื้นที่เลเวลสูงเพื่อหาวัตถุดิบเริ่มต้น ดรอปประจำชนิดมอนสเตอร์และอุปกรณ์เดิมยังอยู่
+
+- `dropChance`, `dropCount`: โอกาสและจำนวนของปกติ/บอส
+- `rarityThresholds`: ขอบสะสมปกติ `[0.75,0.95,0.995]` = Common75%, Rare20%, Epic4.5%, Legend0.5%; บอส `[0.4,0.75,0.95]` = 40%,35%,20%,5%
+- `recipe`: ค่าเริ่มที่เลือกเพราะผู้เล่นไม่ได้ระบุจำนวน เป็นจำนวนบวกเพิ่มตามเลเวล `tier=floor(level/levelDivisor)`; Shade essence=`essenceBase+tier` (เริ่ม2); วัตถุดิบคู่=`partnerBase+tier` (เริ่ม1); ราคา=`level×zenyPerLevel` (เริ่ม12) จึง Lv1 ใช้2+1, Lv90 ใช้11+10 ราคา1080z
+- อาวุธและเครื่องประดับใช้ Shade essence + Rune stone; หมวก เสื้อ กางเกง รองเท้าใช้ Shade essence + Sky feather วัตถุดิบทั้งคู่ต้อง rarity ตรงกับที่เลือกใน Forge ทุกชิ้นใน catalog รวมเซ็ตเลเวลสูงคราฟต์ได้ทั้ง Common/Rare/Epic/Legend และยังต้องมีเลเวลตามสูตร
+- `upgradeCount=5`: วัตถุดิบชนิดเดียวและ rarity เดียว 5 ชิ้น → rarity ถัดไป 1 ชิ้น ฟรี zeny; Legend อัปต่อไม่ได้ ค่านี้ตรวจเป็น5ตามกติกาผู้เล่น
+- `primary`: สูตร fallback ATK/STR/AGI สำหรับอาวุธ, ATK สำหรับเครื่องประดับที่ใช้ได้ทุกอาชีพ, DEF/HP สำหรับชิ้นป้องกัน ไม่มี ATK หลักบนชิ้นป้องกัน ค่าที่กำหนดใน equipment.json ยังใช้กับ ATK/DEF/HP ที่ตรงบทบาท; STR/AGI อาวุธคำนวณตามเลเวลและอาชีพ
+- `equipment.json` ยังปรับ rarity multiplier, จำนวน/ช่วง secondary affix, เซ็ต และดรอปอุปกรณ์ได้ secondary affix ใช้ pool เดิม ไม่แก้เซ็ตโบนัส
+
+เซฟเก่าคง version7 บัญชี เงิน อุปกรณ์ unique ID rarity ตีบวก และ secondary เดิม วัตถุดิบสามชนิดที่ไม่มี rarity เป็นCommon สแต็กชนิด/rarityเดียวกันรวมโดยรักษาจำนวน สแต็กต่างrarityแยกกันทั้ง Bag/Trade/Market/Admin/loot กางเกงแทนถุงมือใน6ช่องเดิม: gear ID ลงท้าย `-gloves` คงไว้เพื่ออ้างอิงเซฟ แต่แสดง Pants ไอคอน `gear-pants` และย้าย equipped.gloves ไปpants
+
+หมายเหตุ `docs/balance/catalog.json` เป็น snapshot ก่อนระบบนี้ ไม่ใช่ค่าคราฟต์ปัจจุบัน; tests ตรวจว่า ID อุปกรณ์เดิมคงอยู่และตรวจสูตร/บทบาทใหม่แยกกัน

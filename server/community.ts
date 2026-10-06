@@ -1,3 +1,4 @@
+import {sameStack} from '../src/game/crafting';
 import {economy} from '../src/config/balance';
 import {itemCategory} from '../src/game/items';
 import {refineLevel} from '../src/game/refinement';
@@ -20,7 +21,7 @@ function available(player:Player,key:string,count:number) {
  if(!item||Object.values(player.actor.save.equipped).includes(item.id||'')||item.gearId&&count!==1)reject('Item unavailable or equipped');return item!;
 }
 function receive(player:Player,item:Item) {
- const items=player.actor.save.items,stack=!item.gearId&&items.find(i=>i.name===item.name);
+ const items=player.actor.save.items,stack=!item.gearId&&items.find(i=>sameStack(i,item));
  if(stack)stack.count+=item.count;else {if(items.filter(i=>i.count>0).length>=BAG_CAPACITY)reject('Recipient bag is full');items.push({...structuredClone(item),category:itemCategory(item),secondary:normalizeSecondary(item.secondary),...(item.gearId?{refine:refineLevel(item.refine)}:{})});}
 }
 function remove(player:Player,item:Item,count:number){item.count-=count;player.actor.save.items=player.actor.save.items.filter(i=>i.count>0)}
@@ -65,7 +66,9 @@ export function shareKill(r:Realm,p:Player,monster:Simulation['monsters'][number
  const members=actors.filter(a=>party.members.includes(a.p.id)&&a.p.room===p.room&&a.sim.save.hp>0&&Math.hypot(a.sim.x-monster.x,a.sim.z-monster.z)<economy.party.rewardRadius);
  if(!members.length)return false;const spec=actors.find(a=>a.p.id===p.id)!.sim.monsterSpec(monster.kind),xp=Math.max(1,Math.floor(spec.xp/members.length)),gold=Math.floor(spec.gold/members.length);
  for(const {p:member,sim} of members){const rewardGold=Math.round(gold*(1+(sim.gearBonuses.goldBonus||0)/100)),rewardXp=xp*(1+(sim.gearBonuses.expBonus||0)/100);sim.addExperience(rewardXp);sim.save.gold+=rewardGold;sim.save.kills++;sim.progressQuest('kills');if(spec.boss)sim.progressQuest('boss');sim.markTutorial('attack');sim.onEvent('Party reward · +'+Math.round(rewardXp*sim.experienceMultiplier)+' EXP · +'+rewardGold+' z','reward');ledger(r,crypto.randomUUID(),member.id,'party-kill:'+monster.kind,now,rewardGold);}
- const recipient=members[(party.lootCursor++)%members.length];if(!recipient.sim.addItem(spec.drop,spec.icon))recipient.sim.loot.push({x:monster.x,z:monster.z,name:spec.drop,icon:spec.icon});recipient.sim.onEvent('Party loot: '+spec.drop,'reward');const stone=actors.find(m=>m.p.id===p.id)!.sim.rollStoneLoot(monster);if(stone){const owner=members[(party.lootCursor++)%members.length],drop=stone;if(!owner.sim.addItem(drop.name,drop.icon))owner.sim.loot.push({x:monster.x,z:monster.z,name:drop.name,icon:drop.icon});}const gearDrop=actors.find(m=>m.p.id===p.id)!.sim.rollEquipmentLoot(monster);if(gearDrop){const owner=members[(party.lootCursor++)%members.length];if(!owner.sim.addEquipmentItem(gearDrop))owner.sim.loot.push({x:monster.x,z:monster.z,name:gearDrop.name,icon:gearDrop.icon,item:gearDrop});owner.sim.onEvent('Party equipment: '+gearDrop.name,'reward');}return true;
+ const recipient=members[(party.lootCursor++)%members.length];if(!recipient.sim.addItem(spec.drop,spec.icon))recipient.sim.loot.push({x:monster.x,z:monster.z,name:spec.drop,icon:spec.icon});recipient.sim.onEvent('Party loot: '+spec.drop,'reward');const stone=actors.find(m=>m.p.id===p.id)!.sim.rollStoneLoot(monster);if(stone){const owner=members[(party.lootCursor++)%members.length],drop=stone;if(!owner.sim.addItem(drop.name,drop.icon))owner.sim.loot.push({x:monster.x,z:monster.z,name:drop.name,icon:drop.icon});}const gearDrop=actors.find(m=>m.p.id===p.id)!.sim.rollEquipmentLoot(monster);if(gearDrop){const owner=members[(party.lootCursor++)%members.length];if(!owner.sim.addEquipmentItem(gearDrop))owner.sim.loot.push({x:monster.x,z:monster.z,name:gearDrop.name,icon:gearDrop.icon,item:gearDrop});owner.sim.onEvent('Party equipment: '+gearDrop.name,'reward');}
+ for(const drop of actors.find(m=>m.p.id===p.id)!.sim.rollMaterialLoot(monster)){const owner=members[(party.lootCursor++)%members.length];if(!owner.sim.addItem(drop.name,drop.icon,drop.count,drop.rarity))owner.sim.loot.push({x:monster.x,z:monster.z,name:drop.name,icon:drop.icon,item:drop});}
+ return true;
 }
 
 export function communityCommand(r:Realm,p:Player,type:string,args:unknown[],now:number,id:string) {

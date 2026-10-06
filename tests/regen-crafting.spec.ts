@@ -23,7 +23,7 @@ test('HP affixes stay at or below 0.5%/s for every item tier and combine with ba
 });
 
 test('crafting uses the new bag capacity and rejects a full bag before charging anything',()=>{
- const sim=new Simulation(()=>.5,undefined,null);sim.save.gold=1000;sim.addItem('Dew jelly','jelly',100);sim.addItem('Verdant leaf','leaf',100);
+ const sim=new Simulation(()=>.5,undefined,null);sim.save.gold=1000;sim.addItem('Shade essence','jelly',100);sim.addItem('Rune stone','leaf',100);
  for(let n=sim.save.items.length;n<70;n++)sim.save.items.push({name:'Material '+n,icon:'leaf',count:1});
  expect(sim.craft('sprout-blade')).toBe(true);expect(sim.save.items.some(i=>i.gearId==='sprout-blade')).toBe(true);
  while(sim.save.items.length<BAG_CAPACITY)sim.save.items.push({name:'Material '+sim.save.items.length,icon:'leaf',count:1});

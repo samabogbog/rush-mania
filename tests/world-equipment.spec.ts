@@ -11,11 +11,11 @@ const command=(s:Snapshot,type:string,args:unknown[]=[])=>({id:`${s.player.sessi
 test('crafting consumes exact ingredients, creates unique weapons and keeps refinement on its instance',()=>{
  const sim=new Simulation(()=>.5,undefined,null);sim.save.gold=200;const before=structuredClone(sim.save);
  expect(sim.craft('sprout-blade')).toBe(false);expect(sim.save).toEqual(before);
- sim.addItem('Dew jelly','💧',8);sim.addItem('Verdant leaf','🌿',6);expect(sim.craft('sprout-blade')).toBe(true);
- const first=sim.save.items.find(i=>i.gearId==='sprout-blade')!;expect(sim.save.gold).toBe(160);const damage=sim.damage;
- expect(sim.equip(first.id!)).toBe(true);expect(sim.damage).toBe(damage+16);sim.addItem('Common refine stone','ice-shard');sim.upgrade();expect(first.refine).toBe(1);expect(sim.save.gold).toBe(100);expect(sim.damage).toBeCloseTo(damage+17.6);
+ sim.addItem('Shade essence','💧',8);sim.addItem('Rune stone','🌿',6);expect(sim.craft('sprout-blade')).toBe(true);
+ const first=sim.save.items.find(i=>i.gearId==='sprout-blade')!;expect(sim.save.gold).toBe(188);const damage=sim.damage;
+ expect(sim.equip(first.id!)).toBe(true);expect(sim.damage).toBe(damage+14);sim.addItem('Common refine stone','ice-shard');sim.upgrade();expect(first.refine).toBe(1);expect(sim.save.gold).toBe(128);expect(sim.damage).toBeCloseTo(damage+15.4);
  expect(sim.craft('sprout-blade')).toBe(true);const second=sim.save.items.filter(i=>i.gearId==='sprout-blade')[1];expect(second.id).not.toBe(first.id);
- sim.equip(second.id!);expect(sim.damage).toBe(damage+16);sim.equip(first.id!);expect(sim.damage).toBeCloseTo(damage+17.6);
+ sim.equip(second.id!);expect(sim.damage).toBe(damage+14);sim.equip(first.id!);expect(sim.damage).toBeCloseTo(damage+15.4);
  sim.sell();expect(sim.save.items.find(i=>i.id===first.id)?.count).toBe(1);expect(sim.save.items.find(i=>i.id===second.id)?.count).toBe(1);
  sim.setClass('mage');expect(sim.save.equipped.weapon).toBeNull();expect(sim.equip(first.id!)).toBe(false);
 });
@@ -46,5 +46,5 @@ test('v1 online realm and v2 character saves migrate without losing gold, kills 
  const realm=freshRealm(1000);realm.monsters=sim.monsters;delete realm.rooms;realm.version=1;
  realm.players.hero={id:'hero',name:'Sprout',actor:capture(sim),lastSeen:0,input:[0,0],inputAt:0,acknowledged:[],events:[],serial:0,session:{id:'legacy',sequence:0}};
  for(const key of ['zone','equipped','quests','tutorial'])delete (realm.players.hero.actor.save as any)[key];realm.players.hero.actor.save.version=2;store.realm=realm;
- const s=await transact(store,identity,{connect:true},2000);expect(s.player.actor.save.gold).toBe(333);expect(s.player.actor.save.kills).toBe(7);expect(s.player.actor.save.zone).toBe('glade');expect(s.player.actor.save.equipped).toEqual({weapon:null,helmet:null,armor:null,gloves:null,boots:null,accessory:null});expect(store.realm!.version).toBe(2);expect(store.realm!.monsters).toBeUndefined();
+ const s=await transact(store,identity,{connect:true},2000);expect(s.player.actor.save.gold).toBe(333);expect(s.player.actor.save.kills).toBe(7);expect(s.player.actor.save.zone).toBe('glade');expect(s.player.actor.save.equipped).toEqual({weapon:null,helmet:null,armor:null,pants:null,boots:null,accessory:null});expect(store.realm!.version).toBe(2);expect(store.realm!.monsters).toBeUndefined();
 });

@@ -11,7 +11,7 @@ test('five level sets have all six slots and rarity rolls preserve main stats wi
 });
 test('monster gear drops retain their exact identity and rolls through a full bag and collection',()=>{
  const sim=new Simulation(()=>0,undefined,null),m=sim.monsters[0];sim.x=m.x;sim.z=m.z;sim.hit(m,99999);
- const drop=sim.loot.find(l=>l.item)!.item!;expect(drop.gearId).toMatch(/^thornwood-/);
+ const drop=sim.loot.find(l=>l.item?.gearId)!.item!;expect(drop.gearId).toMatch(/^thornwood-/);
  sim.save.items.push(...Array.from({length:BAG_CAPACITY-2},(_,i)=>({name:'material-'+i,icon:'leaf',count:1})));sim.collect();expect(sim.loot.some(l=>l.item?.id===drop.id)).toBe(true);
  sim.save.items.splice(-3);sim.collect();expect(sim.save.items.find(i=>i.id===drop.id)).toEqual(drop);sim.collect();expect(sim.save.items.filter(i=>i.id===drop.id)).toHaveLength(1);
  const loaded=new Simulation(()=>.999,structuredClone(sim.save),null);expect(loaded.save.items.find(i=>i.id===drop.id)).toEqual(drop);
@@ -49,7 +49,7 @@ test('server creates rolled equipment, ignores forged items and acknowledges col
  const random=Math.random;Math.random=()=>0;
  try{let s=await transact(store,{id:'drop-server',name:'Hero'},{connect:true},1000);const sim=new Simulation(()=>0,undefined,null);sim.save.level=10;gear(sim,'field-coat',{goldBonus:50});const initialGold=sim.save.gold;const m=sim.monsters[0];sim.x=m.x;sim.z=m.z;sim.target=m.id;realm.players['drop-server'].actor=capture(sim);
   let now=1000;for(let i=0;i<12&&s.player.actor.save.kills<1;i++)s=await transact(store,{id:'drop-server',name:'Hero'},{movement:[0,0],...{items:[{name:'Forged Legend',secondary:{atk:999999}}]}} as any,now+=200);
-  const drop=s.player.actor.loot.find(l=>l.item)!.item!;expect(drop.rarity).toBe('common');expect(drop.gearId).toMatch(/^thornwood-/);expect(realm.ledger.filter((entry:any)=>entry.action.startsWith('kill:')).reduce((total:number,entry:any)=>total+entry.goldDelta,0)).toBe(s.player.actor.save.gold-initialGold);
+  const drop=s.player.actor.loot.find(l=>l.item?.gearId)!.item!;expect(drop.rarity).toBe('common');expect(drop.gearId).toMatch(/^thornwood-/);expect(realm.ledger.filter((entry:any)=>entry.action.startsWith('kill:')).reduce((total:number,entry:any)=>total+entry.goldDelta,0)).toBe(s.player.actor.save.gold-initialGold);
   const command={id:`${s.player.session.id}:1`,type:'collect',args:[]};s=await transact(store,{id:'drop-server',name:'Hero'},{commands:[command]},now+=1);s=await transact(store,{id:'drop-server',name:'Hero'},{commands:[command]},now+=1);
   expect(s.player.actor.save.items.filter(i=>i.id===drop.id)).toHaveLength(1);expect(s.player.actor.save.items.find(i=>i.id===drop.id)).toEqual(drop);expect(s.player.actor.save.items.some(i=>i.name==='Forged Legend')).toBe(false);
  }finally{Math.random=random;}

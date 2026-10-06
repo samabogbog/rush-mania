@@ -78,7 +78,8 @@ export class NetworkSimulation extends Simulation {
   override sell(){this.send('sell')}
   override toggleTutorial(){this.send('toggleTutorial')}
   override interact(id:string){this.send('interact',id)}
-  override craft(id:string){this.send('craft',id);return true}
+  override craft(id:string,rarity:Rarity='common'){this.send('craft',id,rarity);return true}
+  override upgradeMaterial(name:string,rarity:Rarity){this.send('upgradeMaterial',name,rarity);return true}
   override equip(id:string){this.send('equip',id);return true}
   override unequip(slot:GearSlot){this.send('unequip',slot)}
   override claimQuest(id:string){this.send('claimQuest',id);return true}

@@ -1,4 +1,6 @@
-# ค่าปัจจุบันสำหรับปรับสมดุล Mossvale
+# ตารางค่าก่อนปรับระบบวัตถุดิบ rarity ของ Mossvale
+
+**หมายเหตุ:** ตารางอุปกรณ์และสูตรคราฟต์ในเอกสารนี้เป็นข้อมูลก่อนรอบเปลี่ยน Shade essence/Sky feather/Rune stone และกางเกง ให้ใช้ `src/config/equipment.json`, `src/config/crafting.json` และ `src/config/README-TH.md` สำหรับค่าปัจจุบัน
 
 อ้างอิง source commit `dddb8eb479299589c8d6aea0de961a635620a289` ซึ่งตรงกับรุ่นที่เผยแพร่ล่าสุด เอกสารนี้รายงานกติกาปัจจุบัน ไม่ได้เปลี่ยนค่าบาลานซ์ ค่ามอนสเตอร์ออนไลน์อาจถูก override ด้วยเมนูแอดมิน; ตารางนี้เป็นค่า default ใน source ไม่ได้อ่านฐานข้อมูล production
 

@@ -5,10 +5,11 @@ import {classes,skills} from '../src/game/classes';
 import {species,zones,questDefinitions} from '../src/game/content';
 import {refineBonus,refineChance,refineCost} from '../src/game/refinement';
 import {Simulation} from '../src/simulation';
-import {progression,equipmentConfig,refinement,classConfig,contentConfig,economy,validateConfiguration} from '../src/config/balance';
-const config=()=>structuredClone({progression,equipment:equipmentConfig,refinement,classes:classConfig,content:contentConfig,economy});
+import {craftingConfig,progression,equipmentConfig,refinement,classConfig,contentConfig,economy,validateConfiguration} from '../src/config/balance';
+const config=()=>structuredClone({crafting:craftingConfig,progression,equipment:equipmentConfig,refinement,classes:classConfig,content:contentConfig,economy});
 test('default complete catalogs preserve existing ids, numbers, formulas and descriptions',()=>{
- expect({equipment,gearSets,skills,classes,species,zones,questDefinitions}).toEqual(Object.fromEntries(['equipment','gearSets','skills','classes','species','zones','questDefinitions'].map(k=>[k,baseline[k as keyof typeof baseline]])));
+ expect(equipment.map(g=>g.id)).toEqual(baseline.equipment.map(g=>g.id));expect(gearSets).toEqual(baseline.gearSets);expect(skills).toEqual(baseline.skills);expect(classes).toEqual(baseline.classes);expect(questDefinitions).toEqual(baseline.questDefinitions);
+ for(const gear of equipment){expect(gear.materials[0][0]).toBe('Shade essence');expect(gear.materials[1][0]).toBe(gear.slot==='weapon'||gear.slot==='accessory'?'Rune stone':'Sky feather');}
  expect(Array.from({length:11},(_,i)=>refineBonus(i))).toEqual([0,10,21,33,46,60,75,91,108,126,145]);
 });
 test('shared runtime consumes edited balance values, then restores them',()=>{

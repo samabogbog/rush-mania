@@ -1,5 +1,6 @@
 import {economy,progression} from '../src/config/balance';
 import {EXP_CHARM,EXP_TOME,EXP_TEST_GRANT_COUNT,itemCatalog,itemCategory} from '../src/game/items';
+import {sameStack,isRarity,isCraftMaterial} from '../src/game/crafting';
 import {rollGear,rarityOrder,BAG_CAPACITY,type Rarity} from '../src/game/equipment';
 import {isStoneTier} from '../src/game/refinement';
 import {communityCommand,communitySnapshot,partyOf,shareKill} from './community';
@@ -100,11 +101,11 @@ function execute(player:Player,realm:Realm,command:Command,now:number,admin=fals
       if(!admin)throw new GameError('Admin access required',403);
       const entry=itemCatalog.find(i=>i.id===a),rarity=command.args[2],refine=command.args[3];
       if(!entry||!integer(b,1,entry.gearId?20:9999)||typeof rarity!=='string'||!rarityOrder.includes(rarity as Rarity)||!integer(refine,0,10))throw new GameError('Invalid spawn request');
-      const existing=!entry.gearId&&sim.save.items.find(i=>i.name===entry.name&&i.count>0);
+      const existing=!entry.gearId&&sim.save.items.find(i=>sameStack(i,{name:entry.name,rarity:rarity as Rarity})&&i.count>0);
       const slots=sim.save.items.filter(i=>i.count>0).length+(entry.gearId?b as number:existing?0:1);
       if(slots>BAG_CAPACITY) {sim.onEvent('Bag full. Nothing spawned.');break;}
       if(entry.gearId)for(let n=0;n<(b as number);n++)sim.addEquipmentItem({...rollGear(entry.gearId,rarity as Rarity),refine:refine as number,name:entry.name,icon:entry.icon,count:1,category:itemCategory(entry)});
-      else sim.addItem(entry.name,entry.icon,b as number);
+      else sim.addItem(entry.name,entry.icon,b as number,rarity as Rarity);
       realm.ledger.push({id:command.id,player:player.id,action:`adminSpawn:${entry.id}:${b}:${rarity}:+${refine}`,at:now,goldDelta:0});
       sim.onEvent(`Admin spawned ${b} × ${entry.name}`,'reward');break;
     }
@@ -135,7 +136,8 @@ function execute(player:Player,realm:Realm,command:Command,now:number,admin=fals
     case 'sell':sim.sell();break;
     case 'toggleTutorial':sim.toggleTutorial();break;
     case 'interact':if(typeof a!=='string')throw new GameError('Invalid NPC');sim.interact(a);break;
-    case 'craft':if(typeof a!=='string')throw new GameError('Invalid recipe');sim.craft(a);break;
+    case 'craft':if(typeof a!=='string'||(b!==undefined&&!isRarity(b)))throw new GameError('Invalid recipe rarity');sim.craft(a,(b||'common') as Rarity);break;
+    case 'upgradeMaterial':if(typeof a!=='string'||!isCraftMaterial(a)||!isRarity(b))throw new GameError('Invalid material upgrade');sim.upgradeMaterial(a,b);break;
     case 'equip':if(typeof a!=='string')throw new GameError('Invalid equipment');sim.equip(a);break;
     case 'unequip':if(!isGearSlot(a))throw new GameError('Invalid equipment slot');sim.unequip(a);break;
     case 'claimQuest':if(typeof a!=='string')throw new GameError('Invalid quest');sim.claimQuest(a);break;
