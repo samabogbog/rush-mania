@@ -47,9 +47,29 @@ export function insideMonsterGroup(zone:ZoneId,id:string|undefined,x:number,z:nu
 export function zoneSpawns(zone:ZoneId):{kind:Kind;x:number;z:number;groupId?:string}[] {
  const regular=zones[zone==='town'?'glade':zone].species.filter(k=>!species[k].boss&&!species[k].miniBoss);
  const out:{kind:Kind;x:number;z:number;groupId?:string}[]=[];
- for(const [index,g] of zoneMonsterGroups(zone).entries())for(let n=0;n<g.count;n++){
-  const angle=n/g.count*Math.PI*2,x=g.x+Math.cos(angle)*monsterGroupConfig.spawnRadius,z=g.z+Math.sin(angle)*monsterGroupConfig.spawnRadius;
-  out.push({kind:regular[index%regular.length],x,z,groupId:g.id});
+ const obstacles=zoneObstacles(zone),radius=monsterGroupConfig.spawnRadius;
+ for(const [index,g] of zoneMonsterGroups(zone).entries()){
+  const placed:{x:number;z:number}[]=[];
+  const safe=(x:number,z:number)=>x>=WORLD_BOUNDS.minX&&x<=WORLD_BOUNDS.maxX&&z>=WORLD_BOUNDS.minZ&&z<=WORLD_BOUNDS.maxZ&&!protectedPosition(zone,x,z)&&!obstacles.some(o=>Math.hypot(x-o.x,z-o.z)<o.r+.3)&&placed.every(p=>Math.hypot(x-p.x,z-p.z)>=.8);
+  for(let n=0;n<g.count;n++){
+   // Independent member seeds keep offline/server homes stable across requests and respawns.
+   let seed=2166136261;
+   for(const char of `${g.id}:${n}`)seed=Math.imul(seed^char.charCodeAt(0),16777619)>>>0;
+   const random=()=>{seed=(seed+0x6D2B79F5)>>>0;let value=seed;value=Math.imul(value^(value>>>15),value|1);value^=value+Math.imul(value^(value>>>7),value|61);return ((value^(value>>>14))>>>0)/4294967296;};
+   let point:{x:number;z:number}|undefined;
+   for(let attempt=0;attempt<96&&!point;attempt++){
+    const angle=random()*Math.PI*2,distance=radius*Math.sqrt(.12+.88*random());
+    const x=g.x+Math.cos(angle)*distance,z=g.z+Math.sin(angle)*distance;
+    if(safe(x,z))point={x,z};
+   }
+   // Bounded deterministic search if random candidates are obstructed; never emit unsafe homes.
+   for(let row=-6;row<=6&&!point;row++)for(let col=-6;col<=6&&!point;col++){
+    const dx=col*radius/6,dz=row*radius/6,x=g.x+dx,z=g.z+dz;
+    if(Math.hypot(dx,dz)<=radius&&safe(x,z))point={x,z};
+   }
+   if(!point)throw new Error(`No safe monster scatter position for ${g.id}:${n}`);
+   placed.push(point);out.push({kind:regular[index%regular.length],...point,groupId:g.id});
+  }
  }
  for(const kind of zones[zone].species)if(species[kind].boss||species[kind].miniBoss)out.push({kind,x:species[kind].boss?32:-32,z:32});
  return out;

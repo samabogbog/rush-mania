@@ -2,14 +2,24 @@ import {test,expect} from '@playwright/test';
 import {Simulation} from '../src/simulation';
 import {zones,type ZoneId} from '../src/game/content';
 import {zoneMonsterGroups,zoneSpawns,zoneObstacles,protectedPosition,WORLD_BOUNDS,validateMonsterGroupConfig,monsterGroupConfig} from '../src/game/map-data';
-import {transact} from '../server/realm';
+import {transact,ROOM_LAYOUT_REVISION} from '../server/realm';
 import type {Realm} from '../server/protocol';
 import type {RealmStore} from '../server/store';
 for(const zone of Object.keys(zones) as ZoneId[])test(`${zone} packs have six to eight members and clear ground`,()=>{
  const entries=zoneSpawns(zone),groups=zoneMonsterGroups(zone),obstacles=zoneObstacles(zone);
  expect(groups).toHaveLength(6);
  for(const g of groups){expect(entries.filter(m=>m.groupId===g.id)).toHaveLength(g.count);expect(g.count).toBeGreaterThanOrEqual(6);expect(g.count).toBeLessThanOrEqual(8);expect(protectedPosition(zone,g.x,g.z)).toBe(false);expect(obstacles.some(o=>Math.hypot(g.x-o.x,g.z-o.z)<g.radius+o.r)).toBe(false);}
+ expect(zoneSpawns(zone)).toEqual(entries);
+ const sim=new Simulation(()=>.123,undefined,null);sim.populateZone(zone);
  for(const g of groups){
+  const members=entries.filter(m=>m.groupId===g.id),distances=members.map(m=>Math.hypot(m.x-g.x,m.z-g.z));
+  expect(Math.max(...distances)-Math.min(...distances)).toBeGreaterThan(.8);
+  expect(Math.max(...distances)).toBeGreaterThan(3);
+  expect(distances.every(d=>d<=monsterGroupConfig.spawnRadius)).toBe(true);
+  for(const [index,m] of members.entries()){
+   for(const other of members.slice(index+1))expect(Math.hypot(m.x-other.x,m.z-other.z)).toBeGreaterThanOrEqual(.8);
+   const home=sim.monsters.filter(actor=>actor.groupId===g.id)[index];expect([home.homeX,home.homeZ]).toEqual([m.x,m.z]);
+  }
   for(let n=0;n<32;n++){const angle=n/32*Math.PI*2,x=g.x+Math.cos(angle)*g.radius,z=g.z+Math.sin(angle)*g.radius;expect(protectedPosition(zone,x,z)).toBe(false);}
   for(const h of groups)if(h.id!==g.id)expect(Math.hypot(g.x-h.x,g.z-h.z)).toBeGreaterThan(9.6);
  }
@@ -43,12 +53,19 @@ test('Auto stays stationary through two natural kill and respawn cycles',()=>{
  for(let n=0;n<1500&&deaths<2;n++){s.tick(.025,0,0);expect(s.x).toBe(g.x);expect(s.z).toBe(g.z);if(previous&&!m.alive){deaths++;m.respawn=.1;}previous=m.alive;}
  expect(deaths).toBe(2);
 });
-test('layout migration preserves HP fraction, status, respawn and items exactly once',async()=>{
+test('revision-2 ring layout migrates to scatter preserving HP fraction, status, respawn and items exactly once',async()=>{
  const store=new Store(),id={id:'keeper',name:'Keeper'};await transact(store,id,{connect:true},1000);
  const room=store.realm!.rooms!.glade,m=room.monsters[0],s=new Simulation(()=>.5,undefined,null);
- m.hp=s.monsterSpec(m.kind).hp*.25;m.poison=3;m.poisonDamage=7;const dead=room.monsters[1];dead.alive=false;dead.hp=0;dead.respawn=9;room.layoutRevision=1;
+ m.hp=s.monsterSpec(m.kind).hp*.25;m.poison=3;m.poisonDamage=7;const dead=room.monsters[1];dead.alive=false;dead.hp=0;dead.respawn=9;room.layoutRevision=2;
+ for(const g of zoneMonsterGroups('glade'))for(const [index,old] of room.monsters.filter(actor=>actor.groupId===g.id).entries()){
+  const angle=index/g.count*Math.PI*2;old.x=old.homeX=g.x+Math.cos(angle)*monsterGroupConfig.spawnRadius;old.z=old.homeZ=g.z+Math.sin(angle)*monsterGroupConfig.spawnRadius;
+ }
+ const oldHomes=room.monsters.map(actor=>[actor.homeX,actor.homeZ]);
  const items=structuredClone(store.realm!.players.keeper.actor.save.items);store.realm!.players.keeper.actor.loot=[{x:1,z:2,name:'Retained',icon:'?'}];
  const snap=await transact(store,id,{},1000),next=store.realm!.rooms!.glade;
+ expect(next.layoutRevision).toBe(ROOM_LAYOUT_REVISION);
+ expect(next.monsters.map(actor=>[actor.homeX,actor.homeZ])).not.toEqual(oldHomes);
+ expect(next.monsters.map(actor=>[actor.homeX,actor.homeZ])).toEqual(zoneSpawns('glade').map(actor=>[actor.x,actor.z]));
  expect(next.monsters[0].hp).toBe(s.monsterSpec(m.kind).hp*.25);expect(next.monsters[0].poison).toBe(3);expect(next.monsters[1].alive).toBe(false);expect(next.monsters[1].respawn).toBe(9);
  expect(snap.player.actor.save.items).toEqual(items);expect(snap.player.actor.loot).toEqual([{x:1,z:2,name:'Retained',icon:'?'}]);
  const saved=structuredClone(next.monsters);await transact(store,id,{},1000);expect(store.realm!.rooms!.glade.monsters).toEqual(saved);
