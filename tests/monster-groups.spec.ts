@@ -9,13 +9,19 @@ for(const zone of Object.keys(zones) as ZoneId[])test(`${zone} packs have six to
  const entries=zoneSpawns(zone),groups=zoneMonsterGroups(zone),obstacles=zoneObstacles(zone);
  expect(groups).toHaveLength(6);
  for(const g of groups){expect(entries.filter(m=>m.groupId===g.id)).toHaveLength(g.count);expect(g.count).toBeGreaterThanOrEqual(6);expect(g.count).toBeLessThanOrEqual(8);expect(protectedPosition(zone,g.x,g.z)).toBe(false);expect(obstacles.some(o=>Math.hypot(g.x-o.x,g.z-o.z)<g.radius+o.r)).toBe(false);}
+ const regular=entries.filter(m=>m.groupId);
+ expect(Math.max(...regular.map(m=>m.x))-Math.min(...regular.map(m=>m.x))).toBeGreaterThan(75);
+ expect(Math.max(...regular.map(m=>m.z))-Math.min(...regular.map(m=>m.z))).toBeGreaterThan(75);
+ expect(new Set(regular.map(m=>`${Math.round(m.x/30)},${Math.round(m.z/30)}`)).size).toBe(9);
  expect(zoneSpawns(zone)).toEqual(entries);
  const sim=new Simulation(()=>.123,undefined,null);sim.populateZone(zone);
  for(const g of groups){
   const members=entries.filter(m=>m.groupId===g.id),distances=members.map(m=>Math.hypot(m.x-g.x,m.z-g.z));
   expect(Math.max(...distances)-Math.min(...distances)).toBeGreaterThan(.8);
-  expect(Math.max(...distances)).toBeGreaterThan(3);
-  expect(distances.every(d=>d<=monsterGroupConfig.spawnRadius)).toBe(true);
+  expect(Math.max(...distances)).toBeGreaterThan(15);
+  expect(Math.max(...members.map(m=>m.x))-Math.min(...members.map(m=>m.x))).toBeGreaterThan(15);
+  expect(Math.max(...members.map(m=>m.z))-Math.min(...members.map(m=>m.z))).toBeGreaterThan(10);
+
   for(const [index,m] of members.entries()){
    for(const other of members.slice(index+1))expect(Math.hypot(m.x-other.x,m.z-other.z)).toBeGreaterThanOrEqual(.8);
    const home=sim.monsters.filter(actor=>actor.groupId===g.id)[index];expect([home.homeX,home.homeZ]).toEqual([m.x,m.z]);
@@ -28,9 +34,11 @@ for(const zone of Object.keys(zones) as ZoneId[])test(`${zone} packs have six to
 test('stationary territory pulls entire pack and respawns; leaving returns without healing',()=>{
  const s=new Simulation(()=>.5,undefined,null),g=zoneMonsterGroups('glade')[0];s.x=g.x;s.z=g.z;s.save.hp=s.maxHp;
  const pack=s.monsters.filter(m=>m.groupId===g.id);s.tick(.025,0,0);expect(pack.every(m=>m.aggro)).toBe(true);expect(s.target).toBeNull();
+ for(let n=0;n<700;n++)s.tick(.025,0,0);
+ expect(pack.every(m=>Math.hypot(m.x-s.x,m.z-s.z)<1.6)).toBe(true);
  const m=pack[0];m.alive=false;m.hp=0;m.respawn=.01;s.tick(.025,0,0);expect(m.alive&&m.aggro).toBe(true);
  m.hp=7;s.x=g.x+g.radius+1;s.tick(.025,0,0);expect(pack.every(m=>!m.aggro)).toBe(true);
- for(let n=0;n<100;n++)s.tick(.025,0,0);expect(m.hp).toBe(7);expect(m.returning).toBe(false);
+ for(let n=0;n<1000;n++)s.tick(.025,0,0);expect(m.hp).toBe(7);expect(m.returning).toBe(false);
 });
 class Store implements RealmStore{realm:Realm|null=null;revision=0;async read(){return this.realm?{realm:structuredClone(this.realm),revision:this.revision}:null;}async create(r:Realm){this.realm=structuredClone(r);}async commit(v:number,r:Realm){if(v!==this.revision)return false;this.realm=structuredClone(r);this.revision++;return true;}}
 test('server assigns same group to nearest living occupant and hands off dead/disconnected owners; respawn reacquires',async()=>{
@@ -53,12 +61,12 @@ test('Auto stays stationary through two natural kill and respawn cycles',()=>{
  for(let n=0;n<1500&&deaths<2;n++){s.tick(.025,0,0);expect(s.x).toBe(g.x);expect(s.z).toBe(g.z);if(previous&&!m.alive){deaths++;m.respawn=.1;}previous=m.alive;}
  expect(deaths).toBe(2);
 });
-test('revision-2 ring layout migrates to scatter preserving HP fraction, status, respawn and items exactly once',async()=>{
+test('revision-3 nearby layout migrates to scatter preserving HP fraction, status, respawn and items exactly once',async()=>{
  const store=new Store(),id={id:'keeper',name:'Keeper'};await transact(store,id,{connect:true},1000);
  const room=store.realm!.rooms!.glade,m=room.monsters[0],s=new Simulation(()=>.5,undefined,null);
- m.hp=s.monsterSpec(m.kind).hp*.25;m.poison=3;m.poisonDamage=7;const dead=room.monsters[1];dead.alive=false;dead.hp=0;dead.respawn=9;room.layoutRevision=2;
+ m.hp=s.monsterSpec(m.kind).hp*.25;m.poison=3;m.poisonDamage=7;const dead=room.monsters[1];dead.alive=false;dead.hp=0;dead.respawn=9;room.layoutRevision=3;
  for(const g of zoneMonsterGroups('glade'))for(const [index,old] of room.monsters.filter(actor=>actor.groupId===g.id).entries()){
-  const angle=index/g.count*Math.PI*2;old.x=old.homeX=g.x+Math.cos(angle)*monsterGroupConfig.spawnRadius;old.z=old.homeZ=g.z+Math.sin(angle)*monsterGroupConfig.spawnRadius;
+  const angle=index/g.count*Math.PI*2;old.x=old.homeX=g.x+Math.cos(angle)*4.8;old.z=old.homeZ=g.z+Math.sin(angle)*4.8;
  }
  const oldHomes=room.monsters.map(actor=>[actor.homeX,actor.homeZ]);
  const items=structuredClone(store.realm!.players.keeper.actor.save.items);store.realm!.players.keeper.actor.loot=[{x:1,z:2,name:'Retained',icon:'?'}];
@@ -87,8 +95,19 @@ test('server ticks the second manual attacker outside circles, rather than the f
 
 test('group config validates editable values and lookups reuse stable objects',()=>{
  expect(zoneMonsterGroups('glade')).toBe(zoneMonsterGroups('glade'));
- for(const key of ['radius','spawnRadius','runSpeed'] as const){const config=structuredClone(monsterGroupConfig);config[key]=0;expect(()=>validateMonsterGroupConfig(config)).toThrow();config[key]=NaN;expect(()=>validateMonsterGroupConfig(config)).toThrow();}
+ for(const key of ['radius','runSpeed'] as const){const config=structuredClone(monsterGroupConfig);config[key]=0;expect(()=>validateMonsterGroupConfig(config)).toThrow();config[key]=NaN;expect(()=>validateMonsterGroupConfig(config)).toThrow();}
  for(const count of [5,9,6.5]){const config=structuredClone(monsterGroupConfig);config.maps.glade[0].count=count;expect(()=>validateMonsterGroupConfig(config)).toThrow();}
  const duplicate=structuredClone(monsterGroupConfig);duplicate.maps.glade[0].id=duplicate.maps.town[0].id;expect(()=>validateMonsterGroupConfig(duplicate)).toThrow();
  const badCenter=structuredClone(monsterGroupConfig);badCenter.maps.glade[0].x=Infinity;expect(()=>validateMonsterGroupConfig(badCenter)).toThrow();
+});
+
+for(const zone of Object.keys(zones) as ZoneId[])test(`${zone} all broad-cell homes rush around obstacles to their stationary trigger`,()=>{
+ for(const g of zoneMonsterGroups(zone))for(const offset of [0,2]){
+  const s=new Simulation(()=>.5,undefined,null);s.save.zone=zone;s.populateZone(zone);for(const m of s.monsters)s.balance[m.kind]={atk:0};s.x=g.x+offset;s.z=g.z;s.save.hp=s.maxHp;
+  s.monsters=s.monsters.filter(m=>m.groupId===g.id);
+  const reached=new Set<number>();
+  for(let n=0;n<1600;n++){s.save.hp=s.maxHp;s.tick(.025,0,0);for(const m of s.monsters)if(Math.hypot(m.x-s.x,m.z-s.z)<1.6)reached.add(m.id);}
+  expect(reached.size,`${g.id} offset ${offset}`).toBe(g.count);
+  expect(s.monsters.every(m=>m.aggro)).toBe(true);
+ }
 });

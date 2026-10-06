@@ -20,7 +20,7 @@ test('real map movement enters a visible territory; Auto farms two waves without
   await page.waitForFunction(id=>(window as any).mossvale.snapshot().activeGroupId===id,group.id,{timeout:30000});
   await page.waitForFunction(({x,z})=>{const d=(window as any).mossvale.snapshot();return !d.destination&&Math.hypot(d.x-x,d.z-z)<.2},group,{timeout:30000});
   const arrived=await snap();expect(pack(arrived)).toHaveLength(group.count);expect(pack(arrived).every((m:any)=>m.aggro)).toBe(true);
-  await expect.poll(async()=>pack(await snap()).filter((m:any)=>Math.hypot(m.x-arrived.x,m.z-arrived.z)<1.6).length,{timeout:15000}).toBe(group.count);
+  await expect.poll(async()=>pack(await snap()).filter((m:any)=>Math.hypot(m.x-arrived.x,m.z-arrived.z)<1.6).length,{timeout:30000}).toBe(group.count);
   await page.screenshot({path:dir+'/territory-rush.png'});
   await page.locator('#auto').click();
   await page.waitForFunction(n=>(window as any).mossvale.snapshot().kills>=n,arrived.kills+group.count*2,{timeout:90000});

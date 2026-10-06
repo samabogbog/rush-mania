@@ -40,6 +40,9 @@ export type Monster = {
   groupId?: string;
   territoryAggro?: boolean;
   returning?: boolean;
+  rushRoute?: {x:number;z:number}[];
+  rushRouteRetry?: number;
+  rushGoal?: {x:number;z:number};
   facingX?: number; facingZ?: number; pattern?: number; shape?: AttackShape;
 };
 export type Item = { category?:ItemCategory; name: string; icon: string; count: number; id?:string; gearId?:string; refine?:number; rarity?:Rarity; secondary?:Bonuses };
@@ -715,11 +718,12 @@ export class Simulation {
     }
     return true;
   }
-  pathTo(x: number, z: number) {
+  pathTo(x: number, z: number, startX=this.x, startZ=this.z, avoidProtected=false) {
+    const blocked=(px:number,pz:number)=>(avoidProtected?this.obstacles.some(o=>Math.hypot(px-o.x,pz-o.z)<o.r+.65):this.blocked(px,pz))||(avoidProtected&&protectedPosition(this.save.zone,px,pz));
     const step = 0.65,
       key = (x: number, z: number) => `${x},${z}`;
-    const sx = Math.round(this.x / step),
-      sz = Math.round(this.z / step),
+    const sx = Math.round(startX / step),
+      sz = Math.round(startZ / step),
       gx = Math.round(x / step),
       gz = Math.round(z / step);
     const open = [{ x: sx, z: sz, g: 0, f: 0 }],
@@ -750,14 +754,14 @@ export class Simulation {
         if (
           Math.abs(nx * step) > WORLD_BOUNDS.maxX ||
           Math.abs(nz * step) > WORLD_BOUNDS.maxZ ||
-          this.blocked(nx * step, nz * step)
+          blocked(nx * step, nz * step)
         )
           continue;
         if (
           dx &&
           dz &&
-          (this.blocked((p.x + dx) * step, p.z * step) ||
-            this.blocked(p.x * step, (p.z + dz) * step))
+          (blocked((p.x + dx) * step, p.z * step) ||
+            blocked(p.x * step, (p.z + dz) * step))
         )
           continue;
         const nk = key(nx, nz),
@@ -896,11 +900,11 @@ export class Simulation {
       const safe=protectedPosition(this.save.zone,this.x,this.z);
       const inGroup=insideMonsterGroup(this.save.zone,m.groupId,this.x,this.z)&&this.save.hp>0&&this.deathTime<=0;
       if(m.groupId){
-        if(inGroup){m.aggro=true;m.owner=this.actorId;m.returning=false;m.territoryAggro=true;}
+        if(inGroup){if(!m.territoryAggro){m.rushRoute=this.pathTo(this.x,this.z,m.x,m.z,true);m.rushRouteRetry=1;m.rushGoal={x:this.x,z:this.z};}m.aggro=true;m.owner=this.actorId;m.returning=false;m.territoryAggro=true;}
         else if(m.territoryAggro){m.returning=true;m.aggro=false;m.owner=undefined;m.windup=0;m.territoryAggro=false;}
       }
       if(elite&&!m.aggro&&!m.returning&&d<(spec.aggroRadius||8)&&!safe&&this.save.hp>0){m.aggro=true;m.owner=this.actorId;}
-      if((m.aggro||m.id===this.target)&&(safe||this.save.hp<=0||(!m.territoryAggro&&d>(elite?22:8))||Math.hypot(m.x-m.homeX,m.z-m.homeZ)>(m.territoryAggro?14:(spec.leashRadius||10)))){m.returning=true;m.aggro=false;m.owner=undefined;m.windup=0;}
+      if((m.aggro||m.id===this.target)&&(safe||this.save.hp<=0||(!m.territoryAggro&&d>(elite?22:8))||(!m.territoryAggro&&Math.hypot(m.x-m.homeX,m.z-m.homeZ)>(spec.leashRadius||10)))){m.returning=true;m.aggro=false;m.owner=undefined;m.windup=0;}
       if(m.returning){
         const homeDistance=Math.hypot(m.x-m.homeX,m.z-m.homeZ),step=Math.min(homeDistance,dt*4);
         if(!m.groupId)m.hp=Math.min(spec.hp,m.hp+spec.hp*dt*economy.monsters.homeRegen);m.stun=m.slow=m.poison=0;
@@ -908,7 +912,7 @@ export class Simulation {
         else {const nx=m.x+(m.homeX-m.x)/homeDistance*step,nz=m.z+(m.homeZ-m.z)/homeDistance*step;if(!this.blocked(nx,nz)){m.x=nx;m.z=nz;}else {m.x=m.homeX;m.z=m.homeZ;if(!m.groupId)m.hp=spec.hp;m.returning=false;}}
         continue;
       }
-      if ((m.id === this.target || m.aggro) && !safe && d < (m.territoryAggro?14:elite?22:8)) {
+      if ((m.id === this.target || m.aggro) && !safe && (m.territoryAggro||d < (elite?22:8))) {
         if (m.windup > 0) {
           m.windup -= dt;
           if (m.windup <= 0) {
@@ -939,12 +943,20 @@ export class Simulation {
           if (d > (m.territoryAggro?1.1:Math.min(spec.range*.75,2.2))) {
             const speed=m.territoryAggro?monsterGroupConfig.runSpeed:spec.family==='beast'?2:spec.family==='golem'?1:1.4;
             const step = dt * (m.slow > 0 ? speed*.5 : speed);
-            const nx = m.x + ((this.x - m.x) / d) * step,
-              nz = m.z + ((this.z - m.z) / d) * step;
-            if (!this.blocked(nx, nz)&&!protectedPosition(this.save.zone,nx,nz)) {
-              m.x = nx;
-              m.z = nz;
+            let goalX=this.x,goalZ=this.z;
+            const directX=m.x+(this.x-m.x)/d*step,directZ=m.z+(this.z-m.z)/d*step;
+            if(m.territoryAggro){
+              m.rushRouteRetry=Math.max(0,(m.rushRouteRetry||0)-dt);
+              if(m.rushGoal&&Math.hypot(this.x-m.rushGoal.x,this.z-m.rushGoal.z)>2)m.rushRoute=[];
+              if((this.blocked(directX,directZ)||protectedPosition(this.save.zone,directX,directZ))&&!m.rushRoute?.length&&!m.rushRouteRetry){
+                m.rushRoute=this.pathTo(this.x,this.z,m.x,m.z,true);m.rushGoal={x:this.x,z:this.z};m.rushRouteRetry=1;
+              }
+              while(m.rushRoute?.length&&Math.hypot(m.rushRoute[0].x-m.x,m.rushRoute[0].z-m.z)<.2)m.rushRoute.shift();
+              if(m.rushRoute?.length){goalX=m.rushRoute[0].x;goalZ=m.rushRoute[0].z;}
             }
+            const distance=Math.hypot(goalX-m.x,goalZ-m.z),travel=Math.min(step,distance);
+            const nx=m.x+(goalX-m.x)/(distance||1)*travel,nz=m.z+(goalZ-m.z)/(distance||1)*travel;
+            if (!this.blocked(nx,nz)&&!protectedPosition(this.save.zone,nx,nz)) {m.x=nx;m.z=nz;}
           }
           m.attack -= dt;
           if (d < spec.range+.2 && m.attack <= 0) {

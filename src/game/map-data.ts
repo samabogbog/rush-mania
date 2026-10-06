@@ -31,7 +31,7 @@ export function protectedPosition(zone:ZoneId,x:number,z:number) {
 }
 /** Editable normal packs; town uses beginner glade species outside its safe hub. */
 export function validateMonsterGroupConfig(config:typeof monsterGroupConfig){
- for(const key of ['radius','spawnRadius','runSpeed'] as const)if(!Number.isFinite(config[key])||config[key]<=0)throw new Error(`Invalid monster group ${key}`);
+ for(const key of ['radius','runSpeed'] as const)if(!Number.isFinite(config[key])||config[key]<=0)throw new Error(`Invalid monster group ${key}`);
  const ids=new Set<string>();
  for(const groups of Object.values(config.maps))for(const g of groups){
   if(!g.id||ids.has(g.id))throw new Error('Invalid monster group duplicate ID');ids.add(g.id);
@@ -47,28 +47,33 @@ export function insideMonsterGroup(zone:ZoneId,id:string|undefined,x:number,z:nu
 export function zoneSpawns(zone:ZoneId):{kind:Kind;x:number;z:number;groupId?:string}[] {
  const regular=zones[zone==='town'?'glade':zone].species.filter(k=>!species[k].boss&&!species[k].miniBoss);
  const out:{kind:Kind;x:number;z:number;groupId?:string}[]=[];
- const obstacles=zoneObstacles(zone),radius=monsterGroupConfig.spawnRadius;
- for(const [index,g] of zoneMonsterGroups(zone).entries()){
-  const placed:{x:number;z:number}[]=[];
-  const safe=(x:number,z:number)=>x>=WORLD_BOUNDS.minX&&x<=WORLD_BOUNDS.maxX&&z>=WORLD_BOUNDS.minZ&&z<=WORLD_BOUNDS.maxZ&&!protectedPosition(zone,x,z)&&!obstacles.some(o=>Math.hypot(x-o.x,z-o.z)<o.r+.3)&&placed.every(p=>Math.hypot(x-p.x,z-p.z)>=.8);
+ const obstacles=zoneObstacles(zone),groups=zoneMonsterGroups(zone);
+ const placed:{x:number;z:number}[]=[];
+ for(const [index,g] of groups.entries()){
+  let seed=2166136261;
+  for(const char of g.id)seed=Math.imul(seed^char.charCodeAt(0),16777619)>>>0;
+  const random=()=>{seed=(seed+0x6D2B79F5)>>>0;let value=seed;value=Math.imul(value^(value>>>15),value|1);value^=value+Math.imul(value^(value>>>7),value|61);return ((value^(value>>>14))>>>0)/4294967296;};
+  const safe=(x:number,z:number)=>!protectedPosition(zone,x,z)&&!obstacles.some(o=>Math.hypot(x-o.x,z-o.z)<o.r+.9);
+  const candidates:{x:number;z:number}[]=[];
+  // Stratified world samples belong to the nearest trigger, forming broad map-wide cells.
+  // Retry each tile a bounded number of times, then use its center as a safe fallback.
+  const tile=7.5;
+  for(let row=0;row<12;row++)for(let col=0;col<12;col++)for(let attempt=0;attempt<9;attempt++){
+   const x=-45+(col+(attempt===8?.5:.1+.8*random()))*tile,z=-45+(row+(attempt===8?.5:.1+.8*random()))*tile;
+   const distance=Math.hypot(x-g.x,z-g.z);
+   if(groups.some(h=>Math.hypot(x-h.x,z-h.z)<distance)||!safe(x,z))continue;
+   candidates.push({x,z});break;
+  }
+  const members:{x:number;z:number}[]=[];
   for(let n=0;n<g.count;n++){
-   // Independent member seeds keep offline/server homes stable across requests and respawns.
-   let seed=2166136261;
-   for(const char of `${g.id}:${n}`)seed=Math.imul(seed^char.charCodeAt(0),16777619)>>>0;
-   const random=()=>{seed=(seed+0x6D2B79F5)>>>0;let value=seed;value=Math.imul(value^(value>>>15),value|1);value^=value+Math.imul(value^(value>>>7),value|61);return ((value^(value>>>14))>>>0)/4294967296;};
-   let point:{x:number;z:number}|undefined;
-   for(let attempt=0;attempt<96&&!point;attempt++){
-    const angle=random()*Math.PI*2,distance=radius*Math.sqrt(.12+.88*random());
-    const x=g.x+Math.cos(angle)*distance,z=g.z+Math.sin(angle)*distance;
-    if(safe(x,z))point={x,z};
-   }
-   // Bounded deterministic search if random candidates are obstructed; never emit unsafe homes.
-   for(let row=-6;row<=6&&!point;row++)for(let col=-6;col<=6&&!point;col++){
-    const dx=col*radius/6,dz=row*radius/6,x=g.x+dx,z=g.z+dz;
-    if(Math.hypot(dx,dz)<=radius&&safe(x,z))point={x,z};
-   }
+   // Farthest-point selection spreads members across their cell instead of clustering by the circle.
+   const eligible=candidates.filter(p=>placed.every(h=>Math.hypot(p.x-h.x,p.z-h.z)>=.8));
+   const point=n===0?eligible[Math.floor(random()*eligible.length)]:eligible.reduce<typeof eligible[number]|undefined>((best,p)=>{
+    const score=(v:typeof p)=>Math.min(...members.map(h=>Math.hypot(v.x-h.x,v.z-h.z)));
+    return !best||score(p)>score(best)?p:best;
+   },undefined);
    if(!point)throw new Error(`No safe monster scatter position for ${g.id}:${n}`);
-   placed.push(point);out.push({kind:regular[index%regular.length],...point,groupId:g.id});
+   members.push(point);placed.push(point);out.push({kind:regular[index%regular.length],...point,groupId:g.id});
   }
  }
  for(const kind of zones[zone].species)if(species[kind].boss||species[kind].miniBoss)out.push({kind,x:species[kind].boss?32:-32,z:32});

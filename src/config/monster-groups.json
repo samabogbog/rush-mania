@@ -1,7 +1,6 @@
 {
   "radius": 2.8,
   "runSpeed": 4.6,
-  "spawnRadius": 4.8,
   "maps": {
     "town": [
       {

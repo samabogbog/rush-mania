@@ -9,7 +9,7 @@ for(const zone of Object.keys(zones) as ZoneId[])test(`${zone}: square sectors, 
  expect(entries.filter(m=>species[m.kind].miniBoss)).toHaveLength(1);
  expect(entries.length).toBe(44);
  for(const m of entries){expect(protectedPosition(zone,m.x,m.z)).toBe(false);expect(zoneObstacles(zone).some(o=>Math.hypot(o.x-m.x,o.z-m.z)<o.r+.3)).toBe(false);}
- expect(new Set(entries.map(m=>`${Math.round(m.x/30)},${Math.round(m.z/30)}`)).size).toBe(8);
+ expect(new Set(entries.map(m=>`${Math.round(m.x/30)},${Math.round(m.z/30)}`)).size).toBe(9);
  for(const m of entries.filter(m=>species[m.kind].boss||species[m.kind].miniBoss)){
   const spec=species[m.kind],baseHp=60+spec.level*18;
   expect(spec.hp/baseHp).toBe(spec.boss?16:5);
