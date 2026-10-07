@@ -7,6 +7,7 @@
 | progression.json | `levels` ตาราง EXP 1–100, `pointsPerLevel`, สูตร HP/MP/ATK/DEF, crit/regen, `caps`, ค่าเริ่มผู้เล่นใหม่ |
 | classes.json | `classes` ระยะ/ช่วงโจมตี, `skills` 60 รายการ: MP, cooldown, power, range, radius, duration, cast, level |
 | equipment.json | `crafted` 18 สูตรเดิม, `sets` 5 เซ็ต, `pieceFormulas`, rarity, affix, โบนัสเซ็ต, `drops.levels`, `drops.slotMultipliers`, `eliteDrops` |
+| salvage.json | `levels`: จำนวนต่อวัสดุแต่ละชนิด Common/Rare/Epic; `materials` คู่ offense/defense; `sale`: สัดส่วนราคาขาย/ตัวคูณ rarity (Legend ไม่ย่อย) |
 | refinement.json | success 10 ขั้น, rareMultiplier, bonusLinear, cost, downgrade, stoneCraftCount และดรอปหิน |
 | content.json | `normalBalance` checkpoints/multipliers, `species` identity/AI/legacy stats, `zones.level` ระดับเข้า, `recommendedLevel` เริ่มช่วงแนะนำ, `maxLevel` จบช่วงแนะนำ/รายชื่อมอนสเตอร์, `quests` รางวัล |
 | monster-groups.json | รัศมีเขต/จุดเกิด, ความเร็ววิ่ง, ตำแหน่งและจำนวน6–8ตัวต่อกลุ่ม; ตรวจด้วย `validateMonsterGroupConfig` ใน map-data.ts |
@@ -70,3 +71,5 @@ Eliteล่าสุด: `content.normalBalance.boss/mini` กำหนดHP/ATK
 ## Skill ranks ล่าสุด
 
 `skill-ranks.json` ระบุ10ระดับปลดล็อก×5rank, damagePercent (เช่น200=200%ATK), targets, defaultAttackRadius, maxRank5 และงบ1SPต่อlevel/1SPต่อrank. ทุก60สกิลเป็นโจมตีแล้วตามคำขอ; heal/guard/furyเดิมเปลี่ยนarea ไม่มีpartyheal/buff. ดู [ตารางและกติกา](../../docs/SKILL-RANKS-TH.md). Damageจริงมาจากranktable ไม่ใช่powerเดิมในclasses.json. การเรียน/upgrade/resetแชร์งบข้ามอาชีพ เซฟเดิมchoicesเริ่มrank1ในversion8โดยคงข้อมูลผู้เล่นเดิม
+
+จำนวน affix ใหม่ใน equipment.json: Common1 Rare2 Epic3 Legend4; ไม่ reroll หรือเพิ่ม affix ให้ชิ้นเดิม. Salvage จำนวนต่อวัสดุ **แต่ละชนิด** (Lv10 Common: Shade2 + Rune2 สำหรับ offense), เก็บ rarity เดิม. Gear รุ่นเก่าใช้ tier สูงสุดที่ไม่เกิน level (ต่ำกว่า10ใช้10); Legend ย่อยไม่ได้. ขาย/ย่อยชิ้นที่ใส่อยู่ต้องถอดก่อน และย่อยตรวจพื้นที่วัสดุครบสองชนิดก่อนตัดชิ้นเดิม. แก้ JSON ต้อง build/restart เช่นเดียวกับไฟล์อื่น.

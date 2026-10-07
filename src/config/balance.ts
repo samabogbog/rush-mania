@@ -1,3 +1,4 @@
+import salvageData from './salvage.json' with {type:'json'};
 import skillRankData from './skill-ranks.json' with {type:'json'};
 import craftingData from './crafting.json' with {type:'json'};
 import progressionData from './progression.json' with {type:'json'};
@@ -20,9 +21,13 @@ export function validateBalance(value:unknown, shape:unknown, path='balance'):vo
   for(const [key,s] of Object.entries(shape))validateBalance((value as Record<string,unknown>)[key],s,`${path}.${key}`);
  }
 }
-const data={skillRanks:skillRankData,crafting:craftingData,progression:progressionData,equipment:equipmentData,refinement:refinementData,classes:classData,content:contentData,economy:economyData};
+const data={salvage:salvageData,skillRanks:skillRankData,crafting:craftingData,progression:progressionData,equipment:equipmentData,refinement:refinementData,classes:classData,content:contentData,economy:economyData};
 export function validateConfiguration(config:typeof data){
  validateBalance(config,schema);
+ config.salvage.levels.forEach((row,i)=>{if(row.level!==[10,30,50,70,90][i])throw new Error('Invalid balance config salvage.levels: ordered gear tiers');for(const key of ['common','rare','epic'] as const)if(!Number.isSafeInteger(row[key])||row[key]<1)throw new Error('Invalid balance config salvage.levels: positive integer yields');});
+ if(config.salvage.materials.offense.join('|')!=='Shade essence|Rune stone'||config.salvage.materials.defense.join('|')!=='Shade essence|Sky feather')throw new Error('Invalid balance config salvage.materials: material identities');
+ if(config.salvage.sale.potionFraction>1||config.salvage.sale.gearFraction>1||!Number.isSafeInteger(config.salvage.sale.materialUnitPrice))throw new Error('Invalid balance config salvage.sale: fraction/price');
+
  const ranks=config.skillRanks;if(ranks.maxRank!==5||ranks.pointsPerLevel!==1||ranks.rankCost!==1||ranks.defaultAttackRadius<=0)throw new Error('Invalid balance config skillRanks: ranks/points/radius contract');
  ranks.levels.forEach((row,i)=>{if(row.unlockLevel!==(i+1)*10)throw new Error('Invalid balance config skillRanks.levels: ordered 10–100');for(const n of row.damagePercent)if(n<=0)throw new Error('Invalid balance config skillRanks.damagePercent');for(const n of row.targets)if(!Number.isInteger(n)||n<1)throw new Error('Invalid balance config skillRanks.targets');});
  if(config.crafting.materials.join('|')!=='Shade essence|Sky feather|Rune stone')throw new Error('Invalid balance config crafting.materials: fixed three-material identity');
@@ -78,3 +83,5 @@ export const contentConfig=contentData;
 export const economy=economyData;
 
 export const skillRankConfig=skillRankData;
+
+export const salvageConfig=salvageData;

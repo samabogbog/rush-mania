@@ -500,10 +500,10 @@
     "legend": 1.45
   },
   "secondaryCounts": {
-    "common": 0,
-    "rare": 1,
-    "epic": 2,
-    "legend": 3
+    "common": 1,
+    "rare": 2,
+    "epic": 3,
+    "legend": 4
   },
   "affixRanges": {
     "critChance": [

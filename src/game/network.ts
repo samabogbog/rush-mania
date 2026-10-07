@@ -80,6 +80,8 @@ export class NetworkSimulation extends Simulation {
   override useAuxiliary(slot:number){this.send('useAuxiliary',slot);return true}
   override assignSkill(slot:number,id:string){this.send('assignSkill',slot,id);return true}
   override buy(name:string){this.send('buy',name)}
+  override sellItem(key:string,count=1){this.send('sellItem',key,count);return true}
+  override salvageItem(key:string){this.send('salvageItem',key);return true}
   override sell(){this.send('sell')}
   override toggleTutorial(){this.send('toggleTutorial')}
   override interact(id:string){this.send('interact',id)}

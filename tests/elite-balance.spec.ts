@@ -2,7 +2,7 @@ import {test,expect} from '@playwright/test';
 import {Simulation} from '../src/simulation';
 import {normalMonsterBalance,zones,species} from '../src/game/content';
 import {rollEquipmentDrops,gearById} from '../src/game/equipment';
-import {skillRankConfig,contentConfig,equipmentConfig,progression,craftingConfig,refinement,classConfig,economy,validateConfiguration} from '../src/config/balance';
+import {salvageConfig,skillRankConfig,contentConfig,equipmentConfig,progression,craftingConfig,refinement,classConfig,economy,validateConfiguration} from '../src/config/balance';
 import {transact,MONSTER_BALANCE_REVISION,ROOM_LAYOUT_REVISION} from '../server/realm';
 import {shareKill} from '../server/community';
 import type {Realm} from '../server/protocol';
@@ -14,7 +14,7 @@ test('each themed elite uses new level and same-level normal multipliers, gold f
 });
 test('all elite gear levels have exactly two weighted drops, uniform slots, independent duplicate identities',()=>{
  for(const [,level,gearLevel] of tiers)for(const tier of ['boss','mini'] as const){const rows=equipmentConfig.eliteDrops[tier];let lower=0;for(const row of rows){const mid=lower+row.weight/2;for(const slotRoll of [0,.999999]){const groups=equipmentConfig.eliteDrops.groups[row.group as 'attack'|'defense'],slot=slotRoll===0?groups[0]:groups.at(-1)!;
-  const one=[mid,slotRoll];if(slot==='weapon')one.push(.999999);for(let n=0;n<(row.rarity==='rare'?1:2);n++)one.push(.5,.5);const queue=[...one,...one],drops=rollEquipmentDrops(level,tier,()=>queue.shift()??.999999);expect(drops).toHaveLength(2);expect(drops.map(d=>d.rarity)).toEqual([row.rarity,row.rarity]);expect(drops.map(d=>gearById(d.gearId!)!.slot)).toEqual([slot,slot]);expect(drops.map(d=>gearById(d.gearId!)!.level)).toEqual([gearLevel,gearLevel]);expect(drops[0].gearId).toBe(drops[1].gearId);expect(drops[0].id).not.toBe(drops[1].id);
+  const one=[mid,slotRoll];if(slot==='weapon')one.push(.999999);for(let n=0;n<(row.rarity==='rare'?2:3);n++)one.push(.5,.5);const queue=[...one,...one],drops=rollEquipmentDrops(level,tier,()=>queue.shift()??.999999);expect(drops).toHaveLength(2);expect(drops.map(d=>d.rarity)).toEqual([row.rarity,row.rarity]);expect(drops.map(d=>gearById(d.gearId!)!.slot)).toEqual([slot,slot]);expect(drops.map(d=>gearById(d.gearId!)!.level)).toEqual([gearLevel,gearLevel]);expect(drops[0].gearId).toBe(drops[1].gearId);expect(drops[0].id).not.toBe(drops[1].id);
  }lower+=row.weight;}
   for(const rng of [()=>0,()=>.999999]){const drops=rollEquipmentDrops(level,tier,rng);expect(drops).toHaveLength(2);expect(drops.every(d=>d.rarity==='rare'||d.rarity==='epic')).toBe(true);}
  }
@@ -22,7 +22,7 @@ test('all elite gear levels have exactly two weighted drops, uniform slots, inde
 test('weighted group exact boundaries choose next group; totals and bad edits validate',()=>{
  for(const tier of ['boss','mini'] as const){let threshold=0;const rows=equipmentConfig.eliteDrops[tier];for(let i=0;i<rows.length-1;i++){threshold+=rows[i].weight;const queue=[threshold,.999999,...Array(4).fill(.5),.999999,.999999,...Array(4).fill(.5)];const drop=rollEquipmentDrops(20,tier,()=>queue.shift()??.999999)[0];expect(drop.rarity).toBe(rows[i+1].rarity);expect(equipmentConfig.eliteDrops.groups[rows[i+1].group as 'attack'|'defense']).toContain(gearById(drop.gearId!)!.slot);}}
  const boundary=[.58,.999999,...Array(4).fill(.5),.999999,.999999,...Array(4).fill(.5)];const bossBoundary=rollEquipmentDrops(20,'boss',()=>boundary.shift()??.999999)[0];expect(bossBoundary.rarity).toBe('epic');expect(gearById(bossBoundary.gearId!)!.slot).toBe('boots');
- const config=()=>structuredClone({skillRanks:skillRankConfig,content:contentConfig,equipment:equipmentConfig,progression,crafting:craftingConfig,refinement,classes:classConfig,economy});for(const mutate of [(c:ReturnType<typeof config>)=>c.equipment.eliteDrops.count=3,c=>c.equipment.eliteDrops.boss[0].weight=.5,c=>c.equipment.eliteDrops.mini[0].rarity='legend',c=>c.content.normalBalance.boss.goldPerLevel=0]){const c=config();mutate(c);expect(()=>validateConfiguration(c)).toThrow(/Invalid balance config/);}
+ const config=()=>structuredClone({salvage:salvageConfig,skillRanks:skillRankConfig,content:contentConfig,equipment:equipmentConfig,progression,crafting:craftingConfig,refinement,classes:classConfig,economy});for(const mutate of [(c:ReturnType<typeof config>)=>c.equipment.eliteDrops.count=3,c=>c.equipment.eliteDrops.boss[0].weight=.5,c=>c.equipment.eliteDrops.mini[0].rarity='legend',c=>c.content.normalBalance.boss.goldPerLevel=0]){const c=config();mutate(c);expect(()=>validateConfiguration(c)).toThrow(/Invalid balance config/);}
 });
 test('solo and party elites award exactly two unique pieces and configured gold, including mini bosses',()=>{
  for(const tier of ['boss','mini'] as const){const s=new Simulation(()=>0,undefined,null),m=s.monsters.find(m=>tier==='boss'?species[m.kind].boss:species[m.kind].miniBoss)!;s.x=m.x;s.z=m.z;const gold=s.save.gold;s.hit(m,1e9);expect(s.save.gold-gold).toBe(20*(tier==='boss'?50:30));expect(s.loot.filter(l=>l.item?.gearId)).toHaveLength(2);

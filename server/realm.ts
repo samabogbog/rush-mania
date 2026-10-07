@@ -169,6 +169,8 @@ function execute(player:Player,realm:Realm,command:Command,now:number,admin=fals
     case 'useAuxiliary':if(!integer(a,0,3))throw new GameError('Invalid auxiliary slot');sim.useAuxiliary(a as number);break;
     case 'assignSkill':if(!integer(a,0,5)||typeof b!=='string')throw new GameError('Invalid assignment');sim.assignSkill(a as number,b);break;
     case 'buy':if(typeof a!=='string')throw new GameError('Invalid item');sim.buy(a);break;
+    case 'sellItem':if(command.args.length!==2||typeof a!=='string'||!integer(b,1,1000000))throw new GameError('Invalid item sale');sim.sellItem(a,b as number);break;
+    case 'salvageItem':if(command.args.length!==1||typeof a!=='string')throw new GameError('Invalid salvage item');sim.salvageItem(a);break;
     case 'sell':sim.sell();break;
     case 'toggleTutorial':sim.toggleTutorial();break;
     case 'interact':if(typeof a!=='string')throw new GameError('Invalid NPC');sim.interact(a);break;

@@ -1,0 +1,11 @@
+{
+  "levels": [
+    {"level":10,"common":2,"rare":1,"epic":1},
+    {"level":30,"common":2,"rare":2,"epic":1},
+    {"level":50,"common":3,"rare":2,"epic":1},
+    {"level":70,"common":3,"rare":3,"epic":1},
+    {"level":90,"common":4,"rare":3,"epic":1}
+  ],
+  "materials": {"offense":["Shade essence","Rune stone"],"defense":["Shade essence","Sky feather"]},
+  "sale": {"potionFraction":0.5,"gearFraction":0.5,"materialUnitPrice":6,"rarityMultipliers":{"common":1,"rare":1.25,"epic":1.5,"legend":2}}
+}

@@ -13,7 +13,7 @@ export type SecondaryStat='critChance'|'critDamage'|'damageBonus'|'skillDamage'|
 
 export type Bonuses={atk?:number;def?:number;hp?:number;mp?:number;str?:number;vit?:number;agi?:number}&Partial<Record<SecondaryStat,number>>;
 export type GearDefinition={id:string;name:string;slot:GearSlot;job?:ClassId;level:number;rarity:Rarity;setId?:string;dropOnly?:boolean;icon:string;bonuses:Bonuses;cost:number;materials:[string,number][];description:string};
-export const equipment = config.crafted as GearDefinition[];
+export const equipment = structuredClone(config.crafted) as GearDefinition[];
 export const gearById=(id:string)=>equipment.find(g=>g.id===id);
 export const gearByName=(name:string)=>equipment.find(g=>g.name===name);
 

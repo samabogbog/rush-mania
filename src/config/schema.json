@@ -3979,5 +3979,60 @@
         ]
       }
     ]
+  },
+  "salvage": {
+    "levels": [
+      {
+        "level": "number",
+        "common": "number",
+        "rare": "number",
+        "epic": "number"
+      },
+      {
+        "level": "number",
+        "common": "number",
+        "rare": "number",
+        "epic": "number"
+      },
+      {
+        "level": "number",
+        "common": "number",
+        "rare": "number",
+        "epic": "number"
+      },
+      {
+        "level": "number",
+        "common": "number",
+        "rare": "number",
+        "epic": "number"
+      },
+      {
+        "level": "number",
+        "common": "number",
+        "rare": "number",
+        "epic": "number"
+      }
+    ],
+    "materials": {
+      "offense": [
+        "string",
+        "string"
+      ],
+      "defense": [
+        "string",
+        "string"
+      ]
+    },
+    "sale": {
+      "potionFraction": "number",
+      "gearFraction": "number",
+      "materialUnitPrice": "number",
+      "rarityMultipliers": {
+        "common": "number",
+        "rare": "number",
+        "epic": "number",
+        "legend": "number"
+      }
+    }
   }
 }

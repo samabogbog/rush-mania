@@ -1,3 +1,4 @@
+import {inventoryKey,salvageYield,itemSalePrice} from './game/inventory-actions';
 import {isCraftMaterial,isRarity,materialRarity,materialKey,sameStack,gearRecipe,craftCost,materialCount,rollMaterialDrops} from './game/crafting';
 import {materialIcons} from './game/items';
 import {craftingConfig,progression,economy,refinement,contentConfig,skillRankConfig} from './config/balance';
@@ -498,6 +499,23 @@ export class Simulation {
     const blue = name === "Blue potion", cost = blue ? economy.bluePotion.cost : economy.redPotion.cost;
     if (this.save.gold < cost) { this.onEvent("Not enough zeny"); return; }
     if(!this.addItem(name, blue ? "💠" : "🧪"))return;this.save.gold -= cost; this.persist(); this.onEvent("Potion added to your bag", "reward");
+  }
+  sellItem(key:string,count=1){
+    if(!Number.isSafeInteger(count)||count<1)return false;
+    const item=this.save.items.find(i=>inventoryKey(i)===key&&i.count>0);
+    if(!item||count>item.count||item.gearId&&(count!==1||item.count!==1)||item.id&&Object.values(this.save.equipped).includes(item.id))return false;
+    const price=itemSalePrice(item);if(price<=0)return false;
+    item.count-=count;this.save.items=this.save.items.filter(i=>i.count>0);this.save.gold+=price*count;
+    this.onEvent(`Sold ${count} ${item.name} · +${price*count} z`,'reward');this.persist();return true;
+  }
+  salvageItem(key:string){
+    const item=this.save.items.find(i=>inventoryKey(i)===key&&i.gearId&&i.count===1);
+    if(!item||item.id&&Object.values(this.save.equipped).includes(item.id))return false;
+    const yields=salvageYield(item);if(!yields.length)return false;
+    const next=this.save.items.filter(i=>i!==item).map(i=>structuredClone(i));
+    for(const material of yields){const stack=next.find(i=>sameStack(i,material));if(stack)stack.count+=material.count;else next.push({...material,id:materialKey(material.name,material.rarity),icon:materialIcons[material.name],category:'material'});}
+    if(next.filter(i=>i.count>0).length>BAG_CAPACITY){this.onEvent('Bag full. Make room for salvage materials.');return false;}
+    this.save.items=next;this.onEvent(`Salvaged ${item.name} · ${yields.map(i=>i.name+' ×'+i.count).join(' + ')}`,'reward');this.persist();return true;
   }
   sell() {
     let count = 0;

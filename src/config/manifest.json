@@ -9,7 +9,8 @@
     "economy.json",
     "crafting.json",
     "monster-groups.json",
-    "skill-ranks.json"
+    "skill-ranks.json",
+    "salvage.json"
   ],
   "validation": "schema.json",
   "documentation": "README-TH.md",

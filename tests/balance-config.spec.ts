@@ -5,8 +5,8 @@ import {classes,skills} from '../src/game/classes';
 import {species,zones,questDefinitions} from '../src/game/content';
 import {refineBonus,refineChance,refineCost} from '../src/game/refinement';
 import {Simulation} from '../src/simulation';
-import {craftingConfig,progression,equipmentConfig,refinement,classConfig,skillRankConfig,contentConfig,economy,validateConfiguration} from '../src/config/balance';
-const config=()=>structuredClone({skillRanks:skillRankConfig,crafting:craftingConfig,progression,equipment:equipmentConfig,refinement,classes:classConfig,content:contentConfig,economy});
+import {salvageConfig,craftingConfig,progression,equipmentConfig,refinement,classConfig,skillRankConfig,contentConfig,economy,validateConfiguration} from '../src/config/balance';
+const config=()=>structuredClone({salvage:salvageConfig,skillRanks:skillRankConfig,crafting:craftingConfig,progression,equipment:equipmentConfig,refinement,classes:classConfig,content:contentConfig,economy});
 test('default complete catalogs preserve existing ids, numbers, formulas and descriptions',()=>{
  expect(equipment.map(g=>g.id)).toEqual(baseline.equipment.map(g=>g.id));expect(gearSets).toEqual(baseline.gearSets);for(const job of ['swordsman','mage','archer'] as const)expect(skills[job].map(({id,stage,branch,level,mp,cooldown,cast})=>({id,stage,branch,level,mp,cooldown,cast}))).toEqual(baseline.skills[job].map(({id,stage,branch,level,mp,cooldown,cast})=>({id,stage,branch,level,mp,cooldown,cast}))); expect(classes).toEqual(baseline.classes);expect(questDefinitions).toEqual(baseline.questDefinitions);
  for(const gear of equipment){expect(gear.materials[0][0]).toBe('Shade essence');expect(gear.materials[1][0]).toBe(gear.slot==='weapon'||gear.slot==='accessory'?'Rune stone':'Sky feather');}
