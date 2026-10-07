@@ -51,3 +51,7 @@ artifacts/dynamic-skills/review/*
 # Expanded-world raw video remains local; curated PNG/JSON/Markdown proof is retained.
 artifacts/expanded-world/video/
 artifacts/expanded-world/*.webm
+
+# Lv10 VFX raw video remains local; curated frames and evidence are retained.
+artifacts/lv10-vfx/raw/
+artifacts/lv10-vfx/*.webm

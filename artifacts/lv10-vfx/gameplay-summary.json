@@ -1,0 +1,65 @@
+{
+  "environment": "Chromium ANGLE SwiftShader software renderer; authentic learned Lv10 skills, rank1 with Lv100 hero fixture. Hardware FPS not verified.",
+  "actualCasts": [
+    {
+      "skill": "archer-1",
+      "mpBefore": 852,
+      "mpAfter": 842,
+      "kills": 3,
+      "cooldown": 4,
+      "effect": "piercing-sunbeam",
+      "pool": 37,
+      "activeAfter": 0
+    },
+    {
+      "skill": "archer-b-1",
+      "mpBefore": 852,
+      "mpAfter": 844,
+      "kills": 4,
+      "cooldown": 5,
+      "effect": "snare-ring-burst",
+      "pool": 41,
+      "activeAfter": 0
+    },
+    {
+      "skill": "mage-1",
+      "mpBefore": 852,
+      "mpAfter": 840.3500000000008,
+      "kills": 4,
+      "cooldown": 3.5000000000000018,
+      "effect": "fire-lance-detonation",
+      "pool": 36,
+      "activeAfter": 0
+    },
+    {
+      "skill": "mage-b-1",
+      "mpBefore": 852,
+      "mpAfter": 843,
+      "kills": 4,
+      "cooldown": 5,
+      "effect": "bramble-helix-burst",
+      "pool": 38,
+      "activeAfter": 0
+    },
+    {
+      "skill": "swordsman-1",
+      "mpBefore": 852,
+      "mpAfter": 842,
+      "kills": 4,
+      "cooldown": 4,
+      "effect": "power-cleave-beam",
+      "pool": 37,
+      "activeAfter": 0
+    },
+    {
+      "skill": "swordsman-b-1",
+      "mpBefore": 852,
+      "mpAfter": 844,
+      "kills": 4,
+      "cooldown": 9,
+      "effect": "bulwark-impact-column",
+      "pool": 37,
+      "activeAfter": 0
+    }
+  ]
+}

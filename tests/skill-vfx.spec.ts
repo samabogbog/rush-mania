@@ -10,7 +10,7 @@ test('all sixty skill VFX respect quality budgets and recycle geometry after sus
 });
 test('healing centers on caster, weapon impacts center on target, and branches have coherent distinct palettes',()=>{
  const engine=new NullEngine();const scene=new Scene(engine);const vfx=new SkillVFX(scene);
- const heal=skills.mage.find(s=>s.name==='Worldtree Bloom')!;vfx.release(heal,'mage',10,20,-20,-30);vfx.update(.3);
+ const heal={...skills.mage.find(s=>s.name==='Worldtree Bloom Burst')!,effect:'heal' as const};vfx.release(heal,'mage',10,20,-20,-30);vfx.update(.3);
  const active=scene.meshes.filter(m=>m.isEnabled());expect(active.length).toBeGreaterThanOrEqual(12);expect(active.every(m=>Math.abs(m.position.x-10)<3&&Math.abs(m.position.z-20)<3)).toBe(true);
  vfx.clear();expect(vfx.diagnostics.active).toBe(0);expect(scene.meshes.filter(m=>m.isEnabled())).toHaveLength(0);
  expect(skillPalette('mage',skills.mage[0])).not.toEqual(skillPalette('mage',skills.mage[10]));
@@ -37,8 +37,8 @@ test('full pool reclaims inactive shapes for new focal effects and arrows face t
  const sparks=[];for(let i=0;i<SkillVFX.MAX_MESHES;i++)sparks.push(allocator.mesh('spark',0xffeeaa));
  for(const mesh of sparks)mesh.setEnabled(false);allocator.free.set('spark',sparks);
  expect(vfx.diagnostics.pooled).toBe(160);
- for(const [job,name,shape] of [['mage','Lightning','lightning'],['mage','Worldtree Bloom','tree'],['swordsman','Earthbreaker','slab'],['mage','Astral Storm','star'],['archer','Power Shot','arrow']] as const){const skill=skills[job].find(s=>s.name===name)!;vfx.release(skill,job,0,0,-4,0);vfx.update(.18);expect(scene.meshes.some(m=>m.isEnabled()&&m.metadata?.vfxShape===shape)).toBe(true);expect(vfx.diagnostics.pooled).toBeLessThanOrEqual(160);vfx.clear();}
- const hunt=skills.archer.find(s=>s.name==='Wild Hunt')!;vfx.release(hunt,'archer',0,0,-4,0);vfx.update(.12);
+ for(const [job,name,shape] of [['mage','Lightning','lightning'],['mage','Worldtree Bloom Burst','tree'],['swordsman','Earthbreaker','slab'],['mage','Astral Storm','star'],['archer','Power Shot','arrow']] as const){const skill=skills[job].find(s=>s.name===name)!;vfx.release(skill,job,0,0,-4,0);vfx.update(.18);expect(scene.meshes.some(m=>m.isEnabled()&&m.metadata?.vfxShape===shape)).toBe(true);expect(vfx.diagnostics.pooled).toBeLessThanOrEqual(160);vfx.clear();}
+ const hunt=skills.archer.find(s=>s.name==='Wild Hunt Strike')!;vfx.release(hunt,'archer',0,0,-4,0);vfx.update(.12);
  const arrows=scene.meshes.filter(m=>m.isEnabled()&&m.metadata?.vfxShape==='arrow');expect(arrows.length).toBeGreaterThan(3);expect(arrows.every(m=>m.rotation.y<-.7&&m.rotation.y>-2.4)).toBe(true);
  vfx.dispose();scene.dispose();engine.dispose();
 });
@@ -61,6 +61,6 @@ test('crescent is a closed tapered volume at three view angles and solids stay o
  expect([...edges.values()].every(n=>n===2)).toBe(true);
  for(const angle of [0,Math.PI/4,Math.PI/2]){let min=Infinity,max=-Infinity;for(let i=0;i<positions.length;i+=3){const projected=positions[i]*Math.sin(angle)+positions[i+2]*Math.cos(angle);min=Math.min(min,projected);max=Math.max(max,projected);}expect(max-min).toBeGreaterThan(.5);}
  vfx.update(.12);expect(blade.visibility).toBe(1);expect((blade.material as any).alpha).toBe(1);expect((blade.material as any).backFaceCulling).toBe(true);
- vfx.clear();const guard=skills.swordsman.find(s=>s.effect==='guard')!;vfx.release(guard,'swordsman',0,0,3,2);const dome=scene.meshes.find(m=>m.isEnabled()&&m.metadata?.vfxShape==='shield')!;expect((dome.material as any).alpha).toBe(.25);expect((dome.material as any).needDepthPrePass).toBe(true);
+ vfx.clear();const guard={...skills.swordsman[2],effect:'guard' as const};vfx.release(guard,'swordsman',0,0,3,2);const dome=scene.meshes.find(m=>m.isEnabled()&&m.metadata?.vfxShape==='shield')!;expect((dome.material as any).alpha).toBe(.25);expect((dome.material as any).needDepthPrePass).toBe(true);
  vfx.dispose();scene.dispose();engine.dispose();
 });
