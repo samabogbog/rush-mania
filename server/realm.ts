@@ -50,7 +50,7 @@ function hydrate(player:Player, realm:Realm) {
   const sim=new Simulation(Math.random,player.actor.save as Save,null), normalizedSave=sim.save;
   player.room ||= normalizedSave.zone;
   const room=roomFor(realm,player.room,normalizedSave.zone);
-  Object.assign(sim,structuredClone(player.actor));sim.save=normalizedSave;sim.cooldowns=Array.from({length:10},(_,n)=>n<6?sim.skillCooldowns[sim.save.hotbar[n]||'']||0:sim.auxiliaryCooldown||0);sim.online=true;sim.balance=realm.balance||{};
+  Object.assign(sim,structuredClone(player.actor));sim.save=normalizedSave;sim.skillCooldownTotals=player.actor.skillCooldownTotals||{...sim.skillCooldowns};sim.autoSkillCursor=Number.isInteger(sim.autoSkillCursor)?((sim.autoSkillCursor%6)+6)%6:0;sim.cooldowns=Array.from({length:10},(_,n)=>n<6?sim.skillCooldowns[sim.save.hotbar[n]||'']||0:sim.auxiliaryCooldown||0);sim.online=true;sim.balance=realm.balance||{};
   sim.monsters=room.monsters;sim.obstacles=zoneObstacles(sim.save.zone);sim.actorId=player.id;
   sim.onEvent=(text,type='system',x,z)=>{player.events.push({id:++player.serial,text,type,x,z});player.events=player.events.slice(-40)};
   return sim;

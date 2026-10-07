@@ -1,3 +1,4 @@
+import {joystickVector} from './game/mobile-input';
 import {craftingMaterials,isCraftMaterial,materialCount,materialRarity,gearRecipe,craftCost} from './game/crafting';
 import {craftingConfig,economy,refinement,equipmentConfig,progression,skillRankConfig} from './config/balance';
 import { WORLD_BOUNDS, PORTAL_POSITION, zoneMonsterGroups, insideMonsterGroup } from './game/map-data';
@@ -81,9 +82,9 @@ app.innerHTML = `<canvas id="game" aria-label="3D game world: click the ground t
 <div id="target-hud" hidden><div><span id="target-name">Dewdrop</span><small>Lv. 1 · Wild monster</small></div><div class="target-bar"><i id="target-fill"></i></div><button id="untarget" title="Clear target">${icon("x")}</button></div>
 <nav class="side-menu" aria-label="Game menus"><button data-panel="inventory" title="Inventory (I)">${icon("backpack")}<span>Bag</span><kbd>I</kbd></button><button data-panel="skills" title="Skills (K)">${icon("wand-sparkles")}<span>Skills</span><kbd>K</kbd></button><button data-panel="character" title="Character (C)">${icon("user-round")}<span>Hero</span><kbd>C</kbd></button><button data-panel="forge" title="Upgrade equipment">${icon("anvil")}<span>Forge</span></button><button data-panel="shop" title="Potion merchant">${icon("store")}<span>Shop</span></button></nav>
 <div class="chat"><div class="chat-tabs"><button class="active" data-chat="world">World</button><button data-chat="combat">Combat</button><span>LOCAL ADVENTURE</span><button id="chat-hide" aria-label="Hide activity log">${icon("chevron-down")}</button></div><div id="chat-log"><p><b class="system">System</b> Welcome to Mossvale, adventurer.</p><p><b class="guide">Guide</b> Click a monster to begin your adventure!</p></div><div class="chat-input">${icon("message-circle")}<input id="chat-input" placeholder="Leave a local note…" maxlength="100" aria-label="Local note"><span>↵</span></div></div>
-<div class="bottom-center"><div id="combat-state" aria-live="polite"></div><div class="control-hint"><span>${icon("mouse-pointer-2")} Click to move & attack</span><b>·</b><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> to walk</span></div><div class="action-bar"><button class="target-action" id="nearest" title="Select nearest monster (Tab)">${icon('crosshair')}<kbd>TAB</kbd></button><div class="action-divider"></div><div class="skill-hotbar" aria-label="Six skill slots">${Array.from({length:6},(_,n)=>`<button class="skill-slot gold" data-skill="${n}" data-hotbar="${n}" title="Skill ${n+1}"><kbd>${n+1}</kbd>${icon('plus')}<small>Empty</small><span class="cooldown"></span></button>`).join('')}</div><div class="action-divider"></div><div class="aux-hotbar" aria-label="Four auxiliary item slots">${Array.from({length:4},(_,n)=>`<button class="aux-slot" data-aux="${n}"><kbd>${[7,8,9,0][n]}</kbd>${icon('plus')}<small>Empty</small><span class="count"></span><span class="cooldown"></span></button>`).join('')}</div><button class="loot-action" id="loot" title="Pick up nearby loot (F)">${icon('hand')}<kbd>F</kbd><small>Loot</small></button><button id="auto" title="Auto-select and attack monsters">${icon('repeat-2')}<small>Auto</small></button></div><div class="experience"><span>BASE EXP</span><div><i id="exp-fill"></i></div><b id="exp-text">0 / 120</b></div></div>
+<div class="bottom-center"><div id="combat-state" aria-live="polite"></div><div class="control-hint"><span>${icon("mouse-pointer-2")} Click to move & attack</span><b>·</b><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> to walk</span></div><div class="action-bar"><button class="target-action" id="nearest" title="Select nearest monster (Tab)">${icon('crosshair')}<kbd>TAB</kbd></button><div class="action-divider"></div><div class="skill-hotbar" aria-label="Six skill slots">${Array.from({length:6},(_,n)=>`<button class="skill-slot gold" data-skill="${n}" data-hotbar="${n}" title="Skill ${n+1}"><kbd>${n+1}</kbd>${icon('plus')}<small>Empty</small><span class="cooldown"></span></button>`).join('')}</div><div class="action-divider"></div><div class="aux-hotbar" aria-label="Four auxiliary item slots">${Array.from({length:4},(_,n)=>`<button class="aux-slot" data-aux="${n}"><kbd>${[7,8,9,0][n]}</kbd>${icon('plus')}<small>Empty</small><span class="count"></span><span class="cooldown"></span></button>`).join('')}</div><button class="loot-action" id="loot" title="Pick up nearby loot (F)">${icon('hand')}<kbd>F</kbd><small>Loot</small></button><button id="auto" aria-label="Toggle auto combat" aria-pressed="false" title="Auto combat: use assigned skills, then normal attacks">${icon('repeat-2')}<small>Auto</small></button></div><div class="experience"><span>BASE EXP</span><div><i id="exp-fill"></i></div><b id="exp-text">0 / 120</b></div></div>
 <div class="bottom-right"><div class="community-shortcuts"><button data-panel="community" title="Party & friends">${icon("hero")} Party</button><button data-panel="market" title="Player market">${icon("store")} Market</button></div><div class="wallet">${icon("coins")}<b id="gold">120</b><span>z</span></div><div class="utility"><button id="camera" title="Reset camera">${icon("focus")}</button><button data-panel="settings" title="Settings">${icon("settings-2")}</button><button data-panel="help" title="How to play">${icon("circle-help")}</button></div><span class="save-indicator"><i></i> Adventure saved locally</span></div>
-<aside id="item-tooltip" class="item-tooltip" role="tooltip" hidden></aside><aside id="secondary-popover" class="secondary-popover" role="region" aria-label="Secondary stats" hidden></aside><div id="toast" role="status"></div><div id="panel-root"></div><div class="touch-controls"><button data-touch="up" aria-label="Walk up"><span class="arrow-up">${icon("arrow-down")}</span></button><button data-touch="left" aria-label="Walk left"><span class="arrow-left">${icon("arrow-right")}</span></button><button data-touch="down" aria-label="Walk down">${icon("arrow-down")}</button><button data-touch="right" aria-label="Walk right">${icon("arrow-right")}</button></div>`;
+<aside id="item-tooltip" class="item-tooltip" role="tooltip" hidden></aside><aside id="secondary-popover" class="secondary-popover" role="region" aria-label="Secondary stats" hidden></aside><div id="toast" role="status"></div><div id="panel-root"></div><div class="mobile-controls"><div id="mobile-joystick" role="group" aria-label="Drag to move" tabindex="0"><span class="stick-guide" aria-hidden="true"></span><span class="stick-knob" aria-hidden="true"></span><small>MOVE</small></div><button id="mobile-auto" aria-label="Toggle auto combat" aria-pressed="false">${icon('repeat-2')}<strong>AUTO</strong></button></div>`;
 async function boot(){
 let sim: Simulation;
 try { sim = await startSimulation(); } catch(error) {
@@ -91,6 +92,16 @@ try { sim = await startSimulation(); } catch(error) {
   app.innerHTML = `<div class="graphics-error"><h1>${signIn?'Sign in to play online':'Realm unavailable'}</h1><p>${signIn?'Log in to your game account to continue.':'Your online character is safe. Reload to reconnect.'}</p>${signIn?'<button onclick="location.reload()">Return to game login</button>':'<button onclick="location.reload()">Reconnect</button>'}<p><a href="?practice=1">Play practice with your existing device save</a></p></div>`;
   if(signIn)return;
   throw error;
+}
+const joystick={dx:0,dz:0,pointer:null as number|null};
+function resetJoystick(){
+  joystick.dx=joystick.dz=0;
+  sim.stopMovementInput();
+  const stick=document.querySelector<HTMLElement>('#mobile-joystick');
+  const pointer=joystick.pointer;joystick.pointer=null;
+  stick?.classList.remove('dragging');
+  stick?.style.setProperty('--stick-x','0px');stick?.style.setProperty('--stick-z','0px');
+  if(pointer!==null&&stick?.hasPointerCapture(pointer))stick.releasePointerCapture(pointer);
 }
 const feedback = new FeedbackAudio();
 window.addEventListener("pointerdown", () => feedback.unlock(), { once: true });
@@ -216,6 +227,7 @@ function hideItemTooltip(){const tip=document.getElementById('item-tooltip');if(
 function secondaryStatsMarkup(){return `<div class="secondary-character-stats">${Object.entries({critChance:sim.criticalChance*100,critDamage:sim.criticalMultiplier*100,damageBonus:sim.gearBonuses.damageBonus||0,skillDamage:sim.gearBonuses.skillDamage||0,lifesteal:Math.min(25,sim.gearBonuses.lifesteal||0),hpRegen:sim.hpRegenPercent,mpRegen:.7+(sim.gearBonuses.mpRegen||0),attackSpeed:Math.min(100,sim.gearBonuses.attackSpeed||0),moveSpeed:Math.min(50,sim.gearBonuses.moveSpeed||0),armorPen:Math.min(60,sim.gearBonuses.armorPen||0),damageReduction:Math.min(60,sim.gearBonuses.damageReduction||0),dodgeChance:Math.min(35,sim.gearBonuses.dodgeChance||0),expBonus:sim.gearBonuses.expBonus||0,goldBonus:sim.gearBonuses.goldBonus||0,healingBonus:Math.min(100,sim.gearBonuses.healingBonus||0),cooldownReduction:Math.min(40,sim.gearBonuses.cooldownReduction||0)}).map(([key,value])=>`<span>${statLabels[key as keyof Bonuses]}<b>${formatStat(key as keyof Bonuses,value)}</b></span>`).join('')}</div>`;}
 
 function renderPanel() {
+  if(panel)resetJoystick();
   document.body.classList.toggle('hotbar-editing',panel==='skills'||panel==='inventory');
   closeGameSelect();
   hideItemTooltip();
@@ -553,10 +565,12 @@ window.addEventListener("keydown", (e) => {
 window.addEventListener("keyup", (e) => keys.delete(e.key.toLowerCase()));
 window.addEventListener("blur", () => {
   keys.clear();
+  resetJoystick();
   sim.persist();
 });
 document.addEventListener("visibilitychange", () => {
   keys.clear();
+  resetJoystick();
   sim.persist();
 });
 document
@@ -568,11 +582,13 @@ document
 document.querySelectorAll<HTMLElement>(".action-bar [data-aux]").forEach(b=>b.onclick=()=>{if(!panel)sim.useAuxiliary(Number(b.dataset.aux))});
 $("#nearest").onclick = () => sim.nearest();
 $("#loot").onclick = () => sim.collect();
-$("#auto").onclick = () => {
-  sim.setAuto(!sim.auto);
-  $("#auto").classList.toggle("active", sim.auto);
-  sim.onEvent(sim.auto ? "Auto hunt enabled" : "Auto hunt stopped");
-};
+function syncAutoButtons(){
+  for(const id of ['#auto','#mobile-auto']){const button=$(id);button.classList.toggle('active',sim.auto);button.setAttribute('aria-pressed',String(sim.auto));}
+}
+function toggleAuto(){if(panel)return;sim.setAuto(!sim.auto);syncAutoButtons();}
+$('#auto').onclick=toggleAuto;
+$('#mobile-auto').onclick=e=>{e.preventDefault();e.stopPropagation();toggleAuto();};
+$('#mobile-auto').onpointerdown=e=>{e.stopPropagation();};
 $("#untarget").onclick = () => sim.clearTarget();
 $("#claim").onclick = () => sim.claim();
 $("#camera").onclick = () => {
@@ -606,20 +622,25 @@ $("#chat-input").addEventListener("keydown", (e) => {
     input.blur();
   }
 });
-document.querySelectorAll<HTMLElement>("[data-touch]").forEach((b) => {
-  const map: Record<string, string> = {
-    up: "w",
-    down: "s",
-    left: "a",
-    right: "d",
-  };
-  b.onpointerdown = (e) => {
-    e.preventDefault();
-    b.setPointerCapture(e.pointerId);
-    keys.add(map[b.dataset.touch!]);
-  };
-  b.onpointerup = b.onpointercancel = () => keys.delete(map[b.dataset.touch!]);
-});
+const stick=$('#mobile-joystick');
+function moveJoystick(e:PointerEvent){
+  if(joystick.pointer!==e.pointerId)return;
+  e.preventDefault();e.stopPropagation();
+  const rect=stick.getBoundingClientRect(),radius=rect.width*.32;
+  const vector=joystickVector(e.clientX-(rect.left+rect.width/2),e.clientY-(rect.top+rect.height/2),radius);
+  joystick.dx=vector.dx;joystick.dz=vector.dz;
+  stick.style.setProperty('--stick-x',`${vector.knobX}px`);stick.style.setProperty('--stick-z',`${vector.knobZ}px`);
+}
+stick.onpointerdown=e=>{
+  e.preventDefault();e.stopPropagation();
+  if(panel||joystick.pointer!==null||e.button!==0)return;
+  joystick.pointer=e.pointerId;stick.setPointerCapture(e.pointerId);stick.classList.add('dragging');moveJoystick(e);
+};
+stick.onpointermove=moveJoystick;
+stick.onpointerup=stick.onpointercancel=e=>{e.preventDefault();e.stopPropagation();if(e.pointerId===joystick.pointer)resetJoystick();};
+stick.onlostpointercapture=()=>resetJoystick();
+stick.onclick=e=>{e.preventDefault();e.stopPropagation();};
+window.addEventListener('resize',resetJoystick);
 let music = false;
 let audio: AudioContext | null = null;
 let musicTimer = 0;
@@ -701,6 +722,18 @@ function bindSkillDrops() {
   document.querySelectorAll<HTMLElement>('[data-aux]').forEach(slot=>{slot.ondragover=e=>e.preventDefault();slot.ondrop=e=>{e.preventDefault();const name=e.dataTransfer?.getData('application/x-mossvale-item')||e.dataTransfer?.getData('text/plain');if(isAuxiliaryItem(name)&&sim.assignAuxiliary(Number(slot.dataset.aux),name)){renderPanel();refreshHotbar()}};});
 
 }
+let cooldownViews: {button:HTMLButtonElement;label:HTMLElement;id:string|null;lockedLabel:string}[]=[];
+function refreshCooldownViews(){
+  for(const view of cooldownViews){
+    const remaining=view.id?sim.skillCooldownRemaining(view.id):0,ratio=view.id?sim.skillCooldownRatio(view.id):0;
+    view.button.style.setProperty('--cooldown-progress',`${(1-ratio)*100}%`);
+    view.button.dataset.cooldownRatio=ratio.toFixed(4);
+    view.button.classList.toggle('on-cooldown',remaining>0);
+    const text=remaining>0?String(Math.ceil(remaining)):view.lockedLabel;
+    if(view.label.textContent!==text)view.label.textContent=text;
+    view.label.classList.toggle('cooling',remaining>0);
+  }
+}
 function refreshHotbar() {
   const signature = `${sim.save.job}:${sim.save.level}:${sim.save.hotbar.join(",")}:${sim.save.auxiliary.join(",")}:${sim.save.skillChoices[sim.save.job].join(",")}:${JSON.stringify(sim.save.skillRanks)}`;
   if (signature === hotbarSignature) return;
@@ -719,9 +752,11 @@ function refreshHotbar() {
     button.title = skill
       ? `${skill.name} · Rank ${sim.skillRank(skill.id)}/5 · ${skill.damagePercent}% ATK · ${skill.maxTargets} targets · radius ${skill.radius}m · ${skill.mp} MP · ${locked ? "Unlocks at level " + skill.level : skill.cooldown + "s cooldown"}`
       : "Assign a skill in the Skills window";
-    button.innerHTML = `<kbd>${key + 1}</kbd>${icon(skill?.icon || "plus")}<small>${skill?.name || "Empty"}</small><span class="cooldown">${locked && skill ? "Lv " + skill.level : ""}</span>`;
+    button.innerHTML = `<kbd>${key + 1}</kbd>${icon(skill?.icon || "plus")}<small>${skill?.name || "Empty"}</small><span class="cooldown-radial" aria-hidden="true"></span><span class="cooldown">${locked && skill ? "Lv " + skill.level : ""}</span>`;
   });
   document.querySelectorAll<HTMLElement>('.action-bar [data-aux]').forEach(button=>{const n=Number(button.dataset.aux),name=sim.save.auxiliary[n];button.title=name===EXP_CHARM.name?`EXP Charm · Passive EXP ×${EXP_CHARM.multiplier} while slotted · never consumed`:name||'Assign an approved item in Skills';button.classList.toggle('locked',!name);button.innerHTML=`<kbd>${[7,8,9,0][n]}</kbd>${icon(name?auxiliaryItems[name].icon:'plus')}<small>${name==='Red potion'?'HP':name==='Blue potion'?'MP':name===EXP_CHARM.name?'×'+EXP_CHARM.multiplier:'Empty'}</small><span class="count"></span><span class="cooldown"></span>`;});
+  cooldownViews=Array.from(document.querySelectorAll<HTMLButtonElement>('.action-bar [data-skill]')).map(button=>({button,label:button.querySelector<HTMLElement>('.cooldown')!,id:sim.save.hotbar[Number(button.dataset.skill)],lockedLabel:button.querySelector<HTMLElement>('.cooldown')!.textContent||''}));
+  refreshCooldownViews();
   bindSkillDrops();
 }
 refreshHotbar();
@@ -733,8 +768,8 @@ let footstepTimer = 0;
 function frame(now: number) {
   const dt = Math.min((now - last) / 1000, 0.25);
   last = now;
-  const dx = (keys.has("d") ? 1 : 0) - (keys.has("a") ? 1 : 0),
-    dz = (keys.has("s") ? 1 : 0) - (keys.has("w") ? 1 : 0);
+  const keyboardX=(keys.has("d")?1:0)-(keys.has("a")?1:0),keyboardZ=(keys.has("s")?1:0)-(keys.has("w")?1:0);
+  const dx=keyboardX||keyboardZ?keyboardX:joystick.dx,dz=keyboardX||keyboardZ?keyboardZ:joystick.dz;
   const oldX = sim.x,
     oldZ = sim.z;
   let remaining = dt;
@@ -744,6 +779,7 @@ function frame(now: number) {
     remaining -= step;
   }
   world.update(sim.paused && !sim.online ? 0 : dt);
+  refreshCooldownViews();
   footstepTimer -= dt;
   if (
     !sim.paused &&
@@ -799,28 +835,7 @@ function frame(now: number) {
     $("#quest-reward").textContent = s.questClaimed
       ? "✓ QUEST COMPLETE"
       : "REWARD   100 z + 3 potions";
-    document
-      .querySelectorAll<HTMLElement>(".action-bar [data-skill]")
-      .forEach((b) => {
-        const i = Number(b.dataset.skill);
-        const c = b.querySelector<HTMLElement>(".cooldown")!;
-        c.textContent =
-          sim.cooldowns[i] > 0
-            ? Math.ceil(sim.cooldowns[i]).toString()
-            : b.classList.contains("locked")
-              ? sim.skillList.find(
-                  (skill) =>
-                    skill.id === sim.save.hotbar[i],
-                )?.level
-                ? "Lv " +
-                  sim.skillList.find(
-                    (skill) =>
-                      skill.id === sim.save.hotbar[i],
-                  )!.level
-                : ""
-              : "";
-        c.classList.toggle("cooling", sim.cooldowns[i] > 0);
-      });
+    syncAutoButtons();
     const target = sim.monsters.find((m) => m.id === sim.target && m.alive);
     $("#target-hud").hidden = !target;
     if (target) {
@@ -845,6 +860,10 @@ Object.defineProperty(window, "mossvale", {
       hotbar: [...sim.save.hotbar],auxiliary:[...sim.save.auxiliary],skillChoices:structuredClone(sim.save.skillChoices),skillRanks:{...sim.save.skillRanks},skillPoints:sim.skillPoints,skillSpent:sim.save.level-sim.skillPoints,
       unlockedSkills: sim.unlockedSkills.map((skill) => skill.id),
       defense: sim.defense,
+      joystickInput:[joystick.dx,joystick.dz],joystickActive:joystick.pointer!==null,
+      auto:sim.auto,autoSkillCursor:sim.autoSkillCursor,
+      cooldownRatios:sim.save.hotbar.map(id=>id?sim.skillCooldownRatio(id):0),
+      skillCooldownTotals:{...sim.skillCooldownTotals},
       cooldowns: [...sim.cooldowns],
       skillCooldowns: { ...sim.skillCooldowns },
       cast: sim.cast ? { ...sim.cast } : null,

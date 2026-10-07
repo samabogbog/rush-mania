@@ -114,6 +114,8 @@ export class Simulation {
   cooldowns = Array(10).fill(0) as number[];
   auxiliaryCooldown=0;
   skillCooldowns: Record<string, number> = {};
+  skillCooldownTotals: Record<string, number> = {};
+  autoSkillCursor = 0;
   guard = { time: 0, power: 0 };
   fury = { time: 0, power: 0 };
   cast: {
@@ -490,6 +492,7 @@ export class Simulation {
   }
   clearTarget() { this.target = null; }
   setAuto(enabled: boolean) { this.auto = enabled; }
+  stopMovementInput() {} // Practice consumes the current input directly on the next tick.
   buy(name: string) {
     if (!["Red potion", "Blue potion"].includes(name)) return;
     const blue = name === "Blue potion", cost = blue ? economy.bluePotion.cost : economy.redPotion.cost;
@@ -593,6 +596,7 @@ export class Simulation {
     this.markTutorial("skill");
     this.save.mp -= skill.mp;
     this.skillCooldowns[id] = skill.cooldown*this.cooldownMultiplier;
+    this.skillCooldownTotals[id] = this.skillCooldowns[id];
     if (skill.cast)
       this.cast = {
         skillId: id,
@@ -604,6 +608,29 @@ export class Simulation {
     this.refreshCooldowns();
     this.persist();
     return true;
+  }
+  skillCooldownRemaining(id: string) { return this.skillCooldowns[id] || 0; }
+  skillCooldownRatio(id: string) {
+    const remaining=this.skillCooldownRemaining(id);
+    const total=this.skillCooldownTotals[id] || remaining;
+    return total>0?Math.max(0,Math.min(1,remaining/total)):0;
+  }
+  private tryAutoSkill() {
+    if(!this.auto||this.destination||this.cast||this.deathTime>0||this.save.hp<=0)return false;
+    const learned=new Set(this.unlockedSkills.map(skill=>skill.id));
+    const group=zoneMonsterGroups(this.save.zone).find(g=>insideMonsterGroup(this.save.zone,g.id,this.x,this.z));
+    for(let offset=0;offset<6;offset++) {
+      const slot=(this.autoSkillCursor+offset)%6,id=this.save.hotbar[slot];
+      if(!id||!learned.has(id)||(this.skillCooldowns[id]||0)>0)continue;
+      const skill=this.skillList.find(skill=>skill.id===id)!;
+      if(this.save.mp<skill.mp)continue;
+      const targets=this.monsters.filter(m=>m.alive&&(!group||m.groupId===group.id)&&Math.hypot(m.x-this.x,m.z-this.z)<=skill.range&&this.direct(m.x,m.z));
+      targets.sort((a,b)=>(a.id===this.target?-1:b.id===this.target?1:Math.hypot(a.x-this.x,a.z-this.z)-Math.hypot(b.x-this.x,b.z-this.z)||a.id-b.id));
+      if(!targets.length)continue;
+      this.target=targets[0].id;
+      if(this.castSkill(id)){this.autoSkillCursor=(slot+1)%6;return true;}
+    }
+    return false;
   }
   private resolveSkill(skill: Skill, targetId: number | null) {
     const monster = this.monsters.find(
@@ -811,9 +838,10 @@ export class Simulation {
       this.target = null;
       this.destination = null;
       const len = Math.hypot(dx, dz);
-      this.x += (dx / len) * dt * this.movementSpeed;
-      this.z += (dz / len) * dt * this.movementSpeed;
+      this.x += (dx / Math.max(1,len)) * dt * this.movementSpeed;
+      this.z += (dz / Math.max(1,len)) * dt * this.movementSpeed;
     } else {
+      const autoSkillStarted=this.tryAutoSkill();
       const m = this.monsters.find((e) => e.id === this.target && e.alive);
       const dest = m || this.destination;
       if (dest) {
@@ -822,7 +850,7 @@ export class Simulation {
           dist > (m ? this.job.range : 0.15) ||
           (m && !this.direct(m.x, m.z))
         ) {
-          if(m&&zoneMonsterGroups(this.save.zone).some(g=>insideMonsterGroup(this.save.zone,g.id,this.x,this.z))) { /* Hold position while the pack runs into attack range. */ } else {
+          if(this.cast||autoSkillStarted||m&&zoneMonsterGroups(this.save.zone).some(g=>insideMonsterGroup(this.save.zone,g.id,this.x,this.z))) { /* Hold position while the pack runs into attack range. */ } else {
           let next: { x: number; z: number } = dest;
           if (!this.direct(dest.x, dest.z)) {
             if (this.routeTimer <= 0 || !this.route.length) {
@@ -845,7 +873,7 @@ export class Simulation {
             this.z += ((next.z - this.z) / nd) * movement;
           }
           }
-        } else if (m && this.attackTimer <= 0 && !this.cast) {
+        } else if (m && this.attackTimer <= 0 && !this.cast && !autoSkillStarted) {
           this.hit(m, this.damage);
           this.attackTimer =
             this.attackInterval;

@@ -19,7 +19,8 @@ export class NetworkSimulation extends Simulation {
   private accept(snapshot:Snapshot) {
     const oldZone=this.save.zone;this.receivedAt=performance.now();
     const before=JSON.stringify([this.save.job,this.save.stats,this.save.points,this.save.weapon,this.save.hotbar,this.save.skillChoices,this.save.skillRanks,this.save.auxiliary,this.save.items,this.save.gold,this.save.equipped,this.save.zone,this.save.quests]);
-    for(const field of actorFields) (this as unknown as Record<string,unknown>)[field]=snapshot.player.actor[field];
+    for(const field of actorFields) if(snapshot.player.actor[field]!==undefined)(this as unknown as Record<string,unknown>)[field]=snapshot.player.actor[field];
+    this.skillCooldownTotals=snapshot.player.actor.skillCooldownTotals||{...this.skillCooldowns};this.autoSkillCursor=snapshot.player.actor.autoSkillCursor||0;
     const socialChanged=JSON.stringify([this.community,this.remotePlayers.map(p=>p.id)])!==JSON.stringify([snapshot.community,snapshot.peers.map(p=>p.id)]);this.community=snapshot.community;
     this.balance=snapshot.balance||{};this.admin=snapshot.admin===true;
     if(!this.view||oldZone!==this.save.zone||Math.hypot(this.view.x-this.x,this.view.z-this.z)>3)this.view={x:this.x,z:this.z};
@@ -49,11 +50,13 @@ export class NetworkSimulation extends Simulation {
     if(!this.view)return;
     // Presentation only. Authoritative coordinates, damage and items stay in server snapshots.
     const length=Math.hypot(...input),lead=Math.min(.15,this.rtt/2000)*this.movementSpeed;
-    const targetX=this.x+(length?input[0]/length*lead:0),targetZ=this.z+(length?input[1]/length*lead:0);
+    const targetX=this.x+(length?input[0]/Math.max(1,length)*lead:0),targetZ=this.z+(length?input[1]/Math.max(1,length)*lead:0);
     const blend=1-Math.exp(-dt*(length?3:16));
     this.view.x+=(targetX-this.view.x)*blend;this.view.z+=(targetZ-this.view.z)*blend;
-    if(length&&performance.now()-this.receivedAt<1000&&this.save.hp>0&&this.deathTime<=0){const nx=this.view.x+input[0]/length*this.movementSpeed*dt,nz=this.view.z+input[1]/length*this.movementSpeed*dt;const blocked=nx<WORLD_BOUNDS.minX||nx>WORLD_BOUNDS.maxX||nz<WORLD_BOUNDS.minZ||nz>WORLD_BOUNDS.maxZ||this.obstacles.some(o=>Math.hypot(nx-o.x,nz-o.z)<o.r+.3);if(!blocked&&Math.hypot(nx-this.x,nz-this.z)<=1.6){this.view.x=nx;this.view.z=nz;}}
+    if(length&&performance.now()-this.receivedAt<1000&&this.save.hp>0&&this.deathTime<=0){const nx=this.view.x+input[0]/Math.max(1,length)*this.movementSpeed*dt,nz=this.view.z+input[1]/Math.max(1,length)*this.movementSpeed*dt;const blocked=nx<WORLD_BOUNDS.minX||nx>WORLD_BOUNDS.maxX||nz<WORLD_BOUNDS.minZ||nz>WORLD_BOUNDS.maxZ||this.obstacles.some(o=>Math.hypot(nx-o.x,nz-o.z)<o.r+.3);if(!blocked&&Math.hypot(nx-this.x,nz-this.z)<=1.6){this.view.x=nx;this.view.z=nz;}}
   }
+  override stopMovementInput(){if(this.input[0]||this.input[1]){this.input=[0,0];this.schedule(0);}}
+  override skillCooldownRemaining(id:string){return Math.max(0,(this.skillCooldowns[id]||0)-(performance.now()-this.receivedAt)/1000);}
   override spawnItem(id:string,count:number,rarity:Rarity='common',refine=0){if(this.admin)this.send('adminSpawn',id,count,rarity,refine);}
   override persist(){} // Durable save belongs to the server; browser cannot submit a character object.
   override select(id:number){this.send('select',id)}

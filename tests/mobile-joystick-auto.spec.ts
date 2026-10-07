@@ -1,0 +1,33 @@
+import {test,expect} from '@playwright/test';
+import {Simulation} from '../src/simulation';
+import {WORLD_BOUNDS,zoneMonsterGroups} from '../src/game/map-data';
+import {mkdirSync,writeFileSync} from 'node:fs';
+test.use({hasTouch:true});
+test('mobile touch joystick releases cleanly, Auto casts both assigned skills, and cooldown clears radially',async({page,context})=>{
+ const seed=new Simulation(()=>.5,undefined,null);seed.save.level=30;seed.chooseSkill('swordsman-1');seed.chooseSkill('swordsman-2');seed.save.hp=seed.maxHp;seed.save.mp=seed.maxMp;
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.setViewportSize({width:390,height:844});
+ await page.addInitScript(save=>{localStorage.setItem('mossvale-save',JSON.stringify(save));localStorage.setItem('mossvale-quality','low')},seed.save);
+ await page.goto('/?practice=1');await page.waitForFunction(()=>{const s=(window as any).mossvale?.snapshot();return s&&s.riggedActors===s.modelsExpected&&s.modelErrors===0},{},{timeout:60000});await expect(page.locator('#hp-text')).toContainText(String(seed.maxHp));
+ const snap=()=>page.evaluate(()=>(window as any).mossvale.snapshot());const stick=page.locator('#mobile-joystick'),auto=page.locator('#mobile-auto');await expect(stick).toBeVisible();await expect(auto).toBeVisible();
+ const cdp=await context.newCDPSession(page),box=(await stick.boundingBox())!,center={x:box.x+box.width/2,y:box.y+box.height/2};
+ const touch=async(type:string,x=center.x,y=center.y)=>cdp.send('Input.dispatchTouchEvent',{type,touchPoints:type==='touchEnd'||type==='touchCancel'?[]:[{x,y,id:1,radiusX:2,radiusY:2,force:1}]});
+ const beforeMove=await snap();await touch('touchStart');await touch('touchMove',center.x+box.width*.3,center.y);await page.waitForFunction(x=>(window as any).mossvale.snapshot().x>x+.4,beforeMove.x,{timeout:10000});await touch('touchEnd');
+ const released=await snap();expect(released.joystickActive).toBe(false);expect(released.joystickInput).toEqual([0,0]);await expect.poll(async()=>Math.abs((await snap()).x-released.x),{timeout:1000}).toBeLessThan(.08);await page.waitForTimeout(250);expect(Math.abs((await snap()).x-released.x)).toBeLessThan(.08);expect((await snap()).destination).toBeNull();
+ await touch('touchStart');await touch('touchMove',center.x+box.width*.3,center.y);await page.keyboard.press('i');await touch('touchEnd');await page.keyboard.press('Escape');const panelReleased=await snap();await page.waitForTimeout(250);expect(Math.abs((await snap()).x-panelReleased.x)).toBeLessThan(.08);
+ mkdirSync('artifacts/mobile-controls',{recursive:true});await page.screenshot({path:'artifacts/mobile-controls/portrait.png'});
+ await page.setViewportSize({width:844,height:390});await expect(stick).toBeVisible();await expect(auto).toBeVisible();
+ const rectangles=await page.locator('#mobile-joystick,#mobile-auto,.action-bar').evaluateAll(nodes=>nodes.map(n=>{const b=n.getBoundingClientRect();return {x:b.x,y:b.y,w:b.width,h:b.height}}));
+ for(const b of rectangles){expect(b.x).toBeGreaterThanOrEqual(0);expect(b.y).toBeGreaterThanOrEqual(0);expect(b.x+b.w).toBeLessThanOrEqual(845);expect(b.y+b.h).toBeLessThanOrEqual(391);}const overlap=(a:any,b:any)=>a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;expect(overlap(rectangles[0],rectangles[1])).toBe(false);expect(overlap(rectangles[0],rectangles[2])).toBe(false);expect(overlap(rectangles[1],rectangles[2])).toBe(false);await page.screenshot({path:'artifacts/mobile-controls/landscape.png'});
+ await page.setViewportSize({width:390,height:844});const g=zoneMonsterGroups('glade')[0];await page.keyboard.press('m');const map=(await page.locator('#large-map').boundingBox())!;
+ await page.mouse.click(map.x+(g.x-WORLD_BOUNDS.minX)/(WORLD_BOUNDS.maxX-WORLD_BOUNDS.minX)*map.width,map.y+(g.z-WORLD_BOUNDS.minZ)/(WORLD_BOUNDS.maxZ-WORLD_BOUNDS.minZ)*map.height);
+ const requested=(await snap()).destination;expect(requested).not.toBeNull();expect(Math.hypot(requested.x-g.x,requested.z-g.z)).toBeLessThan(.5);await page.waitForFunction(({x,z})=>{const s=(window as any).mossvale.snapshot();return !s.destination&&Math.hypot(s.x-x,s.z-z)<.2},requested,{timeout:30000});await page.waitForFunction(id=>{const s=(window as any).mossvale.snapshot();return s.monsters.filter((m:any)=>m.groupId===id).every((m:any)=>m.alive&&Math.hypot(m.x-s.x,m.z-s.z)<1.6)},g.id,{timeout:30000});
+ const beforeAuto=await snap();await auto.tap();await expect(auto).toHaveAttribute('aria-pressed','true');await page.waitForFunction(()=>{const s=(window as any).mossvale.snapshot();return s.skillCooldowns['swordsman-1']>0&&s.skillCooldowns['swordsman-2']>0},{},{timeout:10000});
+ const skill=page.locator('.skill-hotbar [data-skill="1"]'),ratio=Number(await skill.getAttribute('data-cooldown-ratio'));expect(ratio).toBeGreaterThan(.4);expect(ratio).toBeLessThanOrEqual(1);await expect.poll(async()=>Number(await skill.getAttribute('data-cooldown-ratio')),{timeout:5000}).toBeLessThan(ratio-.05);
+ const afterAuto=await snap();expect(afterAuto.mp).toBeLessThan(beforeAuto.mp-15);expect(afterAuto.kills).toBeGreaterThan(beforeAuto.kills);expect(Math.hypot(afterAuto.x-beforeAuto.x,afterAuto.z-beforeAuto.z)).toBeLessThan(.05);await page.screenshot({path:'artifacts/mobile-controls/auto-radial-cooldown.png'});await auto.tap();await expect(auto).toHaveAttribute('aria-pressed','false');
+ expect(errors).toEqual([]);
+ writeFileSync('artifacts/mobile-controls/evidence.json',JSON.stringify({fixture:{level:30,practice:true},movement:{before:beforeMove.x,after:released.x},auto:{beforeMp:beforeAuto.mp,afterMp:afterAuto.mp,kills:afterAuto.kills-beforeAuto.kills},cooldownRatio:ratio,pageErrors:errors},null,2));
+});
+test('desktop retains its existing Auto button without mobile controls',async({browser})=>{
+ const context=await browser.newContext({hasTouch:false,viewport:{width:1200,height:800}}),page=await context.newPage();
+ try{const seed=new Simulation(()=>.5,undefined,null);seed.save.zone='town';await context.addInitScript(save=>{localStorage.setItem('mossvale-save',JSON.stringify(save));localStorage.setItem('mossvale-quality','low')},seed.save);await page.goto('/?practice=1');await page.waitForFunction(()=>{const s=(window as any).mossvale?.snapshot();return s&&s.riggedActors===s.modelsExpected&&s.modelErrors===0},{},{timeout:60000});await expect(page.locator('#mobile-joystick')).toBeHidden();await expect(page.locator('#mobile-auto')).toBeHidden();await expect(page.locator('#auto')).toBeVisible();mkdirSync('artifacts/mobile-controls',{recursive:true});await page.screenshot({path:'artifacts/mobile-controls/desktop.png'});}finally{await context.close();}
+});
