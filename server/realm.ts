@@ -82,6 +82,7 @@ export function migrateRealmItems(realm:Realm){
  });
  realm.itemRevision=1;
 }
+export const INPUT_LEASE_MS=1500;
 function advance(realm:Realm,now:number) {
   migrateRealmItems(realm);
   if(!realm.rooms)roomFor(realm,'glade','glade');
@@ -126,14 +127,17 @@ function advance(realm:Realm,now:number) {
   }
   // Server clock only. No offline farming or long catch-up bursts after inactivity.
   let remaining=Math.max(0,Math.min(0.5,(now-realm.time)/1000));
+  let simulatedAt=now-remaining*1000;
   while(remaining>0.00001) {
     const dt=Math.min(0.025,remaining);
     assignOwnership();
     for(const {p,sim} of sims) {
-      const input=now-p.inputAt<500?p.input:[0,0];
+      // Evaluate held input along the bounded catch-up timeline, not at arrival.
+      const input=simulatedAt-p.inputAt<INPUT_LEASE_MS?p.input:[0,0];
       sim.tick(dt,input[0],input[1]);
     }
     remaining-=dt;
+    simulatedAt+=dt*1000;
   }
   for(const {p,sim} of sims) p.actor=capture(sim);
 

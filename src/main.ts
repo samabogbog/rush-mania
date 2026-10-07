@@ -871,6 +871,7 @@ Object.defineProperty(window, "mossvale", {
       skillCooldowns: { ...sim.skillCooldowns },
       cast: sim.cast ? { ...sim.cast } : null,
       renderX:sim.renderX,renderZ:sim.renderZ,
+      network:sim instanceof NetworkSimulation?sim.networkDiagnostics:null,
       x: sim.x,
       z: sim.z,
       level: sim.save.level,
@@ -885,6 +886,7 @@ Object.defineProperty(window, "mossvale", {
       paused: sim.paused,
       monsters: sim.monsters.map((m) => ({
         ...m,
+        renderX:sim.renderMonster(m).x,renderZ:sim.renderMonster(m).z,
         screen: world.project(m.x, m.z, 0.5),
       })),
       destination: sim.destination ? { ...sim.destination } : null,

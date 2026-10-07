@@ -398,7 +398,7 @@ export class World implements GameWorld {
   clearSkillPreview(){if(this.sim.online)return false;this.previewHeld=false;this.skillVFX.clear();this.skillSequence=null;this.skillMotion=null;return true;}
   private beginSkillVisual(skill:Skill,tx:number,tz:number,preview=false) {
     if(this.previewHeld){this.skillVFX.clear();this.previewHeld=false;}
-    const total=preview?(skill.cast||.18):(this.sim.cast?.total||.001),remaining=preview?total:(this.sim.cast?.remaining||0);
+    const total=preview?(skill.cast||.18):(this.sim.renderCast?.total||.001),remaining=preview?total:(this.sim.renderCast?.remaining||0);
     this.skillSequence={preview,skill,remaining,total,released:false,x:this.player.position.x,z:this.player.position.z,tx,tz};
     this.skillVFX.anticipation(skill,this.sim.save.job,this.player.position.x,this.player.position.z);
   }
@@ -416,7 +416,7 @@ export class World implements GameWorld {
     const sequence=this.skillSequence;
     if(sequence){
       if(sequence.preview||sequence.released)sequence.remaining-=dt;
-      else sequence.remaining=cast?.skillId===sequence.skill.id?cast.remaining:0;
+      else sequence.remaining=cast?.skillId===sequence.skill.id?(this.sim.renderCast?.remaining||0):0;
       if((sequence.preview?sequence.remaining<=0:(!cast||transition==='release'))&&!sequence.released){sequence.released=true;sequence.remaining=skillRecoveryDuration(sequence.skill.stage);this.skillVFX.release(sequence.skill,this.sim.save.job,sequence.x,sequence.z,sequence.tx,sequence.tz);}
       const phase=!sequence.released?'anticipation':sequence.remaining>skillRecoveryDuration(sequence.skill.stage)*.28?'release':'recovery';
       this.skillMotion={skillId:sequence.skill.id,duration:sequence.released?skillRecoveryDuration(sequence.skill.stage):sequence.total,job:this.sim.save.job,stage:sequence.skill.stage,branch:sequence.skill.branch,effect:sequence.skill.effect,phase,progress:!sequence.released?1-Math.max(0,sequence.remaining)/sequence.total:1-Math.max(0,sequence.remaining)/skillRecoveryDuration(sequence.skill.stage)};
@@ -453,11 +453,11 @@ export class World implements GameWorld {
     const angularDelta=Math.atan2(Math.sin(facing-this.player.rotation.y),Math.cos(facing-this.player.rotation.y));
     this.player.rotation.y+=angularDelta*(dt>0?1-Math.exp(-dt*18):1);
     for (const [id, model] of this.heroModels)
-      {model.setEnabled(id === this.sim.save.job);this.models.setSkillMotion(model,id===this.sim.save.job?this.skillMotion:null);this.models.animate(model,moving,this.sim.save.hp,this.sim.actionTime>0,!!this.sim.cast,dt);}
+      {model.setEnabled(id === this.sim.save.job);this.models.setSkillMotion(model,id===this.sim.save.job?this.skillMotion:null);this.models.animate(model,moving,this.sim.save.hp,this.sim.renderActionTime>0,(this.sim.renderCast?.remaining||0)>0,dt);}
     this.updateOutfit();
     this.player.rotation.z =
-      this.sim.hurtTime > 0 ? Math.sin(this.sim.hurtTime * 18) * 0.035 : 0;
-    this.player.scaling.setAll(this.sim.hurtTime > 0 ? 0.96 : 1);
+      this.sim.renderHurtTime > 0 ? Math.sin(this.sim.renderHurtTime * 18) * 0.035 : 0;
+    this.player.scaling.setAll(this.sim.renderHurtTime > 0 ? 0.96 : 1);
     this.lastX = renderX;
     this.lastZ = renderZ;
     const heroBlend=Math.hypot(facingX,facingZ)>6?1:blend;
@@ -478,7 +478,7 @@ export class World implements GameWorld {
       (m) => m.id === this.sim.target && m.alive,
     );
     this.selection.setEnabled(!!target);
-    if (target) this.selection.position.set(target.x, 0.04, target.z);
+    if (target) {const position=this.sim.renderMonster(target);this.selection.position.set(position.x, 0.04, position.z);}
     this.destination.setEnabled(!!this.sim.destination);
     if (this.sim.destination)
       this.destination.position.set(
@@ -488,16 +488,17 @@ export class World implements GameWorld {
       );
     if(updateLabels)for (const entry of this.zoneLabels){const point=this.project(entry.x,entry.z,2.4);entry.label.style.transform=`translate(${point.x}px,${point.y}px) translate(-50%,-100%)`;}
     for (const monster of this.sim.monsters) {
+      const position=this.sim.renderMonster(monster);
       const actor = this.monsters.get(monster.id)!;
       actor.setEnabled(monster.alive||monster.respawn>12.1);
-      const monsterMoving=Math.hypot(monster.x-actor.position.x,monster.z-actor.position.z)>.015;
-      if(monsterMoving)actor.rotation.y=Math.atan2(monster.x-actor.position.x,monster.z-actor.position.z);
-      const projected=this.project(actor.position.x+(monster.x-actor.position.x)*blend,actor.position.z+(monster.z-actor.position.z)*blend,1.7),visible=projected.x>this.bounds.left-80&&projected.x<this.bounds.left+this.bounds.width+80&&projected.y>this.bounds.top-80&&projected.y<this.bounds.top+this.bounds.height+80;
+      const monsterMoving=Math.hypot(position.x-actor.position.x,position.z-actor.position.z)>.015;
+      if(monsterMoving)actor.rotation.y=Math.atan2(position.x-actor.position.x,position.z-actor.position.z);
+      const projected=this.project(position.x,position.z,1.7),visible=projected.x>this.bounds.left-80&&projected.x<this.bounds.left+this.bounds.width+80&&projected.y>this.bounds.top-80&&projected.y<this.bounds.top+this.bounds.height+80;
       this.models.animate(actor,monsterMoving,monster.alive?monster.hp:0,monster.windup>0,false,dt,visible);
       actor.position.set(
-        actor.position.x+(monster.x-actor.position.x)*blend,
+        position.x,
         Math.sin(this.visualTime * 2 + monster.id) * 0.05,
-        actor.position.z+(monster.z-actor.position.z)*blend,
+        position.z,
       );
       const warnings=this.warnings.get(monster.id)!,shape=monster.shape||species[monster.kind].shape;
       for(const [kind,mesh] of Object.entries(warnings))mesh.setEnabled(monster.alive&&monster.windup>0&&kind===shape);
@@ -506,7 +507,7 @@ export class World implements GameWorld {
       warning.rotation.y=shape==='circle'?0:Math.atan2(monster.facingX??0,monster.facingZ??1);
       warning.scaling.setAll(.9+.1*(1-monster.windup/species[monster.kind].windup));
       actor.rotation.z =
-        monster.stun > 0 ? Math.sin(this.sim.time * 12) * 0.1 : 0;
+        monster.stun > 0 ? Math.sin(this.sim.renderTime * 12) * 0.1 : 0;
       if(updateLabels){const label=this.monsterLabels.get(monster.id)!;
         const text=`${species[monster.kind].boss?"BOSS · ":species[monster.kind].miniBoss?"MINI-BOSS · ":""}${monster.kind} · Lv ${species[monster.kind].level}${monster.stun>0?" · Stunned":monster.poison>0?" · Poison":monster.slow>0?" · Slow":""}`;
         if(this.labelNames.get(monster.id)!==text){this.labelSpans.get(monster.id)!.textContent=text;this.labelNames.set(monster.id,text);}
@@ -531,13 +532,14 @@ export class World implements GameWorld {
       const rarity=drop.item?.rarity||'common',colors={common:0xffdf8a,rare:0x5cb9ff,epic:0xbc74ff,ancient:0xffa63e,legend:0xff526f};this.loot[index].material=this.factory.material(colors[rarity],true);
       this.loot[index].position.set(
         drop.x,
-        0.35 + Math.sin(this.sim.time * 4 + index) * 0.1,
+        0.35 + Math.sin(this.sim.renderTime * 4 + index) * 0.1,
         drop.z,
       );
       this.loot[index].rotation.y += dt;
     });
     for(const [id,peer] of this.peers) if(!this.sim.remotePlayers.some(p=>p.id===id && p.job===peer.job)) {peer.node.dispose();peer.label.remove();this.peers.delete(id);}
     for(const player of this.sim.remotePlayers) {
+      const position=this.sim.renderPeer(player);
       let peer=this.peers.get(player.id);
       if(!peer) {
         const node=this.factory.group('other-adventurer');node.position.set(player.x,0,player.z);buildPlayer(this.factory,node,player.job);this.factory.mergeActor(node);
@@ -547,10 +549,10 @@ export class World implements GameWorld {
         const name=document.createElement('span');name.textContent=player.name;label.append(name);this.labels.append(label);
         peer={node,label,job:player.job};this.peers.set(player.id,peer);
       }
-      const dx=player.x-peer.node.position.x,dz=player.z-peer.node.position.z;
+      const dx=position.x-peer.node.position.x,dz=position.z-peer.node.position.z;
       if(Math.hypot(dx,dz)>.015)peer.node.rotation.y=Math.atan2(dx,dz);
       this.models.animate(peer.node,Math.hypot(dx,dz)>.015,player.hp,false,false,dt);
-      peer.node.position.x+=dx*blend;peer.node.position.z+=dz*blend;
+      peer.node.position.x=position.x;peer.node.position.z=position.z;
       if(updateLabels){const point=this.project(peer.node.position.x,peer.node.position.z,2.5);peer.label.style.transform=`translate(${point.x}px,${point.y}px) translate(-50%,-100%)`;}
     }
     this.engine.beginFrame();

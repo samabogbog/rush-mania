@@ -105,6 +105,12 @@ export class Simulation {
   save: Save;
   get renderX(){return this.x}
   get renderZ(){return this.z}
+  get renderTime(){return this.time}
+  get renderActionTime(){return this.actionTime}
+  get renderHurtTime(){return this.hurtTime}
+  get renderCast(){return this.cast}
+  renderMonster(monster:Monster){return {x:monster.x,z:monster.z};}
+  renderPeer(player:{id:string;x:number;z:number}){return {x:player.x,z:player.z};}
   x = 0;
   z = 2;
   target: number | null = null;

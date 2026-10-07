@@ -6,25 +6,40 @@ import type { ZoneId } from './content';
 import type { Rarity, GearSlot } from './equipment';
 import type { ClassId } from './classes';
 import { actorFields, type Command, type Snapshot } from '../../server/protocol';
+import {EntityPresentation,LocalPresentation} from './network-presentation';
 export class NetworkSimulation extends Simulation {
   override online=true;
   override connection='Connecting…';
   private session=''; private sequence=0; private queue:Command[]=[];
-  private view?:{x:number;z:number};private receivedAt=performance.now();private rtt=0;private sentInput:[number,number]=[0,0];
-  override get renderX(){return this.view?.x??this.x}
-  override get renderZ(){return this.view?.z??this.z}
+  private view?:LocalPresentation;private receivedAt=performance.now();private rtt=0;private sentInput:[number,number]=[0,0];
+  private presentation=new EntityPresentation();private payloadBytes=0;
+  override get renderX(){return this.view?.position.x??this.x}
+  override get renderZ(){return this.view?.position.z??this.z}
+  private get snapshotAge(){return Math.max(0,performance.now()-this.receivedAt);}
+  override get renderTime(){return this.time+Math.min(1.2,this.snapshotAge/1000);}
+  override get renderActionTime(){return Math.max(0,this.actionTime-this.snapshotAge/1000);}
+  override get renderHurtTime(){return Math.max(0,this.hurtTime-this.snapshotAge/1000);}
+  override get renderCast(){return this.cast?{...this.cast,remaining:Math.max(0,this.cast.remaining-this.snapshotAge/1000)}:null;}
+  override renderMonster(monster:Simulation['monsters'][number]){return this.presentation.position('monster:'+monster.id,monster,performance.now());}
+  override renderPeer(player:Simulation['remotePlayers'][number]){return this.presentation.position('peer:'+player.id,player,performance.now());}
+  get networkDiagnostics(){return Object.freeze({rttMs:this.rtt,snapshotIntervalMs:this.presentation.intervalMs,snapshotAgeMs:this.snapshotAge,payloadBytes:this.payloadBytes,interpolationDelayMs:this.presentation.delayMs,bufferedSamples:this.presentation.bufferedSamples,pendingCommands:this.queue.length,inFlight:this.running,retries:this.retry,predictionStale:this.snapshotAge>=1200});}
   private input:[number,number]=[0,0]; private running=false; private timer?:ReturnType<typeof setTimeout>;
   private eventCursor=0; private chatSeen=new Set<string>(); private retry=0; private stopped=false;
   constructor(snapshot:Snapshot) {super(Math.random,snapshot.player.actor.save,null);this.accept(snapshot);this.session=snapshot.player.session.id;this.sequence=snapshot.player.session.sequence;this.schedule(200);}
   private accept(snapshot:Snapshot) {
-    const oldZone=this.save.zone;this.receivedAt=performance.now();
+    const oldZone=this.save.zone,oldAlive=this.save.hp>0&&this.deathTime<=0,oldX=this.x,oldZ=this.z;
+    this.receivedAt=performance.now();
     const before=JSON.stringify([this.save.job,this.save.stats,this.save.points,this.save.weapon,this.save.hotbar,this.save.skillChoices,this.save.skillRanks,this.save.auxiliary,this.save.items,this.save.gold,this.save.equipped,this.save.zone,this.save.quests]);
     for(const field of actorFields) if(snapshot.player.actor[field]!==undefined)(this as unknown as Record<string,unknown>)[field]=snapshot.player.actor[field];
     this.skillCooldownTotals=snapshot.player.actor.skillCooldownTotals||{...this.skillCooldowns};this.autoSkillCursor=snapshot.player.actor.autoSkillCursor||0;
     const socialChanged=JSON.stringify([this.community,this.remotePlayers.map(p=>p.id)])!==JSON.stringify([snapshot.community,snapshot.peers.map(p=>p.id)]);this.community=snapshot.community;
     this.balance=snapshot.balance||{};this.admin=snapshot.admin===true;
-    if(!this.view||oldZone!==this.save.zone||Math.hypot(this.view.x-this.x,this.view.z-this.z)>3)this.view={x:this.x,z:this.z};
+    const alive=this.save.hp>0&&this.deathTime<=0,reset=oldZone!==this.save.zone||oldAlive!==alive||Math.hypot(oldX-this.x,oldZ-this.z)>3;
+    if(!this.view)this.view=new LocalPresentation({x:this.x,z:this.z});
+    const length=Math.hypot(...this.input),lead=alive&&!this.paused&&!reset?Math.min(.2,this.rtt/2000)*this.movementSpeed:0;
+    this.view.reconcile({x:this.x+this.input[0]/Math.max(1,length)*lead,z:this.z+this.input[1]/Math.max(1,length)*lead},reset);
     this.monsters=snapshot.monsters;this.remotePlayers=snapshot.peers;
+    this.presentation.accept([...this.monsters.map(monster=>({id:'monster:'+monster.id,x:monster.x,z:monster.z,life:monster.kind+':'+monster.alive})),...this.remotePlayers.map(player=>({id:'peer:'+player.id,x:player.x,z:player.z,life:player.job+':'+(player.hp>0)}))],this.receivedAt,reset);
     this.queue=this.queue.filter(c=>Number(c.id.split(':')[1])>snapshot.player.session.sequence);
     for(const event of snapshot.player.events)if(event.id>this.eventCursor){this.eventCursor=event.id;this.onEvent(event.text,event.type,event.x,event.z)}
     for(const chat of snapshot.chat)if(!this.chatSeen.has(chat.id)){this.chatSeen.add(chat.id);this.onEvent(`${chat.from}: ${chat.text}`,'chat')}
@@ -38,7 +53,8 @@ export class NetworkSimulation extends Simulation {
     if(this.running||this.stopped)return;this.running=true;const started=performance.now();this.sentInput=this.paused?[0,0]:[...this.input];
     try {
       const response=await fetch('/api/game',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({commands:this.queue.slice(0,8),movement:this.sentInput}),signal:AbortSignal.timeout(8000)});
-      const body=await response.json();
+      const text=await response.text();this.payloadBytes=new TextEncoder().encode(text).byteLength;
+      const body=JSON.parse(text);
       if(!response.ok){if(response.status===409||response.status===401){this.stopped=true;this.connection=body.error;this.onEvent(body.error);if(response.status===401)location.reload();return;}throw new Error(body.error)}
       this.rtt=performance.now()-started;this.accept(body as Snapshot);
     }catch {this.retry++;this.connection=`Reconnecting… (${this.queue.length} pending)`;}
@@ -49,11 +65,8 @@ export class NetworkSimulation extends Simulation {
     if(input[0]!==this.input[0]||input[1]!==this.input[1]){this.input=input;this.schedule(0);}
     if(!this.view)return;
     // Presentation only. Authoritative coordinates, damage and items stay in server snapshots.
-    const length=Math.hypot(...input),lead=Math.min(.15,this.rtt/2000)*this.movementSpeed;
-    const targetX=this.x+(length?input[0]/Math.max(1,length)*lead:0),targetZ=this.z+(length?input[1]/Math.max(1,length)*lead:0);
-    const blend=1-Math.exp(-dt*(length?3:16));
-    this.view.x+=(targetX-this.view.x)*blend;this.view.z+=(targetZ-this.view.z)*blend;
-    if(length&&performance.now()-this.receivedAt<1000&&this.save.hp>0&&this.deathTime<=0){const nx=this.view.x+input[0]/Math.max(1,length)*this.movementSpeed*dt,nz=this.view.z+input[1]/Math.max(1,length)*this.movementSpeed*dt;const blocked=nx<WORLD_BOUNDS.minX||nx>WORLD_BOUNDS.maxX||nz<WORLD_BOUNDS.minZ||nz>WORLD_BOUNDS.maxZ||this.obstacles.some(o=>Math.hypot(nx-o.x,nz-o.z)<o.r+.3);if(!blocked&&Math.hypot(nx-this.x,nz-this.z)<=1.6){this.view.x=nx;this.view.z=nz;}}
+    const length=Math.hypot(...input),moving=this.save.hp>0&&this.deathTime<=0&&!this.paused;
+    this.view.tick(dt,{x:moving?input[0]/Math.max(1,length)*this.movementSpeed:0,z:moving?input[1]/Math.max(1,length)*this.movementSpeed:0},this.snapshotAge,point=>point.x<WORLD_BOUNDS.minX||point.x>WORLD_BOUNDS.maxX||point.z<WORLD_BOUNDS.minZ||point.z>WORLD_BOUNDS.maxZ||this.obstacles.some(o=>Math.hypot(point.x-o.x,point.z-o.z)<o.r+.3));
   }
   override stopMovementInput(){if(this.input[0]||this.input[1]){this.input=[0,0];this.schedule(0);}}
   override skillCooldownRemaining(id:string){return Math.max(0,(this.skillCooldowns[id]||0)-(performance.now()-this.receivedAt)/1000);}
