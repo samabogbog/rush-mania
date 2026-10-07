@@ -29,9 +29,10 @@ export const TOWN_SAFE_RADIUS=economy.map.townSafeRadius;
 export function protectedPosition(zone:ZoneId,x:number,z:number) {
  return (zone==='town'&&Math.hypot(x,z)<TOWN_SAFE_RADIUS)||Math.hypot(x-PORTAL_POSITION.x,z-PORTAL_POSITION.z)<economy.map.portalSafeRadius||zones[zone].npcs.some(n=>Math.hypot(x-n.x,z-n.z)<economy.map.npcSafeRadius);
 }
-/** Editable normal packs; town uses beginner glade species outside its safe hub. */
+/** Editable normal packs; town intentionally has no packs or monsters. */
 export function validateMonsterGroupConfig(config:typeof monsterGroupConfig){
  for(const key of ['radius','runSpeed'] as const)if(!Number.isFinite(config[key])||config[key]<=0)throw new Error(`Invalid monster group ${key}`);
+ for(const [zone,groups] of Object.entries(config.maps))if(groups.length&&!zones[zone as ZoneId].species.some(k=>!species[k].boss&&!species[k].miniBoss))throw new Error(`Invalid monster group ${zone}: no normal species`);
  const ids=new Set<string>();
  for(const groups of Object.values(config.maps))for(const g of groups){
   if(!g.id||ids.has(g.id))throw new Error('Invalid monster group duplicate ID');ids.add(g.id);
@@ -45,7 +46,7 @@ export function zoneMonsterGroups(zone:ZoneId) {return cachedGroups[zone];}
 export function monsterGroup(zone:ZoneId,id?:string){return id?zoneMonsterGroups(zone).find(g=>g.id===id):undefined;}
 export function insideMonsterGroup(zone:ZoneId,id:string|undefined,x:number,z:number){const g=monsterGroup(zone,id);return !!g&&!protectedPosition(zone,x,z)&&Math.hypot(x-g.x,z-g.z)<=g.radius;}
 export function zoneSpawns(zone:ZoneId):{kind:Kind;x:number;z:number;groupId?:string}[] {
- const regular=zones[zone==='town'?'glade':zone].species.filter(k=>!species[k].boss&&!species[k].miniBoss);
+ const regular=zones[zone].species.filter(k=>!species[k].boss&&!species[k].miniBoss);
  const out:{kind:Kind;x:number;z:number;groupId?:string}[]=[];
  const obstacles=zoneObstacles(zone),groups=zoneMonsterGroups(zone);
  const placed:{x:number;z:number}[]=[];

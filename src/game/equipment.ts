@@ -64,11 +64,22 @@ export function rollGear(id:string,rarity:Rarity,random= Math.random):GearInstan
  for(let n=0;n<secondaryCounts[rarity];n++){const index=Math.min(pool.length-1,Math.floor(random()*pool.length)),key=pool.splice(index,1)[0],[min,max]=affixRanges[key];const factor=config.affixFactorBase+gear.level/config.affixLevelDivisor,roll=random();secondary[key]=key==='hpRegen'?Math.min(config.hpRegenPerPieceCap,Math.round((min+(max-min)*roll)*100)/100):Math.round((min+(max-min)*roll)*factor*10)/10;}
  return {id:crypto.randomUUID(),gearId:id,refine:0,rarity,secondary};
 }
-export function rollEquipmentDrop(level:number,boss:boolean,random=Math.random):GearInstance|undefined {
- if(random()>=(boss ? config.dropChance.boss : config.dropChance.normal))return;
- const set=[...gearSets].reverse().find(s=>level>=s.level)||gearSets[0],pool=equipment.filter(g=>g.setId===set.id);
- const gear=pool[Math.min(pool.length-1,Math.floor(random()*pool.length))],roll=random();
- const thresholds=boss?config.rarityThresholds.boss:config.rarityThresholds.normal;const rarity:Rarity=roll<thresholds[0]?'common':roll<thresholds[1]?'rare':roll<thresholds[2]?'epic':'legend';
- return rollGear(gear.id,rarity,random);
+/** Rates are per slot per kill. Common/Rare are disjoint; slots roll independently.
+ * Levels between table entries use the preceding row; values outside the table clamp.
+ * Elites use the exact same equipment table as ordinary monsters. */
+export function equipmentDropRow(level:number){return [...config.drops.levels].reverse().find(row=>level>=row.monsterLevel)||config.drops.levels[0];}
+export function rollEquipmentDrops(level:number,_boss:boolean,random=Math.random):GearInstance[] {
+ const row=equipmentDropRow(level),set=gearSets.find(s=>s.level===row.gearLevel);
+ if(!set)throw new Error(`Unknown equipment drop set level ${row.gearLevel}`);
+ const drops:GearInstance[]=[];
+ for(const slot of gearSlots){
+  const multiplier=config.drops.slotMultipliers[slot],roll=random();
+  const rarity:Rarity|undefined=roll<row.common*multiplier?'common':roll<(row.common+row.rare)*multiplier?'rare':undefined;
+  if(!rarity)continue;
+  const pool=equipment.filter(g=>g.setId===set.id&&g.slot===slot);
+  const gear=pool.length===1?pool[0]:pool[Math.min(pool.length-1,Math.floor(random()*pool.length))];
+  drops.push(rollGear(gear.id,rarity,random));
+ }
+ return drops;
 }
 export function setBonuses(id:string,pieces:number):Bonuses {const set=gearSets.find(s=>s.id===id);if(!set)return {};const bonuses:Bonuses={};if(pieces>=2)bonuses.hp=set.level*config.setBonuses.hpLevel;if(pieces>=4){bonuses.atk=Math.round(set.level*config.setBonuses.atkLevel);bonuses.def=Math.round(set.level*config.setBonuses.defLevel);}if(pieces>=6){bonuses.damageBonus=config.setBonuses.damageBonus;bonuses.hpRegen=Math.min(config.hpRegenPerPieceCap,Math.round(set.level/config.setBonuses.hpRegenLevelDivisor*config.setBonuses.hpRegenMax*100)/100);bonuses.moveSpeed=config.setBonuses.moveSpeed;}return bonuses;}

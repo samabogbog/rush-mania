@@ -10,7 +10,7 @@ test('party membership requires invitation, friends require acceptance and dunge
  b=await send('b',b,'partyAccept',[party.id]);expect(b.community!.party).toBeNull();expect(b.player.events.at(-1)!.text).toContain('unavailable');
  a=await send('a',a,'partyInvite',['b']);b=await send('b',b,'partyAccept',[party.id]);expect(b.community!.party!.members).toHaveLength(2);
  a=await send('a',a,'friendRequest',['b']);expect(a.community!.friends).toHaveLength(0);b=await send('b',b,'friendAccept',['a']);expect(b.community!.friends[0].id).toBe('a');
- for(const p of Object.values(store.realm!.players)){p.actor.save.level=40;p.actor.x=0;p.actor.z=-11;}
+ for(const p of Object.values(store.realm!.players)){p.actor.save.level=70;p.actor.x=0;p.actor.z=-11;}
  a=await send('a',a,'travel',['ruins']);b=await send('b',b,'travel',['ruins']);expect(a.player.room).toBe('dungeon:'+party.id);expect(b.player.room).toBe(a.player.room);expect(b.peers[0].id).toBe('a');
  b=await send('b',b,'partyLeave');expect(b.player.room).toBe('town');expect(b.player.actor.save.zone).toBe('town');
 });
@@ -33,7 +33,7 @@ test('market escrow, sales fee, replay protection and rollback on full bags keep
 });
 test('party combat splits EXP and gold, rotates materials, and mage support heals nearby allies',async()=>{
  const {store,send,...initial}=await setup();let {a,b}=initial;a=await send('a',a,'partyCreate');a=await send('a',a,'partyInvite',['b']);b=await send('b',b,'partyAccept',[a.community!.party!.id]);
- const p=store.realm!.players.a;p.actor.save.level=100;p.actor.save.job='mage';p.actor.save.mp=500;p.actor.save.stats.str=500;const target=store.realm!.rooms!.glade.monsters[0];p.actor.x=target.x+1;p.actor.z=target.z;p.actor.target=target.id;p.actor.attackTimer=10;store.realm!.players.b.actor.x=target.x+2;store.realm!.players.b.actor.z=target.z;target.hp=1;
- for(let n=1;n<=5;n++)a=await send('a',a,'chooseSkill',['mage-'+n]);a=await send('a',a,'castSkill',['mage-1']);expect(a.player.actor.cast).not.toBeNull();a=await transact(store,{id:'a',name:'A'},{},a.serverTime+400);expect(a.player.actor.cast).toBeNull();expect(a.player.actor.save.gold).toBe(120);expect(store.realm!.players.b.actor.save.gold).toBe(120);expect(store.realm!.players.b.actor.save.kills).toBe(1);expect(a.player.actor.save.items.some(i=>i.name==='Dew jelly')).toBe(true);
+ const p=store.realm!.players.a;p.actor.save.level=100;p.actor.save.job='mage';p.actor.save.mp=500;p.actor.save.stats.str=500;const target=store.realm!.rooms!.glade.monsters[0];p.actor.x=target.x+1;p.actor.z=target.z;p.actor.target=target.id;p.actor.attackTimer=10;store.realm!.players.b.actor.x=target.x+2;store.realm!.players.b.actor.z=target.z;target.hp=1;const goldPerMember=Math.floor(new (await import('../src/simulation')).Simulation(()=>.5,p.actor.save,null).monsterSpec(target.kind).gold/2);
+ for(let n=1;n<=5;n++)a=await send('a',a,'chooseSkill',['mage-'+n]);a=await send('a',a,'castSkill',['mage-1']);expect(a.player.actor.cast).not.toBeNull();a=await transact(store,{id:'a',name:'A'},{},a.serverTime+400);expect(a.player.actor.cast).toBeNull();expect(a.player.actor.save.gold).toBe(120+goldPerMember);expect(store.realm!.players.b.actor.save.gold).toBe(120+goldPerMember);expect(store.realm!.players.b.actor.save.kills).toBe(1);expect(a.player.actor.save.items.some(i=>i.name==='Dew jelly')).toBe(true);
  const healId='mage-5';expect(new (await import('../src/simulation')).Simulation(()=>.5,p.actor.save,null).skillList.find(s=>s.id===healId)!.effect).toBe('heal');store.realm!.players.a.actor.cast=null;store.realm!.players.b.actor.save.hp=20;a=await send('a',a,'castSkill',[healId]);expect(store.realm!.players.b.actor.save.hp).toBeGreaterThan(20);
 });

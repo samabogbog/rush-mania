@@ -25,7 +25,7 @@ test('normal checkpoints, interpolation, early levels, and elite multipliers sha
 test('normal drops use independent exact boundaries, zero chances, common stones, and no guaranteed craft materials',()=>{
  const sim=new Simulation(()=>0,undefined,null);sim.populateZone('ruins');const monster=sim.monsters.find(m=>m.kind==='ShadeWisp')!;
  expect(sim.hasLegacyDrop(monster)).toBe(false);expect(sim.rollStoneLoot(monster)?.name).toBe('Common refine stone');expect(sim.rollMaterialLoot(monster)).toHaveLength(6);
- const rates=normalMonsterBalance(50).drops;sim.random=()=>rates.commonStone;expect(sim.rollStoneLoot(monster)).toBeUndefined();
+ const rates=normalMonsterBalance(sim.monsterSpec(monster.kind).level).drops;sim.random=()=>rates.commonStone;expect(sim.rollStoneLoot(monster)).toBeUndefined();
  const old=structuredClone(contentConfig.normalBalance);try{for(const row of contentConfig.normalBalance.checkpoints)for(const key of Object.keys(row.drops))row.drops[key as keyof typeof row.drops]=0;sim.random=()=>0;expect(sim.rollStoneLoot(monster)).toBeUndefined();expect(sim.rollMaterialLoot(monster)).toEqual([]);}finally{Object.assign(contentConfig.normalBalance,old);}
  sim.random=()=>1;expect(sim.rollMaterialLoot(monster)).toEqual([]);expect(sim.rollStoneLoot(monster)).toBeUndefined();
 });
@@ -56,7 +56,7 @@ test('all nine CSV checkpoints preserve stats and percentages including malforme
  }
 });
 test('each independent material rate includes just below and excludes exact probability boundary',()=>{
- const sim=new Simulation(()=>0,undefined,null);sim.populateZone('ruins');const monster=sim.monsters.find(m=>m.kind==='ShadeWisp')!,rates=normalMonsterBalance(50).drops;
+ const sim=new Simulation(()=>0,undefined,null);sim.populateZone('ruins');const monster=sim.monsters.find(m=>m.kind==='ShadeWisp')!,rates=normalMonsterBalance(sim.monsterSpec(monster.kind).level).drops;
  const keys=['shade_common','shade_rare','rune_common','rune_rare','sky_common','sky_rare'] as const;
  for(const [index,key] of keys.entries()){let cursor=0;sim.random=()=>cursor++===index?rates[key]-Number.EPSILON:1;const drops=sim.rollMaterialLoot(monster);expect(drops).toHaveLength(1);expect(drops[0].name).toBe(({shade:'Shade essence',rune:'Rune stone',sky:'Sky feather'} as const)[key.split('_')[0] as 'shade'|'rune'|'sky']);expect(drops[0].rarity).toBe(key.split('_')[1]);cursor=0;sim.random=()=>cursor++===index?rates[key]:1;expect(sim.rollMaterialLoot(monster)).toHaveLength(0);}
 });

@@ -40,8 +40,11 @@ export function validateConfiguration(config:typeof data){
  positive(config.refinement.stoneCraftCount,'refinement.stoneCraftCount');
  for(const [path,v] of Object.entries(config.progression.initial.stats))if(!Number.isInteger(v))throw new Error(`Invalid balance config progression.initial.stats.${path}: expected integer`);
  const probability=(v:number,path:string)=>{if(v>1)throw new Error(`Invalid balance config ${path}: probability exceeds 1`)};
- for(const [key,v] of Object.entries({...config.equipment.dropChance,...config.crafting.dropChance}))probability(v,`equipment.dropChance.${key}`);
- for(const [key,list] of Object.entries({...config.equipment.rarityThresholds,...Object.fromEntries(Object.entries(config.crafting.rarityThresholds).map(([k,v])=>['material-'+k,v])),...Object.fromEntries(Object.entries(config.refinement.stoneDropThresholds).map(([k,v])=>['stone-'+k,v]))})){let last=0;for(const v of list){probability(v,key);if(v<last)throw new Error(`Invalid balance config ${key}: thresholds must ascend`);last=v;}}
+ for(const [key,v] of Object.entries(config.crafting.dropChance))probability(v,`equipment.dropChance.${key}`);
+ for(const [key,list] of Object.entries({...Object.fromEntries(Object.entries(config.crafting.rarityThresholds).map(([k,v])=>['material-'+k,v])),...Object.fromEntries(Object.entries(config.refinement.stoneDropThresholds).map(([k,v])=>['stone-'+k,v]))})){let last=0;for(const v of list){probability(v,key);if(v<last)throw new Error(`Invalid balance config ${key}: thresholds must ascend`);last=v;}}
+ const dropRows=config.equipment.drops.levels;
+ dropRows.forEach((row,i)=>{if(!Number.isInteger(row.monsterLevel)||row.monsterLevel<1||row.monsterLevel>100||(i>0&&row.monsterLevel<=dropRows[i-1].monsterLevel))throw new Error('Invalid balance config equipment.drops.levels: monster levels must ascend');if(!config.equipment.sets.some(set=>set.level===row.gearLevel))throw new Error('Invalid balance config equipment.drops.levels: unknown gear level');probability(row.common,'equipment.drops.common');probability(row.rare,'equipment.drops.rare');for(const multiplier of Object.values(config.equipment.drops.slotMultipliers))probability((row.common+row.rare)*multiplier,'equipment.drops.slot probability');});
+ for(const zone of Object.values(config.content.zones))if(zone.level<1||zone.recommendedLevel<1||zone.recommendedLevel>zone.maxLevel||zone.maxLevel>100)throw new Error('Invalid balance config content.zones: entry/recommended range');
  config.refinement.success.forEach(v=>probability(v,'refinement.success'));
  probability(config.economy.marketFee,'economy.marketFee');
  for(const [key,v] of Object.entries(config.progression.caps))if(key!=='attackSpeed'&&key!=='healing')probability(v,`progression.caps.${key}`);

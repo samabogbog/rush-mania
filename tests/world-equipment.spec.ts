@@ -26,19 +26,19 @@ test('equipment cannot generate free health, quest rewards cannot be claimed twi
  expect(sim.save.quests.fieldwork.progress).toBe(15);const gold=sim.save.gold;expect(sim.claimQuest('fieldwork')).toBe(true);expect(sim.save.gold).toBe(gold+200);
  const once=structuredClone(sim.save);expect(sim.claimQuest('fieldwork')).toBe(false);expect(sim.save).toEqual(once);
 });
-test('the six areas contain 26 kinds; travel respects portal, levels and town safety',()=>{
- expect(Object.keys(zones)).toHaveLength(6);expect(Object.keys(species)).toHaveLength(26);
+test('the six areas retain 37 species identities; travel respects portal, levels and town safety',()=>{
+ expect(Object.keys(zones)).toHaveLength(6);expect(Object.keys(species)).toHaveLength(37);
  const sim=new Simulation(()=>.5,undefined,null);expect(sim.travel('town')).toBe(false);expect(sim.save.zone).toBe('glade');expect(sim.destination).toEqual({x:0,z:-11});
  sim.x=0;sim.z=-11;expect(sim.travel('town')).toBe(true);expect(sim.monsters).toEqual([]);
  expect(sim.travel('orchard')).toBe(false);sim.save.level=20;expect(sim.travel('orchard')).toBe(true);expect(sim.monsters.every(m=>zones.orchard.species.includes(m.kind))).toBe(true);
- sim.online=true;sim.save.level=65;expect(sim.travel('ruins')).toBe(false);expect(sim.travel('ruins',true)).toBe(true);expect(sim.monsters.some(m=>species[m.kind].boss)).toBe(true);
+ sim.online=true;sim.save.level=70;expect(sim.travel('ruins')).toBe(false);expect(sim.travel('ruins',true)).toBe(true);expect(sim.monsters.some(m=>species[m.kind].boss)).toBe(true);
 });
 test('server rooms isolate peers and retain existing monsters when a character leaves and returns',async()=>{
  const store=new Store();let s=await transact(store,identity,{connect:true},1000);await transact(store,{id:'other',name:'Mallow'},{connect:true},1100);
  s=await transact(store,identity,{commands:[command(s,'goTo',[0,-11])]},1200);
  for(let now=1400;now<=4600;now+=200)s=await transact(store,identity,{movement:[0,0]},now);
- s=await transact(store,identity,{commands:[command(s,'travel',['town'])]},4800);expect(s.player.actor.save.zone).toBe('town');expect(s.monsters).toEqual([]);expect(s.peers).toEqual([]);
- const townGold=s.player.actor.save.gold;s=await transact(store,identity,{commands:[command(s,'travel',['glade'])]},5000);expect(s.player.actor.save.zone).toBe('glade');expect(s.monsters).toHaveLength(17);expect(s.player.actor.save.gold).toBe(townGold);
+ store.realm!.players.hero.actor.x=0;store.realm!.players.hero.actor.z=-11;s=await transact(store,identity,{commands:[command(s,'travel',['town'])]},4800);expect(s.player.actor.save.zone).toBe('town');expect(s.monsters).toEqual([]);expect(s.peers).toEqual([]);
+ const townGold=s.player.actor.save.gold;store.realm!.players.hero.actor.x=0;store.realm!.players.hero.actor.z=-11;s=await transact(store,identity,{commands:[command(s,'travel',['glade'])]},5000);expect(s.player.actor.save.zone).toBe('glade');expect(s.monsters).toHaveLength(44);expect(s.player.actor.save.gold).toBe(townGold);
  expect(Object.keys(store.realm!.rooms!)).toEqual(expect.arrayContaining(['glade','town']));
 });
 test('v1 online realm and v2 character saves migrate without losing gold, kills or items',async()=>{

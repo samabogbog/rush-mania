@@ -1,7 +1,7 @@
 {
   "species": {
     "Dewdrop": {
-      "level": 1,
+      "level": 5,
       "family": "slime",
       "color": 3528948,
       "drop": "Dew jelly",
@@ -11,12 +11,12 @@
       "defense": 8,
       "atk": 7,
       "gold": 8,
-      "icon": "\ud83d\udca7",
+      "icon": "💧",
       "windup": 0.65,
       "range": 2.2
     },
     "Wildcap": {
-      "level": 2,
+      "level": 10,
       "family": "cap",
       "color": 16734586,
       "drop": "Forest mushroom",
@@ -26,12 +26,12 @@
       "defense": 18,
       "atk": 8,
       "gold": 8,
-      "icon": "\ud83c\udf44",
+      "icon": "🍄",
       "windup": 0.65,
       "range": 2.2
     },
     "Leafling": {
-      "level": 2,
+      "level": 15,
       "family": "plant",
       "color": 10675508,
       "drop": "Verdant leaf",
@@ -41,12 +41,12 @@
       "defense": 12,
       "atk": 8,
       "gold": 8,
-      "icon": "\ud83c\udf3f",
+      "icon": "🌿",
       "windup": 0.65,
       "range": 2.2
     },
     "Sunbee": {
-      "level": 5,
+      "level": 10,
       "family": "insect",
       "color": 16761400,
       "drop": "Honey drop",
@@ -56,12 +56,12 @@
       "defense": 15,
       "atk": 19,
       "gold": 9,
-      "icon": "\ud83c\udf3f",
+      "icon": "🌿",
       "windup": 1.1,
       "range": 5
     },
     "RibbonHare": {
-      "level": 7,
+      "level": 15,
       "family": "beast",
       "color": 16756168,
       "drop": "Soft fur",
@@ -71,12 +71,12 @@
       "defense": 17.799999999999997,
       "atk": 23.8,
       "gold": 10,
-      "icon": "\ud83c\udf3f",
+      "icon": "🌿",
       "windup": 0.8,
       "range": 3.6
     },
     "Applesprout": {
-      "level": 20,
+      "level": 25,
       "family": "plant",
       "color": 16011104,
       "drop": "Amber leaf",
@@ -86,12 +86,12 @@
       "defense": 36,
       "atk": 55,
       "gold": 18,
-      "icon": "\ud83c\udf3f",
+      "icon": "🌿",
       "windup": 0.8,
       "range": 2.2
     },
     "AmberBoar": {
-      "level": 24,
+      "level": 35,
       "family": "beast",
       "color": 16751934,
       "drop": "Boar tusk",
@@ -101,12 +101,12 @@
       "defense": 41.599999999999994,
       "atk": 64.6,
       "gold": 20,
-      "icon": "\ud83c\udf3f",
+      "icon": "🌿",
       "windup": 1.1,
       "range": 5
     },
     "Honeybug": {
-      "level": 26,
+      "level": 25,
       "family": "insect",
       "color": 16763700,
       "drop": "Golden honey",
@@ -116,12 +116,12 @@
       "defense": 44.4,
       "atk": 69.4,
       "gold": 21,
-      "icon": "\ud83c\udf3f",
+      "icon": "🌿",
       "windup": 0.8,
       "range": 3.6
     },
     "Sporeguard": {
-      "level": 30,
+      "level": 35,
       "family": "cap",
       "color": 12280810,
       "drop": "Amber spore",
@@ -131,7 +131,7 @@
       "defense": 50,
       "atk": 79,
       "gold": 24,
-      "icon": "\ud83c\udf3f",
+      "icon": "🌿",
       "windup": 0.8,
       "range": 2.2
     },
@@ -146,12 +146,12 @@
       "defense": 57,
       "atk": 91,
       "gold": 27,
-      "icon": "\ud83c\udf3f",
+      "icon": "🌿",
       "windup": 1.1,
       "range": 5
     },
     "GlowWisp": {
-      "level": 40,
+      "level": 45,
       "family": "wisp",
       "color": 6745855,
       "drop": "Wisp essence",
@@ -161,12 +161,12 @@
       "defense": 64,
       "atk": 103,
       "gold": 30,
-      "icon": "\ud83c\udf3f",
+      "icon": "🌿",
       "windup": 0.8,
       "range": 3.6
     },
     "MarshTurtle": {
-      "level": 44,
+      "level": 55,
       "family": "golem",
       "color": 5104286,
       "drop": "River shell",
@@ -176,12 +176,12 @@
       "defense": 120,
       "atk": 112.6,
       "gold": 32,
-      "icon": "\ud83c\udf3f",
+      "icon": "🌿",
       "windup": 0.8,
       "range": 2.2
     },
     "ReedSprite": {
-      "level": 48,
+      "level": 45,
       "family": "plant",
       "color": 5229498,
       "drop": "Marsh reed",
@@ -191,12 +191,12 @@
       "defense": 75.19999999999999,
       "atk": 122.19999999999999,
       "gold": 34,
-      "icon": "\ud83c\udf3f",
+      "icon": "🌿",
       "windup": 1.1,
       "range": 5
     },
     "PuddleJelly": {
-      "level": 52,
+      "level": 55,
       "family": "slime",
       "color": 10848255,
       "drop": "Crystal jelly",
@@ -206,12 +206,12 @@
       "defense": 80.8,
       "atk": 131.8,
       "gold": 37,
-      "icon": "\ud83c\udf3f",
+      "icon": "🌿",
       "windup": 0.8,
       "range": 2.2
     },
     "CrystalMoth": {
-      "level": 60,
+      "level": 55,
       "family": "insect",
       "color": 13143807,
       "drop": "Crystal dust",
@@ -221,7 +221,7 @@
       "defense": 92,
       "atk": 151,
       "gold": 42,
-      "icon": "\ud83c\udf3f",
+      "icon": "🌿",
       "windup": 0.8,
       "range": 3.6
     },
@@ -236,12 +236,12 @@
       "defense": 99,
       "atk": 163,
       "gold": 45,
-      "icon": "\ud83c\udf3f",
+      "icon": "🌿",
       "windup": 0.8,
       "range": 2.2
     },
     "IceGolem": {
-      "level": 70,
+      "level": 75,
       "family": "golem",
       "color": 6671359,
       "drop": "Ice shard",
@@ -251,12 +251,12 @@
       "defense": 180,
       "atk": 175,
       "gold": 48,
-      "icon": "\ud83c\udf3f",
+      "icon": "🌿",
       "windup": 0.8,
       "range": 3.6
     },
     "Snowcap": {
-      "level": 76,
+      "level": 65,
       "family": "cap",
       "color": 14993407,
       "drop": "Snow spore",
@@ -266,12 +266,12 @@
       "defense": 114.39999999999999,
       "atk": 189.4,
       "gold": 51,
-      "icon": "\ud83c\udf3f",
+      "icon": "🌿",
       "windup": 0.8,
       "range": 2.2
     },
     "PeakOwl": {
-      "level": 82,
+      "level": 75,
       "family": "wisp",
       "color": 16772530,
       "drop": "Sky feather",
@@ -281,12 +281,12 @@
       "defense": 122.8,
       "atk": 203.79999999999998,
       "gold": 55,
-      "icon": "\ud83c\udf3f",
+      "icon": "🌿",
       "windup": 1.1,
       "range": 5
     },
     "FrostWolf": {
-      "level": 90,
+      "level": 75,
       "family": "beast",
       "color": 12902143,
       "drop": "Frost fang",
@@ -296,12 +296,12 @@
       "defense": 134,
       "atk": 223,
       "gold": 60,
-      "icon": "\ud83c\udf3f",
+      "icon": "🌿",
       "windup": 1.1,
       "range": 5
     },
     "Rootling": {
-      "level": 40,
+      "level": 85,
       "family": "plant",
       "color": 7978338,
       "drop": "Ancient root",
@@ -311,12 +311,12 @@
       "defense": 64,
       "atk": 103,
       "gold": 30,
-      "icon": "\ud83c\udf3f",
+      "icon": "🌿",
       "windup": 0.8,
       "range": 2.2
     },
     "RuinSentinel": {
-      "level": 45,
+      "level": 95,
       "family": "golem",
       "color": 11900134,
       "drop": "Rune stone",
@@ -326,12 +326,12 @@
       "defense": 71,
       "atk": 115,
       "gold": 33,
-      "icon": "\ud83c\udf3f",
+      "icon": "🌿",
       "windup": 1.1,
       "range": 5
     },
     "ShadeWisp": {
-      "level": 50,
+      "level": 85,
       "family": "wisp",
       "color": 13530095,
       "drop": "Shade essence",
@@ -341,12 +341,12 @@
       "defense": 78,
       "atk": 127,
       "gold": 36,
-      "icon": "\ud83c\udf3f",
+      "icon": "🌿",
       "windup": 0.8,
       "range": 3.6
     },
     "StoneWarden": {
-      "level": 55,
+      "level": 95,
       "family": "golem",
       "color": 11120342,
       "drop": "Warden stone",
@@ -356,12 +356,12 @@
       "defense": 160,
       "atk": 139,
       "gold": 39,
-      "icon": "\ud83c\udf3f",
+      "icon": "🌿",
       "windup": 0.8,
       "range": 2.2
     },
     "VineBeast": {
-      "level": 60,
+      "level": 95,
       "family": "beast",
       "color": 10806606,
       "drop": "Living vine",
@@ -371,7 +371,7 @@
       "defense": 92,
       "atk": 151,
       "gold": 42,
-      "icon": "\ud83c\udf3f",
+      "icon": "🌿",
       "windup": 1.1,
       "range": 5
     },
@@ -386,7 +386,7 @@
       "defense": 57.599999999999994,
       "atk": 78.6,
       "gold": 120,
-      "icon": "\ud83d\udc51",
+      "icon": "👑",
       "windup": 1.65,
       "range": 4,
       "tier": "boss",
@@ -407,7 +407,7 @@
       "defense": 34.56,
       "atk": 47.16,
       "gold": 40,
-      "icon": "\u25c6",
+      "icon": "◆",
       "windup": 1.25,
       "range": 3.2,
       "tier": "mini",
@@ -428,7 +428,7 @@
       "defense": 87,
       "atk": 129,
       "gold": 180,
-      "icon": "\ud83d\udc51",
+      "icon": "👑",
       "windup": 1.65,
       "range": 4,
       "tier": "boss",
@@ -449,7 +449,7 @@
       "defense": 52.2,
       "atk": 77.4,
       "gold": 60,
-      "icon": "\u25c6",
+      "icon": "◆",
       "windup": 1.25,
       "range": 3.2,
       "tier": "mini",
@@ -470,7 +470,7 @@
       "defense": 171,
       "atk": 273,
       "gold": 324,
-      "icon": "\ud83d\udc51",
+      "icon": "👑",
       "windup": 1.65,
       "range": 4,
       "tier": "boss",
@@ -491,7 +491,7 @@
       "defense": 102.60000000000001,
       "atk": 163.8,
       "gold": 108,
-      "icon": "\u25c6",
+      "icon": "◆",
       "windup": 1.25,
       "range": 3.2,
       "tier": "mini",
@@ -502,7 +502,7 @@
       "leashRadius": 14
     },
     "CrystalShellSovereign": {
-      "level": 60,
+      "level": 55,
       "family": "golem",
       "color": 5104286,
       "drop": "River shell",
@@ -512,7 +512,7 @@
       "defense": 276,
       "atk": 453,
       "gold": 504,
-      "icon": "\ud83d\udc51",
+      "icon": "👑",
       "windup": 1.65,
       "range": 4,
       "tier": "boss",
@@ -523,7 +523,7 @@
       "leashRadius": 17
     },
     "MarshWispHerald": {
-      "level": 60,
+      "level": 55,
       "family": "wisp",
       "color": 6745855,
       "drop": "Wisp essence",
@@ -533,7 +533,7 @@
       "defense": 165.6,
       "atk": 271.8,
       "gold": 168,
-      "icon": "\u25c6",
+      "icon": "◆",
       "windup": 1.25,
       "range": 3.2,
       "tier": "mini",
@@ -544,7 +544,7 @@
       "leashRadius": 14
     },
     "FrostfangSovereign": {
-      "level": 90,
+      "level": 75,
       "family": "beast",
       "color": 12902143,
       "drop": "Frost fang",
@@ -554,7 +554,7 @@
       "defense": 402,
       "atk": 669,
       "gold": 720,
-      "icon": "\ud83d\udc51",
+      "icon": "👑",
       "windup": 1.65,
       "range": 4,
       "tier": "boss",
@@ -565,7 +565,7 @@
       "leashRadius": 17
     },
     "IceboundSentinel": {
-      "level": 90,
+      "level": 75,
       "family": "golem",
       "color": 6671359,
       "drop": "Ice shard",
@@ -575,7 +575,7 @@
       "defense": 241.20000000000002,
       "atk": 401.40000000000003,
       "gold": 240,
-      "icon": "\u25c6",
+      "icon": "◆",
       "windup": 1.25,
       "range": 3.2,
       "tier": "mini",
@@ -586,7 +586,7 @@
       "leashRadius": 14
     },
     "RootheartGuardian": {
-      "level": 65,
+      "level": 95,
       "family": "golem",
       "color": 16757069,
       "drop": "Rootheart core",
@@ -596,7 +596,7 @@
       "defense": 297,
       "atk": 489,
       "gold": 540,
-      "icon": "\ud83d\udc51",
+      "icon": "👑",
       "windup": 1.65,
       "range": 4,
       "tier": "boss",
@@ -607,7 +607,7 @@
       "leashRadius": 17
     },
     "RuinShadeHerald": {
-      "level": 65,
+      "level": 95,
       "family": "wisp",
       "color": 13530095,
       "drop": "Shade essence",
@@ -617,7 +617,7 @@
       "defense": 178.20000000000002,
       "atk": 293.40000000000003,
       "gold": 180,
-      "icon": "\u25c6",
+      "icon": "◆",
       "windup": 1.25,
       "range": 3.2,
       "tier": "mini",
@@ -633,14 +633,11 @@
       "name": "Sprout Town",
       "level": 1,
       "maxLevel": 100,
-      "description": "A safe central town with merchants and quests; powerful guardians roam the outer wilds.",
+      "description": "A peaceful central town with merchants and quests. No monsters roam this area.",
       "ground": 8837239,
       "path": 15915160,
       "accent": 15764884,
-      "species": [
-        "TownWildwoodKing",
-        "TownBrambleCaptain"
-      ],
+      "species": [],
       "music": [
         523,
         659,
@@ -654,26 +651,27 @@
       "npcs": [
         {
           "id": "merchant",
-          "name": "Mallow \u00b7 Merchant",
+          "name": "Mallow · Merchant",
           "x": -4,
           "z": -8,
           "panel": "shop"
         },
         {
           "id": "forge",
-          "name": "Ember \u00b7 Blacksmith",
+          "name": "Ember · Blacksmith",
           "x": 5,
           "z": -7,
           "panel": "forge"
         },
         {
           "id": "guide",
-          "name": "Pip \u00b7 Quest guide",
+          "name": "Pip · Quest guide",
           "x": 0,
           "z": -5,
           "panel": "journal"
         }
-      ]
+      ],
+      "recommendedLevel": 1
     },
     "glade": {
       "name": "Moonlit Glade",
@@ -705,16 +703,17 @@
       "npcs": [
         {
           "id": "scout",
-          "name": "Fern \u00b7 Scout",
+          "name": "Fern · Scout",
           "x": 3,
           "z": -11,
           "panel": "journal"
         }
-      ]
+      ],
+      "recommendedLevel": 1
     },
     "orchard": {
       "name": "Amber Orchard",
-      "level": 20,
+      "level": 10,
       "maxLevel": 40,
       "description": "Dodge charging beasts; gather amber materials for critical builds.",
       "ground": 11918168,
@@ -742,17 +741,18 @@
       "npcs": [
         {
           "id": "farmer",
-          "name": "Clover \u00b7 Orchard keeper",
+          "name": "Clover · Orchard keeper",
           "x": -3,
           "z": -11,
           "panel": "journal"
         }
-      ]
+      ],
+      "recommendedLevel": 20
     },
     "marsh": {
       "name": "Crystal Marsh",
-      "level": 40,
-      "maxLevel": 65,
+      "level": 30,
+      "maxLevel": 60,
       "description": "Wisp essence and crystal dust strengthen mana and defensive builds.",
       "ground": 6605491,
       "path": 13030829,
@@ -779,17 +779,18 @@
       "npcs": [
         {
           "id": "witch",
-          "name": "Luma \u00b7 Crystal scholar",
+          "name": "Luma · Crystal scholar",
           "x": 3,
           "z": -11,
           "panel": "journal"
         }
-      ]
+      ],
+      "recommendedLevel": 40
     },
     "frost": {
       "name": "Frostpeak Trail",
-      "level": 65,
-      "maxLevel": 100,
+      "level": 50,
+      "maxLevel": 80,
       "description": "Watch the windups. Frost materials forge late-game weapons.",
       "ground": 13233151,
       "path": 15063499,
@@ -816,18 +817,19 @@
       "npcs": [
         {
           "id": "ranger",
-          "name": "Flurry \u00b7 Ranger",
+          "name": "Flurry · Ranger",
           "x": -3,
           "z": -11,
           "panel": "journal"
         }
-      ]
+      ],
+      "recommendedLevel": 60
     },
     "ruins": {
       "name": "Rootheart Ruins",
-      "level": 40,
+      "level": 70,
       "maxLevel": 100,
-      "description": "Party dungeon for 2\u20134 adventurers. Defeat the Rootheart Guardian.",
+      "description": "Party dungeon for 2–4 adventurers. Defeat the Rootheart Guardian.",
       "ground": 9079229,
       "path": 13220056,
       "accent": 13862399,
@@ -853,12 +855,13 @@
       "npcs": [
         {
           "id": "warden",
-          "name": "Rune \u00b7 Dungeon warden",
+          "name": "Rune · Dungeon warden",
           "x": 3,
           "z": -11,
           "panel": "journal"
         }
-      ]
+      ],
+      "recommendedLevel": 80
     }
   },
   "quests": [
@@ -1095,6 +1098,45 @@
       "defense": 1.8,
       "gold": 4,
       "xp": 4
+    },
+    "previousRevisionHp": {
+      "Dewdrop": 21.6,
+      "Wildcap": 43.2,
+      "Leafling": 43.2,
+      "Sunbee": 108.0,
+      "RibbonHare": 151.2,
+      "Applesprout": 432.0,
+      "AmberBoar": 523.2,
+      "Honeybug": 568.8,
+      "Sporeguard": 660.0,
+      "OrchardStag": 780.0,
+      "GlowWisp": 900.0,
+      "MarshTurtle": 1005.6,
+      "ReedSprite": 1111.2,
+      "PuddleJelly": 1216.8,
+      "CrystalMoth": 1428.0,
+      "FrostCub": 1566.0,
+      "IceGolem": 1704.0,
+      "Snowcap": 1876.8,
+      "PeakOwl": 2054.4,
+      "FrostWolf": 2304.0,
+      "Rootling": 900.0,
+      "RuinSentinel": 1032.0,
+      "ShadeWisp": 1164.0,
+      "StoneWarden": 1296.0,
+      "VineBeast": 1428.0,
+      "TownWildwoodKing": 2764.8,
+      "TownBrambleCaptain": 864.0,
+      "MooncapMonarch": 5184.0,
+      "DewdropMatriarch": 1620.0,
+      "AmberAntlerKing": 12480.0,
+      "HoneyHiveMarshal": 3900.0,
+      "CrystalShellSovereign": 22848.0,
+      "MarshWispHerald": 7140.0,
+      "FrostfangSovereign": 36864.0,
+      "IceboundSentinel": 11520.0,
+      "RootheartGuardian": 25056.0,
+      "RuinShadeHerald": 7830.0
     }
   }
 }

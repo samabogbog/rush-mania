@@ -574,22 +574,6 @@
   "affixFactorBase": 0.65,
   "affixLevelDivisor": 140,
   "hpRegenPerPieceCap": 0.5,
-  "dropChance": {
-    "normal": 0.16,
-    "boss": 0.75
-  },
-  "rarityThresholds": {
-    "normal": [
-      0.7,
-      0.93,
-      0.99
-    ],
-    "boss": [
-      0.2,
-      0.6,
-      0.9
-    ]
-  },
   "setBonuses": {
     "hpLevel": 2,
     "atkLevel": 0.4,
@@ -688,5 +672,83 @@
         0
       ]
     }
+  },
+  "drops": {
+    "slotMultipliers": {
+      "weapon": 1,
+      "helmet": 1.5,
+      "armor": 1.5,
+      "pants": 1.5,
+      "boots": 1.5,
+      "accessory": 1
+    },
+    "levels": [
+      {
+        "monsterLevel": 5,
+        "gearLevel": 10,
+        "common": 0.01,
+        "rare": 0.002
+      },
+      {
+        "monsterLevel": 10,
+        "gearLevel": 10,
+        "common": 0.015,
+        "rare": 0.003
+      },
+      {
+        "monsterLevel": 15,
+        "gearLevel": 10,
+        "common": 0.02,
+        "rare": 0.004
+      },
+      {
+        "monsterLevel": 25,
+        "gearLevel": 30,
+        "common": 0.01,
+        "rare": 0.002
+      },
+      {
+        "monsterLevel": 35,
+        "gearLevel": 30,
+        "common": 0.02,
+        "rare": 0.004
+      },
+      {
+        "monsterLevel": 45,
+        "gearLevel": 50,
+        "common": 0.01,
+        "rare": 0.002
+      },
+      {
+        "monsterLevel": 55,
+        "gearLevel": 50,
+        "common": 0.02,
+        "rare": 0.004
+      },
+      {
+        "monsterLevel": 65,
+        "gearLevel": 70,
+        "common": 0.01,
+        "rare": 0.002
+      },
+      {
+        "monsterLevel": 75,
+        "gearLevel": 70,
+        "common": 0.02,
+        "rare": 0.004
+      },
+      {
+        "monsterLevel": 85,
+        "gearLevel": 90,
+        "common": 0.01,
+        "rare": 0.002
+      },
+      {
+        "monsterLevel": 95,
+        "gearLevel": 90,
+        "common": 0.02,
+        "rare": 0.004
+      }
+    ]
   }
 }

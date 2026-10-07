@@ -7,7 +7,7 @@ import type {Realm} from '../server/protocol';
 import type {RealmStore} from '../server/store';
 for(const zone of Object.keys(zones) as ZoneId[])test(`${zone} packs have six to eight members and clear ground`,()=>{
  const entries=zoneSpawns(zone),groups=zoneMonsterGroups(zone),obstacles=zoneObstacles(zone);
- expect(groups).toHaveLength(6);
+ expect(groups).toHaveLength(zone==='town'?0:6);if(zone==='town'){expect(entries).toEqual([]);return;}
  for(const g of groups){expect(entries.filter(m=>m.groupId===g.id)).toHaveLength(g.count);expect(g.count).toBeGreaterThanOrEqual(6);expect(g.count).toBeLessThanOrEqual(8);expect(protectedPosition(zone,g.x,g.z)).toBe(false);expect(obstacles.some(o=>Math.hypot(g.x-o.x,g.z-o.z)<g.radius+o.r)).toBe(false);}
  const regular=entries.filter(m=>m.groupId);
  expect(Math.max(...regular.map(m=>m.x))-Math.min(...regular.map(m=>m.x))).toBeGreaterThan(75);
@@ -32,7 +32,7 @@ for(const zone of Object.keys(zones) as ZoneId[])test(`${zone} packs have six to
  for(const m of entries){expect(obstacles.some(o=>Math.hypot(m.x-o.x,m.z-o.z)<o.r+.3)).toBe(false);expect(protectedPosition(zone,m.x,m.z)).toBe(false);expect(m.x).toBeGreaterThanOrEqual(WORLD_BOUNDS.minX);expect(m.x).toBeLessThanOrEqual(WORLD_BOUNDS.maxX);expect(m.z).toBeGreaterThanOrEqual(WORLD_BOUNDS.minZ);expect(m.z).toBeLessThanOrEqual(WORLD_BOUNDS.maxZ);}
 });
 test('stationary territory pulls entire pack and respawns; leaving returns without healing',()=>{
- const s=new Simulation(()=>.5,undefined,null),g=zoneMonsterGroups('glade')[0];s.x=g.x;s.z=g.z;s.save.hp=s.maxHp;
+ const s=new Simulation(()=>.5,undefined,null),g=zoneMonsterGroups('glade')[0];s.x=g.x;s.z=g.z;s.save.stats.vit=10000;s.save.hp=s.maxHp;
  const pack=s.monsters.filter(m=>m.groupId===g.id);s.tick(.025,0,0);expect(pack.every(m=>m.aggro)).toBe(true);expect(s.target).toBeNull();
  for(let n=0;n<700;n++)s.tick(.025,0,0);
  expect(pack.every(m=>Math.hypot(m.x-s.x,m.z-s.z)<1.6)).toBe(true);
@@ -97,7 +97,7 @@ test('group config validates editable values and lookups reuse stable objects',(
  expect(zoneMonsterGroups('glade')).toBe(zoneMonsterGroups('glade'));
  for(const key of ['radius','runSpeed'] as const){const config=structuredClone(monsterGroupConfig);config[key]=0;expect(()=>validateMonsterGroupConfig(config)).toThrow();config[key]=NaN;expect(()=>validateMonsterGroupConfig(config)).toThrow();}
  for(const count of [5,9,6.5]){const config=structuredClone(monsterGroupConfig);config.maps.glade[0].count=count;expect(()=>validateMonsterGroupConfig(config)).toThrow();}
- const duplicate=structuredClone(monsterGroupConfig);duplicate.maps.glade[0].id=duplicate.maps.town[0].id;expect(()=>validateMonsterGroupConfig(duplicate)).toThrow();
+ const duplicate=structuredClone(monsterGroupConfig);duplicate.maps.glade[0].id=duplicate.maps.glade[1].id;expect(()=>validateMonsterGroupConfig(duplicate)).toThrow();
  const badCenter=structuredClone(monsterGroupConfig);badCenter.maps.glade[0].x=Infinity;expect(()=>validateMonsterGroupConfig(badCenter)).toThrow();
 });
 

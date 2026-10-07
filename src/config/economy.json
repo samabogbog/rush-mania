@@ -30,7 +30,7 @@
     "healFactor": 0.6,
     "buffFactor": 0.7,
     "dungeonMinMembers": 2,
-    "dungeonLevel": 40,
+    "dungeonLevel": 70,
     "tauntRadius": 5
   },
   "marketFee": 0.1,

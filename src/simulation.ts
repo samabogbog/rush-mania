@@ -14,7 +14,7 @@ import {
   type Skill,
 } from "./game/classes";
 import { normalMonsterBalance, species, zones, isZone, questDefinitions, type Kind, type ZoneId, type AttackShape } from "./game/content";
-import { equipment, gearById, gearByName, type GearSlot, type Bonuses, type Rarity, BAG_CAPACITY, gearSlots, itemBonuses, normalizeSecondary, rollGear, rollEquipmentDrop, setBonuses, gearSets } from "./game/equipment";
+import { equipment, gearById, gearByName, type GearSlot, type Bonuses, type Rarity, BAG_CAPACITY, gearSlots, itemBonuses, normalizeSecondary, rollGear, rollEquipmentDrops, setBonuses, gearSets } from "./game/equipment";
 import { zoneObstacles, zoneSpawns, WORLD_BOUNDS, PORTAL_POSITION, protectedPosition, insideMonsterGroup, zoneMonsterGroups, monsterGroupConfig } from "./game/map-data";
 export { species } from "./game/content";
 export type { Kind } from "./game/content";
@@ -235,7 +235,7 @@ export class Simulation {
     const drops=spec.boss?rollMaterialDrops(true,this.random):(['shade','rune','sky'] as const).flatMap(key=>(['common','rare'] as const).flatMap(rarity=>this.random()<rates[`${key}_${rarity}`]?[{name:({shade:'Shade essence',rune:'Rune stone',sky:'Sky feather'} as const)[key],rarity,count:1}]:[]));
     return drops.map(drop=>({...drop,icon:materialIcons[drop.name],id:materialKey(drop.name,drop.rarity),category:'material'}));
   }
-  rollEquipmentLoot(monster:Monster):Item|undefined {const rolled=rollEquipmentDrop(this.monsterSpec(monster.kind).level,!!this.monsterSpec(monster.kind).boss,this.random);if(!rolled)return;const gear=gearById(rolled.gearId!)!;return {...rolled,name:gear.name,category:itemCategory({name:gear.name}),icon:gear.icon,count:1};}
+  rollEquipmentLoot(monster:Monster):Item[] {return rollEquipmentDrops(this.monsterSpec(monster.kind).level,!!this.monsterSpec(monster.kind).boss,this.random).map(rolled=>{const gear=gearById(rolled.gearId!)!;return {...rolled,name:gear.name,category:itemCategory({name:gear.name}),icon:gear.icon,count:1};});}
   get agility() { return this.save.stats.agi+(this.gearBonuses.agi||0); }
   toggleTutorial(){if(this.save.tutorial.includes('skip'))this.save.tutorial=this.save.tutorial.filter(s=>s!=='skip');else this.save.tutorial.push('skip');this.persist();}
   markTutorial(step:string) {if(!this.save.tutorial.includes(step))this.save.tutorial.push(step)}
@@ -533,7 +533,7 @@ export class Simulation {
         icon: this.monsterSpec(m.kind).icon,
       });
       const stone=this.rollStoneLoot(m);if(stone)this.loot.push({x:m.x,z:m.z,name:stone.name,icon:stone.icon});
-      const equipmentDrop=this.rollEquipmentLoot(m);if(equipmentDrop)this.loot.push({x:m.x,z:m.z,name:equipmentDrop.name,icon:equipmentDrop.icon,item:equipmentDrop});
+      for(const equipmentDrop of this.rollEquipmentLoot(m))this.loot.push({x:m.x,z:m.z,name:equipmentDrop.name,icon:equipmentDrop.icon,item:equipmentDrop});
       for(const item of this.rollMaterialLoot(m))this.loot.push({x:m.x,z:m.z,name:item.name,icon:item.icon,item});
       this.loot=this.loot.slice(-40);
       }

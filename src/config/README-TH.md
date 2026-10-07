@@ -6,9 +6,9 @@
 | --- | --- |
 | progression.json | `levels` ตาราง EXP 1–100, `pointsPerLevel`, สูตร HP/MP/ATK/DEF, crit/regen, `caps`, ค่าเริ่มผู้เล่นใหม่ |
 | classes.json | `classes` ระยะ/ช่วงโจมตี, `skills` 60 รายการ: MP, cooldown, power, range, radius, duration, cast, level |
-| equipment.json | `crafted` 18 สูตรเดิม, `sets` 5 เซ็ต, `pieceFormulas`, rarity, affix, โบนัสเซ็ต, ดรอป |
+| equipment.json | `crafted` 18 สูตรเดิม, `sets` 5 เซ็ต, `pieceFormulas`, rarity, affix, โบนัสเซ็ต, `drops.levels` และ `drops.slotMultipliers` |
 | refinement.json | success 10 ขั้น, rareMultiplier, bonusLinear, cost, downgrade, stoneCraftCount และดรอปหิน |
-| content.json | `normalBalance` checkpoints/multipliers, `species` identity/AI/legacy stats, `zones` ระดับเข้า/รายชื่อมอนสเตอร์, `quests` รางวัล |
+| content.json | `normalBalance` checkpoints/multipliers, `species` identity/AI/legacy stats, `zones.level` ระดับเข้า, `recommendedLevel` เริ่มช่วงแนะนำ, `maxLevel` จบช่วงแนะนำ/รายชื่อมอนสเตอร์, `quests` รางวัล |
 | monster-groups.json | รัศมีเขต/จุดเกิด, ความเร็ววิ่ง, ตำแหน่งและจำนวน6–8ตัวต่อกลุ่ม; ตรวจด้วย `validateMonsterGroupConfig` ใน map-data.ts |
 | economy.json | ยา/ราคา, EXP Tome/Charm, ตาย, party/support/dungeon/market, respawn/พักโจมตี/ฟื้นเมื่อกลับบ้าน, safe radius |
 | schema.json | รูปร่างข้อมูลสำหรับตรวจเมื่อเริ่มเกม ไม่ใช่ค่าบาลานซ์; ห้ามแก้เพื่อข้าม validation |
@@ -19,7 +19,7 @@
 - เวลาเป็นวินาที ระยะเป็นหน่วยโลก ราคาเป็น zeny
 - affix และโบนัสอุปกรณ์เป็น **จุดเปอร์เซ็นต์**: `critChance:5` คือ 5%; `hpRegen:0.5` คือ 0.5% Max HP ต่อวินาที; `mpRegen` เป็น MP ต่อวินาที
 - `progression.critBase:0.05` คือ 5%, `critAgi:0.002` คือเพิ่ม 0.2 จุดเปอร์เซ็นต์ต่อ AGI; `caps.crit:0.6` คือ 60%. `caps` ทั้งหมดเป็น **สัดส่วน 0–1** (attackSpeed/healing 1 คือโบนัส 100%) ไม่ใช่หน่วยเดียวกับ affix
-- โอกาส `success`, `dropChance`, `downgradeChance`, `marketFee` เป็นสัดส่วน 0–1 เช่น 0.15=15%. `rarityThresholds` และ `stoneDropThresholds` เป็นขอบสะสม เรียงขึ้น (ไม่ใช่โอกาสแยกแต่ละ rarity)
+- โอกาส `success`, `dropChance`, `downgradeChance`, `marketFee` เป็นสัดส่วน 0–1 เช่น 0.15=15%. `crafting.rarityThresholds` และ `stoneDropThresholds` เป็นขอบสะสม เรียงขึ้น (ไม่ใช่โอกาสแยกแต่ละ rarity)
 - `power` ของ hit/area/stun/slow/poison เป็นตัวคูณ ATK; heal เป็นสัดส่วน Max HP; guard/fury เป็นสัดส่วนลดดาเมจ/เพิ่ม ATK. Guard ต้องไม่เกิน 1
 - EXP ขั้นถัดไป = `levels[level-1].nextLevelXp` ตาม XLSX (Lv100 runtime=0); ค่า HP/MP/ATK ต่อเลเวลใช้ (level−1), DEF ใช้ level
 - `pieceFormulas` เก็บ `[ตัวคูณเลเวล,ค่าคงที่]`: ATK/DEF ปัด Math.round; STR/AGI ปัด Math.ceil; HP/MP ไม่ปัด. rarity ปัดหลักเป็นจำนวนเต็มก่อนตีบวก แล้วปัดสุดท้าย 2 ตำแหน่ง
@@ -29,7 +29,7 @@
 
 1. เปลี่ยน EXP ขั้นถัดไป: `progression.json` → `levels[level-1].nextLevelXp`; เซฟเดิมไม่ถูก reset
 2. ให้ Red potion ฟื้น 80 ราคา 18: `economy.json` → `redPotion:{"heal":80,"cost":18}`. ร้านค้า tooltip และ simulation ใช้ค่าเดียวกัน
-3. เพิ่มโอกาสอุปกรณ์ปกติจาก16%เป็น20%: `equipment.json` → `dropChance.normal:0.2`; ไม่ต้องเปลี่ยน rarityThresholds
+3. เพิ่มโอกาส Common ต่อช่องของมอนสเตอร์Lv5จาก1%เป็น2%: `equipment.json` → `drops.levels[0].common:0.02`; ไม่กระทบ Rare. `slotMultipliers` ของ helmet/armor/pants/boots เท่ากับ1.5; weapon/accessoryเท่ากับ1
 4. ลด Fire Bolt ใช้ MP: หา id `mage-1` ใน `classes.json`, แก้ `mp`; คำบรรยายที่ใส่ตัวเลขเองควรแก้ `description` ด้วย
 5. เปลี่ยน HP มอนสเตอร์: `content.json` → `normalBalance.checkpoints[].hp` และ elite multipliers. ค่า hp/atk/defense/xp/gold ใน species เป็น legacy snapshot สำหรับตรวจย้อนหลังและ migration ไม่ใช่ default runtime; server admin override ยังมีลำดับเหนือ default ใหม่
 
@@ -60,3 +60,7 @@ validateConfiguration ใช้ได้ใน browser และ Worker ไม�
 หมายเหตุ `docs/balance/catalog.json` เป็น snapshot ก่อนระบบนี้ ไม่ใช่ค่าคราฟต์ปัจจุบัน; tests ตรวจว่า ID อุปกรณ์เดิมคงอยู่และตรวจสูตร/บทบาทใหม่แยกกัน
 
 รายละเอียดไฟล์อัปโหลดและกติกาการ mapping: `docs/IMPORTED-BALANCE.md`.
+
+## แผนที่และดรอปอุปกรณ์ 7 ต.ค. 2026
+
+ดู [ตารางและกติกาล่าสุด](../../docs/MAP-DROP-BALANCE-TH.md). อุปกรณ์ใช้ `equipment.drops` แทน global dropChance/rarityThresholds เดิม: สุ่มแยก6ช่องต่อkill, Common/Rareไม่ซ้อนในช่องเดียว, ไม่มี Epic/Legendจากมอนสเตอร์รวมboss/mini. Item เดิมทุกrarityยังอยู่และคราฟต์ได้ตามระบบเดิม. `normalBalance.previousRevisionHp` เป็น snapshot migration revision2 ห้ามแก้เพื่อปรับHPปัจจุบัน. Town species/groups ว่าง; แผนที่อื่นคง6กลุ่ม.

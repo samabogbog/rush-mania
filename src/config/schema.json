@@ -1227,22 +1227,6 @@
     "affixFactorBase": "number",
     "affixLevelDivisor": "number",
     "hpRegenPerPieceCap": "number",
-    "dropChance": {
-      "normal": "number",
-      "boss": "number"
-    },
-    "rarityThresholds": {
-      "normal": [
-        "number",
-        "number",
-        "number"
-      ],
-      "boss": [
-        "number",
-        "number",
-        "number"
-      ]
-    },
     "setBonuses": {
       "hpLevel": "number",
       "atkLevel": "number",
@@ -1341,6 +1325,84 @@
           "number"
         ]
       }
+    },
+    "drops": {
+      "slotMultipliers": {
+        "weapon": "number",
+        "helmet": "number",
+        "armor": "number",
+        "pants": "number",
+        "boots": "number",
+        "accessory": "number"
+      },
+      "levels": [
+        {
+          "monsterLevel": "number",
+          "gearLevel": "number",
+          "common": "number",
+          "rare": "number"
+        },
+        {
+          "monsterLevel": "number",
+          "gearLevel": "number",
+          "common": "number",
+          "rare": "number"
+        },
+        {
+          "monsterLevel": "number",
+          "gearLevel": "number",
+          "common": "number",
+          "rare": "number"
+        },
+        {
+          "monsterLevel": "number",
+          "gearLevel": "number",
+          "common": "number",
+          "rare": "number"
+        },
+        {
+          "monsterLevel": "number",
+          "gearLevel": "number",
+          "common": "number",
+          "rare": "number"
+        },
+        {
+          "monsterLevel": "number",
+          "gearLevel": "number",
+          "common": "number",
+          "rare": "number"
+        },
+        {
+          "monsterLevel": "number",
+          "gearLevel": "number",
+          "common": "number",
+          "rare": "number"
+        },
+        {
+          "monsterLevel": "number",
+          "gearLevel": "number",
+          "common": "number",
+          "rare": "number"
+        },
+        {
+          "monsterLevel": "number",
+          "gearLevel": "number",
+          "common": "number",
+          "rare": "number"
+        },
+        {
+          "monsterLevel": "number",
+          "gearLevel": "number",
+          "common": "number",
+          "rare": "number"
+        },
+        {
+          "monsterLevel": "number",
+          "gearLevel": "number",
+          "common": "number",
+          "rare": "number"
+        }
+      ]
     }
   },
   "refinement": {
@@ -2972,10 +3034,7 @@
         "ground": "number",
         "path": "number",
         "accent": "number",
-        "species": [
-          "string",
-          "string"
-        ],
+        "species": [],
         "music": [
           "number",
           "number",
@@ -3008,7 +3067,8 @@
             "z": "number",
             "panel": "string"
           }
-        ]
+        ],
+        "recommendedLevel": "number"
       },
       "glade": {
         "name": "string",
@@ -3045,7 +3105,8 @@
             "z": "number",
             "panel": "string"
           }
-        ]
+        ],
+        "recommendedLevel": "number"
       },
       "orchard": {
         "name": "string",
@@ -3082,7 +3143,8 @@
             "z": "number",
             "panel": "string"
           }
-        ]
+        ],
+        "recommendedLevel": "number"
       },
       "marsh": {
         "name": "string",
@@ -3119,7 +3181,8 @@
             "z": "number",
             "panel": "string"
           }
-        ]
+        ],
+        "recommendedLevel": "number"
       },
       "frost": {
         "name": "string",
@@ -3156,7 +3219,8 @@
             "z": "number",
             "panel": "string"
           }
-        ]
+        ],
+        "recommendedLevel": "number"
       },
       "ruins": {
         "name": "string",
@@ -3193,7 +3257,8 @@
             "z": "number",
             "panel": "string"
           }
-        ]
+        ],
+        "recommendedLevel": "number"
       }
     },
     "quests": [
@@ -3430,6 +3495,45 @@
         "defense": "number",
         "gold": "number",
         "xp": "number"
+      },
+      "previousRevisionHp": {
+        "Dewdrop": "number",
+        "Wildcap": "number",
+        "Leafling": "number",
+        "Sunbee": "number",
+        "RibbonHare": "number",
+        "Applesprout": "number",
+        "AmberBoar": "number",
+        "Honeybug": "number",
+        "Sporeguard": "number",
+        "OrchardStag": "number",
+        "GlowWisp": "number",
+        "MarshTurtle": "number",
+        "ReedSprite": "number",
+        "PuddleJelly": "number",
+        "CrystalMoth": "number",
+        "FrostCub": "number",
+        "IceGolem": "number",
+        "Snowcap": "number",
+        "PeakOwl": "number",
+        "FrostWolf": "number",
+        "Rootling": "number",
+        "RuinSentinel": "number",
+        "ShadeWisp": "number",
+        "StoneWarden": "number",
+        "VineBeast": "number",
+        "TownWildwoodKing": "number",
+        "TownBrambleCaptain": "number",
+        "MooncapMonarch": "number",
+        "DewdropMatriarch": "number",
+        "AmberAntlerKing": "number",
+        "HoneyHiveMarshal": "number",
+        "CrystalShellSovereign": "number",
+        "MarshWispHerald": "number",
+        "FrostfangSovereign": "number",
+        "IceboundSentinel": "number",
+        "RootheartGuardian": "number",
+        "RuinShadeHerald": "number"
       }
     }
   },

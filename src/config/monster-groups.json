@@ -2,44 +2,7 @@
   "radius": 2.8,
   "runSpeed": 4.6,
   "maps": {
-    "town": [
-      {
-        "id": "town-1",
-        "x": 0,
-        "z": 24,
-        "count": 6
-      },
-      {
-        "id": "town-2",
-        "x": -32,
-        "z": -32,
-        "count": 7
-      },
-      {
-        "id": "town-3",
-        "x": 32,
-        "z": -32,
-        "count": 8
-      },
-      {
-        "id": "town-4",
-        "x": -32,
-        "z": 0,
-        "count": 6
-      },
-      {
-        "id": "town-5",
-        "x": 32,
-        "z": 0,
-        "count": 7
-      },
-      {
-        "id": "town-6",
-        "x": 0,
-        "z": -32,
-        "count": 8
-      }
-    ],
+    "town": [],
     "glade": [
       {
         "id": "glade-1",

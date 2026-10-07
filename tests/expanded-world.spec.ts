@@ -1,24 +1,24 @@
 import {test,expect} from '@playwright/test';
 import {Simulation} from '../src/simulation';
-import {zones,species,type ZoneId} from '../src/game/content';
+import {normalMonsterBalance,zones,species,type ZoneId} from '../src/game/content';
 import {WORLD_SIZE,WORLD_BOUNDS,zoneSpawns,protectedPosition,zoneObstacles} from '../src/game/map-data';
 for(const zone of Object.keys(zones) as ZoneId[])test(`${zone}: square sectors, one boss and mini, protected spawns`,()=>{
  const entries=zoneSpawns(zone);
  expect(WORLD_SIZE).toBe(96);expect(WORLD_BOUNDS.maxX).toBe(WORLD_BOUNDS.maxZ);
- expect(entries.filter(m=>species[m.kind].boss)).toHaveLength(1);
- expect(entries.filter(m=>species[m.kind].miniBoss)).toHaveLength(1);
- expect(entries.length).toBe(44);
+ expect(entries.filter(m=>species[m.kind].boss)).toHaveLength(zone==='town'?0:1);
+ expect(entries.filter(m=>species[m.kind].miniBoss)).toHaveLength(zone==='town'?0:1);
+ expect(entries.length).toBe(zone==='town'?0:44);if(zone==='town')return;
  for(const m of entries){expect(protectedPosition(zone,m.x,m.z)).toBe(false);expect(zoneObstacles(zone).some(o=>Math.hypot(o.x-m.x,o.z-m.z)<o.r+.3)).toBe(false);}
  expect(new Set(entries.map(m=>`${Math.round(m.x/30)},${Math.round(m.z/30)}`)).size).toBe(9);
  for(const m of entries.filter(m=>species[m.kind].boss||species[m.kind].miniBoss)){
-  const spec=species[m.kind],baseHp=60+spec.level*18;
-  expect(spec.hp/baseHp).toBe(spec.boss?16:5);
-  expect(spec.atk/(7+spec.level*2.4)).toBeCloseTo(spec.boss?3:1.8);
-  expect(spec.defense/(8+spec.level*1.4)).toBeCloseTo(spec.boss?3:1.8);
+  const sim=new Simulation(()=>.5,undefined,null),spec=sim.monsterSpec(m.kind),base=normalMonsterBalance(spec.level);
+  expect(spec.hp/base.hp).toBe(spec.boss?16:5);
+  expect(spec.atk/base.atk).toBeCloseTo(spec.boss?3:1.8);
+  expect(spec.defense/base.defense).toBeCloseTo(spec.boss?3:1.8);
  }
 });
 test('nearby elites acquire without selecting; windup gives time; leash heals and town hub stays safe',()=>{
- const sim=new Simulation(()=>.5,undefined,null);sim.populateZone('town');sim.save.zone='town';sim.obstacles=[];
+ const sim=new Simulation(()=>.5,undefined,null);sim.populateZone('glade');sim.save.zone='glade';sim.obstacles=[];
  const boss=sim.monsters.find(m=>species[m.kind].boss)!;
  sim.x=boss.x-5;sim.z=boss.z;const hp=sim.save.hp;sim.tick(.025,0,0);
  expect(boss.aggro).toBe(true);expect(sim.target).toBeNull();expect(sim.save.hp).toBeGreaterThanOrEqual(hp);
@@ -43,9 +43,9 @@ class WorldStore implements RealmStore {
 test('authority chooses nearby living player, releases dead owner, and protects town hub',async()=>{
  const store=new WorldStore(),a={id:'a',name:'Far'},b={id:'b',name:'Near'};
  await transact(store,a,{connect:true},1000);await transact(store,b,{connect:true},1000);
- const realm=store.realm!,town=new Simulation(()=>.5,undefined,null);town.populateZone('town');realm.rooms!.town={zone:'town',monsters:town.monsters};
- for(const player of Object.values(realm.players)){player.room='town';player.actor.save.zone='town';player.actor.x=0;player.actor.z=0;}
- const boss=realm.rooms!.town.monsters.find(m=>species[m.kind].boss)!;
+ const realm=store.realm!,town=new Simulation(()=>.5,undefined,null);town.populateZone('glade');realm.rooms!.glade={zone:'glade',monsters:town.monsters};
+ for(const player of Object.values(realm.players)){player.room='glade';player.actor.save.zone='glade';player.actor.x=0;player.actor.z=0;}
+ const boss=realm.rooms!.glade.monsters.find(m=>species[m.kind].boss)!;
  realm.players.b.actor.x=boss.x-5;realm.players.b.actor.z=boss.z;
  let snap=await transact(store,a,{},1025);expect(snap.monsters.find(m=>m.id===boss.id)!.owner).toBe('b');
  store.realm!.players.b.actor.save.hp=0;store.realm!.players.b.actor.deathTime=1;
