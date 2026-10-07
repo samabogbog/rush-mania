@@ -13,11 +13,13 @@
     ],
     "noEmit": true,
     "types": [
-      "vite/client"
+      "vite/client",
+      "node"
     ]
   },
   "include": [
     "src",
-    "server"
+    "server",
+    "api"
   ]
 }

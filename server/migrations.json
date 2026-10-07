@@ -1,0 +1,22 @@
+[
+  {
+    "name": "0000_lethal_lady_bullseye.sql",
+    "checksum": "ba61f3fdb991a78823edecfbaf1f413cc6f03713838966a53708fddf2c3e80fd",
+    "statements": [
+      "CREATE TABLE `backups` (\n\t`id` text PRIMARY KEY NOT NULL,\n\t`revision` integer NOT NULL,\n\t`state` text NOT NULL,\n\t`created_at` integer NOT NULL\n)",
+      "CREATE TABLE `realms` (\n\t`id` text PRIMARY KEY NOT NULL,\n\t`revision` integer NOT NULL,\n\t`state` text NOT NULL,\n\t`updated_at` integer NOT NULL\n)"
+    ]
+  },
+  {
+    "name": "0001_nappy_mariko_yashida.sql",
+    "checksum": "748cfc9c52421ce36e69daf53c19e6ff326392f2a4104c7fafaa50ebed08eeb9",
+    "statements": [
+      "CREATE TABLE `auth_attempts` (\n\t`key` text PRIMARY KEY NOT NULL,\n\t`window` integer NOT NULL,\n\t`attempts` integer NOT NULL\n)",
+      "CREATE TABLE `game_accounts` (\n\t`id` text PRIMARY KEY NOT NULL,\n\t`username` text NOT NULL,\n\t`player_id` text NOT NULL,\n\t`legacy_site_id` text,\n\t`password_hash` text NOT NULL,\n\t`salt` text NOT NULL,\n\t`created_at` integer NOT NULL\n)",
+      "CREATE UNIQUE INDEX `game_accounts_username_unique` ON `game_accounts` (`username`)",
+      "CREATE UNIQUE INDEX `game_accounts_player_id_unique` ON `game_accounts` (`player_id`)",
+      "CREATE UNIQUE INDEX `game_accounts_legacy_site_id_unique` ON `game_accounts` (`legacy_site_id`)",
+      "CREATE TABLE `game_sessions` (\n\t`token_hash` text PRIMARY KEY NOT NULL,\n\t`account_id` text NOT NULL,\n\t`expires_at` integer NOT NULL,\n\tFOREIGN KEY (`account_id`) REFERENCES `game_accounts`(`id`) ON UPDATE no action ON DELETE cascade\n)"
+    ]
+  }
+]
