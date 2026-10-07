@@ -1,3 +1,4 @@
+import {migrateStoredItem,migrateStoredLoot,isRetiredMaterial} from '../src/game/item-migration';
 import {economy,progression,contentConfig} from '../src/config/balance';
 import {EXP_CHARM,EXP_TOME,EXP_TEST_GRANT_COUNT,itemCatalog,itemCategory} from '../src/game/items';
 import {sameStack,isRarity,isCraftMaterial} from '../src/game/crafting';
@@ -14,7 +15,7 @@ import type { RealmStore } from './store';
 export class GameError extends Error { constructor(message:string,public status=400){super(message)} }
 export const ROOM_LAYOUT_REVISION=6;
 export const MONSTER_BALANCE_REVISION=4;
-export function freshRealm(now:number):Realm { const sim=new Simulation(Math.random,undefined,null); return {version:2,time:now,players:{},rooms:{glade:{zone:'glade',monsters:sim.monsters,layoutRevision:ROOM_LAYOUT_REVISION,balanceRevision:MONSTER_BALANCE_REVISION}},chat:[],ledger:[]}; }
+export function freshRealm(now:number):Realm { const sim=new Simulation(Math.random,undefined,null); return {version:2,itemRevision:1,time:now,players:{},rooms:{glade:{zone:'glade',monsters:sim.monsters,layoutRevision:ROOM_LAYOUT_REVISION,balanceRevision:MONSTER_BALANCE_REVISION}},chat:[],ledger:[]}; }
 function roomFor(realm:Realm,id:string,zone:ZoneId) {
   if(!realm.rooms) {realm.rooms={glade:{zone:'glade',monsters:realm.monsters||new Simulation(Math.random,undefined,null).monsters}};delete realm.monsters;realm.version=2;}
   const room=realm.rooms[id];
@@ -62,7 +63,27 @@ function support(realm:Realm,player:Player,sim:Simulation,actors:{p:Player;sim:S
   friend.sim.onEvent(player.name+' shared '+skill.name,'reward');
  }};
 }
+export function migrateRealmItems(realm:Realm){
+ const rewrite=new Map<string,string>(),removed=new Set<string>();
+ for(const player of Object.values(realm.players)){
+  if(player.actor.save.version>=9)continue;
+  for(const old of player.actor.save.items){const key=old.id||old.name,next=migrateStoredItem(old,true);if(!next)removed.add(player.id+':'+key);else if(next.id&&next.id!==key)rewrite.set(player.id+':'+key,next.id);}
+  player.actor.loot=migrateStoredLoot(player.actor.loot||[],true);
+  player.actor.save=new Simulation(Math.random,player.actor.save,null).save;
+  if([...removed].some(key=>key.startsWith(player.id+':'))){player.events.push({id:++player.serial,text:'Obsolete crafting materials retired. Equipment, active materials and gold preserved.',type:'system'});player.events=player.events.slice(-40);}
+ }
+ if((realm.itemRevision||0)<1&&realm.community){
+  realm.community.listings=realm.community.listings.flatMap(listing=>{const item=migrateStoredItem(listing.item,true);return item?[{...listing,item}]:[];});
+ }
+ if(realm.community)realm.community.trades=realm.community.trades.filter(trade=>{
+  for(const [id,offer] of Object.entries(trade.offers))if(offer.count>0&&removed.has(id+':'+offer.item))return false;
+  for(const [id,offer] of Object.entries(trade.offers))offer.item=rewrite.get(id+':'+offer.item)||offer.item;
+  return true;
+ });
+ realm.itemRevision=1;
+}
 function advance(realm:Realm,now:number) {
+  migrateRealmItems(realm);
   if(!realm.rooms)roomFor(realm,'glade','glade');
   for(const [id,room] of Object.entries(realm.rooms||{}))roomFor(realm,id,room.zone);
   for(const id of Object.keys(realm.rooms||{}))if(id.startsWith('dungeon:')&&!realm.community?.parties.some(p=>'dungeon:'+p.id===id))delete realm.rooms![id];

@@ -1,0 +1,14 @@
+{
+  "runtime_sha256": "fa22a4ea71ff4d6449869c7a43d2367831f1d073da2b103da1cafeaeca17298c",
+  "build": "npm run build: passed",
+  "pure_checks": 72,
+  "browser_checks": 4,
+  "total_distinct_checks": 76,
+  "pure_evidence": "68/71 passed on final unchanged runtime; 3 stale EXP/auth fixtures corrected and passed separately; 1 additional retired-trade cancellation check passed",
+  "migration_suite": "6 passed, including old Legend idempotence, equipped numerical bonus preservation, disconnected saves, escrow/floorloot/trade migration, retired trade cancellation",
+  "browser_suite": "1200x800 and390x844:15distinctPNGloaded,Ancient/Legendtooltips,matchingraritycraft,5Ancient-to1Legend,plusinventorysell/use/salvage/refine andexistingraritycraft",
+  "icon_metadata": "15 transparent RGBA256x256PNG,>=26pxsafeedge,1,083,837bytes total",
+  "visual_review": "Contact sheets full and40px; inventory1200 andcraft390 inspected; distinct tiers/family silhouettes and consistent safe padding approved",
+  "environment": "Chromium headless SwiftShader; UI correctness checks, not player hardware FPS",
+  "art_score": 8.5
+}

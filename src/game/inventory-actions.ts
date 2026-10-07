@@ -6,7 +6,7 @@ import {EXP_CHARM,EXP_TOME} from './items';
 export function inventoryKey(item:{id?:string;name:string;rarity?:import('./equipment').Rarity}){return item.id||(isCraftMaterial(item.name)?materialKey(item.name,item.rarity||'common'):item.name);}
 export function salvageYield(item:GearInstance){
  const gear=item.gearId?gearById(item.gearId):undefined,rarity=itemRarity(item);
- if(!gear||rarity==='legend')return [];
+ if(!gear||(rarity==='ancient'||rarity==='legend'))return [];
  const row=[...salvageConfig.levels].reverse().find(row=>gear.level>=row.level)||salvageConfig.levels[0];
  const group=gear.slot==='weapon'||gear.slot==='accessory'?'offense':'defense';
  return salvageConfig.materials[group].map(name=>({name,rarity,count:row[rarity]}));

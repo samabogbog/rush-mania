@@ -1622,3 +1622,8 @@ body:has(.game-panel) .mobile-controls{visibility:hidden;pointer-events:none}
 .item-detail-actions button:disabled{opacity:.4;cursor:default}
 .item-detail-actions button:focus-visible{outline:3px solid #36724b;outline-offset:2px}
 #item-details .salvage-preview{padding:8px;background:#e4efd1;color:#304b2c;border:1px solid #a0b68b;border-radius:5px;font-size:11px;font-weight:800}
+.item.rarity-ancient,.item-tooltip.rarity-ancient{--rarity-color:#e6a320}.item.rarity-ancient{background:#ffe38b}
+.item.rarity-legend,.item-tooltip.rarity-legend{--rarity-color:#f24e79}.item.rarity-legend{background:#ffd8e6}
+.material-upgrade-row button .game-icon{width:24px;height:24px;vertical-align:middle;margin-right:4px}
+.trade-offers .game-icon{width:28px;height:28px;vertical-align:middle;margin-right:5px}
+.game-select-trigger>.game-icon,.game-select-menu [role=option]>.game-icon{width:25px;height:25px;vertical-align:middle;flex-shrink:0;margin-right:7px}

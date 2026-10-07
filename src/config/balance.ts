@@ -1,3 +1,4 @@
+import itemMigrationData from './item-migration.json' with {type:'json'};
 import salvageData from './salvage.json' with {type:'json'};
 import skillRankData from './skill-ranks.json' with {type:'json'};
 import craftingData from './crafting.json' with {type:'json'};
@@ -21,9 +22,11 @@ export function validateBalance(value:unknown, shape:unknown, path='balance'):vo
   for(const [key,s] of Object.entries(shape))validateBalance((value as Record<string,unknown>)[key],s,`${path}.${key}`);
  }
 }
-const data={salvage:salvageData,skillRanks:skillRankData,crafting:craftingData,progression:progressionData,equipment:equipmentData,refinement:refinementData,classes:classData,content:contentData,economy:economyData};
+const data={itemMigration:itemMigrationData,salvage:salvageData,skillRanks:skillRankData,crafting:craftingData,progression:progressionData,equipment:equipmentData,refinement:refinementData,classes:classData,content:contentData,economy:economyData};
 export function validateConfiguration(config:typeof data){
  validateBalance(config,schema);
+ if(config.itemMigration.saveVersion!==9||config.itemMigration.realmRevision!==1||new Set(config.itemMigration.retiredMaterials).size!==config.itemMigration.retiredMaterials.length||config.itemMigration.retiredMaterials.some(name=>config.crafting.materials.includes(name)))throw new Error('Invalid balance config itemMigration: revision/material identity');
+
  config.salvage.levels.forEach((row,i)=>{if(row.level!==[10,30,50,70,90][i])throw new Error('Invalid balance config salvage.levels: ordered gear tiers');for(const key of ['common','rare','epic'] as const)if(!Number.isSafeInteger(row[key])||row[key]<1)throw new Error('Invalid balance config salvage.levels: positive integer yields');});
  if(config.salvage.materials.offense.join('|')!=='Shade essence|Rune stone'||config.salvage.materials.defense.join('|')!=='Shade essence|Sky feather')throw new Error('Invalid balance config salvage.materials: material identities');
  if(config.salvage.sale.potionFraction>1||config.salvage.sale.gearFraction>1||!Number.isSafeInteger(config.salvage.sale.materialUnitPrice))throw new Error('Invalid balance config salvage.sale: fraction/price');
@@ -85,3 +88,5 @@ export const economy=economyData;
 export const skillRankConfig=skillRankData;
 
 export const salvageConfig=salvageData;
+
+export const itemMigrationConfig=itemMigrationData;

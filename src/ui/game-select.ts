@@ -3,14 +3,15 @@ let active:{select:HTMLSelectElement;button:HTMLButtonElement;list:HTMLDivElemen
 const widgets=new WeakMap<HTMLSelectElement,HTMLButtonElement>();
 let serial=0;
 export function closeGameSelect(){if(!active)return;active.button.setAttribute('aria-expanded','false');active.button.removeAttribute('aria-activedescendant');active.list.remove();active=undefined;}
-function sync(select:HTMLSelectElement,button:HTMLButtonElement){const text=select.selectedOptions[0]?.textContent||'Choose…';if(button.textContent!==text)button.textContent=text;button.disabled=select.disabled;button.title=button.textContent;}
+function addOptionIcon(target:HTMLElement,path:string|undefined){if(!path||!path.startsWith('/icons/'))return;const img=document.createElement('img');img.src=path;img.className='game-icon';img.alt='';img.setAttribute('aria-hidden','true');target.prepend(img);}
+function sync(select:HTMLSelectElement,button:HTMLButtonElement){const text=select.selectedOptions[0]?.textContent||'Choose…';if(button.textContent!==text||button.dataset.icon!==(select.selectedOptions[0]?.dataset.icon||'')){button.textContent=text;button.dataset.icon=select.selectedOptions[0]?.dataset.icon||'';addOptionIcon(button,button.dataset.icon);}button.disabled=select.disabled;button.title=button.textContent;}
 function highlight(index:number){if(!active)return;const options=Array.from(active.list.querySelectorAll<HTMLElement>('[role="option"]'));if(!options.length)return;active.index=Math.max(0,Math.min(options.length-1,index));options.forEach((o,n)=>o.classList.toggle('highlighted',n===active!.index));const option=options[active.index];active.button.setAttribute('aria-activedescendant',option.id);option.scrollIntoView({block:'nearest'});}
 function commit(index:number){if(!active)return;const {select,button,list}=active,option=list.querySelectorAll<HTMLElement>('[role="option"]')[index];if(!option)return;select.value=option.dataset.value!;closeGameSelect();sync(select,button);button.focus();select.dispatchEvent(new Event('change',{bubbles:true}));}
 function open(select:HTMLSelectElement,button:HTMLButtonElement){
  closeGameSelect();if(select.disabled)return;
  const list=document.createElement('div');list.className='game-select-menu';list.id=button.getAttribute('aria-controls')!;list.role='listbox';list.setAttribute('aria-label',button.getAttribute('aria-label')!);
  const enabled=Array.from(select.options).filter(o=>!o.disabled);
- enabled.forEach((option,index)=>{const row=document.createElement('div');row.role='option';row.id=list.id+'-'+index;row.dataset.value=option.value;row.textContent=option.text;row.setAttribute('aria-selected',String(option.selected));row.onpointerdown=e=>{e.preventDefault();e.stopPropagation();commit(index)};row.onpointermove=()=>highlight(index);list.append(row)});
+ enabled.forEach((option,index)=>{const row=document.createElement('div');row.role='option';row.id=list.id+'-'+index;row.dataset.value=option.value;row.textContent=option.text;addOptionIcon(row,option.dataset.icon);row.setAttribute('aria-selected',String(option.selected));row.onpointerdown=e=>{e.preventDefault();e.stopPropagation();commit(index)};row.onpointermove=()=>highlight(index);list.append(row)});
  document.body.append(list);
 
  active={select,button,list,index:Math.max(0,enabled.findIndex(o=>o.selected))};button.setAttribute('aria-expanded','true');positionGameSelect();highlight(active.index);

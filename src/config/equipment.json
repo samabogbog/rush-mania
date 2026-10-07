@@ -15,12 +15,12 @@
       "cost": 40,
       "materials": [
         [
-          "Dew jelly",
-          4
+          "Shade essence",
+          2
         ],
         [
-          "Verdant leaf",
-          3
+          "Rune stone",
+          1
         ]
       ],
       "description": "A sturdy beginning for a frontline adventurer."
@@ -41,12 +41,12 @@
       "cost": 40,
       "materials": [
         [
-          "Verdant leaf",
-          4
+          "Shade essence",
+          2
         ],
         [
-          "Forest mushroom",
-          3
+          "Rune stone",
+          1
         ]
       ],
       "description": "A light staff that gives your spells room to grow."
@@ -66,12 +66,12 @@
       "cost": 40,
       "materials": [
         [
-          "Verdant leaf",
-          4
+          "Shade essence",
+          2
         ],
         [
-          "Dew jelly",
-          3
+          "Rune stone",
+          1
         ]
       ],
       "description": "Quick attacks for a nimble hunter."
@@ -90,12 +90,12 @@
       "cost": 35,
       "materials": [
         [
-          "Soft fur",
-          3
+          "Shade essence",
+          2
         ],
         [
-          "Forest mushroom",
-          3
+          "Sky feather",
+          1
         ]
       ],
       "description": "Balanced defense for your first expeditions."
@@ -113,12 +113,12 @@
       "cost": 35,
       "materials": [
         [
-          "Verdant leaf",
-          6
+          "Shade essence",
+          2
         ],
         [
-          "Honey drop",
-          2
+          "Rune stone",
+          1
         ]
       ],
       "description": "A small charm for a faster, luckier build."
@@ -138,12 +138,12 @@
       "cost": 240,
       "materials": [
         [
-          "Boar tusk",
-          6
+          "Shade essence",
+          4
         ],
         [
-          "Amber leaf",
-          5
+          "Rune stone",
+          3
         ]
       ],
       "description": "Powerful strikes; pair it with a defensive coat."
@@ -164,12 +164,12 @@
       "cost": 240,
       "materials": [
         [
-          "Amber spore",
-          6
+          "Shade essence",
+          4
         ],
         [
-          "Golden honey",
-          4
+          "Rune stone",
+          3
         ]
       ],
       "description": "Enough mana to sustain an area-control build."
@@ -189,12 +189,12 @@
       "cost": 240,
       "materials": [
         [
-          "Amber antler",
-          5
+          "Shade essence",
+          4
         ],
         [
-          "Amber leaf",
-          6
+          "Rune stone",
+          3
         ]
       ],
       "description": "Speed and critical hits over raw defense."
@@ -214,12 +214,12 @@
       "cost": 500,
       "materials": [
         [
-          "River shell",
-          8
+          "Shade essence",
+          6
         ],
         [
-          "Marsh reed",
-          6
+          "Sky feather",
+          5
         ]
       ],
       "description": "A durable choice for tanking and risky solo fights."
@@ -239,12 +239,12 @@
       "cost": 500,
       "materials": [
         [
-          "Wisp essence",
-          8
+          "Shade essence",
+          6
         ],
         [
-          "Crystal dust",
-          6
+          "Sky feather",
+          5
         ]
       ],
       "description": "Trade some defense for spell power and mana."
@@ -263,12 +263,12 @@
       "cost": 360,
       "materials": [
         [
-          "Crystal dust",
-          8
+          "Shade essence",
+          6
         ],
         [
-          "Crystal jelly",
-          6
+          "Rune stone",
+          5
         ]
       ],
       "description": "Focus your offensive skills."
@@ -287,11 +287,11 @@
       "cost": 360,
       "materials": [
         [
-          "Marsh reed",
-          8
+          "Shade essence",
+          6
         ],
         [
-          "Crystal dust",
+          "Rune stone",
           5
         ]
       ],
@@ -313,12 +313,12 @@
       "cost": 1200,
       "materials": [
         [
-          "Frost fang",
+          "Shade essence",
           8
         ],
         [
-          "Ice shard",
-          10
+          "Rune stone",
+          7
         ]
       ],
       "description": "A reliable weapon for leading a dungeon party."
@@ -339,12 +339,12 @@
       "cost": 1200,
       "materials": [
         [
-          "Snow spore",
+          "Shade essence",
           8
         ],
         [
-          "Sky feather",
-          8
+          "Rune stone",
+          7
         ]
       ],
       "description": "Strong area magic and a deep mana pool."
@@ -364,12 +364,12 @@
       "cost": 1200,
       "materials": [
         [
-          "Sky feather",
+          "Shade essence",
           8
         ],
         [
-          "Frost fang",
-          8
+          "Rune stone",
+          7
         ]
       ],
       "description": "An aggressive late-game critical build."
@@ -389,12 +389,12 @@
       "cost": 1600,
       "materials": [
         [
-          "Rootheart core",
-          2
+          "Shade essence",
+          8
         ],
         [
-          "Warden stone",
-          8
+          "Sky feather",
+          7
         ]
       ],
       "description": "Survive the Guardian’s strongest attacks."
@@ -416,11 +416,11 @@
       "materials": [
         [
           "Shade essence",
-          10
+          8
         ],
         [
-          "Living vine",
-          8
+          "Sky feather",
+          7
         ]
       ],
       "description": "An offensive alternative to heavy plate."
@@ -440,12 +440,12 @@
       "cost": 1200,
       "materials": [
         [
-          "Rootheart core",
-          1
+          "Shade essence",
+          8
         ],
         [
           "Rune stone",
-          10
+          7
         ]
       ],
       "description": "A trophy that strengthens every class."
@@ -497,13 +497,15 @@
     "common": 1,
     "rare": 1.1,
     "epic": 1.25,
-    "legend": 1.45
+    "ancient": 1.45,
+    "legend": 1.75
   },
   "secondaryCounts": {
     "common": 1,
     "rare": 2,
     "epic": 3,
-    "legend": 4
+    "ancient": 4,
+    "legend": 5
   },
   "affixRanges": {
     "critChance": [

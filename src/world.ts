@@ -528,7 +528,7 @@ export class World implements GameWorld {
       this.loot.push(mesh);
     }
     this.sim.loot.forEach((drop, index) => {
-      const rarity=drop.item?.rarity||'common',colors={common:0xffdf8a,rare:0x5cb9ff,epic:0xbc74ff,legend:0xffa63e};this.loot[index].material=this.factory.material(colors[rarity],true);
+      const rarity=drop.item?.rarity||'common',colors={common:0xffdf8a,rare:0x5cb9ff,epic:0xbc74ff,ancient:0xffa63e,legend:0xff526f};this.loot[index].material=this.factory.material(colors[rarity],true);
       this.loot[index].position.set(
         drop.x,
         0.35 + Math.sin(this.sim.time * 4 + index) * 0.1,

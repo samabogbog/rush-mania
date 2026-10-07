@@ -1,3 +1,4 @@
+import {craftingMaterials} from '../src/game/crafting';
 import {test,expect} from '@playwright/test';
 import {transact} from '../server/realm';
 import type {Realm,Snapshot} from '../server/protocol';
@@ -32,8 +33,10 @@ test('market escrow, sales fee, replay protection and rollback on full bags keep
  store.realm!.players.b.actor.save.items=Array.from({length:144},(_,i)=>({name:'material'+i,icon:'leaf',count:1}));b=await send('b',b,'marketBuy',[rare]);expect(b.player.actor.save.gold).toBe(60);expect(b.community!.listings).toHaveLength(1);expect(b.player.events.at(-1)!.text).toBe('Recipient bag is full');
 });
 test('party combat splits EXP and gold, rotates materials, and converted mage skills do not heal allies',async()=>{
+ const originalRandom=Math.random;Math.random=()=>0;try{
  const {store,send,...initial}=await setup();let {a,b}=initial;a=await send('a',a,'partyCreate');a=await send('a',a,'partyInvite',['b']);b=await send('b',b,'partyAccept',[a.community!.party!.id]);
  const p=store.realm!.players.a;p.actor.save.level=100;p.actor.save.job='mage';p.actor.save.mp=500;p.actor.save.stats.str=500;const target=store.realm!.rooms!.glade.monsters[0];p.actor.x=target.x+1;p.actor.z=target.z;p.actor.target=target.id;p.actor.attackTimer=10;store.realm!.players.b.actor.x=target.x+2;store.realm!.players.b.actor.z=target.z;target.hp=1;const goldPerMember=Math.floor(new (await import('../src/simulation')).Simulation(()=>.5,p.actor.save,null).monsterSpec(target.kind).gold/2);
- for(let n=1;n<=5;n++)a=await send('a',a,'chooseSkill',['mage-'+n]);a=await send('a',a,'castSkill',['mage-1']);expect(a.player.actor.cast).not.toBeNull();a=await transact(store,{id:'a',name:'A'},{},a.serverTime+400);expect(a.player.actor.cast).toBeNull();expect(a.player.actor.save.gold).toBe(120+goldPerMember);expect(store.realm!.players.b.actor.save.gold).toBe(120+goldPerMember);expect(store.realm!.players.b.actor.save.kills).toBe(1);expect(a.player.actor.save.items.some(i=>i.name==='Dew jelly')).toBe(true);
+ for(let n=1;n<=5;n++)a=await send('a',a,'chooseSkill',['mage-'+n]);a=await send('a',a,'castSkill',['mage-1']);expect(a.player.actor.cast).not.toBeNull();a=await transact(store,{id:'a',name:'A'},{},a.serverTime+400);expect(a.player.actor.cast).toBeNull();expect(a.player.actor.save.gold).toBe(120+goldPerMember);expect(store.realm!.players.b.actor.save.gold).toBe(120+goldPerMember);expect(store.realm!.players.b.actor.save.kills).toBe(1);expect(a.player.actor.save.items.some(i=>craftingMaterials.includes(i.name))).toBe(true);expect(store.realm!.players.b.actor.save.items.some(i=>craftingMaterials.includes(i.name))).toBe(true);
  const healId='mage-5';expect(new (await import('../src/simulation')).Simulation(()=>.5,p.actor.save,null).skillList.find(s=>s.id===healId)!.effect).toBe('area');store.realm!.players.a.actor.cast=null;store.realm!.players.b.actor.save.hp=20;a=await send('a',a,'castSkill',[healId]);expect(store.realm!.players.b.actor.save.hp).toBeLessThan(20.01);
+ }finally{Math.random=originalRandom;}
 });

@@ -10,7 +10,8 @@
     "crafting.json",
     "monster-groups.json",
     "skill-ranks.json",
-    "salvage.json"
+    "salvage.json",
+    "item-migration.json"
   ],
   "validation": "schema.json",
   "documentation": "README-TH.md",

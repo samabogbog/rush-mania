@@ -1150,13 +1150,15 @@
       "common": "number",
       "rare": "number",
       "epic": "number",
-      "legend": "number"
+      "legend": "number",
+      "ancient": "number"
     },
     "secondaryCounts": {
       "common": "number",
       "rare": "number",
       "epic": "number",
-      "legend": "number"
+      "legend": "number",
+      "ancient": "number"
     },
     "affixRanges": {
       "critChance": [
@@ -4031,8 +4033,38 @@
         "common": "number",
         "rare": "number",
         "epic": "number",
-        "legend": "number"
+        "legend": "number",
+        "ancient": "number"
       }
     }
+  },
+  "itemMigration": {
+    "saveVersion": "number",
+    "realmRevision": "number",
+    "retiredMaterials": [
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string"
+    ]
   }
 }

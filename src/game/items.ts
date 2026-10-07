@@ -15,7 +15,9 @@ export function itemCategory(item:{name:string;gearId?:string}):ItemCategory {
  if(['Red potion','Blue potion',EXP_TOME.name,EXP_CHARM.name].includes(item.name))return 'consumable';
  return 'material';
 }
-export const materialIcons:Record<string,string>={'Dew jelly':'jelly','Forest mushroom':'mushroom','Verdant leaf':'leaf','Honey drop':'honey','Golden honey':'honey','Soft fur':'fur','Frost fur':'fur','Boar tusk':'tusk','Amber antler':'antler','Wisp essence':'wisp-essence','Shade essence':'wisp-essence','Crystal dust':'crystal-dust','Ice shard':'ice-shard','Frost fang':'frost-fang','Sky feather':'feather','Rootheart core':'root-core','Amber leaf':'leaf','Marsh reed':'leaf','Ancient root':'leaf','Living vine':'leaf','Amber spore':'mushroom','Snow spore':'mushroom','Crystal jelly':'jelly','Rune stone':'ice-shard','Warden stone':'ice-shard','River shell':'shell-vest'};
+export const materialSlugs:Record<string,string>={'Shade essence':'shade-essence','Sky feather':'sky-feather','Rune stone':'rune-stone'};
+export const materialIcon=(name:string,rarity:import('./equipment').Rarity='common')=>materialSlugs[name]?`materials/${materialSlugs[name]}-${rarity}`:'chest';
+export const materialIcons:Record<string,string>=Object.fromEntries(craftingMaterials.map(name=>[name,materialIcon(name)]));
 export type CatalogItem={id:string;name:string;icon:string;category:ItemCategory;gearId?:string};
-const names=new Set([...craftingMaterials,...Object.values(species).map(s=>s.drop),...questDefinitions.map(q=>q.item),...equipment.flatMap(g=>g.materials.map(m=>m[0]))]);
+const names=new Set(craftingMaterials);
 export const itemCatalog:CatalogItem[]=[{...EXP_CHARM,category:'consumable'},{...EXP_TOME,category:'consumable'},...equipment.map(g=>({id:g.id,name:g.name,icon:g.icon,gearId:g.id,category:itemCategory(g)})),...Array.from(names).filter(name=>!name.includes('potion')).map(name=>({id:'material:'+name,name,icon:materialIcons[name]||'chest',category:'material' as const})),...['Red potion','Blue potion'].map((name,n)=>({id:'potion:'+name,name,icon:n?'mana-potion':'health-potion',category:'consumable' as const})),...Object.entries(refineStones).map(([tier,s])=>({id:'refine:'+tier,name:s.name,icon:s.icon,category:'refine' as const}))];

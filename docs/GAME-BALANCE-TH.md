@@ -2,7 +2,7 @@
 
 **หมายเหตุ:** ตารางอุปกรณ์และสูตรคราฟต์ในเอกสารนี้เป็นข้อมูลก่อนรอบเปลี่ยน Shade essence/Sky feather/Rune stone และกางเกง ให้ใช้ `src/config/equipment.json`, `src/config/crafting.json` และ `src/config/README-TH.md` สำหรับค่าปัจจุบัน
 
-**การปรับล่าสุด:** จำนวนสถานะรองของอุปกรณ์ที่สุ่มใหม่เป็น Common 1, Rare 2, Epic 3, Legend 4; ระบบคลิกไอเท็มและการย่อยดู `docs/INVENTORY-SALVAGE-TH.md` ตารางด้านล่างเก็บไว้เป็นประวัติก่อนปรับสมดุล
+**การปรับล่าสุด:** Common 1, Rare 2, Epic 3, Ancient 4, Legend 5 สถานะรอง; Ancient รับค่า Legend เดิม และ Legend ใหม่ใช้ตัวคูณหลัก 1.75 รายละเอียดปัจจุบันดู `docs/MATERIAL-RARITIES-TH.md` และ `docs/INVENTORY-SALVAGE-TH.md` ตารางด้านล่างเก็บไว้เป็นประวัติก่อนปรับสมดุล
 
 อ้างอิง source commit `dddb8eb479299589c8d6aea0de961a635620a289` ซึ่งตรงกับรุ่นที่เผยแพร่ล่าสุด เอกสารนี้รายงานกติกาปัจจุบัน ไม่ได้เปลี่ยนค่าบาลานซ์ ค่ามอนสเตอร์ออนไลน์อาจถูก override ด้วยเมนูแอดมิน; ตารางนี้เป็นค่า default ใน source ไม่ได้อ่านฐานข้อมูล production
 

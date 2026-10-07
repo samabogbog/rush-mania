@@ -5,9 +5,9 @@ export const gearSlots=['weapon','helmet','armor','pants','boots','accessory'] a
 export type GearSlot=typeof gearSlots[number];
 export const isGearSlot=(value:unknown):value is GearSlot=>typeof value==='string'&&gearSlots.includes(value as GearSlot);
 export const BAG_CAPACITY=economy.bagCapacity;
-export const rarityOrder=['common','rare','epic','legend'] as const;
+export const rarityOrder=['common','rare','epic','ancient','legend'] as const;
 export type Rarity=typeof rarityOrder[number];
-export const rarityLabels:Record<Rarity,string>={common:'Common',rare:'Rare',epic:'Epic',legend:'Legend'};
+export const rarityLabels:Record<Rarity,string>={common:'Common',rare:'Rare',epic:'Epic',ancient:'Ancient',legend:'Legend'};
 export const secondaryCounts:Record<Rarity,number>=config.secondaryCounts;
 export type SecondaryStat='critChance'|'critDamage'|'damageBonus'|'skillDamage'|'lifesteal'|'hpRegen'|'mpRegen'|'attackSpeed'|'moveSpeed'|'armorPen'|'damageReduction'|'dodgeChance'|'expBonus'|'goldBonus'|'healingBonus'|'cooldownReduction';
 

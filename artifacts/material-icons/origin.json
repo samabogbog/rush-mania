@@ -1,0 +1,202 @@
+{
+  "origin": "Fresh OpenAI image_gen generation",
+  "source": "/workspace/generated_images/exec-2755233e-8cdc-4eab-b7da-4faef458f3ee.png",
+  "processing": "5x3 cell extraction, alpha bounding box crop, proportional Lanczos resample to max 204px, center on transparent 256px canvas",
+  "icons": [
+    {
+      "file": "public/icons/materials/shade-essence-common.png",
+      "size": [
+        256,
+        256
+      ],
+      "bbox": [
+        50,
+        26,
+        205,
+        230
+      ]
+    },
+    {
+      "file": "public/icons/materials/shade-essence-rare.png",
+      "size": [
+        256,
+        256
+      ],
+      "bbox": [
+        48,
+        26,
+        208,
+        230
+      ]
+    },
+    {
+      "file": "public/icons/materials/shade-essence-epic.png",
+      "size": [
+        256,
+        256
+      ],
+      "bbox": [
+        46,
+        26,
+        209,
+        230
+      ]
+    },
+    {
+      "file": "public/icons/materials/shade-essence-ancient.png",
+      "size": [
+        256,
+        256
+      ],
+      "bbox": [
+        46,
+        26,
+        209,
+        230
+      ]
+    },
+    {
+      "file": "public/icons/materials/shade-essence-legend.png",
+      "size": [
+        256,
+        256
+      ],
+      "bbox": [
+        47,
+        26,
+        209,
+        230
+      ]
+    },
+    {
+      "file": "public/icons/materials/sky-feather-common.png",
+      "size": [
+        256,
+        256
+      ],
+      "bbox": [
+        41,
+        26,
+        215,
+        230
+      ]
+    },
+    {
+      "file": "public/icons/materials/sky-feather-rare.png",
+      "size": [
+        256,
+        256
+      ],
+      "bbox": [
+        41,
+        26,
+        215,
+        230
+      ]
+    },
+    {
+      "file": "public/icons/materials/sky-feather-epic.png",
+      "size": [
+        256,
+        256
+      ],
+      "bbox": [
+        36,
+        26,
+        220,
+        230
+      ]
+    },
+    {
+      "file": "public/icons/materials/sky-feather-ancient.png",
+      "size": [
+        256,
+        256
+      ],
+      "bbox": [
+        39,
+        26,
+        217,
+        230
+      ]
+    },
+    {
+      "file": "public/icons/materials/sky-feather-legend.png",
+      "size": [
+        256,
+        256
+      ],
+      "bbox": [
+        36,
+        26,
+        220,
+        230
+      ]
+    },
+    {
+      "file": "public/icons/materials/rune-stone-common.png",
+      "size": [
+        256,
+        256
+      ],
+      "bbox": [
+        41,
+        26,
+        215,
+        230
+      ]
+    },
+    {
+      "file": "public/icons/materials/rune-stone-rare.png",
+      "size": [
+        256,
+        256
+      ],
+      "bbox": [
+        39,
+        26,
+        217,
+        230
+      ]
+    },
+    {
+      "file": "public/icons/materials/rune-stone-epic.png",
+      "size": [
+        256,
+        256
+      ],
+      "bbox": [
+        38,
+        26,
+        217,
+        230
+      ]
+    },
+    {
+      "file": "public/icons/materials/rune-stone-ancient.png",
+      "size": [
+        256,
+        256
+      ],
+      "bbox": [
+        34,
+        26,
+        222,
+        230
+      ]
+    },
+    {
+      "file": "public/icons/materials/rune-stone-legend.png",
+      "size": [
+        256,
+        256
+      ],
+      "bbox": [
+        34,
+        26,
+        222,
+        230
+      ]
+    }
+  ]
+}

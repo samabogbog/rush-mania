@@ -1,7 +1,7 @@
 import {readFileSync} from 'node:fs';
 import {test,expect} from '@playwright/test';
 import expectedLevels from './imported-levels-fixture.json' with {type:'json'};
-import {salvageConfig,skillRankConfig,contentConfig,progression,validateConfiguration,craftingConfig,equipmentConfig,refinement,classConfig,economy} from '../src/config/balance';
+import {itemMigrationConfig,salvageConfig,skillRankConfig,contentConfig,progression,validateConfiguration,craftingConfig,equipmentConfig,refinement,classConfig,economy} from '../src/config/balance';
 import {normalMonsterBalance,species} from '../src/game/content';
 import {Simulation} from '../src/simulation';
 import {transact,MONSTER_BALANCE_REVISION} from '../server/realm';
@@ -30,7 +30,7 @@ test('normal drops use independent exact boundaries, zero chances, common stones
  sim.random=()=>1;expect(sim.rollMaterialLoot(monster)).toEqual([]);expect(sim.rollStoneLoot(monster)).toBeUndefined();
 });
 test('loading existing progress grants no levels and preserves assets and allocated stats',()=>{
- const saved=new Simulation(()=>.5,undefined,null).save;saved.level=40;saved.xp=1e6;saved.gold=321;saved.stats.str=99;saved.points=7;saved.items.push({name:'Shade essence',icon:'?',rarity:'rare',count:8,category:'material',id:'material:Shade essence:rare'});
+ const saved=new Simulation(()=>.5,undefined,null).save;saved.level=40;saved.xp=1e6;saved.gold=321;saved.stats.str=99;saved.points=7;saved.items.push({name:'Shade essence',icon:'materials/shade-essence-rare',rarity:'rare',count:8,category:'material',id:'material:Shade essence:rare'});
  const loaded=new Simulation(()=>.5,structuredClone(saved),null);expect(loaded.save).toEqual(saved);expect(loaded.save.level).toBe(40);expect(loaded.maxXp).toBe(expectedLevels[39][3]);
 });
 test('persisted monster HP migrates once without resetting targets, timers, player progress, or admin overrides',async()=>{
@@ -43,7 +43,7 @@ test('persisted monster HP migrates once without resetting targets, timers, play
  const hp=current.monsters[0].hp;await transact(store,id,{},1000);expect(store.realm!.rooms!.glade.monsters[0].hp).toBe(hp);
 });
 test('invalid imported level and probability edits are rejected before runtime',()=>{
- const config=()=>structuredClone({salvage:salvageConfig,skillRanks:skillRankConfig,crafting:craftingConfig,progression,equipment:equipmentConfig,refinement,classes:classConfig,content:contentConfig,economy});
+ const config=()=>structuredClone({itemMigration:itemMigrationConfig,salvage:salvageConfig,skillRanks:skillRankConfig,crafting:craftingConfig,progression,equipment:equipmentConfig,refinement,classes:classConfig,content:contentConfig,economy});
  for(const mutate of [(c:ReturnType<typeof config>)=>c.progression.levels[1].level=1,c=>c.progression.levels[0].monsterXp=0,c=>c.content.normalBalance.checkpoints[0].drops.commonStone=1.1,c=>c.content.normalBalance.checkpoints[0].level=11]){const c=config();mutate(c);expect(()=>validateConfiguration(c)).toThrow(/Invalid balance config/);}
 });
 

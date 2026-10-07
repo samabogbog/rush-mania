@@ -1,7 +1,7 @@
 import {test,expect} from '@playwright/test';
 import {Simulation,type Item} from '../src/simulation';
 import {gearById,rollGear} from '../src/game/equipment';
-const fixture=()=>{const sim=new Simulation(()=>.5,undefined,null);sim.save.level=100;sim.save.zone='town';for(let n=0;n<52;n++){const id=n===0?'thornwood-blade':n===1?'starfall-helmet':'thornwood-charm',definition=gearById(id)!;sim.addEquipmentItem({...rollGear(id,n===0?'rare':'legend',()=>.6),name:definition.name,icon:definition.icon,count:1});}return sim.save;};
+const fixture=()=>{const sim=new Simulation(()=>.5,undefined,null);sim.save.level=100;sim.save.zone='town';for(let n=0;n<52;n++){const id=n===0?'thornwood-blade':n===1?'starfall-helmet':'thornwood-charm',definition=gearById(id)!;sim.addEquipmentItem({...rollGear(id,n===0?'rare':'ancient',()=>.6),name:definition.name,icon:definition.icon,count:1});}return sim.save;};
 test('bag has 48 cells per page, three pages, floating comparison, persistent left-click details and right-click equip/unequip',async({page})=>{
  const save=fixture();await page.addInitScript(save=>{localStorage.setItem('mossvale-save',JSON.stringify(save));localStorage.setItem('mossvale-quality','low')},save);
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('/?practice=1');await page.waitForFunction(()=>{const s=(window as any).mossvale?.snapshot();return s&&s.riggedActors===s.modelsExpected&&s.modelErrors===0},{},{timeout:60000});await expect(page.locator('#hp-text')).toContainText('/');await page.keyboard.press('i');

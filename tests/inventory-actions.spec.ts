@@ -3,14 +3,14 @@ import {Simulation} from '../src/simulation';
 import {equipment,rollGear,itemBonuses,BAG_CAPACITY,type Rarity} from '../src/game/equipment';
 import {inventoryKey,salvageYield,itemSalePrice} from '../src/game/inventory-actions';
 import {materialCount} from '../src/game/crafting';
-import {salvageConfig,skillRankConfig,contentConfig,equipmentConfig,progression,craftingConfig,refinement,classConfig,economy,validateConfiguration} from '../src/config/balance';
+import {itemMigrationConfig,salvageConfig,skillRankConfig,contentConfig,equipmentConfig,progression,craftingConfig,refinement,classConfig,economy,validateConfiguration} from '../src/config/balance';
 import {transact} from '../server/realm';
 import type {Realm} from '../server/protocol';
 import type {RealmStore} from '../server/store';
 function fresh(){const s=new Simulation(()=>.5,undefined,null);s.save.level=100;s.save.items=[];s.save.equipped={weapon:null,helmet:null,armor:null,pants:null,boots:null,accessory:null};return s;}
 function add(s:Simulation,level=10,slot='weapon',rarity:Rarity='common'){const gear=equipment.find(g=>g.level===level&&g.slot===slot)!;const item={...rollGear(gear.id,rarity,()=>.5),name:gear.name,icon:gear.icon,count:1};s.save.items.push(item);return item;}
-test('new affix counts are 1/2/3/4 with unique stats; existing secondary rolls stay unchanged',()=>{
- for(const [rarity,count] of [['common',1],['rare',2],['epic',3],['legend',4]] as const){const s=fresh(),item=add(s,10,'weapon',rarity);expect(Object.keys(item.secondary!)).toHaveLength(count);item.secondary={critChance:3.2,goldBonus:6};const before=structuredClone(item.secondary),bonuses=itemBonuses(item);const loaded=new Simulation(()=>0,structuredClone(s.save),null);expect(loaded.save.items[0].secondary).toEqual(before);expect(itemBonuses(loaded.save.items[0])).toEqual(bonuses);}
+test('new affix counts are 1/2/3/4/5 with unique stats; existing secondary rolls stay unchanged',()=>{
+ for(const [rarity,count] of [['common',1],['rare',2],['epic',3],['ancient',4],['legend',5]] as const){const s=fresh(),item=add(s,10,'weapon',rarity);expect(Object.keys(item.secondary!)).toHaveLength(count);item.secondary={critChance:3.2,goldBonus:6};const before=structuredClone(item.secondary),bonuses=itemBonuses(item);const loaded=new Simulation(()=>0,structuredClone(s.save),null);expect(loaded.save.items[0].secondary).toEqual(before);expect(itemBonuses(loaded.save.items[0])).toEqual(bonuses);}
 });
 test('all five tiers, six slots and rarities yield EACH correct material count with matching rarity',()=>{
  const counts=[[2,1,1],[2,2,1],[3,2,1],[3,3,1],[4,3,1]];
@@ -33,7 +33,7 @@ test('single-item sale respects exact stack rarity, counts, pricing and unique e
 });
 test('salvage config edits affect shared yields/prices and invalid edits fail early',()=>{
  const old=structuredClone(salvageConfig);try{salvageConfig.levels[0].common=7;salvageConfig.sale.gearFraction=.25;const s=fresh(),item=add(s);expect(salvageYield(item).map(y=>y.count)).toEqual([7,7]);expect(itemSalePrice(item)).toBe(Math.floor(10*craftingConfig.recipe.zenyPerLevel*.25));}finally{Object.assign(salvageConfig,old);}
- const cfg=()=>structuredClone({salvage:salvageConfig,skillRanks:skillRankConfig,content:contentConfig,equipment:equipmentConfig,progression,crafting:craftingConfig,refinement,classes:classConfig,economy});expect(()=>validateConfiguration(cfg())).not.toThrow();for(const change of [(c:ReturnType<typeof cfg>)=>c.salvage.levels[0].common=.5,c=>c.salvage.levels[0].rare=0,c=>c.salvage.levels[1].level=10,c=>c.salvage.materials.offense[0]='Typo',c=>c.salvage.sale.gearFraction=1.1,c=>Object.assign(c.salvage,{typo:1})]){const c=cfg();change(c);expect(()=>validateConfiguration(c)).toThrow(/Invalid balance config/);}
+ const cfg=()=>structuredClone({itemMigration:itemMigrationConfig,salvage:salvageConfig,skillRanks:skillRankConfig,content:contentConfig,equipment:equipmentConfig,progression,crafting:craftingConfig,refinement,classes:classConfig,economy});expect(()=>validateConfiguration(cfg())).not.toThrow();for(const change of [(c:ReturnType<typeof cfg>)=>c.salvage.levels[0].common=.5,c=>c.salvage.levels[0].rare=0,c=>c.salvage.levels[1].level=10,c=>c.salvage.materials.offense[0]='Typo',c=>c.salvage.sale.gearFraction=1.1,c=>Object.assign(c.salvage,{typo:1})]){const c=cfg();change(c);expect(()=>validateConfiguration(c)).toThrow(/Invalid balance config/);}
 });
 class Store implements RealmStore{realm:Realm|null=null;revision=0;async read(){return this.realm?{realm:structuredClone(this.realm),revision:this.revision}:null;}async create(r:Realm){this.realm=structuredClone(r);}async commit(rev:number,r:Realm){if(rev!==this.revision)return false;this.realm=structuredClone(r);this.revision++;return true;}}
 test('server owns item sales/salvage, rejects equipped/foreign items, preserves IDs and replay spends once',async()=>{
