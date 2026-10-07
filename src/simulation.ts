@@ -124,7 +124,7 @@ export class Simulation {
   deathTime = 0;
   onSupport?: (skill: Skill) => void;
   balance:Record<string,Partial<Pick<(typeof species)[Kind],"hp"|"atk"|"defense"|"xp"|"gold">>> = {};
-  monsterSpec(kind:Kind){const base=species[kind],normal=normalMonsterBalance(base.level),tier=base.boss?contentConfig.normalBalance.boss:base.miniBoss?contentConfig.normalBalance.mini:{hp:1,atk:1,defense:1,gold:1,xp:1};return {...base,hp:normal.hp*tier.hp,atk:normal.atk*tier.atk,defense:normal.defense*tier.defense,gold:normal.gold*tier.gold,xp:progression.levels[base.level-1].monsterXp*tier.xp,...this.balance[kind]};}
+  monsterSpec(kind:Kind){const base=species[kind],normal=normalMonsterBalance(base.level),tier=base.boss?contentConfig.normalBalance.boss:base.miniBoss?contentConfig.normalBalance.mini:{hp:1,atk:1,defense:1,goldPerLevel:0,xp:1};return {...base,hp:normal.hp*tier.hp,atk:normal.atk*tier.atk,defense:normal.defense*tier.defense,gold:base.boss||base.miniBoss?base.level*tier.goldPerLevel:normal.gold,xp:progression.levels[base.level-1].monsterXp*tier.xp,...this.balance[kind]};}
   hasLegacyDrop(monster:Monster){const spec=this.monsterSpec(monster.kind);return !!spec.boss||!isCraftMaterial(spec.drop);}
 
   monsters: Monster[] = [];
@@ -235,7 +235,7 @@ export class Simulation {
     const drops=spec.boss?rollMaterialDrops(true,this.random):(['shade','rune','sky'] as const).flatMap(key=>(['common','rare'] as const).flatMap(rarity=>this.random()<rates[`${key}_${rarity}`]?[{name:({shade:'Shade essence',rune:'Rune stone',sky:'Sky feather'} as const)[key],rarity,count:1}]:[]));
     return drops.map(drop=>({...drop,icon:materialIcons[drop.name],id:materialKey(drop.name,drop.rarity),category:'material'}));
   }
-  rollEquipmentLoot(monster:Monster):Item[] {return rollEquipmentDrops(this.monsterSpec(monster.kind).level,!!this.monsterSpec(monster.kind).boss,this.random).map(rolled=>{const gear=gearById(rolled.gearId!)!;return {...rolled,name:gear.name,category:itemCategory({name:gear.name}),icon:gear.icon,count:1};});}
+  rollEquipmentLoot(monster:Monster):Item[] {return rollEquipmentDrops(this.monsterSpec(monster.kind).level,this.monsterSpec(monster.kind).boss?'boss':this.monsterSpec(monster.kind).miniBoss?'mini':'normal',this.random).map(rolled=>{const gear=gearById(rolled.gearId!)!;return {...rolled,name:gear.name,category:itemCategory({name:gear.name}),icon:gear.icon,count:1};});}
   get agility() { return this.save.stats.agi+(this.gearBonuses.agi||0); }
   toggleTutorial(){if(this.save.tutorial.includes('skip'))this.save.tutorial=this.save.tutorial.filter(s=>s!=='skip');else this.save.tutorial.push('skip');this.persist();}
   markTutorial(step:string) {if(!this.save.tutorial.includes(step))this.save.tutorial.push(step)}

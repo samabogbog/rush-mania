@@ -19,7 +19,7 @@ test('normal checkpoints, interpolation, early levels, and elite multipliers sha
  expect(normalMonsterBalance(1).hp).toBe(21.6);expect(normalMonsterBalance(1).drops).toEqual(points[0].drops);expect(normalMonsterBalance(100)).toEqual(normalMonsterBalance(90));
  expect(normalMonsterBalance(35).hp).toBe(780);expect(normalMonsterBalance(35).drops.shade_rare).toBe(.00375);
  const sim=new Simulation(()=>.5,undefined,null);
- for(const [kind,base] of Object.entries(species)){const spec=sim.monsterSpec(kind as keyof typeof species),normal=normalMonsterBalance(base.level),tier=base.boss?contentConfig.normalBalance.boss:base.miniBoss?contentConfig.normalBalance.mini:{hp:1,atk:1,defense:1,gold:1,xp:1};for(const key of ['hp','atk','defense','gold'] as const)expect(spec[key]).toBe(normal[key]*tier[key]);expect(spec.xp).toBe(progression.levels[base.level-1].monsterXp*tier.xp);}
+ for(const [kind,base] of Object.entries(species)){const spec=sim.monsterSpec(kind as keyof typeof species),normal=normalMonsterBalance(base.level),tier=base.boss?contentConfig.normalBalance.boss:base.miniBoss?contentConfig.normalBalance.mini:{hp:1,atk:1,defense:1,goldPerLevel:0,xp:1};for(const key of ['hp','atk','defense'] as const)expect(spec[key]).toBe(normal[key]*tier[key]);expect(spec.gold).toBe(base.boss||base.miniBoss?base.level*tier.goldPerLevel:normal.gold);expect(spec.xp).toBe(progression.levels[base.level-1].monsterXp*tier.xp);}
  sim.balance.Dewdrop={hp:999,xp:123};expect(sim.monsterSpec('Dewdrop').hp).toBe(999);expect(sim.monsterSpec('Dewdrop').xp).toBe(123);
 });
 test('normal drops use independent exact boundaries, zero chances, common stones, and no guaranteed craft materials',()=>{

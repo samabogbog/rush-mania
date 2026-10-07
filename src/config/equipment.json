@@ -750,5 +750,86 @@
         "rare": 0.004
       }
     ]
+  },
+  "eliteDrops": {
+    "count": 2,
+    "levels": [
+      {
+        "monsterLevel": 20,
+        "gearLevel": 10
+      },
+      {
+        "monsterLevel": 40,
+        "gearLevel": 30
+      },
+      {
+        "monsterLevel": 60,
+        "gearLevel": 50
+      },
+      {
+        "monsterLevel": 80,
+        "gearLevel": 70
+      },
+      {
+        "monsterLevel": 100,
+        "gearLevel": 90
+      }
+    ],
+    "groups": {
+      "attack": [
+        "weapon",
+        "accessory"
+      ],
+      "defense": [
+        "helmet",
+        "armor",
+        "pants",
+        "boots"
+      ]
+    },
+    "boss": [
+      {
+        "group": "attack",
+        "rarity": "rare",
+        "weight": 0.12
+      },
+      {
+        "group": "defense",
+        "rarity": "rare",
+        "weight": 0.18
+      },
+      {
+        "group": "attack",
+        "rarity": "epic",
+        "weight": 0.28
+      },
+      {
+        "group": "defense",
+        "rarity": "epic",
+        "weight": 0.42
+      }
+    ],
+    "mini": [
+      {
+        "group": "attack",
+        "rarity": "rare",
+        "weight": 0.2
+      },
+      {
+        "group": "defense",
+        "rarity": "rare",
+        "weight": 0.3
+      },
+      {
+        "group": "attack",
+        "rarity": "epic",
+        "weight": 0.2
+      },
+      {
+        "group": "defense",
+        "rarity": "epic",
+        "weight": 0.3
+      }
+    ]
   }
 }

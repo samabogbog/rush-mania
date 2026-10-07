@@ -418,7 +418,7 @@
       "leashRadius": 14
     },
     "MooncapMonarch": {
-      "level": 15,
+      "level": 20,
       "family": "cap",
       "color": 14972917,
       "drop": "Forest mushroom",
@@ -439,7 +439,7 @@
       "leashRadius": 17
     },
     "DewdropMatriarch": {
-      "level": 15,
+      "level": 20,
       "family": "slime",
       "color": 3528948,
       "drop": "Dew jelly",
@@ -460,7 +460,7 @@
       "leashRadius": 14
     },
     "AmberAntlerKing": {
-      "level": 35,
+      "level": 40,
       "family": "beast",
       "color": 15439700,
       "drop": "Amber antler",
@@ -481,7 +481,7 @@
       "leashRadius": 17
     },
     "HoneyHiveMarshal": {
-      "level": 35,
+      "level": 40,
       "family": "insect",
       "color": 16763700,
       "drop": "Golden honey",
@@ -502,7 +502,7 @@
       "leashRadius": 14
     },
     "CrystalShellSovereign": {
-      "level": 55,
+      "level": 60,
       "family": "golem",
       "color": 5104286,
       "drop": "River shell",
@@ -523,7 +523,7 @@
       "leashRadius": 17
     },
     "MarshWispHerald": {
-      "level": 55,
+      "level": 60,
       "family": "wisp",
       "color": 6745855,
       "drop": "Wisp essence",
@@ -544,7 +544,7 @@
       "leashRadius": 14
     },
     "FrostfangSovereign": {
-      "level": 75,
+      "level": 80,
       "family": "beast",
       "color": 12902143,
       "drop": "Frost fang",
@@ -565,7 +565,7 @@
       "leashRadius": 17
     },
     "IceboundSentinel": {
-      "level": 75,
+      "level": 80,
       "family": "golem",
       "color": 6671359,
       "drop": "Ice shard",
@@ -586,7 +586,7 @@
       "leashRadius": 14
     },
     "RootheartGuardian": {
-      "level": 95,
+      "level": 100,
       "family": "golem",
       "color": 16757069,
       "drop": "Rootheart core",
@@ -607,7 +607,7 @@
       "leashRadius": 17
     },
     "RuinShadeHerald": {
-      "level": 95,
+      "level": 100,
       "family": "wisp",
       "color": 13530095,
       "drop": "Shade essence",
@@ -1086,18 +1086,18 @@
       }
     ],
     "boss": {
-      "hp": 16,
-      "atk": 3,
-      "defense": 3,
-      "gold": 12,
-      "xp": 12
+      "hp": 30,
+      "atk": 6,
+      "defense": 2,
+      "xp": 12,
+      "goldPerLevel": 50
     },
     "mini": {
-      "hp": 5,
-      "atk": 1.8,
-      "defense": 1.8,
-      "gold": 4,
-      "xp": 4
+      "hp": 15,
+      "atk": 3,
+      "defense": 1.5,
+      "xp": 4,
+      "goldPerLevel": 30
     },
     "previousRevisionHp": {
       "Dewdrop": 21.6,
@@ -1137,6 +1137,45 @@
       "IceboundSentinel": 11520.0,
       "RootheartGuardian": 25056.0,
       "RuinShadeHerald": 7830.0
+    },
+    "revision3Hp": {
+      "Dewdrop": 108.0,
+      "Wildcap": 216.0,
+      "Leafling": 324.0,
+      "Sunbee": 216.0,
+      "RibbonHare": 324.0,
+      "Applesprout": 546.0,
+      "AmberBoar": 780.0,
+      "Honeybug": 546.0,
+      "Sporeguard": 780.0,
+      "OrchardStag": 780.0,
+      "GlowWisp": 1032.0,
+      "MarshTurtle": 1296.0,
+      "ReedSprite": 1032.0,
+      "PuddleJelly": 1296.0,
+      "CrystalMoth": 1296.0,
+      "FrostCub": 1566.0,
+      "IceGolem": 1848.0,
+      "Snowcap": 1566.0,
+      "PeakOwl": 1848.0,
+      "FrostWolf": 1848.0,
+      "Rootling": 2148.0,
+      "RuinSentinel": 2304.0,
+      "ShadeWisp": 2148.0,
+      "StoneWarden": 2304.0,
+      "VineBeast": 2304.0,
+      "TownWildwoodKing": 2764.8,
+      "TownBrambleCaptain": 864.0,
+      "MooncapMonarch": 5184.0,
+      "DewdropMatriarch": 1620.0,
+      "AmberAntlerKing": 12480.0,
+      "HoneyHiveMarshal": 3900.0,
+      "CrystalShellSovereign": 20736.0,
+      "MarshWispHerald": 6480.0,
+      "FrostfangSovereign": 29568.0,
+      "IceboundSentinel": 9240.0,
+      "RootheartGuardian": 36864.0,
+      "RuinShadeHerald": 11520.0
     }
   }
 }

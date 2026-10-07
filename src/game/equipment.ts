@@ -66,9 +66,12 @@ export function rollGear(id:string,rarity:Rarity,random= Math.random):GearInstan
 }
 /** Rates are per slot per kill. Common/Rare are disjoint; slots roll independently.
  * Levels between table entries use the preceding row; values outside the table clamp.
- * Elites use the exact same equipment table as ordinary monsters. */
+ * Elite rolls use their own guaranteed two-item weighted table. */
 export function equipmentDropRow(level:number){return [...config.drops.levels].reverse().find(row=>level>=row.monsterLevel)||config.drops.levels[0];}
-export function rollEquipmentDrops(level:number,_boss:boolean,random=Math.random):GearInstance[] {
+export type EquipmentDropTier='normal'|'boss'|'mini';
+export function rollEquipmentDrops(level:number,tier:EquipmentDropTier|boolean,random=Math.random):GearInstance[] {
+ const kind=tier===true?'boss':tier===false?'normal':tier;
+ if(kind!=='normal')return rollEliteEquipmentDrops(level,kind,random);
  const row=equipmentDropRow(level),set=gearSets.find(s=>s.level===row.gearLevel);
  if(!set)throw new Error(`Unknown equipment drop set level ${row.gearLevel}`);
  const drops:GearInstance[]=[];
@@ -79,6 +82,24 @@ export function rollEquipmentDrops(level:number,_boss:boolean,random=Math.random
   const pool=equipment.filter(g=>g.setId===set.id&&g.slot===slot);
   const gear=pool.length===1?pool[0]:pool[Math.min(pool.length-1,Math.floor(random()*pool.length))];
   drops.push(rollGear(gear.id,rarity,random));
+ }
+ return drops;
+}
+/** Two independent weighted group draws, then uniform slot choice within the group.
+ * Repeated slots/items are allowed; rollGear gives every piece its own UUID/affixes. */
+export function rollEliteEquipmentDrops(level:number,tier:'boss'|'mini',random=Math.random):GearInstance[] {
+ const configRow=[...config.eliteDrops.levels].reverse().find(row=>level>=row.monsterLevel)||config.eliteDrops.levels[0];
+ const set=gearSets.find(s=>s.level===configRow.gearLevel);
+ if(!set)throw new Error(`Unknown elite drop set level ${configRow.gearLevel}`);
+ const weights=config.eliteDrops[tier],drops:GearInstance[]=[];
+ for(let n=0;n<config.eliteDrops.count;n++){
+  const roll=random();let cumulative=0;
+  const selected=weights.find(row=>{cumulative=Math.round((cumulative+row.weight)*1e15)/1e15;return roll<cumulative;})||weights[weights.length-1];
+  const slots=config.eliteDrops.groups[selected.group as keyof typeof config.eliteDrops.groups];
+  const slot=slots[Math.min(slots.length-1,Math.floor(random()*slots.length))];
+  const pool=equipment.filter(g=>g.setId===set.id&&g.slot===slot);
+  const gear=pool.length===1?pool[0]:pool[Math.min(pool.length-1,Math.floor(random()*pool.length))];
+  drops.push(rollGear(gear.id,selected.rarity as Rarity,random));
  }
  return drops;
 }

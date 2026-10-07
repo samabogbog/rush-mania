@@ -1403,6 +1403,87 @@
           "rare": "number"
         }
       ]
+    },
+    "eliteDrops": {
+      "count": "number",
+      "levels": [
+        {
+          "monsterLevel": "number",
+          "gearLevel": "number"
+        },
+        {
+          "monsterLevel": "number",
+          "gearLevel": "number"
+        },
+        {
+          "monsterLevel": "number",
+          "gearLevel": "number"
+        },
+        {
+          "monsterLevel": "number",
+          "gearLevel": "number"
+        },
+        {
+          "monsterLevel": "number",
+          "gearLevel": "number"
+        }
+      ],
+      "groups": {
+        "attack": [
+          "string",
+          "string"
+        ],
+        "defense": [
+          "string",
+          "string",
+          "string",
+          "string"
+        ]
+      },
+      "boss": [
+        {
+          "group": "string",
+          "rarity": "string",
+          "weight": "number"
+        },
+        {
+          "group": "string",
+          "rarity": "string",
+          "weight": "number"
+        },
+        {
+          "group": "string",
+          "rarity": "string",
+          "weight": "number"
+        },
+        {
+          "group": "string",
+          "rarity": "string",
+          "weight": "number"
+        }
+      ],
+      "mini": [
+        {
+          "group": "string",
+          "rarity": "string",
+          "weight": "number"
+        },
+        {
+          "group": "string",
+          "rarity": "string",
+          "weight": "number"
+        },
+        {
+          "group": "string",
+          "rarity": "string",
+          "weight": "number"
+        },
+        {
+          "group": "string",
+          "rarity": "string",
+          "weight": "number"
+        }
+      ]
     }
   },
   "refinement": {
@@ -3486,17 +3567,56 @@
         "hp": "number",
         "atk": "number",
         "defense": "number",
-        "gold": "number",
-        "xp": "number"
+        "xp": "number",
+        "goldPerLevel": "number"
       },
       "mini": {
         "hp": "number",
         "atk": "number",
         "defense": "number",
-        "gold": "number",
-        "xp": "number"
+        "xp": "number",
+        "goldPerLevel": "number"
       },
       "previousRevisionHp": {
+        "Dewdrop": "number",
+        "Wildcap": "number",
+        "Leafling": "number",
+        "Sunbee": "number",
+        "RibbonHare": "number",
+        "Applesprout": "number",
+        "AmberBoar": "number",
+        "Honeybug": "number",
+        "Sporeguard": "number",
+        "OrchardStag": "number",
+        "GlowWisp": "number",
+        "MarshTurtle": "number",
+        "ReedSprite": "number",
+        "PuddleJelly": "number",
+        "CrystalMoth": "number",
+        "FrostCub": "number",
+        "IceGolem": "number",
+        "Snowcap": "number",
+        "PeakOwl": "number",
+        "FrostWolf": "number",
+        "Rootling": "number",
+        "RuinSentinel": "number",
+        "ShadeWisp": "number",
+        "StoneWarden": "number",
+        "VineBeast": "number",
+        "TownWildwoodKing": "number",
+        "TownBrambleCaptain": "number",
+        "MooncapMonarch": "number",
+        "DewdropMatriarch": "number",
+        "AmberAntlerKing": "number",
+        "HoneyHiveMarshal": "number",
+        "CrystalShellSovereign": "number",
+        "MarshWispHerald": "number",
+        "FrostfangSovereign": "number",
+        "IceboundSentinel": "number",
+        "RootheartGuardian": "number",
+        "RuinShadeHerald": "number"
+      },
+      "revision3Hp": {
         "Dewdrop": "number",
         "Wildcap": "number",
         "Leafling": "number",

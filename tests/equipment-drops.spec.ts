@@ -6,7 +6,7 @@ test('five level sets have all six slots and rarity rolls preserve main stats wi
  expect(gearSets.map(s=>s.level)).toEqual([10,30,50,70,90]);
  for(const set of gearSets){const pieces=equipment.filter(g=>g.setId===set.id);expect(pieces).toHaveLength(8);expect(new Set(pieces.map(p=>p.slot))).toEqual(new Set(gearSlots));expect(pieces.every(p=>Object.values(p.bonuses).some(v=>v>0))).toBe(true);}
  for(const rarity of ['common','rare','epic','legend'] as Rarity[]){const item=rollGear('thornwood-blade',rarity,()=>.99);expect(Object.keys(item.secondary!)).toHaveLength(secondaryCounts[rarity]);expect(itemBonuses(item).atk).toBeGreaterThanOrEqual(32);}
- expect(rollEquipmentDrops(1,false,()=>.5)).toEqual([]);expect(rollEquipmentDrops(90,true,()=>.99)).toEqual([]);
+ expect(rollEquipmentDrops(1,false,()=>.5)).toEqual([]);expect(rollEquipmentDrops(90,true,()=>.99).map(g=>g.rarity)).toEqual(['epic','epic']);
  const numbers=[.01,0,.5,.5,...Array(5).fill(.5)];const rare=rollEquipmentDrops(85,false,()=>numbers.shift()??.5)[0]!;expect(rare.rarity).toBe('rare');expect(rare.gearId).toMatch(/^starfall-/);
 });
 test('monster gear drops retain their exact identity and rolls through a full bag and collection',()=>{

@@ -12,9 +12,9 @@ for(const zone of Object.keys(zones) as ZoneId[])test(`${zone}: square sectors, 
  expect(new Set(entries.map(m=>`${Math.round(m.x/30)},${Math.round(m.z/30)}`)).size).toBe(9);
  for(const m of entries.filter(m=>species[m.kind].boss||species[m.kind].miniBoss)){
   const sim=new Simulation(()=>.5,undefined,null),spec=sim.monsterSpec(m.kind),base=normalMonsterBalance(spec.level);
-  expect(spec.hp/base.hp).toBe(spec.boss?16:5);
-  expect(spec.atk/base.atk).toBeCloseTo(spec.boss?3:1.8);
-  expect(spec.defense/base.defense).toBeCloseTo(spec.boss?3:1.8);
+  expect(spec.hp/base.hp).toBe(spec.boss?30:15);
+  expect(spec.atk/base.atk).toBeCloseTo(spec.boss?6:3);
+  expect(spec.defense/base.defense).toBeCloseTo(spec.boss?2:1.5);
  }
 });
 test('nearby elites acquire without selecting; windup gives time; leash heals and town hub stays safe',()=>{

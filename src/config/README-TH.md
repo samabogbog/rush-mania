@@ -6,7 +6,7 @@
 | --- | --- |
 | progression.json | `levels` ตาราง EXP 1–100, `pointsPerLevel`, สูตร HP/MP/ATK/DEF, crit/regen, `caps`, ค่าเริ่มผู้เล่นใหม่ |
 | classes.json | `classes` ระยะ/ช่วงโจมตี, `skills` 60 รายการ: MP, cooldown, power, range, radius, duration, cast, level |
-| equipment.json | `crafted` 18 สูตรเดิม, `sets` 5 เซ็ต, `pieceFormulas`, rarity, affix, โบนัสเซ็ต, `drops.levels` และ `drops.slotMultipliers` |
+| equipment.json | `crafted` 18 สูตรเดิม, `sets` 5 เซ็ต, `pieceFormulas`, rarity, affix, โบนัสเซ็ต, `drops.levels`, `drops.slotMultipliers`, `eliteDrops` |
 | refinement.json | success 10 ขั้น, rareMultiplier, bonusLinear, cost, downgrade, stoneCraftCount และดรอปหิน |
 | content.json | `normalBalance` checkpoints/multipliers, `species` identity/AI/legacy stats, `zones.level` ระดับเข้า, `recommendedLevel` เริ่มช่วงแนะนำ, `maxLevel` จบช่วงแนะนำ/รายชื่อมอนสเตอร์, `quests` รางวัล |
 | monster-groups.json | รัศมีเขต/จุดเกิด, ความเร็ววิ่ง, ตำแหน่งและจำนวน6–8ตัวต่อกลุ่ม; ตรวจด้วย `validateMonsterGroupConfig` ใน map-data.ts |
@@ -63,4 +63,6 @@ validateConfiguration ใช้ได้ใน browser และ Worker ไม�
 
 ## แผนที่และดรอปอุปกรณ์ 7 ต.ค. 2026
 
-ดู [ตารางและกติกาล่าสุด](../../docs/MAP-DROP-BALANCE-TH.md). อุปกรณ์ใช้ `equipment.drops` แทน global dropChance/rarityThresholds เดิม: สุ่มแยก6ช่องต่อkill, Common/Rareไม่ซ้อนในช่องเดียว, ไม่มี Epic/Legendจากมอนสเตอร์รวมboss/mini. Item เดิมทุกrarityยังอยู่และคราฟต์ได้ตามระบบเดิม. `normalBalance.previousRevisionHp` เป็น snapshot migration revision2 ห้ามแก้เพื่อปรับHPปัจจุบัน. Town species/groups ว่าง; แผนที่อื่นคง6กลุ่ม.
+ดู [ตารางและกติกาล่าสุด](../../docs/MAP-DROP-BALANCE-TH.md). อุปกรณ์ใช้ `equipment.drops` แทน global dropChance/rarityThresholds เดิม: สุ่มแยก6ช่องต่อkill, Common/Rareไม่ซ้อนในช่องเดียว, มอนสเตอร์ปกติไม่มี Epic/Legend; boss/miniรับประกัน2ชิ้นRare/EpicตามeliteDrops. Item เดิมทุกrarityยังอยู่และคราฟต์ได้ตามระบบเดิม. `normalBalance.previousRevisionHp` เป็น snapshot migration revision2 (revision3Hpสำหรับrevision3) ห้ามแก้เพื่อปรับHPปัจจุบัน. Town species/groups ว่าง; แผนที่อื่นคง6กลุ่ม.
+
+Eliteล่าสุด: `content.normalBalance.boss/mini` กำหนดHP/ATK/DEF multiplierเทียบnormalระดับเดียวกันและgoldPerLevel. `equipment.eliteDrops` แยกboss/mini4กลุ่มน้ำหนักรวม1, รับประกัน2independentdraws, ซ้ำslotได้. normaldropsไม่เปลี่ยน. รายละเอียดตารางในdocs/MAP-DROP-BALANCE-TH.md

@@ -12,8 +12,8 @@ import { isClass } from '../src/game/classes';
 import { capture, type Command, type Player, type Realm, type Snapshot } from './protocol';
 import type { RealmStore } from './store';
 export class GameError extends Error { constructor(message:string,public status=400){super(message)} }
-export const ROOM_LAYOUT_REVISION=5;
-export const MONSTER_BALANCE_REVISION=3;
+export const ROOM_LAYOUT_REVISION=6;
+export const MONSTER_BALANCE_REVISION=4;
 export function freshRealm(now:number):Realm { const sim=new Simulation(Math.random,undefined,null); return {version:2,time:now,players:{},rooms:{glade:{zone:'glade',monsters:sim.monsters,layoutRevision:ROOM_LAYOUT_REVISION,balanceRevision:MONSTER_BALANCE_REVISION}},chat:[],ledger:[]}; }
 function roomFor(realm:Realm,id:string,zone:ZoneId) {
   if(!realm.rooms) {realm.rooms={glade:{zone:'glade',monsters:realm.monsters||new Simulation(Math.random,undefined,null).monsters}};delete realm.monsters;realm.version=2;}
@@ -23,7 +23,7 @@ function roomFor(realm:Realm,id:string,zone:ZoneId) {
     if(room){
       const remaining=[...room.monsters];
       for(const m of sim.monsters){const index=remaining.findIndex(old=>old.kind===m.kind);if(index<0)continue;const old=remaining.splice(index,1)[0];
-        const max=sim.monsterSpec(m.kind).hp,oldMax=room.balanceRevision===MONSTER_BALANCE_REVISION?max:(realm.balance?.[m.kind]?.hp??(room.balanceRevision===2?contentConfig.normalBalance.previousRevisionHp[m.kind]:species[m.kind].hp));
+        const max=sim.monsterSpec(m.kind).hp,oldMax=room.balanceRevision===MONSTER_BALANCE_REVISION?max:(realm.balance?.[m.kind]?.hp??(room.balanceRevision===3?contentConfig.normalBalance.revision3Hp[m.kind]:room.balanceRevision===2?contentConfig.normalBalance.previousRevisionHp[m.kind]:species[m.kind].hp));
         Object.assign(m,{hp:old.alive?max*Math.max(0,Math.min(1,old.hp/oldMax)):0,alive:old.alive,respawn:old.respawn,attack:old.attack,stun:old.stun,slow:old.slow,poison:old.poison,poisonTimer:old.poisonTimer,poisonDamage:old.poisonDamage});
       }
     }
@@ -39,7 +39,7 @@ function roomFor(realm:Realm,id:string,zone:ZoneId) {
   if(current.balanceRevision!==MONSTER_BALANCE_REVISION){
     const sim=new Simulation(Math.random,undefined,null);sim.balance=realm.balance||{};
     for(const monster of current.monsters){
-      const previousMax=realm.balance?.[monster.kind]?.hp??(current.balanceRevision===2?contentConfig.normalBalance.previousRevisionHp[monster.kind]:species[monster.kind].hp);
+      const previousMax=realm.balance?.[monster.kind]?.hp??(current.balanceRevision===3?contentConfig.normalBalance.revision3Hp[monster.kind]:current.balanceRevision===2?contentConfig.normalBalance.previousRevisionHp[monster.kind]:species[monster.kind].hp);
       if(monster.alive)monster.hp=sim.monsterSpec(monster.kind).hp*Math.max(0,Math.min(1,monster.hp/previousMax));
     }
     current.balanceRevision=MONSTER_BALANCE_REVISION;
