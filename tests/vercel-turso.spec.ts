@@ -23,7 +23,7 @@ test('embedded migration checksums and statements exactly match checked-in SQLit
 test('automatic migrations and CLI migrations are idempotent and retain accounts and realm after reopen',async()=>{
  const c=client(),DB=await initializeDatabase(c),realm=freshRealm(1000);await new D1RealmStore(DB).create(realm);await migrateDatabase(c);
  const {migrateTurso}=await import('../tools/migrate-turso.mjs');await migrateTurso(c);
- const row=await new D1RealmStore(DB).read();expect(row?.revision).toBe(0);expect(row?.realm.players).toEqual({});expect((await c.execute('SELECT COUNT(*) n FROM mossvale_migrations')).rows[0].n).toBe(2);
+ const row=await new D1RealmStore(DB).read();expect(row?.revision).toBe(0);expect(row?.realm.players).toEqual({});expect((await c.execute('SELECT COUNT(*) n FROM mossvale_migrations')).rows[0].n).toBe(migrations.length);
  c.close();clients.splice(clients.indexOf(c),1);const reopened=await initializeDatabase(client());expect(await new D1RealmStore(reopened).read()).toEqual(row);
 });
 test('realm concurrent revision writes have one winner and stale writes cannot overwrite it',async()=>{

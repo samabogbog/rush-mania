@@ -83,7 +83,7 @@ export function migrateRealmItems(realm:Realm){
  realm.itemRevision=1;
 }
 export const INPUT_LEASE_MS=1500;
-function advance(realm:Realm,now:number) {
+export function advanceRealm(realm:Realm,now:number) {
   migrateRealmItems(realm);
   if(!realm.rooms)roomFor(realm,'glade','glade');
   for(const [id,room] of Object.entries(realm.rooms||{}))roomFor(realm,id,room.zone);
@@ -230,7 +230,7 @@ export async function transact(store:RealmStore,identity:{id:string;name:string;
     let row=await store.read();
     if(!row){await store.create(freshRealm(now));row=await store.read()}
     if(!row)throw new GameError('The game database is unavailable',503);
-    const {realm,revision}=row;if(realm.maintenance)throw new GameError("Realm maintenance. Your adventure is saved; reconnect when it reopens.",503); advance(realm,now);
+    const {realm,revision}=row;if(realm.maintenance)throw new GameError("Realm maintenance. Your adventure is saved; reconnect when it reopens.",503); advanceRealm(realm,now);
     let player=realm.players[identity.id];
     if(!player) {
       if(Object.keys(realm.players).length>=128)throw new GameError('This alpha realm has reached its account capacity',503);
@@ -266,7 +266,11 @@ export async function transact(store:RealmStore,identity:{id:string;name:string;
       for(const command of input.commands)execute(player,realm,command,now,identity.admin===true);
     }
     player.lastSeen=now;realm.ledger=realm.ledger.slice(-500);
-    if(await store.commit(revision,realm)) return {balance:realm.balance||{},community:communitySnapshot(realm,player,now),player:structuredClone(player),monsters:structuredClone(roomFor(realm,player.room||player.actor.save.zone,player.actor.save.zone).monsters),peers:Object.values(realm.players).filter(p=>p.id!==identity.id&&p.room===player.room&&now-p.lastSeen<10_000).map(p=>({id:p.id,name:p.name,job:p.actor.save.job,x:p.actor.x,z:p.actor.z,hp:p.actor.save.hp,maxHp:progression.hpBase+p.actor.save.stats.vit*progression.hpVit+(p.actor.save.level-1)*progression.hpPerLevel})),chat:structuredClone(realm.chat),revision:revision+1,serverTime:now};
+    if(await store.commit(revision,realm)) return realmSnapshot(realm,identity.id,revision+1,now);
   }
   throw new GameError('The realm is busy. Your commands can be retried safely.',503);
+}
+export function realmSnapshot(realm:Realm,playerId:string,revision:number,now=Date.now()):Snapshot {
+  const player=realm.players[playerId];if(!player)throw new GameError('Player unavailable',404);
+  return {balance:realm.balance||{},community:communitySnapshot(realm,player,now),player:structuredClone(player),monsters:structuredClone(roomFor(realm,player.room||player.actor.save.zone,player.actor.save.zone).monsters),peers:Object.values(realm.players).filter(p=>p.id!==playerId&&p.room===player.room&&now-p.lastSeen<10_000).map(p=>({id:p.id,name:p.name,job:p.actor.save.job,x:p.actor.x,z:p.actor.z,hp:p.actor.save.hp,maxHp:progression.hpBase+p.actor.save.stats.vit*progression.hpVit+(p.actor.save.level-1)*progression.hpPerLevel})),chat:structuredClone(realm.chat),revision,serverTime:now};
 }

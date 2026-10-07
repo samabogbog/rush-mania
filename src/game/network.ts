@@ -10,9 +10,9 @@ import {EntityPresentation,LocalPresentation} from './network-presentation';
 export class NetworkSimulation extends Simulation {
   override online=true;
   override connection='Connecting…';
-  private session=''; private sequence=0; private queue:Command[]=[];
+  protected session=''; protected sequence=0; protected queue:Command[]=[];
   private view?:LocalPresentation;private receivedAt=performance.now();private rtt=0;private sentInput:[number,number]=[0,0];
-  private presentation=new EntityPresentation();private payloadBytes=0;
+  protected presentation=new EntityPresentation();private payloadBytes=0;
   override get renderX(){return this.view?.position.x??this.x}
   override get renderZ(){return this.view?.position.z??this.z}
   private get snapshotAge(){return Math.max(0,performance.now()-this.receivedAt);}
@@ -22,11 +22,11 @@ export class NetworkSimulation extends Simulation {
   override get renderCast(){return this.cast?{...this.cast,remaining:Math.max(0,this.cast.remaining-this.snapshotAge/1000)}:null;}
   override renderMonster(monster:Simulation['monsters'][number]){return this.presentation.position('monster:'+monster.id,monster,performance.now());}
   override renderPeer(player:Simulation['remotePlayers'][number]){return this.presentation.position('peer:'+player.id,player,performance.now());}
-  get networkDiagnostics(){return Object.freeze({rttMs:this.rtt,snapshotIntervalMs:this.presentation.intervalMs,snapshotAgeMs:this.snapshotAge,payloadBytes:this.payloadBytes,interpolationDelayMs:this.presentation.delayMs,bufferedSamples:this.presentation.bufferedSamples,pendingCommands:this.queue.length,inFlight:this.running,retries:this.retry,predictionStale:this.snapshotAge>=1200});}
-  private input:[number,number]=[0,0]; private running=false; private timer?:ReturnType<typeof setTimeout>;
-  private eventCursor=0; private chatSeen=new Set<string>(); private retry=0; private stopped=false;
-  constructor(snapshot:Snapshot) {super(Math.random,snapshot.player.actor.save,null);this.accept(snapshot);this.session=snapshot.player.session.id;this.sequence=snapshot.player.session.sequence;this.schedule(200);}
-  private accept(snapshot:Snapshot) {
+  get networkDiagnostics(){return Object.freeze({rttMs:this.rtt,snapshotIntervalMs:this.presentation.intervalMs,snapshotAgeMs:this.snapshotAge,payloadBytes:this.payloadBytes,interpolationDelayMs:this.presentation.delayMs,bufferedSamples:this.presentation.bufferedSamples,pendingCommands:this.queue.length,inFlight:this.running,retries:this.retry,predictionStale:this.snapshotAge>=1200,transport:'http' as string});}
+  protected input:[number,number]=[0,0]; private running=false; private timer?:ReturnType<typeof setTimeout>;
+  private eventCursor=0; private chatSeen=new Set<string>(); private retry=0; protected stopped=false;
+  constructor(snapshot:Snapshot,private polling=true) {super(Math.random,snapshot.player.actor.save,null);this.accept(snapshot);this.session=snapshot.player.session.id;this.sequence=snapshot.player.session.sequence;if(polling)this.schedule(200);}
+  protected accept(snapshot:Snapshot) {
     const oldZone=this.save.zone,oldAlive=this.save.hp>0&&this.deathTime<=0,oldX=this.x,oldZ=this.z;
     this.receivedAt=performance.now();
     const before=JSON.stringify([this.save.job,this.save.stats,this.save.points,this.save.weapon,this.save.hotbar,this.save.skillChoices,this.save.skillRanks,this.save.auxiliary,this.save.items,this.save.gold,this.save.equipped,this.save.zone,this.save.quests]);
@@ -47,8 +47,8 @@ export class NetworkSimulation extends Simulation {
     this.connection='Online · server saved'; this.retry=0;
     if(socialChanged||before!==JSON.stringify([this.save.job,this.save.stats,this.save.points,this.save.weapon,this.save.hotbar,this.save.skillChoices,this.save.skillRanks,this.save.auxiliary,this.save.items,this.save.gold,this.save.equipped,this.save.zone,this.save.quests]))this.onEvent('', 'sync');
   }
-  private send(type:string,...args:unknown[]) { if(this.stopped)return; if(this.queue.length>=32){this.onEvent('Waiting for connection. Try again shortly.');return;}this.queue.push({id:`${this.session}:${++this.sequence}`,type,args});this.schedule(0); }
-  private schedule(delay:number) {if(this.timer)clearTimeout(this.timer);if(!this.stopped)this.timer=setTimeout(()=>void this.flush(),delay);}
+  protected send(type:string,...args:unknown[]) { if(this.stopped)return; if(this.queue.length>=32){this.onEvent('Waiting for connection. Try again shortly.');return;}this.queue.push({id:`${this.session}:${++this.sequence}`,type,args});this.schedule(0); }
+  private schedule(delay:number) {if(!this.polling)return;if(this.timer)clearTimeout(this.timer);if(!this.stopped)this.timer=setTimeout(()=>void this.flush(),delay);}
   private async flush() {
     if(this.running||this.stopped)return;this.running=true;const started=performance.now();this.sentInput=this.paused?[0,0]:[...this.input];
     try {
@@ -112,6 +112,11 @@ export class RealmConnectionError extends Error{constructor(message:string,publi
 export async function startSimulation():Promise<Simulation> {
   if(new URLSearchParams(location.search).get('practice')==='1')return new Simulation();
   await requireGameAccount();
+  const ticket=await fetch('/api/realtime-ticket',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}',signal:AbortSignal.timeout(10000)});
+  if(!ticket.ok)throw new RealmConnectionError('Cannot connect to the online realm.',ticket.status);
+  const configuration=await ticket.json();
+  if(configuration.available===true){const {RealtimeNetworkSimulation}=await import('./realtime-network');return RealtimeNetworkSimulation.connect(configuration)}
+  if(configuration.available!==false)throw new RealmConnectionError('Invalid realm transport configuration',503);
   const response=await fetch('/api/game',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({connect:true}),signal:AbortSignal.timeout(10000)});
   if(!response.ok)throw new RealmConnectionError('Cannot connect to the online realm. Your character is kept on the server.',response.status);
   return new NetworkSimulation(await response.json());

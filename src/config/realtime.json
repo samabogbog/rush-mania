@@ -1,0 +1,11 @@
+{
+  "tickHz": 20,
+  "snapshotHz": 10,
+  "autosaveMs": 5000,
+  "leaseMs": 30000,
+  "leaseRenewMs": 10000,
+  "ticketTtlMs": 60000,
+  "maxPayloadBytes": 8192,
+  "maxMessagesPerSecond": 40,
+  "maxConnections": 128
+}

@@ -12,7 +12,9 @@
     "dev:server": "node tools/dev-server.mjs",
     "assets:build": "node tools/build-assets.mjs && node tools/optimize-assets.mjs",
     "build:vercel": "tsc && vite build",
-    "db:migrate:turso": "node tools/migrate-turso.mjs"
+    "db:migrate:turso": "node tools/migrate-turso.mjs",
+    "build:realtime": "node tools/build-realtime.mjs",
+    "start:realtime": "node dist/realtime/start.mjs"
   },
   "dependencies": {
     "@babylonjs/core": "^9.29.0",
@@ -20,13 +22,15 @@
     "@babylonjs/serializers": "^9.29.0",
     "@fontsource/nunito": "^5.3.0",
     "@libsql/client": "^0.18.0",
-    "drizzle-orm": "^0.45.3"
+    "drizzle-orm": "^0.45.3",
+    "ws": "^8.22.0"
   },
   "devDependencies": {
     "@gltf-transform/core": "^4.5.1",
     "@gltf-transform/functions": "^4.5.1",
     "@playwright/test": "^1.56.0",
     "@types/node": "^26.6.4",
+    "@types/ws": "^8.18.2",
     "agent-browser": "^0.38.1",
     "drizzle-kit": "^0.31.11",
     "esbuild": "^0.28.2",

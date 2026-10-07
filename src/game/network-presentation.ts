@@ -5,9 +5,10 @@ const clamp=(value:number,min:number,max:number)=>Math.max(min,Math.min(max,valu
 export class EntityPresentation {
   private tracks=new Map<string,Sample[]>();private playback=new Map<string,number>();private lastArrival?:number;private jitterMs=0;
   intervalMs=200;delayMs=150;
+  constructor(private maxDelayMs=900,private initialIntervalMs=200){this.intervalMs=initialIntervalMs;}
   accept(entities:(Position&{id:string;life:string})[],at:number,reset=false) {
-    if(reset){this.tracks.clear();this.playback.clear();this.lastArrival=undefined;this.intervalMs=200;this.delayMs=150;this.jitterMs=0;}
-    if(this.lastArrival!==undefined){const interval=clamp(at-this.lastArrival,1,2000);this.jitterMs+=(Math.abs(interval-this.intervalMs)-this.jitterMs)*.25;this.intervalMs+=(interval-this.intervalMs)*.25;this.delayMs=clamp(this.intervalMs*1.05+this.jitterMs,100,900);}
+    if(reset){this.tracks.clear();this.playback.clear();this.lastArrival=undefined;this.intervalMs=this.initialIntervalMs;this.delayMs=150;this.jitterMs=0;}
+    if(this.lastArrival!==undefined){const interval=clamp(at-this.lastArrival,1,2000);this.jitterMs+=(Math.abs(interval-this.intervalMs)-this.jitterMs)*.25;this.intervalMs+=(interval-this.intervalMs)*.25;this.delayMs=clamp(this.intervalMs*1.05+this.jitterMs,100,this.maxDelayMs);}
     this.lastArrival=at;const retained=new Set<string>();
     for(const entity of entities){retained.add(entity.id);let samples=this.tracks.get(entity.id)||[];const previous=samples.at(-1);
       if(previous&&(previous.life!==entity.life||Math.hypot(entity.x-previous.x,entity.z-previous.z)>3)){samples=[];this.playback.delete(entity.id);}

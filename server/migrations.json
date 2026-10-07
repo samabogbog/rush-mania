@@ -18,5 +18,12 @@
       "CREATE UNIQUE INDEX `game_accounts_legacy_site_id_unique` ON `game_accounts` (`legacy_site_id`)",
       "CREATE TABLE `game_sessions` (\n\t`token_hash` text PRIMARY KEY NOT NULL,\n\t`account_id` text NOT NULL,\n\t`expires_at` integer NOT NULL,\n\tFOREIGN KEY (`account_id`) REFERENCES `game_accounts`(`id`) ON UPDATE no action ON DELETE cascade\n)"
     ]
+  },
+  {
+    "name": "0002_realtime_lease.sql",
+    "checksum": "7c12d6d033597562354043eb7ce8946320385529b0552d974d7ad9a72efaf145",
+    "statements": [
+      "CREATE TABLE `realtime_leases` (\n  `id` text PRIMARY KEY NOT NULL,\n  `owner` text NOT NULL,\n  `expires_at` integer NOT NULL\n)"
+    ]
   }
 ]

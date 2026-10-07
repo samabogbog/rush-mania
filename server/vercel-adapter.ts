@@ -12,6 +12,6 @@ export function vercelRequest(request:Request,platform=false):Request {
   return new Request(request,{headers});
 }
 
-export async function handleVercelRequest(request:Request,DB:Database,adminAccountId?:string,platform=false):Promise<Response> {
-  return worker.fetch(vercelRequest(request,platform),{DB,ADMIN_ACCOUNT_ID:adminAccountId});
+export async function handleVercelRequest(request:Request,DB:Database,adminAccountId?:string,platform=false,realtime?:{url?:string;secret?:string}):Promise<Response> {
+  return worker.fetch(vercelRequest(request,platform),{DB,ADMIN_ACCOUNT_ID:adminAccountId,REALTIME_SERVER_URL:realtime?.url,REALTIME_SIGNING_SECRET:realtime?.secret});
 }
