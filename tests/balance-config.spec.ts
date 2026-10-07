@@ -5,10 +5,10 @@ import {classes,skills} from '../src/game/classes';
 import {species,zones,questDefinitions} from '../src/game/content';
 import {refineBonus,refineChance,refineCost} from '../src/game/refinement';
 import {Simulation} from '../src/simulation';
-import {craftingConfig,progression,equipmentConfig,refinement,classConfig,contentConfig,economy,validateConfiguration} from '../src/config/balance';
-const config=()=>structuredClone({crafting:craftingConfig,progression,equipment:equipmentConfig,refinement,classes:classConfig,content:contentConfig,economy});
+import {craftingConfig,progression,equipmentConfig,refinement,classConfig,skillRankConfig,contentConfig,economy,validateConfiguration} from '../src/config/balance';
+const config=()=>structuredClone({skillRanks:skillRankConfig,crafting:craftingConfig,progression,equipment:equipmentConfig,refinement,classes:classConfig,content:contentConfig,economy});
 test('default complete catalogs preserve existing ids, numbers, formulas and descriptions',()=>{
- expect(equipment.map(g=>g.id)).toEqual(baseline.equipment.map(g=>g.id));expect(gearSets).toEqual(baseline.gearSets);expect(skills).toEqual(baseline.skills);expect(classes).toEqual(baseline.classes);expect(questDefinitions).toEqual(baseline.questDefinitions);
+ expect(equipment.map(g=>g.id)).toEqual(baseline.equipment.map(g=>g.id));expect(gearSets).toEqual(baseline.gearSets);for(const job of ['swordsman','mage','archer'] as const)expect(skills[job].map(({id,stage,branch,level,mp,cooldown,cast})=>({id,stage,branch,level,mp,cooldown,cast}))).toEqual(baseline.skills[job].map(({id,stage,branch,level,mp,cooldown,cast})=>({id,stage,branch,level,mp,cooldown,cast}))); expect(classes).toEqual(baseline.classes);expect(questDefinitions).toEqual(baseline.questDefinitions);
  for(const gear of equipment){expect(gear.materials[0][0]).toBe('Shade essence');expect(gear.materials[1][0]).toBe(gear.slot==='weapon'||gear.slot==='accessory'?'Rune stone':'Sky feather');}
  expect(Array.from({length:11},(_,i)=>refineBonus(i))).toEqual([0,10,21,33,46,60,75,91,108,126,145]);
 });
@@ -22,8 +22,8 @@ test('shared runtime consumes edited balance values, then restores them',()=>{
   expect(itemBonuses({gearId:'thornwood-blade',rarity:'legend'},false).atk).toBe(64);
   expect(setBonuses('thornwood',6).damageBonus).toBe(17);expect(rollEquipmentDrops(5,false,()=>0)).toEqual([]);
   contentConfig.normalBalance.checkpoints[0].hp=123;expect(sim.monsterSpec('Dewdrop').hp).toBe(61.5);
-  classConfig.skills.swordsman[0].power=7;expect(sim.skillList[0].power).toBe(7);
- }finally{Object.assign(progression,old.progression);refinement.success.splice(0,refinement.success.length,...old.refinement.success);Object.assign(refinement,{...old.refinement,success:refinement.success});Object.assign(equipmentConfig,old.equipment);Object.assign(contentConfig.normalBalance,old.content.normalBalance);Object.assign(classConfig.skills.swordsman[0],old.classes.skills.swordsman[0]);}
+  skillRankConfig.levels[0].damagePercent[0]=700;expect(sim.skillList[0].power).toBe(7);
+ }finally{Object.assign(progression,old.progression);refinement.success.splice(0,refinement.success.length,...old.refinement.success);Object.assign(refinement,{...old.refinement,success:refinement.success});Object.assign(equipmentConfig,old.equipment);Object.assign(contentConfig.normalBalance,old.content.normalBalance);Object.assign(classConfig.skills.swordsman[0],old.classes.skills.swordsman[0]);Object.assign(skillRankConfig,old.skillRanks);}
 });
 test('bad edits fail clearly before gameplay',()=>{
  for(const change of [(c:ReturnType<typeof config>)=>c.refinement.success[0]=2,c=>c.refinement.costBase=-1,c=>c.content.zones.glade.species[0]='Typo',c=>c.equipment.crafted[1].id=c.equipment.crafted[0].id,c=>c.equipment.drops.levels[1].monsterLevel=4,c=>Object.assign(c.equipment.affixRanges,{typo:[1,2]}),c=>c.economy.potionCooldown=Number.NaN]){const c=config();change(c);expect(()=>validateConfiguration(c)).toThrow(/Invalid balance config/);}

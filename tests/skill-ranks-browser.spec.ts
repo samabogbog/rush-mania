@@ -1,0 +1,23 @@
+import {test,expect} from '@playwright/test';
+import {Simulation} from '../src/simulation';
+import {zoneMonsterGroups,WORLD_BOUNDS} from '../src/game/map-data';
+import {mkdirSync,writeFileSync} from 'node:fs';
+test('learn and upgrade with SP, persist/reset ranks, then cast a rank-five attack against six rushing enemies',async({page})=>{
+ const seed=new Simulation(()=>.5,undefined,null);seed.save.level=30;seed.save.hp=seed.maxHp;seed.save.mp=seed.maxMp;
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.setViewportSize({width:1200,height:800});
+ await page.addInitScript(save=>{if(!sessionStorage.getItem('rank-fixture')){localStorage.setItem('mossvale-save',JSON.stringify(save));sessionStorage.setItem('rank-fixture','1');}localStorage.setItem('mossvale-quality','low')},seed.save);
+ const ready=()=>page.waitForFunction(()=>{const s=(window as any).mossvale?.snapshot();return s&&s.riggedActors===s.modelsExpected&&s.modelErrors===0},{},{timeout:60000});
+ const snap=()=>page.evaluate(()=>(window as any).mossvale.snapshot());await page.goto('/?practice=1');await ready();await expect(page.locator('#hp-text')).toContainText(String(seed.maxHp));
+ const learn=async()=>{await page.locator('[data-learn="swordsman-1"]').click();for(let n=0;n<4;n++)await page.locator('[data-upgrade-skill="swordsman-1"]').click();};
+ await page.keyboard.press('k');await learn();expect((await snap()).skillRanks['swordsman-1']).toBe(5);expect((await snap()).skillPoints).toBe(25);await expect(page.locator('[data-upgrade-skill="swordsman-1"]')).toBeDisabled();
+ mkdirSync('artifacts/skill-ranks',{recursive:true});await page.screenshot({path:'artifacts/skill-ranks/rank-five-ui.png'});
+ await page.reload();await ready();expect((await snap()).skillRanks['swordsman-1']).toBe(5);expect((await snap()).skillPoints).toBe(25);
+ await page.keyboard.press('k');await page.locator('#reset-skills').click();expect((await snap()).skillPoints).toBe(30);expect((await snap()).skillRanks).toEqual({});await learn();await page.keyboard.press('Escape');
+ const g=zoneMonsterGroups('glade')[0];await page.keyboard.press('m');const box=(await page.locator('#large-map').boundingBox())!;
+ await page.mouse.click(box.x+(g.x-WORLD_BOUNDS.minX)/(WORLD_BOUNDS.maxX-WORLD_BOUNDS.minX)*box.width,box.y+(g.z-WORLD_BOUNDS.minZ)/(WORLD_BOUNDS.maxZ-WORLD_BOUNDS.minZ)*box.height);
+ await page.waitForFunction(({x,z})=>{const s=(window as any).mossvale.snapshot();return !s.destination&&Math.hypot(s.x-x,s.z-z)<.2},g,{timeout:30000});
+ await page.waitForFunction(id=>{const s=(window as any).mossvale.snapshot();return s.monsters.filter((m:any)=>m.groupId===id).every((m:any)=>m.alive&&Math.hypot(m.x-s.x,m.z-s.z)<1.6)},g.id,{timeout:30000});
+ const before=await snap();await page.keyboard.press('1');await page.waitForFunction(k=>(window as any).mossvale.snapshot().kills>=k+6,before.kills,{timeout:12000});const after=await snap();
+ expect(after.mp).toBeLessThan(before.mp);expect(after.skillCooldowns['swordsman-1']).toBeGreaterThan(0);expect(after.monsters.filter((m:any)=>m.groupId===g.id&&m.alive)).toHaveLength(0);expect(errors).toEqual([]);
+ await page.screenshot({path:'artifacts/skill-ranks/six-target-attack.png'});writeFileSync('artifacts/skill-ranks/browser-evidence.json',JSON.stringify({fixture:{level:30,practice:true},rank:after.skillRanks['swordsman-1'],points:after.skillPoints,before:{kills:before.kills,mp:before.mp},after:{kills:after.kills,mp:after.mp,cooldown:after.skillCooldowns['swordsman-1']},pageErrors:errors},null,2));
+});

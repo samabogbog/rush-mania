@@ -1,9 +1,10 @@
 import {isCraftMaterial,isRarity,materialRarity,materialKey,sameStack,gearRecipe,craftCost,materialCount,rollMaterialDrops} from './game/crafting';
 import {materialIcons} from './game/items';
-import {craftingConfig,progression,economy,refinement,contentConfig} from './config/balance';
+import {craftingConfig,progression,economy,refinement,contentConfig,skillRankConfig} from './config/balance';
 import {EXP_CHARM,EXP_TOME,itemCategory,type ItemCategory} from './game/items';
 import {refineLevel,refineCost,rollRefinement,rollStoneDrop,refineStones,isStoneTier,type StoneTier} from './game/refinement';
 import {
+  skillAtRank,skillRankCap,
   classes,
   isAuxiliaryItem,
   skills,
@@ -57,6 +58,7 @@ export type Save = {
   hotbar: (string | null)[];
   auxiliary:(string|null)[];
   skillChoices:Record<ClassId,(string|null)[]>;
+  skillRanks:Record<string,number>;
   level: number;
   xp: number;
   gold: number;
@@ -71,7 +73,7 @@ export type Save = {
   items: Item[];
 };
 const defaults: Save = {
-  version: 7,
+  version: 8,
   zone: "glade",
   equipped: {weapon:null,helmet:null,armor:null,pants:null,boots:null,accessory:null},
   quests: {},
@@ -79,6 +81,7 @@ const defaults: Save = {
   job: "swordsman",
   hotbar: Array(6).fill(null),
   auxiliary:["Red potion","Blue potion",null,null],
+  skillRanks:{},
   skillChoices:{swordsman:Array(10).fill(null),mage:Array(10).fill(null),archer:Array(10).fill(null)},
   level: 1,
   xp: 0,
@@ -148,7 +151,7 @@ export class Simulation {
     }
     this.save.job = isClass(this.save.job) ? this.save.job : "swordsman";
     const legacyRefine=(loadedVersion<6||this.save.legacyBasicRefine)&&this.save.weapon>0;
-    this.save.version = 7;
+    this.save.version = 8;
     this.save.weapon=refineLevel(this.save.weapon);
     for(const item of this.save.items)if(isCraftMaterial(item.name)&&!item.gearId){item.rarity=isRarity(item.rarity)?item.rarity:'common';item.id=materialKey(item.name,item.rarity);}
     for(const item of this.save.items)if(item.gearId)item.refine=refineLevel(item.refine);
@@ -191,6 +194,11 @@ export class Simulation {
         if(!valid)gap=true;return valid?id!:null;
       });
     }
+    const previousRanks=this.save.skillRanks;this.save.skillRanks={};
+    for(const job of Object.keys(classes) as ClassId[])for(const id of this.save.skillChoices[job])if(id){const skill=skills[job].find(s=>s.id===id)!;this.save.skillRanks[id]=Math.max(1,Math.min(skillRankCap(skill),Math.floor(Number(previousRanks?.[id])||1)));}
+    // Rank budget is global across jobs; malformed offline saves cannot mint points.
+    let excess=Object.values(this.save.skillRanks).reduce((sum,n)=>sum+n*skillRankConfig.rankCost,0)-this.save.level*skillRankConfig.pointsPerLevel;
+    for(const id of Object.keys(this.save.skillRanks).reverse())while(excess>0&&this.save.skillRanks[id]>1){this.save.skillRanks[id]--;excess-=skillRankConfig.rankCost;}
     const available = this.unlockedSkills,used=new Set<string>();
     this.save.hotbar=Array.from({length:6},(_,index)=>{const id=this.save.hotbar?.[index];if(!id||!available.some(k=>k.id===id)||used.has(id))return null;used.add(id);return id;});
     const aux=this.save.auxiliary;this.save.auxiliary=Array.from({length:4},(_,n)=>isAuxiliaryItem(aux?.[n])?aux[n]:null);
@@ -318,7 +326,7 @@ export class Simulation {
     return classes[this.save.job];
   }
   get skillList() {
-    return skills[this.save.job];
+    return skills[this.save.job].map(skill=>skillAtRank(skill,this.skillRank(skill.id)));
   }
   get unlockedSkills() {
     return this.skillList.filter(skill=>this.save.level>=skill.level&&this.save.skillChoices[this.save.job].includes(skill.id));
@@ -361,12 +369,16 @@ export class Simulation {
     this.refreshCooldowns();this.persist();
     return true;
   }
+  skillRank(id:string){return this.save.skillRanks[id]||0;}
+  get skillPoints(){return Math.max(0,this.save.level*skillRankConfig.pointsPerLevel-Object.values(this.save.skillRanks).reduce((sum,n)=>sum+n*skillRankConfig.rankCost,0));}
+  upgradeSkill(id:string){const skill=this.skillList.find(s=>s.id===id);if(!skill||this.cast||!this.unlockedSkills.some(s=>s.id===id)||this.skillRank(id)>=skillRankCap(skill)||this.skillPoints<skillRankConfig.rankCost)return false;this.save.skillRanks[id]++;this.onEvent(`${skill.name} · Rank ${this.skillRank(id)}`,'reward');this.persist();return true;}
   chooseSkill(id:string){
-    const skill=this.skillList.find(k=>k.id===id);if(!skill||this.save.level<skill.level||this.save.skillChoices[this.save.job][skill.stage-1]||skill.stage>1&&!this.save.skillChoices[this.save.job][skill.stage-2])return false;
-    this.save.skillChoices[this.save.job][skill.stage-1]=id;const slot=this.save.hotbar.indexOf(null);if(slot>=0)this.save.hotbar[slot]=id;this.onEvent(`Learned ${skill.name}`,'reward');this.persist();return true;
+    const skill=this.skillList.find(k=>k.id===id);if(!skill||this.cast||this.skillPoints<skillRankConfig.rankCost||this.save.level<skill.level||this.save.skillChoices[this.save.job][skill.stage-1]||skill.stage>1&&!this.save.skillChoices[this.save.job][skill.stage-2])return false;
+    this.save.skillChoices[this.save.job][skill.stage-1]=id;this.save.skillRanks[id]=1;const slot=this.save.hotbar.indexOf(null);if(slot>=0)this.save.hotbar[slot]=id;this.onEvent(`Learned ${skill.name}`,'reward');this.persist();return true;
   }
   resetSkills(){
     if(this.target!==null||this.cast||this.guard.time>0||this.fury.time>0||Object.values(this.skillCooldowns).some(c=>c>0)||this.monsters.some(m=>m.alive&&m.aggro&&(!this.actorId||m.owner===this.actorId))){this.onEvent('Leave combat and wait for skill cooldowns and buffs before resetting.');return false;}
+    for(const id of this.save.skillChoices[this.save.job])if(id)delete this.save.skillRanks[id];
     this.save.skillChoices[this.save.job]=Array(10).fill(null);this.save.hotbar=Array(6).fill(null);this.refreshCooldowns();this.persist();this.onEvent('Skill choices reset. Select one skill at each stage.');return true;
   }
   assignAuxiliary(slot:number,name:string|null){if(!Number.isInteger(slot)||slot<0||slot>3||name!==null&&!isAuxiliaryItem(name)||name===EXP_CHARM.name&&!this.save.items.some(i=>i.name===name&&i.count>0))return false;const previous=name?this.save.auxiliary.indexOf(name):-1;if(previous>=0)this.save.auxiliary[previous]=this.save.auxiliary[slot];this.save.auxiliary[slot]=name;this.persist();return true;}
@@ -615,37 +627,17 @@ export class Simulation {
       Math.hypot(monster.x - this.x, monster.z - this.z) <= skill.range &&
       this.direct(monster.x, monster.z)
     ) {
-      if (skill.effect === "area") {
-        const center =
-          this.save.job === "swordsman" ? { x: this.x, z: this.z } : monster;
-        for (const enemy of this.monsters) {
-          if (
-            enemy.alive &&
-            Math.hypot(enemy.x - center.x, enemy.z - center.z) <=
-              (skill.radius || 3) &&
-            this.direct(enemy.x, enemy.z)
-          ) {
-            this.hit(enemy, this.damage * skill.power,true);
-            if (skill.duration) enemy.slow = skill.duration;
-          }
-        }
-        this.onEvent(skill.name, "whirl", center.x, center.z);
-      } else {
-        this.hit(monster, this.damage * skill.power,true);
-        if (monster.alive) {
-          if (skill.effect === "stun") {
-            monster.stun = skill.duration || 2;
-            monster.windup = 0;
-          }
-          if (skill.effect === "slow") monster.slow = skill.duration || 4;
-          if (skill.effect === "poison") {
-            monster.poison = skill.duration || 6;
-            monster.poisonTimer = 1;
-            monster.poisonDamage = this.damage * progression.poisonAtkFactor;
-          }
-        }
-        this.onEvent(skill.name, "strike", monster.x, monster.z);
+      const center=skill.effect==='area'&&this.save.job==='swordsman'?{x:this.x,z:this.z}:monster;
+      const targets=this.monsters.filter(enemy=>enemy.alive&&Math.hypot(enemy.x-center.x,enemy.z-center.z)<=(skill.radius??skillRankConfig.defaultAttackRadius)&&Math.hypot(enemy.x-this.x,enemy.z-this.z)<=skill.range&&this.direct(enemy.x,enemy.z)).sort((a,b)=>a.id===monster.id?-1:b.id===monster.id?1:Math.hypot(a.x-center.x,a.z-center.z)-Math.hypot(b.x-center.x,b.z-center.z)||a.id-b.id).slice(0,skill.maxTargets||1);
+      for(const enemy of targets){
+        this.hit(enemy,this.damage*skill.power,true);
+        if(!enemy.alive)continue;
+        if(skill.effect==='area'&&skill.areaSlow!==false&&skill.duration)enemy.slow=skill.duration;
+        if(skill.effect==='stun'){enemy.stun=skill.duration||2;enemy.windup=0;}
+        if(skill.effect==='slow')enemy.slow=skill.duration||4;
+        if(skill.effect==='poison'){enemy.poison=skill.duration||6;enemy.poisonTimer=1;enemy.poisonDamage=this.damage*progression.poisonAtkFactor;}
       }
+      this.onEvent(skill.name,skill.effect==='area'?'whirl':'strike',center.x,center.z);
     } else this.onEvent("Cast missed: target moved out of range.");
   }
   private refreshCooldowns() {

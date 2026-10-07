@@ -66,3 +66,7 @@ validateConfiguration ใช้ได้ใน browser และ Worker ไม�
 ดู [ตารางและกติกาล่าสุด](../../docs/MAP-DROP-BALANCE-TH.md). อุปกรณ์ใช้ `equipment.drops` แทน global dropChance/rarityThresholds เดิม: สุ่มแยก6ช่องต่อkill, Common/Rareไม่ซ้อนในช่องเดียว, มอนสเตอร์ปกติไม่มี Epic/Legend; boss/miniรับประกัน2ชิ้นRare/EpicตามeliteDrops. Item เดิมทุกrarityยังอยู่และคราฟต์ได้ตามระบบเดิม. `normalBalance.previousRevisionHp` เป็น snapshot migration revision2 (revision3Hpสำหรับrevision3) ห้ามแก้เพื่อปรับHPปัจจุบัน. Town species/groups ว่าง; แผนที่อื่นคง6กลุ่ม.
 
 Eliteล่าสุด: `content.normalBalance.boss/mini` กำหนดHP/ATK/DEF multiplierเทียบnormalระดับเดียวกันและgoldPerLevel. `equipment.eliteDrops` แยกboss/mini4กลุ่มน้ำหนักรวม1, รับประกัน2independentdraws, ซ้ำslotได้. normaldropsไม่เปลี่ยน. รายละเอียดตารางในdocs/MAP-DROP-BALANCE-TH.md
+
+## Skill ranks ล่าสุด
+
+`skill-ranks.json` ระบุ10ระดับปลดล็อก×5rank, damagePercent (เช่น200=200%ATK), targets, defaultAttackRadius, maxRank5 และงบ1SPต่อlevel/1SPต่อrank. ทุก60สกิลเป็นโจมตีแล้วตามคำขอ; heal/guard/furyเดิมเปลี่ยนarea ไม่มีpartyheal/buff. ดู [ตารางและกติกา](../../docs/SKILL-RANKS-TH.md). Damageจริงมาจากranktable ไม่ใช่powerเดิมในclasses.json. การเรียน/upgrade/resetแชร์งบข้ามอาชีพ เซฟเดิมchoicesเริ่มrank1ในversion8โดยคงข้อมูลผู้เล่นเดิม

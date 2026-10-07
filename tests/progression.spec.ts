@@ -50,8 +50,9 @@ test("defense formula mitigates damage for both combatants and attack rolls vary
   expect(damageAfterDefense(100, 300)).toBe(25);
   const sim = new Simulation(() => 0.5,undefined,null);
   const monster = sim.monsters[0];
+  const originalHp=monster.hp,def=sim.monsterSpec(monster.kind).defense;
   sim.hit(monster, 108);
-  expect(monster.hp).toBe(21.6-106); // Uploaded Lv1 DEF 1.8 rounds 108 ATK to 106 damage.
+  expect(monster.hp).toBe(originalHp-Math.round(damageAfterDefense(108,def)));
   const weak = new Simulation(() => 0.2),
     strong = new Simulation(() => 0.8);
   weak.hit(weak.monsters[0], 30);

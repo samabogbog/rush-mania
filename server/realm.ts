@@ -163,6 +163,7 @@ function execute(player:Player,realm:Realm,command:Command,now:number,admin=fals
     case 'claim':sim.claim();break;
     case 'setClass':if(!isClass(a))throw new GameError('Invalid class');sim.setClass(a);break;
     case 'chooseSkill':if(typeof a!=='string')throw new GameError('Invalid skill choice');sim.chooseSkill(a);break;
+    case 'upgradeSkill':if(typeof a!=='string')throw new GameError('Invalid skill rank');sim.upgradeSkill(a);break;
     case 'resetSkills':sim.resetSkills();break;
     case 'assignAuxiliary':if(!integer(a,0,3)||(b!==null&&typeof b!=='string'))throw new GameError('Invalid auxiliary assignment');sim.assignAuxiliary(a as number,b as string|null);break;
     case 'useAuxiliary':if(!integer(a,0,3))throw new GameError('Invalid auxiliary slot');sim.useAuxiliary(a as number);break;

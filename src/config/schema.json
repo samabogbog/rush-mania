@@ -1592,7 +1592,9 @@
           "description": "string",
           "level": "number",
           "range": "number",
-          "duration": "number"
+          "duration": "number",
+          "radius": "number",
+          "areaSlow": "boolean"
         },
         {
           "id": "string",
@@ -1621,7 +1623,9 @@
           "cooldown": "number",
           "description": "string",
           "level": "number",
-          "range": "number"
+          "range": "number",
+          "radius": "number",
+          "areaSlow": "boolean"
         },
         {
           "id": "string",
@@ -1636,7 +1640,9 @@
           "description": "string",
           "level": "number",
           "range": "number",
-          "duration": "number"
+          "duration": "number",
+          "radius": "number",
+          "areaSlow": "boolean"
         },
         {
           "id": "string",
@@ -1712,7 +1718,9 @@
           "description": "string",
           "level": "number",
           "range": "number",
-          "duration": "number"
+          "duration": "number",
+          "radius": "number",
+          "areaSlow": "boolean"
         },
         {
           "id": "string",
@@ -1741,7 +1749,9 @@
           "cooldown": "number",
           "description": "string",
           "level": "number",
-          "range": "number"
+          "range": "number",
+          "radius": "number",
+          "areaSlow": "boolean"
         },
         {
           "id": "string",
@@ -1771,36 +1781,9 @@
           "description": "string",
           "level": "number",
           "range": "number",
-          "duration": "number"
-        },
-        {
-          "id": "string",
-          "stage": "number",
-          "branch": "number",
-          "name": "string",
-          "icon": "string",
-          "effect": "string",
-          "power": "number",
-          "mp": "number",
-          "cooldown": "number",
-          "description": "string",
-          "level": "number",
-          "range": "number",
-          "duration": "number"
-        },
-        {
-          "id": "string",
-          "stage": "number",
-          "branch": "number",
-          "name": "string",
-          "icon": "string",
-          "effect": "string",
-          "power": "number",
-          "mp": "number",
-          "cooldown": "number",
-          "description": "string",
-          "level": "number",
-          "range": "number"
+          "duration": "number",
+          "radius": "number",
+          "areaSlow": "boolean"
         },
         {
           "id": "string",
@@ -1830,7 +1813,42 @@
           "description": "string",
           "level": "number",
           "range": "number",
-          "duration": "number"
+          "radius": "number",
+          "areaSlow": "boolean"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number",
+          "radius": "number",
+          "areaSlow": "boolean"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number",
+          "radius": "number",
+          "areaSlow": "boolean"
         },
         {
           "id": "string",
@@ -1896,7 +1914,9 @@
           "description": "string",
           "level": "number",
           "range": "number",
-          "duration": "number"
+          "duration": "number",
+          "radius": "number",
+          "areaSlow": "boolean"
         },
         {
           "id": "string",
@@ -1926,7 +1946,9 @@
           "cooldown": "number",
           "description": "string",
           "level": "number",
-          "range": "number"
+          "range": "number",
+          "radius": "number",
+          "areaSlow": "boolean"
         },
         {
           "id": "string",
@@ -1941,7 +1963,9 @@
           "description": "string",
           "level": "number",
           "range": "number",
-          "duration": "number"
+          "duration": "number",
+          "radius": "number",
+          "areaSlow": "boolean"
         },
         {
           "id": "string",
@@ -2034,7 +2058,9 @@
           "cooldown": "number",
           "description": "string",
           "level": "number",
-          "range": "number"
+          "range": "number",
+          "radius": "number",
+          "areaSlow": "boolean"
         },
         {
           "id": "string",
@@ -2080,52 +2106,9 @@
           "description": "string",
           "level": "number",
           "range": "number",
-          "duration": "number"
-        },
-        {
-          "id": "string",
-          "stage": "number",
-          "branch": "number",
-          "name": "string",
-          "icon": "string",
-          "effect": "string",
-          "power": "number",
-          "mp": "number",
-          "cooldown": "number",
-          "description": "string",
-          "level": "number",
-          "range": "number",
           "duration": "number",
-          "cast": "number"
-        },
-        {
-          "id": "string",
-          "stage": "number",
-          "branch": "number",
-          "name": "string",
-          "icon": "string",
-          "effect": "string",
-          "power": "number",
-          "mp": "number",
-          "cooldown": "number",
-          "description": "string",
-          "level": "number",
-          "range": "number"
-        },
-        {
-          "id": "string",
-          "stage": "number",
-          "branch": "number",
-          "name": "string",
-          "icon": "string",
-          "effect": "string",
-          "power": "number",
-          "mp": "number",
-          "cooldown": "number",
-          "description": "string",
-          "level": "number",
-          "range": "number",
-          "duration": "number"
+          "radius": "number",
+          "areaSlow": "boolean"
         },
         {
           "id": "string",
@@ -2156,7 +2139,58 @@
           "description": "string",
           "level": "number",
           "range": "number",
+          "radius": "number",
+          "areaSlow": "boolean"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number",
+          "radius": "number",
+          "areaSlow": "boolean"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number",
           "cast": "number"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "cast": "number",
+          "radius": "number",
+          "areaSlow": "boolean"
         }
       ],
       "archer": [
@@ -2202,7 +2236,9 @@
           "description": "string",
           "level": "number",
           "range": "number",
-          "duration": "number"
+          "duration": "number",
+          "radius": "number",
+          "areaSlow": "boolean"
         },
         {
           "id": "string",
@@ -2231,7 +2267,9 @@
           "cooldown": "number",
           "description": "string",
           "level": "number",
-          "range": "number"
+          "range": "number",
+          "radius": "number",
+          "areaSlow": "boolean"
         },
         {
           "id": "string",
@@ -2246,7 +2284,9 @@
           "description": "string",
           "level": "number",
           "range": "number",
-          "duration": "number"
+          "duration": "number",
+          "radius": "number",
+          "areaSlow": "boolean"
         },
         {
           "id": "string",
@@ -2366,7 +2406,26 @@
           "cooldown": "number",
           "description": "string",
           "level": "number",
-          "range": "number"
+          "range": "number",
+          "radius": "number",
+          "areaSlow": "boolean"
+        },
+        {
+          "id": "string",
+          "stage": "number",
+          "branch": "number",
+          "name": "string",
+          "icon": "string",
+          "effect": "string",
+          "power": "number",
+          "mp": "number",
+          "cooldown": "number",
+          "description": "string",
+          "level": "number",
+          "range": "number",
+          "duration": "number",
+          "radius": "number",
+          "areaSlow": "boolean"
         },
         {
           "id": "string",
@@ -2396,22 +2455,9 @@
           "description": "string",
           "level": "number",
           "range": "number",
-          "duration": "number"
-        },
-        {
-          "id": "string",
-          "stage": "number",
-          "branch": "number",
-          "name": "string",
-          "icon": "string",
-          "effect": "string",
-          "power": "number",
-          "mp": "number",
-          "cooldown": "number",
-          "description": "string",
-          "level": "number",
-          "range": "number",
-          "duration": "number"
+          "duration": "number",
+          "radius": "number",
+          "areaSlow": "boolean"
         },
         {
           "id": "string",
@@ -2457,7 +2503,9 @@
           "description": "string",
           "level": "number",
           "range": "number",
-          "duration": "number"
+          "duration": "number",
+          "radius": "number",
+          "areaSlow": "boolean"
         }
       ]
     },
@@ -3753,5 +3801,183 @@
         "hpBase": "number"
       }
     }
+  },
+  "skillRanks": {
+    "maxRank": "number",
+    "pointsPerLevel": "number",
+    "rankCost": "number",
+    "defaultAttackRadius": "number",
+    "levels": [
+      {
+        "unlockLevel": "number",
+        "damagePercent": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ],
+        "targets": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ]
+      },
+      {
+        "unlockLevel": "number",
+        "damagePercent": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ],
+        "targets": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ]
+      },
+      {
+        "unlockLevel": "number",
+        "damagePercent": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ],
+        "targets": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ]
+      },
+      {
+        "unlockLevel": "number",
+        "damagePercent": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ],
+        "targets": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ]
+      },
+      {
+        "unlockLevel": "number",
+        "damagePercent": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ],
+        "targets": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ]
+      },
+      {
+        "unlockLevel": "number",
+        "damagePercent": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ],
+        "targets": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ]
+      },
+      {
+        "unlockLevel": "number",
+        "damagePercent": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ],
+        "targets": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ]
+      },
+      {
+        "unlockLevel": "number",
+        "damagePercent": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ],
+        "targets": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ]
+      },
+      {
+        "unlockLevel": "number",
+        "damagePercent": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ],
+        "targets": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ]
+      },
+      {
+        "unlockLevel": "number",
+        "damagePercent": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ],
+        "targets": [
+          "number",
+          "number",
+          "number",
+          "number",
+          "number"
+        ]
+      }
+    ]
   }
 }

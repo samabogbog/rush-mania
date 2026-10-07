@@ -8,7 +8,8 @@
     "content.json",
     "economy.json",
     "crafting.json",
-    "monster-groups.json"
+    "monster-groups.json",
+    "skill-ranks.json"
   ],
   "validation": "schema.json",
   "documentation": "README-TH.md",

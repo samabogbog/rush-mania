@@ -1,0 +1,178 @@
+{
+  "maxRank": 5,
+  "pointsPerLevel": 1,
+  "rankCost": 1,
+  "defaultAttackRadius": 3,
+  "levels": [
+    {
+      "unlockLevel": 10,
+      "damagePercent": [
+        200,
+        210,
+        220,
+        230,
+        240
+      ],
+      "targets": [
+        4,
+        4,
+        5,
+        5,
+        6
+      ]
+    },
+    {
+      "unlockLevel": 20,
+      "damagePercent": [
+        220,
+        230,
+        240,
+        250,
+        260
+      ],
+      "targets": [
+        4,
+        4,
+        5,
+        5,
+        6
+      ]
+    },
+    {
+      "unlockLevel": 30,
+      "damagePercent": [
+        240,
+        250,
+        260,
+        270,
+        280
+      ],
+      "targets": [
+        4,
+        4,
+        5,
+        5,
+        6
+      ]
+    },
+    {
+      "unlockLevel": 40,
+      "damagePercent": [
+        260,
+        270,
+        280,
+        290,
+        300
+      ],
+      "targets": [
+        5,
+        5,
+        6,
+        6,
+        7
+      ]
+    },
+    {
+      "unlockLevel": 50,
+      "damagePercent": [
+        280,
+        290,
+        300,
+        310,
+        320
+      ],
+      "targets": [
+        5,
+        5,
+        6,
+        6,
+        7
+      ]
+    },
+    {
+      "unlockLevel": 60,
+      "damagePercent": [
+        300,
+        310,
+        320,
+        330,
+        340
+      ],
+      "targets": [
+        5,
+        5,
+        6,
+        6,
+        7
+      ]
+    },
+    {
+      "unlockLevel": 70,
+      "damagePercent": [
+        320,
+        330,
+        340,
+        350,
+        360
+      ],
+      "targets": [
+        6,
+        6,
+        7,
+        7,
+        8
+      ]
+    },
+    {
+      "unlockLevel": 80,
+      "damagePercent": [
+        340,
+        350,
+        360,
+        370,
+        380
+      ],
+      "targets": [
+        6,
+        6,
+        7,
+        7,
+        8
+      ]
+    },
+    {
+      "unlockLevel": 90,
+      "damagePercent": [
+        360,
+        370,
+        380,
+        390,
+        400
+      ],
+      "targets": [
+        6,
+        6,
+        7,
+        7,
+        8
+      ]
+    },
+    {
+      "unlockLevel": 100,
+      "damagePercent": [
+        380,
+        390,
+        400,
+        410,
+        420
+      ],
+      "targets": [
+        7,
+        7,
+        8,
+        8,
+        9
+      ]
+    }
+  ]
+}

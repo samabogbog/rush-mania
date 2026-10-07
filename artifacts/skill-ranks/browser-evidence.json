@@ -1,0 +1,18 @@
+{
+  "fixture": {
+    "level": 30,
+    "practice": true
+  },
+  "rank": 5,
+  "points": 25,
+  "before": {
+    "kills": 0,
+    "mp": 292
+  },
+  "after": {
+    "kills": 6,
+    "mp": 282,
+    "cooldown": 4
+  },
+  "pageErrors": []
+}

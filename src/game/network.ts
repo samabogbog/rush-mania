@@ -18,7 +18,7 @@ export class NetworkSimulation extends Simulation {
   constructor(snapshot:Snapshot) {super(Math.random,snapshot.player.actor.save,null);this.accept(snapshot);this.session=snapshot.player.session.id;this.sequence=snapshot.player.session.sequence;this.schedule(200);}
   private accept(snapshot:Snapshot) {
     const oldZone=this.save.zone;this.receivedAt=performance.now();
-    const before=JSON.stringify([this.save.job,this.save.stats,this.save.points,this.save.weapon,this.save.hotbar,this.save.skillChoices,this.save.auxiliary,this.save.items,this.save.gold,this.save.equipped,this.save.zone,this.save.quests]);
+    const before=JSON.stringify([this.save.job,this.save.stats,this.save.points,this.save.weapon,this.save.hotbar,this.save.skillChoices,this.save.skillRanks,this.save.auxiliary,this.save.items,this.save.gold,this.save.equipped,this.save.zone,this.save.quests]);
     for(const field of actorFields) (this as unknown as Record<string,unknown>)[field]=snapshot.player.actor[field];
     const socialChanged=JSON.stringify([this.community,this.remotePlayers.map(p=>p.id)])!==JSON.stringify([snapshot.community,snapshot.peers.map(p=>p.id)]);this.community=snapshot.community;
     this.balance=snapshot.balance||{};this.admin=snapshot.admin===true;
@@ -29,7 +29,7 @@ export class NetworkSimulation extends Simulation {
     for(const chat of snapshot.chat)if(!this.chatSeen.has(chat.id)){this.chatSeen.add(chat.id);this.onEvent(`${chat.from}: ${chat.text}`,'chat')}
     if(this.chatSeen.size>120)this.chatSeen=new Set(snapshot.chat.map(m=>m.id));
     this.connection='Online · server saved'; this.retry=0;
-    if(socialChanged||before!==JSON.stringify([this.save.job,this.save.stats,this.save.points,this.save.weapon,this.save.hotbar,this.save.skillChoices,this.save.auxiliary,this.save.items,this.save.gold,this.save.equipped,this.save.zone,this.save.quests]))this.onEvent('', 'sync');
+    if(socialChanged||before!==JSON.stringify([this.save.job,this.save.stats,this.save.points,this.save.weapon,this.save.hotbar,this.save.skillChoices,this.save.skillRanks,this.save.auxiliary,this.save.items,this.save.gold,this.save.equipped,this.save.zone,this.save.quests]))this.onEvent('', 'sync');
   }
   private send(type:string,...args:unknown[]) { if(this.stopped)return; if(this.queue.length>=32){this.onEvent('Waiting for connection. Try again shortly.');return;}this.queue.push({id:`${this.session}:${++this.sequence}`,type,args});this.schedule(0); }
   private schedule(delay:number) {if(this.timer)clearTimeout(this.timer);if(!this.stopped)this.timer=setTimeout(()=>void this.flush(),delay);}
@@ -70,6 +70,7 @@ export class NetworkSimulation extends Simulation {
   override stat(key:'str'|'vit'|'agi'){this.send('stat',key)}
   override claim(){this.send('claim')}
   override setClass(job:ClassId){this.send('setClass',job);return true}
+  override upgradeSkill(id:string){this.send('upgradeSkill',id);return true}
   override chooseSkill(id:string){this.send('chooseSkill',id);return true}
   override resetSkills(){this.send('resetSkills');return true}
   override assignAuxiliary(slot:number,name:string|null){this.send('assignAuxiliary',slot,name);return true}

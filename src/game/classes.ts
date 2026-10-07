@@ -1,4 +1,4 @@
-import {classConfig, progression} from '../config/balance';
+import {classConfig, progression,skillRankConfig} from '../config/balance';
 import {EXP_CHARM} from './items';
 export const MAX_LEVEL = progression.maxLevel;
 export type ClassId = "swordsman" | "mage" | "archer";
@@ -17,9 +17,13 @@ export type Skill = {
   power: number;
   effect: SkillEffect;
   radius?: number;
+  areaSlow?:boolean;
   duration?: number;
   cast?: number;
   description: string;
+  rank?:number;
+  maxTargets?:number;
+  damagePercent?:number;
 };
 export const classes = classConfig.classes as Record<ClassId,{name:string;role:string;icon:string;color:number;range:number;speed:number;weapon:string}>;
 export const skills = classConfig.skills as Record<ClassId,Skill[]>;
@@ -32,4 +36,12 @@ export function isClass(value: unknown): value is ClassId {
 /** Base mitigation formula; variability and critical hits are applied before this step. */
 export function damageAfterDefense(atk: number, def: number) {
   return (Math.max(0, atk) * progression.defenseScale) / (progression.defenseScale + Math.max(0, def));
+}
+
+export const isOffensiveSkill=(skill:Skill)=>!['heal','guard','fury'].includes(skill.effect);
+export const skillRankCap=(_skill:Skill)=>skillRankConfig.maxRank;
+export function skillAtRank(skill:Skill,rank:number):Skill {
+ const n=Math.max(1,Math.min(skillRankCap(skill),Math.floor(rank||1))),row=skillRankConfig.levels.find(row=>row.unlockLevel===skill.level);
+ if(!row)throw new Error(`Missing skill rank table for ${skill.id} level ${skill.level}`);
+ return {...skill,rank:n,power:row.damagePercent[n-1]/100,damagePercent:row.damagePercent[n-1],maxTargets:row.targets[n-1],radius:skill.radius??skillRankConfig.defaultAttackRadius};
 }

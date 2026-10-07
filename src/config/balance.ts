@@ -1,3 +1,4 @@
+import skillRankData from './skill-ranks.json' with {type:'json'};
 import craftingData from './crafting.json' with {type:'json'};
 import progressionData from './progression.json' with {type:'json'};
 import equipmentData from './equipment.json' with {type:'json'};
@@ -19,9 +20,11 @@ export function validateBalance(value:unknown, shape:unknown, path='balance'):vo
   for(const [key,s] of Object.entries(shape))validateBalance((value as Record<string,unknown>)[key],s,`${path}.${key}`);
  }
 }
-const data={crafting:craftingData,progression:progressionData,equipment:equipmentData,refinement:refinementData,classes:classData,content:contentData,economy:economyData};
+const data={skillRanks:skillRankData,crafting:craftingData,progression:progressionData,equipment:equipmentData,refinement:refinementData,classes:classData,content:contentData,economy:economyData};
 export function validateConfiguration(config:typeof data){
  validateBalance(config,schema);
+ const ranks=config.skillRanks;if(ranks.maxRank!==5||ranks.pointsPerLevel!==1||ranks.rankCost!==1||ranks.defaultAttackRadius<=0)throw new Error('Invalid balance config skillRanks: ranks/points/radius contract');
+ ranks.levels.forEach((row,i)=>{if(row.unlockLevel!==(i+1)*10)throw new Error('Invalid balance config skillRanks.levels: ordered 10–100');for(const n of row.damagePercent)if(n<=0)throw new Error('Invalid balance config skillRanks.damagePercent');for(const n of row.targets)if(!Number.isInteger(n)||n<1)throw new Error('Invalid balance config skillRanks.targets');});
  if(config.crafting.materials.join('|')!=='Shade essence|Sky feather|Rune stone')throw new Error('Invalid balance config crafting.materials: fixed three-material identity');
  if(config.crafting.upgradeCount!==5)throw new Error('Invalid balance config crafting.upgradeCount: requires 5 to 1');
  for(const [key,value] of Object.entries(config.crafting.recipe))if(!Number.isSafeInteger(value)||value<1)throw new Error('Invalid balance config crafting.recipe.'+key);
@@ -58,7 +61,7 @@ export function validateConfiguration(config:typeof data){
  if(config.refinement.cap!==config.refinement.success.length)throw new Error('Invalid balance config refinement: cap must equal success table length');
  for(const count of Object.values(config.equipment.secondaryCounts))if(!Number.isInteger(count)||count>Object.keys(config.equipment.affixRanges).length)throw new Error('Invalid balance config equipment.secondaryCounts');
  for(const [stat,[min,max]] of Object.entries(config.equipment.affixRanges))if(min>max)throw new Error(`Invalid balance config equipment.affixRanges.${stat}: min exceeds max`);
- for(const [job,list] of Object.entries(config.classes.skills)){const ids=new Set<string>();for(const s of list){if((s.effect==='guard'&&s.power>1)||s.stage<1||s.stage>10||!Number.isInteger(s.stage)||ids.has(s.id)||![0,1].includes(s.branch)||!['hit','area','heal','guard','fury','stun','slow','poison'].includes(s.effect))throw new Error(`Invalid balance config classes.skills.${job}: duplicate id or unknown branch/effect`);ids.add(s.id);}}
+ for(const [job,list] of Object.entries(config.classes.skills)){const ids=new Set<string>();for(const s of list){if((s.effect==='guard'&&s.power>1)||s.stage<1||s.stage>10||!Number.isInteger(s.stage)||ids.has(s.id)||![0,1].includes(s.branch)||!['hit','area','stun','slow','poison'].includes(s.effect))throw new Error(`Invalid balance config classes.skills.${job}: duplicate id or unknown branch/effect`);ids.add(s.id);}}
  config.content.normalBalance.checkpoints.forEach((row,i)=>{if(row.level!==(i+1)*10)throw new Error('Invalid balance config content.normalBalance: checkpoints must be 10–90');for(const [key,v] of Object.entries(row.drops))probability(v,'content.normalBalance.drops.'+key);for(const key of ['hp','atk','defense'] as const)positive(row[key],'content.normalBalance.'+key);});
  for(const monster of Object.values(config.content.species))if(!Number.isInteger(monster.level)||monster.level<1||monster.level>100)throw new Error('Invalid balance config content.species: level must be 1–100');
  for(const [id,zone] of Object.entries(config.content.zones))for(const kind of zone.species)if(!Object.hasOwn(config.content.species,kind))throw new Error(`Invalid balance config content.zones.${id}: unknown species ${kind}`);
@@ -73,3 +76,5 @@ export const refinement=refinementData;
 export const classConfig=classData;
 export const contentConfig=contentData;
 export const economy=economyData;
+
+export const skillRankConfig=skillRankData;
