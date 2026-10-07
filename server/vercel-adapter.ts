@@ -1,5 +1,5 @@
-import worker from './worker';
-import type {Database} from './store';
+import worker from './worker.js';
+import type {Database} from './store.js';
 
 export function vercelRequest(request:Request,platform=false):Request {
   const headers=new Headers(request.headers);

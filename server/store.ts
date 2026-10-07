@@ -1,4 +1,4 @@
-import type { Realm } from './protocol';
+import type { Realm } from './protocol.js';
 export interface Statement { bind(...values:unknown[]): Statement; first<T>(): Promise<T|null>; run(): Promise<{meta:{changes:number}}> }
 export interface Database { prepare(sql:string):Statement }
 export interface RealmStore { read():Promise<{revision:number; realm:Realm}|null>; create(realm:Realm):Promise<void>; commit(revision:number,realm:Realm):Promise<boolean> }

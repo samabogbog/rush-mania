@@ -1,5 +1,5 @@
-import {getTursoDatabase} from './libsql-database';
-import {handleVercelRequest} from './vercel-adapter';
+import {getTursoDatabase} from './libsql-database.js';
+import {handleVercelRequest} from './vercel-adapter.js';
 
 export async function handle(request:Request):Promise<Response> {
   try {

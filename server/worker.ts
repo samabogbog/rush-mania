@@ -1,7 +1,7 @@
-import {authRoute,authenticatedAccount} from './auth';
-import {operations} from './operations';
-import { D1RealmStore, type Database } from './store';
-import { GameError, transact } from './realm';
+import {authRoute,authenticatedAccount} from './auth.js';
+import {operations} from './operations.js';
+import { D1RealmStore, type Database } from './store.js';
+import { GameError, transact } from './realm.js';
 interface Env { ADMIN_EMAIL?: string; ADMIN_ACCOUNT_ID?: string; DB: Database; ASSETS?: { fetch(request:Request):Promise<Response> } }
 export default {
   async fetch(request:Request,env:Env):Promise<Response> {

@@ -1,5 +1,5 @@
-import {classConfig, progression,skillRankConfig} from '../config/balance';
-import {EXP_CHARM} from './items';
+import {classConfig, progression,skillRankConfig} from '../config/balance.js';
+import {EXP_CHARM} from './items.js';
 export const MAX_LEVEL = progression.maxLevel;
 export type ClassId = "swordsman" | "mage" | "archer";
 export type SkillEffect =

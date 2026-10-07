@@ -1,9 +1,9 @@
-import {salvageConfig,economy} from '../config/balance';
-import {gearById,itemRarity,type GearInstance} from './equipment';
-import {craftCost,isCraftMaterial,materialKey} from './crafting';
-import {EXP_CHARM,EXP_TOME} from './items';
+import {salvageConfig,economy} from '../config/balance.js';
+import {gearById,itemRarity,type GearInstance} from './equipment.js';
+import {craftCost,isCraftMaterial,materialKey} from './crafting.js';
+import {EXP_CHARM,EXP_TOME} from './items.js';
 /** Legacy material stacks without IDs still resolve by name AND rarity, never by name alone. */
-export function inventoryKey(item:{id?:string;name:string;rarity?:import('./equipment').Rarity}){return item.id||(isCraftMaterial(item.name)?materialKey(item.name,item.rarity||'common'):item.name);}
+export function inventoryKey(item:{id?:string;name:string;rarity?:import('./equipment.js').Rarity}){return item.id||(isCraftMaterial(item.name)?materialKey(item.name,item.rarity||'common'):item.name);}
 export function salvageYield(item:GearInstance){
  const gear=item.gearId?gearById(item.gearId):undefined,rarity=itemRarity(item);
  if(!gear||(rarity==='ancient'||rarity==='legend'))return [];

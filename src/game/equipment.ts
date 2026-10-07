@@ -1,6 +1,6 @@
-import {equipmentConfig as config, economy,craftingConfig as crafting} from '../config/balance';
-import {refineBonus} from './refinement';
-import type {ClassId} from './classes';
+import {equipmentConfig as config, economy,craftingConfig as crafting} from '../config/balance.js';
+import {refineBonus} from './refinement.js';
+import type {ClassId} from './classes.js';
 export const gearSlots=['weapon','helmet','armor','pants','boots','accessory'] as const;
 export type GearSlot=typeof gearSlots[number];
 export const isGearSlot=(value:unknown):value is GearSlot=>typeof value==='string'&&gearSlots.includes(value as GearSlot);

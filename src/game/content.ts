@@ -1,4 +1,4 @@
-import {contentConfig} from '../config/balance';
+import {contentConfig} from '../config/balance.js';
 export type Family='slime'|'cap'|'plant'|'beast'|'insect'|'wisp'|'golem';
 export type AttackShape='circle'|'line'|'cone';
 export type MonsterSpec={hp:number;xp:number;color:number;drop:string;icon:string;defense:number;atk:number;gold:number;level:number;family:Family;shape:AttackShape;windup:number;range:number;boss?:boolean;miniBoss?:boolean;tier?:'boss'|'mini';modelKind?:string;aggroRadius?:number;leashRadius?:number};

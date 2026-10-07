@@ -1,6 +1,6 @@
 import monsterGroupConfig from '../config/monster-groups.json' with {type:'json'};
 export {monsterGroupConfig};
-import {economy} from '../config/balance';
+import {economy} from '../config/balance.js';
 /** Collision data shared by the server and Babylon, never supplied by a client. */
 export function gladeObstacles() {
   const out: { x: number; z: number; r: number }[] = [];
@@ -8,7 +8,7 @@ export function gladeObstacles() {
     for(let i=0;i<w;i++) for(let j=0;j<d;j++) out.push({x:x+i*1.12,z:z+j*1.12,r:0.72});
   return out;
 }
-import {species,zones,type ZoneId,type Kind} from './content';
+import {species,zones,type ZoneId,type Kind} from './content.js';
 export function zoneObstacles(zone:ZoneId) {
  if(zone==='glade')return [...gladeObstacles(),...outerObstacles(zone)];
  const out:{x:number;z:number;r:number}[]=[];

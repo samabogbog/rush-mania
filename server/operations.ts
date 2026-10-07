@@ -1,8 +1,8 @@
-import {D1RealmStore,type Database} from './store';
-import {GameError} from './realm';
-import {Simulation} from '../src/simulation';
-import {species} from '../src/game/content';
-import type {Realm} from './protocol';
+import {D1RealmStore,type Database} from './store.js';
+import {GameError} from './realm.js';
+import {Simulation} from '../src/simulation.js';
+import {species} from '../src/game/content.js';
+import type {Realm} from './protocol.js';
 export async function operations(db:Database,input:Record<string,unknown>,post:boolean) {
  const store=new D1RealmStore(db),row=await store.read();if(!row)throw new GameError('Realm not initialized',404);
  const backup=async()=>{const id=crypto.randomUUID();await db.prepare('INSERT INTO backups (id, revision, state, created_at) VALUES (?, ?, ?, ?)').bind(id,row.revision,JSON.stringify(row.realm),Date.now()).run();await db.prepare('DELETE FROM backups WHERE id IN (SELECT id FROM backups ORDER BY created_at DESC LIMIT -1 OFFSET 20)').bind().run();return id;};

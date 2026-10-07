@@ -1,8 +1,8 @@
-import {craftingMaterials} from './crafting';
-import {economy} from '../config/balance';
-import {equipment,gearById,gearByName} from './equipment';
-import {species,questDefinitions} from './content';
-import {refineStones} from './refinement';
+import {craftingMaterials} from './crafting.js';
+import {economy} from '../config/balance.js';
+import {equipment,gearById,gearByName} from './equipment.js';
+import {species,questDefinitions} from './content.js';
+import {refineStones} from './refinement.js';
 export const EXP_TOME=economy.expTome;
 export const EXP_CHARM=economy.expCharm;
 export const EXP_TEST_GRANT_COUNT=1;
@@ -16,7 +16,7 @@ export function itemCategory(item:{name:string;gearId?:string}):ItemCategory {
  return 'material';
 }
 export const materialSlugs:Record<string,string>={'Shade essence':'shade-essence','Sky feather':'sky-feather','Rune stone':'rune-stone'};
-export const materialIcon=(name:string,rarity:import('./equipment').Rarity='common')=>materialSlugs[name]?`materials/${materialSlugs[name]}-${rarity}`:'chest';
+export const materialIcon=(name:string,rarity:import('./equipment.js').Rarity='common')=>materialSlugs[name]?`materials/${materialSlugs[name]}-${rarity}`:'chest';
 export const materialIcons:Record<string,string>=Object.fromEntries(craftingMaterials.map(name=>[name,materialIcon(name)]));
 export type CatalogItem={id:string;name:string;icon:string;category:ItemCategory;gearId?:string};
 const names=new Set(craftingMaterials);

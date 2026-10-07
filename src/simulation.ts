@@ -1,10 +1,10 @@
-import {migrateStoredItem,isRetiredMaterial} from './game/item-migration';
-import {inventoryKey,salvageYield,itemSalePrice} from './game/inventory-actions';
-import {isCraftMaterial,isRarity,materialRarity,materialKey,sameStack,gearRecipe,craftCost,materialCount,rollMaterialDrops} from './game/crafting';
-import {materialIcons} from './game/items';
-import {craftingConfig,progression,economy,refinement,contentConfig,skillRankConfig} from './config/balance';
-import {EXP_CHARM,EXP_TOME,itemCategory,materialIcon,type ItemCategory} from './game/items';
-import {refineLevel,refineCost,rollRefinement,rollStoneDrop,refineStones,isStoneTier,type StoneTier} from './game/refinement';
+import {migrateStoredItem,isRetiredMaterial} from './game/item-migration.js';
+import {inventoryKey,salvageYield,itemSalePrice} from './game/inventory-actions.js';
+import {isCraftMaterial,isRarity,materialRarity,materialKey,sameStack,gearRecipe,craftCost,materialCount,rollMaterialDrops} from './game/crafting.js';
+import {materialIcons} from './game/items.js';
+import {craftingConfig,progression,economy,refinement,contentConfig,skillRankConfig} from './config/balance.js';
+import {EXP_CHARM,EXP_TOME,itemCategory,materialIcon,type ItemCategory} from './game/items.js';
+import {refineLevel,refineCost,rollRefinement,rollStoneDrop,refineStones,isStoneTier,type StoneTier} from './game/refinement.js';
 import {
   skillAtRank,skillRankCap,
   classes,
@@ -15,12 +15,12 @@ import {
   damageAfterDefense,
   type ClassId,
   type Skill,
-} from "./game/classes";
-import { normalMonsterBalance, species, zones, isZone, questDefinitions, type Kind, type ZoneId, type AttackShape } from "./game/content";
-import { rarityOrder, equipment, gearById, gearByName, type GearSlot, type Bonuses, type Rarity, BAG_CAPACITY, gearSlots, itemBonuses, normalizeSecondary, rollGear, rollEquipmentDrops, setBonuses, gearSets } from "./game/equipment";
-import { zoneObstacles, zoneSpawns, WORLD_BOUNDS, PORTAL_POSITION, protectedPosition, insideMonsterGroup, zoneMonsterGroups, monsterGroupConfig } from "./game/map-data";
-export { species } from "./game/content";
-export type { Kind } from "./game/content";
+} from "./game/classes.js";
+import { normalMonsterBalance, species, zones, isZone, questDefinitions, type Kind, type ZoneId, type AttackShape } from "./game/content.js";
+import { rarityOrder, equipment, gearById, gearByName, type GearSlot, type Bonuses, type Rarity, BAG_CAPACITY, gearSlots, itemBonuses, normalizeSecondary, rollGear, rollEquipmentDrops, setBonuses, gearSets } from "./game/equipment.js";
+import { zoneObstacles, zoneSpawns, WORLD_BOUNDS, PORTAL_POSITION, protectedPosition, insideMonsterGroup, zoneMonsterGroups, monsterGroupConfig } from "./game/map-data.js";
+export { species } from "./game/content.js";
+export type { Kind } from "./game/content.js";
 export type Monster = {
   id: number;
   kind: Kind;
@@ -488,7 +488,7 @@ export class Simulation {
   spawnItem(id:string,count:number,rarity:Rarity='common',refine=0){if(!this.admin||!this.online)this.onEvent('Admin spawning requires an authorized online account.');}
   online = false;
   connection = "Practice · saved on this device";
-  community: import("../server/protocol").Snapshot["community"];
+  community: import("../server/protocol.js").Snapshot["community"];
   communityAction(_type:string,..._args:unknown[]){this.onEvent("Community features require the online realm.");}
   remotePlayers: { id: string; name: string; job: ClassId; x: number; z: number; hp: number; maxHp: number }[] = [];
   goTo(x: number, z: number) {

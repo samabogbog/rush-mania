@@ -1,5 +1,5 @@
-import type {Database} from './store';
-import {GameError} from './realm';
+import type {Database} from './store.js';
+import {GameError} from './realm.js';
 const iterations=100000, lifetime=7*24*60*60*1000;
 const hex=(bytes:ArrayBuffer|Uint8Array)=>Array.from(new Uint8Array(bytes instanceof Uint8Array?bytes.buffer:bytes),n=>n.toString(16).padStart(2,'0')).join('');
 const random=()=>hex(crypto.getRandomValues(new Uint8Array(32)));

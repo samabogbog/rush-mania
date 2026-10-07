@@ -1,4 +1,4 @@
-import {refinement as config} from '../config/balance';
+import {refinement as config} from '../config/balance.js';
 export const REFINE_CAP=config.cap;
 export const refineSuccess=config.success;
 export type StoneTier='common'|'rare';

@@ -26,6 +26,14 @@ Turso ใหม่เริ่มแยกจาก Sites เดิม ข้อ
 
 ตรวจ `/api/auth/status`, สมัครสมาชิก/ล็อกอิน/ล็อกเอาต์, เซฟและโหลดตัวละครอีกครั้ง, ทดลองสองบัญชี, และตรวจว่า API ไม่ส่งหน้า HTML กลับมาแทน JSON ทดสอบ production ของจริงหลังตั้งฐานข้อมูลแล้วจึงถือว่า deployment เสร็จ
 
-รอบนี้การสร้างโปรเจกต์ผ่านการเชื่อมต่อ Vercel ถูกปฏิเสธด้วย **HTTP 403: You don't have permission to create the project** จึงยังไม่มี deployment URL ใหม่ และยังไม่ได้สร้างหรือเชื่อมฐานข้อมูล Turso จริง การตั้ง permission ของปลั๊กอิน ChatGPT ไม่ใช่การเพิ่มสิทธิ์ Vercel API นี้
+ตอนเตรียมโค้ดครั้งแรก การสร้างโปรเจกต์ผ่านการเชื่อมต่อ Vercel ถูกปฏิเสธด้วย **HTTP 403: You don't have permission to create the project** จึงไม่สามารถ deploy ผ่านการเชื่อมต่อนั้น ต่อมาผู้ใช้สร้างและ deploy `https://rush-mania.vercel.app` ผ่าน dashboard เอง การเชื่อมต่อของผู้ช่วยยังไม่ได้รับสิทธิ์อ่าน log ของโปรเจกต์นี้ การตั้ง permission ของปลั๊กอิน ChatGPT ไม่ใช่การเพิ่มสิทธิ์ Vercel API นี้
 
 ผลตรวจโค้ดที่เตรียม: Node.js 24.19.0, production build ผ่าน, ทดสอบ API/SQLite 17 ข้อผ่าน และตรวจ bundle/import API 6 entry สำเร็จ พร้อมตรวจว่าขาด database config แล้วตอบ 503 การทดสอบ libSQL ใช้ SQLite file ชั่วคราวในเครื่อง ไม่ใช่ Turso production และยังไม่มีผลตรวจ live Vercel/Turso
+
+## การแก้ Function startup บน Vercel
+
+การ deploy ครั้งแรกพบ `ERR_MODULE_NOT_FOUND` ที่ `/var/task/server/vercel-handler` เนื่องจาก import ของ Node ESM ไม่มีนามสกุล `.js` การทดสอบ bundle เดิมรวมโมดูลเข้าด้วยกันจึงไม่พบข้อผิดพลาดที่เกิดเมื่อ Vercel แปลง TypeScript เป็นไฟล์ JavaScript แยกกัน
+
+แก้ import ทั้งหก API entry และ dependency ที่โหลดต่อทั้งหมดให้ใช้ `.js` พร้อมเพิ่ม `tsconfig.vercel-node.json` สำหรับ compile แยกไฟล์ตามโครงสร้างจริง ชุดทดสอบ `tests/vercel-node-package.spec.ts` เปิดแต่ละ API ใน Node process ใหม่โดยไม่ bundle และเรียก handler จริง จึงตรวจได้ทั้งการ resolve module/JSON และการตอบข้อผิดพลาดเมื่อไม่ได้ตั้งฐานข้อมูล
+
+ผลตรวจรุ่นแก้ ESM: production build ผ่าน, ระบบ API/SQLite และ native unbundled API 23 ข้อผ่าน, browser ตรวจโหลดเกม/ขาย/ใช้ยา/ย่อย/ตีบวกทั้ง desktop/mobile อีก 1 ข้อผ่าน รวม 24 ข้อ การยืนยัน live ต้องเปิด /api/auth/status หลัง Vercel deploy commit ล่าสุด หากตั้ง Turso ถูกต้องและยังไม่ล็อกอิน จะได้ JSON {"account":null}

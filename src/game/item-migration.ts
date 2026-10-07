@@ -1,7 +1,7 @@
-import {itemMigrationConfig} from '../config/balance';
-import {materialIcon} from './items';
-import {isCraftMaterial,materialKey} from './crafting';
-import type {Item,Simulation} from '../simulation';
+import {itemMigrationConfig} from '../config/balance.js';
+import {materialIcon} from './items.js';
+import {isCraftMaterial,materialKey} from './crafting.js';
+import type {Item,Simulation} from '../simulation.js';
 export const retiredMaterials=new Set(itemMigrationConfig.retiredMaterials);
 export const isRetiredMaterial=(item:{name:string;gearId?:string})=>!item.gearId&&retiredMaterials.has(item.name);
 /** Retired materials are removed; gear UUIDs and all rolled/refined values stay intact. */

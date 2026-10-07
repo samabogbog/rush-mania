@@ -1,5 +1,5 @@
-import {craftingConfig as config} from '../config/balance';
-import {rarityOrder,type Rarity,type GearDefinition} from './equipment';
+import {craftingConfig as config} from '../config/balance.js';
+import {rarityOrder,type Rarity,type GearDefinition} from './equipment.js';
 export const craftingMaterials=config.materials;
 export const isCraftMaterial=(name:string)=>craftingMaterials.includes(name);
 export const isRarity=(value:unknown):value is Rarity=>typeof value==='string'&&rarityOrder.includes(value as Rarity);

@@ -1,6 +1,6 @@
 import {createClient, type Client, type InValue} from '@libsql/client';
-import type {Database, Statement} from './store';
-import {migrateDatabase} from './libsql-migrations';
+import type {Database, Statement} from './store.js';
+import {migrateDatabase} from './libsql-migrations.js';
 
 /** Keep the Sites D1 contract and SQLite compare-and-swap writes unchanged. */
 export function libsqlDatabase(client:Client):Database {

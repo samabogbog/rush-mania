@@ -1,1 +1,1 @@
-export {handle as POST} from '../../server/vercel-handler';
+export {handle as POST} from '../../server/vercel-handler.js';
