@@ -1,0 +1,82 @@
+{
+  "passed": {
+    "Lv10Regression": 2,
+    "Lv20HighLowBrowserFamilies": 3,
+    "Lv20AuthenticCasts": 6,
+    "Lv20UnitPoolRadius": 2
+  },
+  "build": "npm run build passed; existing chunk-size warning",
+  "gameplayQuality": "low",
+  "visualQualities": [
+    "high",
+    "low"
+  ],
+  "casts": [
+    {
+      "skill": "archer-2",
+      "killsAdded": 4,
+      "mpSpent": 18,
+      "cooldowns": {
+        "archer-2": 8
+      },
+      "activeAfterCleanup": 0,
+      "modelErrors": 0,
+      "pageErrors": []
+    },
+    {
+      "skill": "archer-b-2",
+      "killsAdded": 4,
+      "mpSpent": 14,
+      "cooldowns": {
+        "archer-b-2": 8
+      },
+      "activeAfterCleanup": 0,
+      "modelErrors": 0,
+      "pageErrors": []
+    },
+    {
+      "skill": "mage-2",
+      "killsAdded": 4,
+      "mpSpent": 17.870000000000346,
+      "cooldowns": {
+        "mage-2": 7.499999999999993
+      },
+      "activeAfterCleanup": 0,
+      "modelErrors": 0,
+      "pageErrors": []
+    },
+    {
+      "skill": "mage-b-2",
+      "killsAdded": 4,
+      "mpSpent": 15,
+      "cooldowns": {
+        "mage-b-2": 11
+      },
+      "activeAfterCleanup": 0,
+      "modelErrors": 0,
+      "pageErrors": []
+    },
+    {
+      "skill": "swordsman-2",
+      "killsAdded": 4,
+      "mpSpent": 18,
+      "cooldowns": {
+        "swordsman-2": 7
+      },
+      "activeAfterCleanup": 0,
+      "modelErrors": 0,
+      "pageErrors": []
+    },
+    {
+      "skill": "swordsman-b-2",
+      "killsAdded": 4,
+      "mpSpent": 14,
+      "cooldowns": {
+        "swordsman-b-2": 8
+      },
+      "activeAfterCleanup": 0,
+      "modelErrors": 0,
+      "pageErrors": []
+    }
+  ]
+}

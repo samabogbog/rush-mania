@@ -21,11 +21,12 @@ export function skillPalette(job:ClassId, skill:Skill):number[] {
 export class SkillVFX {
  private templates=new Map<Shape,Mesh>();private materials=new Map<string,StandardMaterial>();
  private active:Particle[]=[];private free=new Map<Shape,Mesh[]>();private created=0;private serial=0;private low=false;
+ private lv20Cue:{skillId:string;style:string;impactSeconds:number;heroSeconds:number;focal:{x:number;z:number};decorativeRadius:number}|null=null;
  private lv10Cue:{skillId:string;style:string;impactSeconds:number;heroSeconds:number;focal:{x:number;z:number};decorativeRadius:number}|null=null;
  static readonly MAX_MESHES=160;
  constructor(private scene:Scene){}
  setLowQuality(low:boolean){this.low=low;}
- get diagnostics(){return {active:this.active.length,pooled:this.created,limit:this.low?40:96,geometry3D:true,noSprites:true,textures:0,shapes:[...this.templates.keys()],materials:this.materials.size,lv10Cue:this.lv10Cue,drawCount:this.active.filter(p=>p.mesh.isEnabled()).length};}
+ get diagnostics(){return {active:this.active.length,pooled:this.created,limit:this.low?40:96,geometry3D:true,noSprites:true,textures:0,shapes:[...this.templates.keys()],materials:this.materials.size,lv10Cue:this.lv10Cue,lv20Cue:this.lv20Cue,drawCount:this.active.filter(p=>p.mesh.isEnabled()).length};}
  private template(shape:Shape){
   const name='vfx-template-'+shape,parts:Mesh[]=[];
   const tube=(path:Vector3[],radius:number)=>{const m=MeshBuilder.CreateTube(name,{path,radius,tessellation:7},this.scene);parts.push(m);return m;};
@@ -84,6 +85,7 @@ export class SkillVFX {
  }
  anticipation(skill:Skill,job:ClassId,x:number,z:number){if(skill.level===10){const c=skillPalette(job,skill),d=skill.cast||.18;this.emit('ring',c[0],x,.09,z,1.1,d,0,0,0,-2);this.emit('core',c[1],x,1,z,.13,d,0,.2,0,.75);for(let i=0;i<(this.low?3:6);i++){const a=i*Math.PI*2/(this.low?3:6);this.emit('ray',c[0],x+Math.cos(a)*.75,.5,z+Math.sin(a)*.75,.12,d,-Math.cos(a)*3,2,-Math.sin(a)*3);}return;}const c=skillPalette(job,skill),duration=skill.cast||.2;this.emit('ring',c[1],x,.08,z,.65+skill.stage*.035,duration,0,0,0,.25,.5);this.emit(skill.branch?'petal':'star',c[0],x,1,z,.16,duration,0,.4,0,.15,2);}
  release(skill:Skill,job:ClassId,x:number,z:number,tx:number,tz:number){
+  if(skill.level===20){this.releaseLv20(skill,job,x,z,tx,tz);return;}
   if(skill.level===10){this.releaseLv10(skill,job,x,z,tx,tz);return;}
   const c=skillPalette(job,skill),stage=skill.stage,high=stage>=7,name=skill.name.toLowerCase(),self=['heal','guard','fury'].includes(skill.effect),cx=self||job==='swordsman'&&skill.effect==='area'?x:tx,cz=self||job==='swordsman'&&skill.effect==='area'?z:tz;
   const size=.75+stage*.085,life=.55+stage*.04,count=this.low?3:3+Math.floor(stage/2),dir=Math.atan2(tx-x,tz-z),travel=Math.max(.18,Math.min(.55,Math.hypot(tx-x,tz-z)/12));
@@ -135,8 +137,47 @@ export class SkillVFX {
   }
   if(!this.low){for(let i=0;i<5;i++){const a=i*2.4;this.emit('spark',c[1],cx,.85,cz,.12,.5,Math.sin(a)*3.8,3.8,Math.cos(a)*3.8,-.12,2,impact,true);}}
  }
+ /** Level twenty's reach is decorative; the release callback already coincides with game impact. */
+ private releaseLv20(skill:Skill,job:ClassId,x:number,z:number,tx:number,tz:number){
+  const branch=skill.branch,c=job==='mage'&&!branch?[0x65cfff,0xe3fbff,0x9e99ff]:skillPalette(job,skill);
+  const cx=job==='swordsman'?x:tx,cz=job==='swordsman'?z:tz,dir=Math.atan2(tx-x,tz-z);
+  const style=job==='swordsman'?(branch?'concussion-crown':'whirlwind-blade-vortex'):job==='mage'?(branch?'dew-bloom-fountain':'frost-nova-spires'):(branch?'venom-dart-eruption':'arrow-rain-sunburst');
+  this.lv20Cue={skillId:skill.id,style,impactSeconds:0,heroSeconds:.28,focal:{x:cx,z:cz},decorativeRadius:5.6};
+  // Reserve a complete hero silhouette even when previous casts filled the active budget.
+  // Older decorative meshes return to their existing pool; no extra allocation tier is introduced.
+  const limit=this.low?40:96;
+  while(this.active.length>limit-18){const p=this.active.pop()!;p.mesh.setEnabled(false);const shape=p.mesh.metadata.vfxShape as Shape,list=this.free.get(shape)||[];list.push(p.mesh);this.free.set(shape,list);}
+  const sculpt=(shape:Shape,color:number,px:number,py:number,pz:number,size:number,duration:number,stretch:[number,number,number],vx=0,vy=0,vz=0,grow=0,spin=0,delay=0)=>{
+   const m=this.emit(shape,color,px,py,pz,size,duration,vx,vy,vz,grow,spin,delay);if(m){this.active[this.active.length-1].stretch=stretch;m.scaling.set(size*stretch[0],size*stretch[1],size*stretch[2]);}return m;
+  };
+  const beam=(sx:number,sy:number,sz:number,ex:number,ey:number,ez:number,width:number)=>{
+   const dx=ex-sx,dy=ey-sy,dz=ez-sz,length=Math.hypot(dx,dy,dz);
+   for(const [color,w] of [[c[0],width],[c[1],width*.32]]){const m=sculpt('beam',color,(sx+ex)/2,(sy+ey)/2,(sz+ez)/2,1,.28,[w,w,length/2]);if(m)m.rotation.set(-Math.atan2(dy,Math.hypot(dx,dz)),Math.atan2(dx,dz),0);}
+  };
+  // These first meshes are immediate, substantial and readable with particles disabled.
+  sculpt('core',c[1],cx,.9,cz,.65,.22,[1,branch?1.8:1.2,1],0,0,0,4);
+  for(let i=0;i<3;i++)sculpt('ring',c[i],cx,.12+i*.13,cz,.45+i*.12,.52,[1,1,1],0,0,0,(5.6-.45-i*.12)/.52);
+  beam(cx,.15,cz,cx,job==='archer'?4.8:4.1,cz,job==='swordsman'?4:2.6);
+  if(job!=='swordsman')beam(x,1,z,cx,1,cz,job==='archer'?1.8:2.6);
+  if(job==='swordsman'){
+   if(branch){sculpt('shield',c[0],cx,.2,cz,1.8,.3,[1,.65,1]);for(let i=0;i<5;i++){const a=i*Math.PI*2/5;sculpt('slab',c[i%3],cx+Math.sin(a)*1.2,.3,cz+Math.cos(a)*1.2,.65,.48,[1,2,1],Math.sin(a)*4,2,Math.cos(a)*4,0,3);}}
+   else for(let i=0;i<3;i++){const m=sculpt('crescent',c[i],cx,.6+i*.35,cz,1.8,.42,[1,1,1],0,0,0,5.4,9+i*2);if(m)m.rotation.set(.25+i*.2,dir+i*2.1,.15);}
+  }else if(job==='mage'){
+   if(branch){sculpt('spiral',c[0],cx,.1,cz,1.3,.6,[1,1.4,1],0,0,0,.7,6);sculpt('tree',c[0],cx,.1,cz,.9,.58,[1,1.1,1],0,0,0,.6);}
+   else for(let i=0;i<5;i++){const a=i*Math.PI*2/5;sculpt('ice',c[i%3],cx+Math.sin(a)*1.2,.1,cz+Math.cos(a)*1.2,.85,.58,[1,1.7,1],Math.sin(a)*3,0,Math.cos(a)*3,.4);}
+  }else if(branch){sculpt('arrow',c[1],cx,.9,cz,1.2,.28,[1,1,1],0,0,0,0,0);sculpt('spiral',c[0],cx,.1,cz,1.3,.6,[1,1.3,1],0,0,0,.7,-5);sculpt('branch',c[2],cx,.1,cz,1.2,.58,[1,1.3,1],0,0,0,.6);}
+  else for(let i=0;i<5;i++){const a=i*Math.PI*2/5;const m=sculpt('arrow',c[i%3],cx+Math.sin(a)*1.3,3.2+i%2*.5,cz+Math.cos(a)*1.3,.95,.34,[1,1,1],0,-8,0);if(m)m.rotation.x=Math.PI/2;}
+  // Radial fan spans nearly six world units, with distinct airborne volumes per family.
+  const n=this.low?12:28,shape:Shape=job==='swordsman'&&branch?'slab':job==='mage'?(branch?'petal':'ice'):job==='archer'&&branch?'petal':'ray';
+  for(let i=0;i<n;i++){
+   const a=i*Math.PI*2/n+branch*.2,speed=8.4+i%3*.3;
+   const m=sculpt(shape,c[i%3],cx+Math.sin(a)*.5,.65+i%3*.12,cz+Math.cos(a)*.5,shape==='ray'?.28:.32,.55,[1,1,shape==='ray'?2.5:1],Math.sin(a)*speed,1.4+i%3*.6,Math.cos(a)*speed,-.18,shape==='ray'?0:4);
+   if(m&&shape==='ray')m.rotation.set(-.25,a,0);
+  }
+  if(!this.low)for(let i=0;i<10;i++){const a=i*Math.PI*2/10;sculpt('spark',c[1],cx,.9,cz,.13,.42,[1,1,1],Math.sin(a)*10,3,Math.cos(a)*10,-.15,3);}
+ }
  basic(job:ClassId,x:number,z:number){this.emit(job==='swordsman'?'crescent':'star',job==='mage'?0xb5d9ff:0xffe5a3,x,.75,z,job==='swordsman'?.65:.14,.3,0,.4,0,.5,4);}
  update(dt:number){for(let i=this.active.length-1;i>=0;i--){const p=this.active[i];let elapsed=dt;if(p.delay>0){p.delay-=dt;if(p.delay>0)continue;elapsed=-p.delay;p.delay=0;p.mesh.setEnabled(true);}p.life-=elapsed;if(p.life<=0){p.mesh.setEnabled(false);const shape=p.mesh.metadata.vfxShape as Shape;let list=this.free.get(shape);if(!list){list=[];this.free.set(shape,list);}list.push(p.mesh);this.active.splice(i,1);continue;}const t=p.duration-p.life;p.mesh.position.set(p.x+p.vx*t,p.y+p.vy*t-(p.gravity?t*t*3:0),p.z+p.vz*t);p.mesh.rotation.y+=p.spin*elapsed;p.mesh.visibility=Math.min(1,p.life/.08);const scale=Math.max(.01,p.size+p.grow*t);p.mesh.scaling.set(scale*p.stretch[0],scale*p.stretch[1],scale*p.stretch[2]);}}
- clear(){this.lv10Cue=null;for(const p of this.active){p.mesh.setEnabled(false);const shape=p.mesh.metadata.vfxShape as Shape;const list=this.free.get(shape)||[];list.push(p.mesh);this.free.set(shape,list);}this.active.length=0;}
+ clear(){this.lv10Cue=null;this.lv20Cue=null;for(const p of this.active){p.mesh.setEnabled(false);const shape=p.mesh.metadata.vfxShape as Shape;const list=this.free.get(shape)||[];list.push(p.mesh);this.free.set(shape,list);}this.active.length=0;}
  dispose(){this.clear();this.free.forEach(list=>list.forEach(mesh=>mesh.dispose()));this.templates.forEach(mesh=>mesh.dispose());this.materials.forEach(material=>material.dispose());this.free.clear();this.templates.clear();this.materials.clear();this.created=0;}
 }

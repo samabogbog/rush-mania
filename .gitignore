@@ -55,3 +55,7 @@ artifacts/expanded-world/*.webm
 # Lv10 VFX raw video remains local; curated frames and evidence are retained.
 artifacts/lv10-vfx/raw/
 artifacts/lv10-vfx/*.webm
+
+# Lv20 VFX raw recordings stay local; reviewed PNG/JSON evidence is retained.
+artifacts/lv20-vfx/raw/
+artifacts/lv20-vfx/*.webm
