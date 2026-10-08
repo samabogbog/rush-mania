@@ -5,7 +5,7 @@ test('town is peaceful and map UI separates entry level from recommended level',
  const seed=new Simulation(()=>.5,undefined,null);seed.save.zone='town';seed.save.level=10;seed.save.hp=seed.maxHp;seed.save.mp=seed.maxMp;
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.setViewportSize({width:1200,height:800});
  await page.addInitScript(save=>{localStorage.setItem('mossvale-save',JSON.stringify(save));localStorage.setItem('mossvale-quality','low')},seed.save);
- await page.goto('/?practice=1');const ready=()=>page.waitForFunction(()=>{const s=(window as any).mossvale?.snapshot();return s&&s.riggedActors===s.modelsExpected&&s.modelErrors===0},{},{timeout:60000});await ready();await expect(page.locator('#hp-text')).toContainText(String(seed.maxHp));
+ await page.goto('/?practice=1');await page.locator('#practice-start').click();const ready=()=>page.waitForFunction(()=>{const s=(window as any).mossvale?.snapshot();return s&&s.riggedActors===s.modelsExpected&&s.modelErrors===0},{},{timeout:60000});await ready();await expect(page.locator('#hp-text')).toContainText(String(seed.maxHp));
  const snap=()=>page.evaluate(()=>(window as any).mossvale.snapshot());expect((await snap()).monsters).toEqual([]);expect((await snap()).territoriesCount).toBe(0);
  await page.keyboard.press('m');
  for(const text of ['Entry Lv 1 · Recommended Lv 1–100','Entry Lv 1 · Recommended Lv 1–20','Entry Lv 10 · Recommended Lv 20–40','Entry Lv 30 · Recommended Lv 40–60','Entry Lv 50 · Recommended Lv 60–80','Entry Lv 70 · Recommended Lv 80–100'])await expect(page.locator('.area-list')).toContainText(text);

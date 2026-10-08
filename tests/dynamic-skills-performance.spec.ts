@@ -5,7 +5,7 @@ import {skills} from '../src/game/classes';
 const out='artifacts/dynamic-skills';
 async function setup(page:any){
  mkdirSync(out,{recursive:true});const sim=new Simulation(()=>.5,undefined,null);sim.save.job='mage';sim.save.level=100;sim.save.hp=sim.maxHp;sim.save.mp=sim.maxMp;for(let n=1;n<=10;n++)sim.chooseSkill(`mage-${n}`);sim.assignSkill(0,'mage-10');
- await page.addInitScript(save=>{localStorage.setItem('mossvale-save',JSON.stringify(save));localStorage.setItem('mossvale-quality','low')},sim.save);const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('/?practice=1');await page.waitForFunction(()=>{const s=(window as any).mossvale?.snapshot();return s&&s.drawCalls>0&&s.riggedActors>=s.monsters.length+3},{},{timeout:45000});expect(errors).toEqual([]);
+ await page.addInitScript(save=>{localStorage.setItem('mossvale-save',JSON.stringify(save));localStorage.setItem('mossvale-quality','low')},sim.save);const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('/?practice=1');await page.locator('#practice-start').click();await page.waitForFunction(()=>{const s=(window as any).mossvale?.snapshot();return s&&s.drawCalls>0&&s.riggedActors>=s.monsters.length+3},{},{timeout:45000});expect(errors).toEqual([]);
 }
 test('software renderer idle/burst timing and 60 skill sustained pool',async({page})=>{
  await setup(page);const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));

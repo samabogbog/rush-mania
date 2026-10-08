@@ -19,7 +19,7 @@ for(const job of jobs)for(const branch of [0,1] as const)for(const quality of ['
  const context=await browser.newContext({viewport:{width:1200,height:800},recordVideo:{dir:out+'/video',size:{width:1200,height:800}}});const page=await context.newPage();const errors:string[]=[];page.on('pageerror',e=>{errors.push(e.message);console.error('QA_PAGE_ERROR',e.message)});
  const sim=new Simulation(()=>.5,undefined,null);sim.save.job=job;sim.save.level=100;sim.save.hp=sim.maxHp*.5;sim.save.mp=sim.maxMp;sim.save.tutorial=['skip'];
  await page.addInitScript(({save,quality})=>{localStorage.setItem('mossvale-save',JSON.stringify(save));localStorage.setItem('mossvale-quality',quality)},{save:sim.save,quality});
- await page.goto('/?practice=1');await ready(page);await page.keyboard.press('k');for(let stage=1;stage<=10;stage++)await page.locator(`[data-learn="${job}-${branch?'b-':''}${stage}"]`).click();await expect(page.locator('.learned-tag')).toHaveCount(10);await page.keyboard.press('Escape');
+ await page.goto('/?practice=1');await page.locator('#practice-start').click();await ready(page);await page.keyboard.press('k');for(let stage=1;stage<=10;stage++)await page.locator(`[data-learn="${job}-${branch?'b-':''}${stage}"]`).click();await expect(page.locator('.learned-tag')).toHaveCount(10);await page.keyboard.press('Escape');
  const records:any[]=[];
  for(const stage of [1,10]){
   const skill=skills[job].find(s=>s.stage===stage&&s.branch===branch)!;await page.locator('#untarget').evaluate((b:HTMLElement)=>b.click());await assign(page,skill.id,stage===1?0:1);

@@ -9,7 +9,7 @@ test('hover and pinned equipment details show percent regen and high-roll colors
  await page.setViewportSize({width:1200,height:800});
  await page.addInitScript(save=>{localStorage.setItem('mossvale-save',JSON.stringify(save));localStorage.setItem('mossvale-quality','low')},sim.save);
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto('/?practice=1');await expect(page.locator('#hp-text')).toContainText('/');await page.keyboard.press('i');
+ await page.goto('/?practice=1');await page.locator('#practice-start').click();await expect(page.locator('#hp-text')).toContainText('/');await page.keyboard.press('i');
  const cell=page.locator(`.inventory-grid [data-item="${item.id}"]`);await cell.hover();
  for(const id of ['#item-tooltip','#item-details']){
   if(id==='#item-details')await cell.click();const tip=page.locator(id);await expect(tip).toBeVisible();

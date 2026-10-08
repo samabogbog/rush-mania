@@ -1,4 +1,5 @@
 import {test,expect} from '@playwright/test';
+async function enterRoster(page:any){await expect(page.locator('#character-start')).toBeVisible();expect(await page.locator('#game').count()).toBe(0);if(await page.locator('[data-character]').count()===0){await page.locator('#character-name').fill('QA Sprout');await page.locator('#character-create button[type=submit]').click();await expect(page.locator('[data-character]')).toHaveCount(1)}await page.locator('#character-start').click();}
 async function loaded(page:any){await page.waitForFunction(()=>{const s=(window as any).mossvale?.snapshot();return s&&s.riggedActors===s.modelsExpected+document.querySelectorAll('.peer-label').length&&s.modelErrors===0},{},{timeout:60000});}
 test('register, purchase, logout and login restore the hero; mobile form and separate account work',async({browser})=>{
  const context=await browser.newContext({viewport:{width:1200,height:800}}),page=await context.newPage(),errors:string[]=[];
@@ -11,7 +12,7 @@ test('register, purchase, logout and login restore the hero; mobile form and sep
   await page.locator('#account-register').click();await expect(page.locator('#account-confirm')).toBeVisible();
   await page.locator('#account-register').click();await expect(page.locator('#account-confirm')).toHaveCount(0);await expect(page.locator('#account-password')).toHaveAttribute('autocomplete','current-password');
   await page.locator('#account-register').click();await page.locator('#account-username').fill(username);await page.locator('#account-password').fill(password);await page.locator('#account-confirm').fill('different password');await page.locator('#account-login').click();await expect(page.locator('#account-error')).toHaveText('Passwords must match');
-  await page.locator('#account-confirm').fill(password);await page.locator('#account-confirm').press('Enter');await loaded(page);
+  await page.locator('#account-confirm').fill(password);await page.locator('#account-confirm').press('Enter');await enterRoster(page);await loaded(page);
   const before=await page.evaluate(()=>(window as any).mossvale.snapshot());
   await page.locator('[data-panel="shop"]').first().click();await page.locator('[data-buy="Red potion"]').click();
   await expect.poll(()=>page.evaluate(()=>(window as any).mossvale.snapshot().gold)).toBe(before.gold-15);
@@ -22,10 +23,10 @@ test('register, purchase, logout and login restore the hero; mobile form and sep
   await page.setViewportSize({width:390,height:844});await page.screenshot({path:'artifacts/account-login-mobile.png'});
   expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);const button=await page.locator('#account-login').boundingBox();expect(button!.x).toBeGreaterThanOrEqual(0);expect(button!.x+button!.width).toBeLessThanOrEqual(390);
   await page.locator('#account-username').fill(username);await page.locator('#account-password').fill('Incorrect password 123');await page.locator('#account-login').click();await expect(page.locator('#account-error')).toHaveText('Invalid username or password');
-  await page.setViewportSize({width:1200,height:800});await page.locator('#account-password').fill(password);await page.locator('#account-login').click();await loaded(page);
+  await page.setViewportSize({width:1200,height:800});await page.locator('#account-password').fill(password);await page.locator('#account-login').click();await enterRoster(page);await loaded(page);
   const restored=await page.evaluate(()=>(window as any).mossvale.snapshot());expect(restored.gold).toBe(purchased.gold);expect(restored.items).toEqual(purchased.items);
   const second=await browser.newContext({viewport:{width:1200,height:800}}),other=await second.newPage();other.on('pageerror',e=>errors.push(e.message));
-  try{await other.addInitScript(()=>localStorage.setItem('mossvale-quality','low'));await other.goto('/');await other.locator('#account-register').click();await other.locator('#account-username').fill(username+'_b');await other.locator('#account-password').fill(password);await other.locator('#account-confirm').fill(password);await other.locator('#account-login').click();await loaded(other);expect(await other.evaluate(()=>(window as any).mossvale.snapshot().gold)).toBe(120);await other.locator('[data-panel="settings"]').first().click();await expect(other.locator('[data-panel="admin"]')).toHaveCount(0)}finally{await second.close()}
+  try{await other.addInitScript(()=>localStorage.setItem('mossvale-quality','low'));await other.goto('/');await other.locator('#account-register').click();await other.locator('#account-username').fill(username+'_b');await other.locator('#account-password').fill(password);await other.locator('#account-confirm').fill(password);await other.locator('#account-login').click();await enterRoster(other);await loaded(other);expect(await other.evaluate(()=>(window as any).mossvale.snapshot().gold)).toBe(120);await other.locator('[data-panel="settings"]').first().click();await expect(other.locator('[data-panel="admin"]')).toHaveCount(0)}finally{await second.close()}
   expect(errors).toEqual([]);
  }finally{await context.close()}
 });

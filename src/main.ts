@@ -1,3 +1,4 @@
+import {requireGameAccount,enteredCharacter} from './ui/account-auth';
 import {inventoryKey,salvageYield,itemSalePrice} from './game/inventory-actions';
 import {joystickVector} from './game/mobile-input';
 import {craftingMaterials,isCraftMaterial,materialCount,materialRarity,gearRecipe,craftCost} from './game/crafting';
@@ -64,6 +65,8 @@ const itemDisplayIcon=(item:{name:string;gearId?:string;icon:string;rarity?:Rari
 const itemIcon=(name:string,rarity:Rarity='common')=>icon(isCraftMaterial(name)?materialIcon(name,rarity):(gearByName(name)?gearIcon(gearByName(name)!,displayJob):undefined)||({[EXP_CHARM.name]:EXP_CHARM.icon,[EXP_TOME.name]:EXP_TOME.icon,'Common refine stone':'ice-shard','Rare refine stone':'crystal-dust','Red potion':'health-potion','Blue potion':'mana-potion'} as Record<string,string>)[name]||'chest');
 const portrait = `<img class="hero-portrait" src="/icons/hero.png" alt="Sprout the adventurer" draggable="false">`;
 const app = document.querySelector<HTMLDivElement>("#app")!;
+async function enterGame(){
+await requireGameAccount();
 app.innerHTML = `<canvas id="game" aria-label="3D game world: click the ground to move, click a monster to attack"></canvas><div id="labels"></div><div id="floats"></div>
 <header class="identity"><div class="portrait">${portrait}<b id="level-badge">1</b></div><div class="identity-info"><div class="name-line"><strong>Sprout</strong><span id="class-name">SWORDSMAN</span>${icon("sprout")}</div><div class="resource hp"><i id="hp-fill"></i><span>HP <b id="hp-text"></b></span></div><div class="resource mp"><i id="mp-fill"></i><span>MP <b id="mp-text"></b></span></div><div class="xp-mini"><i id="xp-fill"></i></div></div><button class="identity-more" data-panel="character" title="Character status (C)">${icon("chevron-right")}</button></header>
 <div class="world-heading"><div class="wordmark">${icon("sparkles")} MOSSVALE <span>ONLINE</span></div><div class="realm"><span></span> MOONLIT GLADE <b>·</b> <small>CHANNEL 01 · SOLO PROTOTYPE</small></div></div>
@@ -94,6 +97,8 @@ function resetJoystick(){
   if(pointer!==null&&stick?.hasPointerCapture(pointer))stick.releasePointerCapture(pointer);
 }
 displayJob=sim.save.job;
+const heroName=document.querySelector<HTMLElement>('.name-line strong');if(heroName)heroName.textContent=enteredCharacter()?.name||'Sprout';
+const heroPortrait=document.querySelector<HTMLImageElement>('.hero-portrait');if(heroPortrait)heroPortrait.alt=enteredCharacter()?.name||'Sprout the adventurer';
 const feedback = new FeedbackAudio();
 window.addEventListener("pointerdown", () => feedback.unlock(), { once: true });
 window.addEventListener("keydown", () => feedback.unlock(), { once: true });
@@ -324,7 +329,7 @@ function renderPanel() {
   }
   if(panel==='report')body='<p>Describe what happened and what you expected. The report includes your character and area.</p><textarea id="bug-text" maxlength="500" rows="5" aria-label="Bug description"></textarea><button id="submit-bug">Send bug report</button>';
   if (panel === "settings") {
-    body = `<h3>Make yourself at home.</h3><div class="setting-row"><span>Sound effects</span><button id="sfx-panel">${feedback.enabled ? "On" : "Off"}</button></div><div class="setting-row"><span>Ambient music</span><button id="sound-panel">${music ? "On" : "Off"}</button></div><div class="setting-row"><span>Graphics quality</span><select id="graphics-quality">${["auto","high","low"].map(q=>`<option ${world.quality===q?"selected":""}>${q}</option>`).join("")}</select></div><div class="setting-row"><span>Camera zoom</span><input id="zoom" type="range" min="0.65" max="1.6" step="0.05" value="${world.zoom}" aria-label="Camera zoom"></div><div class="panel-note">Graphics: ${world.diagnostics.drawCalls} draw calls · ${world.diagnostics.fps.toFixed(0)} FPS · p95 ${world.diagnostics.frameP95.toFixed(1)} ms</div>${sim.admin ? '<button data-panel="admin" class="primary-button">Admin: spawn items</button><button id="realm-tools" class="primary-button">Realm operations</button>' : ""}${sim.online?'<button id="account-logout">Log out of game account</button>':""}<button data-panel="report">Report a bug</button><button id="save-now" class="primary-button">${icon("save")} ${sim.online ? "Check server connection" : "Save adventure"}</button><div class="panel-note">Mossvale v0.4 · Babylon.js alpha<br>Playable heroes: KayKit Adventurers by Kay Lousberg (CC0).<br>World and monsters: original project-authored assets.<br>${sim.online ? "Server-authoritative realm · game account" : "Practice mode · local save"}</div>`;
+    body = `<h3>Make yourself at home.</h3><div class="setting-row"><span>Sound effects</span><button id="sfx-panel">${feedback.enabled ? "On" : "Off"}</button></div><div class="setting-row"><span>Ambient music</span><button id="sound-panel">${music ? "On" : "Off"}</button></div><div class="setting-row"><span>Graphics quality</span><select id="graphics-quality">${["auto","high","low"].map(q=>`<option ${world.quality===q?"selected":""}>${q}</option>`).join("")}</select></div><div class="setting-row"><span>Camera zoom</span><input id="zoom" type="range" min="0.65" max="1.6" step="0.05" value="${world.zoom}" aria-label="Camera zoom"></div><div class="panel-note">Graphics: ${world.diagnostics.drawCalls} draw calls · ${world.diagnostics.fps.toFixed(0)} FPS · p95 ${world.diagnostics.frameP95.toFixed(1)} ms</div>${sim.admin ? '<button data-panel="admin" class="primary-button">Admin: spawn items</button><button id="realm-tools" class="primary-button">Realm operations</button>' : ""}${sim.online?'<button id="character-switch">Switch character</button><button id="account-logout">Log out of game account</button>':'<button id="character-switch">Return to practice entry</button>'}<button data-panel="report">Report a bug</button><button id="save-now" class="primary-button">${icon("save")} ${sim.online ? "Check server connection" : "Save adventure"}</button><div class="panel-note">Mossvale v0.4 · Babylon.js alpha<br>Playable heroes: KayKit Adventurers by Kay Lousberg (CC0).<br>World and monsters: original project-authored assets.<br>${sim.online ? "Server-authoritative realm · game account" : "Practice mode · local save"}</div>`;
   }
   $("#panel-root").innerHTML =
     `<div class="panel-backdrop"></div><section data-open-panel="${panel}" class="game-panel ${panel === "map" ? "wide" : panel === "inventory" ? "bag-panel" : panel === "forge" ? "craft-panel" : panel === "skills" ? "skills-panel" : ""}" role="dialog" aria-modal="true" aria-label="${title}"><div class="panel-heading">${icon(ic)}<h2>${title}</h2><span>${sim.online ? "LIVE" : "PAUSED"}</span><button id="close-panel" aria-label="Close window">${icon("x")}</button></div><div class="panel-body">${body}</div><div class="panel-footer">${icon("sparkles")} MOSSVALE <span>ESC to return to adventure</span></div></section>`;
@@ -494,6 +499,7 @@ function renderPanel() {
     };
   }
   if (panel === "settings") {
+    document.querySelector("#character-switch")?.addEventListener("click",()=>{if(sim instanceof NetworkSimulation)sim.dispose();location.reload()});
     document.querySelector("#account-logout")?.addEventListener("click",async()=>{try{const response=await fetch("/api/auth/logout",{method:"POST"});if(response.ok){if(sim instanceof NetworkSimulation)sim.dispose();location.reload()}else sim.onEvent("Could not log out. Try again.")}catch{sim.onEvent("Could not log out. Try again.")}});
     if(document.getElementById('realm-tools')) $("#realm-tools").onclick=()=>openPanel('operations');
     $("#sfx-panel").onclick = () => {
@@ -931,3 +937,5 @@ window.addEventListener("pagehide", (event) => {
 
 }
 void boot();
+}
+void enterGame();

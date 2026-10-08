@@ -58,8 +58,8 @@ export async function createRealtimeServer(options:RealtimeServerOptions){
           const claims=await verifyTicket(message.ticket,options.secret);if(claims.origin!==req.headers.origin||!allowed.has(claims.origin))throw new GameError('Invalid realtime origin',403);
           if(usedTickets.has(claims.jti))throw new GameError('Realtime ticket already used',401);
           usedTickets.set(claims.jti,claims.expiresAt);
-          const account=await options.client.execute({sql:'SELECT a.id,a.player_id,a.username FROM game_accounts a JOIN game_sessions s ON s.account_id=a.id WHERE a.id=? AND s.token_hash=? AND s.expires_at>?',args:[claims.accountId,claims.sessionHash,Date.now()]});
-          if(account.rows[0]?.player_id!==claims.playerId||account.rows[0]?.username!==claims.name)throw new GameError('Game session expired',401);
+          const account=await options.client.execute({sql:'SELECT a.id,c.id AS player_id,c.name,c.job FROM game_accounts a JOIN game_sessions s ON s.account_id=a.id JOIN game_characters c ON c.id=s.selected_character_id AND c.account_id=a.id WHERE a.id=? AND s.token_hash=? AND s.expires_at>?',args:[claims.accountId,claims.sessionHash,Date.now()]});
+          if(account.rows[0]?.player_id!==claims.playerId||account.rows[0]?.name!==claims.name||account.rows[0]?.job!==claims.job)throw new GameError('Game session expired',401);
           if(message.resumeSession!==undefined&&typeof message.resumeSession!=='string')throw new GameError('Invalid resume session');
           await serialize(async()=>{try{
             if(socket.readyState!==WebSocket.OPEN)return;
@@ -82,7 +82,7 @@ export async function createRealtimeServer(options:RealtimeServerOptions){
   const snapshots=setInterval(()=>{if(!realm.ready)return;for(const [id,socket] of sockets){if(Date.now()-(lastMessage.get(socket)||0)>10000){socket.close(1008,'Heartbeat expired');continue;}try{send(socket,realm.snapshot(id));}catch(error){fail(socket,error);}}},1000/tuning.snapshotHz);
   const autosave=setInterval(()=>{if(realm.ready)void realm.checkpoint().catch(()=>{});},tuning.autosaveMs);
   const heartbeat=setInterval(()=>{if(!realm.ready)return;void realm.renew().catch(()=>{});for(const [ticket,expiry] of usedTickets)if(expiry<Date.now())usedTickets.delete(ticket);
-    for(const [socket,claims] of claimsBySocket)void options.client.execute({sql:'SELECT account_id FROM game_sessions WHERE token_hash=? AND account_id=? AND expires_at>?',args:[claims.sessionHash,claims.accountId,Date.now()]}).then(result=>{if(!result.rows.length)socket.close(1008,'Game session expired');}).catch(()=>fail(socket,new GameError('Session verification unavailable',503)));
+    for(const [socket,claims] of claimsBySocket)void options.client.execute({sql:'SELECT account_id FROM game_sessions WHERE token_hash=? AND account_id=? AND expires_at>? AND selected_character_id=?',args:[claims.sessionHash,claims.accountId,Date.now(),claims.playerId]}).then(result=>{if(!result.rows.length)socket.close(1008,'Game session expired');}).catch(()=>fail(socket,new GameError('Session verification unavailable',503)));
   },tuning.leaseRenewMs);
   await new Promise<void>((resolve,reject)=>{server.once('error',reject);server.listen(options.port??8788,options.host??'0.0.0.0',()=>{server.removeListener('error',reject);resolve();});});
   let closing:Promise<void>|undefined;

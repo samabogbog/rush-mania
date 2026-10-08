@@ -226,7 +226,7 @@ function execute(player:Player,realm:Realm,command:Command,now:number,admin=fals
   realm.metrics??={};realm.metrics[command.type]=(realm.metrics[command.type]||0)+1;
   player.actor=capture(sim);player.session.sequence=sequence;player.acknowledged=[command.id];
 }
-export async function transact(store:RealmStore,identity:{id:string;name:string;admin?:boolean},input:{connect?:boolean;commands?:Command[];movement?:unknown}={},now=Date.now()):Promise<Snapshot> {
+export async function transact(store:RealmStore,identity:{id:string;name:string;job?:import('../src/game/classes.js').ClassId;admin?:boolean},input:{connect?:boolean;commands?:Command[];movement?:unknown}={},now=Date.now()):Promise<Snapshot> {
   for(let retry=0;retry<8;retry++) {
     let row=await store.read();
     if(!row){await store.create(freshRealm(now));row=await store.read()}
@@ -236,6 +236,7 @@ export async function transact(store:RealmStore,identity:{id:string;name:string;
     if(!player) {
       if(Object.keys(realm.players).length>=128)throw new GameError('This alpha realm has reached its account capacity',503);
       const sim=new Simulation(Math.random,undefined,null);
+      if(identity.job)sim.setClass(identity.job);
       player={room:sim.save.zone,id:identity.id,name:identity.name.slice(0,24),actor:capture(sim),lastSeen:now,input:[0,0],inputAt:0,acknowledged:[],events:[],serial:0,session:{id:crypto.randomUUID(),sequence:0}};
       realm.players[identity.id]=player;
     }

@@ -12,7 +12,7 @@ test('real map movement enters a visible territory; Auto farms two waves without
  const snap=()=>page.evaluate(()=>(window as any).mossvale.snapshot()),group=zoneMonsterGroups('glade')[0];
  const pack=(state:any)=>state.monsters.filter((m:any)=>m.groupId===group.id);
  try{
-  await page.goto('/?practice=1');await page.waitForFunction(()=>{const d=(window as any).mossvale?.snapshot();return d&&d.riggedActors===d.modelsExpected&&d.modelErrors===0},{},{timeout:60000});
+  await page.goto('/?practice=1');await page.locator('#practice-start').click();await page.waitForFunction(()=>{const d=(window as any).mossvale?.snapshot();return d&&d.riggedActors===d.modelsExpected&&d.modelErrors===0},{},{timeout:60000});
   expect((await snap()).territoriesCount).toBe(6);expect((await snap()).activeGroupId).toBeNull();
   await page.keyboard.press('m');await expect(page.getByText('Rush territory',{exact:true})).toBeVisible();await page.screenshot({path:dir+'/map-markers.png'});
   const box=(await page.locator('#large-map').boundingBox())!;

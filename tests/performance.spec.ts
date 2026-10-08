@@ -33,7 +33,7 @@ test('Low has a fixed pixel budget, sleeping template clips and lightweight grou
  await page.setViewportSize({width:1920,height:1080});
  await page.addInitScript(()=>localStorage.setItem('mossvale-quality','low'));
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto('/?practice=1');
+ await page.goto('/?practice=1');await page.locator('#practice-start').click();
  await page.waitForFunction(()=>(window as any).mossvale?.snapshot().riggedActors>=20);
  await expect(page.locator('#hp-text')).toHaveText('120 / 120');await page.waitForTimeout(2000);
  const inspect=()=>page.evaluate(async()=>{

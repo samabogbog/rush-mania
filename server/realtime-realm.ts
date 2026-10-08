@@ -46,7 +46,7 @@ export class RealtimeRealm {
     this.check(now);
     const session=this.realm.players[claims.playerId]?.session.id;
     if(resumeSession&&session!==resumeSession)throw new GameError('Game session changed; refresh before sending pending actions',409);
-    await transact(this.memoryStore(),{id:claims.playerId,name:claims.name,admin:claims.admin},{connect:!resumeSession},now);
+    await transact(this.memoryStore(),{id:claims.playerId,name:claims.name,job:claims.job,admin:claims.admin},{connect:!resumeSession},now);
     this.connections.set(claims.playerId,{claims,inputSequence:0});
     if(!resumeSession)void this.checkpoint().catch(()=>{});
     return this.snapshot(claims.playerId,now);

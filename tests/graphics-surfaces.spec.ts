@@ -5,7 +5,7 @@ test('textured world survives quality switches, stays bounded and preserves touc
  const sim=new Simulation(()=>.5,undefined,null);sim.save.zone='town';sim.save.level=100;sim.save.hp=sim.maxHp;sim.save.mp=sim.maxMp;
  await page.setViewportSize({width:1200,height:800});const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
  await page.addInitScript(save=>{localStorage.setItem('mossvale-save',JSON.stringify(save));localStorage.setItem('mossvale-quality','high')},sim.save);
- await page.goto('/?practice=1');await expect(page.locator('#hp-text')).toContainText('/',{timeout:60000});
+ await page.goto('/?practice=1');await page.locator('#practice-start').click();await expect(page.locator('#hp-text')).toContainText('/',{timeout:60000});
  await page.waitForFunction(()=>{const s=(window as any).mossvale?.snapshot();return s&&s.modelsExpected>0&&s.riggedActors===s.modelsExpected&&s.modelErrors===0},null,{timeout:60000});
  const snapshot=()=>page.evaluate(()=>(window as any).mossvale.snapshot());const first=await snapshot();expect(first.surfaceTextures).toBeGreaterThan(0);expect(first.surfaceTextures).toBeLessThanOrEqual(12);expect(first.texturedMapMeshes).toBeGreaterThan(3);expect(first.shadowsEnabled).toBe(true);expect(first.shadowFilter).toBe('blur-close-exponential');expect(first.shadowBlurKernel).toBe(20);expect(first.textureDetail).toBe(.6);
  mkdirSync('artifacts/graphics-upgrade',{recursive:true});await page.screenshot({path:'artifacts/graphics-upgrade/qa-town-high.png'});

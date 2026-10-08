@@ -25,5 +25,13 @@
     "statements": [
       "CREATE TABLE `realtime_leases` (\n  `id` text PRIMARY KEY NOT NULL,\n  `owner` text NOT NULL,\n  `expires_at` integer NOT NULL\n)"
     ]
+  },
+  {
+    "name": "0003_account_characters.sql",
+    "checksum": "7a8fbac360b8c8d3198aa5196395680161d265983ca9b204f455e346747e0d94",
+    "statements": [
+      "CREATE TABLE game_characters (\n id TEXT PRIMARY KEY NOT NULL,\n account_id TEXT NOT NULL REFERENCES game_accounts(id) ON DELETE CASCADE,\n slot INTEGER NOT NULL CHECK(slot BETWEEN 1 AND 3),\n name TEXT NOT NULL,\n job TEXT NOT NULL CHECK(job IN ('swordsman','mage','archer')),\n created_at INTEGER NOT NULL,\n UNIQUE(account_id,slot)\n)",
+      "ALTER TABLE game_sessions ADD COLUMN selected_character_id TEXT REFERENCES game_characters(id)"
+    ]
   }
 ]

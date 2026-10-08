@@ -1,3 +1,4 @@
+import {charactersRoute,selectedCharacter} from './characters.js';
 import {authRoute,authenticatedAccount} from './auth.js';
 import {operations} from './operations.js';
 import { D1RealmStore, type Database } from './store.js';
@@ -9,7 +10,7 @@ export default {
   async fetch(request:Request,env:Env):Promise<Response> {
     const url=new URL(request.url);
     if(!url.pathname.startsWith('/api/')) return env.ASSETS ? env.ASSETS.fetch(request) : new Response('Assets unavailable',{status:503});
-    if(!['/api/game','/api/operations','/api/realtime-ticket'].includes(url.pathname)&&!url.pathname.startsWith('/api/auth/'))return Response.json({error:'Not found'},{status:404});
+    if(!['/api/game','/api/operations','/api/realtime-ticket','/api/characters','/api/characters/create','/api/characters/select'].includes(url.pathname)&&!url.pathname.startsWith('/api/auth/'))return Response.json({error:'Not found'},{status:404});
     const headers={'Cache-Control':'no-store','Content-Type':'application/json; charset=utf-8'};
     try {
       const siteId=request.headers.get('oai-authenticated-user-id');
@@ -23,6 +24,7 @@ export default {
       if(url.pathname.startsWith('/api/auth/'))return await authRoute(env.DB,request,url.pathname,input as Record<string,unknown>);
       const trustedAdmin=!!siteId && !!env.ADMIN_EMAIL && request.headers.get('oai-authenticated-user-email')===env.ADMIN_EMAIL;
       const account=await authenticatedAccount(env.DB,request);
+      if(url.pathname.startsWith('/api/characters'))return await charactersRoute(env.DB,request,account,url.pathname,input as Record<string,unknown>);
       const accountAdmin=!!env.ADMIN_ACCOUNT_ID && !!account && account.id===env.ADMIN_ACCOUNT_ID;
       if(url.pathname==='/api/realtime-ticket') {
         if(request.method!=='POST')throw new GameError('Method not allowed',405);
@@ -30,8 +32,9 @@ export default {
         if(!account)throw new GameError('Game account required',401);
         if(!env.REALTIME_SERVER_URL)return Response.json({available:false},{headers});
         if(!env.REALTIME_SIGNING_SECRET)throw new GameError('Realtime service unavailable',503);
+        const character=await selectedCharacter(env.DB,request,account);
         const now=Date.now(),expiresAt=now+tuning.ticketTtlMs;
-        const ticket=await signTicket({version:1,realm:'glade-01',accountId:account.id,playerId:account.player_id,name:account.username,admin:accountAdmin,origin:url.origin,sessionHash:await sessionHash(request),issuedAt:now,expiresAt,jti:crypto.randomUUID()},env.REALTIME_SIGNING_SECRET);
+        const ticket=await signTicket({version:1,realm:'glade-01',accountId:account.id,playerId:character.id,name:character.name,job:character.job,admin:accountAdmin,origin:url.origin,sessionHash:await sessionHash(request),issuedAt:now,expiresAt,jti:crypto.randomUUID()},env.REALTIME_SIGNING_SECRET);
         return Response.json({available:true,url:socketUrl(env.REALTIME_SERVER_URL),ticket,expiresAt},{headers});
       }
       if(url.pathname==='/api/game'&&!account)throw new GameError('Log in to your game account to play online',401);
@@ -44,9 +47,10 @@ export default {
         return Response.json(await operations(env.DB,input as Record<string,unknown>,request.method==='POST'),{headers});
       }
       if(!account)throw new GameError('Log in to your game account to play online',401);
-      const id=account.player_id;
+      const character=await selectedCharacter(env.DB,request,account);
+      const id=character.id;
       const admin=accountAdmin || (!!siteId && trustedAdmin && account.legacy_site_id===siteId);
-      const snapshot=await transact(new D1RealmStore(env.DB),{id,name:account!.username,admin},input);
+      const snapshot=await transact(new D1RealmStore(env.DB),{id,name:character.name,job:character.job,admin},input);
       snapshot.admin=admin;
       return Response.json(snapshot,{headers});
     }catch(error) {

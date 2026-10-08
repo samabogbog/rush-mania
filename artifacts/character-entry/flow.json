@@ -1,0 +1,16 @@
+{
+  "environment": "Local SQLite HTTP-authoritative game, Chromium ANGLE SwiftShader, Low",
+  "jobs": [
+    "swordsman",
+    "mage",
+    "archer"
+  ],
+  "gold": [
+    105,
+    120,
+    120
+  ],
+  "restoredGold": 105,
+  "errors": [],
+  "connections": 85
+}

@@ -7,7 +7,7 @@ test('learn and upgrade with SP, persist/reset ranks, then cast a rank-five atta
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.setViewportSize({width:1200,height:800});
  await page.addInitScript(save=>{if(!sessionStorage.getItem('rank-fixture')){localStorage.setItem('mossvale-save',JSON.stringify(save));sessionStorage.setItem('rank-fixture','1');}localStorage.setItem('mossvale-quality','low')},seed.save);
  const ready=()=>page.waitForFunction(()=>{const s=(window as any).mossvale?.snapshot();return s&&s.riggedActors===s.modelsExpected&&s.modelErrors===0},{},{timeout:60000});
- const snap=()=>page.evaluate(()=>(window as any).mossvale.snapshot());await page.goto('/?practice=1');await ready();await expect(page.locator('#hp-text')).toContainText(String(seed.maxHp));
+ const snap=()=>page.evaluate(()=>(window as any).mossvale.snapshot());await page.goto('/?practice=1');await page.locator('#practice-start').click();await ready();await expect(page.locator('#hp-text')).toContainText(String(seed.maxHp));
  const learn=async()=>{await page.locator('[data-learn="swordsman-1"]').click();for(let n=0;n<4;n++)await page.locator('[data-upgrade-skill="swordsman-1"]').click();};
  await page.keyboard.press('k');await learn();expect((await snap()).skillRanks['swordsman-1']).toBe(5);expect((await snap()).skillPoints).toBe(25);await expect(page.locator('[data-upgrade-skill="swordsman-1"]')).toBeDisabled();
  mkdirSync('artifacts/skill-ranks',{recursive:true});await page.screenshot({path:'artifacts/skill-ranks/rank-five-ui.png'});

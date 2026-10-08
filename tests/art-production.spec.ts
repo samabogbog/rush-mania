@@ -77,7 +77,7 @@ test('real learned mage cast anticipates during cast and impacts only on resolut
  const sim=new Simulation(()=>.5,undefined,null);sim.save.job='mage';sim.save.level=100;sim.save.hp=sim.maxHp;sim.save.mp=sim.maxMp;
  for(let n=1;n<=10;n++)sim.chooseSkill(`mage-${n}`);sim.assignSkill(0,'mage-10');
  await page.addInitScript(save=>{localStorage.setItem('mossvale-save',JSON.stringify(save));localStorage.setItem('mossvale-quality','low')},sim.save);
- await page.setViewportSize({width:1200,height:800});await page.goto('/?practice=1');await page.waitForFunction(()=>(window as any).mossvale?.snapshot().riggedActors>=3);
+ await page.setViewportSize({width:1200,height:800});await page.goto('/?practice=1');await page.locator('#practice-start').click();await page.waitForFunction(()=>(window as any).mossvale?.snapshot().riggedActors>=3);
  await page.keyboard.press('Tab');await page.keyboard.press('1');
  await page.waitForFunction(()=>!!(window as any).mossvale.snapshot().cast);
  const casting=await state(page);expect(casting.cast.skillId).toBe('mage-10');expect(casting.skillCooldowns['mage-10']).toBeGreaterThan(0);

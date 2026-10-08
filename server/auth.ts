@@ -5,7 +5,7 @@ const hex=(bytes:ArrayBuffer|Uint8Array)=>Array.from(new Uint8Array(bytes instan
 const random=()=>hex(crypto.getRandomValues(new Uint8Array(32)));
 async function digest(value:string){return hex(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value)))}
 async function passwordHash(password:string,salt:string){const key=await crypto.subtle.importKey('raw',new TextEncoder().encode(password),'PBKDF2',false,['deriveBits']);return hex(await crypto.subtle.deriveBits({name:'PBKDF2',salt:new TextEncoder().encode(salt),iterations,hash:'SHA-256'},key,256))}
-interface Account{id:string;username:string;player_id:string;legacy_site_id:string|null;password_hash:string;salt:string}
+export interface Account{id:string;username:string;player_id:string;legacy_site_id:string|null;password_hash:string;salt:string}
 function token(request:Request){return request.headers.get('cookie')?.match(/(?:^|;\s*)mossvale-session=([a-f0-9]{64})(?:;|$)/)?.[1]}
 function cookie(request:Request,value:string,maxAge:number){return `mossvale-session=${value}; Path=/; HttpOnly; SameSite=Strict; Max-Age=${maxAge}${new URL(request.url).protocol==='https:'?'; Secure':''}`}
 export async function authenticatedAccount(db:Database,request:Request,now=Date.now()):Promise<Account|null>{const value=token(request);if(!value)return null;return db.prepare('SELECT a.* FROM game_accounts a JOIN game_sessions s ON s.account_id=a.id WHERE s.token_hash=? AND s.expires_at>?').bind(await digest(value),now).first<Account>()}

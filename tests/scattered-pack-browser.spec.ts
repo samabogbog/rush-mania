@@ -2,7 +2,7 @@ import {test,expect} from '@playwright/test';
 import {WORLD_BOUNDS,zoneMonsterGroups} from '../src/game/map-data';
 test('pack idles at positions across a broad map cell while its territory remains visible',async({page})=>{
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.setViewportSize({width:1200,height:800});
- await page.addInitScript(()=>{localStorage.removeItem('mossvale-save');localStorage.setItem('mossvale-quality','low')});await page.goto('/?practice=1');
+ await page.addInitScript(()=>{localStorage.removeItem('mossvale-save');localStorage.setItem('mossvale-quality','low')});await page.goto('/?practice=1');await page.locator('#practice-start').click();
  await page.waitForFunction(()=>{const d=(window as any).mossvale?.snapshot();return d&&d.riggedActors===d.modelsExpected&&d.modelErrors===0},{},{timeout:60000});
  await expect(page.locator('#hp-text')).toContainText('/');
  const group=zoneMonsterGroups('glade')[0],snap=()=>page.evaluate(()=>(window as any).mossvale.snapshot());

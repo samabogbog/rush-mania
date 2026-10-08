@@ -22,12 +22,13 @@ test('accounts retain purchased legacy items after database reopen; sessions can
   expect(registered.status).toBe(200);const cookie=registered.headers.get('set-cookie')!.split(';')[0];
   expect(await registered.json()).toEqual({account:{username:'oldhero'}});
   sqlite.close();sqlite=new DatabaseSync(join(folder,'game.sqlite'));DB=adapter(sqlite);env={DB,ADMIN_EMAIL:'owner@game.test'};
+  const roster=await(await worker.fetch(req('characters',undefined,cookie),env)).json();expect(roster.characters[0].id).toBe('legacy-owner');await worker.fetch(req('characters/select',{id:'legacy-owner'},cookie),env);
   const connected=await worker.fetch(req('game',{connect:true},cookie),env);expect(connected.status).toBe(200);const snapshot=await connected.json();
   expect(snapshot.player.actor.save.gold).toBe(105);expect(snapshot.player.actor.save.items.find((i:any)=>i.name==='Red potion').count).toBe(9);expect(snapshot.admin).toBe(true);
   const another=await worker.fetch(req('game',{},cookie,'other-site','owner@game.test'),env);expect((await another.json()).admin).toBe(false);
   expect((await worker.fetch(req('operations',undefined,cookie,'other-site','other@game.test'),env)).status).toBe(403);
   const second=await worker.fetch(req('auth/register',{username:'newhero',password:'test-only password 123'}),env);expect(second.status).toBe(200);
-  const secondCookie=second.headers.get('set-cookie')!.split(';')[0];const fresh=await(await worker.fetch(req('game',{connect:true},secondCookie),env)).json();
+  const secondCookie=second.headers.get('set-cookie')!.split(';')[0];const created=await(await worker.fetch(req('characters',{name:'Fresh hero',job:'archer'},secondCookie),env)).json();await worker.fetch(req('characters/select',{id:created.character.id},secondCookie),env);const fresh=await(await worker.fetch(req('game',{connect:true},secondCookie),env)).json();
   expect(fresh.player.id).not.toBe(snapshot.player.id);expect(fresh.player.actor.save.gold).toBe(120);expect(fresh.admin).toBe(false);
   const last=cookie.slice(-1);const forged=cookie.slice(0,-1)+(last==='0'?'1':'0');expect((await worker.fetch(req('game',{},forged),env)).status).toBe(401);
   sqlite.prepare('UPDATE game_sessions SET expires_at=0').run();expect((await worker.fetch(req('game',{},cookie),env)).status).toBe(401);

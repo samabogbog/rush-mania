@@ -1698,3 +1698,12 @@ body:has(.game-panel) .mobile-controls{visibility:hidden;pointer-events:none}
 
 .secondary-stats .secondary-roll-high b { color: #9333ea; font-weight: 800; }
 .secondary-stats .secondary-roll-excellent b { color: #dc2626; font-weight: 800; }
+/* Account entry stays independent of the map and renderer. */
+.account-card:has(.character-roster){width:min(100%,620px)}
+.account-card .account-primary{width:100%;background:#667e3c;color:#fff8e7;margin:12px 0}
+.character-roster{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:20px 0 10px}
+.account-card .character-slot{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:16px 8px;min-height:158px;box-sizing:border-box;background:#f5e8c9;border:2px solid #b89b69;border-radius:14px;overflow-wrap:anywhere}
+.character-slot img{width:44px;height:44px;object-fit:contain}.character-slot span{font-size:12px;text-transform:capitalize}.character-slot small{font-size:11px;color:#76634b}
+.account-card .character-slot[aria-pressed=true]{background:#e7edbe;border-color:#536c35;box-shadow:0 0 0 2px #536c35}.character-slot.empty{border-style:dashed;opacity:.7}.character-slot.empty>span{font-size:28px}
+.account-card h2{font-size:17px;margin:10px 0 0}.account-card #character-create{border-top:1px solid #d4bd91;padding-top:10px}.account-links{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:16px}.account-links button{padding:0 18px}.account-card button:focus-visible,.account-card input:focus-visible,.account-card a:focus-visible{outline:3px solid #527739;outline-offset:3px}
+@media(max-width:480px){.character-roster{gap:6px}.account-card .character-slot{min-height:142px;padding:12px 5px}.character-slot img{width:36px;height:36px}.character-slot strong{font-size:13px}.character-slot span{font-size:10px}.account-wordmark{font-size:12px;letter-spacing:2px}}
