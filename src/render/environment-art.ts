@@ -4,7 +4,7 @@ import { Primitives } from './primitives';
 
 /** Small, deterministic art vocabulary. Static geometry is palette-baked by mergeStatic. */
 export function meadowGround(f:Primitives,color:number,pathColor:number) {
- const ground=f.mesh({kind:'plane',w:32,h:32},color,0,0,0);ground.rotation.x=-Math.PI/2;
+ const ground=f.mesh({kind:'plane',w:32,h:32},color,0,0,0);ground.rotation.x=-Math.PI/2;f.surface(ground,'grass');
  // A continuous ribbon has no repeated tile seams and subtly wanders through the playfield.
  for(const horizontal of [false,true]) {
   const positions:number[]=[],indices:number[]=[],normals:number[]=[],uvs:number[]=[];
@@ -15,7 +15,7 @@ export function meadowGround(f:Primitives,color:number,pathColor:number) {
   }
   // Both windings keep the strip visible through Babylon's handedness/camera conventions.
   const frontIndices=indices.slice();for(let i=0;i<frontIndices.length;i+=3)indices.push(frontIndices[i+2],frontIndices[i+1],frontIndices[i]);
-  const ribbon=new Mesh('soft-winding-path',f.scene),data=new VertexData();data.positions=positions;data.indices=indices;data.normals=normals;data.uvs=uvs;data.applyToMesh(ribbon);ribbon.material=f.material(pathColor);ribbon.receiveShadows=true;
+  const ribbon=new Mesh('soft-winding-path',f.scene),data=new VertexData();data.positions=positions;data.indices=indices;data.normals=normals;data.uvs=uvs;data.applyToMesh(ribbon);ribbon.material=f.material(pathColor);f.surface(ribbon,'dirt');ribbon.receiveShadows=true;
  }
  for(let i=0;i<28;i++) {const t=-15+i*1.12,x=Math.sin(t*.18)*.3+(i%2?.9:-.9),stone=f.ball(.13,0xf4dfb1,x,.024,t,undefined,.2);stone.scaling.x=1.6;}
 }
@@ -49,7 +49,7 @@ export function gardenPath(f:Primitives,from:[number,number],to:[number,number],
  const positions:number[]=[],normals:number[]=[],uvs:number[]=[],indices:number[]=[];
  const dx=to[0]-from[0],dz=to[1]-from[1],length=Math.hypot(dx,dz),nx=-dz/length,nz=dx/length;
  for(let i=0;i<=16;i++){const t=i/16,bend=Math.sin(t*Math.PI)*.55;for(const side of [-1,1]){positions.push(from[0]+dx*t+nx*(bend+side*width/2),.026,from[1]+dz*t+nz*(bend+side*width/2));normals.push(0,1,0);uvs.push((side+1)/2,t);}if(i<16){const k=i*2;indices.push(k,k+1,k+2,k+1,k+3,k+2,k+2,k+1,k,k+2,k+3,k+1);}}
- const m=new Mesh('garden-promenade',f.scene),data=new VertexData();data.positions=positions;data.normals=normals;data.uvs=uvs;data.indices=indices;data.applyToMesh(m);m.material=f.material(color);m.receiveShadows=true;
+ const m=new Mesh('garden-promenade',f.scene),data=new VertexData();data.positions=positions;data.normals=normals;data.uvs=uvs;data.indices=indices;data.applyToMesh(m);m.material=f.material(color);f.surface(m,color===0xcba375?'wood':'dirt');m.receiveShadows=true;
 }
 export function meadowPatch(f:Primitives,x:number,z:number,r:number,color:number,background=0x82cc79){
  const positions:number[]=[],normals:number[]=[],uvs:number[]=[],colors:number[]=[],indices:number[]=[];
@@ -60,7 +60,7 @@ export function meadowPatch(f:Primitives,x:number,z:number,r:number,color:number
   const fade=ring===2?1:0;colors.push(...inside.map((c,k)=>c*(1-fade)+outside[k]*fade),1);
   if(ring<2&&i<32){const k=ring*33+i;indices.push(k,k+1,k+33,k+1,k+34,k+33,k+33,k+1,k,k+33,k+34,k+1);}
  }
- const patch=new Mesh('soft-painted-meadow',f.scene),data=new VertexData();data.positions=positions;data.normals=normals;data.uvs=uvs;data.colors=colors;data.indices=indices;data.applyToMesh(patch);patch.material=f.material(0xffffff);patch.receiveShadows=true;patch.position.set(x,0,z);
+ const patch=new Mesh('soft-painted-meadow',f.scene),data=new VertexData();data.positions=positions;data.normals=normals;data.uvs=uvs;data.colors=colors;data.indices=indices;data.applyToMesh(patch);patch.material=f.material(0xffffff);patch.receiveShadows=true;patch.position.set(x,0,z);f.surface(patch,'grass');
 }
 export function townGarden(f:Primitives){
  for(const [x,z,r,c] of [[-11,-7,4,0x89ce7b],[11,-7,4,0x89ce7b],[-11,8,4.5,0x8bd281],[11,8,4.5,0x8bd281],[-4,13,3,0x8fd183]])meadowPatch(f,x,z,r,c,0x86d877);

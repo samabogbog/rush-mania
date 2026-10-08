@@ -5,6 +5,7 @@ import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder.js";
 import { Scene } from "@babylonjs/core/scene.js";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial.js";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode.js";
+import { SurfaceMaterials, type Surface } from "./surface-materials";
 export type Shape =
   | { kind: "box"; w: number; h: number; d: number }
   | { kind: "plane"; w: number; h: number }
@@ -16,7 +17,13 @@ export type Shape =
 export class Primitives {
   private materials = new Map<string, StandardMaterial>();
   private serial = 0;
-  constructor(public scene: Scene) {}
+  readonly surfaces: SurfaceMaterials;
+  constructor(public scene: Scene) { this.surfaces = new SurfaceMaterials(scene); }
+  surface(mesh: Mesh, surface: Surface) {
+    mesh.metadata = { ...mesh.metadata, surface };
+    this.surfaces.projectUV(mesh, surface);
+    return mesh;
+  }
   material(color: number, unlit = false, alpha = 1) {
     const key = `${color}:${unlit}:${alpha}`;
     let m = this.materials.get(key);
@@ -202,20 +209,22 @@ export class Primitives {
   mergeStatic(exclude: Mesh, included?:Set<Mesh>) {
     const groups = new Map<StandardMaterial, Mesh[]>();
     for (const m of this.scene.meshes) {
-      if (!(m instanceof Mesh) || m === exclude || (included && !included.has(m)) || m.metadata?.npcId) continue;
+      if (!(m instanceof Mesh) || m === exclude || (included && !included.has(m)) || m.metadata?.npcId || !m.getTotalVertices()) continue;
       m.computeWorldMatrix(true);
       const original=m.material as StandardMaterial;
       const color=original.diffuseColor,colors:number[]=[],paint=m.getVerticesData("color");
       // Preserve authored ground gradients while still baking the material palette.
       for(let vertex=0;vertex<m.getTotalVertices();vertex++)colors.push(color.r*(paint?.[vertex*4]??1),color.g*(paint?.[vertex*4+1]??1),color.b*(paint?.[vertex*4+2]??1),paint?.[vertex*4+3]??1);
       m.setVerticesData("color",colors);
-      const mat=this.material(0xffffff,original.disableLighting,original.alpha);m.material=mat;
+      const surface=!original.disableLighting&&original.alpha===1?this.surfaces.classify(m,((Math.round(color.r*255)<<16)|(Math.round(color.g*255)<<8)|Math.round(color.b*255))):null;
+      if(surface){this.surfaces.projectUV(m,surface);m.metadata={...m.metadata,surface};}
+      const mat=surface?this.surfaces.material(surface):this.material(0xffffff,original.disableLighting,original.alpha);m.material=mat;
       const group = groups.get(mat) ?? [];
       group.push(m);
       groups.set(mat, group);
     }
     for (const list of groups.values()) {
-      if (list.length < 2) continue;
+      if (list.length < 2) {list[0].isPickable=false;list[0].freezeWorldMatrix();continue;}
       const merged = Mesh.MergeMeshes(
         list,
         true,

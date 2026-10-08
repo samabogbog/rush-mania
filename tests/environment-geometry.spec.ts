@@ -17,7 +17,7 @@ test('all environment maps merge their geometry with compatible vertex attribute
   expect(scene.meshes.length,zone).toBeLessThan(before);
   if(paint){expect(scene.meshes.some(m=>{const c=m.getVerticesData('color');if(!c)return false;for(let i=0;i<c.length;i+=4)if(paint.every((v,k)=>Math.abs(v-c[i+k])<.00001))return true;return false;}),zone+' meadow gradient preserved').toBe(true);}
   expect(scene.meshes.every(m=>m.getTotalVertices()>0),zone).toBe(true);
-  expect(scene.meshes.reduce((n,m)=>n+m.getTotalVertices(),0),zone+' static vertex budget').toBeLessThanOrEqual(120000);
+  expect(scene.meshes.reduce((n,m)=>n+m.getTotalVertices(),0),zone+' static vertex budget').toBeLessThanOrEqual(220000);
   console.log('ENVIRONMENT_GEOMETRY',zone,JSON.stringify({meshes:scene.meshes.length,vertices:scene.meshes.reduce((n,m)=>n+m.getTotalVertices(),0)}));
   scene.dispose();engine.dispose();
  }

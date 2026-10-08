@@ -48,6 +48,7 @@ export class World implements GameWorld {
   private readonly labelSpans=new Map<number,HTMLElement>();
   private outfitKey="";private outfit:TransformNode[]=[];
   private readonly shadows: ShadowGenerator;
+  private readonly sunlight: DirectionalLight;
   private currentZone: ZoneId | null=null;
   private farmTerritories: {group:ReturnType<typeof zoneMonsterGroups>[number];root:TransformNode;fill:Mesh;border:Mesh;active:boolean}[]=[];
   private territoryMaterials: StandardMaterial[]=[];
@@ -103,7 +104,7 @@ export class World implements GameWorld {
     this.scene = new Scene(this.engine);
     this.scene.useRightHandedSystem = true;
     this.scene.clearColor = Color4.FromHexString("#4e4abcff");
-    this.scene.ambientColor = new Color3(0.08, 0.08, 0.08);
+    this.scene.ambientColor = new Color3(0.045, 0.055, 0.075);
     this.scene.detachControl();
     this.camera = new FreeCamera(
       "isometric-camera",
@@ -114,27 +115,29 @@ export class World implements GameWorld {
     this.camera.minZ = 0.1;
     this.camera.maxZ = 150;
     const sky = new HemisphericLight("sky", Vector3.Up(), this.scene);
-    sky.intensity = 0.75;
-    sky.groundColor = Color3.FromHexString("#9aa568");
-    const sun = new DirectionalLight(
+    sky.intensity = 0.65;
+    sky.diffuse = Color3.FromHexString("#dcecff");
+    sky.groundColor = Color3.FromHexString("#b6c498");
+    const sun = this.sunlight = new DirectionalLight(
       "sun",
-      new Vector3(12, -24, -12).normalize(),
+      new Vector3(18, -30, -18).normalize(),
       this.scene,
     );
-    sun.position.set(-12, 24, 12);
+    sun.position.set(-18, 30, 18);
     sun.diffuse = Color3.FromHexString("#fff1ce");
-    sun.intensity = 0.45;
+    sun.intensity = 0.72;
     sun.autoUpdateExtends = false;
-    sun.orthoLeft = -30;
-    sun.orthoRight = 30;
-    sun.orthoTop = 30;
-    sun.orthoBottom = -30;
+    sun.orthoLeft = -34;
+    sun.orthoRight = 34;
+    sun.orthoTop = 34;
+    sun.orthoBottom = -34;
     sun.shadowMinZ = 1;
     sun.shadowMaxZ = 80;
     const shadows = this.shadows = new ShadowGenerator(1024, sun);
     shadows.usePercentageCloserFiltering = true;
-    shadows.bias = 0.001;
-    shadows.normalBias = 0.05;
+    shadows.bias = 0.00035;
+    shadows.darkness = 0.16;
+    shadows.normalBias = 0.025;
     this.factory = new Primitives(this.scene);
     this.models = new ModelLibrary(this.scene);
     this.skillVFX = new SkillVFX(this.scene);
@@ -196,6 +199,7 @@ export class World implements GameWorld {
     });
     this.engine.onContextRestoredObservable.add(() => {
       this.ready = true;
+      this.applyQuality();
       sim.paused = this.pausedBeforeLoss;
       sim.onEvent("Graphics restored. Your adventure is ready.");
     });
@@ -242,7 +246,13 @@ export class World implements GameWorld {
     for(const entry of this.zoneLabels)entry.label.remove();this.zoneLabels=[];
     const oldMeshes=new Set(this.scene.meshes),oldNodes=new Set(this.scene.transformNodes);
     this.blocking=[];this.currentZone=this.sim.save.zone;
-    this.ground.material=this.factory.material(zones[this.currentZone].ground);
+    const groundColor=zones[this.currentZone].ground;
+    // Shared texture and vertex tint cover the entire 96×96 world, including outer sectors.
+    this.ground.material=this.factory.surfaces.material('grass');
+    this.factory.surface(this.ground,'grass');
+    const tint=Color3.FromInts(groundColor>>16&255,groundColor>>8&255,groundColor&255),colors:number[]=[];
+    for(let i=0;i<this.ground.getTotalVertices();i++)colors.push(tint.r,tint.g,tint.b,1);
+    this.ground.setVerticesData('color',colors);
     buildZoneMap(this.factory,this.blocking,this.currentZone);this.sim.obstacles=this.blocking;
     const included=new Set(this.scene.meshes.filter((m):m is Mesh=>m instanceof Mesh&&!oldMeshes.has(m)));
     this.factory.mergeStatic(this.ground,new Set([...included].filter(m=>!m.isWorldMatrixFrozen)));
@@ -292,7 +302,15 @@ export class World implements GameWorld {
   }
 
   setQuality(quality:"auto"|"high"|"low") {this.quality=quality;this.autoReduced=false;this.frameTimes=[];this.lastFrame=performance.now();localStorage.setItem("mossvale-quality",quality);this.applyQuality();this.resize();}
-  private applyQuality(){const low=this.quality==='low'||this.autoReduced;this.scene.shadowsEnabled=!low;this.models.setLowQuality(low);this.skillVFX.setLowQuality(low);this.shadows.getShadowMap()?.resize(this.quality==='high'?1024:512);}
+  private applyQuality(){
+    const low=this.quality==='low'||this.autoReduced;
+    this.scene.shadowsEnabled=!low;
+    this.models.setLowQuality(low);this.skillVFX.setLowQuality(low);
+    this.factory.surfaces.setLowQuality(low);
+    this.shadows.filteringQuality=this.quality==='high'?ShadowGenerator.QUALITY_MEDIUM:ShadowGenerator.QUALITY_LOW;
+    const size=this.quality==='high'?2048:512,map=this.shadows.getShadowMap();
+    if(map&&map.getSize().width!==size)map.resize(size);
+  }
 
   private updateOutfit() {
     const model=this.heroModels.get(this.sim.save.job)!,nodes=model.getChildTransformNodes(false),spine=nodes.find(n=>n.name.endsWith('-spine')),hand=nodes.find(n=>n.name.endsWith('-hand.r')||n.name.endsWith('-right-hand'));
@@ -311,7 +329,11 @@ export class World implements GameWorld {
   }
   get diagnostics() {
     return {
-      engine: "Babylon.js",territoriesCount:this.farmTerritories.length,activeGroupId:this.farmTerritories.find(t=>t.active)?.group.id??null,groupCenters:this.farmTerritories.map(t=>({...t.group,visible:t.root.isEnabled()})),worldSize:WORLD_SIZE,worldBounds:WORLD_BOUNDS,modelsLoaded:this.models.loaded,modelsExpected:3+this.sim.monsters.length,
+      engine: "Babylon.js",...this.factory.surfaces.diagnostics,
+      sceneTextures:this.scene.textures.length,sceneMaterials:this.scene.materials.length,
+      texturedMapMeshes:this.mapMeshes.filter(m=>(m.material as StandardMaterial)?.diffuseTexture).length+1,
+      shadowsEnabled:this.scene.shadowsEnabled,shadowMapSize:this.shadows.getShadowMap()?.getSize().width,
+      lighting:'warm directional sunlight / cool sky fill',territoriesCount:this.farmTerritories.length,activeGroupId:this.farmTerritories.find(t=>t.active)?.group.id??null,groupCenters:this.farmTerritories.map(t=>({...t.group,visible:t.root.isEnabled()})),worldSize:WORLD_SIZE,worldBounds:WORLD_BOUNDS,modelsLoaded:this.models.loaded,modelsExpected:3+this.sim.monsters.length,
       previewHeld:this.previewHeld,vfx:this.skillVFX.diagnostics,sceneMeshes:this.scene.meshes.length,skillMotion:this.skillMotion,quality:this.quality,autoReduced:this.autoReduced,riggedActors:this.models.active,motionPoses:this.models.motionDiagnostics,modelErrors:this.models.errors,
       renderWidth:this.engine.getRenderWidth(),renderHeight:this.engine.getRenderHeight(),activeAnimations:this.scene.animatables.length,
       drawCalls: this.instrumentation.drawCallsCounter.current,
@@ -473,6 +495,8 @@ export class World implements GameWorld {
         new Vector3(Math.sin(this.angle) * 24, 29, Math.cos(this.angle) * 24),
       );
     this.camera.setTarget(focus);
+    // Track the camera across all nine sectors instead of clipping shadows to the origin.
+    this.sunlight.position.set(focus.x-18,30,focus.z+18);
     this.scene.updateTransformMatrix(true);
     const target = this.sim.monsters.find(
       (m) => m.id === this.sim.target && m.alive,

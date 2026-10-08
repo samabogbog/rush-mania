@@ -1,5 +1,5 @@
 import { classes, type ClassId } from "../game/classes";
-import { Mesh } from "@babylonjs/core/Meshes/mesh";
+import { Mesh } from "@babylonjs/core/Meshes/mesh.js";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode.js";
 import { Primitives } from "./primitives";
 import { species, type Kind } from "../simulation";
