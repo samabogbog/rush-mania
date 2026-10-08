@@ -21,12 +21,13 @@ export function skillPalette(job:ClassId, skill:Skill):number[] {
 export class SkillVFX {
  private templates=new Map<Shape,Mesh>();private materials=new Map<string,StandardMaterial>();
  private active:Particle[]=[];private free=new Map<Shape,Mesh[]>();private created=0;private serial=0;private low=false;
+ private lv30Cue:{skillId:string;style:string;impactSeconds:number;heroSeconds:number;focal:{x:number;z:number};decorativeRadius:number}|null=null;
  private lv20Cue:{skillId:string;style:string;impactSeconds:number;heroSeconds:number;focal:{x:number;z:number};decorativeRadius:number}|null=null;
  private lv10Cue:{skillId:string;style:string;impactSeconds:number;heroSeconds:number;focal:{x:number;z:number};decorativeRadius:number}|null=null;
  static readonly MAX_MESHES=160;
  constructor(private scene:Scene){}
  setLowQuality(low:boolean){this.low=low;}
- get diagnostics(){return {active:this.active.length,pooled:this.created,limit:this.low?40:96,geometry3D:true,noSprites:true,textures:0,shapes:[...this.templates.keys()],materials:this.materials.size,lv10Cue:this.lv10Cue,lv20Cue:this.lv20Cue,drawCount:this.active.filter(p=>p.mesh.isEnabled()).length};}
+ get diagnostics(){return {active:this.active.length,pooled:this.created,limit:this.low?40:96,geometry3D:true,noSprites:true,textures:0,shapes:[...this.templates.keys()],materials:this.materials.size,lv10Cue:this.lv10Cue,lv20Cue:this.lv20Cue,lv30Cue:this.lv30Cue,drawCount:this.active.filter(p=>p.mesh.isEnabled()).length};}
  private template(shape:Shape){
   const name='vfx-template-'+shape,parts:Mesh[]=[];
   const tube=(path:Vector3[],radius:number)=>{const m=MeshBuilder.CreateTube(name,{path,radius,tessellation:7},this.scene);parts.push(m);return m;};
@@ -85,6 +86,7 @@ export class SkillVFX {
  }
  anticipation(skill:Skill,job:ClassId,x:number,z:number){if(skill.level===10){const c=skillPalette(job,skill),d=skill.cast||.18;this.emit('ring',c[0],x,.09,z,1.1,d,0,0,0,-2);this.emit('core',c[1],x,1,z,.13,d,0,.2,0,.75);for(let i=0;i<(this.low?3:6);i++){const a=i*Math.PI*2/(this.low?3:6);this.emit('ray',c[0],x+Math.cos(a)*.75,.5,z+Math.sin(a)*.75,.12,d,-Math.cos(a)*3,2,-Math.sin(a)*3);}return;}const c=skillPalette(job,skill),duration=skill.cast||.2;this.emit('ring',c[1],x,.08,z,.65+skill.stage*.035,duration,0,0,0,.25,.5);this.emit(skill.branch?'petal':'star',c[0],x,1,z,.16,duration,0,.4,0,.15,2);}
  release(skill:Skill,job:ClassId,x:number,z:number,tx:number,tz:number){
+  if(skill.level===30){this.releaseLv30(skill,job,x,z,tx,tz);return;}
   if(skill.level===20){this.releaseLv20(skill,job,x,z,tx,tz);return;}
   if(skill.level===10){this.releaseLv10(skill,job,x,z,tx,tz);return;}
   const c=skillPalette(job,skill),stage=skill.stage,high=stage>=7,name=skill.name.toLowerCase(),self=['heal','guard','fury'].includes(skill.effect),cx=self||job==='swordsman'&&skill.effect==='area'?x:tx,cz=self||job==='swordsman'&&skill.effect==='area'?z:tz;
@@ -176,8 +178,53 @@ export class SkillVFX {
   }
   if(!this.low)for(let i=0;i<10;i++){const a=i*Math.PI*2/10;sculpt('spark',c[1],cx,.9,cz,.13,.42,[1,1,1],Math.sin(a)*10,3,Math.cos(a)*10,-.15,3);}
  }
+ /** Level thirty is a decorative release only: no gameplay range or choreography is changed. */
+ private releaseLv30(skill:Skill,job:ClassId,x:number,z:number,tx:number,tz:number){
+  const branch=skill.branch,c=job==='mage'&&!branch?[0x9d8cff,0xe9e3ff,0x69e9ff]:skillPalette(job,skill);
+  const cx=job==='swordsman'?x:tx,cz=job==='swordsman'?z:tz,dir=Math.atan2(tx-x,tz-z);
+  const style=job==='swordsman'?(branch?'field-recovery-cross-fountain':'iron-guard-fortress-crash'):job==='mage'?(branch?'spore-hex-orbital-cage':'arcane-barrier-prism-crash'):(branch?'scatter-volley-six-spoke-fan':'evasive-stance-wing-crash');
+  this.lv30Cue={skillId:skill.id,style,impactSeconds:0,heroSeconds:.32,focal:{x:cx,z:cz},decorativeRadius:6.6};
+  // Keep the entire new silhouette even when casts overlap. Reuse the same bounded pool.
+  const limit=this.low?40:96;
+  while(this.active.length>limit-24){const p=this.active.pop()!;p.mesh.setEnabled(false);const shape=p.mesh.metadata.vfxShape as Shape,list=this.free.get(shape)||[];list.push(p.mesh);this.free.set(shape,list);}
+  const sculpt=(shape:Shape,color:number,px:number,py:number,pz:number,size:number,duration:number,stretch:[number,number,number],vx=0,vy=0,vz=0,grow=0,spin=0)=>{
+   const m=this.emit(shape,color,px,py,pz,size,duration,vx,vy,vz,grow,spin);if(m){this.active[this.active.length-1].stretch=stretch;m.scaling.set(size*stretch[0],size*stretch[1],size*stretch[2]);}return m;
+  };
+  const beam=(sx:number,sy:number,sz:number,ex:number,ey:number,ez:number,width:number)=>{
+   const dx=ex-sx,dy=ey-sy,dz=ez-sz,length=Math.hypot(dx,dy,dz);
+   for(const [color,w] of [[c[0],width],[c[1],width*.3]]){const m=sculpt('beam',color,(sx+ex)/2,(sy+ey)/2,(sz+ez)/2,1,.32,[w,w,length/2]);if(m)m.rotation.set(-Math.atan2(dy,Math.hypot(dx,dz)),Math.atan2(dx,dz),0);}
+  };
+  sculpt('core',c[1],cx,1,cz,.8,.28,[1,1.6,1],0,0,0,3.4);
+  for(let i=0;i<3;i++)sculpt('ring',c[i],cx,.12+i*.14,cz,.6+i*.15,.6,[1,1,1],0,0,0,(6.6-.6-i*.15)/.6);
+  // Job/branch silhouettes are deliberately different from level twenty's central pillar.
+  if(job==='swordsman'&&!branch){
+   sculpt('shield',c[0],cx,.15,cz,2.1,.4,[1,.8,1]);
+   for(let i=0;i<4;i++){const a=dir+Math.PI/4+i*Math.PI/2,px=cx+Math.sin(a)*1.7,pz=cz+Math.cos(a)*1.7;beam(px,4.8,pz,px,.15,pz,3.4);sculpt('slab',c[2],px,.25,pz,.8,.6,[1,2.4,1],Math.sin(a)*2,1.6,Math.cos(a)*2,0,2);}
+  }else if(job==='swordsman'){
+   for(let i=0;i<4;i++){const a=dir+i*Math.PI/2;beam(cx,.2,cz,cx+Math.sin(a)*3.8,2.8,cz+Math.cos(a)*3.8,3);}
+   sculpt('spiral',c[0],cx,.1,cz,1.5,.65,[1,1.6,1],0,0,0,.5,4);
+   for(let i=0;i<4;i++){const a=i*Math.PI/2;sculpt('petal',c[2],cx+Math.sin(a)*1.5,1.5,cz+Math.cos(a)*1.5,.7,.6,[1,1,2],Math.sin(a)*3,2,Math.cos(a)*3,0,3);}
+  }else if(job==='mage'&&!branch){
+   for(let i=0;i<3;i++){const a=dir+i*Math.PI*2/3,b=dir+(i+1)*Math.PI*2/3;beam(cx+Math.sin(a)*2.8,.3,cz+Math.cos(a)*2.8,cx,4.8,cz,3);beam(cx+Math.sin(a)*2.8,.3,cz+Math.cos(a)*2.8,cx+Math.sin(b)*2.8,.3,cz+Math.cos(b)*2.8,2);}
+   sculpt('shield',c[0],cx,.2,cz,2.3,.45,[1,1.5,1]);
+  }else if(job==='mage'){
+   for(let i=0;i<3;i++){const m=sculpt('ring',c[i],cx,1.6,cz,2,.65,[1,1,1],0,0,0,.5,2+i);if(m)m.rotation.set(Math.PI/2,0,i*Math.PI/3);const a=i*Math.PI*2/3;beam(cx+Math.sin(a)*2.3,3.5,cz+Math.cos(a)*2.3,cx,.5,cz,2.6);sculpt('core',c[0],cx+Math.sin(a)*2.3,2.8,cz+Math.cos(a)*2.3,.5,.6,[1,1,1],0,.6,0,.3);}
+   sculpt('branch',c[2],cx,.1,cz,1.5,.65,[1,1.3,1],0,0,0,.4,3);
+  }else if(!branch){
+   for(const side of [-1,1]){const a=dir+side*1.05;beam(cx,.25,cz,cx+Math.sin(a)*4.3,3.1,cz+Math.cos(a)*4.3,3);const m=sculpt('crescent',c[0],cx+Math.sin(a)*1.8,1.1,cz+Math.cos(a)*1.8,2,.5,[1,1,1],Math.sin(a)*2,1,Math.cos(a)*2,1.2,side*5);if(m)m.rotation.set(.7,a,side*.45);}
+   beam(x,1,z,cx,1,cz,1.8);sculpt('arrow',c[1],cx,1,cz,1.3,.4,[1,1,2],0,1,0);
+  }else{
+   for(let i=0;i<6;i++){const a=dir+(i-2.5)*.36;beam(cx,.9,cz,cx+Math.sin(a)*4.5,1.3+i%2*.5,cz+Math.cos(a)*4.5,1.8);const m=sculpt('arrow',c[i%3],cx,.9,cz,1.1,.6,[1,1,1],Math.sin(a)*9,1,Math.cos(a)*9);if(m)m.rotation.y=a;}
+  }
+  const shape:Shape=job==='swordsman'?(branch?'petal':'slab'):job==='mage'?(branch?'core':'star'):branch?'arrow':'ray',n=this.low?12:32;
+  for(let i=0;i<n;i++){const a=i*Math.PI*2/n+branch*.2,speed=9.2+i%3*.25;
+   const m=sculpt(shape,c[i%3],cx+Math.sin(a)*.5,.8+i%3*.14,cz+Math.cos(a)*.5,shape==='ray'?.32:.35,.6,[1,1,shape==='ray'?3:1],Math.sin(a)*speed,1.8+i%3*.5,Math.cos(a)*speed,-.18,shape==='ray'||shape==='arrow'?0:4);
+   if(m&&(shape==='ray'||shape==='arrow'))m.rotation.set(-.2,a,0);
+  }
+  if(!this.low)for(let i=0;i<12;i++){const a=i*Math.PI*2/12;sculpt('spark',c[1],cx,1,cz,.15,.5,[1,1,1],Math.sin(a)*10,3.5,Math.cos(a)*10,-.18,3);}
+ }
  basic(job:ClassId,x:number,z:number){this.emit(job==='swordsman'?'crescent':'star',job==='mage'?0xb5d9ff:0xffe5a3,x,.75,z,job==='swordsman'?.65:.14,.3,0,.4,0,.5,4);}
  update(dt:number){for(let i=this.active.length-1;i>=0;i--){const p=this.active[i];let elapsed=dt;if(p.delay>0){p.delay-=dt;if(p.delay>0)continue;elapsed=-p.delay;p.delay=0;p.mesh.setEnabled(true);}p.life-=elapsed;if(p.life<=0){p.mesh.setEnabled(false);const shape=p.mesh.metadata.vfxShape as Shape;let list=this.free.get(shape);if(!list){list=[];this.free.set(shape,list);}list.push(p.mesh);this.active.splice(i,1);continue;}const t=p.duration-p.life;p.mesh.position.set(p.x+p.vx*t,p.y+p.vy*t-(p.gravity?t*t*3:0),p.z+p.vz*t);p.mesh.rotation.y+=p.spin*elapsed;p.mesh.visibility=Math.min(1,p.life/.08);const scale=Math.max(.01,p.size+p.grow*t);p.mesh.scaling.set(scale*p.stretch[0],scale*p.stretch[1],scale*p.stretch[2]);}}
- clear(){this.lv10Cue=null;this.lv20Cue=null;for(const p of this.active){p.mesh.setEnabled(false);const shape=p.mesh.metadata.vfxShape as Shape;const list=this.free.get(shape)||[];list.push(p.mesh);this.free.set(shape,list);}this.active.length=0;}
+ clear(){this.lv10Cue=null;this.lv20Cue=null;this.lv30Cue=null;for(const p of this.active){p.mesh.setEnabled(false);const shape=p.mesh.metadata.vfxShape as Shape;const list=this.free.get(shape)||[];list.push(p.mesh);this.free.set(shape,list);}this.active.length=0;}
  dispose(){this.clear();this.free.forEach(list=>list.forEach(mesh=>mesh.dispose()));this.templates.forEach(mesh=>mesh.dispose());this.materials.forEach(material=>material.dispose());this.free.clear();this.templates.clear();this.materials.clear();this.created=0;}
 }

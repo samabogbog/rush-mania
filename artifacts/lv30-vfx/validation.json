@@ -1,0 +1,326 @@
+{
+  "checksPassed": {
+    "lv10Regression": 2,
+    "lv20Regression": 2,
+    "lv30RadiusPool": 2,
+    "lv30LowHighBrowser": 3,
+    "lv30ActualCasts": 6
+  },
+  "build": "npm run build passed, existing chunk-size warning",
+  "environment": "Chromium ANGLE SwiftShader software renderer; not player hardware FPS",
+  "gameplayQuality": "low",
+  "visualQualities": [
+    "low",
+    "high"
+  ],
+  "casts": [
+    {
+      "skill": "archer-3",
+      "killsAdded": 4,
+      "mpSpent": 15,
+      "cooldowns": {
+        "archer-3": 14
+      },
+      "activeAfterCleanup": 0,
+      "modelErrors": 0,
+      "pageErrors": []
+    },
+    {
+      "skill": "archer-b-3",
+      "killsAdded": 4,
+      "mpSpent": 18,
+      "cooldowns": {
+        "archer-b-3": 7
+      },
+      "activeAfterCleanup": 0,
+      "modelErrors": 0,
+      "pageErrors": []
+    },
+    {
+      "skill": "mage-3",
+      "killsAdded": 4,
+      "mpSpent": 18,
+      "cooldowns": {
+        "mage-3": 16
+      },
+      "activeAfterCleanup": 0,
+      "modelErrors": 0,
+      "pageErrors": []
+    },
+    {
+      "skill": "mage-b-3",
+      "killsAdded": 4,
+      "mpSpent": 16,
+      "cooldowns": {
+        "mage-b-3": 10
+      },
+      "activeAfterCleanup": 0,
+      "modelErrors": 0,
+      "pageErrors": []
+    },
+    {
+      "skill": "swordsman-3",
+      "killsAdded": 4,
+      "mpSpent": 15,
+      "cooldowns": {
+        "swordsman-3": 15
+      },
+      "activeAfterCleanup": 0,
+      "modelErrors": 0,
+      "pageErrors": []
+    },
+    {
+      "skill": "swordsman-b-3",
+      "killsAdded": 4,
+      "mpSpent": 16,
+      "cooldowns": {
+        "swordsman-b-3": 14
+      },
+      "activeAfterCleanup": 0,
+      "modelErrors": 0,
+      "pageErrors": []
+    }
+  ],
+  "performance": [
+    {
+      "skill": "archer-3",
+      "low": false,
+      "idle": {
+        "frameP50": 250.19999998807907,
+        "frameP95": 509.90000000596046,
+        "vfxDrawCount": 0,
+        "drawCalls": 9,
+        "meshes": 10,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 225.10000002384186,
+        "frameP95": 389,
+        "vfxDrawCount": 57,
+        "drawCalls": 66,
+        "meshes": 74,
+        "materials": 9
+      }
+    },
+    {
+      "skill": "archer-b-3",
+      "low": false,
+      "idle": {
+        "frameP50": 250.19999998807907,
+        "frameP95": 509.90000000596046,
+        "vfxDrawCount": 0,
+        "drawCalls": 9,
+        "meshes": 10,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 164.40000000596046,
+        "frameP95": 338.5,
+        "vfxDrawCount": 66,
+        "drawCalls": 75,
+        "meshes": 117,
+        "materials": 15
+      }
+    },
+    {
+      "skill": "archer-3",
+      "low": true,
+      "idle": {
+        "frameP50": 101.2000000178814,
+        "frameP95": 204.7999999821186,
+        "vfxDrawCount": 0,
+        "drawCalls": 9,
+        "meshes": 117,
+        "materials": 17
+      },
+      "burst": {
+        "frameP50": 137.40000000596046,
+        "frameP95": 298.5,
+        "vfxDrawCount": 25,
+        "drawCalls": 34,
+        "meshes": 117,
+        "materials": 17
+      }
+    },
+    {
+      "skill": "archer-b-3",
+      "low": true,
+      "idle": {
+        "frameP50": 101.2000000178814,
+        "frameP95": 204.7999999821186,
+        "vfxDrawCount": 0,
+        "drawCalls": 9,
+        "meshes": 117,
+        "materials": 17
+      },
+      "burst": {
+        "frameP50": 130.7999999821186,
+        "frameP95": 378.2000000178814,
+        "vfxDrawCount": 34,
+        "drawCalls": 43,
+        "meshes": 117,
+        "materials": 17
+      }
+    },
+    {
+      "skill": "mage-3",
+      "low": false,
+      "idle": {
+        "frameP50": 110,
+        "frameP95": 218.7999999821186,
+        "vfxDrawCount": 0,
+        "drawCalls": 10,
+        "meshes": 11,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 198.40000000596046,
+        "frameP95": 381.5,
+        "vfxDrawCount": 61,
+        "drawCalls": 72,
+        "meshes": 78,
+        "materials": 10
+      }
+    },
+    {
+      "skill": "mage-b-3",
+      "low": false,
+      "idle": {
+        "frameP50": 110,
+        "frameP95": 218.7999999821186,
+        "vfxDrawCount": 0,
+        "drawCalls": 10,
+        "meshes": 11,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 210.30000001192093,
+        "frameP95": 393.69999998807907,
+        "vfxDrawCount": 61,
+        "drawCalls": 71,
+        "meshes": 118,
+        "materials": 18
+      }
+    },
+    {
+      "skill": "mage-3",
+      "low": true,
+      "idle": {
+        "frameP50": 99.59999999403954,
+        "frameP95": 298.59999999403954,
+        "vfxDrawCount": 0,
+        "drawCalls": 10,
+        "meshes": 118,
+        "materials": 19
+      },
+      "burst": {
+        "frameP50": 188.7000000178814,
+        "frameP95": 614.1999999880791,
+        "vfxDrawCount": 29,
+        "drawCalls": 40,
+        "meshes": 118,
+        "materials": 19
+      }
+    },
+    {
+      "skill": "mage-b-3",
+      "low": true,
+      "idle": {
+        "frameP50": 99.59999999403954,
+        "frameP95": 298.59999999403954,
+        "vfxDrawCount": 0,
+        "drawCalls": 10,
+        "meshes": 118,
+        "materials": 19
+      },
+      "burst": {
+        "frameP50": 179.5,
+        "frameP95": 368.30000001192093,
+        "vfxDrawCount": 29,
+        "drawCalls": 39,
+        "meshes": 118,
+        "materials": 19
+      }
+    },
+    {
+      "skill": "swordsman-3",
+      "low": false,
+      "idle": {
+        "frameP50": 129.59999999403954,
+        "frameP95": 686,
+        "vfxDrawCount": 0,
+        "drawCalls": 11,
+        "meshes": 12,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 213.40000000596046,
+        "frameP95": 488.80000001192093,
+        "vfxDrawCount": 61,
+        "drawCalls": 73,
+        "meshes": 79,
+        "materials": 10
+      }
+    },
+    {
+      "skill": "swordsman-b-3",
+      "low": false,
+      "idle": {
+        "frameP50": 129.59999999403954,
+        "frameP95": 686,
+        "vfxDrawCount": 0,
+        "drawCalls": 11,
+        "meshes": 12,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 206.59999999403954,
+        "frameP95": 393.2999999821186,
+        "vfxDrawCount": 61,
+        "drawCalls": 72,
+        "meshes": 118,
+        "materials": 16
+      }
+    },
+    {
+      "skill": "swordsman-3",
+      "low": true,
+      "idle": {
+        "frameP50": 176.2000000178814,
+        "frameP95": 490.59999999403954,
+        "vfxDrawCount": 0,
+        "drawCalls": 11,
+        "meshes": 118,
+        "materials": 17
+      },
+      "burst": {
+        "frameP50": 244,
+        "frameP95": 553.7999999821186,
+        "vfxDrawCount": 29,
+        "drawCalls": 41,
+        "meshes": 118,
+        "materials": 17
+      }
+    },
+    {
+      "skill": "swordsman-b-3",
+      "low": true,
+      "idle": {
+        "frameP50": 176.2000000178814,
+        "frameP95": 490.59999999403954,
+        "vfxDrawCount": 0,
+        "drawCalls": 11,
+        "meshes": 118,
+        "materials": 17
+      },
+      "burst": {
+        "frameP50": 215.90000000596046,
+        "frameP95": 424.09999999403954,
+        "vfxDrawCount": 29,
+        "drawCalls": 40,
+        "meshes": 118,
+        "materials": 17
+      }
+    }
+  ]
+}

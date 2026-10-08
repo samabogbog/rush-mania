@@ -1,0 +1,147 @@
+{
+  "environment": "Chromium ANGLE SwiftShader; authentic learned Lv30 skill rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+  "before": {
+    "job": "archer",
+    "zone": "glade",
+    "x": 1.1000000000000003,
+    "z": 17.399999999999963,
+    "hp": 1289.8375307999918,
+    "mp": 852,
+    "kills": 0,
+    "hotbar": [
+      "archer-b-3",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "archer-1",
+      "archer-2",
+      "archer-b-3"
+    ],
+    "skillCooldowns": {},
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "drawCount": 0
+    },
+    "modelErrors": 0,
+    "drawCalls": 50
+  },
+  "after": {
+    "job": "archer",
+    "zone": "glade",
+    "x": 1.1000000000000003,
+    "z": 17.399999999999963,
+    "hp": 1289.8375307999918,
+    "mp": 834,
+    "kills": 4,
+    "hotbar": [
+      "archer-b-3",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "archer-1",
+      "archer-2",
+      "archer-b-3"
+    ],
+    "skillCooldowns": {
+      "archer-b-3": 7
+    },
+    "skillMotion": null,
+    "vfx": {
+      "active": 1,
+      "pooled": 1,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "star"
+      ],
+      "materials": 1,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "drawCount": 1
+    },
+    "modelErrors": 0,
+    "drawCalls": 50
+  },
+  "recovered": {
+    "job": "archer",
+    "zone": "glade",
+    "x": 1.1000000000000003,
+    "z": 17.399999999999963,
+    "hp": 1294.1539307999888,
+    "mp": 838.6859999999992,
+    "kills": 4,
+    "hotbar": [
+      "archer-b-3",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "archer-1",
+      "archer-2",
+      "archer-b-3"
+    ],
+    "skillCooldowns": {
+      "archer-b-3": 5.899999999999984
+    },
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 37,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "star",
+        "ring",
+        "petal",
+        "core",
+        "beam",
+        "arrow"
+      ],
+      "materials": 7,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": {
+        "skillId": "archer-b-3",
+        "style": "scatter-volley-six-spoke-fan",
+        "impactSeconds": 0,
+        "heroSeconds": 0.32,
+        "focal": {
+          "x": 2.1000000000000005,
+          "z": 18.399999999999963
+        },
+        "decorativeRadius": 6.6
+      },
+      "drawCount": 0
+    },
+    "modelErrors": 0,
+    "drawCalls": 48
+  },
+  "errors": []
+}
