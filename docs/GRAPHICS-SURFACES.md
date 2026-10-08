@@ -1,8 +1,8 @@
 # Textured environment and lighting
 
-Six shared original procedural surface families (grass, dirt, stone, wood, plaster, water) add material detail without external downloads. Each uses a 128×128 mipmapped albedo and normal texture. World-space UV projection keeps scale consistent across merged meshes and map sectors. Vertex colors preserve each zone's palette; static meshes batch by surface family.
+Six shared original procedural surface families (grass, dirt, stone, wood, plaster, water) add material detail without external downloads. Each uses a 128×128 mipmapped albedo and normal texture. Albedo keeps 60% of the original texture contrast, and normal relief is deliberately subtle. World-space UV projection keeps scale consistent across merged meshes and map sectors. Vertex colors preserve each zone's palette; static meshes batch by surface family.
 
-Warm directional sunlight with a cooler sky fill adds depth. The shadow camera follows the player across the full 96×96 map. High uses a 2048 PCF shadow map; Auto retains its 512 map. Low keeps albedo textures, disables bump sampling and shadows, and uses reduced texture filtering. Switching quality reuses the cached texture library.
+Warm directional sunlight with a cooler sky fill adds depth. The shadow camera follows the player across the full 96×96 map. High uses a 2048 shadow map with a 20-tap Gaussian kernel on a half-resolution blur target; Auto retains its 512 map with a 10-tap kernel. Both use blurred close exponential filtering to soften polygon silhouettes; shadow darkness is reduced. Low keeps albedo textures, disables bump sampling and shadows, and uses reduced texture filtering. Switching quality reuses the cached texture library.
 
 ## Verification
 

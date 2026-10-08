@@ -8,6 +8,7 @@ import { Scene } from '@babylonjs/core/scene.js';
 
 export type Surface = 'grass' | 'dirt' | 'stone' | 'wood' | 'plaster' | 'water';
 const SIZE = 128;
+const TEXTURE_DETAIL = .6;
 const woodColors = new Set([0xa76e43,0xbc8a56,0xa57348,0x855c3c,0x95663f,0xb48152,0xdea476,0xc79564,0xbd8758,0xa97149,0xb47e51,0xc99c68,0xcba375,0xb19d73]);
 const stoneColors = new Set([0xaab6a2,0xa6b1a3,0xb8bea8,0xaab3ac,0xc4c1ae,0x675c93,0xc6aff1,0x7c7398,0xb4a5cc,0xb2a5d1,0xe7dcff,0xd2c2e8,0xf2ce94,0xdfc9ac,0x83a4c9,0xb87374,0xe88e9c,0x81b8cb,0x96c9d6,0xf4abb4,0xc97987]);
 const waterColors = new Set([0x60d9ef,0x499fe9,0x57aab4]);
@@ -74,9 +75,9 @@ export class SurfaceMaterials {
     h=.5+ripple*.08+broad*.035;tone=.93+ripple*.055;
    }else {h=grain*.1+broad*.08;tone=.91+grain*.065;}
    const index=y*SIZE+x;heights[index]=h;
-   const c=Math.round(Math.min(1,tone)*255);albedo.set([c,c,c,255],index*4);
+   const c=Math.round((1-(1-Math.min(1,tone))*TEXTURE_DETAIL)*255);albedo.set([c,c,c,255],index*4);
   }
-  const normal=new Uint8Array(SIZE*SIZE*4),strength=surface==='stone'?.9:surface==='wood'?.7:.55;
+  const normal=new Uint8Array(SIZE*SIZE*4),strength=surface==='stone'?.18:surface==='wood'?.14:surface==='water'?.16:.2;
   for(let y=0;y<SIZE;y++)for(let x=0;x<SIZE;x++){
    const dx=(heights[y*SIZE+wrap(x-1,SIZE)]-heights[y*SIZE+wrap(x+1,SIZE)])*strength;
    const dy=(heights[wrap(y-1,SIZE)*SIZE+x]-heights[wrap(y+1,SIZE)*SIZE+x])*strength;
@@ -85,7 +86,7 @@ export class SurfaceMaterials {
   const make=(data:Uint8Array,name:string)=>{const t=RawTexture.CreateRGBATexture(data,SIZE,SIZE,this.scene,true,false,Texture.TRILINEAR_SAMPLINGMODE);t.name=name;t.wrapU=t.wrapV=Texture.WRAP_ADDRESSMODE;t.anisotropicFilteringLevel=this.low?1:4;this.textures.push(t);return t;};
   const mat=new StandardMaterial('surface-'+surface,this.scene);mat.diffuseColor=Color3.White();
   mat.diffuseTexture=make(albedo,surface+'-albedo');
-  const normalTexture=make(normal,surface+'-normal');normalTexture.level=surface==='water'?.23:.45;
+  const normalTexture=make(normal,surface+'-normal');normalTexture.level=1; // Shape relief is encoded directly; avoid inverse level amplification.
   this.normals.set(surface,normalTexture);mat.bumpTexture=this.low?null:normalTexture;
   // Broad subdued highlights suggest rough surfaces, without plastic gloss.
   mat.specularColor=surface==='water'?new Color3(.24,.28,.3):new Color3(.035,.032,.026);mat.specularPower=surface==='water'?64:surface==='wood'?24:12;
@@ -108,6 +109,6 @@ export class SurfaceMaterials {
   this.low=low;for(const texture of this.textures)texture.anisotropicFilteringLevel=low?1:4;
   for(const [surface,material] of this.materials)material.bumpTexture=low?null:this.normals.get(surface)??null;
  }
- get diagnostics(){return {surfaceMaterials:this.materials.size,surfaceTextures:this.textures.length,textureSize:SIZE,normalMaps:!this.low,surfaceFamilies:[...this.materials.keys()]};}
+ get diagnostics(){return {surfaceMaterials:this.materials.size,surfaceTextures:this.textures.length,textureSize:SIZE,textureDetail:TEXTURE_DETAIL,normalMaps:!this.low,surfaceFamilies:[...this.materials.keys()]};}
  // Zone rebuilds deliberately retain the tiny shared library. Scene disposal owns its lifetime.
 }

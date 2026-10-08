@@ -134,9 +134,14 @@ export class World implements GameWorld {
     sun.shadowMinZ = 1;
     sun.shadowMaxZ = 80;
     const shadows = this.shadows = new ShadowGenerator(1024, sun);
-    shadows.usePercentageCloserFiltering = true;
+    // Separable Gaussian blur smooths the canopy silhouette; close ESM avoids overflow.
+    shadows.useBlurCloseExponentialShadowMap = true;
+    shadows.useKernelBlur = true;
+    shadows.blurScale = 2;
+    shadows.blurKernel = 20;
+    shadows.depthScale = 50;
     shadows.bias = 0.00035;
-    shadows.darkness = 0.16;
+    shadows.darkness = 0.25;
     shadows.normalBias = 0.025;
     this.factory = new Primitives(this.scene);
     this.models = new ModelLibrary(this.scene);
@@ -307,7 +312,9 @@ export class World implements GameWorld {
     this.scene.shadowsEnabled=!low;
     this.models.setLowQuality(low);this.skillVFX.setLowQuality(low);
     this.factory.surfaces.setLowQuality(low);
-    this.shadows.filteringQuality=this.quality==='high'?ShadowGenerator.QUALITY_MEDIUM:ShadowGenerator.QUALITY_LOW;
+    // Setters dispose old blur targets/passes; unchanged settings are no-ops.
+    this.shadows.blurScale=this.quality==='high'?2:1;
+    this.shadows.blurKernel=this.quality==='high'?20:10;
     const size=this.quality==='high'?2048:512,map=this.shadows.getShadowMap();
     if(map&&map.getSize().width!==size)map.resize(size);
   }
@@ -332,7 +339,7 @@ export class World implements GameWorld {
       engine: "Babylon.js",...this.factory.surfaces.diagnostics,
       sceneTextures:this.scene.textures.length,sceneMaterials:this.scene.materials.length,
       texturedMapMeshes:this.mapMeshes.filter(m=>(m.material as StandardMaterial)?.diffuseTexture).length+1,
-      shadowsEnabled:this.scene.shadowsEnabled,shadowMapSize:this.shadows.getShadowMap()?.getSize().width,
+      shadowsEnabled:this.scene.shadowsEnabled,shadowFilter:'blur-close-exponential',shadowBlurKernel:this.shadows.blurKernel,shadowBlurScale:this.shadows.blurScale,shadowDarkness:this.shadows.darkness,shadowDepthScale:this.shadows.depthScale,shadowMapSize:this.shadows.getShadowMap()?.getSize().width,
       lighting:'warm directional sunlight / cool sky fill',territoriesCount:this.farmTerritories.length,activeGroupId:this.farmTerritories.find(t=>t.active)?.group.id??null,groupCenters:this.farmTerritories.map(t=>({...t.group,visible:t.root.isEnabled()})),worldSize:WORLD_SIZE,worldBounds:WORLD_BOUNDS,modelsLoaded:this.models.loaded,modelsExpected:3+this.sim.monsters.length,
       previewHeld:this.previewHeld,vfx:this.skillVFX.diagnostics,sceneMeshes:this.scene.meshes.length,skillMotion:this.skillMotion,quality:this.quality,autoReduced:this.autoReduced,riggedActors:this.models.active,motionPoses:this.models.motionDiagnostics,modelErrors:this.models.errors,
       renderWidth:this.engine.getRenderWidth(),renderHeight:this.engine.getRenderHeight(),activeAnimations:this.scene.animatables.length,
