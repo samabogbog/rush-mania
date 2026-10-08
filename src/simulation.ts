@@ -497,7 +497,7 @@ export class Simulation {
   enemyFilter: (monster: Monster) => boolean = () => true;
   onKill?: (monster: Monster) => boolean | void;
   admin = false;
-  spawnItem(id:string,count:number,rarity:Rarity='common',refine=0){if(!this.admin||!this.online)this.onEvent('Admin spawning requires an authorized online account.');}
+  spawnItem(id:string,count:number,rarity:Rarity='common',refine=0,maxRoll=false){if(!this.admin||!this.online)this.onEvent('Admin spawning requires an authorized online account.');}
   online = false;
   connection = "Practice · saved on this device";
   community: import("../server/protocol.js").Snapshot["community"];

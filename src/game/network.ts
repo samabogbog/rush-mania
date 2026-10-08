@@ -70,7 +70,7 @@ export class NetworkSimulation extends Simulation {
   }
   override stopMovementInput(){if(this.input[0]||this.input[1]){this.input=[0,0];this.schedule(0);}}
   override skillCooldownRemaining(id:string){return Math.max(0,(this.skillCooldowns[id]||0)-(performance.now()-this.receivedAt)/1000);}
-  override spawnItem(id:string,count:number,rarity:Rarity='common',refine=0){if(this.admin)this.send('adminSpawn',id,count,rarity,refine);}
+  override spawnItem(id:string,count:number,rarity:Rarity='common',refine=0,maxRoll=false){if(this.admin)this.send('adminSpawn',id,count,rarity,refine,maxRoll);}
   override persist(){} // Durable save belongs to the server; browser cannot submit a character object.
   override select(id:number){this.send('select',id)}
   override nearest(){this.send('nearest')}

@@ -72,10 +72,10 @@ export function secondaryRollQuality(key:SecondaryStat,value:number,level:number
  if(effective>=maximum*.8-Number.EPSILON*maximum)return 'high';
  return undefined;
 }
-export function rollGear(id:string,rarity:Rarity,random= Math.random):GearInstance {
+export function rollGear(id:string,rarity:Rarity,random= Math.random,maxRoll=false):GearInstance {
  const gear=gearById(id);if(!gear)throw new Error('Unknown equipment');
  const pool=Object.keys(affixRanges) as SecondaryStat[],secondary:Bonuses={};
- for(let n=0;n<secondaryCounts[rarity];n++){const index=Math.min(pool.length-1,Math.floor(random()*pool.length)),key=pool.splice(index,1)[0];secondary[key]=secondaryRollValue(key,gear.level,random());}
+ for(let n=0;n<secondaryCounts[rarity];n++){const index=Math.min(pool.length-1,Math.floor(random()*pool.length)),key=pool.splice(index,1)[0];const roll=random();secondary[key]=secondaryRollValue(key,gear.level,maxRoll?1:roll);}
  return {id:crypto.randomUUID(),gearId:gear.id,refine:0,rarity,secondary};
 }
 /** Rates are per slot per kill. Common/Rare are disjoint; slots roll independently.

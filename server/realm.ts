@@ -160,14 +160,14 @@ function execute(player:Player,realm:Realm,command:Command,now:number,admin=fals
   else switch(command.type) {
     case 'adminSpawn': {
       if(!admin)throw new GameError('Admin access required',403);
-      const entry=itemCatalog.find(i=>i.id===a||i.id===gearById(String(a))?.id),rarity=command.args[2],refine=command.args[3];
-      if(!entry||!integer(b,1,entry.gearId?20:9999)||typeof rarity!=='string'||!rarityOrder.includes(rarity as Rarity)||!integer(refine,0,10))throw new GameError('Invalid spawn request');
+      const entry=itemCatalog.find(i=>i.id===a||i.id===gearById(String(a))?.id),rarity=command.args[2],refine=command.args[3],maxRoll=command.args[4];
+      if(!entry||!integer(b,1,entry.gearId?20:9999)||typeof rarity!=='string'||!rarityOrder.includes(rarity as Rarity)||!integer(refine,0,10)||(maxRoll!==undefined&&typeof maxRoll!=='boolean'))throw new GameError('Invalid spawn request');
       const existing=!entry.gearId&&sim.save.items.find(i=>sameStack(i,{name:entry.name,rarity:rarity as Rarity})&&i.count>0);
       const slots=sim.save.items.filter(i=>i.count>0).length+(entry.gearId?b as number:existing?0:1);
       if(slots>BAG_CAPACITY) {sim.onEvent('Bag full. Nothing spawned.');break;}
-      if(entry.gearId)for(let n=0;n<(b as number);n++)sim.addEquipmentItem({...rollGear(entry.gearId,rarity as Rarity),refine:refine as number,name:entry.name,icon:entry.icon,count:1,category:itemCategory(entry)});
+      if(entry.gearId)for(let n=0;n<(b as number);n++)sim.addEquipmentItem({...rollGear(entry.gearId,rarity as Rarity,Math.random,maxRoll===true),refine:refine as number,name:entry.name,icon:entry.icon,count:1,category:itemCategory(entry)});
       else sim.addItem(entry.name,entry.icon,b as number,rarity as Rarity);
-      realm.ledger.push({id:command.id,player:player.id,action:`adminSpawn:${entry.id}:${b}:${rarity}:+${refine}`,at:now,goldDelta:0});
+      realm.ledger.push({id:command.id,player:player.id,action:`adminSpawn:${entry.id}:${b}:${rarity}:+${refine}:max=${Boolean(entry.gearId)&&maxRoll===true}`,at:now,goldDelta:0});
       sim.onEvent(`Admin spawned ${b} × ${entry.name}`,'reward');break;
     }
     case 'select': if(integer(a,0,sim.monsters.length-1)) sim.select(a as number); else throw new GameError('Invalid target'); break;
