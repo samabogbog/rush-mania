@@ -26,7 +26,7 @@ test('damage bonuses and penetration affect damage, while lifesteal counts actua
 test('regen, movement, cooldown and healing bonuses affect gameplay; no HP is created by equipping',()=>{
  const sim=new Simulation(()=>.5,undefined,null);sim.save.level=100;sim.setClass('mage');for(let n=1;n<=5;n++)sim.chooseSkill('mage-'+n);sim.populateZone('town');sim.save.hp=50;sim.save.mp=0;
  gear(sim,'field-coat',{hpRegen:.4,mpRegen:2,moveSpeed:25,attackSpeed:20,cooldownReduction:20,healingBonus:25});expect(sim.save.hp).toBe(50);
- sim.tick(1,0,0);expect(sim.save.hp).toBeCloseTo(50+sim.maxHp*.009);expect(sim.save.mp).toBeCloseTo(2.7);sim.tick(.1,1,0);expect(sim.x).toBeCloseTo(.55);
+ sim.tick(1,0,0);expect(sim.save.hp).toBeCloseTo(50+sim.maxHp*.006);expect(sim.save.mp).toBeCloseTo(sim.maxMp*.01);sim.tick(.1,1,0);expect(sim.x).toBeCloseTo(.55);
  sim.save.hp=1;expect(sim.usePotion(false)).toBe(true);expect(sim.save.hp).toBeCloseTo(1+65*1.25);
 });
 test('set thresholds activate at two, four and six pieces and disappear on removal',()=>{

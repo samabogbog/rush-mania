@@ -419,11 +419,11 @@
     ],
     "hpRegen": [
       0.1,
-      0.5
+      0.3
     ],
     "mpRegen": [
-      0.2,
-      1
+      0.1,
+      0.5
     ],
     "attackSpeed": [
       2,
@@ -464,7 +464,8 @@
   },
   "affixFactorBase": 0.65,
   "affixLevelDivisor": 140,
-  "hpRegenPerPieceCap": 0.5,
+  "hpRegenPerPieceCap": 0.3,
+  "mpRegenPerPieceCap": 0.5,
   "setBonuses": {
     "hpLevel": 2,
     "atkLevel": 0.4,

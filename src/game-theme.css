@@ -1695,3 +1695,6 @@ body:has(.game-panel) .mobile-controls{visibility:hidden;pointer-events:none}
  .game-panel.bag-panel .item-category-tabs .game-icon{width:clamp(22px,7vw,28px);height:clamp(22px,7vw,28px)}
 }
 @media(max-width:900px){#app .identity,#app .map-area,#app #target-hud,#app .chat{zoom:1}}
+
+.secondary-stats .secondary-roll-high b { color: #9333ea; font-weight: 800; }
+.secondary-stats .secondary-roll-excellent b { color: #dc2626; font-weight: 800; }

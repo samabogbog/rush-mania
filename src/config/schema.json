@@ -33,7 +33,7 @@
     "attackRateCeiling": "number",
     "attackAgiHalfSaturation": "number",
     "hpRegenPercent": "number",
-    "mpRegen": "number",
+    "mpRegenPercent": "number",
     "defenseScale": "number",
     "varianceBase": "number",
     "varianceSpread": "number",
@@ -1119,6 +1119,7 @@
     "affixFactorBase": "number",
     "affixLevelDivisor": "number",
     "hpRegenPerPieceCap": "number",
+    "mpRegenPerPieceCap": "number",
     "setBonuses": {
       "hpLevel": "number",
       "atkLevel": "number",

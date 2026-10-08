@@ -18,7 +18,7 @@
 ## หน่วยและสูตร
 
 - เวลาเป็นวินาที ระยะเป็นหน่วยโลก ราคาเป็น zeny
-- affix และโบนัสอุปกรณ์เป็น **จุดเปอร์เซ็นต์**: `critChance:5` คือ 5%; `hpRegen:0.5` คือ 0.5% Max HP ต่อวินาที; `mpRegen` เป็น MP ต่อวินาที
+- affix และโบนัสอุปกรณ์เป็น **จุดเปอร์เซ็นต์**: `critChance:5` คือ 5%; `hpRegen:0.3` คือ 0.3% Max HP ต่อวินาที; `mpRegen:0.5` คือ 0.5% Max MP ต่อวินาที
 - `progression.critBase:0.05` คือ 5%, `critAgi:0.002` คือเพิ่ม 0.2 จุดเปอร์เซ็นต์ต่อ AGI; `caps.crit:0.6` คือ 60%. `caps` ทั้งหมดเป็น **สัดส่วน 0–1** (attackSpeed 0.25 คือโบนัสสูงสุด 25%, healing 1 คือโบนัส 100%) ไม่ใช่หน่วยเดียวกับ affix
 - โอกาส `success`, `dropChance`, `downgradeChance`, `marketFee` เป็นสัดส่วน 0–1 เช่น 0.15=15%. `crafting.rarityThresholds` และ `stoneDropThresholds` เป็นขอบสะสม เรียงขึ้น (ไม่ใช่โอกาสแยกแต่ละ rarity)
 - `power` ของ hit/area/stun/slow/poison เป็นตัวคูณ ATK; heal เป็นสัดส่วน Max HP; guard/fury เป็นสัดส่วนลดดาเมจ/เพิ่ม ATK. Guard ต้องไม่เกิน 1
@@ -83,3 +83,9 @@ item-migration.json เก็บรายชื่อวัสดุที่เ
 `extraAgi=max(0,totalAGI-attackAgiBase)`; `baseRate=1/class.speed`; `rate=baseRate+(attackRateCeiling-baseRate)*extraAgi/(extraAgi+attackAgiHalfSaturation)`. At 55 total AGI the rate is halfway between its class baseline and the ceiling; finite AGI approaches the ceiling from below. Gear AGI contributes to total AGI.
 
 Gear attackSpeed affixes use percentage points, separately capped by `progression.caps.attackSpeed=0.25`: `interval=1/(rate*(1+min(0.25,gearSpeed/100)))`. The character panel shows this capped effective gear bonus (maximum 25%). Gear speed can raise the final rate above 2 attacks/sec; the AGI ceiling excludes this bonus.
+
+## Regeneration and secondary roll quality
+
+Base regeneration uses `progression.hpRegenPercent=0.3` percent Max HP/sec and `progression.mpRegenPercent=0.5` percent Max MP/sec. `mpRegenPercent` replaces the former flat `mpRegen` progression field. Random HP regeneration is 0.1–0.3%/sec and MP regeneration 0.1–0.5%/sec, rounded to 0.01 without gear-level scaling. `equipment.hpRegenPerPieceCap=0.3` and `mpRegenPerPieceCap=0.5` also clamp existing secondary values when loaded, used and displayed. Save shape is unchanged; existing MP values now represent percent/sec within that cap. Healing received and lifesteal remain separate from regeneration.
+
+Other random affixes use `(0.65+gearLevel/140)` and round to 0.1. Shared `secondaryRollMaximum` uses the generation formula, including rounding and regeneration caps. Tooltip secondary rows become bold purple at 80% of that maximum and bold red at 90%; red takes precedence. Equipment tooltips retain requirements, actual refinement/main bonuses, comparison and set bonuses while omitting flavor, source and refinement explanation text.

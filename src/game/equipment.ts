@@ -18,13 +18,14 @@ export const gearById=(id:string)=>equipment.find(g=>g.id===id||g.legacyIds?.inc
 export const gearByName=(name:string)=>equipment.find(g=>g.name===name||g.legacyNames?.includes(name));
 
 export const gearIcon=(gear:{slot?:string;icon:string;weaponIcons?:Record<ClassId,string>},job:ClassId='swordsman')=>(gear.slot==='weapon'?gear.weaponIcons?.[job]:undefined)||gear.icon;
-export const statLabels:Record<keyof Bonuses,string>={atk:'ATK',def:'DEF',hp:'Max HP',mp:'Max MP',str:'STR',vit:'VIT',agi:'AGI',critChance:'Critical chance',critDamage:'Critical damage',damageBonus:'Damage bonus',skillDamage:'Skill damage',lifesteal:'Lifesteal',hpRegen:'HP regeneration',mpRegen:'MP regen / sec',attackSpeed:'Attack speed',moveSpeed:'Move speed',armorPen:'Armor penetration',damageReduction:'Damage reduction',dodgeChance:'Dodge chance',expBonus:'EXP bonus',goldBonus:'Zeny bonus',healingBonus:'Healing received',cooldownReduction:'Cooldown reduction'};
+export const statLabels:Record<keyof Bonuses,string>={atk:'ATK',def:'DEF',hp:'Max HP',mp:'Max MP',str:'STR',vit:'VIT',agi:'AGI',critChance:'Critical chance',critDamage:'Critical damage',damageBonus:'Damage bonus',skillDamage:'Skill damage',lifesteal:'Lifesteal',hpRegen:'HP regeneration',mpRegen:'MP regeneration',attackSpeed:'Attack speed',moveSpeed:'Move speed',armorPen:'Armor penetration',damageReduction:'Damage reduction',dodgeChance:'Dodge chance',expBonus:'EXP bonus',goldBonus:'Zeny bonus',healingBonus:'Healing received',cooldownReduction:'Cooldown reduction'};
 export const percentStats=new Set<keyof Bonuses>(['critChance','critDamage','damageBonus','skillDamage','lifesteal','attackSpeed','moveSpeed','armorPen','damageReduction','dodgeChance','expBonus','goldBonus','healingBonus','cooldownReduction']);
-export const formatStat=(key:keyof Bonuses,value:number)=>`${Math.round(value*(key==='hpRegen'?100:10))/(key==='hpRegen'?100:10)}${key==='hpRegen'?'%/s':percentStats.has(key)?'%':''}`;
+export const formatStat=(key:keyof Bonuses,value:number)=>`${Math.round(value*((key==='hpRegen'||key==='mpRegen')?100:10))/((key==='hpRegen'||key==='mpRegen')?100:10)}${(key==='hpRegen'||key==='mpRegen')?'%/s':percentStats.has(key)?'%':''}`;
 export function normalizeSecondary(secondary:Bonuses|undefined):Bonuses|undefined {
  if(!secondary)return undefined;
  const normalized={...secondary};
  if(normalized.hpRegen!==undefined)normalized.hpRegen=Math.max(0,Math.min(config.hpRegenPerPieceCap,normalized.hpRegen));
+ if(normalized.mpRegen!==undefined)normalized.mpRegen=Math.max(0,Math.min(config.mpRegenPerPieceCap,normalized.mpRegen));
  return normalized;
 }
 export const gearSets=config.sets;
@@ -57,10 +58,24 @@ export function itemBonuses(item:GearInstance,refinement=true):Bonuses {
  return out;
 }
 const affixRanges=config.affixRanges as Record<SecondaryStat,[number,number]>;
+/** Shared by generation and roll-quality UI; regen rolls use percent/sec without level scaling. */
+export function secondaryRollValue(key:SecondaryStat,level:number,roll:number):number {
+ const [min,max]=affixRanges[key],value=min+(max-min)*roll;
+ if(key==='hpRegen'||key==='mpRegen')return Math.min(key==='hpRegen'?config.hpRegenPerPieceCap:config.mpRegenPerPieceCap,Math.round(value*100)/100);
+ return Math.round(value*(config.affixFactorBase+level/config.affixLevelDivisor)*10)/10;
+}
+export function secondaryRollMaximum(key:SecondaryStat,level:number):number {return secondaryRollValue(key,level,1);}
+export function secondaryRollQuality(key:SecondaryStat,value:number,level:number):'high'|'excellent'|undefined {
+ const maximum=secondaryRollMaximum(key,level),effective=normalizeSecondary({[key]:value})![key]!;
+ if(maximum<=0)return undefined;
+ if(effective>=maximum*.9-Number.EPSILON*maximum)return 'excellent';
+ if(effective>=maximum*.8-Number.EPSILON*maximum)return 'high';
+ return undefined;
+}
 export function rollGear(id:string,rarity:Rarity,random= Math.random):GearInstance {
  const gear=gearById(id);if(!gear)throw new Error('Unknown equipment');
  const pool=Object.keys(affixRanges) as SecondaryStat[],secondary:Bonuses={};
- for(let n=0;n<secondaryCounts[rarity];n++){const index=Math.min(pool.length-1,Math.floor(random()*pool.length)),key=pool.splice(index,1)[0],[min,max]=affixRanges[key];const factor=config.affixFactorBase+gear.level/config.affixLevelDivisor,roll=random();secondary[key]=key==='hpRegen'?Math.min(config.hpRegenPerPieceCap,Math.round((min+(max-min)*roll)*100)/100):Math.round((min+(max-min)*roll)*factor*10)/10;}
+ for(let n=0;n<secondaryCounts[rarity];n++){const index=Math.min(pool.length-1,Math.floor(random()*pool.length)),key=pool.splice(index,1)[0];secondary[key]=secondaryRollValue(key,gear.level,random());}
  return {id:crypto.randomUUID(),gearId:gear.id,refine:0,rarity,secondary};
 }
 /** Rates are per slot per kill. Common/Rare are disjoint; slots roll independently.

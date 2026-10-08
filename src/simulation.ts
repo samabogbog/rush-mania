@@ -250,6 +250,7 @@ export class Simulation {
     return 1/(rate*(1+this.attackSpeedBonus/100));
   }
   get cooldownMultiplier(){return 1-Math.min(progression.caps.cooldown,(this.gearBonuses.cooldownReduction||0)/100)}
+  get mpRegenPercent(){return progression.mpRegenPercent+(this.gearBonuses.mpRegen||0)}
   get hpRegenPercent(){return progression.hpRegenPercent+(this.gearBonuses.hpRegen||0)}
   get healingMultiplier(){return 1+Math.min(progression.caps.healing,(this.gearBonuses.healingBonus||0)/100)}
   addEquipmentItem(item:Item){if(this.save.items.some(i=>i.id===item.id))return false;if(this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY){this.onEvent('Bag full. Make room before collecting.');return false;}this.save.items.push({...structuredClone(item),category:itemCategory(item),secondary:normalizeSecondary(item.secondary),refine:refineLevel(item.refine)});return true;}
@@ -864,7 +865,7 @@ export class Simulation {
         }
       }
     }
-    this.save.mp = Math.min(this.maxMp, this.save.mp + dt * (progression.mpRegen+(this.gearBonuses.mpRegen||0)));
+    this.save.mp = Math.min(this.maxMp, this.save.mp + dt*this.maxMp*this.mpRegenPercent/100);
     this.save.hp=Math.min(this.maxHp,this.save.hp+dt*this.maxHp*this.hpRegenPercent/100);
     if (dx || dz) {
       this.markTutorial("move");
