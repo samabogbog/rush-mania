@@ -27,3 +27,11 @@ Software rendering in this execution environment is slow (15–16 sampled frames
 No Railway account connector, CLI login or token is available in this workspace. Turso credentials are sensitive Vercel envs and cannot be copied through the connector. User must provision the Railway service and set its variables without sending secrets in chat. Vercel code can ship with realtime disabled until the service is healthy. See RAILWAY-REALTIME-TH.md for exact steps/cutover order.
 
 Single replica only. Checkpoints may lose up to~5s progress after an abrupt process crash; reconnect replays unacknowledged commands. Lease timeout30s may delay crash restart. This prototype is not a high-availability distributed realm.
+
+## Recovery fix — 2026-10-08
+
+User's Railway log shows successful startup followed by a generic persistence/ownership failure. App Sleeping is off. That log does not identify the original cause.
+
+Fixed fatal realm failures leaving the HTTP process alive: CLI now closes connections and exits1, allowing Railway ON_FAILURE restart. Factory callers remain in control and never exit the test process. Startup can wait up to35s for a prior lease without stealing it; renew requests are singleflight. Classified logs distinguish lease expiry/conflict, revision conflict and database failure, with safe code/context only (no raw database messages/tokens/URLs).
+
+27 focused regression tests passed, including a spawned CLI process that loses ownership and exits1 while retaining the other owner's lease. An additional realSQLite startup-wait test passed, proving the old owner cannot checkpoint over the replacement. Both TypeScript checks and realtime bundle build pass. No live database writes or manual lease deletion were performed. Live recovery still requires the new Railway deployment and a healthy /health result; underlying production fault remains unconfirmed until classified logs are observed.
