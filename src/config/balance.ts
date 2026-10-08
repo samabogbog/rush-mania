@@ -46,7 +46,12 @@ export function validateConfiguration(config:typeof data){
  const positive=(v:number,path:string)=>{if(v<=0)throw new Error(`Invalid balance config ${path}: must be greater than zero`)};
  for(const [path,v] of Object.entries({'progression.defenseScale':config.progression.defenseScale,'equipment.affixLevelDivisor':config.equipment.affixLevelDivisor,'equipment.setBonuses.hpRegenLevelDivisor':config.equipment.setBonuses.hpRegenLevelDivisor,'progression.moveBase':config.progression.moveBase}))positive(v,path);
  config.progression.levels.forEach((row,i)=>{if(row.level!==i+1)throw new Error('Invalid balance config progression.levels: levels must be ordered 1–100');positive(row.monsterXp,'progression.levels.monsterXp');positive(row.multiplier,'progression.levels.multiplier');positive(row.nextLevelXp,'progression.levels.nextLevelXp');});
- positive(1+(config.progression.initial.stats.agi-config.progression.attackAgiBase)*config.progression.attackAgiFactor,'progression.attackInterval denominator');
+ positive(config.progression.attackRateCeiling,'progression.attackRateCeiling');
+ positive(config.progression.attackAgiHalfSaturation,'progression.attackAgiHalfSaturation');
+ for(const [job,entry] of Object.entries(config.classes.classes)){
+  positive(entry.speed,`classes.classes.${job}.speed`);
+  if(1/entry.speed>config.progression.attackRateCeiling)throw new Error(`Invalid balance config classes.classes.${job}.speed: base attack rate exceeds progression.attackRateCeiling`);
+ }
  for(const [path,v] of Object.entries({'progression.pointsPerLevel':config.progression.pointsPerLevel,'progression.initial.points':config.progression.initial.points,'refinement.stoneCraftCount':config.refinement.stoneCraftCount,'refinement.rareDowngradeLevels':config.refinement.rareDowngradeLevels,...Object.fromEntries(Object.entries(config.economy.party).filter(([k])=>['maxMembers','dungeonMinMembers','dungeonLevel'].includes(k)).map(([k,v])=>['economy.party.'+k,v]))}))if(!Number.isInteger(v))throw new Error(`Invalid balance config ${path}: expected integer`);
  positive(config.refinement.stoneCraftCount,'refinement.stoneCraftCount');
  for(const [path,v] of Object.entries(config.progression.initial.stats))if(!Number.isInteger(v))throw new Error(`Invalid balance config progression.initial.stats.${path}: expected integer`);
@@ -63,7 +68,7 @@ export function validateConfiguration(config:typeof data){
  for(const tier of ['boss','mini'] as const)for(const key of ['hp','atk','defense','goldPerLevel'] as const)positive(config.content.normalBalance[tier][key],'content.normalBalance.'+tier+'.'+key);
  config.refinement.success.forEach(v=>probability(v,'refinement.success'));
  probability(config.economy.marketFee,'economy.marketFee');
- for(const [key,v] of Object.entries(config.progression.caps))if(key!=='attackSpeed'&&key!=='healing')probability(v,`progression.caps.${key}`);
+ for(const [key,v] of Object.entries(config.progression.caps))if(key!=='healing')probability(v,`progression.caps.${key}`);
  probability(config.progression.critBase,'progression.critBase');
  probability(config.refinement.downgradeChance,'refinement.downgradeChance');
  if(config.refinement.cap!==config.refinement.success.length)throw new Error('Invalid balance config refinement: cap must equal success table length');

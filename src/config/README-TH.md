@@ -19,7 +19,7 @@
 
 - เวลาเป็นวินาที ระยะเป็นหน่วยโลก ราคาเป็น zeny
 - affix และโบนัสอุปกรณ์เป็น **จุดเปอร์เซ็นต์**: `critChance:5` คือ 5%; `hpRegen:0.5` คือ 0.5% Max HP ต่อวินาที; `mpRegen` เป็น MP ต่อวินาที
-- `progression.critBase:0.05` คือ 5%, `critAgi:0.002` คือเพิ่ม 0.2 จุดเปอร์เซ็นต์ต่อ AGI; `caps.crit:0.6` คือ 60%. `caps` ทั้งหมดเป็น **สัดส่วน 0–1** (attackSpeed/healing 1 คือโบนัส 100%) ไม่ใช่หน่วยเดียวกับ affix
+- `progression.critBase:0.05` คือ 5%, `critAgi:0.002` คือเพิ่ม 0.2 จุดเปอร์เซ็นต์ต่อ AGI; `caps.crit:0.6` คือ 60%. `caps` ทั้งหมดเป็น **สัดส่วน 0–1** (attackSpeed 0.25 คือโบนัสสูงสุด 25%, healing 1 คือโบนัส 100%) ไม่ใช่หน่วยเดียวกับ affix
 - โอกาส `success`, `dropChance`, `downgradeChance`, `marketFee` เป็นสัดส่วน 0–1 เช่น 0.15=15%. `crafting.rarityThresholds` และ `stoneDropThresholds` เป็นขอบสะสม เรียงขึ้น (ไม่ใช่โอกาสแยกแต่ละ rarity)
 - `power` ของ hit/area/stun/slow/poison เป็นตัวคูณ ATK; heal เป็นสัดส่วน Max HP; guard/fury เป็นสัดส่วนลดดาเมจ/เพิ่ม ATK. Guard ต้องไม่เกิน 1
 - EXP ขั้นถัดไป = `levels[level-1].nextLevelXp` ตาม XLSX (Lv100 runtime=0); ค่า HP/MP/ATK ต่อเลเวลใช้ (level−1), DEF ใช้ level
@@ -75,3 +75,11 @@ Eliteล่าสุด: `content.normalBalance.boss/mini` กำหนดHP/ATK
 จำนวน affix ใหม่ใน equipment.json: Common1 Rare2 Epic3 Ancient4 Legend5; ไม่ reroll หรือเพิ่ม affix ให้ชิ้นเดิม. Salvage จำนวนต่อวัสดุ **แต่ละชนิด** (Lv10 Common: Shade2 + Rune2 สำหรับ offense), เก็บ rarity เดิม. Gear รุ่นเก่าใช้ tier สูงสุดที่ไม่เกิน level (ต่ำกว่า10ใช้10); Ancient/Legend ย่อยไม่ได้. ขาย/ย่อยชิ้นที่ใส่อยู่ต้องถอดก่อน และย่อยตรวจพื้นที่วัสดุครบสองชนิดก่อนตัดชิ้นเดิม. แก้ JSON ต้อง build/restart เช่นเดียวกับไฟล์อื่น.
 
 item-migration.json เก็บรายชื่อวัสดุที่เลิกใช้และ revision ของ migration ไม่ใช่รายการดรอป. เซฟ9/realm itemRevision1 เปลี่ยน Legend เดิมเป็น Ancient (1.45×/4 affix) และลบเฉพาะวัสดุเก่าที่ระบุ; Legend ใหม่1.75×/5 affix ได้จากวัสดุ5Ancient→1Legend ไม่ดรอปตรง. ID material:*:legend เดิมเปลี่ยน ancient พร้อม trade reference; UUID gear/refine/secondary/gold/quest progress คงเดิม.
+
+## Normal attack speed
+
+`classes.classes.*.speed` is the normal attack interval in seconds at total AGI 5: Swordsman 1.0, Mage 1.2, Archer 1.1. Client and server use the same Simulation. `progression.attackAgiBase=5`, `attackRateCeiling=2` attacks/sec and `attackAgiHalfSaturation=50` control diminishing AGI returns:
+
+`extraAgi=max(0,totalAGI-attackAgiBase)`; `baseRate=1/class.speed`; `rate=baseRate+(attackRateCeiling-baseRate)*extraAgi/(extraAgi+attackAgiHalfSaturation)`. At 55 total AGI the rate is halfway between its class baseline and the ceiling; finite AGI approaches the ceiling from below. Gear AGI contributes to total AGI.
+
+Gear attackSpeed affixes use percentage points, separately capped by `progression.caps.attackSpeed=0.25`: `interval=1/(rate*(1+min(0.25,gearSpeed/100)))`. The character panel shows this capped effective gear bonus (maximum 25%). Gear speed can raise the final rate above 2 attacks/sec; the AGI ceiling excludes this bonus.

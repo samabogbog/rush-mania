@@ -29,7 +29,8 @@
   "critMultiplier": 1.5,
   "moveBase": 4.4,
   "attackAgiBase": 5,
-  "attackAgiFactor": 0.04,
+  "attackRateCeiling": 2,
+  "attackAgiHalfSaturation": 50,
   "hpRegenPercent": 0.5,
   "mpRegen": 0.7,
   "defenseScale": 100,
@@ -39,7 +40,7 @@
   "caps": {
     "crit": 0.6,
     "move": 0.5,
-    "attackSpeed": 1,
+    "attackSpeed": 0.25,
     "cooldown": 0.4,
     "healing": 1,
     "armorPen": 0.6,

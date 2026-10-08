@@ -243,7 +243,12 @@ export class Simulation {
   get criticalChance(){return Math.min(progression.caps.crit,progression.critBase+this.agility*progression.critAgi+(this.gearBonuses.critChance||0)/100)}
   get criticalMultiplier(){return progression.critMultiplier+(this.gearBonuses.critDamage||0)/100}
   get movementSpeed(){return progression.moveBase*(1+Math.min(progression.caps.move,(this.gearBonuses.moveSpeed||0)/100))}
-  get attackInterval(){return this.job.speed/((1+(this.agility-progression.attackAgiBase)*progression.attackAgiFactor)*(1+Math.min(progression.caps.attackSpeed,(this.gearBonuses.attackSpeed||0)/100)))}
+  get attackSpeedBonus(){return Math.min(progression.caps.attackSpeed*100,this.gearBonuses.attackSpeed||0)}
+  get attackInterval(){
+    const baseRate=1/this.job.speed,extraAgi=Math.max(0,this.agility-progression.attackAgiBase);
+    const rate=baseRate+(progression.attackRateCeiling-baseRate)*extraAgi/(extraAgi+progression.attackAgiHalfSaturation);
+    return 1/(rate*(1+this.attackSpeedBonus/100));
+  }
   get cooldownMultiplier(){return 1-Math.min(progression.caps.cooldown,(this.gearBonuses.cooldownReduction||0)/100)}
   get hpRegenPercent(){return progression.hpRegenPercent+(this.gearBonuses.hpRegen||0)}
   get healingMultiplier(){return 1+Math.min(progression.caps.healing,(this.gearBonuses.healingBonus||0)/100)}
