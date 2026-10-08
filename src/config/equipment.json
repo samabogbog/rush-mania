@@ -1,10 +1,9 @@
 {
   "crafted": [
     {
-      "id": "sprout-blade",
-      "name": "Sprout Blade",
+      "id": "sprout-weapon",
+      "name": "Sprout Weapon",
       "slot": "weapon",
-      "job": "swordsman",
       "level": 1,
       "rarity": "common",
       "icon": "thornwood-blade",
@@ -23,58 +22,22 @@
           1
         ]
       ],
-      "description": "A sturdy beginning for a frontline adventurer."
-    },
-    {
-      "id": "bloom-staff",
-      "name": "Bloom Staff",
-      "slot": "weapon",
-      "job": "mage",
-      "level": 1,
-      "rarity": "common",
-      "icon": "thornwood-staff",
-      "bonuses": {
-        "atk": 12,
-        "mp": 20,
-        "str": 2
-      },
-      "cost": 40,
-      "materials": [
-        [
-          "Shade essence",
-          2
-        ],
-        [
-          "Rune stone",
-          1
-        ]
+      "description": "A universal weapon that takes the form of your class.",
+      "legacyIds": [
+        "sprout-blade",
+        "bloom-staff",
+        "willow-bow"
       ],
-      "description": "A light staff that gives your spells room to grow."
-    },
-    {
-      "id": "willow-bow",
-      "name": "Willow Bow",
-      "slot": "weapon",
-      "job": "archer",
-      "level": 1,
-      "rarity": "common",
-      "icon": "thornwood-bow",
-      "bonuses": {
-        "atk": 10,
-        "agi": 3
-      },
-      "cost": 40,
-      "materials": [
-        [
-          "Shade essence",
-          2
-        ],
-        [
-          "Rune stone",
-          1
-        ]
+      "legacyNames": [
+        "Sprout Blade",
+        "Bloom Staff",
+        "Willow Bow"
       ],
-      "description": "Quick attacks for a nimble hunter."
+      "weaponIcons": {
+        "swordsman": "thornwood-blade",
+        "mage": "thornwood-staff",
+        "archer": "thornwood-bow"
+      }
     },
     {
       "id": "field-coat",
@@ -124,10 +87,9 @@
       "description": "A small charm for a faster, luckier build."
     },
     {
-      "id": "amber-cleaver",
-      "name": "Amber Cleaver",
+      "id": "amber-weapon",
+      "name": "Amber Weapon",
       "slot": "weapon",
-      "job": "swordsman",
       "level": 20,
       "rarity": "rare",
       "icon": "suncrest-blade",
@@ -146,58 +108,22 @@
           3
         ]
       ],
-      "description": "Powerful strikes; pair it with a defensive coat."
-    },
-    {
-      "id": "amber-wand",
-      "name": "Amber Wand",
-      "slot": "weapon",
-      "job": "mage",
-      "level": 20,
-      "rarity": "rare",
-      "icon": "suncrest-staff",
-      "bonuses": {
-        "atk": 32,
-        "mp": 50,
-        "str": 5
-      },
-      "cost": 240,
-      "materials": [
-        [
-          "Shade essence",
-          4
-        ],
-        [
-          "Rune stone",
-          3
-        ]
+      "description": "A universal weapon that takes the form of your class.",
+      "legacyIds": [
+        "amber-cleaver",
+        "amber-wand",
+        "horn-bow"
       ],
-      "description": "Enough mana to sustain an area-control build."
-    },
-    {
-      "id": "horn-bow",
-      "name": "Horn Bow",
-      "slot": "weapon",
-      "job": "archer",
-      "level": 20,
-      "rarity": "rare",
-      "icon": "suncrest-bow",
-      "bonuses": {
-        "atk": 32,
-        "agi": 7
-      },
-      "cost": 240,
-      "materials": [
-        [
-          "Shade essence",
-          4
-        ],
-        [
-          "Rune stone",
-          3
-        ]
+      "legacyNames": [
+        "Amber Cleaver",
+        "Amber Wand",
+        "Horn Bow"
       ],
-      "description": "Speed and critical hits over raw defense."
+      "weaponIcons": {
+        "swordsman": "suncrest-blade",
+        "mage": "suncrest-staff",
+        "archer": "suncrest-bow"
+      }
     },
     {
       "id": "shell-vest",
@@ -298,10 +224,9 @@
       "description": "Attack speed and critical chance for agile builds."
     },
     {
-      "id": "frost-edge",
-      "name": "Frost Edge",
+      "id": "frost-weapon",
+      "name": "Frost Weapon",
       "slot": "weapon",
-      "job": "swordsman",
       "level": 65,
       "rarity": "epic",
       "icon": "frostguard-blade",
@@ -321,58 +246,22 @@
           7
         ]
       ],
-      "description": "A reliable weapon for leading a dungeon party."
-    },
-    {
-      "id": "snow-staff",
-      "name": "Snow Staff",
-      "slot": "weapon",
-      "job": "mage",
-      "level": 65,
-      "rarity": "epic",
-      "icon": "frostguard-staff",
-      "bonuses": {
-        "atk": 95,
-        "str": 18,
-        "mp": 120
-      },
-      "cost": 1200,
-      "materials": [
-        [
-          "Shade essence",
-          8
-        ],
-        [
-          "Rune stone",
-          7
-        ]
+      "description": "A universal weapon that takes the form of your class.",
+      "legacyIds": [
+        "frost-edge",
+        "snow-staff",
+        "sky-bow"
       ],
-      "description": "Strong area magic and a deep mana pool."
-    },
-    {
-      "id": "sky-bow",
-      "name": "Sky Bow",
-      "slot": "weapon",
-      "job": "archer",
-      "level": 65,
-      "rarity": "epic",
-      "icon": "frostguard-bow",
-      "bonuses": {
-        "atk": 90,
-        "agi": 20
-      },
-      "cost": 1200,
-      "materials": [
-        [
-          "Shade essence",
-          8
-        ],
-        [
-          "Rune stone",
-          7
-        ]
+      "legacyNames": [
+        "Frost Edge",
+        "Snow Staff",
+        "Sky Bow"
       ],
-      "description": "An aggressive late-game critical build."
+      "weaponIcons": {
+        "swordsman": "frostguard-blade",
+        "mage": "frostguard-staff",
+        "archer": "frostguard-bow"
+      }
     },
     {
       "id": "root-plate",
@@ -397,7 +286,7 @@
           7
         ]
       ],
-      "description": "Survive the Guardian’s strongest attacks."
+      "description": "Survive the Guardian\u2019s strongest attacks."
     },
     {
       "id": "shade-mantle",

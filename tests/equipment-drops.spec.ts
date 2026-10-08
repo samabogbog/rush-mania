@@ -1,10 +1,10 @@
 import {test,expect} from '@playwright/test';
 import {Simulation,type Item} from '../src/simulation';
-import {equipment,gearSets,gearSlots,rollGear,rollEquipmentDrops,secondaryCounts,itemBonuses,BAG_CAPACITY,type Rarity} from '../src/game/equipment';
-function gear(sim:Simulation,id:string,secondary:Item['secondary']={}) {const definition=equipment.find(g=>g.id===id)!;const item:Item={...rollGear(id,'common',()=>.5),name:definition.name,icon:definition.icon,count:1,secondary};sim.addEquipmentItem(item);expect(sim.equip(item.id!)).toBe(true);return item;}
+import {equipment,gearById,gearSets,gearSlots,rollGear,rollEquipmentDrops,secondaryCounts,itemBonuses,BAG_CAPACITY,type Rarity} from '../src/game/equipment';
+function gear(sim:Simulation,id:string,secondary:Item['secondary']={}) {const definition=gearById(id)!;const item:Item={...rollGear(id,'common',()=>.5),name:definition.name,icon:definition.icon,count:1,secondary};sim.addEquipmentItem(item);expect(sim.equip(item.id!)).toBe(true);return item;}
 test('five level sets have all six slots and rarity rolls preserve main stats with unique affixes',()=>{
  expect(gearSets.map(s=>s.level)).toEqual([10,30,50,70,90]);
- for(const set of gearSets){const pieces=equipment.filter(g=>g.setId===set.id);expect(pieces).toHaveLength(8);expect(new Set(pieces.map(p=>p.slot))).toEqual(new Set(gearSlots));expect(pieces.every(p=>Object.values(p.bonuses).some(v=>v>0))).toBe(true);}
+ for(const set of gearSets){const pieces=equipment.filter(g=>g.setId===set.id);expect(pieces).toHaveLength(6);expect(new Set(pieces.map(p=>p.slot))).toEqual(new Set(gearSlots));expect(pieces.every(p=>Object.values(p.bonuses).some(v=>v>0))).toBe(true);}
  for(const rarity of ['common','rare','epic','ancient','legend'] as Rarity[]){const item=rollGear('thornwood-blade',rarity,()=>.99);expect(Object.keys(item.secondary!)).toHaveLength(secondaryCounts[rarity]);expect(itemBonuses(item).atk).toBeGreaterThanOrEqual(32);}
  expect(rollEquipmentDrops(1,false,()=>.5)).toEqual([]);expect(rollEquipmentDrops(90,true,()=>.99).map(g=>g.rarity)).toEqual(['epic','epic']);
  const numbers=[.01,0,.5,.5,...Array(5).fill(.5)];const rare=rollEquipmentDrops(85,false,()=>numbers.shift()??.5)[0]!;expect(rare.rarity).toBe('rare');expect(rare.gearId).toMatch(/^starfall-/);

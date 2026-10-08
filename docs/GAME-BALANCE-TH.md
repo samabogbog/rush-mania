@@ -1,5 +1,8 @@
 # ตารางค่าก่อนปรับระบบวัตถุดิบ rarity ของ Mossvale
 
+> **เอกสารย้อนหลัง:** ตารางด้านล่างอ้างอิง commit เดิม ไม่ใช่ค่าปัจจุบันทั้งหมด สำหรับมอนสเตอร์ v2 และอาวุธร่วม ดู [MONSTERS-V2-REVIEW.md](MONSTERS-V2-REVIEW.md) และ [UNIVERSAL-WEAPONS.md](UNIVERSAL-WEAPONS.md); ค่าใช้งานจริงอยู่ใน `src/config/*.json`
+
+
 **หมายเหตุ:** ตารางอุปกรณ์และสูตรคราฟต์ในเอกสารนี้เป็นข้อมูลก่อนรอบเปลี่ยน Shade essence/Sky feather/Rune stone และกางเกง ให้ใช้ `src/config/equipment.json`, `src/config/crafting.json` และ `src/config/README-TH.md` สำหรับค่าปัจจุบัน
 
 **การปรับล่าสุด:** Common 1, Rare 2, Epic 3, Ancient 4, Legend 5 สถานะรอง; Ancient รับค่า Legend เดิม และ Legend ใหม่ใช้ตัวคูณหลัก 1.75 รายละเอียดปัจจุบันดู `docs/MATERIAL-RARITIES-TH.md` และ `docs/INVENTORY-SALVAGE-TH.md` ตารางด้านล่างเก็บไว้เป็นประวัติก่อนปรับสมดุล

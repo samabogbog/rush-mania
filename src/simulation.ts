@@ -162,7 +162,7 @@ export class Simulation {
     this.save.job = isClass(this.save.job) ? this.save.job : "swordsman";
     const legacyRefine=(loadedVersion<6||this.save.legacyBasicRefine)&&this.save.weapon>0;
     this.save.items=this.save.items.flatMap(item=>{const next=migrateStoredItem(item,loadedVersion<9);return next?[next]:[];});
-    this.save.version = 9;
+    this.save.version = 10;
     this.save.weapon=refineLevel(this.save.weapon);
     for(const item of this.save.items)if(isCraftMaterial(item.name)&&!item.gearId){item.rarity=isRarity(item.rarity)?item.rarity:'common';item.id=materialKey(item.name,item.rarity);}
     for(const item of this.save.items)if(item.gearId)item.refine=refineLevel(item.refine);
@@ -177,7 +177,7 @@ export class Simulation {
     if(legacyRefine&&!this.save.equipped.weapon){
       if(this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY)this.save.legacyBasicRefine=true;
       else {
-      const id={swordsman:'sprout-blade',mage:'bloom-staff',archer:'willow-bow'}[this.save.job],definition=gearById(id)!;
+      const id='sprout-weapon',definition=gearById(id)!;
       const item={...rollGear(id,'common',()=>0),name:definition.name,icon:definition.icon,count:1,refine:this.save.weapon};
       this.save.items.push(item);this.save.equipped.weapon=item.id!;
       delete this.save.legacyBasicRefine;

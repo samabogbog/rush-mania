@@ -12,11 +12,12 @@ export const secondaryCounts:Record<Rarity,number>=config.secondaryCounts;
 export type SecondaryStat='critChance'|'critDamage'|'damageBonus'|'skillDamage'|'lifesteal'|'hpRegen'|'mpRegen'|'attackSpeed'|'moveSpeed'|'armorPen'|'damageReduction'|'dodgeChance'|'expBonus'|'goldBonus'|'healingBonus'|'cooldownReduction';
 
 export type Bonuses={atk?:number;def?:number;hp?:number;mp?:number;str?:number;vit?:number;agi?:number}&Partial<Record<SecondaryStat,number>>;
-export type GearDefinition={id:string;name:string;slot:GearSlot;job?:ClassId;level:number;rarity:Rarity;setId?:string;dropOnly?:boolean;icon:string;bonuses:Bonuses;cost:number;materials:[string,number][];description:string};
+export type GearDefinition={id:string;name:string;slot:GearSlot;job?:ClassId;weaponIcons?:Record<ClassId,string>;legacyIds?:string[];legacyNames?:string[];level:number;rarity:Rarity;setId?:string;dropOnly?:boolean;icon:string;bonuses:Bonuses;cost:number;materials:[string,number][];description:string};
 export const equipment = structuredClone(config.crafted) as GearDefinition[];
-export const gearById=(id:string)=>equipment.find(g=>g.id===id);
-export const gearByName=(name:string)=>equipment.find(g=>g.name===name);
+export const gearById=(id:string)=>equipment.find(g=>g.id===id||g.legacyIds?.includes(id));
+export const gearByName=(name:string)=>equipment.find(g=>g.name===name||g.legacyNames?.includes(name));
 
+export const gearIcon=(gear:{slot?:string;icon:string;weaponIcons?:Record<ClassId,string>},job:ClassId='swordsman')=>(gear.slot==='weapon'?gear.weaponIcons?.[job]:undefined)||gear.icon;
 export const statLabels:Record<keyof Bonuses,string>={atk:'ATK',def:'DEF',hp:'Max HP',mp:'Max MP',str:'STR',vit:'VIT',agi:'AGI',critChance:'Critical chance',critDamage:'Critical damage',damageBonus:'Damage bonus',skillDamage:'Skill damage',lifesteal:'Lifesteal',hpRegen:'HP regeneration',mpRegen:'MP regen / sec',attackSpeed:'Attack speed',moveSpeed:'Move speed',armorPen:'Armor penetration',damageReduction:'Damage reduction',dodgeChance:'Dodge chance',expBonus:'EXP bonus',goldBonus:'Zeny bonus',healingBonus:'Healing received',cooldownReduction:'Cooldown reduction'};
 export const percentStats=new Set<keyof Bonuses>(['critChance','critDamage','damageBonus','skillDamage','lifesteal','attackSpeed','moveSpeed','armorPen','damageReduction','dodgeChance','expBonus','goldBonus','healingBonus','cooldownReduction']);
 export const formatStat=(key:keyof Bonuses,value:number)=>`${Math.round(value*(key==='hpRegen'?100:10))/(key==='hpRegen'?100:10)}${key==='hpRegen'?'%/s':percentStats.has(key)?'%':''}`;
@@ -30,17 +31,15 @@ export const gearSets=config.sets;
 for(const set of gearSets){
  const lv=set.level;
  const pieces:{slot:GearSlot;suffix:string;job?:ClassId;icon:string;bonuses:Bonuses}[]=[
-  {slot:'weapon',suffix:'Blade',job:'swordsman',icon:'swords',bonuses:{}},
-  {slot:'weapon',suffix:'Staff',job:'mage',icon:'sparkles',bonuses:{}},
-  {slot:'weapon',suffix:'Bow',job:'archer',icon:'crosshair',bonuses:{}},
+  {slot:'weapon',suffix:'Weapon',icon:'swords',bonuses:{}},
   {slot:'helmet',suffix:'Helmet',icon:'gear-helmet',bonuses:{}},
   {slot:'armor',suffix:'Coat',icon:set.armorIcon,bonuses:{}},
-  {slot:'pants',suffix:'Gloves',icon:'gear-pants',bonuses:{}},
+  {slot:'pants',suffix:'Pants',icon:set.id+'-pants',bonuses:{}},
   {slot:'boots',suffix:'Boots',icon:'gear-boots',bonuses:{}},
   {slot:'accessory',suffix:'Charm',icon:set.charmIcon,bonuses:{}},
  ];
- for(const piece of pieces){const formulas=config.pieceFormulas[piece.suffix.toLowerCase() as keyof typeof config.pieceFormulas] as Record<string,number[]>;piece.bonuses={};for(const [stat,[slope,base]] of Object.entries(formulas))piece.bonuses[stat as keyof Bonuses]=['str','agi'].includes(stat)?Math.ceil(lv/(1/slope)+base):stat==='atk'||stat==='def'?Math.round(lv*slope+base):lv*slope+base;}
- for(const piece of pieces)equipment.push({id:`${set.id}-${piece.suffix.toLowerCase()}`,name:`${set.name} ${piece.slot==='pants'?'Pants':piece.suffix}`,slot:piece.slot,job:piece.job,level:lv,rarity:'common',setId:set.id,dropOnly:true,icon:piece.slot==='pants'?'gear-pants':`${set.id}-${piece.suffix.toLowerCase()}`,bonuses:piece.bonuses,cost:0,materials:[],description:set.theme});
+ for(const piece of pieces){const formulas=config.pieceFormulas[(piece.slot==='weapon'?'blade':piece.slot==='pants'?'gloves':piece.suffix.toLowerCase()) as keyof typeof config.pieceFormulas] as Record<string,number[]>;piece.bonuses={};for(const [stat,[slope,base]] of Object.entries(formulas))piece.bonuses[stat as keyof Bonuses]=['str','agi'].includes(stat)?Math.ceil(lv/(1/slope)+base):stat==='atk'||stat==='def'?Math.round(lv*slope+base):lv*slope+base;}
+ for(const piece of pieces)equipment.push({id:`${set.id}-${piece.suffix.toLowerCase()}`,name:`${set.name} ${piece.slot==='pants'?'Pants':piece.suffix}`,slot:piece.slot,job:piece.job,level:lv,rarity:'common',setId:set.id,dropOnly:true,icon:piece.slot==='weapon'?set.id+'-blade':`${set.id}-${piece.suffix.toLowerCase()}`,legacyIds:piece.slot==='weapon'?['blade','staff','bow'].map(suffix=>set.id+'-'+suffix):piece.slot==='pants'?[set.id+'-gloves']:undefined,legacyNames:piece.slot==='weapon'?['Blade','Staff','Bow'].map(suffix=>set.name+' '+suffix):piece.slot==='pants'?[set.name+' Gloves']:undefined,weaponIcons:piece.slot==='weapon'?{swordsman:set.id+'-blade',mage:set.id+'-staff',archer:set.id+'-bow'}:undefined,bonuses:piece.bonuses,cost:0,materials:[],description:set.theme});
 }
 for(const gear of equipment){
  const offensive=gear.slot==='weapon'||gear.slot==='accessory',o=crafting.primary.offense,d=crafting.primary.defense;
@@ -62,7 +61,7 @@ export function rollGear(id:string,rarity:Rarity,random= Math.random):GearInstan
  const gear=gearById(id);if(!gear)throw new Error('Unknown equipment');
  const pool=Object.keys(affixRanges) as SecondaryStat[],secondary:Bonuses={};
  for(let n=0;n<secondaryCounts[rarity];n++){const index=Math.min(pool.length-1,Math.floor(random()*pool.length)),key=pool.splice(index,1)[0],[min,max]=affixRanges[key];const factor=config.affixFactorBase+gear.level/config.affixLevelDivisor,roll=random();secondary[key]=key==='hpRegen'?Math.min(config.hpRegenPerPieceCap,Math.round((min+(max-min)*roll)*100)/100):Math.round((min+(max-min)*roll)*factor*10)/10;}
- return {id:crypto.randomUUID(),gearId:id,refine:0,rarity,secondary};
+ return {id:crypto.randomUUID(),gearId:gear.id,refine:0,rarity,secondary};
 }
 /** Rates are per slot per kill. Common/Rare are disjoint; slots roll independently.
  * Levels between table entries use the preceding row; values outside the table clamp.

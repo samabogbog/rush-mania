@@ -1,3 +1,4 @@
+import {gearById} from './equipment.js';
 import {itemMigrationConfig} from '../config/balance.js';
 import {materialIcon} from './items.js';
 import {isCraftMaterial,materialKey} from './crafting.js';
@@ -8,6 +9,7 @@ export const isRetiredMaterial=(item:{name:string;gearId?:string})=>!item.gearId
 export function migrateStoredItem(item:Item,renameLegend:boolean):Item|null {
  if(isRetiredMaterial(item))return null;
  const next=structuredClone(item);
+ const gear=next.gearId?gearById(next.gearId):undefined;if(gear){next.gearId=gear.id;next.name=gear.name;next.icon=gear.icon;}
  if(renameLegend&&next.rarity==='legend')next.rarity='ancient';
  if(isCraftMaterial(next.name)&&!next.gearId){next.rarity ||= 'common';next.id=materialKey(next.name,next.rarity);next.icon=materialIcon(next.name,next.rarity);}
  return next;
@@ -16,6 +18,6 @@ export function migrateStoredLoot(loot:Simulation['loot'],renameLegend:boolean):
  return loot.flatMap(drop=>{
   if(isRetiredMaterial(drop.item||drop))return [];
   const item=drop.item?migrateStoredItem(drop.item,renameLegend):undefined;
-  return [{...drop,...(item?{item,icon:item.icon}:isCraftMaterial(drop.name)?{icon:materialIcon(drop.name)}:{})}];
+  return [{...drop,...(item?{item,name:item.name,icon:item.icon}:isCraftMaterial(drop.name)?{icon:materialIcon(drop.name)}:{})}];
  });
 }

@@ -12,12 +12,12 @@ test('crafting consumes exact ingredients, creates unique weapons and keeps refi
  const sim=new Simulation(()=>.5,undefined,null);sim.save.gold=200;const before=structuredClone(sim.save);
  expect(sim.craft('sprout-blade')).toBe(false);expect(sim.save).toEqual(before);
  sim.addItem('Shade essence','💧',8);sim.addItem('Rune stone','🌿',6);expect(sim.craft('sprout-blade')).toBe(true);
- const first=sim.save.items.find(i=>i.gearId==='sprout-blade')!;expect(sim.save.gold).toBe(188);const damage=sim.damage;
+ const first=sim.save.items.find(i=>i.gearId==='sprout-weapon')!;expect(sim.save.gold).toBe(188);const damage=sim.damage;
  expect(sim.equip(first.id!)).toBe(true);expect(sim.damage).toBe(damage+14);sim.addItem('Common refine stone','ice-shard');sim.upgrade();expect(first.refine).toBe(1);expect(sim.save.gold).toBe(128);expect(sim.damage).toBeCloseTo(damage+15.4);
- expect(sim.craft('sprout-blade')).toBe(true);const second=sim.save.items.filter(i=>i.gearId==='sprout-blade')[1];expect(second.id).not.toBe(first.id);
+ expect(sim.craft('sprout-blade')).toBe(true);const second=sim.save.items.filter(i=>i.gearId==='sprout-weapon')[1];expect(second.id).not.toBe(first.id);
  sim.equip(second.id!);expect(sim.damage).toBe(damage+14);sim.equip(first.id!);expect(sim.damage).toBeCloseTo(damage+15.4);
  sim.sell();expect(sim.save.items.find(i=>i.id===first.id)?.count).toBe(1);expect(sim.save.items.find(i=>i.id===second.id)?.count).toBe(1);
- sim.setClass('mage');expect(sim.save.equipped.weapon).toBeNull();expect(sim.equip(first.id!)).toBe(false);
+ sim.setClass('mage');expect(sim.save.equipped.weapon).toBe(first.id);expect(sim.equip(first.id!)).toBe(true);
 });
 test('equipment cannot generate free health, quest rewards cannot be claimed twice',()=>{
  const sim=new Simulation(()=>.5,undefined,null);sim.addItem('Field Coat','hero');const coat=sim.save.items.find(i=>i.gearId==='field-coat')!;

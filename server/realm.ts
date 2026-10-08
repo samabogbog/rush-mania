@@ -2,7 +2,7 @@ import {migrateStoredItem,migrateStoredLoot,isRetiredMaterial} from '../src/game
 import {economy,progression,contentConfig} from '../src/config/balance.js';
 import {EXP_CHARM,EXP_TOME,EXP_TEST_GRANT_COUNT,itemCatalog,itemCategory} from '../src/game/items.js';
 import {sameStack,isRarity,isCraftMaterial} from '../src/game/crafting.js';
-import {rollGear,rarityOrder,BAG_CAPACITY,type Rarity} from '../src/game/equipment.js';
+import {rollGear,gearById,rarityOrder,BAG_CAPACITY,type Rarity} from '../src/game/equipment.js';
 import {isStoneTier} from '../src/game/refinement.js';
 import {communityCommand,communitySnapshot,partyOf,shareKill} from './community.js';
 import { Simulation, type Save } from '../src/simulation.js';
@@ -14,8 +14,8 @@ import { capture, type Command, type Player, type Realm, type Snapshot } from '.
 import type { RealmStore } from './store.js';
 export class GameError extends Error { constructor(message:string,public status=400){super(message)} }
 export const ROOM_LAYOUT_REVISION=6;
-export const MONSTER_BALANCE_REVISION=4;
-export function freshRealm(now:number):Realm { const sim=new Simulation(Math.random,undefined,null); return {version:2,itemRevision:1,time:now,players:{},rooms:{glade:{zone:'glade',monsters:sim.monsters,layoutRevision:ROOM_LAYOUT_REVISION,balanceRevision:MONSTER_BALANCE_REVISION}},chat:[],ledger:[]}; }
+export const MONSTER_BALANCE_REVISION=5;
+export function freshRealm(now:number):Realm { const sim=new Simulation(Math.random,undefined,null); return {version:2,itemRevision:2,time:now,players:{},rooms:{glade:{zone:'glade',monsters:sim.monsters,layoutRevision:ROOM_LAYOUT_REVISION,balanceRevision:MONSTER_BALANCE_REVISION}},chat:[],ledger:[]}; }
 function roomFor(realm:Realm,id:string,zone:ZoneId) {
   if(!realm.rooms) {realm.rooms={glade:{zone:'glade',monsters:realm.monsters||new Simulation(Math.random,undefined,null).monsters}};delete realm.monsters;realm.version=2;}
   const room=realm.rooms[id];
@@ -24,7 +24,7 @@ function roomFor(realm:Realm,id:string,zone:ZoneId) {
     if(room){
       const remaining=[...room.monsters];
       for(const m of sim.monsters){const index=remaining.findIndex(old=>old.kind===m.kind);if(index<0)continue;const old=remaining.splice(index,1)[0];
-        const max=sim.monsterSpec(m.kind).hp,oldMax=room.balanceRevision===MONSTER_BALANCE_REVISION?max:(realm.balance?.[m.kind]?.hp??(room.balanceRevision===3?contentConfig.normalBalance.revision3Hp[m.kind]:room.balanceRevision===2?contentConfig.normalBalance.previousRevisionHp[m.kind]:species[m.kind].hp));
+        const max=sim.monsterSpec(m.kind).hp,oldMax=room.balanceRevision===MONSTER_BALANCE_REVISION?max:(realm.balance?.[m.kind]?.hp??(room.balanceRevision===4?contentConfig.normalBalance.revision4Hp[m.kind]:room.balanceRevision===3?contentConfig.normalBalance.revision3Hp[m.kind]:room.balanceRevision===2?contentConfig.normalBalance.previousRevisionHp[m.kind]:species[m.kind].hp));
         Object.assign(m,{hp:old.alive?max*Math.max(0,Math.min(1,old.hp/oldMax)):0,alive:old.alive,respawn:old.respawn,attack:old.attack,stun:old.stun,slow:old.slow,poison:old.poison,poisonTimer:old.poisonTimer,poisonDamage:old.poisonDamage});
       }
     }
@@ -40,7 +40,7 @@ function roomFor(realm:Realm,id:string,zone:ZoneId) {
   if(current.balanceRevision!==MONSTER_BALANCE_REVISION){
     const sim=new Simulation(Math.random,undefined,null);sim.balance=realm.balance||{};
     for(const monster of current.monsters){
-      const previousMax=realm.balance?.[monster.kind]?.hp??(current.balanceRevision===3?contentConfig.normalBalance.revision3Hp[monster.kind]:current.balanceRevision===2?contentConfig.normalBalance.previousRevisionHp[monster.kind]:species[monster.kind].hp);
+      const previousMax=realm.balance?.[monster.kind]?.hp??(current.balanceRevision===4?contentConfig.normalBalance.revision4Hp[monster.kind]:current.balanceRevision===3?contentConfig.normalBalance.revision3Hp[monster.kind]:current.balanceRevision===2?contentConfig.normalBalance.previousRevisionHp[monster.kind]:species[monster.kind].hp);
       if(monster.alive)monster.hp=sim.monsterSpec(monster.kind).hp*Math.max(0,Math.min(1,monster.hp/previousMax));
     }
     current.balanceRevision=MONSTER_BALANCE_REVISION;
@@ -66,21 +66,22 @@ function support(realm:Realm,player:Player,sim:Simulation,actors:{p:Player;sim:S
 export function migrateRealmItems(realm:Realm){
  const rewrite=new Map<string,string>(),removed=new Set<string>();
  for(const player of Object.values(realm.players)){
-  if(player.actor.save.version>=9)continue;
-  for(const old of player.actor.save.items){const key=old.id||old.name,next=migrateStoredItem(old,true);if(!next)removed.add(player.id+':'+key);else if(next.id&&next.id!==key)rewrite.set(player.id+':'+key,next.id);}
-  player.actor.loot=migrateStoredLoot(player.actor.loot||[],true);
+  if(player.actor.save.version>=10)continue;
+  const renameLegend=player.actor.save.version<9;
+  for(const old of player.actor.save.items){const key=old.id||old.name,next=migrateStoredItem(old,renameLegend);if(!next)removed.add(player.id+':'+key);else if(next.id&&next.id!==key)rewrite.set(player.id+':'+key,next.id);}
+  player.actor.loot=migrateStoredLoot(player.actor.loot||[],renameLegend);
   player.actor.save=new Simulation(Math.random,player.actor.save,null).save;
   if([...removed].some(key=>key.startsWith(player.id+':'))){player.events.push({id:++player.serial,text:'Obsolete crafting materials retired. Equipment, active materials and gold preserved.',type:'system'});player.events=player.events.slice(-40);}
  }
- if((realm.itemRevision||0)<1&&realm.community){
-  realm.community.listings=realm.community.listings.flatMap(listing=>{const item=migrateStoredItem(listing.item,true);return item?[{...listing,item}]:[];});
+ if((realm.itemRevision||0)<2&&realm.community){
+  realm.community.listings=realm.community.listings.flatMap(listing=>{const item=migrateStoredItem(listing.item,(realm.itemRevision||0)<1);return item?[{...listing,item}]:[];});
  }
  if(realm.community)realm.community.trades=realm.community.trades.filter(trade=>{
   for(const [id,offer] of Object.entries(trade.offers))if(offer.count>0&&removed.has(id+':'+offer.item))return false;
   for(const [id,offer] of Object.entries(trade.offers))offer.item=rewrite.get(id+':'+offer.item)||offer.item;
   return true;
  });
- realm.itemRevision=1;
+ realm.itemRevision=2;
 }
 export const INPUT_LEASE_MS=1500;
 export function advanceRealm(realm:Realm,now:number) {
@@ -159,7 +160,7 @@ function execute(player:Player,realm:Realm,command:Command,now:number,admin=fals
   else switch(command.type) {
     case 'adminSpawn': {
       if(!admin)throw new GameError('Admin access required',403);
-      const entry=itemCatalog.find(i=>i.id===a),rarity=command.args[2],refine=command.args[3];
+      const entry=itemCatalog.find(i=>i.id===a||i.id===gearById(String(a))?.id),rarity=command.args[2],refine=command.args[3];
       if(!entry||!integer(b,1,entry.gearId?20:9999)||typeof rarity!=='string'||!rarityOrder.includes(rarity as Rarity)||!integer(refine,0,10))throw new GameError('Invalid spawn request');
       const existing=!entry.gearId&&sim.save.items.find(i=>sameStack(i,{name:entry.name,rarity:rarity as Rarity})&&i.count>0);
       const slots=sim.save.items.filter(i=>i.count>0).length+(entry.gearId?b as number:existing?0:1);

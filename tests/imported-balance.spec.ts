@@ -16,8 +16,9 @@ test('all 100 spreadsheet levels are exact and cap does not expose level 101',()
 test('normal checkpoints, interpolation, early levels, and elite multipliers share one runtime',()=>{
  const points=contentConfig.normalBalance.checkpoints;
  for(const row of points)expect(normalMonsterBalance(row.level)).toEqual({hp:row.hp,atk:row.atk,defense:row.defense,gold:row.gold,drops:row.drops});
- expect(normalMonsterBalance(1).hp).toBe(21.6);expect(normalMonsterBalance(1).drops).toEqual(points[0].drops);expect(normalMonsterBalance(100)).toEqual(normalMonsterBalance(90));
- expect(normalMonsterBalance(35).hp).toBe(780);expect(normalMonsterBalance(35).drops.shade_rare).toBe(.00375);
+ expect(normalMonsterBalance(1).hp).toBeCloseTo(19.2);expect(normalMonsterBalance(1).drops).toEqual(points[0].drops);expect(normalMonsterBalance(100)).toEqual(normalMonsterBalance(95));
+ expect(normalMonsterBalance(35).hp).toBe(984);expect(normalMonsterBalance(35).drops.shade_rare).toBe(0);
+ expect(normalMonsterBalance(37.5).hp).toBe(942);expect(normalMonsterBalance(37.5).drops.shade_rare).toBe(.0045);
  const sim=new Simulation(()=>.5,undefined,null);
  for(const [kind,base] of Object.entries(species)){const spec=sim.monsterSpec(kind as keyof typeof species),normal=normalMonsterBalance(base.level),tier=base.boss?contentConfig.normalBalance.boss:base.miniBoss?contentConfig.normalBalance.mini:{hp:1,atk:1,defense:1,goldPerLevel:0,xp:1};for(const key of ['hp','atk','defense'] as const)expect(spec[key]).toBe(normal[key]*tier[key]);expect(spec.gold).toBe(base.boss||base.miniBoss?base.level*tier.goldPerLevel:normal.gold);expect(spec.xp).toBe(progression.levels[base.level-1].monsterXp*tier.xp);}
  sim.balance.Dewdrop={hp:999,xp:123};expect(sim.monsterSpec('Dewdrop').hp).toBe(999);expect(sim.monsterSpec('Dewdrop').xp).toBe(123);
@@ -47,13 +48,17 @@ test('invalid imported level and probability edits are rejected before runtime',
  for(const mutate of [(c:ReturnType<typeof config>)=>c.progression.levels[1].level=1,c=>c.progression.levels[0].monsterXp=0,c=>c.content.normalBalance.checkpoints[0].drops.commonStone=1.1,c=>c.content.normalBalance.checkpoints[0].level=11]){const c=config();mutate(c);expect(()=>validateConfiguration(c)).toThrow(/Invalid balance config/);}
 });
 
-test('all nine CSV checkpoints preserve stats and percentages including malformed Lv40 separator',()=>{
+test('historical v1 CSV remains the provenance for revision 4 HP migration',()=>{
  const lines=readFileSync(new URL('../docs/balance/imported/monsters.csv',import.meta.url),'utf8').split(/\r?\n/).filter(line=>/^,normal,/.test(line));
  expect(lines).toHaveLength(9);
- for(const line of lines){const cells=line.split(','),level=Number(cells[2]),row=normalMonsterBalance(level);expect([row.hp,row.atk,row.defense,row.gold]).toEqual(cells.slice(3,7).map(Number));
-  const names={'refine stone':'commonStone','Shade essence common':'shade_common','rune stone common':'rune_common','sky feather common':'sky_common','Shade essence rare':'shade_rare','rune stone rare':'rune_rare','sky feather rare':'sky_rare'} as const;
-  const expected=Object.fromEntries(Object.values(names).map(key=>[key,0]));for(const match of line.matchAll(/(refine stone|Shade essence common|rune stone common|sky feather common|Shade essence rare|rune stone rare|sky feather rare):([\d.]+)%/g))expected[names[match[1] as keyof typeof names]]=Number(match[2])/100;expect(row.drops).toEqual(expected);
- }
+ const rows=lines.map(line=>{const cells=line.split(',');return {level:Number(cells[2]),hp:Number(cells[3]),atk:Number(cells[4]),defense:Number(cells[5]),gold:Number(cells[6]),line};});
+ expect(rows.map(({level,hp,atk,defense,gold})=>[level,hp,atk,defense,gold])).toEqual([[10,216,36,18,10],[20,432,72,36,20],[30,660,110,55,30],[40,900,150,75,40],[50,1164,194,97,50],[60,1428,238,119,60],[70,1704,284,142,70],[80,1992,332,166,80],[90,2304,384,192,90]]);
+ const hpAt=(level:number)=>{const first=rows[0],last=rows.at(-1)!,upper=rows.find(row=>row.level>=level)||last,lower=[...rows].reverse().find(row=>row.level<=level)||first,t=upper.level===lower.level?0:(level-lower.level)/(upper.level-lower.level);return (lower.hp+(upper.hp-lower.hp)*t)*(level<first.level?level/first.level:1);};
+ for(const [kind,spec] of Object.entries(species))expect(contentConfig.normalBalance.revision4Hp[kind as keyof typeof species]).toBeCloseTo(hpAt(spec.level)*(spec.boss?30:spec.miniBoss?15:1));
+ // The old Lv40 line omitted a comma; preserve that provenance independently
+ // from the new active rates rather than treating v1 as today's balance.
+ const oldRare=[...rows[3].line.matchAll(/(Shade essence rare|rune stone rare|sky feather rare):([\d.]+)%/g)].map(match=>Number(match[2])/100);
+ expect(oldRare).toEqual([.0075,.0025,.005]);
 });
 test('each independent material rate includes just below and excludes exact probability boundary',()=>{
  const sim=new Simulation(()=>0,undefined,null);sim.populateZone('ruins');const monster=sim.monsters.find(m=>m.kind==='ShadeWisp')!,rates=normalMonsterBalance(sim.monsterSpec(monster.kind).level).drops;
