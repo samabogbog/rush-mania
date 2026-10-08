@@ -1,0 +1,15 @@
+# Compact bag and mobile HUD
+
+The bag uses seven icon tabs with accessible names and hover titles. Arrow Left/Right, Home and End switch categories; the selected tab has tabindex 0. Capacity and zeny share the compact header. The six equipped slots display Weapon / Charm, Helmet / Armor, Pants / Boots; this is DOM presentation order only and does not change save slots or item ownership. Equipped-item removal keeps an accessible icon button. The inventory remains eight columns and three pages.
+
+At viewport widths up to 900 pixels, optional menus, quests and chat start collapsed. `#mobile-menu-toggle` opens `#mobile-menu`; `#mobile-menu-close`, Escape and `#mobile-menu-backdrop` dismiss it. Each `#mobile-menu [data-mobile-panel]` button opens the original menu and closes the drawer. Quests open the journal; Chat opens the existing chat panel and input. The minimap remains compact and opens the full map. Resizing closes the drawer and resets movement.
+
+Movement uses the existing pointer-captured `#mobile-joystick`, continuously feeding the frame input until release/cancel/lost capture. Opening any panel or the drawer resets the joystick. On the right, `#mobile-attack` calls the same `sim.nearest()` as Tab / the desktop target button: it selects the nearest target and uses the existing approach/normal attack behavior. `#mobile-auto` toggles existing auto combat, and `#mobile-loot` calls existing `sim.collect()`. A panel or drawer gates these actions. No save, damage or networking logic changes.
+
+The six `.skill-hotbar [data-skill]` controls call `sim.skill(slot)`. The four `.aux-hotbar [data-aux]` controls call `sim.useAuxiliary(slot)`. Both remain visible at the bottom with 44-pixel minimum touch controls. Desktop keeps its existing combat controls. Mobile drawer keyboard focus stays within its buttons and game keyboard commands are gated while it is open.
+
+QA artifacts belong in `artifacts/compact-hud/`. Verify 390×844 portrait, 844×390 landscape, narrow portrait and 1200×800 desktop. Meaningful checks include actual target/monster HP change after Attack, MP/cooldown change after a learned skill, auto combat, joystick position change and clean release, menu accessibility, one row of seven category tabs, and unchanged item UUID/equipped ownership after filtering.
+
+Final verification: 14 focused tests pass, including real normal-attack HP damage, Auto skill MP/cooldown changes, touch movement/release, starter quest one-time rewards and inventory actions. Additional browser review checks non-overlapping controls at 390×844, 844×390, 568×320 and 320×568, one-row bag tabs at narrow widths, worn-gear order, and a held joystick resetting when the menu opens. Low and high quality load without page errors. Screenshots were reviewed in headless Chromium with SwiftShader; these are layout/behavior checks, not player-device FPS measurements.
+
+Approved screenshot evidence: `artifacts/compact-hud/review-bag-desktop.png`, `review-bag-320.png`, `review-play-390.png`, `review-play-844.png` and `review-menu.png`.

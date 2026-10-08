@@ -74,7 +74,7 @@ app.innerHTML = `<canvas id="game" aria-label="3D game world: click the ground t
 <div class="chat"><div class="chat-tabs"><button class="active" data-chat="world">World</button><button data-chat="combat">Combat</button><span>LOCAL ADVENTURE</span><button id="chat-hide" aria-label="Hide activity log">${icon("chevron-down")}</button></div><div id="chat-log"><p><b class="system">System</b> Welcome to Mossvale, adventurer.</p><p><b class="guide">Guide</b> Click a monster to begin your adventure!</p></div><div class="chat-input">${icon("message-circle")}<input id="chat-input" placeholder="Leave a local note…" maxlength="100" aria-label="Local note"><span>↵</span></div></div>
 <div class="bottom-center"><div id="combat-state" aria-live="polite"></div><div class="control-hint"><span>${icon("mouse-pointer-2")} Click to move & attack</span><b>·</b><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> to walk</span></div><div class="action-bar"><button class="target-action" id="nearest" title="Select nearest monster (Tab)">${icon('crosshair')}<kbd>TAB</kbd></button><div class="action-divider"></div><div class="skill-hotbar" aria-label="Six skill slots">${Array.from({length:6},(_,n)=>`<button class="skill-slot gold" data-skill="${n}" data-hotbar="${n}" title="Skill ${n+1}"><kbd>${n+1}</kbd>${icon('plus')}<small>Empty</small><span class="cooldown"></span></button>`).join('')}</div><div class="action-divider"></div><div class="aux-hotbar" aria-label="Four auxiliary item slots">${Array.from({length:4},(_,n)=>`<button class="aux-slot" data-aux="${n}"><kbd>${[7,8,9,0][n]}</kbd>${icon('plus')}<small>Empty</small><span class="count"></span><span class="cooldown"></span></button>`).join('')}</div><button class="loot-action" id="loot" title="Pick up nearby loot (F)">${icon('hand')}<kbd>F</kbd><small>Loot</small></button><button id="auto" aria-label="Toggle auto combat" aria-pressed="false" title="Auto combat: use assigned skills, then normal attacks">${icon('repeat-2')}<small>Auto</small></button></div><div class="experience"><span>BASE EXP</span><div><i id="exp-fill"></i></div><b id="exp-text">0 / 120</b></div></div>
 <div class="bottom-right"><div class="community-shortcuts"><button data-panel="community" title="Party & friends">${icon("hero")} Party</button><button data-panel="market" title="Player market">${icon("store")} Market</button></div><div class="wallet">${icon("coins")}<b id="gold">120</b><span>z</span></div><div class="utility"><button id="camera" title="Reset camera">${icon("focus")}</button><button data-panel="settings" title="Settings">${icon("settings-2")}</button><button data-panel="help" title="How to play">${icon("circle-help")}</button></div><span class="save-indicator"><i></i> Adventure saved locally</span></div>
-<aside id="item-details" class="item-tooltip item-details" role="dialog" aria-label="Item details" hidden></aside><aside id="item-tooltip" class="item-tooltip" role="tooltip" hidden></aside><aside id="secondary-popover" class="secondary-popover" role="region" aria-label="Secondary stats" hidden></aside><div id="toast" role="status"></div><div id="panel-root"></div><div class="mobile-controls"><div id="mobile-joystick" role="group" aria-label="Drag to move" tabindex="0"><span class="stick-guide" aria-hidden="true"></span><span class="stick-knob" aria-hidden="true"></span><small>MOVE</small></div><button id="mobile-auto" aria-label="Toggle auto combat" aria-pressed="false">${icon('repeat-2')}<strong>AUTO</strong></button></div>`;
+<aside id="item-details" class="item-tooltip item-details" role="dialog" aria-label="Item details" hidden></aside><aside id="item-tooltip" class="item-tooltip" role="tooltip" hidden></aside><aside id="secondary-popover" class="secondary-popover" role="region" aria-label="Secondary stats" hidden></aside><div id="toast" role="status"></div><div id="panel-root"></div><button id="mobile-menu-toggle" type="button" aria-label="Open game menu" aria-expanded="false" aria-controls="mobile-menu">${icon("backpack")}<span>Menu</span></button><div id="mobile-menu-backdrop" hidden></div><nav id="mobile-menu" aria-label="Mobile game menu" hidden><div class="mobile-menu-heading"><strong>MOSSVALE</strong><button id="mobile-menu-close" aria-label="Close game menu">${icon("x")}</button></div>${[["inventory","backpack","Bag"],["skills","sparkles","Skills"],["character","hero","Hero"],["forge","anvil","Forge"],["shop","store","Shop"],["journal","quest","Quests"],["map","map","Map"],["community","hero","Party"],["market","store","Market"],["settings","settings-2","Settings"],["help","circle-help","Help"]].map(([id,art,label])=>`<button data-mobile-panel="${id}" title="${label}" aria-label="${label}">${icon(art)}<span>${label}</span></button>`).join("")}<button id="mobile-chat-toggle" aria-label="Open realm chat">${icon("quest")}<span>Chat</span></button></nav><div class="mobile-controls"><div id="mobile-joystick" role="group" aria-label="Drag to move" tabindex="0"><span class="stick-guide" aria-hidden="true"></span><span class="stick-knob" aria-hidden="true"></span><small>MOVE</small></div><div class="mobile-combat"><button id="mobile-attack" aria-label="Attack nearest monster" title="Attack nearest monster">${icon("swords")}<strong>Attack</strong></button><button id="mobile-loot" aria-label="Pick up nearby loot" title="Pick up nearby loot">${icon("hand")}</button><button id="mobile-auto" aria-label="Toggle auto combat" aria-pressed="false">${icon('repeat-2')}<strong>AUTO</strong></button></div></div>`;
 async function boot(){
 let sim: Simulation;
 try { sim = await startSimulation(); } catch(error) {
@@ -209,6 +209,8 @@ let craftCategory='all',selectedRecipe='',secondaryPinned=false;
 let secondaryHideTimer:ReturnType<typeof setTimeout>|undefined;
 const escapeItemText=(value:string)=>value.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
 const slotNames:Record<GearSlot,string>={weapon:'Weapon',helmet:'Helmet',armor:'Armor',pants:'Pants',boots:'Boots',accessory:'Charm'};
+const wornDisplayOrder:GearSlot[]=['weapon','accessory','helmet','armor','pants','boots'];
+const bagCategoryIcons:Record<string,string>={all:'chest',weapon:'swords',armor:'field-coat',accessory:'leaf-charm',consumable:'health-potion',material:'materials/rune-stone-common',refine:'ice-shard'};
 const slotIcons:Record<GearSlot,string>={weapon:'swords',helmet:'gear-helmet',armor:'field-coat',pants:'gear-pants',boots:'gear-boots',accessory:'leaf-charm'};
 function inventoryItem(item:Item,worn=false){const gear=item.gearId?gearById(item.gearId):undefined,rarity=gear?itemRarity(item):isCraftMaterial(item.name)?materialRarity(item):item.name===refineStones.rare.name?'rare':'common';return `<button class="item rarity-${rarity} ${worn?'equipped':''}" data-item="${escapeItemText(inventoryKey(item))}" aria-label="${escapeItemText(item.name)}${gear||isCraftMaterial(item.name)?' · '+rarityLabels[rarity]:''}${worn?' · equipped':''}"><span>${itemIcon(item.name,item.rarity)}</span><b>${gear?'+'+(item.refine||0):item.count}</b>${worn?'<small>E</small>':''}</button>`;}
 function mainStatText(item:Item,key:keyof Bonuses,value:number){const base=itemBonuses({...item,secondary:{}},false)[key]||0;const extra=Math.round((value-base)*100)/100;return `${formatStat(key,value)}${extra>0?` <small class="refine-gain">(+${formatStat(key,extra)})</small>`:''}`;}
@@ -242,7 +244,7 @@ function renderPanel() {
   if (panel === "inventory") {
     const items=s.items.filter(i=>i.count && (inventoryFilter==='all'||itemCategory(i)===inventoryFilter)).sort((a,b)=>inventorySort==='count'?b.count-a.count:a.name.localeCompare(b.name)||rarityOrder.indexOf(materialRarity(a))-rarityOrder.indexOf(materialRarity(b)));
     const visible=items.slice(inventoryPage*48,inventoryPage*48+48);
-    body=`<div class="panel-sub"><span>${s.items.filter(i=>i.count).length} / ${BAG_CAPACITY} slots</span><span>${icon('coins')} ${s.gold} z</span></div><div class="bag-layout"><section class="worn-equipment" aria-label="Equipped gear"><div class="section-label">EQUIPPED</div><div class="worn-grid">${gearSlots.map(slot=>{const worn=s.items.find(i=>i.id===s.equipped[slot]);return `<div class="worn-slot"><label>${slotNames[slot]}</label>${worn?inventoryItem(worn,true):`<div class="item empty worn-empty" aria-label="Empty ${slotNames[slot]}">${icon(slotIcons[slot])}</div>`}${worn?`<button class="remove-gear" data-unequip="${slot}" aria-label="Remove ${slotNames[slot]}">Remove</button>`:'<span class="empty-slot-caption">Empty</span>'}</div>`}).join('')}</div><div class="worn-summary"><span>ATK <b>${sim.damage.toFixed(0)} <small class="refine-gain">(+${Math.round(characterRefineAttack()*100)/100})</small></b></span><span>DEF <b>${sim.defense.toFixed(0)}</b></span><span>HP <b>${sim.maxHp}</b></span><span>MP <b>${sim.maxMp}</b></span></div>${sim.activeSets.map(({set,pieces})=>`<div class="set-progress">${set.name} <b>${pieces}/6</b></div>`).join('')}<p class="bag-hint">Click for details and actions.<br>Right-click to use or equip.<br>Hover or focus to compare.</p></section><section class="bag-storage" aria-label="Bag storage"><div class="bag-controls"><div class="item-category-tabs" role="tablist" aria-label="Item categories">${Object.entries({all:'All',...itemCategories}).map(([id,label])=>`<button role="tab" data-bag-category="${id}" aria-selected="${inventoryFilter===id}">${label} <small>${s.items.filter(i=>i.count>0&&(id==='all'||itemCategory(i)===id)).length}</small></button>`).join('')}</div><label>Sort <select id="bag-sort"><option value="name" ${inventorySort==='name'?'selected':''}>Name</option><option value="count" ${inventorySort==='count'?'selected':''}>Quantity</option></select></label></div><div class="inventory-grid" aria-label="Page ${inventoryPage+1} · 48 slots">${visible.map(i=>inventoryItem(i,Object.values(s.equipped).includes(i.id||''))).join('')}${Array.from({length:48-visible.length},()=>'<div class="item empty" aria-hidden="true"></div>').join('')}</div><nav class="bag-pages" aria-label="Inventory pages">${[0,1,2].map(p=>`<button data-bag-page="${p}" aria-label="Inventory page ${p+1}" aria-current="${p===inventoryPage?'page':'false'}">${p+1}</button>`).join('')}<span>PAGE ${inventoryPage+1} / 3</span></nav></section></div>`;
+    body=`<div class="bag-summary"><span title="Bag capacity" aria-label="${s.items.filter(i=>i.count).length} of ${BAG_CAPACITY} bag slots used">${icon("backpack")} ${s.items.filter(i=>i.count).length}/${BAG_CAPACITY}</span><span title="Zeny">${icon("coins")} ${s.gold} z</span></div><div class="bag-layout"><section class="worn-equipment" aria-label="Equipped gear"><div class="section-label">EQUIPPED</div><div class="worn-grid">${wornDisplayOrder.map(slot=>{const worn=s.items.find(i=>i.id===s.equipped[slot]);return `<div class="worn-slot" data-worn-slot="${slot}" title="${slotNames[slot]}"><label>${slotNames[slot]}</label>${worn?inventoryItem(worn,true):`<div class="item empty worn-empty" aria-label="Empty ${slotNames[slot]}">${icon(slotIcons[slot])}</div>`}${worn?`<button class="remove-gear" data-unequip="${slot}" aria-label="Remove ${slotNames[slot]}" title="Remove ${slotNames[slot]}">${icon("minus")}</button>`:""}</div>`}).join('')}</div><div class="worn-summary"><span>ATK <b>${sim.damage.toFixed(0)} <small class="refine-gain">(+${Math.round(characterRefineAttack()*100)/100})</small></b></span><span>DEF <b>${sim.defense.toFixed(0)}</b></span><span>HP <b>${sim.maxHp}</b></span><span>MP <b>${sim.maxMp}</b></span></div>${sim.activeSets.map(({set,pieces})=>`<div class="set-progress">${set.name} <b>${pieces}/6</b></div>`).join('')}</section><section class="bag-storage" aria-label="Bag storage"><div class="bag-controls"><div class="item-category-tabs" role="tablist" aria-label="Item categories">${Object.entries({all:'All',...itemCategories}).map(([id,label])=>`<button role="tab" data-bag-category="${id}" aria-label="${label}" title="${label} · ${s.items.filter(i=>i.count>0&&(id==='all'||itemCategory(i)===id)).length}" tabindex="${inventoryFilter===id?0:-1}" aria-selected="${inventoryFilter===id}">${icon(id==='weapon'?gearIcon(gearById('sprout-weapon')!,s.job):bagCategoryIcons[id])}</button>`).join('')}</div><label class="bag-sort-label"><span class="sr-only">Sort bag</span><select id="bag-sort" aria-label="Sort bag"><option value="name" ${inventorySort==='name'?'selected':''}>Name</option><option value="count" ${inventorySort==='count'?'selected':''}>Quantity</option></select></label></div><div class="inventory-grid" aria-label="Page ${inventoryPage+1} · 48 slots">${visible.map(i=>inventoryItem(i,Object.values(s.equipped).includes(i.id||''))).join('')}${Array.from({length:48-visible.length},()=>'<div class="item empty" aria-hidden="true"></div>').join('')}</div><nav class="bag-pages" aria-label="Inventory pages">${[0,1,2].map(p=>`<button data-bag-page="${p}" aria-label="Inventory page ${p+1}" aria-current="${p===inventoryPage?'page':'false'}">${p+1}</button>`).join('')}</nav></section></div>`;
   }
   if (panel === "character") {
     body = `<div class="character-card"><div class="portrait">${portrait}</div><div><h2>Sprout</h2><span>Level ${s.level} / ${MAX_LEVEL} · ${sim.job.name}</span><p>${sim.job.role}</p></div></div><div class="class-picker">${(Object.entries(classes) as [ClassId, (typeof classes)[ClassId]][]).map(([id, job]) => `<button data-class="${id}" aria-pressed="${s.job === id}" ${sim.target !== null ? "disabled" : ""}>${icon(job.icon)}<strong>${job.name}</strong><small>${job.role}</small></button>`).join("")}</div><div class="stat-pair"><span>Max HP <b>${sim.maxHp}</b></span><span>Max MP <b>${sim.maxMp}</b></span><span>Attack <b>${sim.damage.toFixed(1)} <small class="refine-gain">(+${Math.round(characterRefineAttack()*100)/100})</small></b></span><span>Defense <b>${sim.defense}</b></span></div><div class="secondary-disclosure"><span>Combat details</span><button id="secondary-info" class="info-button" aria-label="Show secondary stats" aria-expanded="false" aria-controls="secondary-popover">i</button></div><div class="section-label">ATTRIBUTES <span>${s.points} points available</span></div>${(["str", "vit", "agi"] as const).map((k, i) => `<div class="stat-row"><span>${[s.job === "mage" ? "Focus" : "Strength", "Vitality", "Agility"][i]}<small>${[s.job === "archer" ? "Melee strength" : "Increase attack power", "Increase health and defense", s.job === "archer" ? "Increase bow attack, attack speed and critical chance" : "Increase attack speed and critical chance"][i]}</small></span><b>${s.stats[k]}</b><button data-stat="${k}" ${s.points ? "" : "disabled"}>${icon("plus")}</button></div>`).join("")}<div class="section-label">EQUIPMENT</div>${gearSlots.map(slot=>{const item=s.items.find(i=>i.id===s.equipped[slot]);return `<div class="stat-row"><span>${slot}<small>${item?.name||'Basic class equipment'}</small></span>${item?`<button data-unequip="${slot}">Remove</button>`:''}</div>`}).join('')}<div class="panel-note">Change class outside combat. Each equipment item keeps its own refinement. Each level grants 3 attribute points. Skills unlock at levels 10, 20 … 100.</div>`;
@@ -287,7 +289,7 @@ function renderPanel() {
   }
   if(panel==='journal') {
     const steps=[['move','Walk with WASD or click the ground.'],['attack','Select a creature and defeat it. Read the red windup and step away.'],['collect','Walk to a drop and press F to collect it.'],['talk','Speak to an NPC near the north camp or in Sprout Town.'],['craft','Open Forge, gather a recipe’s materials and craft equipment.'],['equip','Open Bag and equip what you crafted.'],['refine','Refine your weapon at the forge.'],['travel','Use the north portal to visit a new area.'],['skill','Reach Lv10, assign your first skill, and use it.']];
-    body=`<h3>Learn by adventuring</h3><ol class="tutorial-steps">${steps.map(([id,text])=>`<li class="${s.tutorial.includes(id)?'done':''}">${s.tutorial.includes(id)?'✓ ':''}${text}</li>`).join('')}</ol><button id="skip-tutorial">${s.tutorial.includes('skip')?'Show tutorial hints':'Hide tutorial hints'}</button><div class="section-label">QUEST BOARD</div>${questDefinitions.map(q=>{const state=s.quests[q.id]||{progress:0,claimed:false};return `<article class="quest-card"><h3>${q.name}</h3><p>${q.description}</p><strong>${state.progress}/${q.target}</strong><small>Reward ${q.gold} z · ${q.xp} EXP · ${q.count} ${q.item}</small><button data-claim-quest="${q.id}" ${state.claimed||state.progress<q.target?'disabled':''}>${state.claimed?'Completed':'Claim reward'}</button></article>`}).join('')}`;
+    body=`<article class="quest-card beginner-quest"><h3>A little courage</h3><strong>${Math.min(5,s.kills)}/5 woodland monsters</strong><small>Reward 100 z · 3 Red potions</small><button data-claim-beginner aria-label="${s.questClaimed?'A little courage completed':'Claim A little courage reward'}" ${s.questClaimed||s.kills<5?'disabled':''}>${s.questClaimed?'Completed':'Claim reward'}</button></article><h3>Learn by adventuring</h3><ol class="tutorial-steps">${steps.map(([id,text])=>`<li class="${s.tutorial.includes(id)?'done':''}">${s.tutorial.includes(id)?'✓ ':''}${text}</li>`).join('')}</ol><button id="skip-tutorial">${s.tutorial.includes('skip')?'Show tutorial hints':'Hide tutorial hints'}</button><div class="section-label">QUEST BOARD</div>${questDefinitions.map(q=>{const state=s.quests[q.id]||{progress:0,claimed:false};return `<article class="quest-card"><h3>${q.name}</h3><p>${q.description}</p><strong>${state.progress}/${q.target}</strong><small>Reward ${q.gold} z · ${q.xp} EXP · ${q.count} ${q.item}</small><button data-claim-quest="${q.id}" ${state.claimed||state.progress<q.target?'disabled':''}>${state.claimed?'Completed':'Claim reward'}</button></article>`}).join('')}`;
   }
   if (panel === "help") {
     body = `<button id="open-journal" class="primary-button">Quest board & tutorial</button><div class="handbook-intro">A little world.<br><em>A grand adventure.</em></div><p class="muted">Explore the Moonlit Glade, defeat creatures, gather materials, and grow stronger.</p><div class="help-rows">${[
@@ -338,7 +340,10 @@ function renderPanel() {
       }),
   );
   if(panel==='inventory') {
-    document.querySelectorAll<HTMLElement>('[data-bag-category]').forEach(b=>b.onclick=()=>{inventoryFilter=b.dataset.bagCategory!;inventoryPage=0;renderPanel()});
+    document.querySelectorAll<HTMLElement>('[data-bag-category]').forEach(b=>{
+ const choose=()=>{inventoryFilter=b.dataset.bagCategory!;inventoryPage=0;renderPanel();document.querySelector<HTMLElement>(`[data-bag-category="${inventoryFilter}"]`)?.focus()};b.onclick=choose;
+ b.onkeydown=e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();e.stopPropagation();const tabs=Array.from(document.querySelectorAll<HTMLElement>('[data-bag-category]'));const i=tabs.indexOf(b),next=e.key==='Home'?0:e.key==='End'?tabs.length-1:(i+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;tabs[next].click()};
+ });
     $('#bag-sort').onchange=e=>{inventorySort=(e.target as HTMLSelectElement).value;renderPanel()};
     document.querySelectorAll<HTMLElement>('[data-bag-page]').forEach(button=>button.onclick=()=>{inventoryPage=Number(button.dataset.bagPage);renderPanel()});
     document.querySelectorAll<HTMLElement>('[data-item]').forEach(button=>{
@@ -397,7 +402,7 @@ function renderPanel() {
   document.querySelectorAll<HTMLElement>('[data-community]').forEach(b=>b.onclick=()=>sim.communityAction(b.dataset.community!,...(b.dataset.id?[b.dataset.id]:[])));
   if(document.getElementById('set-trade-offer'))$('#set-trade-offer').onclick=()=>{const item=($('#trade-item') as HTMLSelectElement).value;sim.communityAction('tradeOffer',$('#set-trade-offer').dataset.id,{item,count:item?Number(($('#trade-count') as HTMLInputElement).value):0,gold:Number(($('#trade-gold') as HTMLInputElement).value)});};
   if(document.getElementById('list-market'))$('#list-market').onclick=()=>sim.communityAction('marketList',($('#market-item') as HTMLSelectElement).value,Number(($('#market-count') as HTMLInputElement).value),Number(($('#market-price') as HTMLInputElement).value));
-  if(panel==='journal')$('#skip-tutorial').onclick=()=>{sim.toggleTutorial();renderPanel()};
+  if(panel==='journal'){$('#skip-tutorial').onclick=()=>{sim.toggleTutorial();renderPanel()};document.querySelector<HTMLButtonElement>('[data-claim-beginner]')!.onclick=()=>{sim.claim();renderPanel()};}
   if (panel === "forge")
     $("#refine-item").onchange=e=>{selectedRefine=(e.target as HTMLSelectElement).value;renderPanel()};
   document.querySelectorAll<HTMLElement>('[data-refine-stone]').forEach(b=>b.onclick=()=>{selectedStone=b.dataset.refineStone as StoneTier;renderPanel()});
@@ -520,6 +525,7 @@ function closePanel() {
   renderPanel();
 }
 function openPanel(name: string) {
+  closeMobileMenu();document.body.classList.remove("mobile-chat-open");
   feedback.play("ui");
   keys.clear();
   panel = panel === name ? "" : name;
@@ -533,6 +539,8 @@ const keys = new Set<string>();
 window.addEventListener("keydown", (e) => {
   const k = e.key.toLowerCase();
   if (k === "escape") {
+    if(!$("#mobile-menu").hidden){e.preventDefault();closeMobileMenu(true);return;}
+    document.body.classList.remove("mobile-chat-open");
     if(!$("#item-details").hidden){e.preventDefault();closeItemDetails();hideItemTooltip();return;}
     closePanel();
     return;
@@ -549,6 +557,7 @@ window.addEventListener("keydown", (e) => {
     return;
   }
   if ((e.target as HTMLElement).tagName === "INPUT") return;
+  if(!$("#mobile-menu").hidden)return;
   const shortcut: Record<string, string> = {
     i: "inventory",
     k: "skills",
@@ -587,12 +596,14 @@ document
   .querySelectorAll<HTMLElement>("[data-skill]")
   .forEach((b) => (b.onclick = () => {if(!panel)sim.skill(Number(b.dataset.skill))}));
 document.querySelectorAll<HTMLElement>(".action-bar [data-aux]").forEach(b=>b.onclick=()=>{if(!panel)sim.useAuxiliary(Number(b.dataset.aux))});
-$("#nearest").onclick = () => sim.nearest();
-$("#loot").onclick = () => sim.collect();
+$("#nearest").onclick = () => {if(!panel)sim.nearest()};
+$("#loot").onclick = () => {if(!panel)sim.collect()};
+$("#mobile-attack").onclick=e=>{e.preventDefault();e.stopPropagation();if(!panel&&$("#mobile-menu").hidden)sim.nearest()};
+$("#mobile-loot").onclick=e=>{e.preventDefault();e.stopPropagation();if(!panel&&$("#mobile-menu").hidden)sim.collect()};
 function syncAutoButtons(){
   for(const id of ['#auto','#mobile-auto']){const button=$(id);button.classList.toggle('active',sim.auto);button.setAttribute('aria-pressed',String(sim.auto));}
 }
-function toggleAuto(){if(panel)return;sim.setAuto(!sim.auto);syncAutoButtons();}
+function toggleAuto(){if(panel||!$("#mobile-menu").hidden)return;sim.setAuto(!sim.auto);syncAutoButtons();}
 $('#auto').onclick=toggleAuto;
 $('#mobile-auto').onclick=e=>{e.preventDefault();e.stopPropagation();toggleAuto();};
 $('#mobile-auto').onpointerdown=e=>{e.stopPropagation();};
@@ -607,7 +618,7 @@ $("#camera").onclick = () => {
 $("#quest-toggle").onclick = () => {
   $("#quest-content").hidden = !$("#quest-content").hidden;
 };
-$("#chat-hide").onclick = () => $(".chat").classList.toggle("collapsed");
+$("#chat-hide").onclick = () => {if(document.body.classList.contains("mobile-chat-open"))document.body.classList.remove("mobile-chat-open");else $(".chat").classList.toggle("collapsed")};
 document.querySelectorAll<HTMLElement>("[data-chat]").forEach(
   (b) =>
     (b.onclick = () => {
@@ -629,6 +640,13 @@ $("#chat-input").addEventListener("keydown", (e) => {
     input.blur();
   }
 });
+function closeMobileMenu(focus=false){$('#mobile-menu').hidden=true;$('#mobile-menu-backdrop').hidden=true;$('#mobile-menu-toggle').setAttribute('aria-expanded','false');document.body.classList.remove('mobile-menu-open');if(focus)$('#mobile-menu-toggle').focus()}
+$('#mobile-menu-toggle').onclick=()=>{if(!$('#mobile-menu').hidden){closeMobileMenu();return}if(panel)closePanel();keys.clear();resetJoystick();document.body.classList.remove('mobile-chat-open');$('#mobile-menu').hidden=false;$('#mobile-menu-backdrop').hidden=false;$('#mobile-menu-toggle').setAttribute('aria-expanded','true');document.body.classList.add('mobile-menu-open');$('#mobile-menu-close').focus()};
+document.querySelectorAll<HTMLElement>('#mobile-menu [data-mobile-panel]').forEach(button=>button.onclick=()=>openPanel(button.dataset.mobilePanel!));
+$('#mobile-menu-close').onclick=()=>closeMobileMenu(true);$('#mobile-menu-backdrop').onclick=()=>closeMobileMenu(true);
+$('#mobile-chat-toggle').onclick=()=>{closeMobileMenu();document.body.classList.add('mobile-chat-open');$('.chat').classList.remove('collapsed');$('#chat-input').focus()};
+$('#mobile-menu').onkeydown=e=>{if(e.key!=='Tab')return;const buttons=Array.from($('#mobile-menu').querySelectorAll<HTMLButtonElement>('button'));const index=buttons.indexOf(document.activeElement as HTMLButtonElement);e.preventDefault();buttons[(index+(e.shiftKey?-1:1)+buttons.length)%buttons.length].focus()};
+window.addEventListener('resize',()=>{closeMobileMenu();document.body.classList.remove('mobile-chat-open')});
 const stick=$('#mobile-joystick');
 function moveJoystick(e:PointerEvent){
   if(joystick.pointer!==e.pointerId)return;
@@ -640,7 +658,7 @@ function moveJoystick(e:PointerEvent){
 }
 stick.onpointerdown=e=>{
   e.preventDefault();e.stopPropagation();
-  if(panel||joystick.pointer!==null||e.button!==0)return;
+  if(panel||!$("#mobile-menu").hidden||joystick.pointer!==null||e.button!==0)return;
   joystick.pointer=e.pointerId;stick.setPointerCapture(e.pointerId);stick.classList.add('dragging');moveJoystick(e);
 };
 stick.onpointermove=moveJoystick;
@@ -755,6 +773,7 @@ function refreshHotbar() {
       (skill) => skill.id === sim.save.hotbar[index],
     );
     const locked = !skill || !sim.unlockedSkills.some(k=>k.id===skill.id);
+    button.setAttribute("aria-label",skill?.name||`Skill slot ${key+1}`);
     button.classList.toggle("locked", locked);
     button.dataset.hotbar = String(index);
     button.title = skill
@@ -762,7 +781,7 @@ function refreshHotbar() {
       : "Assign a skill in the Skills window";
     button.innerHTML = `<kbd>${key + 1}</kbd>${icon(skill?.icon || "plus")}<small>${skill?.name || "Empty"}</small><span class="cooldown-radial" aria-hidden="true"></span><span class="cooldown">${locked && skill ? "Lv " + skill.level : ""}</span>`;
   });
-  document.querySelectorAll<HTMLElement>('.action-bar [data-aux]').forEach(button=>{const n=Number(button.dataset.aux),name=sim.save.auxiliary[n];button.title=name===EXP_CHARM.name?`EXP Charm · Passive EXP ×${EXP_CHARM.multiplier} while slotted · never consumed`:name||'Assign an approved item in Skills';button.classList.toggle('locked',!name);button.innerHTML=`<kbd>${[7,8,9,0][n]}</kbd>${icon(name?auxiliaryItems[name].icon:'plus')}<small>${name==='Red potion'?'HP':name==='Blue potion'?'MP':name===EXP_CHARM.name?'×'+EXP_CHARM.multiplier:'Empty'}</small><span class="count"></span><span class="cooldown"></span>`;});
+  document.querySelectorAll<HTMLElement>('.action-bar [data-aux]').forEach(button=>{const n=Number(button.dataset.aux),name=sim.save.auxiliary[n];button.setAttribute('aria-label',name||`Auxiliary slot ${n+1}`);button.title=name===EXP_CHARM.name?`EXP Charm · Passive EXP ×${EXP_CHARM.multiplier} while slotted · never consumed`:name||'Assign an approved item in Skills';button.classList.toggle('locked',!name);button.innerHTML=`<kbd>${[7,8,9,0][n]}</kbd>${icon(name?auxiliaryItems[name].icon:'plus')}<small>${name==='Red potion'?'HP':name==='Blue potion'?'MP':name===EXP_CHARM.name?'×'+EXP_CHARM.multiplier:'Empty'}</small><span class="count"></span><span class="cooldown"></span>`;});
   cooldownViews=Array.from(document.querySelectorAll<HTMLButtonElement>('.action-bar [data-skill]')).map(button=>({button,label:button.querySelector<HTMLElement>('.cooldown')!,id:sim.save.hotbar[Number(button.dataset.skill)],lockedLabel:button.querySelector<HTMLElement>('.cooldown')!.textContent||''}));
   refreshCooldownViews();
   bindSkillDrops();
