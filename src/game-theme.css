@@ -1718,3 +1718,15 @@ body:has(.game-panel) .mobile-controls{visibility:hidden;pointer-events:none}
 @media(max-width:900px){#app .map-area{top:calc(70px + env(safe-area-inset-top))}#mobile-menu:not([hidden]){top:calc(64px + env(safe-area-inset-top));max-height:calc(100dvh - 80px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}}
 .pwa-controls button{border:2px solid #725434;border-radius:12px;background:#e8c977;color:#493524;font:inherit;font-weight:900;cursor:pointer;box-shadow:0 2px 0 #72543433}.pwa-controls button:hover{background:#f2d78d}.pwa-controls button:focus-visible{outline:3px solid #527739;outline-offset:3px}.pwa-controls button:disabled{opacity:.6;cursor:wait}
 .game-select-menu{touch-action:pan-y;-webkit-overflow-scrolling:touch}.game-select-menu [role=option]{user-select:none;-webkit-user-select:none}
+/* Opaque skill paintings fill their frames; auxiliary items retain their own sizing. */
+#app .action-bar .skill-slot.has-skill{padding:0;position:relative}
+#app .action-bar .skill-slot.has-skill>.skill-image{position:absolute;inset:0;display:block;width:100%;height:100%;margin:0;padding:0;object-fit:cover;border-radius:inherit;z-index:0;filter:none}
+#app .skill-slot.has-skill>kbd{position:absolute;top:2px;left:3px;z-index:4;color:#fff9e8;background:#30251ec9;border:1px solid #ffefd06b;border-radius:3px;padding:1px 3px;text-shadow:0 1px 2px #000}
+#app .skill-slot.has-skill>small{position:absolute;bottom:0;left:0;right:0;max-width:100%;margin:0;padding:2px 1px;box-sizing:border-box;background:#241d19c9;color:#fff9e8;z-index:1;font-size:8px;text-shadow:0 1px 2px #000}
+#app .skill-options .skill-art{padding:0;overflow:hidden;display:block;box-sizing:border-box}
+#app .skill-options .skill-art>.skill-image{display:block;width:100%;height:100%;max-width:none;margin:0;padding:0;object-fit:cover;border-radius:inherit;filter:none}
+#app .loadout-skill-art{display:block;flex:none;width:40px;height:40px;border:1px solid #795934;border-radius:5px;overflow:hidden;box-sizing:border-box}
+#app .loadout-skill-art>.skill-image{display:block;width:100%;height:100%;margin:0;padding:0;object-fit:cover;filter:none}
+@media(max-width:800px){#app .loadout-skill-art{width:30px;height:30px}}
+@media(max-width:900px){#app .skill-slot.has-skill>small{display:none}}
+#app .loadout-slot>strong{display:block;min-width:0;max-width:100%;width:100%;box-sizing:border-box;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
