@@ -1,0 +1,1087 @@
+{
+  "version": 3,
+  "source": "Original OpenAI image_gen cute simplified artwork",
+  "layout": "4 columns x 5 rows; row-major; no alpha padding",
+  "skills": [
+    {
+      "id": "swordsman-1",
+      "name": "Power Strike",
+      "path": "public/icons/skills-v3/skill-swordsman-1.png",
+      "source": "art/skills-v3/swordsman-atlas.png",
+      "source_box": [
+        3,
+        3,
+        278,
+        273
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "10aa62b121f3929ca97e29b775bcf5fa64a209e90e05acd0d4a79923f56a45df"
+    },
+    {
+      "id": "swordsman-2",
+      "name": "Whirlwind",
+      "path": "public/icons/skills-v3/skill-swordsman-2.png",
+      "source": "art/skills-v3/swordsman-atlas.png",
+      "source_box": [
+        284,
+        3,
+        558,
+        273
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "52ba1c7374c394a53eab0288570300202a57f87ba7241528044ab32e8eb1ded4"
+    },
+    {
+      "id": "swordsman-3",
+      "name": "Iron Guard Crash",
+      "path": "public/icons/skills-v3/skill-swordsman-3.png",
+      "source": "art/skills-v3/swordsman-atlas.png",
+      "source_box": [
+        564,
+        3,
+        838,
+        273
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "5a170e078c57504ef76a4c960e64ca9dbabda39b41eef565e8c9a695b9f65452"
+    },
+    {
+      "id": "swordsman-4",
+      "name": "Shield Bash",
+      "path": "public/icons/skills-v3/skill-swordsman-4.png",
+      "source": "art/skills-v3/swordsman-atlas.png",
+      "source_box": [
+        844,
+        3,
+        1119,
+        273
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "0584c185bf3930b0af19971aef0e1c09fa6d55b5a17fa058e558892d8050780e"
+    },
+    {
+      "id": "swordsman-5",
+      "name": "Second Wind Burst",
+      "path": "public/icons/skills-v3/skill-swordsman-5.png",
+      "source": "art/skills-v3/swordsman-atlas.png",
+      "source_box": [
+        3,
+        279,
+        278,
+        544
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "d7f149d15a5581f53879acdb500d3c1888046795c8b662329c3e56793ed816d6"
+    },
+    {
+      "id": "swordsman-6",
+      "name": "War Cry Strike",
+      "path": "public/icons/skills-v3/skill-swordsman-6.png",
+      "source": "art/skills-v3/swordsman-atlas.png",
+      "source_box": [
+        284,
+        279,
+        558,
+        544
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "86559a9a054a1662027ebbdd4b744bd239f3f9720d3c736df44ba7349693dcd4"
+    },
+    {
+      "id": "swordsman-7",
+      "name": "Cleave",
+      "path": "public/icons/skills-v3/skill-swordsman-7.png",
+      "source": "art/skills-v3/swordsman-atlas.png",
+      "source_box": [
+        564,
+        279,
+        838,
+        544
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "61ac9918dec7d2e944e45db038129b029572c7e13d0ce495928217eb2a380f5a"
+    },
+    {
+      "id": "swordsman-8",
+      "name": "Hamstring",
+      "path": "public/icons/skills-v3/skill-swordsman-8.png",
+      "source": "art/skills-v3/swordsman-atlas.png",
+      "source_box": [
+        844,
+        279,
+        1119,
+        544
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "70cbe9f595924d04eaa69439abb626094601758d9a39886e50b354de053be954"
+    },
+    {
+      "id": "swordsman-9",
+      "name": "Earthbreaker",
+      "path": "public/icons/skills-v3/skill-swordsman-9.png",
+      "source": "art/skills-v3/swordsman-atlas.png",
+      "source_box": [
+        3,
+        550,
+        278,
+        816
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "bc76369175fae20076305dbaf57299a84b1738ff828c085ffe05222ff9d60072"
+    },
+    {
+      "id": "swordsman-10",
+      "name": "Meteor Blade",
+      "path": "public/icons/skills-v3/skill-swordsman-10.png",
+      "source": "art/skills-v3/swordsman-atlas.png",
+      "source_box": [
+        284,
+        550,
+        558,
+        816
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "029bd71fc376b12c6cfebb9d40b01303c0ebb91db62146065541009f98dddc1b"
+    },
+    {
+      "id": "swordsman-b-1",
+      "name": "Bulwark Crash",
+      "path": "public/icons/skills-v3/skill-swordsman-b-1.png",
+      "source": "art/skills-v3/swordsman-atlas.png",
+      "source_box": [
+        564,
+        550,
+        838,
+        816
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "9ba08d15eb5392799fd123946897e32a02de11b417fe48e4bc419c1dadebfb11"
+    },
+    {
+      "id": "swordsman-b-2",
+      "name": "Concussion",
+      "path": "public/icons/skills-v3/skill-swordsman-b-2.png",
+      "source": "art/skills-v3/swordsman-atlas.png",
+      "source_box": [
+        844,
+        550,
+        1119,
+        816
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "b1e69baeca5b56d223bb63e87f36e7d602c91b505ad78782e5260beaa4dd4259"
+    },
+    {
+      "id": "swordsman-b-3",
+      "name": "Field Recovery Burst",
+      "path": "public/icons/skills-v3/skill-swordsman-b-3.png",
+      "source": "art/skills-v3/swordsman-atlas.png",
+      "source_box": [
+        3,
+        822,
+        278,
+        1091
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "1d1718a9afb07fc2b47acbfb014a7b3d2931468bfbd9db38d549972a9097acde"
+    },
+    {
+      "id": "swordsman-b-4",
+      "name": "Sweeping Challenge",
+      "path": "public/icons/skills-v3/skill-swordsman-b-4.png",
+      "source": "art/skills-v3/swordsman-atlas.png",
+      "source_box": [
+        284,
+        822,
+        558,
+        1091
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "b230480f9e7eb1216bd2cd003dfdbad911421eaefb3675aa5f2d2d94297c1ae9"
+    },
+    {
+      "id": "swordsman-b-5",
+      "name": "Fortress Stance Crash",
+      "path": "public/icons/skills-v3/skill-swordsman-b-5.png",
+      "source": "art/skills-v3/swordsman-atlas.png",
+      "source_box": [
+        564,
+        822,
+        838,
+        1091
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "11cea4237f4b2206176ae82ae6d3065873b7a7c5515007ec2649d09319c1fcc9"
+    },
+    {
+      "id": "swordsman-b-6",
+      "name": "Crushing Advance",
+      "path": "public/icons/skills-v3/skill-swordsman-b-6.png",
+      "source": "art/skills-v3/swordsman-atlas.png",
+      "source_box": [
+        844,
+        822,
+        1119,
+        1091
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "88061fa87075e7549c714195cea702a2a5ec348375492ef66ce02fc0122dea8e"
+    },
+    {
+      "id": "swordsman-b-7",
+      "name": "Battle Renewal Burst",
+      "path": "public/icons/skills-v3/skill-swordsman-b-7.png",
+      "source": "art/skills-v3/swordsman-atlas.png",
+      "source_box": [
+        3,
+        1097,
+        278,
+        1399
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "1b44d0ebaaa40e24043171af1bf3743bc61ca546c80f250e04de8332c525a60c"
+    },
+    {
+      "id": "swordsman-b-8",
+      "name": "Rallying Standard Strike",
+      "path": "public/icons/skills-v3/skill-swordsman-b-8.png",
+      "source": "art/skills-v3/swordsman-atlas.png",
+      "source_box": [
+        284,
+        1097,
+        558,
+        1399
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "239ad5b550e6f959ba04d2df9ef12645cc6d9d253a13a0fe322b7a912764ebb5"
+    },
+    {
+      "id": "swordsman-b-9",
+      "name": "Unbreakable Crash",
+      "path": "public/icons/skills-v3/skill-swordsman-b-9.png",
+      "source": "art/skills-v3/swordsman-atlas.png",
+      "source_box": [
+        564,
+        1097,
+        838,
+        1399
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "801590be8f05e04bf268fd62ec582955dc3a0985efa67591a1721633c94cd9f5"
+    },
+    {
+      "id": "swordsman-b-10",
+      "name": "Guardian Quake",
+      "path": "public/icons/skills-v3/skill-swordsman-b-10.png",
+      "source": "art/skills-v3/swordsman-atlas.png",
+      "source_box": [
+        844,
+        1097,
+        1119,
+        1399
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "4e0bace82028be5dc3af050ae1ffa16560664dc37d714c035159c6c3ea8317bf"
+    },
+    {
+      "id": "mage-1",
+      "name": "Fire Bolt",
+      "path": "public/icons/skills-v3/skill-mage-1.png",
+      "source": "art/skills-v3/mage-atlas.png",
+      "source_box": [
+        3,
+        3,
+        311,
+        259
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "e24e8e3187d8cd6f6d55b1afd7a89f4ba4a3cb7b7f6909d4a168f49c3573b84a"
+    },
+    {
+      "id": "mage-2",
+      "name": "Frost Nova",
+      "path": "public/icons/skills-v3/skill-mage-2.png",
+      "source": "art/skills-v3/mage-atlas.png",
+      "source_box": [
+        317,
+        3,
+        624,
+        259
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "b7cb43480050f16056d5c700b9b504c2b32e72bd9e837487d9df713be416ca5d"
+    },
+    {
+      "id": "mage-3",
+      "name": "Arcane Barrier Crash",
+      "path": "public/icons/skills-v3/skill-mage-3.png",
+      "source": "art/skills-v3/mage-atlas.png",
+      "source_box": [
+        630,
+        3,
+        938,
+        259
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "4b6f1490f849547866103c7960a59c0f42d3808a71d4568dd0001e219d9a8689"
+    },
+    {
+      "id": "mage-4",
+      "name": "Lightning",
+      "path": "public/icons/skills-v3/skill-mage-4.png",
+      "source": "art/skills-v3/mage-atlas.png",
+      "source_box": [
+        944,
+        3,
+        1251,
+        259
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "01f11facb1b21f4ea2096731a800f2b6d3cf16be673507064b9b7178cd7cbd10"
+    },
+    {
+      "id": "mage-5",
+      "name": "Vital Bloom Burst",
+      "path": "public/icons/skills-v3/skill-mage-5.png",
+      "source": "art/skills-v3/mage-atlas.png",
+      "source_box": [
+        3,
+        265,
+        311,
+        499
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "689f0739e485ab054bcb7393a016e470e8584969d38260e8b9227a17ef888690"
+    },
+    {
+      "id": "mage-6",
+      "name": "Arcane Focus Strike",
+      "path": "public/icons/skills-v3/skill-mage-6.png",
+      "source": "art/skills-v3/mage-atlas.png",
+      "source_box": [
+        317,
+        265,
+        624,
+        499
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "f74e4a28b76d446a7bf67acc4bb9e0ed2a4c5ef7b9d05cc64bbd05739691d78a"
+    },
+    {
+      "id": "mage-7",
+      "name": "Blizzard",
+      "path": "public/icons/skills-v3/skill-mage-7.png",
+      "source": "art/skills-v3/mage-atlas.png",
+      "source_box": [
+        630,
+        265,
+        938,
+        499
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "ed236439388fb70b8507429fb088bf593ffaf4e2013ff41d4cf4337c4ffa366a"
+    },
+    {
+      "id": "mage-8",
+      "name": "Venom Cloud",
+      "path": "public/icons/skills-v3/skill-mage-8.png",
+      "source": "art/skills-v3/mage-atlas.png",
+      "source_box": [
+        944,
+        265,
+        1251,
+        499
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "8ad59492b059ad66cd8b6a6ddff04c093500ab68a76eaf0c4429adeaedf75efa"
+    },
+    {
+      "id": "mage-9",
+      "name": "Starfall",
+      "path": "public/icons/skills-v3/skill-mage-9.png",
+      "source": "art/skills-v3/mage-atlas.png",
+      "source_box": [
+        3,
+        505,
+        311,
+        740
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "287f28e5c9e8ba87e7110c04f95fd2cbd8b763cec1aad6c9c0b7389318ba4696"
+    },
+    {
+      "id": "mage-10",
+      "name": "Astral Storm",
+      "path": "public/icons/skills-v3/skill-mage-10.png",
+      "source": "art/skills-v3/mage-atlas.png",
+      "source_box": [
+        317,
+        505,
+        624,
+        740
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "50a398b3f6a47e2b2f45fcd6d64106cb99d14c160896487f339c539df5cc0b85"
+    },
+    {
+      "id": "mage-b-1",
+      "name": "Bramble Bolt",
+      "path": "public/icons/skills-v3/skill-mage-b-1.png",
+      "source": "art/skills-v3/mage-atlas.png",
+      "source_box": [
+        630,
+        505,
+        938,
+        740
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "ccf33d68211da0589688bea37a738c3cb10e163c21e1e21005aa803c8d84cdb6"
+    },
+    {
+      "id": "mage-b-2",
+      "name": "Restoring Dew Burst",
+      "path": "public/icons/skills-v3/skill-mage-b-2.png",
+      "source": "art/skills-v3/mage-atlas.png",
+      "source_box": [
+        944,
+        505,
+        1251,
+        740
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "4cb9eb3b9044a614a27d1d0ed5ea2ea4f5fd004094df1fed5a412a3dd16f7e1b"
+    },
+    {
+      "id": "mage-b-3",
+      "name": "Spore Hex",
+      "path": "public/icons/skills-v3/skill-mage-b-3.png",
+      "source": "art/skills-v3/mage-atlas.png",
+      "source_box": [
+        3,
+        746,
+        311,
+        981
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "5a4e48cae1d154cabfe684d1fccab75a4822149a7eb297c9b0f390b33b5d34e1"
+    },
+    {
+      "id": "mage-b-4",
+      "name": "Thorn Burst",
+      "path": "public/icons/skills-v3/skill-mage-b-4.png",
+      "source": "art/skills-v3/mage-atlas.png",
+      "source_box": [
+        317,
+        746,
+        624,
+        981
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "2b9974f36ae4ccf314281ae85fe5c54b4b1ee6670a9d0b0f7d6391d9a9517d08"
+    },
+    {
+      "id": "mage-b-5",
+      "name": "Living Shelter Crash",
+      "path": "public/icons/skills-v3/skill-mage-b-5.png",
+      "source": "art/skills-v3/mage-atlas.png",
+      "source_box": [
+        630,
+        746,
+        938,
+        981
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "84bb9caeb1f502a1c6d2671dd183f58a0adb7eeedbd80faafefa4dd4bacb2498"
+    },
+    {
+      "id": "mage-b-6",
+      "name": "Moonbeam",
+      "path": "public/icons/skills-v3/skill-mage-b-6.png",
+      "source": "art/skills-v3/mage-atlas.png",
+      "source_box": [
+        944,
+        746,
+        1251,
+        981
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "74448004bb717a6337d3735e4d4f5892d4db3f4fb5ddc712148c2e378cbf25a8"
+    },
+    {
+      "id": "mage-b-7",
+      "name": "Verdant Renewal Burst",
+      "path": "public/icons/skills-v3/skill-mage-b-7.png",
+      "source": "art/skills-v3/mage-atlas.png",
+      "source_box": [
+        3,
+        987,
+        311,
+        1251
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "62d287d1ce5d30334e57b071b339bd8e6946a07000ed1cae20b1774a717db03d"
+    },
+    {
+      "id": "mage-b-8",
+      "name": "Spirit Surge Strike",
+      "path": "public/icons/skills-v3/skill-mage-b-8.png",
+      "source": "art/skills-v3/mage-atlas.png",
+      "source_box": [
+        317,
+        987,
+        624,
+        1251
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "b9efeff3a7af5d8e6f2762a5e2e8607bf4326d5b5ba2806ed97d0f627fb30b40"
+    },
+    {
+      "id": "mage-b-9",
+      "name": "Root Prison",
+      "path": "public/icons/skills-v3/skill-mage-b-9.png",
+      "source": "art/skills-v3/mage-atlas.png",
+      "source_box": [
+        630,
+        987,
+        938,
+        1251
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "25beb6c4f9768abe2b88cde720f19a7a525faa889afe059d4074493eb9b1bd0a"
+    },
+    {
+      "id": "mage-b-10",
+      "name": "Worldtree Bloom Burst",
+      "path": "public/icons/skills-v3/skill-mage-b-10.png",
+      "source": "art/skills-v3/mage-atlas.png",
+      "source_box": [
+        944,
+        987,
+        1251,
+        1251
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "7cdda3949be3f7756d0224049f8b61c84694f5d074506c4220f6681c260e08ae"
+    },
+    {
+      "id": "archer-1",
+      "name": "Power Shot",
+      "path": "public/icons/skills-v3/skill-archer-1.png",
+      "source": "art/skills-v3/archer-atlas.png",
+      "source_box": [
+        3,
+        3,
+        311,
+        248
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "25ed6c5f69c9f95c49d76f730a7f765f25ef5d145b97177d8acbf0ed31521f04"
+    },
+    {
+      "id": "archer-2",
+      "name": "Arrow Rain",
+      "path": "public/icons/skills-v3/skill-archer-2.png",
+      "source": "art/skills-v3/archer-atlas.png",
+      "source_box": [
+        317,
+        3,
+        624,
+        248
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "555a8eda888fe30f9c8f178f9d56b867a4d1ea686bd59f52e54978aca796ffcb"
+    },
+    {
+      "id": "archer-3",
+      "name": "Evasive Stance Crash",
+      "path": "public/icons/skills-v3/skill-archer-3.png",
+      "source": "art/skills-v3/archer-atlas.png",
+      "source_box": [
+        630,
+        3,
+        938,
+        248
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "737ca5b709827bdb3e72ca87d94eeb65eeedfb26b258d75674edcd634e5aaa6c"
+    },
+    {
+      "id": "archer-4",
+      "name": "Pinning Shot",
+      "path": "public/icons/skills-v3/skill-archer-4.png",
+      "source": "art/skills-v3/archer-atlas.png",
+      "source_box": [
+        944,
+        3,
+        1251,
+        248
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "284c9692974386566689ab7645fceb5ab1b6c4948ebcbf673441c13e21c46e10"
+    },
+    {
+      "id": "archer-5",
+      "name": "Field Remedy Burst",
+      "path": "public/icons/skills-v3/skill-archer-5.png",
+      "source": "art/skills-v3/archer-atlas.png",
+      "source_box": [
+        3,
+        254,
+        311,
+        483
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "cc3d62c0dd0a5ae6069a036671be2f23983be844535915b5cee625d243ca3322"
+    },
+    {
+      "id": "archer-6",
+      "name": "Hunter Focus Strike",
+      "path": "public/icons/skills-v3/skill-archer-6.png",
+      "source": "art/skills-v3/archer-atlas.png",
+      "source_box": [
+        317,
+        254,
+        624,
+        483
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "5b838886585f216170f2e1dfe843597bb1908160e1ad9bd391c2b2ff1015d300"
+    },
+    {
+      "id": "archer-7",
+      "name": "Piercing Volley",
+      "path": "public/icons/skills-v3/skill-archer-7.png",
+      "source": "art/skills-v3/archer-atlas.png",
+      "source_box": [
+        630,
+        254,
+        938,
+        483
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "059772b83d839ecedcdab586c446d87070e1012caee204a4b7cedecb980171a3"
+    },
+    {
+      "id": "archer-8",
+      "name": "Poison Arrow",
+      "path": "public/icons/skills-v3/skill-archer-8.png",
+      "source": "art/skills-v3/archer-atlas.png",
+      "source_box": [
+        944,
+        254,
+        1251,
+        483
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "16beafabf9fc1a9d317daaf1e3c22d5a2144d492131e0acd94e803b93cf4b0e5"
+    },
+    {
+      "id": "archer-9",
+      "name": "Crippling Shot",
+      "path": "public/icons/skills-v3/skill-archer-9.png",
+      "source": "art/skills-v3/archer-atlas.png",
+      "source_box": [
+        3,
+        489,
+        311,
+        717
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "717b4b6186f252f161fd405f8422df8816c93d6664b2f5e54c422c3443b3cc13"
+    },
+    {
+      "id": "archer-10",
+      "name": "Sky Barrage",
+      "path": "public/icons/skills-v3/skill-archer-10.png",
+      "source": "art/skills-v3/archer-atlas.png",
+      "source_box": [
+        317,
+        489,
+        624,
+        717
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "3d31e7e5742d86721e1a9a892e55642c6b43c1bb8f6d1c347998f4f84e11be87"
+    },
+    {
+      "id": "archer-b-1",
+      "name": "Snaring Arrow",
+      "path": "public/icons/skills-v3/skill-archer-b-1.png",
+      "source": "art/skills-v3/archer-atlas.png",
+      "source_box": [
+        630,
+        489,
+        938,
+        717
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "b2a8e14e3c98d5bceac3a40555b35b52fdacfda3fcbcaaf165d9e5098d490289"
+    },
+    {
+      "id": "archer-b-2",
+      "name": "Venom Dart",
+      "path": "public/icons/skills-v3/skill-archer-b-2.png",
+      "source": "art/skills-v3/archer-atlas.png",
+      "source_box": [
+        944,
+        489,
+        1251,
+        717
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "f68b2d52e580c3e42531b89a2488470de15c63e14243c440cb53a9181a503753"
+    },
+    {
+      "id": "archer-b-3",
+      "name": "Scatter Volley",
+      "path": "public/icons/skills-v3/skill-archer-b-3.png",
+      "source": "art/skills-v3/archer-atlas.png",
+      "source_box": [
+        3,
+        723,
+        311,
+        959
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "b7efa2e387e1a08f88cda68c48d84e4bd8fb67d1a9678ee715209ebd70d1c85e"
+    },
+    {
+      "id": "archer-b-4",
+      "name": "Herbal Tonic Burst",
+      "path": "public/icons/skills-v3/skill-archer-b-4.png",
+      "source": "art/skills-v3/archer-atlas.png",
+      "source_box": [
+        317,
+        723,
+        624,
+        959
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "12e5a33f8dc7449d441bade98b7d3c1af9542fa162156f4f701505ea7507b7ac"
+    },
+    {
+      "id": "archer-b-5",
+      "name": "Stalker Focus Strike",
+      "path": "public/icons/skills-v3/skill-archer-b-5.png",
+      "source": "art/skills-v3/archer-atlas.png",
+      "source_box": [
+        630,
+        723,
+        938,
+        959
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "4a515c12ef151a3ea0044855f85a3ec114509b7372c2bd5596aa5a42f79e49ae"
+    },
+    {
+      "id": "archer-b-6",
+      "name": "Shock Arrow",
+      "path": "public/icons/skills-v3/skill-archer-b-6.png",
+      "source": "art/skills-v3/archer-atlas.png",
+      "source_box": [
+        944,
+        723,
+        1251,
+        959
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "9a681e888817ec6a8045c45aff3c19f1dd26566d718a1cd8e8732be5d0dacee9"
+    },
+    {
+      "id": "archer-b-7",
+      "name": "Camouflage Guard Crash",
+      "path": "public/icons/skills-v3/skill-archer-b-7.png",
+      "source": "art/skills-v3/archer-atlas.png",
+      "source_box": [
+        3,
+        965,
+        311,
+        1251
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "b7be0ff204acc98d5137b9f68dd26a971b83429cf819fb222221d216b1a782d1"
+    },
+    {
+      "id": "archer-b-8",
+      "name": "Entangling Volley",
+      "path": "public/icons/skills-v3/skill-archer-b-8.png",
+      "source": "art/skills-v3/archer-atlas.png",
+      "source_box": [
+        317,
+        965,
+        624,
+        1251
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "4871f7baa1fcfb2c87ce90b790a64bcaef465d2596df1cd272d6614d55649faf"
+    },
+    {
+      "id": "archer-b-9",
+      "name": "Toxic Fang",
+      "path": "public/icons/skills-v3/skill-archer-b-9.png",
+      "source": "art/skills-v3/archer-atlas.png",
+      "source_box": [
+        630,
+        965,
+        938,
+        1251
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "f7f8677e5e90e515e54828680043936125235a1eddfad6483c47f532f8d7c2d5"
+    },
+    {
+      "id": "archer-b-10",
+      "name": "Wild Hunt Strike",
+      "path": "public/icons/skills-v3/skill-archer-b-10.png",
+      "source": "art/skills-v3/archer-atlas.png",
+      "source_box": [
+        944,
+        965,
+        1251,
+        1251
+      ],
+      "size": [
+        192,
+        192
+      ],
+      "opaque": true,
+      "sha256": "0a72f7c32a7f7eb142ae3dcd6613a90019ca9139e25790ccb9c541f8376f753a"
+    }
+  ]
+}

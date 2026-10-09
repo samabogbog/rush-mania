@@ -61,7 +61,7 @@ const iconAliases: Record<string, string> = {
 };
 const icon = (name: string) =>
   `<img class="game-icon" src="/icons/${iconAliases[name] || name}.png" alt="" aria-hidden="true" draggable="false">`;
-const skillIcon=(skill:{id:string})=>`<img class="game-icon skill-image" src="/icons/skills-v2/skill-${skill.id}.png" alt="" aria-hidden="true" draggable="false">`;
+const skillIcon=(skill:{id:string})=>`<img class="game-icon skill-image" src="/icons/skills-v3/skill-${skill.id}.png" alt="" aria-hidden="true" draggable="false">`;
 let displayJob:ClassId='swordsman';
 const itemDisplayIcon=(item:{name:string;gearId?:string;icon:string;rarity?:Rarity})=>{const gear=gearById(item.gearId||'')||gearByName(item.name);return gear?gearIcon(gear,displayJob):isCraftMaterial(item.name)?materialIcon(item.name,item.rarity):item.icon};
 const itemIcon=(name:string,rarity:Rarity='common')=>icon(isCraftMaterial(name)?materialIcon(name,rarity):(gearByName(name)?gearIcon(gearByName(name)!,displayJob):undefined)||({[EXP_CHARM.name]:EXP_CHARM.icon,[EXP_TOME.name]:EXP_TOME.icon,'Common refine stone':'ice-shard','Rare refine stone':'crystal-dust','Red potion':'health-potion','Blue potion':'mana-potion'} as Record<string,string>)[name]||'chest');
