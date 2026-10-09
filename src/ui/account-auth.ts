@@ -1,3 +1,4 @@
+import {pwaControls,bindPwaControls} from './pwa';
 import {enhanceGameSelects,closeGameSelect} from './game-select';
 type Character={id:string;name:string;job:string;level:number;slot:number};
 let entered=false;
@@ -14,7 +15,7 @@ export async function requireGameAccount():Promise<void>{
  const app=document.querySelector<HTMLDivElement>('#app')!;
  let accountUsername='';
  const practice=new URLSearchParams(location.search).get('practice')==='1';
- const shell=(title:string,content:string)=>{closeGameSelect();app.innerHTML=`<main class="account-screen"><section class="account-card"><img src="/icons/hero.png" alt="" width="64" height="64"><p class="account-wordmark">MOSSVALE ONLINE</p><h1>${title}</h1>${content}</section></main>`;};
+ const shell=(title:string,content:string)=>{closeGameSelect();app.innerHTML=`<main class="account-screen"><section class="account-card"><img src="/icons/hero.png" alt="" width="64" height="64"><p class="account-wordmark">MOSSVALE ONLINE</p><h1>${title}</h1>${content}${pwaControls()}</section></main>`;bindPwaControls(app);};
  const errorMessage=(error:unknown)=>error instanceof Error?error.message:'Please try again.';
  await new Promise<void>(resolve=>{
   const start=()=>{entered=true;closeGameSelect();resolve()};
