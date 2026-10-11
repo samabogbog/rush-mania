@@ -63,3 +63,11 @@ artifacts/lv20-vfx/*.webm
 # Lv30 VFX raw recordings stay local; reviewed PNG/JSON proof is packaged.
 artifacts/lv30-vfx/raw/
 artifacts/lv30-vfx/*.webm
+
+# Lv40 raw recordings stay local; curated review evidence is retained.
+artifacts/lv40-vfx/raw/
+artifacts/lv40-vfx/*.webm
+
+# Lv50 raw recordings stay local; curated review evidence is retained.
+artifacts/lv50-vfx/raw/
+artifacts/lv50-vfx/*.webm

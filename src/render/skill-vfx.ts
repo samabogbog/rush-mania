@@ -6,7 +6,7 @@ import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import { Color3 } from '@babylonjs/core/Maths/math.color.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import type { Skill, ClassId } from '../game/classes';
-type Shape='spark'|'ring'|'petal'|'crescent'|'shield'|'lightning'|'branch'|'slab'|'arrow'|'spiral'|'comet'|'ice'|'star'|'tree'|'beam'|'core'|'ray';
+type Shape='spark'|'ring'|'petal'|'crescent'|'shield'|'lightning'|'branch'|'slab'|'arrow'|'spiral'|'comet'|'ice'|'star'|'tree'|'beam'|'core'|'ray'|'arch'|'vault'|'bastion'|'leaf';
 type Particle={mesh:Mesh;life:number;duration:number;x:number;y:number;z:number;vx:number;vy:number;vz:number;size:number;spin:number;grow:number;delay:number;gravity:boolean;stretch:[number,number,number]};
 export type SkillMotion={job:ClassId;stage:number;branch:number;effect:string;phase:'anticipation'|'release'|'recovery';progress:number;skillId?:string;duration?:number;frozen?:boolean};
 export function skillPalette(job:ClassId, skill:Skill):number[] {
@@ -17,23 +17,48 @@ export function skillPalette(job:ClassId, skill:Skill):number[] {
  if(job==='archer')return skill.branch?[0xb7ff88,0x64e4d4,0xffd96d]:[0xffe58c,0xffba72,0xb5edff];
  return skill.branch?[0x8bdeff,0xffe6a3,0xffffff]:[0xffdf89,0xff9778,0xfff9da];
 }
+/** Authored level-fifty colors follow the actual skill icon artwork. */
+function lv50Palette(job:ClassId,branch:number):number[]{
+ return job==='swordsman'?(branch?[0xffc34d,0xfff0b3,0xaa7135]:[0x67ddb5,0xf3fff1,0x238d78]):job==='mage'?(branch?[0x9bea4b,0xf7ffd0,0xf2d45f]:[0xf888bd,0xfff5f5,0x49c7ae]):branch?[0xb866ff,0xf9eeff,0x6030ae]:[0x72d14f,0xfff8ed,0xedcc63];
+}
 /** Immutable shared volumetric geometry, persistent shaded materials and a bounded mesh pool. */
 export class SkillVFX {
  private templates=new Map<Shape,Mesh>();private materials=new Map<string,StandardMaterial>();
  private active:Particle[]=[];private free=new Map<Shape,Mesh[]>();private created=0;private serial=0;private low=false;
+ private lv50Cue:{skillId:string;style:string;impactSeconds:number;heroSeconds:number;focal:{x:number;z:number};decorativeRadius:number}|null=null;
+ private lv40Cue:{skillId:string;style:string;impactSeconds:number;heroSeconds:number;focal:{x:number;z:number};decorativeRadius:number}|null=null;
  private lv30Cue:{skillId:string;style:string;impactSeconds:number;heroSeconds:number;focal:{x:number;z:number};decorativeRadius:number}|null=null;
  private lv20Cue:{skillId:string;style:string;impactSeconds:number;heroSeconds:number;focal:{x:number;z:number};decorativeRadius:number}|null=null;
  private lv10Cue:{skillId:string;style:string;impactSeconds:number;heroSeconds:number;focal:{x:number;z:number};decorativeRadius:number}|null=null;
  static readonly MAX_MESHES=160;
  constructor(private scene:Scene){}
  setLowQuality(low:boolean){this.low=low;}
- get diagnostics(){return {active:this.active.length,pooled:this.created,limit:this.low?40:96,geometry3D:true,noSprites:true,textures:0,shapes:[...this.templates.keys()],materials:this.materials.size,lv10Cue:this.lv10Cue,lv20Cue:this.lv20Cue,lv30Cue:this.lv30Cue,drawCount:this.active.filter(p=>p.mesh.isEnabled()).length};}
+ get diagnostics(){return {active:this.active.length,pooled:this.created,limit:this.low?40:96,geometry3D:true,noSprites:true,textures:0,shapes:[...this.templates.keys()],materials:this.materials.size,lv10Cue:this.lv10Cue,lv20Cue:this.lv20Cue,lv30Cue:this.lv30Cue,lv40Cue:this.lv40Cue,lv50Cue:this.lv50Cue,drawCount:this.active.filter(p=>p.mesh.isEnabled()).length};}
  private template(shape:Shape){
   const name='vfx-template-'+shape,parts:Mesh[]=[];
   const tube=(path:Vector3[],radius:number)=>{const m=MeshBuilder.CreateTube(name,{path,radius,tessellation:7},this.scene);parts.push(m);return m;};
   const sphere=(x:number,y:number,z:number,s:number)=>{const m=MeshBuilder.CreateSphere(name,{diameter:s,segments:6},this.scene);m.position.set(x,y,z);parts.push(m);return m;};
   if(shape==='beam'||shape==='ray'){const m=MeshBuilder.CreateCylinder(name,{height:2,diameterTop:shape==='ray'?.035:.16,diameterBottom:shape==='ray'?.16:.22,tessellation:8},this.scene);m.rotation.x=Math.PI/2;parts.push(m);}
   else if(shape==='core'){parts.push(MeshBuilder.CreateSphere(name,{diameter:1,segments:12},this.scene));}
+  else if(shape==='arch'||shape==='vault'){
+   // A smooth open vault: its empty center keeps the struck creature readable.
+   const path=Array.from({length:41},(_,i)=>{const a=i/40*Math.PI;return new Vector3(Math.cos(a),Math.sin(a)*1.5,0);});
+   parts.push(MeshBuilder.CreateTube(name,{path,radius:shape==='vault'?.15:.07,tessellation:10},this.scene));
+  }
+  else if(shape==='bastion'){
+   const body=MeshBuilder.CreateCylinder(name,{height:3,diameterTop:.62,diameterBottom:.95,tessellation:8},this.scene);body.position.y=1.5;parts.push(body);
+   const cap=MeshBuilder.CreateCylinder(name,{height:.45,diameterTop:0,diameterBottom:.85,tessellation:8},this.scene);cap.position.y=3.15;parts.push(cap);
+  }
+  else if(shape==='leaf'){
+   // A tapered curved leaf with broad shaded faces, rather than a flattened sphere.
+   const positions:number[]=[],indices:number[]=[],normals:number[]=[],sections=25;
+   for(let i=0;i<sections;i++){const t=i/(sections-1),bulge=Math.sin(t*Math.PI),z=t*2-1,width=.012+.55*bulge,depth=.012+.12*bulge,y=.3*bulge;
+    for(const [px,py] of [[-width,y],[0,y+depth],[width,y],[0,y-depth]])positions.push(px,py,z);
+   }
+   for(let i=0;i<sections-1;i++)for(let j=0;j<4;j++){const a=i*4+j,b=i*4+(j+1)%4,c=(i+1)*4+j,d=(i+1)*4+(j+1)%4;indices.push(a,c,b,b,c,d);}
+   indices.push(0,1,2,0,2,3);const last=(sections-1)*4;indices.push(last,last+2,last+1,last,last+3,last+2);
+   VertexData.ComputeNormals(positions,indices,normals);const data=new VertexData();data.positions=positions;data.indices=indices;data.normals=normals;const m=new Mesh(name,this.scene);data.applyToMesh(m);parts.push(m);
+  }
   else if(shape==='ring')parts.push(MeshBuilder.CreateTorus(name,{diameter:2,thickness:.10,tessellation:32},this.scene));
   else if(shape==='crescent'){
    // Closed tapered blade: a diamond cross-section gives a sharp edge and
@@ -84,8 +109,10 @@ export class SkillVFX {
   mesh.position.set(x,y,z);mesh.scaling.setAll(size);if(shape==='arrow'||shape==='comet'){mesh.rotation.y=Math.atan2(vx,vz);mesh.rotation.x=-Math.atan2(vy,Math.hypot(vx,vz));}if(delay>0)mesh.setEnabled(false);
   this.active.push({mesh,life:duration,duration,x,y,z,vx,vy,vz,size,grow,spin,delay,gravity,stretch:[1,1,1]});return mesh;
  }
- anticipation(skill:Skill,job:ClassId,x:number,z:number){if(skill.level===10){const c=skillPalette(job,skill),d=skill.cast||.18;this.emit('ring',c[0],x,.09,z,1.1,d,0,0,0,-2);this.emit('core',c[1],x,1,z,.13,d,0,.2,0,.75);for(let i=0;i<(this.low?3:6);i++){const a=i*Math.PI*2/(this.low?3:6);this.emit('ray',c[0],x+Math.cos(a)*.75,.5,z+Math.sin(a)*.75,.12,d,-Math.cos(a)*3,2,-Math.sin(a)*3);}return;}const c=skillPalette(job,skill),duration=skill.cast||.2;this.emit('ring',c[1],x,.08,z,.65+skill.stage*.035,duration,0,0,0,.25,.5);this.emit(skill.branch?'petal':'star',c[0],x,1,z,.16,duration,0,.4,0,.15,2);}
+ anticipation(skill:Skill,job:ClassId,x:number,z:number){if(skill.level===50){const c=lv50Palette(job,skill.branch),d=skill.cast||.2;this.emit('ring',c[0],x,.08,z,2,d,0,0,0,-4);for(let i=0;i<3;i++){const a=i*Math.PI*2/3;const m=this.emit('arch',c[i],x,.15,z,.85,d,0,.25,0,.4);if(m)m.rotation.y=a;}return;}if(skill.level===40){const c=skillPalette(job,skill),d=skill.cast||.2;this.emit('ring',c[0],x,.08,z,1.7,d,0,0,0,-3);this.emit(job==='mage'?'lightning':job==='archer'?'arrow':'shield',c[1],x,1,z,.45,d,0,.5,0,.6,2);for(let i=0;i<3;i++){const a=i*Math.PI*2/3;this.emit('star',c[i],x+Math.sin(a),.7,z+Math.cos(a),.2,d,-Math.sin(a)*3,1,-Math.cos(a)*3);}return;}if(skill.level===10){const c=skillPalette(job,skill),d=skill.cast||.18;this.emit('ring',c[0],x,.09,z,1.1,d,0,0,0,-2);this.emit('core',c[1],x,1,z,.13,d,0,.2,0,.75);for(let i=0;i<(this.low?3:6);i++){const a=i*Math.PI*2/(this.low?3:6);this.emit('ray',c[0],x+Math.cos(a)*.75,.5,z+Math.sin(a)*.75,.12,d,-Math.cos(a)*3,2,-Math.sin(a)*3);}return;}const c=skillPalette(job,skill),duration=skill.cast||.2;this.emit('ring',c[1],x,.08,z,.65+skill.stage*.035,duration,0,0,0,.25,.5);this.emit(skill.branch?'petal':'star',c[0],x,1,z,.16,duration,0,.4,0,.15,2);}
  release(skill:Skill,job:ClassId,x:number,z:number,tx:number,tz:number){
+  if(skill.level===50){this.releaseLv50(skill,job,x,z,tx,tz);return;}
+  if(skill.level===40){this.releaseLv40(skill,job,x,z,tx,tz);return;}
   if(skill.level===30){this.releaseLv30(skill,job,x,z,tx,tz);return;}
   if(skill.level===20){this.releaseLv20(skill,job,x,z,tx,tz);return;}
   if(skill.level===10){this.releaseLv10(skill,job,x,z,tx,tz);return;}
@@ -223,8 +250,128 @@ export class SkillVFX {
   }
   if(!this.low)for(let i=0;i<12;i++){const a=i*Math.PI*2/12;sculpt('spark',c[1],cx,1,cz,.15,.5,[1,1,1],Math.sin(a)*10,3.5,Math.cos(a)*10,-.18,3);}
  }
+ /** Level forty uses class-specific hero volumes; all reach remains strictly decorative. */
+ private releaseLv40(skill:Skill,job:ClassId,x:number,z:number,tx:number,tz:number){
+  const branch=skill.branch,dir=Math.atan2(tx-x,tz-z);
+  const c=job==='mage'&&!branch?[0x729dff,0xe6fbff,0xc094ff]:job==='archer'&&branch?[0x69edbd,0xffed96,0x94dfff]:skillPalette(job,skill);
+  const cx=job==='swordsman'&&branch?x:tx,cz=job==='swordsman'&&branch?z:tz;
+  this.lv40Cue={skillId:skill.id,style:job==='swordsman'?(branch?'sweeping-challenge-blade-crown':'shield-bash-solar-anvil'):job==='mage'?(branch?'thorn-burst-root-citadel':'lightning-storm-trident'):(branch?'herbal-tonic-bloom-fountain':'pinning-shot-celestial-seal'),impactSeconds:0,heroSeconds:.44,focal:{x:cx,z:cz},decorativeRadius:7.8};
+  // A full low-quality cast (at most 36 meshes) survives overlapping casts.
+  // Return old decoration to the same pool before allocating the new hero.
+  const limit=this.low?40:96,reserve=this.low?36:68;
+  while(this.active.length>limit-reserve){const p=this.active.pop()!;p.mesh.setEnabled(false);const shape=p.mesh.metadata.vfxShape as Shape,list=this.free.get(shape)||[];list.push(p.mesh);this.free.set(shape,list);}
+  const sculpt=(shape:Shape,color:number,px:number,py:number,pz:number,size:number,duration:number,stretch:[number,number,number]=[1,1,1],vx=0,vy=0,vz=0,grow=0,spin=0,delay=0)=>{
+   const m=this.emit(shape,color,px,py,pz,size,duration,vx,vy,vz,grow,spin,delay);if(m){this.active[this.active.length-1].stretch=stretch;m.scaling.set(size*stretch[0],size*stretch[1],size*stretch[2]);}return m;
+  };
+  const beam=(sx:number,sy:number,sz:number,ex:number,ey:number,ez:number,width:number,delay=0,duration=.44)=>{
+   const dx=ex-sx,dy=ey-sy,dz=ez-sz,length=Math.hypot(dx,dy,dz);
+   for(const [color,w] of [[c[0],width],[c[1],width*.28]]){const m=sculpt('beam',color,(sx+ex)/2,(sy+ey)/2,(sz+ez)/2,1,duration,[w,w,length/2],0,0,0,0,0,delay);if(m)m.rotation.set(-Math.atan2(dy,Math.hypot(dx,dz)),Math.atan2(dx,dz),0);}
+  };
+  // Immediate impact anchors the target; later layers are echoes of that same hit.
+  sculpt('core',c[1],cx,.95,cz,.9,.3,[1,1.3,1],0,0,0,2.4);
+  for(let i=0;i<3;i++)sculpt('ring',c[i],cx,.1+i*.12,cz,.7+i*.2,.65,[1,1,1],0,0,0,(7.8-.7-i*.2)/.65,0,i*.025);
+  if(job==='swordsman'&&!branch){
+   const shield=sculpt('shield',c[0],cx,1.1,cz,2.7,.44,[1,.8,.55]);if(shield)shield.rotation.set(Math.PI/2,dir,0);
+   beam(x,1,z,cx,1,cz,4.6);
+   // A broad directional hammer face, followed by two crossing impact blades.
+   for(const side of [-1,1]){const m=sculpt('crescent',c[side===1?0:2],cx,1.25,cz,2.9,.55,[1,1,1],Math.sin(dir)*2,0,Math.cos(dir)*2,1.8,side*3);if(m)m.rotation.set(Math.PI/2,dir,side*.65);}
+   beam(cx,5.7,cz,cx,.2,cz,4.8,.07,.34);
+   for(let i=0;i<4;i++){const a=dir+Math.PI/4+i*Math.PI/2;sculpt('slab',c[2],cx+Math.sin(a)*1.3,.2,cz+Math.cos(a)*1.3,.8,.65,[1,2,1],Math.sin(a)*5,2.5,Math.cos(a)*5,0,3);}
+  }else if(job==='swordsman'){
+   // Six intersecting blades form a crown instead of Lv30's healing cross.
+   for(let i=0;i<6;i++){const a=dir+i*Math.PI/3;const m=sculpt('crescent',c[i%3],cx,.55+i%2*.55,cz,2.8,.65,[1,1,1],0,.35,0,4.6,(i%2?-1:1)*7);if(m)m.rotation.set(.2+i%2*.65,a,.15);}
+   for(let i=0;i<3;i++){const a=dir+i*Math.PI*2/3;beam(cx,.2,cz,cx+Math.sin(a)*5.2,2.5,cz+Math.cos(a)*5.2,2.8,.04);}
+   sculpt('spiral',c[2],cx,.1,cz,1.4,.7,[1,2,1],0,0,0,.8,-6);
+  }else if(job==='mage'&&!branch){
+   // A branching central bolt and three staggered satellite strikes make a storm.
+   sculpt('lightning',c[1],cx,.1,cz,2.3,.42,[1,1.25,1]);
+   for(let i=0;i<3;i++){const a=dir+i*Math.PI*2/3,px=cx+Math.sin(a)*3,pz=cz+Math.cos(a)*3;sculpt('lightning',c[i%3],px,.1,pz,1.5,.4,[1,1.25,1],0,0,0,0,0,.07+i*.055);beam(px,.3,pz,cx,.9,cz,2.4,.07+i*.055);}
+   for(let i=0;i<2;i++){const m=sculpt('ring',c[2],cx,3.8+i*.6,cz,2.5,.6,[1,1,1],0,-1,0,.4,2+i);if(m)m.rotation.x=.25;}
+   beam(cx,7,cz,cx,.2,cz,4.2,0,.3);
+  }else if(job==='mage'){
+   // Tall root spears enclose a living tree, with opening leaf petals above.
+   sculpt('tree',c[0],cx,.1,cz,1.65,.85,[1,1.25,1],0,0,0,.35);
+   for(let i=0;i<6;i++){const a=i*Math.PI/3,px=cx+Math.sin(a)*2.2,pz=cz+Math.cos(a)*2.2;const m=sculpt('branch',c[i%3],px,.05,pz,1.5,.76,[.75,1.7,.75],Math.sin(a)*2,0,Math.cos(a)*2,.35,0,i%2*.055);if(m)m.rotation.set(Math.cos(a)*-.3,a,Math.sin(a)*.3);sculpt('petal',c[1],px,3.5,pz,.8,.7,[1,.6,2],Math.sin(a)*3,1,Math.cos(a)*3,.15,3,.09);}
+   sculpt('spiral',c[2],cx,.1,cz,2,.75,[1,1.5,1],0,0,0,.3,5);
+  }else if(!branch){
+   // The pin is a towering arrow in a tilted target seal, not an evasive wing.
+   beam(x,1,z,cx,1,cz,2.8);
+   const arrow=sculpt('arrow',c[1],cx,1.5,cz,2.4,.72,[1,1,2.2]);if(arrow)arrow.rotation.x=Math.PI/2;
+   for(let i=0;i<3;i++){const m=sculpt('ring',c[i],cx,1.6,cz,2.3+i*.35,.72,[1,1,1],0,0,0,.6,i%2?2:-2);if(m)m.rotation.set(Math.PI/2,dir,i*Math.PI/3);}
+   for(let i=0;i<4;i++){const a=dir+i*Math.PI/2;beam(cx+Math.sin(a)*3.4,3.8,cz+Math.cos(a)*3.4,cx,.2,cz,2.1,.035*i);}
+   sculpt('star',c[2],cx,3.4,cz,1.1,.55,[1,1,1],0,.7,0,.4,3);
+  }else{
+   // An upward tonic fountain and a six-petal canopy replace the Lv30 arrow fan.
+   sculpt('spiral',c[0],cx,.1,cz,1.8,.85,[1,1.8,1],0,0,0,.45,5);
+   beam(cx,.15,cz,cx,5.4,cz,3.4,0,.4);
+   for(let i=0;i<6;i++){const a=i*Math.PI/3;sculpt('petal',c[i%3],cx+Math.sin(a)*1.2,2.5,cz+Math.cos(a)*1.2,1,.8,[1,.7,2],Math.sin(a)*3.4,1.3,Math.cos(a)*3.4,.2,2);sculpt('core',c[0],cx+Math.sin(a)*.5,.55,cz+Math.cos(a)*.5,.27,.72,[1,1.5,1],Math.sin(a)*2,5,Math.cos(a)*2,-.12,0,.06);}
+   sculpt('star',c[1],cx,4.1,cz,.8,.65,[1,1,1],0,.6,0,.4,3);
+  }
+  const shape:Shape=job==='swordsman'?(branch?'crescent':'slab'):job==='mage'?(branch?'petal':'ray'):branch?'petal':'arrow',n=this.low?10:32;
+  for(let i=0;i<n;i++){const a=i*Math.PI*2/n,speed=10+i%3*.5;const m=sculpt(shape,c[i%3],cx+Math.sin(a)*.5,.6,cz+Math.cos(a)*.5,shape==='ray'?.35:.4,.65,[1,1,shape==='ray'?3:1],Math.sin(a)*speed,1.7+i%3*.6,Math.cos(a)*speed,-.25,shape==='ray'||shape==='arrow'?0:3,.055);if(m&&(shape==='ray'||shape==='arrow'))m.rotation.set(-.2,a,0);}
+ }
+ /** Level fifty authors open silhouettes and staggered crescendos, independent of damage. */
+ private releaseLv50(skill:Skill,job:ClassId,x:number,z:number,tx:number,tz:number){
+  const branch=skill.branch,dir=Math.atan2(tx-x,tz-z),cx=job==='swordsman'?x:tx,cz=job==='swordsman'?z:tz;
+  const c=lv50Palette(job,branch);
+  const style=job==='swordsman'?(branch?'fortress-vault-collapse':'second-wind-twin-wings'):job==='mage'?(branch?'living-shelter-root-vault':'vital-bloom-lotus-eruption'):(branch?'stalker-focus-crossed-reticle':'field-remedy-herbal-comet');
+  this.lv50Cue={skillId:skill.id,style,impactSeconds:0,heroSeconds:.6,focal:{x:cx,z:cz},decorativeRadius:9.2};
+  // Preserve four anticipation meshes and guarantee every low-quality hero and echo.
+  const limit=this.low?40:96,reserve=this.low?36:72;
+  while(this.active.length>limit-reserve){const p=this.active.pop()!;p.mesh.setEnabled(false);const shape=p.mesh.metadata.vfxShape as Shape,list=this.free.get(shape)||[];list.push(p.mesh);this.free.set(shape,list);}
+  const sculpt=(shape:Shape,color:number,px:number,py:number,pz:number,size:number,duration=.6,stretch:[number,number,number]=[1,1,1],delay=0,vx=0,vy=0,vz=0,grow=0,spin=0)=>{
+   const m=this.emit(shape,color,px,py,pz,size,duration,vx,vy,vz,grow,spin,delay);if(m){this.active[this.active.length-1].stretch=stretch;m.scaling.set(size*stretch[0],size*stretch[1],size*stretch[2]);}return m;
+  };
+  const arch=(a:number,r:number,height:number,color:number,delay=0)=>{const m=sculpt(job==='swordsman'&&branch||job==='mage'&&branch?'vault':'arch',color,cx,.12,cz,r,.64,[1,height/r,1],delay,0,0,0,.25);if(m)m.rotation.y=a;};
+  // Immediate small impact and low rim frame the target without filling its torso.
+  sculpt('core',c[1],cx,.22,cz,.42,.22,[1,.65,1],0,0,0,0,1.5);
+  sculpt('ring',c[0],cx,.09,cz,1.5,.6,[1,.6,1],0,0,0,0,2.8);
+  if(job==='swordsman'&&!branch){
+   // Second Wind: paired ascending blade wings with a clear central corridor.
+   for(const side of [-1,1])for(let i=0;i<3;i++){const a=dir+side*(.75+i*.32),r=1.2+i*.65;const m=sculpt('crescent',c[i%3],cx+Math.sin(a)*r,.7+i*.6,cz+Math.cos(a)*r,2.1,.62,[1,.8,1],i*.035,Math.sin(a)*1.4,1.2,Math.cos(a)*1.4,.45,side*1.3);if(m)m.rotation.set(.65,a,side*.55);}
+   arch(dir,2.8,2.3,c[1],.08);
+   for(const side of [-1,1]){const m=sculpt('crescent',c[2],cx,.3,cz,3,.6,[1,.5,1],.24,0,.7,0,2,side*2);if(m)m.rotation.y=dir+side*.7;}
+  }else if(job==='swordsman'){
+   // Fortress: gold shield, open vaults and erupting amber corner bastions.
+   const shield=sculpt('shield',c[0],cx+Math.sin(dir)*2,1.5,cz+Math.cos(dir)*2,2.4,.65,[1,.8,.5]);if(shield)shield.rotation.set(Math.PI/2,dir,0);
+   for(let i=0;i<3;i++)arch(dir+i*Math.PI/3,2.9,3.3,c[i],i*.045);
+   for(let i=0;i<4;i++){const a=dir+Math.PI/4+i*Math.PI/2,px=cx+Math.sin(a)*2.6,pz=cz+Math.cos(a)*2.6;sculpt('bastion',c[i%3],px,.08,pz,1.1,.7,[1,1,1],0,Math.sin(a)*.45,-.1,Math.cos(a)*.45);const m=sculpt('crescent',c[1],px,3.5,pz,1.65,.64,[1,.7,1],.06+i*.025,Math.sin(a)*.7,.2,Math.cos(a)*.7,.3);if(m)m.rotation.set(.35,a,.2);}
+   for(let i=0;i<3;i++){const m=sculpt('crescent',c[i],cx,.4,cz,3.3,.62,[1,.65,1],.1+i*.045,0,0,0,.8,.6);if(m)m.rotation.y=dir+i*Math.PI*2/3;}
+  }else if(job==='mage'&&!branch){
+   // Vital Bloom: two staggered lotus tiers explode outward, never a healing column.
+   for(let i=0;i<6;i++){const a=i*Math.PI/3;const m=sculpt('leaf',c[i%2],cx+Math.sin(a)*2,.8,cz+Math.cos(a)*2,1.65,.7,[1,1,1.4],i%2*.04,Math.sin(a)*2,1.4,Math.cos(a)*2,.25);if(m)m.rotation.set(-.45,a,0);}
+   for(let i=0;i<3;i++){const a=i*Math.PI*2/3+.5;const m=sculpt('crescent',c[1],cx,2.5,cz,2.8,.62,[1,.55,1],.1,0,.5,0,.6,1);if(m)m.rotation.set(.35,a,.35);}
+   for(let i=0;i<6;i++){const a=i*Math.PI/3+.45;const m=sculpt('leaf',c[i%2],cx+Math.sin(a)*2.1,3.1,cz+Math.cos(a)*2.1,1.8,.68,[1,1,1.4],.035+i%2*.03,Math.sin(a)*.9,.5,Math.cos(a)*.9,.12);if(m)m.rotation.set(-.65,a,0);}
+   for(let i=0;i<4;i++)arch(dir+i*Math.PI/4,3.1,3.3,c[2],.04+i*.025);
+  }else if(job==='mage'){
+   // Living Shelter: a luminous leaf shield crowns the crashing root cathedral.
+   const leafShield=sculpt('leaf',c[0],cx+Math.sin(dir+.8)*2.5,2.5,cz+Math.cos(dir+.8)*2.5,1.8,.68,[1.7,1,1.4],.025);if(leafShield)leafShield.rotation.set(Math.PI/2,dir+.8,.15);
+   for(let i=0;i<3;i++)arch(dir+i*Math.PI/3,3.5,3.8,c[i],i*.04);
+   for(let i=0;i<6;i++){const a=i*Math.PI/3;const m=sculpt('leaf',c[i%3],cx+Math.sin(a)*2.4,4.2,cz+Math.cos(a)*2.4,1.8,.7,[1,1,1.6],.025+i%2*.025,Math.sin(a)*.8,-.35,Math.cos(a)*.8,.12);if(m)m.rotation.set(.35,a,0);}
+   for(let i=0;i<2;i++){const m=sculpt('crescent',c[1],cx,3.8+i*.5,cz,3.2,.64,[1,.65,1],.065+i*.045,0,.2,0,.2,.7);if(m)m.rotation.set(.15,dir+i*Math.PI,.2);}
+   for(let i=0;i<4;i++){const a=i*Math.PI/2+.4;const m=sculpt('branch',c[0],cx+Math.sin(a)*2.5,.1,cz+Math.cos(a)*2.5,1.2,.7,[.7,1.4,.7],.025,Math.sin(a)*1.2,0,Math.cos(a)*1.2,.15);if(m)m.rotation.y=a;const leaf=sculpt('petal',c[1],cx+Math.sin(a)*1.8,3.5,cz+Math.cos(a)*1.8,1.2,.64,[1,.6,2],.15,Math.sin(a)*2,-1.5,Math.cos(a)*2);if(leaf)leaf.rotation.y=a;}
+  }else if(!branch){
+   // Field Remedy: a golden herbal arrow passes through the offensive blossom wreath.
+   sculpt('arrow',c[2],x,1.1,z,1.4,.24,[1,1,2],0,(cx-x)/.24,0,(cz-z)/.24);
+   const herbalArrow=sculpt('arrow',c[2],cx,1.3,cz,1.8,.64,[1,1,2],.06,Math.sin(dir)*.6,0,Math.cos(dir)*.6);if(herbalArrow)herbalArrow.rotation.y=dir;
+   for(let i=0;i<3;i++){const a=dir+i*Math.PI*2/3;arch(a,2.8,2.5,c[i],i*.035);const m=sculpt('crescent',c[i],cx,1.1,cz,2.6,.65,[1,.8,1],i*.035,0,.55,0,.8,2);if(m)m.rotation.set(.4,a,.6);sculpt('comet',c[1],cx+Math.sin(a)*2.4,3,cz+Math.cos(a)*2.4,.55,.6,[1,1,1.6],.07,-Math.sin(a)*3,-3,-Math.cos(a)*3);}
+   sculpt('star',c[2],cx,4.1,cz,.95,.65,[1,1,1],.08,0,-.3,0,.2,1);
+   for(let i=0;i<6;i++){const a=dir+i*Math.PI/3;const m=sculpt(i%2?'petal':'leaf',c[i%2],cx+Math.sin(a)*2.2,2.7+i%2*.6,cz+Math.cos(a)*2.2,1.7,.68,[1,1,1.4],.035+i%2*.04,Math.sin(a)*1.2,.6,Math.cos(a)*1.2,.15);if(m)m.rotation.set(-.45,a,.15);}
+  }else{
+   // Stalker Focus: violet crossed reticles converge on a prominent purple arrow.
+   const focusArrow=sculpt('arrow',c[0],cx,1.6,cz,2.2,.65,[1,1,2.3],0,Math.sin(dir)*.5,0,Math.cos(dir)*.5);if(focusArrow)focusArrow.rotation.y=dir;
+   for(let i=0;i<3;i++){const m=sculpt('ring',c[i],cx,1.25,cz,3.4,.66,[1,.65,1],i*.035,0,0,0,.15,i%2?.7:-.7);if(m)m.rotation.set(Math.PI/2,dir,i*Math.PI/3);}
+   for(let i=0;i<4;i++){const a=dir+Math.PI/4+i*Math.PI/2;const m=sculpt('crescent',c[i%3],cx+Math.sin(a)*2.3,2.5,cz+Math.cos(a)*2.3,1.9,.66,[1,.8,1],i*.025,Math.sin(a)*.7,.4,Math.cos(a)*.7,.2);if(m)m.rotation.set(.6,a,.3);}
+   for(let i=0;i<3;i++){const a=dir+i*Math.PI*2/3;sculpt('star',c[1],cx+Math.sin(a)*1.9,4,cz+Math.cos(a)*1.9,.72,.65,[1,1,1],.04+i*.03,0,-.25,0,.1,.7);}
+   for(let i=0;i<4;i++){const a=dir+Math.PI/4+i*Math.PI/2,r=3;const m=sculpt('arrow',c[i%3],cx+Math.sin(a)*r,1.3,cz+Math.cos(a)*r,1.5,.6,[1,1,1.6],i*.025,-Math.sin(a)*2,0,-Math.cos(a)*2);if(m)m.rotation.y=a+Math.PI;arch(a,2.8,2.4,c[2],.08);}
+  }
+  // Late waves grow to 9.2 world units; staged petals/blades carry an elegant second beat.
+  for(let i=0;i<2;i++)sculpt('ring',c[i+1],cx,.12+i*.08,cz,2,.58,[1,.6,1],.28+i*.12,0,0,0,(9.2-2)/.58);
+  const n=this.low?10:30,shape:Shape=job==='mage'||job==='archer'&&!branch?'petal':job==='swordsman'?(branch?'slab':'leaf'):'crescent';
+  for(let i=0;i<n;i++){const a=i*Math.PI*2/n+.2,r=2.2;const m=sculpt(shape,c[i%3],cx+Math.sin(a)*r,.65+i%2*.35,cz+Math.cos(a)*r,shape==='crescent'?.6:.55,.65,[1,.7,shape==='petal'?1.7:1],.16+i%3*.055,Math.sin(a)*8.7,1.2,Math.cos(a)*8.7,-.22,shape==='crescent'?1.2:1.8);if(m)m.rotation.y=a;}
+ }
  basic(job:ClassId,x:number,z:number){this.emit(job==='swordsman'?'crescent':'star',job==='mage'?0xb5d9ff:0xffe5a3,x,.75,z,job==='swordsman'?.65:.14,.3,0,.4,0,.5,4);}
  update(dt:number){for(let i=this.active.length-1;i>=0;i--){const p=this.active[i];let elapsed=dt;if(p.delay>0){p.delay-=dt;if(p.delay>0)continue;elapsed=-p.delay;p.delay=0;p.mesh.setEnabled(true);}p.life-=elapsed;if(p.life<=0){p.mesh.setEnabled(false);const shape=p.mesh.metadata.vfxShape as Shape;let list=this.free.get(shape);if(!list){list=[];this.free.set(shape,list);}list.push(p.mesh);this.active.splice(i,1);continue;}const t=p.duration-p.life;p.mesh.position.set(p.x+p.vx*t,p.y+p.vy*t-(p.gravity?t*t*3:0),p.z+p.vz*t);p.mesh.rotation.y+=p.spin*elapsed;p.mesh.visibility=Math.min(1,p.life/.08);const scale=Math.max(.01,p.size+p.grow*t);p.mesh.scaling.set(scale*p.stretch[0],scale*p.stretch[1],scale*p.stretch[2]);}}
- clear(){this.lv10Cue=null;this.lv20Cue=null;this.lv30Cue=null;for(const p of this.active){p.mesh.setEnabled(false);const shape=p.mesh.metadata.vfxShape as Shape;const list=this.free.get(shape)||[];list.push(p.mesh);this.free.set(shape,list);}this.active.length=0;}
+ clear(){this.lv50Cue=null;this.lv40Cue=null;this.lv10Cue=null;this.lv20Cue=null;this.lv30Cue=null;for(const p of this.active){p.mesh.setEnabled(false);const shape=p.mesh.metadata.vfxShape as Shape;const list=this.free.get(shape)||[];list.push(p.mesh);this.free.set(shape,list);}this.active.length=0;}
  dispose(){this.clear();this.free.forEach(list=>list.forEach(mesh=>mesh.dispose()));this.templates.forEach(mesh=>mesh.dispose());this.materials.forEach(material=>material.dispose());this.free.clear();this.templates.clear();this.materials.clear();this.created=0;}
 }

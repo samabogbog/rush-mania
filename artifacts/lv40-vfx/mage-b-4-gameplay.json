@@ -1,0 +1,145 @@
+{
+  "environment": "Chromium ANGLE SwiftShader; authentic learned Lv40 skill rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+  "before": {
+    "job": "mage",
+    "zone": "glade",
+    "x": 0.8800000000000001,
+    "z": 17.61867999999996,
+    "hp": 1290.120199999997,
+    "mp": 852,
+    "kills": 0,
+    "hotbar": [
+      "mage-b-4",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "mage-1",
+      "mage-2",
+      "mage-3",
+      "mage-b-4"
+    ],
+    "skillCooldowns": {},
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "drawCount": 0
+    },
+    "modelErrors": 0,
+    "drawCalls": 51
+  },
+  "after": {
+    "job": "mage",
+    "zone": "glade",
+    "x": 0.8800000000000001,
+    "z": 17.61867999999996,
+    "hp": 1290.120199999997,
+    "mp": 832,
+    "kills": 4,
+    "hotbar": [
+      "mage-b-4",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "mage-1",
+      "mage-2",
+      "mage-3",
+      "mage-b-4"
+    ],
+    "skillCooldowns": {
+      "mage-b-4": 7
+    },
+    "skillMotion": null,
+    "vfx": {
+      "active": 1,
+      "pooled": 1,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "star"
+      ],
+      "materials": 1,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "drawCount": 1
+    },
+    "modelErrors": 0,
+    "drawCalls": 51
+  },
+  "recovered": {
+    "job": "mage",
+    "zone": "glade",
+    "x": 0.8800000000000001,
+    "z": 17.61867999999996,
+    "hp": 1289.6688615999906,
+    "mp": 842.3662839999984,
+    "kills": 4,
+    "hotbar": [
+      "mage-b-4",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "mage-1",
+      "mage-2",
+      "mage-3",
+      "mage-b-4"
+    ],
+    "skillCooldowns": {
+      "mage-b-4": 4.566599999999964
+    },
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 34,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "star",
+        "ring",
+        "lightning",
+        "core",
+        "tree",
+        "branch",
+        "petal",
+        "spiral"
+      ],
+      "materials": 5,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "drawCount": 0
+    },
+    "modelErrors": 0,
+    "drawCalls": 46
+  },
+  "errors": []
+}

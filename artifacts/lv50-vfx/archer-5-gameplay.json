@@ -1,0 +1,162 @@
+{
+  "environment": "Chromium ANGLE SwiftShader; authentic learned Lv50 skill rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+  "before": {
+    "job": "archer",
+    "zone": "glade",
+    "x": 0.66,
+    "z": 17.39955999999997,
+    "hp": 1289.588976799991,
+    "mp": 852,
+    "kills": 0,
+    "hotbar": [
+      "archer-5",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "archer-1",
+      "archer-2",
+      "archer-3",
+      "archer-4",
+      "archer-5"
+    ],
+    "skillCooldowns": {},
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "drawCount": 0
+    },
+    "modelErrors": 0,
+    "drawCalls": 51
+  },
+  "after": {
+    "job": "archer",
+    "zone": "glade",
+    "x": 0.66,
+    "z": 17.39955999999997,
+    "hp": 1289.588976799991,
+    "mp": 834,
+    "kills": 4,
+    "hotbar": [
+      "archer-5",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "archer-1",
+      "archer-2",
+      "archer-3",
+      "archer-4",
+      "archer-5"
+    ],
+    "skillCooldowns": {
+      "archer-5": 18
+    },
+    "skillMotion": null,
+    "vfx": {
+      "active": 1,
+      "pooled": 1,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "star"
+      ],
+      "materials": 1,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "drawCount": 1
+    },
+    "modelErrors": 0,
+    "drawCalls": 51
+  },
+  "recovered": {
+    "job": "archer",
+    "zone": "glade",
+    "x": 0.66,
+    "z": 17.39955999999997,
+    "hp": 1299.856122799984,
+    "mp": 845.1462899999982,
+    "kills": 4,
+    "hotbar": [
+      "archer-5",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "archer-1",
+      "archer-2",
+      "archer-3",
+      "archer-4",
+      "archer-5"
+    ],
+    "skillCooldowns": {
+      "archer-5": 15.383500000000106
+    },
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 36,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "star",
+        "ring",
+        "arch",
+        "core",
+        "arrow",
+        "crescent",
+        "comet",
+        "leaf",
+        "petal"
+      ],
+      "materials": 5,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": {
+        "skillId": "archer-5",
+        "style": "field-remedy-herbal-comet",
+        "impactSeconds": 0,
+        "heroSeconds": 0.6,
+        "focal": {
+          "x": 1.6600000000000001,
+          "z": 18.39955999999997
+        },
+        "decorativeRadius": 9.2
+      },
+      "drawCount": 0
+    },
+    "modelErrors": 0,
+    "drawCalls": 46
+  },
+  "errors": []
+}

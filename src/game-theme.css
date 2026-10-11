@@ -1367,7 +1367,7 @@ body:has(.game-panel) .touch-controls { visibility:hidden; }
 .item.rarity-epic { background:#e5cef8; }
 .item.rarity-legend { background:#ffe38b; }
 .item.equipped small { background:#b9ee8b; }
-.item-tooltip { position:fixed;z-index:100;pointer-events:none;width:min(330px,calc(100vw - 16px));max-height:calc(100vh - 16px);overflow:hidden;background:#fff1cc;border:3px solid var(--rarity-color,#8a603a);border-radius:7px;box-shadow:0 5px #70502c,0 10px 26px #33251444;padding:14px;color:#6c492b;font-family:Nunito,sans-serif;font-size:12px;line-height:1.4; }
+.item-tooltip { position:fixed;z-index:180;pointer-events:none;width:min(330px,calc(100vw - 16px));max-height:calc(100vh - 16px);overflow:hidden;background:#fff1cc;border:3px solid var(--rarity-color,#8a603a);border-radius:7px;box-shadow:0 5px #70502c,0 10px 26px #33251444;padding:14px;color:#6c492b;font-family:Nunito,sans-serif;font-size:12px;line-height:1.4; }
 .item-tooltip[hidden] { display:none; }
 .tooltip-title { display:flex;align-items:center;gap:10px; }
 .tooltip-title .game-icon { width:48px;height:48px;flex:0 0 48px; }
@@ -1613,7 +1613,7 @@ body:has(.game-panel) .mobile-controls{visibility:hidden;pointer-events:none}
  .world-heading{top:85px;left:10px;transform:none;text-align:left;max-width:185px}.wordmark{display:none}
 }
 
-#item-details.item-details{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:340px;max-width:calc(100vw - 24px);max-height:calc(100dvh - 32px);overflow-y:auto;box-sizing:border-box;pointer-events:auto;z-index:170;box-shadow:0 12px 45px #17271bb0;border-width:3px}
+#item-details.item-details{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:340px;max-width:calc(100vw - 24px);max-height:calc(100dvh - 32px);overflow-y:auto;box-sizing:border-box;pointer-events:auto;z-index:190;box-shadow:0 12px 45px #17271bb0;border-width:3px}
 #item-details[hidden]{display:none}
 #item-details .tooltip-instruction{display:none}
 .item-detail-actions{display:flex;align-items:center;justify-content:center;gap:9px;border-top:1px solid #ac8858;padding-top:10px;margin-top:10px;position:sticky;bottom:-1px;background:#fff0cf}
@@ -1730,3 +1730,9 @@ body:has(.game-panel) .mobile-controls{visibility:hidden;pointer-events:none}
 @media(max-width:800px){#app .loadout-skill-art{width:30px;height:30px}}
 @media(max-width:900px){#app .skill-slot.has-skill>small{display:none}}
 #app .loadout-slot>strong{display:block;min-width:0;max-width:100%;width:100%;box-sizing:border-box;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* Keep full external stat contributions readable in narrow equipment summary cells. */
+.stat-pair>span,.worn-summary>span{gap:6px;align-items:center;min-width:0}
+.stat-pair>span>b,.worn-summary>span>b{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:baseline;gap:2px 4px;text-align:right;font-variant-numeric:tabular-nums}
+.stat-pair .stat-bonus,.worn-summary .stat-bonus{color:#41733c;font-size:10px;font-weight:900;white-space:nowrap}
+@media(max-width:900px){.worn-summary>span{flex-direction:column;gap:2px}.worn-summary>span>b{justify-content:center}.worn-summary .stat-bonus{font-size:9px}}

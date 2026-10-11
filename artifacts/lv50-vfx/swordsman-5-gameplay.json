@@ -1,0 +1,158 @@
+{
+  "environment": "Chromium ANGLE SwiftShader; authentic learned Lv50 skill rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+  "before": {
+    "job": "swordsman",
+    "zone": "glade",
+    "x": 0.8800000000000001,
+    "z": 17.252159999999964,
+    "hp": 1292.9181767999958,
+    "mp": 852,
+    "kills": 0,
+    "hotbar": [
+      "swordsman-5",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "swordsman-1",
+      "swordsman-2",
+      "swordsman-3",
+      "swordsman-4",
+      "swordsman-5"
+    ],
+    "skillCooldowns": {},
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "drawCount": 0
+    },
+    "modelErrors": 0,
+    "drawCalls": 53
+  },
+  "after": {
+    "job": "swordsman",
+    "zone": "glade",
+    "x": 0.8800000000000001,
+    "z": 17.252159999999964,
+    "hp": 1292.9181767999958,
+    "mp": 832,
+    "kills": 4,
+    "hotbar": [
+      "swordsman-5",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "swordsman-1",
+      "swordsman-2",
+      "swordsman-3",
+      "swordsman-4",
+      "swordsman-5"
+    ],
+    "skillCooldowns": {
+      "swordsman-5": 20
+    },
+    "skillMotion": null,
+    "vfx": {
+      "active": 1,
+      "pooled": 1,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "crescent"
+      ],
+      "materials": 1,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "drawCount": 1
+    },
+    "modelErrors": 0,
+    "drawCalls": 53
+  },
+  "recovered": {
+    "job": "swordsman",
+    "zone": "glade",
+    "x": 0.8800000000000001,
+    "z": 17.252159999999964,
+    "hp": 1302.4668383999892,
+    "mp": 842.3662839999984,
+    "kills": 4,
+    "hotbar": [
+      "swordsman-5",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "swordsman-1",
+      "swordsman-2",
+      "swordsman-3",
+      "swordsman-4",
+      "swordsman-5"
+    ],
+    "skillCooldowns": {
+      "swordsman-5": 17.566600000000133
+    },
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 27,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "crescent",
+        "ring",
+        "arch",
+        "core",
+        "leaf"
+      ],
+      "materials": 5,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": {
+        "skillId": "swordsman-5",
+        "style": "second-wind-twin-wings",
+        "impactSeconds": 0,
+        "heroSeconds": 0.6,
+        "focal": {
+          "x": 0.8800000000000001,
+          "z": 17.252159999999964
+        },
+        "decorativeRadius": 9.2
+      },
+      "drawCount": 0
+    },
+    "modelErrors": 0,
+    "drawCalls": 48
+  },
+  "errors": []
+}
