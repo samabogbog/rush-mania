@@ -1,7 +1,6 @@
 import {test,expect} from '@playwright/test';
 import {joystickVector} from '../src/game/mobile-input';
 import {Simulation} from '../src/simulation';
-import {NetworkSimulation} from '../src/game/network';
 import {capture,type Realm} from '../server/protocol';
 import {transact} from '../server/realm';
 import type {RealmStore} from '../server/store';
@@ -14,7 +13,7 @@ test('joystick clamps radial displacement, deadzone, diagonals and fractional sp
 });
 test('Auto rotates assigned learned skills, respects ranked cap and captures actual cooldown totals',()=>{
  const s=fighter();for(let n=0;n<4;n++)s.upgradeSkill('swordsman-1');const casts:string[]=[],hits:number[]=[];const original=s.castSkill.bind(s);s.castSkill=id=>{const accepted=original(id);if(accepted)casts.push(id);return accepted;};s.hit=m=>{hits.push(m.id);};
- s.tick(.01,0,0);expect(casts).toEqual(['swordsman-1']);expect(hits).toHaveLength(6);const total=s.skillCooldownTotals['swordsman-1'];expect(s.skillCooldownRatio('swordsman-1')).toBe(1);s.tick(.01,0,0);expect(casts).toEqual(['swordsman-1','swordsman-2']);expect(s.autoSkillCursor).toBe(2);expect(s.x).toBe(0);expect(s.z).toBe(0);expect(capture(s).skillCooldownTotals['swordsman-1']).toBe(total);
+ s.tick(.01,0,0);expect(casts).toEqual(['swordsman-1']);expect(hits).toHaveLength(6);const total=s.skillCooldownTotals['swordsman-1'];expect(s.skillCooldownRatio('swordsman-1')).toBe(1);s.tick(.01,0,0);expect(casts).toEqual(['swordsman-1']);expect(s.skillCooldowns['swordsman-2']||0).toBe(0);s.tick(.37,0,0);expect(casts).toEqual(['swordsman-1','swordsman-2']);expect(s.autoSkillCursor).toBe(2);expect(s.x).toBe(0);expect(s.z).toBe(0);expect(capture(s).skillCooldownTotals['swordsman-1']).toBe(total);
  s.skillCooldowns['swordsman-1']=total/2;Object.defineProperty(s,'cooldownMultiplier',{get:()=>.6});expect(s.skillCooldownRatio('swordsman-1')).toBe(.5);expect(s.skillCooldownTotals['swordsman-1']).toBe(total);
 });
 test('Auto ignores unassigned/unlearned skills, blocked targets, movement, death and mana shortages silently; basic attack fallback',()=>{
@@ -31,11 +30,15 @@ test('Auto holds during casting but preserves ordinary chase outside stationary 
 class Store implements RealmStore{realm:Realm|null=null;revision=0;async read(){return this.realm?{realm:structuredClone(this.realm),revision:this.revision}:null;}async create(r:Realm){this.realm=structuredClone(r);}async commit(rev:number,r:Realm){if(rev!==this.revision)return false;this.realm=structuredClone(r);this.revision++;return true;}}
 test('server Auto uses same assigned skills and retains rotation/totals across snapshots and legacy actors',async()=>{
  const store=new Store(),identity={id:'autofighter',name:'Auto fighter'};let snap=await transact(store,identity,{connect:true},1000);const sim=fighter();store.realm!.players[identity.id].actor=capture(sim);const room=store.realm!.rooms![store.realm!.players[identity.id].room!];room.monsters=structuredClone(sim.monsters);
- snap=await transact(store,identity,{},1100);expect(snap.player.actor.skillCooldowns['swordsman-1']).toBeGreaterThan(0);expect(snap.player.actor.skillCooldowns['swordsman-2']).toBeGreaterThan(0);expect(snap.player.actor.skillCooldownTotals['swordsman-1']).toBeGreaterThanOrEqual(snap.player.actor.skillCooldowns['swordsman-1']);expect(snap.player.actor.autoSkillCursor).toBe(2);
- delete (store.realm!.players[identity.id].actor as any).skillCooldownTotals;delete (store.realm!.players[identity.id].actor as any).autoSkillCursor;snap=await transact(store,identity,{},1200);expect(snap.player.actor.autoSkillCursor).toBe(0);expect(snap.player.actor.skillCooldownTotals).toBeDefined();expect(snap.player.actor.skillCooldowns['swordsman-1']).toBeGreaterThan(0);
+ snap=await transact(store,identity,{},1100);expect(snap.player.actor.skillCooldowns['swordsman-1']).toBeGreaterThan(0);expect(snap.player.actor.skillCooldowns['swordsman-2']||0).toBe(0);expect(snap.player.actor.actionTime).toBeGreaterThan(0);expect(snap.player.actor.skillCooldownTotals['swordsman-1']).toBeGreaterThanOrEqual(snap.player.actor.skillCooldowns['swordsman-1']);expect(snap.player.actor.autoSkillCursor).toBe(1);snap=await transact(store,identity,{},1500);expect(snap.player.actor.skillCooldowns['swordsman-2']).toBeGreaterThan(0);expect(snap.player.actor.autoSkillCursor).toBe(2);
+ delete (store.realm!.players[identity.id].actor as any).skillCooldownTotals;delete (store.realm!.players[identity.id].actor as any).autoSkillCursor;snap=await transact(store,identity,{},1550);expect(snap.player.actor.autoSkillCursor).toBe(0);expect(snap.player.actor.skillCooldownTotals).toBeDefined();expect(snap.player.actor.skillCooldowns['swordsman-1']).toBeGreaterThan(0);
 });
 
-test('network release sends zero input without waiting for animation frame and cooldown presentation interpolates',()=>{
+test('network release sends zero input without waiting for animation frame and cooldown presentation interpolates',async()=>{
+ // UI modules install DOM listeners on import; this unit checks network methods only.
+ Object.defineProperty(globalThis,'document',{value:{addEventListener(){}},configurable:true});
+ const {NetworkSimulation}=await import('../src/game/network');
+ Reflect.deleteProperty(globalThis,'document');
  let queued=0;const actor={input:[.5,.3],schedule:()=>{queued++;}};
  NetworkSimulation.prototype.stopMovementInput.call(actor as any);expect(actor.input).toEqual([0,0]);expect(queued).toBe(1);NetworkSimulation.prototype.stopMovementInput.call(actor as any);expect(queued).toBe(1);
  const snapshot={skillCooldowns:{test:3},receivedAt:performance.now()-1000};expect(NetworkSimulation.prototype.skillCooldownRemaining.call(snapshot as any,'test')).toBeCloseTo(2,1);snapshot.receivedAt=performance.now()-4000;expect(NetworkSimulation.prototype.skillCooldownRemaining.call(snapshot as any,'test')).toBe(0);expect(snapshot.skillCooldowns.test).toBe(3);

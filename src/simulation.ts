@@ -280,7 +280,7 @@ export class Simulation {
     if(this.save.level<zones[zone].level){this.onEvent(`Reach Lv ${zones[zone].level} to enter ${zones[zone].name}.`);return false;}
     if(zone==='ruins'&&this.online&&!allowDungeon){this.onEvent("Gather a party of 2–4 before entering the ruins.");return false;}
     if(Math.hypot(this.x-PORTAL_POSITION.x,this.z-PORTAL_POSITION.z)>3){this.onEvent("Walk to the glowing north portal to travel.");this.goTo(PORTAL_POSITION.x,PORTAL_POSITION.z);return false;}
-    this.save.zone=zone;this.populateZone(zone);this.x=0;this.z=-9;this.clearTarget();this.destination=null;this.route=[];this.auto=false;this.loot=[];this.onEvent(`Arrived in ${zones[zone].name}`,"zone");this.markTutorial('travel');this.persist();return true;
+    this.save.zone=zone;this.populateZone(zone);this.x=0;this.z=-9;this.clearTarget();this.destination=null;this.route=[];this.auto=false;this.actionTime=0;this.loot=[];this.onEvent(`Arrived in ${zones[zone].name}`,"zone");this.markTutorial('travel');this.persist();return true;
   }
   interact(id:string) {
     const npc=this.zone.npcs.find(n=>n.id===id);if(!npc)return;
@@ -559,7 +559,8 @@ export class Simulation {
     m.territoryAggro=insideMonsterGroup(this.save.zone,m.groupId,this.x,this.z);
     m.returning=false;
     m.owner = this.actorId;
-    this.actionTime = 0.25;
+    // Skill release owns its full recovery; damage ticks must not replace it.
+    if (!skill) this.actionTime = 0.25;
     this.markTutorial("attack");
     const dealt=Math.min(Math.max(0,m.hp),amount);
     m.hp -= amount;
@@ -600,6 +601,7 @@ export class Simulation {
     if (
       this.paused ||
       this.cast ||
+      this.actionTime > 0 ||
       !skill ||
       (this.skillCooldowns[id] || 0) > 0
     )
@@ -608,7 +610,7 @@ export class Simulation {
       this.onEvent(`${skill.name} unlocks at level ${skill.level}.`);
       return false;
     }
-    if(this.deathTime>0)return false;
+    if(this.deathTime>0||this.save.hp<=0)return false;
     const self = ["heal", "guard", "fury"].includes(skill.effect);
     if (!self && this.target === null) this.nearest();
     const target = this.monsters.find(
@@ -650,7 +652,7 @@ export class Simulation {
     return total>0?Math.max(0,Math.min(1,remaining/total)):0;
   }
   private tryAutoSkill() {
-    if(!this.auto||this.destination||this.cast||this.deathTime>0||this.save.hp<=0)return false;
+    if(!this.auto||this.destination||this.cast||this.actionTime>0||this.deathTime>0||this.save.hp<=0)return false;
     const learned=new Set(this.unlockedSkills.map(skill=>skill.id));
     const group=zoneMonsterGroups(this.save.zone).find(g=>insideMonsterGroup(this.save.zone,g.id,this.x,this.z));
     for(let offset=0;offset<6;offset++) {
@@ -670,7 +672,9 @@ export class Simulation {
     const monster = this.monsters.find(
       (monster) => monster.id === targetId && monster.alive,
     );
-    this.actionTime = 0.35;
+    // Match the stage recovery used by render/skill-choreography without a
+    // render dependency: this timer also gates authoritative combat actions.
+    this.actionTime = .36 + Math.min(10, skill.stage) * .012;
     if(["heal","guard","fury"].includes(skill.effect))this.onSupport?.(skill);
     if (skill.effect === "heal") {
       this.save.hp = Math.min(
@@ -884,7 +888,7 @@ export class Simulation {
           dist > (m ? this.job.range : 0.15) ||
           (m && !this.direct(m.x, m.z))
         ) {
-          if(this.cast||autoSkillStarted||m&&zoneMonsterGroups(this.save.zone).some(g=>insideMonsterGroup(this.save.zone,g.id,this.x,this.z))) { /* Hold position while the pack runs into attack range. */ } else {
+          if(this.cast||this.actionTime>0||autoSkillStarted||m&&zoneMonsterGroups(this.save.zone).some(g=>insideMonsterGroup(this.save.zone,g.id,this.x,this.z))) { /* Hold position while recovering or while the pack runs into attack range. */ } else {
           let next: { x: number; z: number } = dest;
           if (!this.direct(dest.x, dest.z)) {
             if (this.routeTimer <= 0 || !this.route.length) {
@@ -907,7 +911,7 @@ export class Simulation {
             this.z += ((next.z - this.z) / nd) * movement;
           }
           }
-        } else if (m && this.attackTimer <= 0 && !this.cast && !autoSkillStarted) {
+        } else if (m && this.attackTimer <= 0 && !this.cast && this.actionTime <= 0 && !autoSkillStarted) {
           this.hit(m, this.damage);
           this.attackTimer =
             this.attackInterval;
@@ -1030,6 +1034,7 @@ export class Simulation {
       this.save.hp = 0;this.deathTime=economy.deathDelay;
       this.target = null;
       this.cast = null;
+      this.actionTime = 0;
       this.destination = null;
       this.route = [];
       this.guard.time = this.fury.time = 0;

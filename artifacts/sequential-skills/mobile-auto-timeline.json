@@ -1,0 +1,106 @@
+{
+  "firstOnly": {
+    "at": 18620.299999999814,
+    "mp": 282.13388199999997,
+    "cooldowns": {
+      "swordsman-1": 3.9082999999999997
+    },
+    "motion": "swordsman-1"
+  },
+  "both": {
+    "at": 18991.700000000186,
+    "mp": 264.6934999999998,
+    "cooldowns": {
+      "swordsman-1": 3.5250000000000017,
+      "swordsman-2": 6.9167
+    },
+    "motion": "swordsman-2"
+  },
+  "skillElapsedBeforeSecond": 0.4749999999999983,
+  "timeline": [
+    {
+      "at": 18140.900000000373,
+      "mp": 292,
+      "cooldowns": {},
+      "motion": null
+    },
+    {
+      "at": 18234.200000000186,
+      "mp": 292,
+      "cooldowns": {},
+      "motion": null
+    },
+    {
+      "at": 18331.900000000373,
+      "mp": 292,
+      "cooldowns": {},
+      "motion": null
+    },
+    {
+      "at": 18448.200000000186,
+      "mp": 292,
+      "cooldowns": {},
+      "motion": null
+    },
+    {
+      "at": 18620.299999999814,
+      "mp": 282.13388199999997,
+      "cooldowns": {
+        "swordsman-1": 3.9082999999999997
+      },
+      "motion": "swordsman-1"
+    },
+    {
+      "at": 18708,
+      "mp": 282.3528819999999,
+      "cooldowns": {
+        "swordsman-1": 3.7583
+      },
+      "motion": "swordsman-1"
+    },
+    {
+      "at": 18804.5,
+      "mp": 282.49888199999987,
+      "cooldowns": {
+        "swordsman-1": 3.6583000000000006
+      },
+      "motion": "swordsman-1"
+    },
+    {
+      "at": 18991.700000000186,
+      "mp": 264.6934999999998,
+      "cooldowns": {
+        "swordsman-1": 3.5250000000000017,
+        "swordsman-2": 6.9167
+      },
+      "motion": "swordsman-2"
+    },
+    {
+      "at": 19085.900000000373,
+      "mp": 264.88826399999977,
+      "cooldowns": {
+        "swordsman-1": 3.391600000000001,
+        "swordsman-2": 6.783299999999996
+      },
+      "motion": "swordsman-2"
+    },
+    {
+      "at": 19198.5,
+      "mp": 265.0098819999997,
+      "cooldowns": {
+        "swordsman-1": 3.308300000000002,
+        "swordsman-2": 6.699999999999996
+      },
+      "motion": "swordsman-2"
+    },
+    {
+      "at": 19305.900000000373,
+      "mp": 265.22888199999966,
+      "cooldowns": {
+        "swordsman-1": 3.1583000000000023,
+        "swordsman-2": 6.549999999999994
+      },
+      "motion": "swordsman-2"
+    }
+  ]
+}

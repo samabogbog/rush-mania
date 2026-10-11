@@ -1,0 +1,17 @@
+{
+  "fixture": {
+    "level": 30,
+    "practice": true
+  },
+  "movement": {
+    "before": 0,
+    "after": 1.6966528951324191
+  },
+  "auto": {
+    "beforeMp": 292,
+    "afterMp": 265.22888199999966,
+    "kills": 6
+  },
+  "cooldownRatio": 0.9881,
+  "pageErrors": []
+}
