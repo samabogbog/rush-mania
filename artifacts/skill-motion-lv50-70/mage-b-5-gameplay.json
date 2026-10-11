@@ -1,0 +1,527 @@
+{
+  "environment": "Chromium ANGLE SwiftShader; authentic learned Lv50–70 skill rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+  "before": {
+    "job": "mage",
+    "zone": "glade",
+    "x": 0.8065199999999969,
+    "z": 17.545639999999963,
+    "hp": 1287.8367459999915,
+    "mp": 852,
+    "kills": 0,
+    "hotbar": [
+      "mage-b-5",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "mage-1",
+      "mage-2",
+      "mage-3",
+      "mage-4",
+      "mage-b-5"
+    ],
+    "skillCooldowns": {},
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "drawCount": 0
+    },
+    "modelErrors": 0,
+    "drawCalls": 50
+  },
+  "after": {
+    "job": "mage",
+    "zone": "glade",
+    "x": 0.8065199999999969,
+    "z": 17.545639999999963,
+    "hp": 1288.8177459999908,
+    "mp": 831.0649999999998,
+    "kills": 3,
+    "hotbar": [
+      "mage-b-5",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "mage-1",
+      "mage-2",
+      "mage-3",
+      "mage-4",
+      "mage-b-5"
+    ],
+    "skillCooldowns": {
+      "mage-b-5": 13.749999999999996
+    },
+    "skillMotion": {
+      "skillId": "mage-b-5",
+      "duration": 1.26,
+      "job": "mage",
+      "stage": 5,
+      "branch": 1,
+      "effect": "area",
+      "phase": "release",
+      "progress": 0
+    },
+    "vfx": {
+      "active": 34,
+      "pooled": 39,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "star",
+        "ring",
+        "arch",
+        "core",
+        "leaf",
+        "vault",
+        "crescent",
+        "branch",
+        "petal"
+      ],
+      "materials": 5,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": {
+        "skillId": "mage-b-5",
+        "style": "living-shelter-root-vault",
+        "impactSeconds": 0,
+        "heroSeconds": 0.6,
+        "focal": {
+          "x": 1.8065199999999968,
+          "z": 18.545639999999963
+        },
+        "decorativeRadius": 9.2
+      },
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "drawCount": 29
+    },
+    "modelErrors": 0,
+    "drawCalls": 80
+  },
+  "recovered": {
+    "job": "mage",
+    "zone": "glade",
+    "x": 0.8065199999999969,
+    "z": 17.545639999999963,
+    "hp": 1279.4768995999837,
+    "mp": 842.6368639999981,
+    "kills": 3,
+    "hotbar": [
+      "mage-b-5",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "mage-1",
+      "mage-2",
+      "mage-3",
+      "mage-4",
+      "mage-b-5"
+    ],
+    "skillCooldowns": {
+      "mage-b-5": 11.033599999999963
+    },
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 39,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "star",
+        "ring",
+        "arch",
+        "core",
+        "leaf",
+        "vault",
+        "crescent",
+        "branch",
+        "petal"
+      ],
+      "materials": 5,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": {
+        "skillId": "mage-b-5",
+        "style": "living-shelter-root-vault",
+        "impactSeconds": 0,
+        "heroSeconds": 0.6,
+        "focal": {
+          "x": 1.8065199999999968,
+          "z": 18.545639999999963
+        },
+        "decorativeRadius": 9.2
+      },
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "drawCount": 0
+    },
+    "modelErrors": 0,
+    "drawCalls": 48
+  },
+  "timeline": [
+    {
+      "hp": 1288.8177459999908,
+      "cast": null,
+      "motion": {
+        "skillId": "mage-b-5",
+        "duration": 1.26,
+        "job": "mage",
+        "stage": 5,
+        "branch": 1,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0
+      },
+      "poses": [
+        {
+          "context": {
+            "skillId": "mage-b-5",
+            "duration": 1.26,
+            "job": "mage",
+            "stage": 5,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0
+          },
+          "clip": "mage-b-5:release:skill-guard:live",
+          "isPlaying": false,
+          "frame": 0,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "active": 34,
+      "cue": "mage-b-5"
+    },
+    {
+      "hp": 1289.7987459999902,
+      "cast": null,
+      "motion": {
+        "skillId": "mage-b-5",
+        "duration": 1.26,
+        "job": "mage",
+        "stage": 5,
+        "branch": 1,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.19841269841269837
+      },
+      "poses": [
+        {
+          "context": {
+            "skillId": "mage-b-5",
+            "duration": 1.26,
+            "job": "mage",
+            "stage": 5,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.19841269841269837
+          },
+          "clip": "mage-b-5:release:skill-guard:live",
+          "isPlaying": false,
+          "frame": 13.630267401179916,
+          "position": [
+            0,
+            0,
+            0.011926483620595518
+          ],
+          "rotation": [
+            -0.02726053398993261,
+            -0.051682011280351416,
+            0
+          ]
+        }
+      ],
+      "active": 33,
+      "cue": "mage-b-5"
+    },
+    {
+      "hp": 1290.3218151999897,
+      "cast": null,
+      "motion": {
+        "skillId": "mage-b-5",
+        "duration": 1.26,
+        "job": "mage",
+        "stage": 5,
+        "branch": 1,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.30420634920635004
+      },
+      "poses": [
+        {
+          "context": {
+            "skillId": "mage-b-5",
+            "duration": 1.26,
+            "job": "mage",
+            "stage": 5,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.30420634920635004
+          },
+          "clip": "mage-b-5:release:skill-guard:live",
+          "isPlaying": false,
+          "frame": 26.680838400170757,
+          "position": [
+            0,
+            0,
+            0.023345732904392357
+          ],
+          "rotation": [
+            -0.05336167521003967,
+            -0.10059297257153907,
+            0
+          ]
+        }
+      ],
+      "active": 32,
+      "cue": "mage-b-5"
+    },
+    {
+      "hp": 1291.0414767999891,
+      "cast": null,
+      "motion": {
+        "skillId": "mage-b-5",
+        "duration": 1.26,
+        "job": "mage",
+        "stage": 5,
+        "branch": 1,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.44976190476190536
+      },
+      "poses": [
+        {
+          "context": {
+            "skillId": "mage-b-5",
+            "duration": 1.26,
+            "job": "mage",
+            "stage": 5,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.44976190476190536
+          },
+          "clip": "mage-b-5:release:skill-guard:live",
+          "isPlaying": false,
+          "frame": 39.01186444045134,
+          "position": [
+            0,
+            0,
+            0.034135380368081315
+          ],
+          "rotation": [
+            -0.07802372655561443,
+            -0.048443281659437655,
+            0
+          ]
+        }
+      ],
+      "active": 8,
+      "cue": "mage-b-5"
+    },
+    {
+      "hp": 1292.0224767999885,
+      "cast": null,
+      "motion": {
+        "skillId": "mage-b-5",
+        "duration": 1.26,
+        "job": "mage",
+        "stage": 5,
+        "branch": 1,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.6481746031746038
+      },
+      "poses": [
+        {
+          "context": {
+            "skillId": "mage-b-5",
+            "duration": 1.26,
+            "job": "mage",
+            "stage": 5,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.6481746031746038
+          },
+          "clip": "mage-b-5:release:skill-guard:live",
+          "isPlaying": false,
+          "frame": 31.940506013219817,
+          "position": [
+            0,
+            0,
+            0.02794794192865377
+          ],
+          "rotation": [
+            -0.06388101012263718,
+            0.10249355993598835,
+            0
+          ]
+        }
+      ],
+      "active": 0,
+      "cue": "mage-b-5"
+    },
+    {
+      "hp": 1293.0030843999878,
+      "cast": null,
+      "motion": {
+        "skillId": "mage-b-5",
+        "duration": 1.26,
+        "job": "mage",
+        "stage": 5,
+        "branch": 1,
+        "effect": "area",
+        "phase": "recovery",
+        "progress": 0.8465079365079368
+      },
+      "poses": [
+        {
+          "context": {
+            "skillId": "mage-b-5",
+            "duration": 1.26,
+            "job": "mage",
+            "stage": 5,
+            "branch": 1,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.8465079365079368
+          },
+          "clip": "mage-b-5:recovery:skill-guard:live",
+          "isPlaying": false,
+          "frame": 8.602113727926772,
+          "position": [
+            0,
+            0,
+            0.0075268492876183375
+          ],
+          "rotation": [
+            -0.017204226943127628,
+            0.028274045600393406,
+            0
+          ]
+        }
+      ],
+      "active": 0,
+      "cue": "mage-b-5"
+    },
+    {
+      "hp": 1283.984084399987,
+      "cast": null,
+      "motion": null,
+      "poses": [],
+      "active": 0,
+      "cue": null
+    },
+    {
+      "hp": 1284.7684919999865,
+      "cast": null,
+      "motion": null,
+      "poses": [],
+      "active": 0,
+      "cue": null
+    },
+    {
+      "hp": 1284.8340227999865,
+      "cast": null,
+      "motion": null,
+      "poses": [],
+      "active": 0,
+      "cue": null
+    },
+    {
+      "hp": 1285.8150227999859,
+      "cast": null,
+      "motion": null,
+      "poses": [],
+      "active": 0,
+      "cue": null
+    },
+    {
+      "hp": 1286.4691535999855,
+      "cast": null,
+      "motion": null,
+      "poses": [],
+      "active": 0,
+      "cue": null
+    },
+    {
+      "hp": 1287.122891999985,
+      "cast": null,
+      "motion": null,
+      "poses": [],
+      "active": 0,
+      "cue": null
+    },
+    {
+      "hp": 1288.1038919999844,
+      "cast": null,
+      "motion": null,
+      "poses": [],
+      "active": 0,
+      "cue": null
+    },
+    {
+      "hp": 1278.9542227999839,
+      "cast": null,
+      "motion": null,
+      "poses": [],
+      "active": 0,
+      "cue": null
+    },
+    {
+      "hp": 1279.4768995999837,
+      "cast": null,
+      "motion": null,
+      "poses": [],
+      "active": 0,
+      "cue": null
+    }
+  ],
+  "errors": []
+}

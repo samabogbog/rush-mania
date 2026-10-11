@@ -10,6 +10,7 @@ import type {AbstractMesh} from '@babylonjs/core/Meshes/abstractMesh';
 import type {Scene} from '@babylonjs/core/scene';
 import {TransformNode} from '@babylonjs/core/Meshes/transformNode';
 import type {AnimationGroup} from '@babylonjs/core/Animations/animationGroup';
+import {Quaternion} from '@babylonjs/core/Maths/math.vector';
 import {Vector3} from '@babylonjs/core/Maths/math.vector';
 import {skillPose,type ChoreographyContext} from './skill-choreography';
 import {MODEL_ASSET_REVISIONS} from './model-revisions';
@@ -18,7 +19,7 @@ export type SkillMotionContext=ChoreographyContext;
 /** One downloaded mesh/rig per kind; instances have independent skeletons and clips. */
 export class ModelLibrary {
  private cache=new Map<string,Promise<AssetContainer>>();
- private actors=new Map<TransformNode,{clips:Map<string,AnimationGroup>;motion:Motion;remaining:number;hp:number;suspended:boolean;pivot:TransformNode;clipKey:string;modelId:string;skillMotion?:SkillMotionContext|null}>();
+ private actors=new Map<TransformNode,{clips:Map<string,AnimationGroup>;motion:Motion;remaining:number;hp:number;suspended:boolean;pivot:TransformNode;clipKey:string;modelId:string;aim?:AnimationGroup;landingBlend?:{start:number;values:{target:any;property:string;value:any}[]};skillMotion?:SkillMotionContext|null}>();
  private low=false;private originals=new Map<AbstractMesh,Material>();private vertexColors=new Map<AbstractMesh,{linear:number[];gamma:number[];stride:number}>();private simple=new Map<Material,Material>();
  private closed=false;loaded=0;errors=0;
  get active(){return this.actors.size}
@@ -36,45 +37,85 @@ export class ModelLibrary {
    target.scaling.setAll(1);
    const clips=new Map(instance.animationGroups.map(g=>[g.name.replace(/^.*-(idle|walk|run|attack-heavy|attack|skill-ultimate|skill-guard|skill-heal|skill|jump|land|dodge|spin|hurt|death)$/,'$1'),g]));
    for(const group of clips.values())for(const entry of group.targetedAnimations){entry.animation.enableBlending=true;entry.animation.blendingSpeed=.35;}
-   this.actors.set(target,{clips,motion:'idle',remaining:0,hp:NaN,suspended:false,pivot,clipKey:'idle',modelId:id});if(target.isEnabled()){const rest=clips.get(id==='archer'?'skill':'idle');if(id==='archer'&&rest)for(const entry of rest.targetedAnimations)entry.animation.enableBlending=false;rest?.start(id!=='archer');if(id==='archer'&&rest){rest.pause();rest.goToFrame(rest.to);}}
+   const aim=id==='archer'?clips.get('skill')?.clone(id+'-upper-body-aim',t=>t):undefined;
+   if(aim){for(const entry of [...aim.targetedAnimations])if(!/(spine|chest|upperarm|lowerarm|wrist|hand|head|elbowIK)/.test(entry.target.name))aim.removeTargetedAnimation(entry.animation);}
+   this.actors.set(target,{aim:aim||undefined,clips,motion:'idle',remaining:0,hp:NaN,suspended:false,pivot,clipKey:'idle',modelId:id});if(target.isEnabled()){const rest=clips.get(id==='archer'?'skill':'idle');if(id==='archer'&&rest)for(const entry of rest.targetedAnimations)entry.animation.enableBlending=false;rest?.start(id!=='archer');if(id==='archer'&&rest){rest.pause();rest.goToFrame(rest.to);}}
    const actorMeshes=target.getChildMeshes();
    for(const mesh of actorMeshes)if(mesh.material?.getClassName()==='PBRMaterial'){this.originals.set(mesh,mesh.material);this.applyMaterial(mesh,mesh.material);}
    this.loaded++;decorate(target);
-   target.onDisposeObservable.addOnce(()=>{this.actors.delete(target);for(const mesh of actorMeshes){this.originals.delete(mesh);this.vertexColors.delete(mesh);}instance.dispose();});
+   target.onDisposeObservable.addOnce(()=>{this.actors.delete(target);aim?.dispose();for(const mesh of actorMeshes){this.originals.delete(mesh);this.vertexColors.delete(mesh);}instance.dispose();});
   }).catch(()=>{if(!this.closed)this.errors++;});
  }
- setSkillMotion(target:TransformNode,context:SkillMotionContext|null){const actor=this.actors.get(target);if(actor){if(!context&&actor.skillMotion){actor.remaining=0;actor.clipKey='';}actor.skillMotion=context;}}
+ setSkillMotion(target:TransformNode,context:SkillMotionContext|null){const actor=this.actors.get(target);if(actor){if(!context&&actor.skillMotion){actor.remaining=0;actor.clipKey='';actor.landingBlend=undefined;}actor.skillMotion=context;}}
  animate(target:TransformNode,moving:boolean,hp:number,action:boolean,casting:boolean,dt:number,visible=true) {
   const actor=this.actors.get(target);if(!actor)return;
   const active=target.isEnabled()&&visible;
   const damaged=hp<actor.hp;actor.hp=hp;actor.remaining=Math.max(0,actor.remaining-dt);
-  if(!active||hp<=0||damaged){actor.skillMotion=null;actor.pivot.position.setAll(0);actor.pivot.rotation.setAll(0);}
-  if(!active){if(!actor.suspended){actor.clips.forEach(g=>g.stop());actor.suspended=true;actor.clipKey='';}return;}
+  const midTier=!!actor.skillMotion&&actor.skillMotion.stage>=5&&actor.skillMotion.stage<=7;
+  if(!active||hp<=0||damaged&&!midTier){actor.skillMotion=null;actor.landingBlend=undefined;actor.pivot.position.setAll(0);actor.pivot.rotation.setAll(0);}
+  if(!active){if(!actor.suspended){actor.clips.forEach(g=>g.stop());actor.aim?.stop();actor.suspended=true;actor.clipKey='';}return;}
   actor.suspended=false;
-  const context=actor.remaining>0&&actor.motion==='hurt'?null:actor.skillMotion;
+  const context=!midTier&&actor.remaining>0&&actor.motion==='hurt'?null:actor.skillMotion;
+  const sampled=!!context&&context.stage>=5&&context.stage<=7;
   const pose=context?skillPose(context):null;
   if(pose){actor.pivot.position.set(pose.x,pose.y,pose.z);actor.pivot.rotation.set(pose.pitch,pose.yaw,pose.roll);}
   else {actor.pivot.position.setAll(0);actor.pivot.rotation.setAll(0);}
-  const next:Motion=hp<=0?'death':damaged?'hurt':context?'skill':action?'attack':actor.remaining>0?actor.motion:moving?'run':'idle';
+  const next:Motion=hp<=0?'death':damaged&&!sampled?'hurt':context?'skill':action?'attack':actor.remaining>0?actor.motion:moving?'run':'idle';
   // The generic idle points this rigid crossbow below the planted feet.
   // Archer rests in the authored ranged aiming endpoint instead.
   const idleAim=actor.modelId==='archer'&&!context&&next==='idle';
-  const clip=idleAim?'skill':pose?.clip||next,key=idleAim?'idle-aim':context?`${context.skillId||context.job}:${context.phase==='anticipation'?'anticipation':'execution'}:${clip}:${context.frozen?'frozen':'live'}`:clip;
+  const clip=idleAim?'skill':pose?.clip||next,key=idleAim?'idle-aim':context?`${context.skillId||context.job}:${sampled?context.phase:context.phase==='anticipation'?'anticipation':'execution'}:${clip}:${context.frozen?'frozen':'live'}`:clip;
   if(key!==actor.clipKey){
    // Only the active Archer landing/hold skips blending; restore on the next
    // motion transition so jump, locomotion and basic attacks keep their blends.
    if(actor.modelId==='archer'){
-    for(const g of actor.clips.values())for(const entry of g.targetedAnimations)entry.animation.enableBlending=!context?.frozen;
+    for(const g of actor.clips.values())for(const entry of g.targetedAnimations)entry.animation.enableBlending=!context?.frozen&&!sampled;
     if(clip==='skill')for(const entry of (actor.clips.get(clip)?.targetedAnimations||[]))entry.animation.enableBlending=false;
    }
+   if(sampled)for(const g of actor.clips.values())for(const entry of g.targetedAnimations)entry.animation.enableBlending=false;
+   else if(actor.modelId!=='archer')for(const g of actor.clips.values())for(const entry of g.targetedAnimations)entry.animation.enableBlending=true;
    actor.clips.forEach(g=>g.stop());actor.motion=next;actor.clipKey=key;
    actor.remaining=next==='hurt'?.22:next==='attack'?.26:0;
    const group=actor.clips.get(clip)||actor.clips.get(next);
+   actor.landingBlend=undefined;
+   if(sampled&&context?.phase!=='anticipation'&&clip!=='jump'&&clip!=='land'){
+    const grounded=(context.branch||0)===1&&context.stage!==6;
+    const start=.075+(context.stage===7?.46:context.stage===6?.44:.42)+.16;
+    // Capture irrespective of the first requested frame: a frozen seek may
+    // enter at .95 seconds and then scrub backward through the landing blend.
+    if(!grounded){
+     const jump=actor.clips.get('jump');jump?.start(false);jump?.pause();jump?.goToFrame(jump.to);
+     if(actor.aim){actor.aim.start(false);actor.aim.pause();actor.aim.goToFrame(actor.aim.to);}
+     const values=(group?.targetedAnimations||[]).map(entry=>{const property=entry.animation.targetProperty;const value=entry.target[property];return {target:entry.target,property,value:value?.clone?value.clone():value};});
+     actor.landingBlend={start,values};jump?.stop();actor.aim?.stop();
+    }
+   }
    group?.start(next==='idle'||next==='run'||context?.phase==='anticipation',pose?.speed||(next==='attack'?1.8:1));
   }
   const group=actor.clips.get(clip)||actor.clips.get(next);
   if(idleAim&&group){group.pause();group.goToFrame(group.to);}
-  if(pose&&group){group.speedRatio=pose.speed;if(context?.frozen){group.pause();group.goToFrame(group.from+(group.to-group.from)*pose.clipProgress);}}
+  if(pose&&group){group.speedRatio=pose.speed;if(context?.frozen||sampled){group.pause();group.goToFrame(group.from+(group.to-group.from)*pose.clipProgress);}}
+  if(sampled&&context&&actor.landingBlend){
+   const elapsed=context.progress*(context.duration||(.36+context.stage*.012)*3);
+   const u=Math.max(0,Math.min(1,(elapsed-actor.landingBlend.start)/.07)),mix=u*u*(3-2*u);
+   for(const {target,property,value} of actor.landingBlend.values){
+    const current=target[property];
+    if(value instanceof Quaternion&&current instanceof Quaternion)Quaternion.SlerpToRef(value,current,mix,current);
+    else if(value instanceof Vector3&&current instanceof Vector3)Vector3.LerpToRef(value,current,mix,current);
+    else if(typeof value==='number'&&typeof current==='number')target[property]=value+(current-value)*mix;
+   }
+   // Retain the endpoint while this clip is active so backward frozen seeking
+   // uses the same deterministic transition as forward playback.
+  }
+  // Keep the equipped crossbow in the authored aiming pose while lower-body
+  // Jump_Full_Short supplies tuck and landing knees. Generic landing arms lower
+  // this prop under the feet; masking those channels preserves hand sockets.
+  if(actor.aim){
+   if(sampled&&actor.modelId==='archer'&&pose?.clip==='jump'){
+    if(!actor.aim.isStarted){for(const entry of actor.aim.targetedAnimations)entry.animation.enableBlending=false;actor.aim.start(false);}
+    actor.aim.pause();actor.aim.goToFrame(actor.aim.to);
+   }else actor.aim.stop();
+  }
  }
  /** Palette variants reuse a loaded family rig while staying consistent across quality changes. */
  recolor(target:TransformNode,color:number){

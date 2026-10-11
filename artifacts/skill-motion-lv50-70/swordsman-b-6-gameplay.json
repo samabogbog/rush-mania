@@ -1,0 +1,579 @@
+{
+  "environment": "Chromium ANGLE SwiftShader; authentic learned Lv50–70 skill rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+  "before": {
+    "job": "swordsman",
+    "zone": "glade",
+    "x": 0.8065200000000049,
+    "z": 17.545639999999963,
+    "hp": 1292.250476799997,
+    "mp": 852,
+    "kills": 0,
+    "hotbar": [
+      "swordsman-b-6",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "swordsman-1",
+      "swordsman-2",
+      "swordsman-3",
+      "swordsman-4",
+      "swordsman-5",
+      "swordsman-b-6"
+    ],
+    "skillCooldowns": {},
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "drawCount": 0
+    },
+    "modelErrors": 0,
+    "drawCalls": 52
+  },
+  "after": {
+    "job": "swordsman",
+    "zone": "glade",
+    "x": 0.8065200000000049,
+    "z": 17.545639999999963,
+    "hp": 1293.1008075999964,
+    "mp": 826.9231419999999,
+    "kills": 3,
+    "hotbar": [
+      "swordsman-b-6",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "swordsman-1",
+      "swordsman-2",
+      "swordsman-3",
+      "swordsman-4",
+      "swordsman-5",
+      "swordsman-b-6"
+    ],
+    "skillCooldowns": {
+      "swordsman-b-6": 10.783299999999997
+    },
+    "skillMotion": {
+      "skillId": "swordsman-b-6",
+      "duration": 1.296,
+      "job": "swordsman",
+      "stage": 6,
+      "branch": 1,
+      "effect": "slow",
+      "phase": "release",
+      "progress": 0
+    },
+    "vfx": {
+      "active": 22,
+      "pooled": 26,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "crescent",
+        "ring",
+        "scream",
+        "core",
+        "beam",
+        "arrow"
+      ],
+      "materials": 6,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": {
+        "skillId": "swordsman-b-6",
+        "style": "crushing-advance-crimson-thrust",
+        "impactSeconds": 0,
+        "heroSeconds": 0.78,
+        "focal": {
+          "x": 1.8065200000000048,
+          "z": 18.545639999999963
+        },
+        "decorativeRadius": 10.8,
+        "palette": [
+          16733230,
+          16769184,
+          9840953
+        ],
+        "endSeconds": 1.22
+      },
+      "lv70Cue": null,
+      "drawCount": 14
+    },
+    "modelErrors": 0,
+    "drawCalls": 67
+  },
+  "recovered": {
+    "job": "swordsman",
+    "zone": "glade",
+    "x": 0.8065200000000049,
+    "z": 17.545639999999963,
+    "hp": 1284.4148767999884,
+    "mp": 839.205999999998,
+    "kills": 3,
+    "hotbar": [
+      "swordsman-b-6",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "swordsman-1",
+      "swordsman-2",
+      "swordsman-3",
+      "swordsman-4",
+      "swordsman-5",
+      "swordsman-b-6"
+    ],
+    "skillCooldowns": {
+      "swordsman-b-6": 7.899999999999957
+    },
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 26,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "crescent",
+        "ring",
+        "scream",
+        "core",
+        "beam",
+        "arrow"
+      ],
+      "materials": 6,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": {
+        "skillId": "swordsman-b-6",
+        "style": "crushing-advance-crimson-thrust",
+        "impactSeconds": 0,
+        "heroSeconds": 0.78,
+        "focal": {
+          "x": 1.8065200000000048,
+          "z": 18.545639999999963
+        },
+        "decorativeRadius": 10.8,
+        "palette": [
+          16733230,
+          16769184,
+          9840953
+        ],
+        "endSeconds": 1.22
+      },
+      "lv70Cue": null,
+      "drawCount": 0
+    },
+    "modelErrors": 0,
+    "drawCalls": 50
+  },
+  "timeline": [
+    {
+      "hp": 1293.1008075999964,
+      "cast": null,
+      "motion": {
+        "skillId": "swordsman-b-6",
+        "duration": 1.296,
+        "job": "swordsman",
+        "stage": 6,
+        "branch": 1,
+        "effect": "slow",
+        "phase": "release",
+        "progress": 0
+      },
+      "poses": [
+        {
+          "context": {
+            "skillId": "swordsman-b-6",
+            "duration": 1.296,
+            "job": "swordsman",
+            "stage": 6,
+            "branch": 1,
+            "effect": "slow",
+            "phase": "release",
+            "progress": 0
+          },
+          "clip": "swordsman-b-6:release:jump:live",
+          "isPlaying": false,
+          "frame": 0,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "active": 22,
+      "cue": "swordsman-b-6"
+    },
+    {
+      "hp": 1294.0818075999957,
+      "cast": null,
+      "motion": {
+        "skillId": "swordsman-b-6",
+        "duration": 1.296,
+        "job": "swordsman",
+        "stage": 6,
+        "branch": 1,
+        "effect": "slow",
+        "phase": "release",
+        "progress": 0.1929012345679012
+      },
+      "poses": [
+        {
+          "context": {
+            "skillId": "swordsman-b-6",
+            "duration": 1.296,
+            "job": "swordsman",
+            "stage": 6,
+            "branch": 1,
+            "effect": "slow",
+            "phase": "release",
+            "progress": 0.1929012345679012
+          },
+          "clip": "swordsman-b-6:release:jump:live",
+          "isPlaying": false,
+          "frame": 27.9045445041223,
+          "position": [
+            0,
+            0.22723749999999998,
+            0.22
+          ],
+          "rotation": [
+            -1.0498318478633005e-33,
+            0,
+            0
+          ]
+        }
+      ],
+      "active": 21,
+      "cue": "swordsman-b-6"
+    },
+    {
+      "hp": 1295.062807599995,
+      "cast": null,
+      "motion": {
+        "skillId": "swordsman-b-6",
+        "duration": 1.296,
+        "job": "swordsman",
+        "stage": 6,
+        "branch": 1,
+        "effect": "slow",
+        "phase": "release",
+        "progress": 0.3858024691358024
+      },
+      "poses": [
+        {
+          "context": {
+            "skillId": "swordsman-b-6",
+            "duration": 1.296,
+            "job": "swordsman",
+            "stage": 6,
+            "branch": 1,
+            "effect": "slow",
+            "phase": "release",
+            "progress": 0.3858024691358024
+          },
+          "clip": "swordsman-b-6:release:jump:live",
+          "isPlaying": false,
+          "frame": 51.76818005496804,
+          "position": [
+            0,
+            0.03123750000000017,
+            0.22
+          ],
+          "rotation": [
+            -1.0498318478633005e-33,
+            0,
+            0
+          ]
+        }
+      ],
+      "active": 19,
+      "cue": "swordsman-b-6"
+    },
+    {
+      "hp": 1295.9135307999945,
+      "cast": null,
+      "motion": {
+        "skillId": "swordsman-b-6",
+        "duration": 1.296,
+        "job": "swordsman",
+        "stage": 6,
+        "branch": 1,
+        "effect": "slow",
+        "phase": "release",
+        "progress": 0.5530864197530858
+      },
+      "poses": [
+        {
+          "context": {
+            "skillId": "swordsman-b-6",
+            "duration": 1.296,
+            "job": "swordsman",
+            "stage": 6,
+            "branch": 1,
+            "effect": "slow",
+            "phase": "release",
+            "progress": 0.5530864197530858
+          },
+          "clip": "swordsman-b-6:release:attack-heavy:live",
+          "isPlaying": false,
+          "frame": 10.781007615560664,
+          "position": [
+            0,
+            0,
+            0.020214388224913744
+          ],
+          "rotation": [
+            -0.013476258816609164,
+            -0.003957129792583848,
+            0
+          ]
+        }
+      ],
+      "active": 5,
+      "cue": "swordsman-b-6"
+    },
+    {
+      "hp": 1296.2400075999944,
+      "cast": null,
+      "motion": {
+        "skillId": "swordsman-b-6",
+        "duration": 1.296,
+        "job": "swordsman",
+        "stage": 6,
+        "branch": 1,
+        "effect": "slow",
+        "phase": "release",
+        "progress": 0.6172839506172838
+      },
+      "poses": [
+        {
+          "context": {
+            "skillId": "swordsman-b-6",
+            "duration": 1.296,
+            "job": "swordsman",
+            "stage": 6,
+            "branch": 1,
+            "effect": "slow",
+            "phase": "release",
+            "progress": 0.6172839506172838
+          },
+          "clip": "swordsman-b-6:release:attack-heavy:live",
+          "isPlaying": false,
+          "frame": 58.18963405085577,
+          "position": [
+            0,
+            0,
+            0.10910555815505628
+          ],
+          "rotation": [
+            -0.07273703877003752,
+            -0.02408857894110997,
+            0
+          ]
+        }
+      ],
+      "active": 2,
+      "cue": "swordsman-b-6"
+    },
+    {
+      "hp": 1297.2210075999938,
+      "cast": null,
+      "motion": {
+        "skillId": "swordsman-b-6",
+        "duration": 1.296,
+        "job": "swordsman",
+        "stage": 6,
+        "branch": 1,
+        "effect": "slow",
+        "phase": "recovery",
+        "progress": 0.8101851851851851
+      },
+      "poses": [
+        {
+          "context": {
+            "skillId": "swordsman-b-6",
+            "duration": 1.296,
+            "job": "swordsman",
+            "stage": 6,
+            "branch": 1,
+            "effect": "slow",
+            "phase": "recovery",
+            "progress": 0.8101851851851851
+          },
+          "clip": "swordsman-b-6:recovery:attack-heavy:live",
+          "isPlaying": false,
+          "frame": 23.600574563870826,
+          "position": [
+            0,
+            0,
+            0.04425107499938439
+          ],
+          "rotation": [
+            -0.02950071666625626,
+            -0.10389514559298735,
+            0
+          ]
+        }
+      ],
+      "active": 0,
+      "cue": "swordsman-b-6"
+    },
+    {
+      "hp": 1297.5482691999935,
+      "cast": null,
+      "motion": {
+        "skillId": "swordsman-b-6",
+        "duration": 1.296,
+        "job": "swordsman",
+        "stage": 6,
+        "branch": 1,
+        "effect": "slow",
+        "phase": "recovery",
+        "progress": 0.8745370370370381
+      },
+      "poses": [
+        {
+          "context": {
+            "skillId": "swordsman-b-6",
+            "duration": 1.296,
+            "job": "swordsman",
+            "stage": 6,
+            "branch": 1,
+            "effect": "slow",
+            "phase": "recovery",
+            "progress": 0.8745370370370381
+          },
+          "clip": "swordsman-b-6:recovery:attack-heavy:live",
+          "isPlaying": false,
+          "frame": 63.64671405274308,
+          "position": [
+            0,
+            0,
+            0.11933758262495334
+          ],
+          "rotation": [
+            -0.07955838841663555,
+            -0.009551665662361496,
+            0
+          ]
+        }
+      ],
+      "active": 0,
+      "cue": "swordsman-b-6"
+    },
+    {
+      "hp": 1288.4637383999927,
+      "cast": null,
+      "motion": null,
+      "poses": [],
+      "active": 0,
+      "cue": null
+    },
+    {
+      "hp": 1289.0523383999923,
+      "cast": null,
+      "motion": null,
+      "poses": [],
+      "active": 0,
+      "cue": null
+    },
+    {
+      "hp": 1289.7719999999917,
+      "cast": null,
+      "motion": null,
+      "poses": [],
+      "active": 0,
+      "cue": null
+    },
+    {
+      "hp": 1290.5564075999912,
+      "cast": null,
+      "motion": null,
+      "poses": [],
+      "active": 0,
+      "cue": null
+    },
+    {
+      "hp": 1291.3412075999906,
+      "cast": null,
+      "motion": null,
+      "poses": [],
+      "active": 0,
+      "cue": null
+    },
+    {
+      "hp": 1292.12600759999,
+      "cast": null,
+      "motion": null,
+      "poses": [],
+      "active": 0,
+      "cue": null
+    },
+    {
+      "hp": 1282.8452767999895,
+      "cast": null,
+      "motion": null,
+      "poses": [],
+      "active": 0,
+      "cue": null
+    },
+    {
+      "hp": 1283.695607599989,
+      "cast": null,
+      "motion": null,
+      "poses": [],
+      "active": 0,
+      "cue": null
+    },
+    {
+      "hp": 1284.4148767999884,
+      "cast": null,
+      "motion": null,
+      "poses": [],
+      "active": 0,
+      "cue": null
+    }
+  ],
+  "errors": []
+}

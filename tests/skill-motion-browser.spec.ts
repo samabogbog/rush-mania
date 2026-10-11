@@ -1,0 +1,20 @@
+import {test,expect} from '@playwright/test';
+import {mkdirSync,writeFileSync} from 'node:fs';
+import {skills,type ClassId} from '../src/game/classes';
+import {skillRecoveryDuration} from '../src/game/skill-timing';
+const out='artifacts/skill-motion-lv50-70';
+for(const job of ['swordsman','mage','archer'] as ClassId[])test(`${job} all six Lv50–70 movements: fixed-time body poses and uninterrupted playback`,async({browser})=>{
+ mkdirSync(out,{recursive:true});const context=await browser.newContext({viewport:{width:1000,height:720},recordVideo:{dir:out+'/raw',size:{width:1000,height:720}}}),page=await context.newPage(),errors:string[]=[];page.on('pageerror',e=>{errors.push(e.message);void page.close()});
+ expect((await page.request.get('/')).status()).toBe(200);expect((await page.request.get('/api/auth/status')).status()).toBe(200);
+ await page.route('**/motion-review.html*',r=>r.fulfill({contentType:'text/html',body:'<!doctype html><canvas style="width:100vw;height:100vh;display:block"></canvas><div id="label" style="position:absolute;top:12px;left:12px;background:white;padding:8px;font:18px sans-serif"></div><script type="module" src="/tests/skill-motion-fixture.ts"></script>'}));await page.goto(`/motion-review.html?job=${job}`);await page.waitForFunction(()=>(window as any).motionReview?.library.active===1,{},{timeout:90000});
+ const idle=await page.evaluate(async()=>{const times:number[]=[];let last=performance.now();for(let n=0;n<20;n++){await new Promise<void>(r=>requestAnimationFrame(()=>r()));const now=performance.now();times.push(now-last);last=now;}times.sort((a,b)=>a-b);return {p50:times[10],p95:times[18],...(window as any).motionReview.describe()};});const records:any[]=[],playbacks:any[]=[];
+ for(const skill of skills[job].filter(s=>s.level>=50&&s.level<=70)){
+  for(const age of [0,.08,.18,.3,.46,.58,.72,.95,skillRecoveryDuration(skill.stage)]){
+   const s=await page.evaluate(({id,t})=>(window as any).motionReview.sample(id,t),{id:skill.id,t:age});expect(s.modelErrors).toBe(0);expect(s.actorPosition).toEqual([0,0,0]);expect(Number.isFinite(s.minY)).toBe(true);expect(s.motion).toHaveLength(1);records.push({id:skill.id,age,...s});await page.screenshot({path:`${out}/${skill.id}-motion-${age.toFixed(2)}.png`});
+  }
+  if(skill.cast)for(const age of [.1,.5,skill.cast*3-.05]){const s=await page.evaluate(({id,t})=>(window as any).motionReview.sample(id,t,'anticipation'),{id:skill.id,t:age});records.push({id:skill.id,age,...s});await page.screenshot({path:`${out}/${skill.id}-cast-${age.toFixed(2)}.png`});}
+  if(skill.branch===0||skill.stage===6){const end=.075+(skill.stage===7?.46:skill.stage===6?.44:.42)+.16+.025;const compare=await page.evaluate(({id,t})=>{const r=(window as any).motionReview;r.reset();r.sample(id,.95);const cold=r.sample(id,t);r.reset();const direct=r.sample(id,t);return {cold,direct};},{id:skill.id,t:end});expect(compare.cold.minY).toBeCloseTo(compare.direct.minY,5);for(let n=0;n<compare.direct.joints.length;n++)for(let k=0;k<4;k++)expect(compare.cold.joints[n].rotation[k]).toBeCloseTo(compare.direct.joints[n].rotation[k],5);}
+  await page.evaluate(id=>(window as any).motionReview.play(id),skill.id);await page.waitForFunction(()=>(window as any).motionReview.playing===false,{},{timeout:15000});const samples=await page.evaluate(()=>(window as any).motionReview.samples);expect(samples.length).toBeGreaterThan(5);expect(samples.every((s:any)=>s.modelErrors===0&&s.actorPosition.every((v:number)=>v===0))).toBe(true);playbacks.push({id:skill.id,samples});
+ }
+ const disposal=await page.evaluate(()=>(window as any).motionReview.disposeActor());expect(disposal.active).toBe(0);expect(disposal.aimGroups).toBe(0);expect(disposal.after).toBeLessThan(disposal.before);expect(errors).toEqual([]);writeFileSync(`${out}/${job}-motion.json`,JSON.stringify({environment:'Chromium ANGLE SwiftShader; render-only closer camera; real wall-clock playback and deterministic samples; VFX intentionally absent to inspect body',idle,records,playbacks,disposal,errors},null,2));const video=page.video();await context.close();if(video)await video.saveAs(`${out}/${job}-motion.webm`);
+});
