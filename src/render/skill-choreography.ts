@@ -1,8 +1,8 @@
 /** Render-only choreography. All offsets are inside the actor, never world/simulation movement. */
+export {skillRecoveryDuration} from '../game/skill-timing.js';
 export type ChoreographyContext={stage:number;branch?:number;job?:string;effect:string;phase:'anticipation'|'release'|'recovery';progress:number;skillId?:string;duration?:number;frozen?:boolean};
 export type SkillPose={clip:string;speed:number;x:number;y:number;z:number;pitch:number;yaw:number;roll:number;clipProgress:number};
 const clamp=(n:number)=>Math.max(0,Math.min(1,n));
-export function skillRecoveryDuration(stage:number){return .36+Math.min(10,stage)*.012;}
 export function skillPose(c:ChoreographyContext):SkillPose {
  const p=clamp(c.progress),stage=Math.max(1,Math.min(10,c.stage)),tier=(stage-1)/9,branch=c.branch||0;
  const support=['heal','guard','fury'].includes(c.effect),air=(!support&&stage>=3)||(c.job==='mage'&&c.effect==='heal'&&stage>=5),flip=air&&stage>=7&&c.job==='archer',spin=!support&&stage>=4&&(c.job==='swordsman'||c.job==='mage'&&branch===0);

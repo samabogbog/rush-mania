@@ -4,7 +4,7 @@ test('sixty branch/stage recipes land cleanly and remain within local visual env
  for(const job of ['swordsman','mage','archer'])for(const branch of [0,1])for(let stage=1;stage<=10;stage++){
   const context={job,branch,stage,effect:'hit',phase:'release' as const,progress:0};
   for(let i=0;i<=100;i++){const p=skillPose({...context,progress:i/100});expect(Math.abs(p.z)).toBeLessThanOrEqual(1.201);expect(p.y).toBeGreaterThanOrEqual(-.001);expect(p.y).toBeLessThanOrEqual(1.441);expect(p.speed).toBeGreaterThan(3);}
-  const final=skillPose({...context,progress:1});expect(final.y).toBeCloseTo(0);expect(final.z).toBeCloseTo(0);expect(Math.sin(final.pitch)).toBeCloseTo(0);expect(Math.sin(final.yaw)).toBeCloseTo(0);expect(final.clip).toBe(job==='archer'?'skill':'land');expect(skillRecoveryDuration(stage)).toBeLessThanOrEqual(.48);
+  const final=skillPose({...context,progress:1});expect(final.y).toBeCloseTo(0);expect(final.z).toBeCloseTo(0);expect(Math.sin(final.pitch)).toBeCloseTo(0);expect(Math.sin(final.yaw)).toBeCloseTo(0);expect(final.clip).toBe(job==='archer'?'skill':'land');expect(skillRecoveryDuration(stage)).toBeLessThanOrEqual(1.44);
  }
 });
 test('high archer flips use source jump and support skills retain full-body casting',()=>{

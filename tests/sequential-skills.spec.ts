@@ -13,9 +13,9 @@ function fighter(job:ClassId='swordsman'){
 }
 for(const job of ['swordsman','mage','archer'] as const)test(`${job}: six ready slots execute in order with cast and complete recovery gaps`,()=>{
  const s=fighter(job),casts:{id:string;time:number}[]=[],original=s.castSkill.bind(s);s.castSkill=id=>{const ok=original(id);if(ok)casts.push({id,time:s.time});return ok};s.setAuto(true);s.tick(.01,0,0);expect(casts).toHaveLength(1);
- for(let i=0;i<1000&&casts.length<6;i++)s.tick(.01,0,0);
+ for(let i=0;i<4000&&casts.length<6;i++)s.tick(.01,0,0);
  expect(casts.map(c=>c.id)).toEqual(s.save.hotbar);
- for(let i=1;i<casts.length;i++){const previous=s.skillList.find(k=>k.id===casts[i-1].id)!;expect(casts[i].time-casts[i-1].time).toBeGreaterThanOrEqual((previous.cast||0)+skillRecoveryDuration(previous.stage)-.0001);}
+ for(let i=1;i<casts.length;i++){const previous=s.skillList.find(k=>k.id===casts[i-1].id)!;expect(casts[i].time-casts[i-1].time).toBeGreaterThanOrEqual((previous.cast||0)*3+skillRecoveryDuration(previous.stage)-.0001);}
  expect(Object.keys(s.skillCooldowns)).toHaveLength(6);
 });
 test('manual spam during instant skill recovery spends no MP and starts no other cooldown; pause freezes gate',()=>{
@@ -33,5 +33,11 @@ test('authoritative server rejects six same-packet instant commands, retains gat
  const store=new Store(),user={id:'sequence',name:'Sequence'};let snap=await transact(store,user,{connect:true},1000);const s=fighter();store.realm!.players[user.id].actor=capture(s);store.realm!.rooms![store.realm!.players[user.id].room!].monsters=structuredClone(s.monsters);const mp=s.save.mp;
  const commands=Array.from({length:6},(_,i)=>({id:snap.player.session.id+':'+(i+1),type:'skill',args:[i]}));snap=await transact(store,user,{commands},1000);expect(Object.keys(snap.player.actor.skillCooldowns)).toEqual(['swordsman-1']);expect(snap.player.actor.save.mp).toBe(mp-s.skillList[0].mp);expect(snap.player.actor.actionTime).toBeCloseTo(skillRecoveryDuration(1));
  snap=await transact(store,user,{commands:[{id:snap.player.session.id+':7',type:'skill',args:[1]}]},1100);expect(snap.player.actor.skillCooldowns['swordsman-2']||0).toBe(0);expect(snap.player.actor.actionTime).toBeGreaterThan(0);
- snap=await transact(store,user,{commands:[{id:snap.player.session.id+':8',type:'skill',args:[1]}]},1500);expect(snap.player.actor.skillCooldowns['swordsman-2']).toBeGreaterThan(0);
+ for(const now of [1500,1900]){snap=await transact(store,user,{},now);expect(snap.player.actor.skillCooldowns['swordsman-2']||0).toBe(0);}
+ snap=await transact(store,user,{commands:[{id:snap.player.session.id+':8',type:'skill',args:[1]}]},2200);expect(snap.player.actor.skillCooldowns['swordsman-2']).toBeGreaterThan(0);
+});
+
+test('cast and recovery are exactly triple the previous durations for every class and stage',()=>{
+ for(const job of ['swordsman','mage','archer'] as const){const s=fighter(job);for(let stage=7;stage<=10;stage++)expect(s.chooseSkill(`${job}-${stage}`)).toBe(true);for(const skill of s.skillList){s.cast=null;s.actionTime=0;s.skillCooldowns={};s.save.mp=s.maxMp;if(!s.unlockedSkills.some(k=>k.id===skill.id))continue;expect(s.castSkill(skill.id)).toBe(true);if(skill.cast){expect(s.cast!.total).toBeCloseTo(skill.cast*3);expect(s.cast!.remaining).toBeCloseTo(skill.cast*3);}else expect(s.actionTime).toBeCloseTo((.36+Math.min(10,skill.stage)*.012)*3);}}
+ for(let stage=1;stage<=10;stage++)expect(skillRecoveryDuration(stage)).toBeCloseTo((.36+stage*.012)*3);
 });

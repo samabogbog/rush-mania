@@ -1,4 +1,5 @@
 import {migrateStoredItem,isRetiredMaterial} from './game/item-migration.js';
+import {skillCastDuration,skillRecoveryDuration} from './game/skill-timing.js';
 import {inventoryKey,salvageYield,itemSalePrice} from './game/inventory-actions.js';
 import {isCraftMaterial,isRarity,materialRarity,materialKey,sameStack,gearRecipe,craftCost,materialCount,rollMaterialDrops} from './game/crafting.js';
 import {materialIcons} from './game/items.js';
@@ -637,8 +638,8 @@ export class Simulation {
       this.cast = {
         skillId: id,
         targetId: target?.id ?? null,
-        remaining: skill.cast,
-        total: skill.cast,
+        remaining: skillCastDuration(skill.cast),
+        total: skillCastDuration(skill.cast),
       };
     else this.resolveSkill(skill, target?.id ?? null);
     this.refreshCooldowns();
@@ -672,9 +673,8 @@ export class Simulation {
     const monster = this.monsters.find(
       (monster) => monster.id === targetId && monster.alive,
     );
-    // Match the stage recovery used by render/skill-choreography without a
-    // render dependency: this timer also gates authoritative combat actions.
-    this.actionTime = .36 + Math.min(10, skill.stage) * .012;
+    // Share recovery timing with choreography; this also gates combat actions.
+    this.actionTime = skillRecoveryDuration(skill.stage);
     if(["heal","guard","fury"].includes(skill.effect))this.onSupport?.(skill);
     if (skill.effect === "heal") {
       this.save.hp = Math.min(
