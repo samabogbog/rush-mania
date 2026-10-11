@@ -1,3 +1,4 @@
+import { SkillCameraShake } from './render/skill-camera-shake.js';
 import { WORLD_SIZE, WORLD_BOUNDS, PORTAL_POSITION, zoneMonsterGroups, insideMonsterGroup } from './game/map-data';
 import { skillRecoveryDuration } from './render/skill-choreography';
 import { skillCastDuration } from './game/skill-timing.js';
@@ -68,6 +69,8 @@ export class World implements GameWorld {
   private readonly destination: TransformNode;
   private readonly loot: Mesh[] = [];
   private readonly skillVFX: SkillVFX;
+  private readonly skillCameraShake=new SkillCameraShake();
+  private skillShakeReleasedThisFrame=false;
   private observedCooldowns: Record<string,number> = {};
   private previousCast:CastSnapshot|null=null;
   private previousAction=0;
@@ -341,7 +344,7 @@ export class World implements GameWorld {
       texturedMapMeshes:this.mapMeshes.filter(m=>(m.material as StandardMaterial)?.diffuseTexture).length+1,
       shadowsEnabled:this.scene.shadowsEnabled,shadowFilter:'blur-close-exponential',shadowBlurKernel:this.shadows.blurKernel,shadowBlurScale:this.shadows.blurScale,shadowDarkness:this.shadows.darkness,shadowDepthScale:this.shadows.depthScale,shadowMapSize:this.shadows.getShadowMap()?.getSize().width,
       lighting:'warm directional sunlight / cool sky fill',territoriesCount:this.farmTerritories.length,activeGroupId:this.farmTerritories.find(t=>t.active)?.group.id??null,groupCenters:this.farmTerritories.map(t=>({...t.group,visible:t.root.isEnabled()})),worldSize:WORLD_SIZE,worldBounds:WORLD_BOUNDS,modelsLoaded:this.models.loaded,modelsExpected:3+this.sim.monsters.length,
-      previewHeld:this.previewHeld,vfx:this.skillVFX.diagnostics,sceneMeshes:this.scene.meshes.length,skillMotion:this.skillMotion,quality:this.quality,autoReduced:this.autoReduced,riggedActors:this.models.active,motionPoses:this.models.motionDiagnostics,modelErrors:this.models.errors,
+      cameraShake:this.skillCameraShake.diagnostics,previewHeld:this.previewHeld,vfx:this.skillVFX.diagnostics,sceneMeshes:this.scene.meshes.length,skillMotion:this.skillMotion,quality:this.quality,autoReduced:this.autoReduced,riggedActors:this.models.active,motionPoses:this.models.motionDiagnostics,modelErrors:this.models.errors,
       renderWidth:this.engine.getRenderWidth(),renderHeight:this.engine.getRenderHeight(),activeAnimations:this.scene.animatables.length,
       drawCalls: this.instrumentation.drawCallsCounter.current,
       fps: this.frameTimes.length ? 1000 / (this.frameTimes.reduce((a,b)=>a+b,0) / this.frameTimes.length) : 0,
@@ -417,24 +420,25 @@ export class World implements GameWorld {
     const target=this.sim.monsters.find(m=>m.id===this.sim.target&&m.alive);
     if(age!==undefined){
       if(!Number.isFinite(age)||age<0||age>1)return false;
-      this.skillVFX.clear();this.skillSequence=null;this.previewHeld=true;
+      this.skillVFX.clear();this.skillCameraShake.reset();this.skillSequence=null;this.previewHeld=true;
       this.skillVFX.release(skill,this.sim.save.job,this.player.position.x,this.player.position.z,target?.x??this.sim.x+2,target?.z??this.sim.z+2);
       this.skillVFX.update(age);
       this.skillMotion={job:this.sim.save.job,stage:skill.stage,branch:skill.branch,effect:skill.effect,skillId:skill.id,duration:skillRecoveryDuration(skill.stage),frozen:true,phase:age>skillRecoveryDuration(skill.stage)*.72?'recovery':'release',progress:Math.min(1,age/skillRecoveryDuration(skill.stage))};
     }else this.beginSkillVisual(skill,target?.x??this.sim.x+2,target?.z??this.sim.z+2,true);
     return true;
   }
-  clearSkillPreview(){if(this.sim.online)return false;this.previewHeld=false;this.skillVFX.clear();this.skillSequence=null;this.skillMotion=null;return true;}
+  clearSkillPreview(){if(this.sim.online)return false;this.previewHeld=false;this.skillVFX.clear();this.skillCameraShake.reset();this.skillSequence=null;this.skillMotion=null;return true;}
   private beginSkillVisual(skill:Skill,tx:number,tz:number,preview=false) {
-    if(this.previewHeld){this.skillVFX.clear();this.previewHeld=false;}
+    if(this.previewHeld){this.skillVFX.clear();this.skillCameraShake.reset();this.previewHeld=false;}
     const total=preview?(skillCastDuration(skill.cast)||.18):(this.sim.renderCast?.total||.001),remaining=preview?total:(this.sim.renderCast?.remaining||0);
     this.skillSequence={preview,skill,remaining,total,released:false,x:this.player.position.x,z:this.player.position.z,tx,tz};
     this.skillVFX.anticipation(skill,this.sim.save.job,this.player.position.x,this.player.position.z);
   }
   private updateSkillVisual(dt:number) {
+    this.skillShakeReleasedThisFrame=false;
     const cast=this.sim.cast,transition=castVisualTransition(this.previousCast,cast,this.previousAction,this.sim.actionTime,dt);
     if(transition==='start'&&cast){const skill=this.sim.skillList.find(s=>s.id===cast.skillId),target=this.sim.monsters.find(m=>m.id===cast.targetId);if(skill)this.beginSkillVisual(skill,target?.x??this.sim.x+1,target?.z??this.sim.z+1);}
-    if(transition==='cancel'&&this.skillSequence&&!this.skillSequence.preview){this.skillSequence=null;this.skillMotion=null;this.skillVFX.clear();}
+    if(transition==='cancel'&&this.skillSequence&&!this.skillSequence.preview){this.skillSequence=null;this.skillMotion=null;this.skillVFX.clear();this.skillCameraShake.reset();}
     for(const [id,cooldown] of Object.entries(this.sim.skillCooldowns)){
       if(cooldown>(this.observedCooldowns[id]||0)+.05&&(!cast||cast.skillId!==id)&&transition!=='cancel'){
         const skill=this.sim.skillList.find(s=>s.id===id);if(skill){const target=this.sim.monsters.find(m=>m.id===this.sim.target);this.beginSkillVisual(skill,target?.x??this.sim.x+1,target?.z??this.sim.z+1);}
@@ -446,7 +450,7 @@ export class World implements GameWorld {
     if(sequence){
       if(sequence.preview||sequence.released)sequence.remaining-=dt;
       else sequence.remaining=cast?.skillId===sequence.skill.id?(this.sim.renderCast?.remaining||0):0;
-      if((sequence.preview?sequence.remaining<=0:(!cast||transition==='release'))&&!sequence.released){sequence.released=true;sequence.remaining=skillRecoveryDuration(sequence.skill.stage);this.skillVFX.release(sequence.skill,this.sim.save.job,sequence.x,sequence.z,sequence.tx,sequence.tz);}
+      if((sequence.preview?sequence.remaining<=0:(!cast||transition==='release'))&&!sequence.released){sequence.released=true;sequence.remaining=skillRecoveryDuration(sequence.skill.stage);this.skillVFX.release(sequence.skill,this.sim.save.job,sequence.x,sequence.z,sequence.tx,sequence.tz);this.skillShakeReleasedThisFrame=this.skillCameraShake.trigger(sequence.skill.level,typeof window!=='undefined'&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);}
       const phase=!sequence.released?'anticipation':sequence.remaining>skillRecoveryDuration(sequence.skill.stage)*.28?'release':'recovery';
       this.skillMotion={skillId:sequence.skill.id,duration:sequence.released?skillRecoveryDuration(sequence.skill.stage):sequence.total,job:this.sim.save.job,stage:sequence.skill.stage,branch:sequence.skill.branch,effect:sequence.skill.effect,phase,progress:!sequence.released?1-Math.max(0,sequence.remaining)/sequence.total:1-Math.max(0,sequence.remaining)/skillRecoveryDuration(sequence.skill.stage)};
       if(sequence.released&&sequence.remaining<=0){this.skillSequence=null;this.skillMotion=null;}
@@ -456,7 +460,7 @@ export class World implements GameWorld {
 
   update(dt: number) {
     if (!this.ready || this.disposed) return;
-    if(this.currentZone!==this.sim.save.zone){this.previewHeld=false;this.skillVFX.clear();this.skillSequence=null;this.skillMotion=null;this.rebuildMap();this.rebuildMonsters();this.loot.splice(0).forEach(m=>m.dispose());}
+    if(this.currentZone!==this.sim.save.zone){this.previewHeld=false;this.skillVFX.clear();this.skillCameraShake.reset();this.skillSequence=null;this.skillMotion=null;this.rebuildMap();this.rebuildMonsters();this.loot.splice(0).forEach(m=>m.dispose());}
     const frameNow=performance.now();
     this.frameTimes.push(frameNow-this.lastFrame);this.lastFrame=frameNow;if(this.frameTimes.length>120)this.frameTimes.shift();
     if(this.quality==="auto"&&!this.autoReduced&&this.frameTimes.length>=12&&this.frameTimes.slice(-10).reduce((a,b)=>a+b,0)/10>40){this.autoReduced=true;this.applyQuality();this.resize();}
@@ -464,7 +468,7 @@ export class World implements GameWorld {
     this.visualTime+=dt;
     // Hurt does not cancel a simulation cast. Keep its sequence until release,
     // or until castVisualTransition observes an actual interruption.
-    if(this.visualJob!==this.sim.save.job||this.sim.save.hp<=0){this.previewHeld=false;this.skillVFX.clear();this.skillSequence=null;this.skillMotion=null;}
+    if(this.visualJob!==this.sim.save.job||this.sim.save.hp<=0){this.previewHeld=false;this.skillVFX.clear();this.skillCameraShake.reset();this.skillSequence=null;this.skillMotion=null;}
     this.visualJob=this.sim.save.job;
     this.updateSkillVisual(dt);
     const renderX=this.sim.renderX,renderZ=this.sim.renderZ;
@@ -503,7 +507,11 @@ export class World implements GameWorld {
       .addInPlace(
         new Vector3(Math.sin(this.angle) * 24, 29, Math.cos(this.angle) * 24),
       );
-    this.camera.setTarget(focus);
+    // The release happens during this update: dt belongs to the interval before it.
+    // Apply its initial sample now, then age by real elapsed seconds on subsequent frames.
+    const shake=this.skillCameraShake.update(this.skillShakeReleasedThisFrame?0:dt),cameraOffset=new Vector3(shake.x,shake.y,shake.z);
+    this.camera.position.addInPlace(cameraOffset);
+    this.camera.setTarget(focus.add(cameraOffset));
     // Track the camera across all nine sectors instead of clipping shadows to the origin.
     this.sunlight.position.set(focus.x-18,30,focus.z+18);
     this.scene.updateTransformMatrix(true);
