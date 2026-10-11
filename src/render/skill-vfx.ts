@@ -7,7 +7,7 @@ import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import { Color3 } from '@babylonjs/core/Maths/math.color.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import type { Skill, ClassId } from '../game/classes';
-type Shape='spark'|'ring'|'petal'|'crescent'|'shield'|'lightning'|'branch'|'slab'|'arrow'|'spiral'|'comet'|'ice'|'star'|'tree'|'beam'|'core'|'ray'|'arch'|'vault'|'bastion'|'leaf'|'shockbolt'|'scream'|'sword'|'stag'|'banner'|'cloud'|'goldstar'|'impactshield'|'rootclaw'|'serpent'|'fang'|'stoneshard';
+type Shape='spark'|'ring'|'petal'|'crescent'|'shield'|'lightning'|'branch'|'slab'|'arrow'|'spiral'|'comet'|'ice'|'star'|'tree'|'beam'|'core'|'ray'|'arch'|'vault'|'bastion'|'leaf'|'shockbolt'|'scream'|'sword'|'stag'|'banner'|'cloud'|'goldstar'|'impactshield'|'rootclaw'|'serpent'|'fang'|'stoneshard'|'fireblade'|'galaxyarm'|'worldcrown'|'blossom'|'featherwing'|'crownfoliage';
 type Particle={mesh:Mesh;life:number;duration:number;x:number;y:number;z:number;vx:number;vy:number;vz:number;size:number;spin:number;grow:number;delay:number;gravity:boolean;stretch:[number,number,number]};
 export type SkillMotion={job:ClassId;stage:number;branch:number;effect:string;phase:'anticipation'|'release'|'recovery';progress:number;skillId?:string;duration?:number;frozen?:boolean};
 export function skillPalette(job:ClassId, skill:Skill):number[] {
@@ -38,10 +38,15 @@ export function lv80Palette(job:ClassId,branch:number):number[]{
 export function lv90Palette(job:ClassId,branch:number):number[]{
  return job==='swordsman'?(branch?[0xffc443,0xfff6cb,0x8c673b]:[0xffcb51,0xfff4b4,0x795139]):job==='mage'?(branch?[0x86512b,0xf2ce49,0x73c638]:[0xffd34e,0xfff7cb,0xe99528]):branch?[0x22e38a,0xc8ffb4,0x087454]:[0xe82b55,0xffc8da,0x701b38];
 }
+/** Final-tier colors are authored from the six actual v4 ultimate icons. */
+export function lv100Palette(job:ClassId,branch:number):number[]{
+ return job==='swordsman'?(branch?[0xffc638,0xfff9db,0x79513b]:[0xff5a16,0xfff5b8,0xca202f]):job==='mage'?(branch?[0xffd44b,0xff91c8,0x73d747]:[0x7431de,0xf19aff,0xffffff]):branch?[0xffcd39,0xfff6bd,0xb58223]:[0x32caff,0xeaffff,0x2381dc];
+}
 /** Immutable shared volumetric geometry, persistent shaded materials and a bounded mesh pool. */
 export class SkillVFX {
  private templates=new Map<Shape,Mesh>();private materials=new Map<string,StandardMaterial>();
  private active:Particle[]=[];private free=new Map<Shape,Mesh[]>();private created=0;private serial=0;private low=false;
+ private lv100Cue:typeof this.lv70Cue=null;
  private lv90Cue:typeof this.lv70Cue=null;
  private lv80Cue:typeof this.lv70Cue=null;
  private lv70Cue:{skillId:string;style:string;impactSeconds:number;heroSeconds:number;focal:{x:number;z:number};decorativeRadius:number;palette:number[];endSeconds:number}|null=null;
@@ -54,12 +59,62 @@ export class SkillVFX {
  static readonly MAX_MESHES=160;
  constructor(private scene:Scene){}
  setLowQuality(low:boolean){this.low=low;}
- get diagnostics(){return {active:this.active.length,pooled:this.created,limit:this.low?40:96,geometry3D:true,noSprites:true,textures:0,shapes:[...this.templates.keys()],materials:this.materials.size,lv10Cue:this.lv10Cue,lv20Cue:this.lv20Cue,lv30Cue:this.lv30Cue,lv40Cue:this.lv40Cue,lv50Cue:this.lv50Cue,lv60Cue:this.lv60Cue,lv70Cue:this.lv70Cue,lv80Cue:this.lv80Cue,lv90Cue:this.lv90Cue,drawCount:this.active.filter(p=>p.mesh.isEnabled()).length};}
+ get diagnostics(){return {active:this.active.length,pooled:this.created,limit:this.low?40:96,geometry3D:true,noSprites:true,textures:0,shapes:[...this.templates.keys()],materials:this.materials.size,lv10Cue:this.lv10Cue,lv20Cue:this.lv20Cue,lv30Cue:this.lv30Cue,lv40Cue:this.lv40Cue,lv50Cue:this.lv50Cue,lv60Cue:this.lv60Cue,lv70Cue:this.lv70Cue,lv80Cue:this.lv80Cue,lv90Cue:this.lv90Cue,lv100Cue:this.lv100Cue,drawCount:this.active.filter(p=>p.mesh.isEnabled()).length};}
  private template(shape:Shape){
   const name='vfx-template-'+shape,parts:Mesh[]=[];
   const tube=(path:Vector3[],radius:number)=>{const m=MeshBuilder.CreateTube(name,{path,radius,tessellation:7},this.scene);parts.push(m);return m;};
   const sphere=(x:number,y:number,z:number,s:number)=>{const m=MeshBuilder.CreateSphere(name,{diameter:s,segments:6},this.scene);m.position.set(x,y,z);parts.push(m);return m;};
-  if(shape==='beam'||shape==='ray'){const m=MeshBuilder.CreateCylinder(name,{height:2,diameterTop:shape==='ray'?.035:.16,diameterBottom:shape==='ray'?.16:.22,tessellation:8},this.scene);m.rotation.x=Math.PI/2;parts.push(m);}
+  if(shape==='fireblade'||shape==='galaxyarm'){
+   // Closed diamond-section ribbons: broad sculpted faces, curved tapered tips, zero textures.
+   const positions:number[]=[],indices:number[]=[],normals:number[]=[],sections=49;
+   for(let i=0;i<sections;i++){const t=i/(sections-1),a=shape==='fireblade'?-.8+t*3.5:t*5.2,r=shape==='fireblade'?1.1: .18+t*1.25,w=.008+Math.sin(Math.PI*t)*(shape==='fireblade'?.31:.115),h=shape==='fireblade'?.065:.055;
+    for(const [dr,dy] of [[-w,0],[0,h],[w,0],[0,-h]])positions.push(Math.cos(a)*(r+dr),dy+(shape==='galaxyarm'?t*.18:Math.sin(a)*.10),Math.sin(a)*(r+dr));
+   }
+   for(let i=0;i<sections-1;i++)for(let j=0;j<4;j++){const a=i*4+j,b=i*4+(j+1)%4,c=(i+1)*4+j,d=(i+1)*4+(j+1)%4;indices.push(a,c,b,b,c,d);}
+   indices.push(0,1,2,0,2,3);const end=(sections-1)*4;indices.push(end,end+2,end+1,end,end+3,end+2);
+   VertexData.ComputeNormals(positions,indices,normals);const data=new VertexData();data.positions=positions;data.indices=indices;data.normals=normals;data.uvs=new Array(positions.length/3*2).fill(0);const mesh=new Mesh(name,this.scene);data.applyToMesh(mesh);parts.push(mesh);
+  }
+  else if(shape==='worldcrown'){
+   // Curved tapering boughs spread into a rounded crown; the lower trunk stays open.
+   const bough=(path:Vector3[],radius:number)=>{const m=MeshBuilder.CreateTube(name,{path,radiusFunction:(i)=>radius*(1-i/(path.length-1)*.91),tessellation:8},this.scene);parts.push(m);};
+   bough(Array.from({length:13},(_,i)=>{const t=i/12;return new Vector3(Math.sin(t*5)*.12,t*3.3,Math.sin(t*3)*.08);}),.19);
+   for(let i=0;i<8;i++){const a=i*Math.PI/4,y=1.15+i%3*.19;
+    const path=Array.from({length:13},(_,j)=>{const t=j/12,r=1.85*Math.sin(t*Math.PI*.48);return new Vector3(Math.cos(a)*r,y+t*1.9-Math.sin(t*Math.PI)*.18,Math.sin(a)*r);});bough(path,.115);
+    for(const side of [-1,1]){const b=a+side*.33;bough(Array.from({length:10},(_,j)=>{const t=j/9,r=.85+t;return new Vector3(Math.cos(b)*r,y+1+t*.95+Math.sin(t*Math.PI)*.1,Math.sin(b)*r);}),.065);}
+    bough(Array.from({length:8},(_,j)=>{const t=j/7;return new Vector3(Math.cos(a)*t,.15*Math.sin(t*Math.PI),Math.sin(a)*t);}),.085);
+   }
+  }
+  else if(shape==='blossom'){
+   // A full rounded spray of nine flowers, each with five plump dimensional petals.
+   for(let k=0;k<9;k++){const a=k*2.4,r=k===0?0:.32+(k%3)*.22,cx=Math.cos(a)*r,cz=Math.sin(a)*r,cy=.12+Math.sin(k*1.7)*.22;
+    for(let i=0;i<5;i++){const b=i*Math.PI*2/5,m=sphere(cx+Math.cos(b)*.18,cy,cz+Math.sin(b)*.18,.32);m.scaling.set(1,.75,1);m.rotation.set(.25*Math.cos(a),0,.25*Math.sin(a));}
+    sphere(cx,cy+.08,cz,.17);
+   }
+  }
+  else if(shape==='crownfoliage'){
+   // Dedicated ultimate foliage: many small rounded leaves grouped at crown tips.
+   for(let i=0;i<13;i++){const a=i*2.4,r=i===0?0:.25+i%4*.19,m=sphere(Math.cos(a)*r,Math.sin(i*1.8)*.18,Math.sin(a)*r,.55);m.scaling.set(.65,.65,1.35);m.rotation.set(.3*Math.sin(a),a,.35*Math.cos(a));}
+  }
+  else if(shape==='featherwing'){
+   // Layered swept white pinions have broad closed faces and a raised central ridge.
+   // Seven long primary feathers overlap five shorter coverts, all in one shared mesh.
+   tube([Vector3.Zero(),new Vector3(.65,.4,0),new Vector3(1.5,.58,.08)],.055);
+   const positions:number[]=[],indices:number[]=[],normals:number[]=[];
+   const feather=(bx:number,by:number,length:number,sweep:number,width:number,depth:number)=>{
+    const base=positions.length/3,sections=21;
+    for(let j=0;j<sections;j++){const t=j/(sections-1),cx=bx+sweep*t+.16*Math.sin(t*Math.PI),cy=by+length*t,cz=depth+.08*Math.sin(t*Math.PI),w=.006+width*Math.pow(Math.sin(t*Math.PI),.8),ridge=.012+.075*Math.sin(t*Math.PI);
+     const dx=sweep+.16*Math.PI*Math.cos(t*Math.PI),dy=length,n=Math.hypot(dx,dy),nx=dy/n,ny=-dx/n;
+     for(const [side,z] of [[-w,0],[0,ridge],[w,0],[0,-ridge]])positions.push(cx+nx*side,cy+ny*side,cz+z);
+    }
+    for(let j=0;j<sections-1;j++)for(let k=0;k<4;k++){const a=base+j*4+k,b=base+j*4+(k+1)%4,c=base+(j+1)*4+k,d=base+(j+1)*4+(k+1)%4;indices.push(a,c,b,b,c,d);}
+    indices.push(base,base+1,base+2,base,base+2,base+3);const end=base+(sections-1)*4;indices.push(end,end+2,end+1,end,end+3,end+2);
+    tube(Array.from({length:15},(_,j)=>{const t=j/14;return new Vector3(bx+sweep*t+.16*Math.sin(t*Math.PI),by+length*t,depth+.08*Math.sin(t*Math.PI)+.065);}),.019);
+   };
+   for(let i=0;i<7;i++)feather(.15+i*.205,.16+i*.06, .8+i*.105,.28+i*.05,.20+i*.012,.04-i*.015);
+   for(let i=0;i<5;i++)feather(.18+i*.25,.15+i*.07,.52+i*.055,.15,.22,.17);
+   VertexData.ComputeNormals(positions,indices,normals);const data=new VertexData();data.positions=positions;data.indices=indices;data.normals=normals;data.uvs=new Array(positions.length/3*2).fill(0);const feathers=new Mesh(name,this.scene);data.applyToMesh(feathers);parts.push(feathers);
+  }
+  else if(shape==='beam'||shape==='ray'){const m=MeshBuilder.CreateCylinder(name,{height:2,diameterTop:shape==='ray'?.035:.16,diameterBottom:shape==='ray'?.16:.22,tessellation:8},this.scene);m.rotation.x=Math.PI/2;parts.push(m);}
   else if(shape==='shockbolt'){
    // A directional, genuinely jagged arrow trail; unlike the vertical storm bolt.
    const path=[new Vector3(0,0,-1.8),new Vector3(.35,.12,-1),new Vector3(-.22,-.08,-.45),new Vector3(.42,.14,.2),new Vector3(0,0,1.6)];tube(path,.09);
@@ -196,7 +251,13 @@ export class SkillVFX {
   mesh.position.set(x,y,z);mesh.scaling.setAll(size);if(shape==='arrow'||shape==='comet'){mesh.rotation.y=Math.atan2(vx,vz);mesh.rotation.x=-Math.atan2(vy,Math.hypot(vx,vz));}if(delay>0)mesh.setEnabled(false);
   this.active.push({mesh,life:duration,duration,x,y,z,vx,vy,vz,size,grow,spin,delay,gravity,stretch:[1,1,1]});return mesh;
  }
- anticipation(skill:Skill,job:ClassId,x:number,z:number){if(skill.level===90){
+ anticipation(skill:Skill,job:ClassId,x:number,z:number){if(skill.level===100){
+  const c=lv100Palette(job,skill.branch),d=skillCastDuration(skill.cast)||.2;
+  this.emit('ring',c[0],x,.09,z,3.8,d,0,0,0,-2);
+  const shape:Shape=job==='swordsman'?(skill.branch?'sword':'fireblade'):job==='mage'?(skill.branch?'worldcrown':'galaxyarm'):skill.branch?'stag':'arrow';
+  const m=this.emit(shape,c[0],x,job==='mage'?2.2:1,z,shape==='stag'?.55:.8,d,0,.2,0,.2,.3);if(m&&shape==='arrow')m.rotation.x=-Math.PI/2;
+  return;}
+ if(skill.level===90){
   const c=lv90Palette(job,skill.branch),d=skillCastDuration(skill.cast)||.2;
   this.emit('ring',c[2],x,.09,z,3.4,d,0,0,0,-1.5);
   const shape:Shape=job==='swordsman'?(skill.branch?'impactshield':'sword'):job==='mage'?(skill.branch?'rootclaw':'goldstar'):'arrow';
@@ -225,6 +286,7 @@ export class SkillVFX {
   this.emit('ring',c[1],x,.15,z,.8,d,0,0,0,.35);return;}
  if(skill.level===50){const c=lv50Palette(job,skill.branch),d=skillCastDuration(skill.cast)||.2;this.emit('ring',c[0],x,.08,z,2,d,0,0,0,-4);for(let i=0;i<3;i++){const a=i*Math.PI*2/3;const m=this.emit('arch',c[i],x,.15,z,.85,d,0,.25,0,.4);if(m)m.rotation.y=a;}return;}if(skill.level===40){const c=skillPalette(job,skill),d=skillCastDuration(skill.cast)||.2;this.emit('ring',c[0],x,.08,z,1.7,d,0,0,0,-3);this.emit(job==='mage'?'lightning':job==='archer'?'arrow':'shield',c[1],x,1,z,.45,d,0,.5,0,.6,2);for(let i=0;i<3;i++){const a=i*Math.PI*2/3;this.emit('star',c[i],x+Math.sin(a),.7,z+Math.cos(a),.2,d,-Math.sin(a)*3,1,-Math.cos(a)*3);}return;}if(skill.level===10){const c=skillPalette(job,skill),d=skillCastDuration(skill.cast)||.18;this.emit('ring',c[0],x,.09,z,1.1,d,0,0,0,-2);this.emit('core',c[1],x,1,z,.13,d,0,.2,0,.75);for(let i=0;i<(this.low?3:6);i++){const a=i*Math.PI*2/(this.low?3:6);this.emit('ray',c[0],x+Math.cos(a)*.75,.5,z+Math.sin(a)*.75,.12,d,-Math.cos(a)*3,2,-Math.sin(a)*3);}return;}const c=skillPalette(job,skill),duration=skillCastDuration(skill.cast)||.2;this.emit('ring',c[1],x,.08,z,.65+skill.stage*.035,duration,0,0,0,.25,.5);this.emit(skill.branch?'petal':'star',c[0],x,1,z,.16,duration,0,.4,0,.15,2);}
  release(skill:Skill,job:ClassId,x:number,z:number,tx:number,tz:number){
+  if(skill.level===100){this.releaseLv100(skill,job,x,z,tx,tz);return;}
   if(skill.level===90){this.releaseLv90(skill,job,x,z,tx,tz);return;}
   if(skill.level===80){this.releaseLv80(skill,job,x,z,tx,tz);return;}
   if(skill.level===70){this.releaseLv70(skill,job,x,z,tx,tz);return;}
@@ -691,8 +753,69 @@ export class SkillVFX {
   const n=this.low?8:48,shape:Shape=job==='swordsman'?'stoneshard':job==='mage'?(branch?'leaf':'goldstar'):branch?'petal':'spark';
   for(let i=0;i<n;i++){const a=i*Math.PI*2/n;const m=sculpt(shape,c[i%3],cx+Math.sin(a)*3,.35+i%3*.35,cz+Math.cos(a)*3,.42,.95,[1,1,1],.3+i%3*.07,Math.sin(a)*10.8,.55,Math.cos(a)*10.8,-.08,1);if(m)m.rotation.y=a;}
  }
+ /** Final-tier cinematic silhouettes: release is visual only, with no gameplay timing changes. */
+ private releaseLv100(skill:Skill,job:ClassId,x:number,z:number,tx:number,tz:number){
+  const c=lv100Palette(job,skill.branch),branch=skill.branch,dir=Math.atan2(tx-x,tz-z),cx=job==='swordsman'?x:tx,cz=job==='swordsman'?z:tz;
+  const style=job==='swordsman'?(branch?'guardian-quake-gold-sword-shattered-earth':'meteor-blade-whitegold-flaming-grand-sweep'):job==='mage'?(branch?'worldtree-gold-crown-pink-blossom-burst':'astral-storm-violet-dimensional-galaxy'):branch?'wild-hunt-golden-antler-arrow-fan':'sky-barrage-cyan-ascending-descending-arrows';
+  this.lv100Cue={skillId:skill.id,style,impactSeconds:0,heroSeconds:1.9,focal:{x:cx,z:cz},decorativeRadius:17.4,palette:[...c],endSeconds:2.65};
+  const limit=this.low?40:96;
+  while(this.active.length){const p=this.active.pop()!;p.mesh.setEnabled(false);const shape=p.mesh.metadata.vfxShape as Shape,list=this.free.get(shape)||[];list.push(p.mesh);this.free.set(shape,list);}
+  const sculpt=(shape:Shape,color:number,px:number,py:number,pz:number,size:number,duration=1.9,stretch:[number,number,number]=[1,1,1],delay=0,vx=0,vy=0,vz=0,grow=0,spin=0)=>{
+   const m=this.emit(shape,color,px,py,pz,size,duration,vx,vy,vz,grow,spin,delay);if(m){this.active[this.active.length-1].stretch=stretch;m.scaling.set(size*stretch[0],size*stretch[1],size*stretch[2]);}return m;
+  };
+  // Finale reservations precede satellites; five waves remain low on the floor.
+  for(let i=0;i<5;i++)sculpt('ring',c[i%3],cx,.08+i*.045,cz,2.5,.95,[1,.4,1],.5+i*.30,0,0,0,(17.4-2.5)/.95);
+  sculpt('core',job==='mage'&&!branch?c[2]:c[1],cx,.2,cz,.7,.22,[1,.3,1]);
+  if(job==='swordsman'&&!branch){
+   // Huge whitegold cutting face sits inside red and orange fire shells; the center stays open.
+   for(let i=0;i<4;i++){const blade=sculpt('fireblade',i===2?c[1]:i===0?c[2]:c[0],cx,.8+i*.55,cz,6.0-i*.40,1.9,[1,1.3,1],i*.045,Math.sin(dir)*.8,.08,Math.cos(dir)*.8,.25,.65);if(blade)blade.rotation.set(.2+i*.035,dir+i*.17,.1);}
+   const sword=sculpt('sword',c[1],cx+Math.cos(dir)*2.4,1.7,cz-Math.sin(dir)*2.4,2.3,1.9,[1.4,1.5,1.2]);if(sword)sword.rotation.set(.35,dir,-1.0);
+   for(let i=0;i<5;i++){const a=dir-1+i*.48;const flame=sculpt('fireblade',c[i%2?0:2],cx+Math.sin(a)*3.5,.5+i%2,cz+Math.cos(a)*3.5,1.8,1.15,[1,1,1],.45,Math.sin(a)*3,.8,Math.cos(a)*3,.3,.7);if(flame)flame.rotation.set(.45,a,.4);}
+   const final=sculpt('fireblade',c[1],cx,1.6,cz,6.6,1.15,[1,.6,1],.65,0,0,0,.8,.45);if(final)final.rotation.set(.18,dir+.45,0);
+  }else if(job==='swordsman'){
+   const slam=sculpt('sword',c[1],cx+1.4,8,cz,2.8,.28,[1.4,1.25,1.4],0,0,-17,0);if(slam)slam.rotation.z=Math.PI;
+   const sword=sculpt('sword',c[1],cx+1.4,5.4,cz,2.65,1.9,[1.8,1.2,1.5],.18);if(sword)sword.rotation.z=Math.PI;
+   for(let i=0;i<8;i++){const a=i*Math.PI/4,r=3.1;const stone=sculpt('stoneshard',c[2],cx+Math.sin(a)*r,-.5,cz+Math.cos(a)*r,1.7,1.9,[1,1.25,1],.1+i%2*.05,Math.sin(a)*.6,.6,Math.cos(a)*.6,.15);if(stone)stone.rotation.set(.3,a,.35);
+    const eruption=sculpt('ray',i%2?c[0]:c[1],cx+Math.sin(a)*2.7,3,cz+Math.cos(a)*2.7,.65,1.45,[1,1,5],.22,Math.sin(a)*.7,1,Math.cos(a)*.7);if(eruption)eruption.rotation.x=-Math.PI/2;
+   }
+   for(let i=0;i<3;i++){const burst=sculpt('scream',c[i%2],cx,.4+i*.6,cz,5.2,1.35,[1,1,1],.5+i*.12,0,.25,0,.7);if(burst)burst.rotation.y=dir+i*2.1;}
+  }else if(job==='mage'&&!branch){
+   // Sweeping curved arms occupy a broad suspended galaxy; white stars stay separate from violet gas.
+   for(let i=0;i<6;i++){const arm=sculpt('galaxyarm',i%2?0xb944f4:c[0],cx,4.8+i%2*.35,cz,5.1,1.9,[1,1.7,1],i%2*.04,0,-.2,0,.12,.65);if(arm)arm.rotation.set(.18,dir+i*Math.PI/3,0);}
+   for(let i=0;i<3;i++){const arm=sculpt('galaxyarm',c[1],cx,5.1+i*.2,cz,4.6,1.55,[1,.7,1],.25,0,-.35,0,-.55,.9);if(arm)arm.rotation.set(.2,i*2.1,0);}
+   sculpt('core',c[1],cx,5,cz,.65,1.45,[1,.5,1],.1,0,-.3,0,.05);
+   for(let i=0;i<12;i++){const a=i*2.4,r=1.6+i%4*.9;sculpt('star',c[2],cx+Math.cos(a)*r,5.2+i%3*.3,cz+Math.sin(a)*r,.17+i%3*.045,1.8,[1,1,1],i%3*.04,0,-.22,0,0,.7);}
+   for(let i=0;i<3;i++){const collapse=sculpt('galaxyarm',i%2?c[1]:c[0],cx,4.8,cz,5,1.05,[1,.8,1],.65+i*.12,0,-2.5,0,-3,1.6);if(collapse)collapse.rotation.y=i*2.1;}
+  }else if(job==='mage'){
+   // The trunk is offset behind the victim; eight broad crown tips frame the golden damaging bloom.
+   const tree=sculpt('worldcrown',c[0],cx,.05,cz+1.2,2.4,1.9,[1.15,1,1.15],0,0,.1,0,.1);if(tree)tree.rotation.y=dir;
+   for(let i=0;i<8;i++){const a=i*Math.PI/4,r=4.6,py=7.25+i%3*.42;sculpt('blossom',c[1],cx+Math.cos(a)*r,py,cz+1.2+Math.sin(a)*r,1.35,1.9,[1,1,1],.08+i%2*.08,0,.05,0,.15,.25);
+    const leaf=sculpt('crownfoliage',c[2],cx+Math.cos(a)*r,py-.3,cz+1.2+Math.sin(a)*r,1.5,1.9,[1,1,1],.1);if(leaf)leaf.rotation.set(.2,a,.4);
+   }
+   for(let i=0;i<6;i++){const a=i*Math.PI/3;const burst=sculpt('ray',c[0],cx+Math.sin(a)*2,2.5,cz+Math.cos(a)*2,.65,1.25,[1,1,4],.6,Math.sin(a)*5,.4,Math.cos(a)*5);if(burst)burst.rotation.set(-.25,a,0);}
+   for(let i=0;i<4;i++){const a=i*2.4;sculpt('blossom',c[1],cx+Math.sin(a)*3,5.4,cz+Math.cos(a)*3,.8,1.7,[1,1,1],.5,Math.sin(a)*2,-1.2,Math.cos(a)*2,0,1);}
+  }else if(!branch){
+   for(const side of [-1,1]){const wing=sculpt('featherwing',c[1],cx+side*.8,4.5,cz,2.4,1.9,[side,1,1]);if(wing)wing.rotation.y=dir;}
+   for(let i=0;i<7;i++){const a=i*Math.PI*2/7,r=2.6+i%2*.7,px=cx+Math.sin(a)*r,pz=cz+Math.cos(a)*r;
+    const rise=sculpt('arrow',c[0],px,2.4,pz,1.6,.55,[1,1,2.6],0,0,8,0);if(rise)rise.rotation.x=-Math.PI/2;
+    const arrow=sculpt('arrow',i%2?c[1]:c[0],px,8,pz,1.8,1.2,[1,1,2.7],.48+i%3*.055,0,-5.5,0);if(arrow)arrow.rotation.x=Math.PI/2;
+    const trail=sculpt('ray',c[0],px,8.6,pz,.44,1.2,[1,1,6],.48+i%3*.055,0,-5.5,0);if(trail)trail.rotation.x=Math.PI/2;
+    sculpt('star',c[1],px,.3,pz,.7,.65,[1,.45,1],.96+i%3*.08,0,.15,0,.5);
+   }
+  }else{
+   const stag=sculpt('stag',c[0],cx-Math.sin(dir)*2.2,.1,cz-Math.cos(dir)*2.2,2.15,1.9,[1.1,1,1.1],0,Math.sin(dir)*.5,.05,Math.cos(dir)*.5);if(stag)stag.rotation.y=dir;
+   for(let i=0;i<7;i++){const a=dir+(i-3)*.15,side=(i-3)*.85,px=cx+Math.cos(dir)*side-Math.sin(dir)*3,pz=cz-Math.sin(dir)*side-Math.cos(dir)*3;
+    const arrow=sculpt('arrow',c[1],px,1.4+i%2*.6,pz,1.8,1.65,[1.2,1.2,3.3],.08+i%2*.08,Math.sin(a)*4,.05,Math.cos(a)*4);if(arrow)arrow.rotation.y=a;
+    const trail=sculpt('ray',c[0],px,1.4+i%2*.6,pz,.45,1.65,[1,1,7],.08+i%2*.08,Math.sin(a)*4,.05,Math.cos(a)*4);if(trail)trail.rotation.y=a;
+   }
+   for(let i=0;i<3;i++){const fan=sculpt('scream',c[i%2],cx,1+i*.65,cz,5.6,1.35,[1,.7,1],.5+i*.1,Math.sin(dir)*2,0,Math.cos(dir)*2,.4);if(fan)fan.rotation.y=dir;}
+  }
+  // Fill only the remaining budget, after every essential silhouette and delayed finale.
+  const budget=Math.min(this.low?6:48,limit-this.active.length),shape:Shape=job==='mage'?(branch?'blossom':'star'):job==='swordsman'?(branch?'stoneshard':'fireblade'):branch?'star':'arrow';
+  for(let i=0;i<budget;i++){const a=i*Math.PI*2/Math.max(1,budget);const accent=sculpt(shape,job==='mage'&&!branch?c[2]:c[i%3],cx+Math.sin(a)*3.5,job==='mage'?4:.6,cz+Math.cos(a)*3.5,.30+i%2*.12,1.1,[1,1,1],.65+i%3*.08,Math.sin(a)*7,job==='mage'?-.3:1,Math.cos(a)*7,-.06,.5);if(accent)accent.rotation.y=a;}
+ }
  basic(job:ClassId,x:number,z:number){this.emit(job==='swordsman'?'crescent':'star',job==='mage'?0xb5d9ff:0xffe5a3,x,.75,z,job==='swordsman'?.65:.14,.3,0,.4,0,.5,4);}
  update(dt:number){for(let i=this.active.length-1;i>=0;i--){const p=this.active[i];let elapsed=dt;if(p.delay>0){p.delay-=dt;if(p.delay>0)continue;elapsed=-p.delay;p.delay=0;p.mesh.setEnabled(true);}p.life-=elapsed;if(p.life<=0){p.mesh.setEnabled(false);const shape=p.mesh.metadata.vfxShape as Shape;let list=this.free.get(shape);if(!list){list=[];this.free.set(shape,list);}list.push(p.mesh);this.active.splice(i,1);continue;}const t=p.duration-p.life;p.mesh.position.set(p.x+p.vx*t,p.y+p.vy*t-(p.gravity?t*t*3:0),p.z+p.vz*t);p.mesh.rotation.y+=p.spin*elapsed;p.mesh.visibility=Math.min(1,p.life/.08);const scale=Math.max(.01,p.size+p.grow*t);p.mesh.scaling.set(scale*p.stretch[0],scale*p.stretch[1],scale*p.stretch[2]);}}
- clear(){this.lv90Cue=null;this.lv80Cue=null;this.lv70Cue=null;this.lv60Cue=null;this.lv50Cue=null;this.lv40Cue=null;this.lv10Cue=null;this.lv20Cue=null;this.lv30Cue=null;for(const p of this.active){p.mesh.setEnabled(false);const shape=p.mesh.metadata.vfxShape as Shape;const list=this.free.get(shape)||[];list.push(p.mesh);this.free.set(shape,list);}this.active.length=0;}
+ clear(){this.lv100Cue=null;this.lv90Cue=null;this.lv80Cue=null;this.lv70Cue=null;this.lv60Cue=null;this.lv50Cue=null;this.lv40Cue=null;this.lv10Cue=null;this.lv20Cue=null;this.lv30Cue=null;for(const p of this.active){p.mesh.setEnabled(false);const shape=p.mesh.metadata.vfxShape as Shape;const list=this.free.get(shape)||[];list.push(p.mesh);this.free.set(shape,list);}this.active.length=0;}
  dispose(){this.clear();this.free.forEach(list=>list.forEach(mesh=>mesh.dispose()));this.templates.forEach(mesh=>mesh.dispose());this.materials.forEach(material=>material.dispose());this.free.clear();this.templates.clear();this.materials.clear();this.created=0;}
 }

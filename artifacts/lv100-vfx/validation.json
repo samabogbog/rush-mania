@@ -1,0 +1,7626 @@
+{
+  "runtimeSHA256": "88391acb406f85d9ea0a3f10626296daed81f9e49ae9252c6f02b4ac9bb791b2",
+  "cameraShakeSHA256": "da9d92b1b285a19fc519a89457da8282954ea45edcef6ce58fea8ed4bc9e72ff",
+  "worldSHA256": "96e74e73df49262fd6f7feecb24d348091be55efcc5c58ddbbf04e5de1ce1559",
+  "sourceBaseline": "0bc5e0858c9a56587aa66c7d4d41dafc0dba563e",
+  "environment": "Node24.19.0; Chromium151 ANGLE SwiftShader; Debian13 x86_64",
+  "build": "passed",
+  "checks": {
+    "code": 59,
+    "browser": 10,
+    "total": 69
+  },
+  "readiness": {
+    "frontend": 200,
+    "authStatus": 200
+  },
+  "previewFrames": 96,
+  "performance": [
+    {
+      "skill": "swordsman-9",
+      "low": false,
+      "idle": {
+        "frameP50": 52.20000000298023,
+        "frameP95": 112.60000000149012,
+        "vfxDrawCount": 0,
+        "drawCalls": 11,
+        "meshes": 12,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 91.5,
+        "frameP95": 134.10000000149012,
+        "vfxDrawCount": 71,
+        "drawCalls": 82,
+        "meshes": 93,
+        "materials": 7
+      }
+    },
+    {
+      "skill": "swordsman-10",
+      "low": false,
+      "idle": {
+        "frameP50": 52.20000000298023,
+        "frameP95": 112.60000000149012,
+        "vfxDrawCount": 0,
+        "drawCalls": 11,
+        "meshes": 12,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 104,
+        "frameP95": 155.39999999850988,
+        "vfxDrawCount": 44,
+        "drawCalls": 55,
+        "meshes": 153,
+        "materials": 11
+      }
+    },
+    {
+      "skill": "swordsman-b-9",
+      "low": false,
+      "idle": {
+        "frameP50": 52.20000000298023,
+        "frameP95": 112.60000000149012,
+        "vfxDrawCount": 0,
+        "drawCalls": 11,
+        "meshes": 12,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 88.60000000149012,
+        "frameP95": 177.70000000298023,
+        "vfxDrawCount": 64,
+        "drawCalls": 75,
+        "meshes": 166,
+        "materials": 17
+      }
+    },
+    {
+      "skill": "swordsman-b-10",
+      "low": false,
+      "idle": {
+        "frameP50": 52.20000000298023,
+        "frameP95": 112.60000000149012,
+        "vfxDrawCount": 0,
+        "drawCalls": 11,
+        "meshes": 12,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 95,
+        "frameP95": 118.60000000149012,
+        "vfxDrawCount": 53,
+        "drawCalls": 64,
+        "meshes": 166,
+        "materials": 23
+      }
+    },
+    {
+      "skill": "swordsman-9",
+      "low": true,
+      "idle": {
+        "frameP50": 54.899999998509884,
+        "frameP95": 110.5,
+        "vfxDrawCount": 0,
+        "drawCalls": 11,
+        "meshes": 166,
+        "materials": 25
+      },
+      "burst": {
+        "frameP50": 98.79999999701977,
+        "frameP95": 167,
+        "vfxDrawCount": 31,
+        "drawCalls": 42,
+        "meshes": 166,
+        "materials": 25
+      }
+    },
+    {
+      "skill": "swordsman-10",
+      "low": true,
+      "idle": {
+        "frameP50": 54.899999998509884,
+        "frameP95": 110.5,
+        "vfxDrawCount": 0,
+        "drawCalls": 11,
+        "meshes": 166,
+        "materials": 25
+      },
+      "burst": {
+        "frameP50": 92.70000000298023,
+        "frameP95": 149.5,
+        "vfxDrawCount": 16,
+        "drawCalls": 27,
+        "meshes": 166,
+        "materials": 25
+      }
+    },
+    {
+      "skill": "swordsman-b-9",
+      "low": true,
+      "idle": {
+        "frameP50": 54.899999998509884,
+        "frameP95": 110.5,
+        "vfxDrawCount": 0,
+        "drawCalls": 11,
+        "meshes": 166,
+        "materials": 25
+      },
+      "burst": {
+        "frameP50": 89.10000000149012,
+        "frameP95": 168.89999999850988,
+        "vfxDrawCount": 24,
+        "drawCalls": 35,
+        "meshes": 166,
+        "materials": 25
+      }
+    },
+    {
+      "skill": "swordsman-b-10",
+      "low": true,
+      "idle": {
+        "frameP50": 54.899999998509884,
+        "frameP95": 110.5,
+        "vfxDrawCount": 0,
+        "drawCalls": 11,
+        "meshes": 166,
+        "materials": 25
+      },
+      "burst": {
+        "frameP50": 83.69999999552965,
+        "frameP95": 136.30000000447035,
+        "vfxDrawCount": 25,
+        "drawCalls": 36,
+        "meshes": 166,
+        "materials": 25
+      }
+    },
+    {
+      "skill": "mage-9",
+      "low": false,
+      "idle": {
+        "frameP50": 51.69999999552965,
+        "frameP95": 131.09999999403954,
+        "vfxDrawCount": 0,
+        "drawCalls": 10,
+        "meshes": 11,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 84.30000000447035,
+        "frameP95": 126.19999999552965,
+        "vfxDrawCount": 56,
+        "drawCalls": 66,
+        "meshes": 77,
+        "materials": 6
+      }
+    },
+    {
+      "skill": "mage-10",
+      "low": false,
+      "idle": {
+        "frameP50": 51.69999999552965,
+        "frameP95": 131.09999999403954,
+        "vfxDrawCount": 0,
+        "drawCalls": 10,
+        "meshes": 11,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 97.10000000149012,
+        "frameP95": 182.20000000298023,
+        "vfxDrawCount": 56,
+        "drawCalls": 66,
+        "meshes": 153,
+        "materials": 12
+      }
+    },
+    {
+      "skill": "mage-b-9",
+      "low": false,
+      "idle": {
+        "frameP50": 51.69999999552965,
+        "frameP95": 131.09999999403954,
+        "vfxDrawCount": 0,
+        "drawCalls": 10,
+        "meshes": 11,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 93,
+        "frameP95": 142.19999999552965,
+        "vfxDrawCount": 68,
+        "drawCalls": 78,
+        "meshes": 180,
+        "materials": 16
+      }
+    },
+    {
+      "skill": "mage-b-10",
+      "low": false,
+      "idle": {
+        "frameP50": 51.69999999552965,
+        "frameP95": 131.09999999403954,
+        "vfxDrawCount": 0,
+        "drawCalls": 10,
+        "meshes": 11,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 621.4000000059605,
+        "frameP95": 716.8999999985099,
+        "vfxDrawCount": 60,
+        "drawCalls": 70,
+        "meshes": 184,
+        "materials": 21
+      }
+    },
+    {
+      "skill": "mage-9",
+      "low": true,
+      "idle": {
+        "frameP50": 58.19999999552965,
+        "frameP95": 113,
+        "vfxDrawCount": 0,
+        "drawCalls": 10,
+        "meshes": 184,
+        "materials": 23
+      },
+      "burst": {
+        "frameP50": 74.30000000447035,
+        "frameP95": 102,
+        "vfxDrawCount": 16,
+        "drawCalls": 26,
+        "meshes": 184,
+        "materials": 23
+      }
+    },
+    {
+      "skill": "mage-10",
+      "low": true,
+      "idle": {
+        "frameP50": 58.19999999552965,
+        "frameP95": 113,
+        "vfxDrawCount": 0,
+        "drawCalls": 10,
+        "meshes": 184,
+        "materials": 23
+      },
+      "burst": {
+        "frameP50": 86.39999999850988,
+        "frameP95": 130.79999999701977,
+        "vfxDrawCount": 28,
+        "drawCalls": 38,
+        "meshes": 184,
+        "materials": 23
+      }
+    },
+    {
+      "skill": "mage-b-9",
+      "low": true,
+      "idle": {
+        "frameP50": 58.19999999552965,
+        "frameP95": 113,
+        "vfxDrawCount": 0,
+        "drawCalls": 10,
+        "meshes": 184,
+        "materials": 23
+      },
+      "burst": {
+        "frameP50": 79.20000000298023,
+        "frameP95": 108.10000000149012,
+        "vfxDrawCount": 28,
+        "drawCalls": 38,
+        "meshes": 184,
+        "materials": 23
+      }
+    },
+    {
+      "skill": "mage-b-10",
+      "low": true,
+      "idle": {
+        "frameP50": 58.19999999552965,
+        "frameP95": 113,
+        "vfxDrawCount": 0,
+        "drawCalls": 10,
+        "meshes": 184,
+        "materials": 23
+      },
+      "burst": {
+        "frameP50": 215.60000000149012,
+        "frameP95": 792.6000000014901,
+        "vfxDrawCount": 32,
+        "drawCalls": 42,
+        "meshes": 184,
+        "materials": 23
+      }
+    },
+    {
+      "skill": "archer-9",
+      "low": false,
+      "idle": {
+        "frameP50": 38.399999998509884,
+        "frameP95": 116.60000000149012,
+        "vfxDrawCount": 0,
+        "drawCalls": 9,
+        "meshes": 10,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 83.39999999850988,
+        "frameP95": 109.39999999850988,
+        "vfxDrawCount": 62,
+        "drawCalls": 71,
+        "meshes": 82,
+        "materials": 7
+      }
+    },
+    {
+      "skill": "archer-10",
+      "low": false,
+      "idle": {
+        "frameP50": 38.399999998509884,
+        "frameP95": 116.60000000149012,
+        "vfxDrawCount": 0,
+        "drawCalls": 9,
+        "meshes": 10,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 86.10000000149012,
+        "frameP95": 227.80000000447035,
+        "vfxDrawCount": 49,
+        "drawCalls": 58,
+        "meshes": 156,
+        "materials": 12
+      }
+    },
+    {
+      "skill": "archer-b-9",
+      "low": false,
+      "idle": {
+        "frameP50": 38.399999998509884,
+        "frameP95": 116.60000000149012,
+        "vfxDrawCount": 0,
+        "drawCalls": 9,
+        "meshes": 10,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 85.20000000298023,
+        "frameP95": 99.10000000149012,
+        "vfxDrawCount": 59,
+        "drawCalls": 68,
+        "meshes": 182,
+        "materials": 17
+      }
+    },
+    {
+      "skill": "archer-b-10",
+      "low": false,
+      "idle": {
+        "frameP50": 38.399999998509884,
+        "frameP95": 116.60000000149012,
+        "vfxDrawCount": 0,
+        "drawCalls": 9,
+        "meshes": 10,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 99.60000000149012,
+        "frameP95": 179.79999999701977,
+        "vfxDrawCount": 51,
+        "drawCalls": 60,
+        "meshes": 184,
+        "materials": 22
+      }
+    },
+    {
+      "skill": "archer-9",
+      "low": true,
+      "idle": {
+        "frameP50": 59.100000001490116,
+        "frameP95": 91.10000000149012,
+        "vfxDrawCount": 0,
+        "drawCalls": 9,
+        "meshes": 184,
+        "materials": 24
+      },
+      "burst": {
+        "frameP50": 78,
+        "frameP95": 169.39999999850988,
+        "vfxDrawCount": 22,
+        "drawCalls": 31,
+        "meshes": 184,
+        "materials": 24
+      }
+    },
+    {
+      "skill": "archer-10",
+      "low": true,
+      "idle": {
+        "frameP50": 59.100000001490116,
+        "frameP95": 91.10000000149012,
+        "vfxDrawCount": 0,
+        "drawCalls": 9,
+        "meshes": 184,
+        "materials": 24
+      },
+      "burst": {
+        "frameP50": 79.89999999850988,
+        "frameP95": 198.69999999552965,
+        "vfxDrawCount": 20,
+        "drawCalls": 29,
+        "meshes": 184,
+        "materials": 24
+      }
+    },
+    {
+      "skill": "archer-b-9",
+      "low": true,
+      "idle": {
+        "frameP50": 59.100000001490116,
+        "frameP95": 91.10000000149012,
+        "vfxDrawCount": 0,
+        "drawCalls": 9,
+        "meshes": 184,
+        "materials": 24
+      },
+      "burst": {
+        "frameP50": 74.60000000149012,
+        "frameP95": 132.5,
+        "vfxDrawCount": 19,
+        "drawCalls": 28,
+        "meshes": 184,
+        "materials": 24
+      }
+    },
+    {
+      "skill": "archer-b-10",
+      "low": true,
+      "idle": {
+        "frameP50": 59.100000001490116,
+        "frameP95": 91.10000000149012,
+        "vfxDrawCount": 0,
+        "drawCalls": 9,
+        "meshes": 184,
+        "materials": 24
+      },
+      "burst": {
+        "frameP50": 93.69999999552965,
+        "frameP95": 186.80000000447035,
+        "vfxDrawCount": 23,
+        "drawCalls": 32,
+        "meshes": 184,
+        "materials": 24
+      }
+    }
+  ],
+  "gameplay": {
+    "swordsman-10": {
+      "environment": "Chromium ANGLE SwiftShader; authentic learned Lv100 skill rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+      "before": {
+        "job": "swordsman",
+        "zone": "glade",
+        "x": 0.8795600000000066,
+        "z": 17.10695999999996,
+        "hp": 1292.4718767999907,
+        "mp": 852,
+        "kills": 0,
+        "hotbar": [
+          "swordsman-10",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "swordsman-1",
+          "swordsman-2",
+          "swordsman-3",
+          "swordsman-4",
+          "swordsman-5",
+          "swordsman-6",
+          "swordsman-7",
+          "swordsman-8",
+          "swordsman-9",
+          "swordsman-10"
+        ],
+        "skillCooldowns": {},
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 0,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [],
+          "materials": 0,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "lv80Cue": null,
+          "lv90Cue": null,
+          "lv100Cue": null,
+          "drawCount": 0
+        },
+        "cameraShake": {
+          "level": 0,
+          "elapsed": 0,
+          "duration": 0,
+          "active": false,
+          "amplitude": 0,
+          "offset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "triggerCount": 0
+        },
+        "modelErrors": 0,
+        "drawCalls": 51
+      },
+      "after": {
+        "job": "swordsman",
+        "zone": "glade",
+        "x": 0.8795600000000066,
+        "z": 17.10695999999996,
+        "hp": 1270.9922227999857,
+        "mp": 810.1642899999987,
+        "kills": 6,
+        "hotbar": [
+          "swordsman-10",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "swordsman-1",
+          "swordsman-2",
+          "swordsman-3",
+          "swordsman-4",
+          "swordsman-5",
+          "swordsman-6",
+          "swordsman-7",
+          "swordsman-8",
+          "swordsman-9",
+          "swordsman-10"
+        ],
+        "skillCooldowns": {
+          "swordsman-10": 23.083500000000107
+        },
+        "skillMotion": {
+          "skillId": "swordsman-10",
+          "duration": 1.44,
+          "job": "swordsman",
+          "stage": 10,
+          "branch": 0,
+          "effect": "area",
+          "phase": "release",
+          "progress": 0
+        },
+        "vfx": {
+          "active": 23,
+          "pooled": 23,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "ring",
+            "fireblade",
+            "core",
+            "sword"
+          ],
+          "materials": 4,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "lv80Cue": null,
+          "lv90Cue": null,
+          "lv100Cue": {
+            "skillId": "swordsman-10",
+            "style": "meteor-blade-whitegold-flaming-grand-sweep",
+            "impactSeconds": 0,
+            "heroSeconds": 1.9,
+            "focal": {
+              "x": 0.8795600000000066,
+              "z": 17.10695999999996
+            },
+            "decorativeRadius": 17.4,
+            "palette": [
+              16734742,
+              16774584,
+              13246511
+            ],
+            "endSeconds": 2.65
+          },
+          "drawCount": 6
+        },
+        "cameraShake": {
+          "level": 100,
+          "elapsed": 0,
+          "duration": 0.36,
+          "active": true,
+          "amplitude": 0.11,
+          "offset": {
+            "x": 0.09803280960675789,
+            "y": 0.03188877551826571,
+            "z": 0.06501476601803624
+          },
+          "triggerCount": 1
+        },
+        "modelErrors": 0,
+        "drawCalls": 58
+      },
+      "recovered": {
+        "job": "swordsman",
+        "zone": "glade",
+        "x": 0.8795600000000066,
+        "z": 17.10695999999996,
+        "hp": 1285.314822799976,
+        "mp": 825.7132899999962,
+        "kills": 6,
+        "hotbar": [
+          "swordsman-10",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "swordsman-1",
+          "swordsman-2",
+          "swordsman-3",
+          "swordsman-4",
+          "swordsman-5",
+          "swordsman-6",
+          "swordsman-7",
+          "swordsman-8",
+          "swordsman-9",
+          "swordsman-10"
+        ],
+        "skillCooldowns": {
+          "swordsman-10": 19.433500000000304
+        },
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 23,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "ring",
+            "fireblade",
+            "core",
+            "sword"
+          ],
+          "materials": 4,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "lv80Cue": null,
+          "lv90Cue": null,
+          "lv100Cue": {
+            "skillId": "swordsman-10",
+            "style": "meteor-blade-whitegold-flaming-grand-sweep",
+            "impactSeconds": 0,
+            "heroSeconds": 1.9,
+            "focal": {
+              "x": 0.8795600000000066,
+              "z": 17.10695999999996
+            },
+            "decorativeRadius": 17.4,
+            "palette": [
+              16734742,
+              16774584,
+              13246511
+            ],
+            "endSeconds": 2.65
+          },
+          "drawCount": 0
+        },
+        "cameraShake": {
+          "level": 100,
+          "elapsed": 0.36,
+          "duration": 0.36,
+          "active": false,
+          "amplitude": 0.11,
+          "offset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "triggerCount": 1
+        },
+        "modelErrors": 0,
+        "drawCalls": 46
+      },
+      "timeline": [
+        {
+          "hp": 1293.3218151999902,
+          "cast": "swordsman-10",
+          "motion": {
+            "skillId": "swordsman-10",
+            "duration": 1.7999999999999998,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.12033333333333218
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1294.1066151999896,
+          "cast": "swordsman-10",
+          "motion": {
+            "skillId": "swordsman-10",
+            "duration": 1.7999999999999998,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.2314444444444429
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1294.826276799989,
+          "cast": "swordsman-10",
+          "motion": {
+            "skillId": "swordsman-10",
+            "duration": 1.7999999999999998,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.33333333333333226
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1285.6762151999885,
+          "cast": "swordsman-10",
+          "motion": {
+            "skillId": "swordsman-10",
+            "duration": 1.7999999999999998,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.45366666666666444
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1286.5920767999878,
+          "cast": "swordsman-10",
+          "motion": {
+            "skillId": "swordsman-10",
+            "duration": 1.7999999999999998,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.5833333333333321
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1278.2458151999874,
+          "cast": "swordsman-10",
+          "motion": {
+            "skillId": "swordsman-10",
+            "duration": 1.7999999999999998,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.675888888888887
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1268.899945999987,
+          "cast": "swordsman-10",
+          "motion": {
+            "skillId": "swordsman-10",
+            "duration": 1.7999999999999998,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.7684999999999986
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1269.4881535999866,
+          "cast": "swordsman-10",
+          "motion": {
+            "skillId": "swordsman-10",
+            "duration": 1.7999999999999998,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.8517777777777763
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1270.273345999986,
+          "cast": "swordsman-10",
+          "motion": {
+            "skillId": "swordsman-10",
+            "duration": 1.7999999999999998,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.9629444444444432
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1270.9922227999857,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-10",
+            "duration": 1.44,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0,
+            "duration": 0.36,
+            "active": true,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0.09803280960675789,
+              "y": 0.03188877551826571,
+              "z": 0.06501476601803624
+            },
+            "triggerCount": 1
+          },
+          "active": 23,
+          "cue": "swordsman-10"
+        },
+        {
+          "hp": 1271.7770227999852,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-10",
+            "duration": 1.44,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.13888888888888884
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.2,
+            "duration": 0.36,
+            "active": true,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0.016330484086664012,
+              "y": -0.008396246247741533,
+              "z": -0.008542330232503568
+            },
+            "triggerCount": 1
+          },
+          "active": 22,
+          "cue": "swordsman-10"
+        },
+        {
+          "hp": 1272.6277459999847,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-10",
+            "duration": 1.44,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.28944444444444384
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 22,
+          "cue": "swordsman-10"
+        },
+        {
+          "hp": 1273.543215199984,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-10",
+            "duration": 1.44,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.4514583333333323
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 22,
+          "cue": "swordsman-10"
+        },
+        {
+          "hp": 1274.3276227999834,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-10",
+            "duration": 1.44,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.5902777777777777
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 22,
+          "cue": "swordsman-10"
+        },
+        {
+          "hp": 1275.3086227999827,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-10",
+            "duration": 1.44,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.7638888888888888
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 22,
+          "cue": "swordsman-10"
+        },
+        {
+          "hp": 1276.289622799982,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-10",
+            "duration": 1.44,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.9375
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 21,
+          "cue": "swordsman-10"
+        },
+        {
+          "hp": 1277.0744227999814,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 16,
+          "cue": "swordsman-10"
+        },
+        {
+          "hp": 1277.859615199981,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 6,
+          "cue": "swordsman-10"
+        },
+        {
+          "hp": 1278.7095535999804,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 2,
+          "cue": "swordsman-10"
+        },
+        {
+          "hp": 1279.6905535999797,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 1,
+          "cue": "swordsman-10"
+        },
+        {
+          "hp": 1280.2787611999793,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 1,
+          "cue": "swordsman-10"
+        },
+        {
+          "hp": 1280.9980303999787,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "swordsman-10"
+        },
+        {
+          "hp": 1281.6525535999783,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "swordsman-10"
+        },
+        {
+          "hp": 1281.7176919999783,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "swordsman-10"
+        },
+        {
+          "hp": 1282.6986919999777,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "swordsman-10"
+        },
+        {
+          "hp": 1283.3528227999773,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "swordsman-10"
+        },
+        {
+          "hp": 1284.0724843999767,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "swordsman-10"
+        },
+        {
+          "hp": 1285.053484399976,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "swordsman-10"
+        },
+        {
+          "hp": 1285.314822799976,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "swordsman-10"
+        }
+      ],
+      "errors": []
+    },
+    "mage-10": {
+      "environment": "Chromium ANGLE SwiftShader; authentic learned Lv100 skill rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+      "before": {
+        "job": "mage",
+        "zone": "glade",
+        "x": 0.66,
+        "z": 17.03347999999997,
+        "hp": 1279.47187679999,
+        "mp": 852,
+        "kills": 0,
+        "hotbar": [
+          "mage-10",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "mage-1",
+          "mage-2",
+          "mage-3",
+          "mage-4",
+          "mage-5",
+          "mage-6",
+          "mage-7",
+          "mage-8",
+          "mage-9",
+          "mage-10"
+        ],
+        "skillCooldowns": {},
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 0,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [],
+          "materials": 0,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "lv80Cue": null,
+          "lv90Cue": null,
+          "lv100Cue": null,
+          "drawCount": 0
+        },
+        "cameraShake": {
+          "level": 0,
+          "elapsed": 0,
+          "duration": 0,
+          "active": false,
+          "amplitude": 0,
+          "offset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "triggerCount": 0
+        },
+        "modelErrors": 0,
+        "drawCalls": 51
+      },
+      "after": {
+        "job": "mage",
+        "zone": "glade",
+        "x": 0.66,
+        "z": 17.03347999999997,
+        "hp": 1232.832084399981,
+        "mp": 805.4185739999978,
+        "kills": 6,
+        "hotbar": [
+          "mage-10",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "mage-1",
+          "mage-2",
+          "mage-3",
+          "mage-4",
+          "mage-5",
+          "mage-6",
+          "mage-7",
+          "mage-8",
+          "mage-9",
+          "mage-10"
+        ],
+        "skillCooldowns": {
+          "mage-10": 24.850100000000182
+        },
+        "skillMotion": {
+          "skillId": "mage-10",
+          "duration": 1.44,
+          "job": "mage",
+          "stage": 10,
+          "branch": 0,
+          "effect": "area",
+          "phase": "release",
+          "progress": 0
+        },
+        "vfx": {
+          "active": 37,
+          "pooled": 37,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "ring",
+            "galaxyarm",
+            "core",
+            "star"
+          ],
+          "materials": 6,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "lv80Cue": null,
+          "lv90Cue": null,
+          "lv100Cue": {
+            "skillId": "mage-10",
+            "style": "astral-storm-violet-dimensional-galaxy",
+            "impactSeconds": 0,
+            "heroSeconds": 1.9,
+            "focal": {
+              "x": 0.6957316596997849,
+              "z": 16.04240198459604
+            },
+            "decorativeRadius": 17.4,
+            "palette": [
+              7614942,
+              15833855,
+              16777215
+            ],
+            "endSeconds": 2.65
+          },
+          "drawCount": 20
+        },
+        "cameraShake": {
+          "level": 100,
+          "elapsed": 0,
+          "duration": 0.36,
+          "active": true,
+          "amplitude": 0.11,
+          "offset": {
+            "x": 0.09803280960675789,
+            "y": 0.03188877551826571,
+            "z": 0.06501476601803624
+          },
+          "triggerCount": 1
+        },
+        "modelErrors": 0,
+        "drawCalls": 72
+      },
+      "recovered": {
+        "job": "mage",
+        "zone": "glade",
+        "x": 0.66,
+        "z": 17.03347999999997,
+        "hp": 1248.26556879997,
+        "mp": 822.1735799999951,
+        "kills": 6,
+        "hotbar": [
+          "mage-10",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "mage-1",
+          "mage-2",
+          "mage-3",
+          "mage-4",
+          "mage-5",
+          "mage-6",
+          "mage-7",
+          "mage-8",
+          "mage-9",
+          "mage-10"
+        ],
+        "skillCooldowns": {
+          "mage-10": 20.9170000000004
+        },
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 37,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "ring",
+            "galaxyarm",
+            "core",
+            "star"
+          ],
+          "materials": 6,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "lv80Cue": null,
+          "lv90Cue": null,
+          "lv100Cue": {
+            "skillId": "mage-10",
+            "style": "astral-storm-violet-dimensional-galaxy",
+            "impactSeconds": 0,
+            "heroSeconds": 1.9,
+            "focal": {
+              "x": 0.6957316596997849,
+              "z": 16.04240198459604
+            },
+            "decorativeRadius": 17.4,
+            "palette": [
+              7614942,
+              15833855,
+              16777215
+            ],
+            "endSeconds": 2.65
+          },
+          "drawCount": 0
+        },
+        "cameraShake": {
+          "level": 100,
+          "elapsed": 0.36,
+          "duration": 0.36,
+          "active": false,
+          "amplitude": 0.11,
+          "offset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "triggerCount": 1
+        },
+        "modelErrors": 0,
+        "drawCalls": 46
+      },
+      "timeline": [
+        {
+          "hp": 1280.1915383999894,
+          "cast": "mage-10",
+          "motion": {
+            "skillId": "mage-10",
+            "duration": 3,
+            "job": "mage",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.06113333333333293
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1280.845276799989,
+          "cast": "mage-10",
+          "motion": {
+            "skillId": "mage-10",
+            "duration": 3,
+            "job": "mage",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.11666666666666625
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1281.4994075999887,
+          "cast": "mage-10",
+          "motion": {
+            "skillId": "mage-10",
+            "duration": 3,
+            "job": "mage",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.1722333333333329
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1282.218676799988,
+          "cast": "mage-10",
+          "motion": {
+            "skillId": "mage-10",
+            "duration": 3,
+            "job": "mage",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.2333333333333325
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1272.8072767999877,
+          "cast": "mage-10",
+          "motion": {
+            "skillId": "mage-10",
+            "duration": 3,
+            "job": "mage",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.2833333333333323
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1273.5920767999871,
+          "cast": "mage-10",
+          "motion": {
+            "skillId": "mage-10",
+            "duration": 3,
+            "job": "mage",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.34999999999999876
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1264.3768767999866,
+          "cast": "mage-10",
+          "motion": {
+            "skillId": "mage-10",
+            "duration": 3,
+            "job": "mage",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.4166666666666652
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1256.161676799986,
+          "cast": "mage-10",
+          "motion": {
+            "skillId": "mage-10",
+            "duration": 3,
+            "job": "mage",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.4833333333333316
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1256.9464767999855,
+          "cast": "mage-10",
+          "motion": {
+            "skillId": "mage-10",
+            "duration": 3,
+            "job": "mage",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.549999999999998
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1257.665745999985,
+          "cast": "mage-10",
+          "motion": {
+            "skillId": "mage-10",
+            "duration": 3,
+            "job": "mage",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.6110999999999975
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1258.4505459999843,
+          "cast": "mage-10",
+          "motion": {
+            "skillId": "mage-10",
+            "duration": 3,
+            "job": "mage",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.6777666666666642
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1259.2353459999838,
+          "cast": "mage-10",
+          "motion": {
+            "skillId": "mage-10",
+            "duration": 3,
+            "job": "mage",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.7444333333333308
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1260.216345999983,
+          "cast": "mage-10",
+          "motion": {
+            "skillId": "mage-10",
+            "duration": 3,
+            "job": "mage",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.8277666666666642
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1260.347015199983,
+          "cast": "mage-10",
+          "motion": {
+            "skillId": "mage-10",
+            "duration": 3,
+            "job": "mage",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.838866666666664
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1250.1318151999824,
+          "cast": "mage-10",
+          "motion": {
+            "skillId": "mage-10",
+            "duration": 3,
+            "job": "mage",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.9055333333333307
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1232.1128151999817,
+          "cast": "mage-10",
+          "motion": {
+            "skillId": "mage-10",
+            "duration": 3,
+            "job": "mage",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.9888666666666641
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1232.832084399981,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-10",
+            "duration": 1.44,
+            "job": "mage",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0,
+            "duration": 0.36,
+            "active": true,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0.09803280960675789,
+              "y": 0.03188877551826571,
+              "z": 0.06501476601803624
+            },
+            "triggerCount": 1
+          },
+          "active": 37,
+          "cue": "mage-10"
+        },
+        {
+          "hp": 1233.6828075999806,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-10",
+            "duration": 1.44,
+            "job": "mage",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.150555555555555
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.21679999999999927,
+            "duration": 0.36,
+            "active": true,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0.011590618010657527,
+              "y": 0.006291843513511529,
+              "z": 0.007385021079965383
+            },
+            "triggerCount": 1
+          },
+          "active": 36,
+          "cue": "mage-10"
+        },
+        {
+          "hp": 1234.59788439998,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-10",
+            "duration": 1.44,
+            "job": "mage",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.3125
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 36,
+          "cue": "mage-10"
+        },
+        {
+          "hp": 1235.5137459999794,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-10",
+            "duration": 1.44,
+            "job": "mage",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.4745833333333318
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 36,
+          "cue": "mage-10"
+        },
+        {
+          "hp": 1236.4292151999787,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-10",
+            "duration": 1.44,
+            "job": "mage",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.6365972222222227
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 36,
+          "cue": "mage-10"
+        },
+        {
+          "hp": 1237.410215199978,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-10",
+            "duration": 1.44,
+            "job": "mage",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.8102083333333339
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 36,
+          "cue": "mage-10"
+        },
+        {
+          "hp": 1238.3912151999773,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-10",
+            "duration": 1.44,
+            "job": "mage",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.983819444444445
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 34,
+          "cue": "mage-10"
+        },
+        {
+          "hp": 1238.5870227999771,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 34,
+          "cue": "mage-10"
+        },
+        {
+          "hp": 1239.3718227999766,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 16,
+          "cue": "mage-10"
+        },
+        {
+          "hp": 1240.352822799976,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 2,
+          "cue": "mage-10"
+        },
+        {
+          "hp": 1241.3338227999752,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 2,
+          "cue": "mage-10"
+        },
+        {
+          "hp": 1241.529630399975,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 1,
+          "cue": "mage-10"
+        },
+        {
+          "hp": 1242.3144303999745,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 1,
+          "cue": "mage-10"
+        },
+        {
+          "hp": 1243.033699599974,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "mage-10"
+        },
+        {
+          "hp": 1243.7529687999734,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "mage-10"
+        },
+        {
+          "hp": 1244.6688303999726,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "mage-10"
+        },
+        {
+          "hp": 1245.453630399972,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "mage-10"
+        },
+        {
+          "hp": 1246.1728995999715,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "mage-10"
+        },
+        {
+          "hp": 1246.957699599971,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "mage-10"
+        },
+        {
+          "hp": 1247.9386995999703,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "mage-10"
+        },
+        {
+          "hp": 1248.26556879997,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "mage-10"
+        }
+      ],
+      "errors": []
+    },
+    "archer-10": {
+      "environment": "Chromium ANGLE SwiftShader; authentic learned Lv100 skill rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+      "before": {
+        "job": "archer",
+        "zone": "glade",
+        "x": 1.026519999999997,
+        "z": 17.693039999999964,
+        "hp": 1288.3982075999925,
+        "mp": 852,
+        "kills": 0,
+        "hotbar": [
+          "archer-10",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "archer-1",
+          "archer-2",
+          "archer-3",
+          "archer-4",
+          "archer-5",
+          "archer-6",
+          "archer-7",
+          "archer-8",
+          "archer-9",
+          "archer-10"
+        ],
+        "skillCooldowns": {},
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 0,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [],
+          "materials": 0,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "lv80Cue": null,
+          "lv90Cue": null,
+          "lv100Cue": null,
+          "drawCount": 0
+        },
+        "cameraShake": {
+          "level": 0,
+          "elapsed": 0,
+          "duration": 0,
+          "active": false,
+          "amplitude": 0,
+          "offset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "triggerCount": 0
+        },
+        "modelErrors": 0,
+        "drawCalls": 49
+      },
+      "after": {
+        "job": "archer",
+        "zone": "glade",
+        "x": 1.026519999999997,
+        "z": 17.693039999999964,
+        "hp": 1284.4144843999884,
+        "mp": 810.531431999999,
+        "kills": 6,
+        "hotbar": [
+          "archer-10",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "archer-1",
+          "archer-2",
+          "archer-3",
+          "archer-4",
+          "archer-5",
+          "archer-6",
+          "archer-7",
+          "archer-8",
+          "archer-9",
+          "archer-10"
+        ],
+        "skillCooldowns": {
+          "archer-10": 22.46680000000008
+        },
+        "skillMotion": {
+          "skillId": "archer-10",
+          "duration": 1.44,
+          "job": "archer",
+          "stage": 10,
+          "branch": 0,
+          "effect": "area",
+          "phase": "release",
+          "progress": 0
+        },
+        "vfx": {
+          "active": 40,
+          "pooled": 40,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "ring",
+            "arrow",
+            "core",
+            "featherwing",
+            "ray",
+            "star"
+          ],
+          "materials": 5,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "lv80Cue": null,
+          "lv90Cue": null,
+          "lv100Cue": {
+            "skillId": "archer-10",
+            "style": "sky-barrage-cyan-ascending-descending-arrows",
+            "impactSeconds": 0,
+            "heroSeconds": 1.9,
+            "focal": {
+              "x": 1.3297402169253438,
+              "z": 16.652330981317036
+            },
+            "decorativeRadius": 17.4,
+            "palette": [
+              3328767,
+              15400959,
+              2327004
+            ],
+            "endSeconds": 2.65
+          },
+          "drawCount": 10
+        },
+        "cameraShake": {
+          "level": 100,
+          "elapsed": 0,
+          "duration": 0.36,
+          "active": true,
+          "amplitude": 0.11,
+          "offset": {
+            "x": 0.09803280960675789,
+            "y": 0.03188877551826571,
+            "z": 0.06501476601803624
+          },
+          "triggerCount": 1
+        },
+        "modelErrors": 0,
+        "drawCalls": 61
+      },
+      "recovered": {
+        "job": "archer",
+        "zone": "glade",
+        "x": 1.026519999999997,
+        "z": 17.693039999999964,
+        "hp": 1300.5017071999773,
+        "mp": 827.996153999996,
+        "kills": 6,
+        "hotbar": [
+          "archer-10",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "archer-1",
+          "archer-2",
+          "archer-3",
+          "archer-4",
+          "archer-5",
+          "archer-6",
+          "archer-7",
+          "archer-8",
+          "archer-9",
+          "archer-10"
+        ],
+        "skillCooldowns": {
+          "archer-10": 18.36710000000031
+        },
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 40,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "ring",
+            "arrow",
+            "core",
+            "featherwing",
+            "ray",
+            "star"
+          ],
+          "materials": 5,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "lv80Cue": null,
+          "lv90Cue": null,
+          "lv100Cue": {
+            "skillId": "archer-10",
+            "style": "sky-barrage-cyan-ascending-descending-arrows",
+            "impactSeconds": 0,
+            "heroSeconds": 1.9,
+            "focal": {
+              "x": 1.3297402169253438,
+              "z": 16.652330981317036
+            },
+            "decorativeRadius": 17.4,
+            "palette": [
+              3328767,
+              15400959,
+              2327004
+            ],
+            "endSeconds": 2.65
+          },
+          "drawCount": 0
+        },
+        "cameraShake": {
+          "level": 100,
+          "elapsed": 0.36,
+          "duration": 0.36,
+          "active": false,
+          "amplitude": 0.11,
+          "offset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "triggerCount": 1
+        },
+        "modelErrors": 0,
+        "drawCalls": 45
+      },
+      "timeline": [
+        {
+          "hp": 1289.248145999992,
+          "cast": "archer-10",
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.5,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.14439999999999864
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1290.2291459999913,
+          "cast": "archer-10",
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.5,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.3110666666666647
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1290.556015199991,
+          "cast": "archer-10",
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.5,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.3665999999999987
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1291.2756767999904,
+          "cast": "archer-10",
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.5,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.48886666666666523
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1292.1256151999899,
+          "cast": "archer-10",
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.5,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.6332666666666655
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1282.9759459999893,
+          "cast": "archer-10",
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.5,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.7777333333333317
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1283.7603535999888,
+          "cast": "archer-10",
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.5,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.9109999999999994
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1284.4144843999884,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.44,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0,
+            "duration": 0.36,
+            "active": true,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0.09803280960675789,
+              "y": 0.03188877551826571,
+              "z": 0.06501476601803624
+            },
+            "triggerCount": 1
+          },
+          "active": 40,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1285.3954843999877,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.44,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.17361111111111116
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.25,
+            "duration": 0.36,
+            "active": true,
+            "amplitude": 0.11,
+            "offset": {
+              "x": -0.007242709941515014,
+              "y": -0.004596138033858089,
+              "z": -0.0017087407495110613
+            },
+            "triggerCount": 1
+          },
+          "active": 39,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1285.4606227999877,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.44,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.18513888888888919
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.2666000000000004,
+            "duration": 0.36,
+            "active": true,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0.005106630291849501,
+              "y": 0.0015275850579269828,
+              "z": -0.004810200680512366
+            },
+            "triggerCount": 1
+          },
+          "active": 39,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1286.441622799987,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.44,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.35875000000000024
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 32,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1287.1608919999865,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.44,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.4860416666666677
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 32,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1287.4226227999864,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.44,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.5323611111111114
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 32,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1288.4036227999857,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.44,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.7059722222222224
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 32,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1289.1888151999851,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.44,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.8449305555555561
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 32,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1290.0387535999846,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.44,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.995347222222223
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 31,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1290.758022799984,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 11,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1291.7390227999833,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 3,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1292.5238227999828,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 2,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1292.7851611999827,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 2,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1293.4392919999823,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 1,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1294.1585611999817,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 1,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1294.9433611999812,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1295.6626303999806,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1296.6436303999799,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1297.4284303999793,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1298.147307199979,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1298.9972455999784,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1299.782045599978,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1300.5017071999773,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "archer-10"
+        }
+      ],
+      "errors": []
+    },
+    "swordsman-b-10": {
+      "environment": "Chromium ANGLE SwiftShader; authentic learned Lv100 skill rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+      "before": {
+        "job": "swordsman",
+        "zone": "glade",
+        "x": 0.8065200000000049,
+        "z": 17.546519999999965,
+        "hp": 1294.218299999997,
+        "mp": 852,
+        "kills": 0,
+        "hotbar": [
+          "swordsman-b-10",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "swordsman-1",
+          "swordsman-2",
+          "swordsman-3",
+          "swordsman-4",
+          "swordsman-5",
+          "swordsman-6",
+          "swordsman-7",
+          "swordsman-8",
+          "swordsman-9",
+          "swordsman-b-10"
+        ],
+        "skillCooldowns": {},
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 0,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [],
+          "materials": 0,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "lv80Cue": null,
+          "lv90Cue": null,
+          "lv100Cue": null,
+          "drawCount": 0
+        },
+        "cameraShake": {
+          "level": 0,
+          "elapsed": 0,
+          "duration": 0,
+          "active": false,
+          "amplitude": 0,
+          "offset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "triggerCount": 0
+        },
+        "modelErrors": 0,
+        "drawCalls": 52
+      },
+      "after": {
+        "job": "swordsman",
+        "zone": "glade",
+        "x": 0.8065200000000049,
+        "z": 17.546519999999965,
+        "hp": 1278.7115075999932,
+        "mp": 813.9635739999991,
+        "kills": 6,
+        "hotbar": [
+          "swordsman-b-10",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "swordsman-1",
+          "swordsman-2",
+          "swordsman-3",
+          "swordsman-4",
+          "swordsman-5",
+          "swordsman-6",
+          "swordsman-7",
+          "swordsman-8",
+          "swordsman-9",
+          "swordsman-b-10"
+        ],
+        "skillCooldowns": {
+          "swordsman-b-10": 18.600100000000076
+        },
+        "skillMotion": {
+          "skillId": "swordsman-b-10",
+          "duration": 1.44,
+          "job": "swordsman",
+          "stage": 10,
+          "branch": 1,
+          "effect": "area",
+          "phase": "release",
+          "progress": 0
+        },
+        "vfx": {
+          "active": 33,
+          "pooled": 33,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "ring",
+            "sword",
+            "core",
+            "stoneshard",
+            "ray",
+            "scream"
+          ],
+          "materials": 6,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "lv80Cue": null,
+          "lv90Cue": null,
+          "lv100Cue": {
+            "skillId": "swordsman-b-10",
+            "style": "guardian-quake-gold-sword-shattered-earth",
+            "impactSeconds": 0,
+            "heroSeconds": 1.9,
+            "focal": {
+              "x": 0.8065200000000049,
+              "z": 17.546519999999965
+            },
+            "decorativeRadius": 17.4,
+            "palette": [
+              16762424,
+              16775643,
+              7950651
+            ],
+            "endSeconds": 2.65
+          },
+          "drawCount": 11
+        },
+        "cameraShake": {
+          "level": 100,
+          "elapsed": 0,
+          "duration": 0.36,
+          "active": true,
+          "amplitude": 0.11,
+          "offset": {
+            "x": 0.09803280960675789,
+            "y": 0.03188877551826571,
+            "z": 0.06501476601803624
+          },
+          "triggerCount": 1
+        },
+        "modelErrors": 0,
+        "drawCalls": 63
+      },
+      "recovered": {
+        "job": "swordsman",
+        "zone": "glade",
+        "x": 0.8065200000000049,
+        "z": 17.546519999999965,
+        "hp": 1294.1449919999827,
+        "mp": 830.7185799999965,
+        "kills": 6,
+        "hotbar": [
+          "swordsman-b-10",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "swordsman-1",
+          "swordsman-2",
+          "swordsman-3",
+          "swordsman-4",
+          "swordsman-5",
+          "swordsman-6",
+          "swordsman-7",
+          "swordsman-8",
+          "swordsman-9",
+          "swordsman-b-10"
+        ],
+        "skillCooldowns": {
+          "swordsman-b-10": 14.6670000000002
+        },
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 33,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "ring",
+            "sword",
+            "core",
+            "stoneshard",
+            "ray",
+            "scream"
+          ],
+          "materials": 6,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "lv80Cue": null,
+          "lv90Cue": null,
+          "lv100Cue": {
+            "skillId": "swordsman-b-10",
+            "style": "guardian-quake-gold-sword-shattered-earth",
+            "impactSeconds": 0,
+            "heroSeconds": 1.9,
+            "focal": {
+              "x": 0.8065200000000049,
+              "z": 17.546519999999965
+            },
+            "decorativeRadius": 17.4,
+            "palette": [
+              16762424,
+              16775643,
+              7950651
+            ],
+            "endSeconds": 2.65
+          },
+          "drawCount": 0
+        },
+        "cameraShake": {
+          "level": 100,
+          "elapsed": 0.36,
+          "duration": 0.36,
+          "active": false,
+          "amplitude": 0.11,
+          "offset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "triggerCount": 1
+        },
+        "modelErrors": 0,
+        "drawCalls": 46
+      },
+      "timeline": [
+        {
+          "hp": 1295.0030999999965,
+          "cast": "swordsman-b-10",
+          "motion": {
+            "skillId": "swordsman-b-10",
+            "duration": 1.2000000000000002,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.16666666666666607
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1295.722369199996,
+          "cast": "swordsman-b-10",
+          "motion": {
+            "skillId": "swordsman-b-10",
+            "duration": 1.2000000000000002,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.31941666666666557
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1296.5075615999954,
+          "cast": "swordsman-b-10",
+          "motion": {
+            "skillId": "swordsman-b-10",
+            "duration": 1.2000000000000002,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.4861666666666661
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1287.2919691999948,
+          "cast": "swordsman-b-10",
+          "motion": {
+            "skillId": "swordsman-b-10",
+            "duration": 1.2000000000000002,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.6527499999999993
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1288.0116307999942,
+          "cast": "swordsman-b-10",
+          "motion": {
+            "skillId": "swordsman-b-10",
+            "duration": 1.2000000000000002,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.8055833333333339
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1277.9267075999937,
+          "cast": "swordsman-b-10",
+          "motion": {
+            "skillId": "swordsman-b-10",
+            "duration": 1.2000000000000002,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.9999166666666678
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1278.7115075999932,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-b-10",
+            "duration": 1.44,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0,
+            "duration": 0.36,
+            "active": true,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0.09803280960675789,
+              "y": 0.03188877551826571,
+              "z": 0.06501476601803624
+            },
+            "triggerCount": 1
+          },
+          "active": 33,
+          "cue": "swordsman-b-10"
+        },
+        {
+          "hp": 1279.5618383999927,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-b-10",
+            "duration": 1.44,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.150486111111109
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.2166999999999971,
+            "duration": 0.36,
+            "active": true,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0.011727230385995137,
+              "y": 0.006245554186625966,
+              "z": 0.007325580286003843
+            },
+            "triggerCount": 1
+          },
+          "active": 31,
+          "cue": "swordsman-b-10"
+        },
+        {
+          "hp": 1280.542838399992,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-b-10",
+            "duration": 1.44,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.32409722222222015
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 31,
+          "cue": "swordsman-b-10"
+        },
+        {
+          "hp": 1280.6735075999918,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-b-10",
+            "duration": 1.44,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.3472222222222222
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 31,
+          "cue": "swordsman-b-10"
+        },
+        {
+          "hp": 1281.3927767999912,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-b-10",
+            "duration": 1.44,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.47451388888888835
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 31,
+          "cue": "swordsman-b-10"
+        },
+        {
+          "hp": 1282.2431075999907,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-b-10",
+            "duration": 1.44,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.625
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 31,
+          "cue": "swordsman-b-10"
+        },
+        {
+          "hp": 1283.22410759999,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-b-10",
+            "duration": 1.44,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.798611111111111
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 31,
+          "cue": "swordsman-b-10"
+        },
+        {
+          "hp": 1284.0089075999895,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-b-10",
+            "duration": 1.44,
+            "job": "swordsman",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.9375
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 30,
+          "cue": "swordsman-b-10"
+        },
+        {
+          "hp": 1284.662645999989,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 22,
+          "cue": "swordsman-b-10"
+        },
+        {
+          "hp": 1285.4478383999885,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 14,
+          "cue": "swordsman-b-10"
+        },
+        {
+          "hp": 1286.1667151999882,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 2,
+          "cue": "swordsman-b-10"
+        },
+        {
+          "hp": 1286.9519075999876,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 2,
+          "cue": "swordsman-b-10"
+        },
+        {
+          "hp": 1287.932907599987,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 1,
+          "cue": "swordsman-b-10"
+        },
+        {
+          "hp": 1288.2597767999866,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 1,
+          "cue": "swordsman-b-10"
+        },
+        {
+          "hp": 1289.240776799986,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "swordsman-b-10"
+        },
+        {
+          "hp": 1289.8289843999855,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "swordsman-b-10"
+        },
+        {
+          "hp": 1290.8099843999848,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "swordsman-b-10"
+        },
+        {
+          "hp": 1290.8755151999849,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "swordsman-b-10"
+        },
+        {
+          "hp": 1291.5943919999845,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "swordsman-b-10"
+        },
+        {
+          "hp": 1292.379584399984,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "swordsman-b-10"
+        },
+        {
+          "hp": 1293.3605843999833,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "swordsman-b-10"
+        },
+        {
+          "hp": 1294.1449919999827,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "swordsman-b-10"
+        }
+      ],
+      "errors": []
+    },
+    "mage-b-10": {
+      "environment": "Chromium ANGLE SwiftShader; authentic learned Lv100 skill rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+      "before": {
+        "job": "mage",
+        "zone": "glade",
+        "x": 0.9534800000000033,
+        "z": 17.399119999999964,
+        "hp": 1282.3299691999964,
+        "mp": 852,
+        "kills": 0,
+        "hotbar": [
+          "mage-b-10",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "mage-1",
+          "mage-2",
+          "mage-3",
+          "mage-4",
+          "mage-5",
+          "mage-6",
+          "mage-7",
+          "mage-8",
+          "mage-9",
+          "mage-b-10"
+        ],
+        "skillCooldowns": {},
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 0,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [],
+          "materials": 0,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "lv80Cue": null,
+          "lv90Cue": null,
+          "lv100Cue": null,
+          "drawCount": 0
+        },
+        "cameraShake": {
+          "level": 0,
+          "elapsed": 0,
+          "duration": 0,
+          "active": false,
+          "amplitude": 0,
+          "offset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "triggerCount": 0
+        },
+        "modelErrors": 0,
+        "drawCalls": 51
+      },
+      "after": {
+        "job": "mage",
+        "zone": "glade",
+        "x": 0.9534800000000033,
+        "z": 17.399119999999964,
+        "hp": 1252.0081227999901,
+        "mp": 797.5068639999982,
+        "kills": 6,
+        "hotbar": [
+          "mage-b-10",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "mage-1",
+          "mage-2",
+          "mage-3",
+          "mage-4",
+          "mage-5",
+          "mage-6",
+          "mage-7",
+          "mage-8",
+          "mage-9",
+          "mage-b-10"
+        ],
+        "skillCooldowns": {
+          "mage-b-10": 32.53360000000013
+        },
+        "skillMotion": {
+          "skillId": "mage-b-10",
+          "duration": 1.44,
+          "job": "mage",
+          "stage": 10,
+          "branch": 1,
+          "effect": "area",
+          "phase": "release",
+          "progress": 0
+        },
+        "vfx": {
+          "active": 39,
+          "pooled": 39,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "ring",
+            "worldcrown",
+            "core",
+            "blossom",
+            "crownfoliage",
+            "ray"
+          ],
+          "materials": 5,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "lv80Cue": null,
+          "lv90Cue": null,
+          "lv100Cue": {
+            "skillId": "mage-b-10",
+            "style": "worldtree-gold-crown-pink-blossom-burst",
+            "impactSeconds": 0,
+            "heroSeconds": 1.9,
+            "focal": {
+              "x": 0.05583876505075956,
+              "z": 16.983665021826333
+            },
+            "decorativeRadius": 17.4,
+            "palette": [
+              16766027,
+              16749000,
+              7591751
+            ],
+            "endSeconds": 2.65
+          },
+          "drawCount": 18
+        },
+        "cameraShake": {
+          "level": 100,
+          "elapsed": 0,
+          "duration": 0.36,
+          "active": true,
+          "amplitude": 0.11,
+          "offset": {
+            "x": 0.09803280960675789,
+            "y": 0.03188877551826571,
+            "z": 0.06501476601803624
+          },
+          "triggerCount": 1
+        },
+        "modelErrors": 0,
+        "drawCalls": 71
+      },
+      "recovered": {
+        "job": "mage",
+        "zone": "glade",
+        "x": 0.9534800000000033,
+        "z": 17.399119999999964,
+        "hp": 1267.834791999979,
+        "mp": 814.6887219999954,
+        "kills": 6,
+        "hotbar": [
+          "mage-b-10",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "mage-1",
+          "mage-2",
+          "mage-3",
+          "mage-4",
+          "mage-5",
+          "mage-6",
+          "mage-7",
+          "mage-8",
+          "mage-9",
+          "mage-b-10"
+        ],
+        "skillCooldowns": {
+          "mage-b-10": 28.500300000000358
+        },
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 39,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "ring",
+            "worldcrown",
+            "core",
+            "blossom",
+            "crownfoliage",
+            "ray"
+          ],
+          "materials": 5,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "lv80Cue": null,
+          "lv90Cue": null,
+          "lv100Cue": {
+            "skillId": "mage-b-10",
+            "style": "worldtree-gold-crown-pink-blossom-burst",
+            "impactSeconds": 0,
+            "heroSeconds": 1.9,
+            "focal": {
+              "x": 0.05583876505075956,
+              "z": 16.983665021826333
+            },
+            "decorativeRadius": 17.4,
+            "palette": [
+              16766027,
+              16749000,
+              7591751
+            ],
+            "endSeconds": 2.65
+          },
+          "drawCount": 0
+        },
+        "cameraShake": {
+          "level": 100,
+          "elapsed": 0.36,
+          "duration": 0.36,
+          "active": false,
+          "amplitude": 0.11,
+          "offset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "triggerCount": 1
+        },
+        "modelErrors": 0,
+        "drawCalls": 47
+      },
+      "timeline": [
+        {
+          "hp": 1282.918961599996,
+          "cast": "mage-b-10",
+          "motion": {
+            "skillId": "mage-b-10",
+            "duration": 2.4000000000000004,
+            "job": "mage",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.0625416666666665
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1283.6378383999956,
+          "cast": "mage-b-10",
+          "motion": {
+            "skillId": "mage-b-10",
+            "duration": 2.4000000000000004,
+            "job": "mage",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.13887499999999997
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1284.422638399995,
+          "cast": "mage-b-10",
+          "motion": {
+            "skillId": "mage-b-10",
+            "duration": 2.4000000000000004,
+            "job": "mage",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.222208333333333
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1264.0767691999947,
+          "cast": "mage-b-10",
+          "motion": {
+            "skillId": "mage-b-10",
+            "duration": 2.4000000000000004,
+            "job": "mage",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.29166666666666563
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1264.6653691999943,
+          "cast": "mage-b-10",
+          "motion": {
+            "skillId": "mage-b-10",
+            "duration": 2.4000000000000004,
+            "job": "mage",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.3541666666666654
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1265.3846383999937,
+          "cast": "mage-b-10",
+          "motion": {
+            "skillId": "mage-b-10",
+            "duration": 2.4000000000000004,
+            "job": "mage",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.4305416666666655
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1256.0383767999933,
+          "cast": "mage-b-10",
+          "motion": {
+            "skillId": "mage-b-10",
+            "duration": 2.4000000000000004,
+            "job": "mage",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.4999583333333314
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1247.627369199993,
+          "cast": "mage-b-10",
+          "motion": {
+            "skillId": "mage-b-10",
+            "duration": 2.4000000000000004,
+            "job": "mage",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.562499999999998
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1248.3462459999926,
+          "cast": "mage-b-10",
+          "motion": {
+            "skillId": "mage-b-10",
+            "duration": 2.4000000000000004,
+            "job": "mage",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.6388333333333316
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1249.3272459999919,
+          "cast": "mage-b-10",
+          "motion": {
+            "skillId": "mage-b-10",
+            "duration": 2.4000000000000004,
+            "job": "mage",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.7429999999999983
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1249.8499227999914,
+          "cast": "mage-b-10",
+          "motion": {
+            "skillId": "mage-b-10",
+            "duration": 2.4000000000000004,
+            "job": "mage",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.798499999999998
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1250.1116535999913,
+          "cast": "mage-b-10",
+          "motion": {
+            "skillId": "mage-b-10",
+            "duration": 2.4000000000000004,
+            "job": "mage",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.8262916666666649
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1250.765784399991,
+          "cast": "mage-b-10",
+          "motion": {
+            "skillId": "mage-b-10",
+            "duration": 2.4000000000000004,
+            "job": "mage",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.8957499999999986
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1251.3543843999905,
+          "cast": "mage-b-10",
+          "motion": {
+            "skillId": "mage-b-10",
+            "duration": 2.4000000000000004,
+            "job": "mage",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.9582499999999986
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1252.0081227999901,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-b-10",
+            "duration": 1.44,
+            "job": "mage",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0,
+            "duration": 0.36,
+            "active": true,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0.09803280960675789,
+              "y": 0.03188877551826571,
+              "z": 0.06501476601803624
+            },
+            "triggerCount": 1
+          },
+          "active": 39,
+          "cue": "mage-b-10"
+        },
+        {
+          "hp": 1252.9891227999894,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-b-10",
+            "duration": 1.44,
+            "job": "mage",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.17361111111111116
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.25,
+            "duration": 0.36,
+            "active": true,
+            "amplitude": 0.11,
+            "offset": {
+              "x": -0.007242709941515014,
+              "y": -0.004596138033858089,
+              "z": -0.0017087407495110613
+            },
+            "triggerCount": 1
+          },
+          "active": 38,
+          "cue": "mage-b-10"
+        },
+        {
+          "hp": 1253.4470535999892,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-b-10",
+            "duration": 1.44,
+            "job": "mage",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.2546527777777783
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 38,
+          "cue": "mage-b-10"
+        },
+        {
+          "hp": 1254.3625227999885,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-b-10",
+            "duration": 1.44,
+            "job": "mage",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.41666666666666663
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 38,
+          "cue": "mage-b-10"
+        },
+        {
+          "hp": 1255.3435227999878,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-b-10",
+            "duration": 1.44,
+            "job": "mage",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.5902777777777778
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 38,
+          "cue": "mage-b-10"
+        },
+        {
+          "hp": 1256.324522799987,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-b-10",
+            "duration": 1.44,
+            "job": "mage",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.7638888888888888
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 38,
+          "cue": "mage-b-10"
+        },
+        {
+          "hp": 1257.3055227999864,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-b-10",
+            "duration": 1.44,
+            "job": "mage",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.9375
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 37,
+          "cue": "mage-b-10"
+        },
+        {
+          "hp": 1258.2865227999857,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 34,
+          "cue": "mage-b-10"
+        },
+        {
+          "hp": 1259.267522799985,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 11,
+          "cue": "mage-b-10"
+        },
+        {
+          "hp": 1260.2485227999844,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 2,
+          "cue": "mage-b-10"
+        },
+        {
+          "hp": 1261.2295227999837,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 1,
+          "cue": "mage-b-10"
+        },
+        {
+          "hp": 1262.0794611999831,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "mage-b-10"
+        },
+        {
+          "hp": 1262.8642611999826,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "mage-b-10"
+        },
+        {
+          "hp": 1263.649061199982,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "mage-b-10"
+        },
+        {
+          "hp": 1264.4338611999815,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "mage-b-10"
+        },
+        {
+          "hp": 1265.087991999981,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "mage-b-10"
+        },
+        {
+          "hp": 1265.6765919999807,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "mage-b-10"
+        },
+        {
+          "hp": 1266.3958611999801,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "mage-b-10"
+        },
+        {
+          "hp": 1267.1151303999795,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "mage-b-10"
+        },
+        {
+          "hp": 1267.834791999979,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "mage-b-10"
+        }
+      ],
+      "errors": []
+    },
+    "archer-b-10": {
+      "environment": "Chromium ANGLE SwiftShader; authentic learned Lv100 skill rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+      "before": {
+        "job": "archer",
+        "zone": "glade",
+        "x": 1.1000000000000003,
+        "z": 17.692599999999967,
+        "hp": 1291.825899999997,
+        "mp": 852,
+        "kills": 0,
+        "hotbar": [
+          "archer-b-10",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "archer-1",
+          "archer-2",
+          "archer-3",
+          "archer-4",
+          "archer-5",
+          "archer-6",
+          "archer-7",
+          "archer-8",
+          "archer-9",
+          "archer-b-10"
+        ],
+        "skillCooldowns": {},
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 0,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [],
+          "materials": 0,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "lv80Cue": null,
+          "lv90Cue": null,
+          "lv100Cue": null,
+          "drawCount": 0
+        },
+        "cameraShake": {
+          "level": 0,
+          "elapsed": 0,
+          "duration": 0,
+          "active": false,
+          "amplitude": 0,
+          "offset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "triggerCount": 0
+        },
+        "modelErrors": 0,
+        "drawCalls": 50
+      },
+      "after": {
+        "job": "archer",
+        "zone": "glade",
+        "x": 1.1000000000000003,
+        "z": 17.692599999999967,
+        "hp": 1292.6758383999966,
+        "mp": 804.9227159999998,
+        "kills": 3,
+        "hotbar": [
+          "archer-b-10",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "archer-1",
+          "archer-2",
+          "archer-3",
+          "archer-4",
+          "archer-5",
+          "archer-6",
+          "archer-7",
+          "archer-8",
+          "archer-9",
+          "archer-b-10"
+        ],
+        "skillCooldowns": {
+          "archer-b-10": 27.78340000000001
+        },
+        "skillMotion": {
+          "skillId": "archer-b-10",
+          "duration": 1.44,
+          "job": "archer",
+          "stage": 10,
+          "branch": 1,
+          "effect": "area",
+          "phase": "release",
+          "progress": 0
+        },
+        "vfx": {
+          "active": 30,
+          "pooled": 30,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "star",
+            "ring",
+            "stag",
+            "core",
+            "arrow",
+            "ray",
+            "scream"
+          ],
+          "materials": 6,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "lv80Cue": null,
+          "lv90Cue": null,
+          "lv100Cue": {
+            "skillId": "archer-b-10",
+            "style": "wild-hunt-golden-antler-arrow-fan",
+            "impactSeconds": 0,
+            "heroSeconds": 1.9,
+            "focal": {
+              "x": 2.1000000000000005,
+              "z": 18.692599999999967
+            },
+            "decorativeRadius": 17.4,
+            "palette": [
+              16764217,
+              16774845,
+              11895331
+            ],
+            "endSeconds": 2.65
+          },
+          "drawCount": 16
+        },
+        "cameraShake": {
+          "level": 100,
+          "elapsed": 0,
+          "duration": 0.36,
+          "active": true,
+          "amplitude": 0.11,
+          "offset": {
+            "x": 0.09803280960675789,
+            "y": 0.03188877551826571,
+            "z": 0.06501476601803624
+          },
+          "triggerCount": 1
+        },
+        "modelErrors": 0,
+        "drawCalls": 66
+      },
+      "recovered": {
+        "job": "archer",
+        "zone": "glade",
+        "x": 1.1000000000000003,
+        "z": 17.692599999999967,
+        "hp": 1277.9600459999851,
+        "mp": 822.6012899999968,
+        "kills": 3,
+        "hotbar": [
+          "archer-b-10",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "archer-1",
+          "archer-2",
+          "archer-3",
+          "archer-4",
+          "archer-5",
+          "archer-6",
+          "archer-7",
+          "archer-8",
+          "archer-9",
+          "archer-b-10"
+        ],
+        "skillCooldowns": {
+          "archer-b-10": 23.633500000000247
+        },
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 30,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "star",
+            "ring",
+            "stag",
+            "core",
+            "arrow",
+            "ray",
+            "scream"
+          ],
+          "materials": 6,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "lv80Cue": null,
+          "lv90Cue": null,
+          "lv100Cue": {
+            "skillId": "archer-b-10",
+            "style": "wild-hunt-golden-antler-arrow-fan",
+            "impactSeconds": 0,
+            "heroSeconds": 1.9,
+            "focal": {
+              "x": 2.1000000000000005,
+              "z": 18.692599999999967
+            },
+            "decorativeRadius": 17.4,
+            "palette": [
+              16764217,
+              16774845,
+              11895331
+            ],
+            "endSeconds": 2.65
+          },
+          "drawCount": 0
+        },
+        "cameraShake": {
+          "level": 100,
+          "elapsed": 0.36,
+          "duration": 0.36,
+          "active": false,
+          "amplitude": 0.11,
+          "offset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "triggerCount": 1
+        },
+        "modelErrors": 0,
+        "drawCalls": 47
+      },
+      "timeline": [
+        {
+          "hp": 1292.6758383999966,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-b-10",
+            "duration": 1.44,
+            "job": "archer",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0,
+            "duration": 0.36,
+            "active": true,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0.09803280960675789,
+              "y": 0.03188877551826571,
+              "z": 0.06501476601803624
+            },
+            "triggerCount": 1
+          },
+          "active": 30,
+          "cue": "archer-b-10"
+        },
+        {
+          "hp": 1293.525776799996,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-b-10",
+            "duration": 1.44,
+            "job": "archer",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.15041666666666564
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.21659999999999854,
+            "duration": 0.36,
+            "active": true,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0.011863174616525862,
+              "y": 0.006198261057748895,
+              "z": 0.007265470606435997
+            },
+            "triggerCount": 1
+          },
+          "active": 29,
+          "cue": "archer-b-10"
+        },
+        {
+          "hp": 1294.5067767999954,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-b-10",
+            "duration": 1.44,
+            "job": "archer",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.3240277777777768
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 29,
+          "cue": "archer-b-10"
+        },
+        {
+          "hp": 1295.160515199995,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-b-10",
+            "duration": 1.44,
+            "job": "archer",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.43972222222222024
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 29,
+          "cue": "archer-b-10"
+        },
+        {
+          "hp": 1295.9453151999944,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-b-10",
+            "duration": 1.44,
+            "job": "archer",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.5786111111111091
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 29,
+          "cue": "archer-b-10"
+        },
+        {
+          "hp": 1296.795645999994,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-b-10",
+            "duration": 1.44,
+            "job": "archer",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.7290972222222207
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 29,
+          "cue": "archer-b-10"
+        },
+        {
+          "hp": 1297.1225151999936,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-b-10",
+            "duration": 1.44,
+            "job": "archer",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.7869444444444424
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 29,
+          "cue": "archer-b-10"
+        },
+        {
+          "hp": 1298.103515199993,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-b-10",
+            "duration": 1.44,
+            "job": "archer",
+            "stage": 10,
+            "branch": 1,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.9605555555555535
+          },
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 28,
+          "cue": "archer-b-10"
+        },
+        {
+          "hp": 1298.4303843999926,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 28,
+          "cue": "archer-b-10"
+        },
+        {
+          "hp": 1299.3462459999919,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 5,
+          "cue": "archer-b-10"
+        },
+        {
+          "hp": 1300.2617151999912,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 2,
+          "cue": "archer-b-10"
+        },
+        {
+          "hp": 1301.1771843999904,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 1,
+          "cue": "archer-b-10"
+        },
+        {
+          "hp": 1302.0926535999897,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 1,
+          "cue": "archer-b-10"
+        },
+        {
+          "hp": 1291.8778459999892,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "archer-b-10"
+        },
+        {
+          "hp": 1292.7277843999886,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "archer-b-10"
+        },
+        {
+          "hp": 1292.7933151999887,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "archer-b-10"
+        },
+        {
+          "hp": 1293.774315199988,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "archer-b-10"
+        },
+        {
+          "hp": 1294.6246459999875,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "archer-b-10"
+        },
+        {
+          "hp": 1284.409445999987,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "archer-b-10"
+        },
+        {
+          "hp": 1285.1942459999864,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "archer-b-10"
+        },
+        {
+          "hp": 1277.1752459999857,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "archer-b-10"
+        },
+        {
+          "hp": 1277.9600459999851,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 100,
+            "elapsed": 0.36,
+            "duration": 0.36,
+            "active": false,
+            "amplitude": 0.11,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 1
+          },
+          "active": 0,
+          "cue": "archer-b-10"
+        }
+      ],
+      "errors": []
+    }
+  },
+  "limits": {
+    "lowActive": 40,
+    "highActive": 96,
+    "allocated": 160
+  },
+  "pageErrors": [],
+  "limitations": [
+    "Software renderer measurements are not player-device FPS. Desktop60/mobile30 targets not verified.",
+    "Render-only comparison previews are separate from actual learned rank1 practice casts.",
+    "Deployment status is recorded separately in post-deploy.json."
+  ],
+  "characterMotionSHA256": {
+    "src/render/skill-choreography.ts": "ebcbe70004e4f0b6c0ca18860f57388a0a2778f0cd3488a34f9d3a6283941a15",
+    "src/render/model-library.ts": "3b6cc7afcfb6270e6366580f8bc9f59dc2573e0e527aef4da5c676c8a7af2b87"
+  },
+  "iconReference": {
+    "directory": "public/icons/skills-v4",
+    "descriptionSource": "src/config/classes.json",
+    "audit": "ICON-AUDIT-TH.md",
+    "allSixVisuallyCompared": true
+  },
+  "builtEntry": "/assets/index-B2sP4ICf.js",
+  "captureTimes": {
+    "swordsman-preview.json": 1791735725.7028086,
+    "archer-preview.json": 1791735651.4993563,
+    "mage-preview.json": 1791735840.3139825,
+    "archer-10-reduced-gameplay.json": 1791735584.247846,
+    "mage-b-10-gameplay.json": 1791735963.9010627,
+    "archer-10-gameplay.json": 1791735860.0218368,
+    "mage-10-gameplay.json": 1791735943.0972192,
+    "archer-b-10-gameplay.json": 1791735878.4017012,
+    "swordsman-10-gameplay.json": 1791735898.2575543,
+    "swordsman-b-10-gameplay.json": 1791735920.7173867
+  },
+  "cameraGameplay": {
+    "archer-10-reduced-gameplay.json": {
+      "environment": "Chromium ANGLE SwiftShader; authentic learned high-level skill and camera response rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+      "before": {
+        "job": "archer",
+        "zone": "glade",
+        "x": 0.9534800000000033,
+        "z": 17.252599999999966,
+        "hp": 1293.657230799996,
+        "mp": 852,
+        "kills": 0,
+        "hotbar": [
+          "archer-10",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "archer-1",
+          "archer-2",
+          "archer-3",
+          "archer-4",
+          "archer-5",
+          "archer-6",
+          "archer-7",
+          "archer-8",
+          "archer-9",
+          "archer-10"
+        ],
+        "skillCooldowns": {},
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 0,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [],
+          "materials": 0,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "lv80Cue": null,
+          "lv90Cue": null,
+          "lv100Cue": null,
+          "drawCount": 0
+        },
+        "cameraShake": {
+          "level": 0,
+          "elapsed": 0,
+          "duration": 0,
+          "active": false,
+          "amplitude": 0,
+          "offset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "triggerCount": 0
+        },
+        "modelErrors": 0,
+        "drawCalls": 51
+      },
+      "after": {
+        "job": "archer",
+        "zone": "glade",
+        "x": 0.9534800000000033,
+        "z": 17.252599999999966,
+        "hp": 1269.0662999999913,
+        "mp": 810.957857999999,
+        "kills": 6,
+        "hotbar": [
+          "archer-10",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "archer-1",
+          "archer-2",
+          "archer-3",
+          "archer-4",
+          "archer-5",
+          "archer-6",
+          "archer-7",
+          "archer-8",
+          "archer-9",
+          "archer-10"
+        ],
+        "skillCooldowns": {
+          "archer-10": 22.366700000000094
+        },
+        "skillMotion": {
+          "skillId": "archer-10",
+          "duration": 1.44,
+          "job": "archer",
+          "stage": 10,
+          "branch": 0,
+          "effect": "area",
+          "phase": "release",
+          "progress": 0
+        },
+        "vfx": {
+          "active": 39,
+          "pooled": 40,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "ring",
+            "arrow",
+            "core",
+            "featherwing",
+            "ray",
+            "star"
+          ],
+          "materials": 5,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "lv80Cue": null,
+          "lv90Cue": null,
+          "lv100Cue": {
+            "skillId": "archer-10",
+            "style": "sky-barrage-cyan-ascending-descending-arrows",
+            "impactSeconds": 0,
+            "heroSeconds": 1.9,
+            "focal": {
+              "x": -0.006391996225876051,
+              "z": 16.84029875556848
+            },
+            "decorativeRadius": 17.4,
+            "palette": [
+              3328767,
+              15400959,
+              2327004
+            ],
+            "endSeconds": 2.65
+          },
+          "drawCount": 9
+        },
+        "cameraShake": {
+          "level": 0,
+          "elapsed": 0,
+          "duration": 0,
+          "active": false,
+          "amplitude": 0,
+          "offset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "triggerCount": 0
+        },
+        "modelErrors": 0,
+        "drawCalls": 58
+      },
+      "recovered": {
+        "job": "archer",
+        "zone": "glade",
+        "x": 0.9534800000000033,
+        "z": 17.252599999999966,
+        "hp": 1284.4997843999802,
+        "mp": 827.7128639999964,
+        "kills": 6,
+        "hotbar": [
+          "archer-10",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "archer-1",
+          "archer-2",
+          "archer-3",
+          "archer-4",
+          "archer-5",
+          "archer-6",
+          "archer-7",
+          "archer-8",
+          "archer-9",
+          "archer-10"
+        ],
+        "skillCooldowns": {
+          "archer-10": 18.433600000000315
+        },
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 40,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "ring",
+            "arrow",
+            "core",
+            "featherwing",
+            "ray",
+            "star"
+          ],
+          "materials": 5,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "lv80Cue": null,
+          "lv90Cue": null,
+          "lv100Cue": {
+            "skillId": "archer-10",
+            "style": "sky-barrage-cyan-ascending-descending-arrows",
+            "impactSeconds": 0,
+            "heroSeconds": 1.9,
+            "focal": {
+              "x": -0.006391996225876051,
+              "z": 16.84029875556848
+            },
+            "decorativeRadius": 17.4,
+            "palette": [
+              3328767,
+              15400959,
+              2327004
+            ],
+            "endSeconds": 2.65
+          },
+          "drawCount": 0
+        },
+        "cameraShake": {
+          "level": 0,
+          "elapsed": 0,
+          "duration": 0,
+          "active": false,
+          "amplitude": 0,
+          "offset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "triggerCount": 0
+        },
+        "modelErrors": 0,
+        "drawCalls": 43
+      },
+      "timeline": [
+        {
+          "hp": 1294.6382307999952,
+          "cast": "archer-10",
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.5,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.16666666666666607
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1294.965099999995,
+          "cast": "archer-10",
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.5,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.22219999999999873
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1295.8154307999944,
+          "cast": "archer-10",
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.5,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.3666666666666656
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1285.7308999999937,
+          "cast": "archer-10",
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.5,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.5221999999999987
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1286.450561599993,
+          "cast": "archer-10",
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.5,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.6444666666666652
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1267.2349691999925,
+          "cast": "archer-10",
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.5,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.7777333333333316
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1268.085299999992,
+          "cast": "archer-10",
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.5,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.9221999999999988
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": null
+        },
+        {
+          "hp": 1269.0662999999913,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.44,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 39,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1270.0469075999906,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.44,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.17354166666666637
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 39,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1271.02790759999,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.44,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.34715277777777753
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 32,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1271.7475691999894,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.44,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.47451388888888957
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 32,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1272.5971151999888,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.44,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.6248611111111119
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 32,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1272.9243767999885,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.44,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.682777777777777
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 32,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1273.774707599988,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-10",
+            "duration": 1.44,
+            "job": "archer",
+            "stage": 10,
+            "branch": 0,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.8332638888888886
+          },
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 32,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1274.7557075999873,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 20,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1275.4753691999867,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 6,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1275.8022383999864,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 3,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1276.5870383999859,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 2,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1277.3718383999853,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 1,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1278.1562459999848,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 1,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1278.7452383999844,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 0,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1279.4645075999838,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 0,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1280.445507599983,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 0,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1280.7723767999828,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 0,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1281.753376799982,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 0,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1282.014715199982,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 0,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1282.7339843999814,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 0,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1283.7149843999807,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 0,
+          "cue": "archer-10"
+        },
+        {
+          "hp": 1284.4997843999802,
+          "cast": null,
+          "motion": null,
+          "shake": {
+            "level": 0,
+            "elapsed": 0,
+            "duration": 0,
+            "active": false,
+            "amplitude": 0,
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "triggerCount": 0
+          },
+          "active": 0,
+          "cue": "archer-10"
+        }
+      ],
+      "errors": []
+    }
+  },
+  "cameraProfiles": {
+    "80": {
+      "amplitude": 0.045,
+      "seconds": 0.24
+    },
+    "90": {
+      "amplitude": 0.075,
+      "seconds": 0.3
+    },
+    "100": {
+      "amplitude": 0.11,
+      "seconds": 0.36
+    }
+  },
+  "visualReview": {
+    "approved": true,
+    "scope": "Six Lv100 VFX only; not an overall game rating",
+    "score": 8.5,
+    "reviewed": [
+      "icon-reference.png",
+      "lv100-high-six-skills.png",
+      "lv100-low-six-skills.png",
+      "swordsman-comparison.png",
+      "mage-comparison.png",
+      "archer-comparison.png",
+      "swordsman-preview-motion.png",
+      "mage-preview-motion.png",
+      "archer-preview-motion.png",
+      "swordsman-10-gameplay-motion.png",
+      "swordsman-b-10-gameplay-motion.png",
+      "mage-10-gameplay-motion.png",
+      "mage-b-10-gameplay-motion.png",
+      "archer-10-gameplay-motion.png",
+      "archer-b-10-gameplay-motion.png",
+      "archer-10-reduced-gameplay-motion.png"
+    ],
+    "findings": [
+      "Each icon-specific ultimate has a larger main silhouette and layered finale than Lv90 in the same camera.",
+      "Worldtree has curved golden boughs, clustered pink flowers and green foliage; Sky Barrage has broad layered white feathers.",
+      "Live rank1 practice recordings show anticipation, release, finale and clean recovery; gameplay labels and HUD remain readable.",
+      "Screen shake increases to the existing Lv100 profile, returns to zero and stays disabled with reduced motion."
+    ],
+    "assetSource": "Procedural geometry authored in src/render/skill-vfx.ts; existing v4 icons used as reference."
+  }
+}
