@@ -7,7 +7,7 @@ import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import { Color3 } from '@babylonjs/core/Maths/math.color.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import type { Skill, ClassId } from '../game/classes';
-type Shape='spark'|'ring'|'petal'|'crescent'|'shield'|'lightning'|'branch'|'slab'|'arrow'|'spiral'|'comet'|'ice'|'star'|'tree'|'beam'|'core'|'ray'|'arch'|'vault'|'bastion'|'leaf'|'shockbolt'|'scream'|'sword'|'stag'|'banner'|'cloud';
+type Shape='spark'|'ring'|'petal'|'crescent'|'shield'|'lightning'|'branch'|'slab'|'arrow'|'spiral'|'comet'|'ice'|'star'|'tree'|'beam'|'core'|'ray'|'arch'|'vault'|'bastion'|'leaf'|'shockbolt'|'scream'|'sword'|'stag'|'banner'|'cloud'|'goldstar'|'impactshield'|'rootclaw'|'serpent'|'fang'|'stoneshard';
 type Particle={mesh:Mesh;life:number;duration:number;x:number;y:number;z:number;vx:number;vy:number;vz:number;size:number;spin:number;grow:number;delay:number;gravity:boolean;stretch:[number,number,number]};
 export type SkillMotion={job:ClassId;stage:number;branch:number;effect:string;phase:'anticipation'|'release'|'recovery';progress:number;skillId?:string;duration?:number;frozen?:boolean};
 export function skillPalette(job:ClassId, skill:Skill):number[] {
@@ -34,10 +34,15 @@ export function lv70Palette(job:ClassId,branch:number):number[]{
 export function lv80Palette(job:ClassId,branch:number):number[]{
  return job==='swordsman'?(branch?[0xffcc55,0xfff1b8,0xe54332]:[0xac52f4,0xf0caff,0x6122a4]):job==='mage'?(branch?[0x45f2ce,0xe5fff2,0x148e91]:[0x9de939,0xbc51e5,0x642596]):branch?[0x6fc53c,0xffe9a1,0x286a32]:[0x9cf332,0xd398ff,0x7329b7];
 }
+/** Lv90 colors follow the six v4 illustrations: gold stone, gold impact, star, wood, crimson and venom. */
+export function lv90Palette(job:ClassId,branch:number):number[]{
+ return job==='swordsman'?(branch?[0xffc443,0xfff6cb,0x8c673b]:[0xffcb51,0xfff4b4,0x795139]):job==='mage'?(branch?[0x86512b,0xf2ce49,0x73c638]:[0xffd34e,0xfff7cb,0xe99528]):branch?[0x22e38a,0xc8ffb4,0x087454]:[0xe82b55,0xffc8da,0x701b38];
+}
 /** Immutable shared volumetric geometry, persistent shaded materials and a bounded mesh pool. */
 export class SkillVFX {
  private templates=new Map<Shape,Mesh>();private materials=new Map<string,StandardMaterial>();
  private active:Particle[]=[];private free=new Map<Shape,Mesh[]>();private created=0;private serial=0;private low=false;
+ private lv90Cue:typeof this.lv70Cue=null;
  private lv80Cue:typeof this.lv70Cue=null;
  private lv70Cue:{skillId:string;style:string;impactSeconds:number;heroSeconds:number;focal:{x:number;z:number};decorativeRadius:number;palette:number[];endSeconds:number}|null=null;
  private lv60Cue:{skillId:string;style:string;impactSeconds:number;heroSeconds:number;focal:{x:number;z:number};decorativeRadius:number;palette:number[];endSeconds:number}|null=null;
@@ -49,7 +54,7 @@ export class SkillVFX {
  static readonly MAX_MESHES=160;
  constructor(private scene:Scene){}
  setLowQuality(low:boolean){this.low=low;}
- get diagnostics(){return {active:this.active.length,pooled:this.created,limit:this.low?40:96,geometry3D:true,noSprites:true,textures:0,shapes:[...this.templates.keys()],materials:this.materials.size,lv10Cue:this.lv10Cue,lv20Cue:this.lv20Cue,lv30Cue:this.lv30Cue,lv40Cue:this.lv40Cue,lv50Cue:this.lv50Cue,lv60Cue:this.lv60Cue,lv70Cue:this.lv70Cue,lv80Cue:this.lv80Cue,drawCount:this.active.filter(p=>p.mesh.isEnabled()).length};}
+ get diagnostics(){return {active:this.active.length,pooled:this.created,limit:this.low?40:96,geometry3D:true,noSprites:true,textures:0,shapes:[...this.templates.keys()],materials:this.materials.size,lv10Cue:this.lv10Cue,lv20Cue:this.lv20Cue,lv30Cue:this.lv30Cue,lv40Cue:this.lv40Cue,lv50Cue:this.lv50Cue,lv60Cue:this.lv60Cue,lv70Cue:this.lv70Cue,lv80Cue:this.lv80Cue,lv90Cue:this.lv90Cue,drawCount:this.active.filter(p=>p.mesh.isEnabled()).length};}
  private template(shape:Shape){
   const name='vfx-template-'+shape,parts:Mesh[]=[];
   const tube=(path:Vector3[],radius:number)=>{const m=MeshBuilder.CreateTube(name,{path,radius,tessellation:7},this.scene);parts.push(m);return m;};
@@ -61,6 +66,34 @@ export class SkillVFX {
    tube([path[2],new Vector3(-.7,.2,.1),new Vector3(-.45,.1,.65)],.055);
    tube([path[3],new Vector3(.9,-.1,.7),new Vector3(.65,0,1.1)],.055);
   }
+  else if(shape==='goldstar'||shape==='impactshield'){
+   // Closed extruded silhouettes: a real five-point star and a solid collision shield.
+   const outline:Vector3[]=shape==='goldstar'?Array.from({length:10},(_,i)=>{const a=Math.PI/2+i*Math.PI/5,r=i%2?.44:1.1;return new Vector3(Math.cos(a)*r,Math.sin(a)*r,0);}):[new Vector3(-.8,.85,0),new Vector3(.8,.85,0),new Vector3(.85,-.1,0),new Vector3(0,-1.2,0),new Vector3(-.85,-.1,0)];
+   const positions:number[]=[],indices:number[]=[],normals:number[]=[],n=outline.length;
+   for(const depth of [-.13,.13]){positions.push(0,0,depth);for(const v of outline)positions.push(v.x,v.y,depth);}
+   for(let i=0;i<n;i++){const a=i+1,b=(i+1)%n+1;indices.push(0,b,a,n+1,n+1+a,n+1+b,a,b,n+1+a,b,n+1+b,n+1+a);}
+   VertexData.ComputeNormals(positions,indices,normals);const data=new VertexData();data.positions=positions;data.indices=indices;data.normals=normals;data.uvs=new Array(positions.length/3*2).fill(0);const m=new Mesh(name,this.scene);data.applyToMesh(m);parts.push(m);
+   if(shape==='impactshield'){tube([new Vector3(0,-.65,.2),new Vector3(0,.65,.2)],.065);tube([new Vector3(-.55,.3,.2),new Vector3(.55,.3,.2)],.065);}
+  }
+  else if(shape==='rootclaw'){
+   // Bent wooden fingers curl inward, leaving the victim visible between the roots.
+   tube([new Vector3(0,0,0),new Vector3(.5,.3,0),new Vector3(.65,1,0),new Vector3(.45,1.65,.08),new Vector3(-.15,1.85,.12)],.13);
+   tube([new Vector3(.5,.55,0),new Vector3(.95,1,.18),new Vector3(.8,1.45,.25)],.085);
+   tube([new Vector3(.4,.25,0),new Vector3(.9,.18,-.35),new Vector3(1.25,0,-.55)],.1);
+  }
+  else if(shape==='serpent'){
+   // Open upper and lower jaws, brow ridges and a sweeping neck; fangs emitted separately in ivory.
+   tube([new Vector3(0,0,-1.6),new Vector3(-.3,.5,-.9),new Vector3(0,1.2,-.25),new Vector3(0,1.4,.4)],.25);
+   const skull=sphere(0,1.45,.5,.9);skull.scaling.set(.95,.55,1.4);
+   const jaw=sphere(0,.78,.55,.7);jaw.scaling.set(.9,.24,1.5);
+   for(const side of [-1,1]){tube([new Vector3(side*.32,1.5,.15),new Vector3(side*.4,1.7,.55),new Vector3(side*.25,1.6,.95)],.1);}
+  }
+  else if(shape==='stoneshard'){
+   // Broad irregular pentagonal rock faces taper to a sharp erupting tip.
+   const m=MeshBuilder.CreateCylinder(name,{height:2.3,diameterTop:0,diameterBottom:1.1,tessellation:5},this.scene);m.position.y=1.05;m.rotation.z=.18;parts.push(m);
+   const ridge=MeshBuilder.CreateCylinder(name,{height:1.5,diameterTop:0,diameterBottom:.65,tessellation:4},this.scene);ridge.position.set(.35,.6,.12);ridge.rotation.z=-.35;parts.push(ridge);
+  }
+  else if(shape==='fang'){const m=MeshBuilder.CreateCylinder(name,{height:.75,diameterTop:.24,diameterBottom:0,tessellation:7},this.scene);parts.push(m);}
   else if(shape==='stag'){
    // Solid leaping stag, oriented +Z: haunches, chest, long neck, muzzle and branching antlers.
    const body=sphere(0,1.2,0,1.15);body.scaling.set(.65,.8,1.55);
@@ -163,7 +196,13 @@ export class SkillVFX {
   mesh.position.set(x,y,z);mesh.scaling.setAll(size);if(shape==='arrow'||shape==='comet'){mesh.rotation.y=Math.atan2(vx,vz);mesh.rotation.x=-Math.atan2(vy,Math.hypot(vx,vz));}if(delay>0)mesh.setEnabled(false);
   this.active.push({mesh,life:duration,duration,x,y,z,vx,vy,vz,size,grow,spin,delay,gravity,stretch:[1,1,1]});return mesh;
  }
- anticipation(skill:Skill,job:ClassId,x:number,z:number){if(skill.level===80){
+ anticipation(skill:Skill,job:ClassId,x:number,z:number){if(skill.level===90){
+  const c=lv90Palette(job,skill.branch),d=skillCastDuration(skill.cast)||.2;
+  this.emit('ring',c[2],x,.09,z,3.4,d,0,0,0,-1.5);
+  const shape:Shape=job==='swordsman'?(skill.branch?'impactshield':'sword'):job==='mage'?(skill.branch?'rootclaw':'goldstar'):'arrow';
+  const m=this.emit(shape,c[0],x,1.1,z,.85,d,0,.2,0,.15);if(m&&shape==='sword')m.rotation.z=-.6;
+  return;}
+ if(skill.level===80){
   const c=lv80Palette(job,skill.branch),d=skillCastDuration(skill.cast)||.2;
   this.emit('ring',c[2],x,.09,z,3.1,d,0,0,0,-1.5);
   const shape:Shape=job==='swordsman'?(skill.branch?'banner':'crescent'):job==='mage'?(skill.branch?'stag':'cloud'):'arrow';
@@ -186,6 +225,7 @@ export class SkillVFX {
   this.emit('ring',c[1],x,.15,z,.8,d,0,0,0,.35);return;}
  if(skill.level===50){const c=lv50Palette(job,skill.branch),d=skillCastDuration(skill.cast)||.2;this.emit('ring',c[0],x,.08,z,2,d,0,0,0,-4);for(let i=0;i<3;i++){const a=i*Math.PI*2/3;const m=this.emit('arch',c[i],x,.15,z,.85,d,0,.25,0,.4);if(m)m.rotation.y=a;}return;}if(skill.level===40){const c=skillPalette(job,skill),d=skillCastDuration(skill.cast)||.2;this.emit('ring',c[0],x,.08,z,1.7,d,0,0,0,-3);this.emit(job==='mage'?'lightning':job==='archer'?'arrow':'shield',c[1],x,1,z,.45,d,0,.5,0,.6,2);for(let i=0;i<3;i++){const a=i*Math.PI*2/3;this.emit('star',c[i],x+Math.sin(a),.7,z+Math.cos(a),.2,d,-Math.sin(a)*3,1,-Math.cos(a)*3);}return;}if(skill.level===10){const c=skillPalette(job,skill),d=skillCastDuration(skill.cast)||.18;this.emit('ring',c[0],x,.09,z,1.1,d,0,0,0,-2);this.emit('core',c[1],x,1,z,.13,d,0,.2,0,.75);for(let i=0;i<(this.low?3:6);i++){const a=i*Math.PI*2/(this.low?3:6);this.emit('ray',c[0],x+Math.cos(a)*.75,.5,z+Math.sin(a)*.75,.12,d,-Math.cos(a)*3,2,-Math.sin(a)*3);}return;}const c=skillPalette(job,skill),duration=skillCastDuration(skill.cast)||.2;this.emit('ring',c[1],x,.08,z,.65+skill.stage*.035,duration,0,0,0,.25,.5);this.emit(skill.branch?'petal':'star',c[0],x,1,z,.16,duration,0,.4,0,.15,2);}
  release(skill:Skill,job:ClassId,x:number,z:number,tx:number,tz:number){
+  if(skill.level===90){this.releaseLv90(skill,job,x,z,tx,tz);return;}
   if(skill.level===80){this.releaseLv80(skill,job,x,z,tx,tz);return;}
   if(skill.level===70){this.releaseLv70(skill,job,x,z,tx,tz);return;}
   if(skill.level===60){this.releaseLv60(skill,job,x,z,tx,tz);return;}
@@ -603,8 +643,56 @@ export class SkillVFX {
   const n=this.low?8:46,shape:Shape=job==='swordsman'?'crescent':job==='mage'?(branch?'spark':'cloud'):branch?'leaf':'spark';
   for(let i=0;i<n;i++){const a=i*Math.PI*2/n;const m=sculpt(shape,c[i%3],cx+Math.sin(a)*3.5,.5+i%3*.5,cz+Math.cos(a)*3.5,.5,.96,[1,1,1],.3+i%3*.07,Math.sin(a)*10.2,.8,Math.cos(a)*10.2,-.12,1);if(m)m.rotation.y=a;}
  }
+ /** Lv90 releases retain their icon hero at the focal point throughout the crescendo. */
+ private releaseLv90(skill:Skill,job:ClassId,x:number,z:number,tx:number,tz:number){
+  const c=lv90Palette(job,skill.branch),branch=skill.branch,dir=Math.atan2(tx-x,tz-z),cx=job==='swordsman'?x:tx,cz=job==='swordsman'?z:tz;
+  const style=job==='swordsman'?(branch?'unbreakable-crash-solid-gold-shield-collision':'earthbreaker-golden-sword-rock-eruption'):job==='mage'?(branch?'root-prison-woody-claws-golden-vines':'starfall-five-point-golden-meteor'):(branch?'toxic-fang-emerald-serpent-ivory-fangs':'crippling-shot-crimson-ankle-explosion');
+  this.lv90Cue={skillId:skill.id,style,impactSeconds:0,heroSeconds:1.38,focal:{x:cx,z:cz},decorativeRadius:15.6,palette:[...c],endSeconds:2.12};
+  const limit=this.low?40:96,reserve=this.low?40:94;
+  while(this.active.length>limit-reserve){const p=this.active.pop()!;p.mesh.setEnabled(false);const shape=p.mesh.metadata.vfxShape as Shape,list=this.free.get(shape)||[];list.push(p.mesh);this.free.set(shape,list);}
+  const sculpt=(shape:Shape,color:number,px:number,py:number,pz:number,size:number,duration=1.38,stretch:[number,number,number]=[1,1,1],delay=0,vx=0,vy=0,vz=0,grow=0,spin=0)=>{
+   const m=this.emit(shape,color,px,py,pz,size,duration,vx,vy,vz,grow,spin,delay);if(m){this.active[this.active.length-1].stretch=stretch;m.scaling.set(size*stretch[0],size*stretch[1],size*stretch[2]);}return m;
+  };
+  // Four reserved ground waves escalate in reach while leaving the target's body unobscured.
+  for(let i=0;i<4;i++)sculpt('ring',c[i%3],cx,.08+i*.05,cz,2.8,.95,[1,.45,1],.30+i*.29,0,0,0,(15.6-2.8)/.95);
+  sculpt('core',c[1],cx,.25,cz,.65,.2,[1,.45,1]);
+  if(job==='swordsman'&&!branch){
+   const sword=sculpt('sword',c[0],cx,3.7,cz,1.55,.22,[1,1.1,1],0,0,-10,0);if(sword)sword.rotation.z=Math.PI;
+   const planted=sculpt('sword',c[0],cx,3.2,cz,1.9,1.38,[1.7,1.1,1.4],.18);if(planted)planted.rotation.z=Math.PI;
+   for(let i=0;i<8;i++){const a=i*Math.PI/4,r=2.3;const m=sculpt('stoneshard',c[2],cx+Math.sin(a)*r,-.25,cz+Math.cos(a)*r,1.35,1.38,[1,1,1],.07+i%2*.07,Math.sin(a)*.5,.25,Math.cos(a)*.5,.16);if(m)m.rotation.set(.3,a,.45);sculpt('ray',c[0],cx+Math.sin(a)*r,.3,cz+Math.cos(a)*r,.55,.65,[1,1,3],.18,Math.sin(a)*3,1,Math.cos(a)*3);}
+   for(let i=0;i<4;i++){const a=dir+i*Math.PI/2;const cut=sculpt('crescent',c[i%2],cx,.35+i*.16,cz,4.2,1.38,[1,.75,1],.12+i*.045,Math.sin(a)*.7,0,Math.cos(a)*.7,.4);if(cut)cut.rotation.set(.25,a,.12);}
+  }else if(job==='swordsman'){
+   const shield=sculpt('impactshield',c[0],cx+Math.sin(dir)*1.5+Math.cos(dir)*2.7,1.8,cz+Math.cos(dir)*1.5-Math.sin(dir)*2.7,1.7,1.38,[1,1,1],0,Math.sin(dir)*.8,0,Math.cos(dir)*.8);if(shield)shield.rotation.y=dir+.55;
+   for(let i=0;i<4;i++){const arc=sculpt('scream',c[i%2?0:1],cx+Math.sin(dir)*1.7,.5+i*.55,cz+Math.cos(dir)*1.7,3.8,1.38,[1,1,1],.06+i*.055,Math.sin(dir)*1.5,.1,Math.cos(dir)*1.5,.4);if(arc)arc.rotation.set(.25,dir+(i-1.5)*.18,.12);}
+   for(let i=0;i<6;i++){const a=i*Math.PI/3;const m=sculpt('ray',c[i%2],cx+Math.sin(dir)*2,1.3,cz+Math.cos(dir)*2,.65,.55,[1,1,3.8],.06+i*.025,Math.sin(a)*5,Math.cos(a)*2,Math.cos(a)*5);if(m)m.rotation.set(a,dir+a,0);}
+   for(let i=0;i<5;i++){const m=sculpt('slab',c[2],cx+Math.sin(dir)*2,.5,cz+Math.cos(dir)*2,.7,.9,[1,1.7,1],.15,Math.sin(dir+i)*3,1+i*.25,Math.cos(dir+i)*3,0,2);if(m)m.rotation.y=dir+i;}
+  }else if(job==='mage'&&!branch){
+   sculpt('goldstar',c[0],cx,4.1,cz,2.25,.35,[1,1,1],0,0,-7.5,0,0,.3);
+   const star=sculpt('goldstar',c[0],cx,3.2,cz,2.1,1.38,[1,1,1],.25,0,0,0,.08,.35);if(star)star.rotation.x=-.45;
+   for(let i=0;i<7;i++){const a=i*Math.PI*2/7,r=3+i%2;sculpt('comet',c[i%2],cx+Math.sin(a)*r,5.5,cz+Math.cos(a)*r,.65,.55,[1,1,3],i*.055,-Math.sin(a)*2,-8,-Math.cos(a)*2);}
+  }else if(job==='mage'){
+   for(let i=0;i<6;i++){const a=i*Math.PI/3;const root=sculpt('rootclaw',c[0],cx+Math.sin(a)*1.7,.05,cz+Math.cos(a)*1.7,1.7,1.38,[1,1,1],i*.025);if(root)root.rotation.y=a+Math.PI;
+    const vine=sculpt('spiral',c[1],cx+Math.sin(a)*1.45,.1,cz+Math.cos(a)*1.45,.65,1.38,[1,1.6,1],.12);if(vine)vine.rotation.y=a;
+    const leaf=sculpt('leaf',c[2],cx+Math.sin(a)*2.4,1.5,cz+Math.cos(a)*2.4,.95,1.38,[1,1,1],.2);if(leaf)leaf.rotation.set(.5,a,.2);}
+  }else if(!branch){
+   const arrow=sculpt('arrow',c[0],cx-Math.sin(dir)*2,.45,cz-Math.cos(dir)*2,2.2,.28,[1,1,2.8],0,Math.sin(dir)*6,0,Math.cos(dir)*6);if(arrow)arrow.rotation.y=dir;
+   const lodged=sculpt('arrow',c[0],cx,.35,cz,1.5,1.38,[1,1,2.2],.22);if(lodged)lodged.rotation.y=dir;
+   for(let i=0;i<6;i++){const a=i*Math.PI/3;const m=sculpt('crescent',c[i%2],cx,.28+i%2*.18,cz,2.1,1.38,[1,.55,1],.12+i*.035,Math.sin(a)*1.7,0,Math.cos(a)*1.7,.3);if(m)m.rotation.y=a;}
+   for(let i=0;i<5;i++)sculpt('ray',c[1],cx,.4,cz,.5,.45,[1,1,3],.22,Math.sin(i*2.4)*7,.4,Math.cos(i*2.4)*7);
+  }else{
+   const head=sculpt('serpent',c[0],cx-Math.sin(dir)*2.3,.25,cz-Math.cos(dir)*2.3,2.5,1.38,[1,1,1],0,Math.sin(dir)*.45,0,Math.cos(dir)*.45);if(head)head.rotation.y=dir;
+   for(const side of [-1,1]){const fang=sculpt('fang',c[1],cx-Math.sin(dir)*.3+Math.cos(dir)*side*.7,3.3,cz-Math.cos(dir)*.3-Math.sin(dir)*side*.7,1.65,1.38,[1,1,1],0,Math.sin(dir)*.45,0,Math.cos(dir)*.45);if(fang)fang.rotation.x=-.3;}
+   for(const side of [-1,1])sculpt('spark',c[2],cx-Math.sin(dir)*1+Math.cos(dir)*side*.88,4.12,cz-Math.cos(dir)*1-Math.sin(dir)*side*.88,.24,1.38,[1,.75,1],0,Math.sin(dir)*.45,0,Math.cos(dir)*.45);
+   const arrow=sculpt('arrow',c[0],cx-Math.sin(dir)*2,.65,cz-Math.cos(dir)*2,1.8,.35,[1,1,3],0,Math.sin(dir)*5,0,Math.cos(dir)*5);if(arrow)arrow.rotation.y=dir;
+   for(let i=0;i<3;i++)sculpt('spiral',c[i%2?2:0],cx,.08,cz,2.2+i*.35,1.38,[1,.12,1],.2+i*.12,0,0,0,.12,.7);
+   // Separate recurrent venom pulses visually communicate poison over time without changing damage.
+   for(let i=0;i<3;i++)sculpt('core',c[0],cx,.45,cz,.35,.28,[1,.6,1],.55+i*.45,0,.25,0,.8);
+  }
+  const n=this.low?8:48,shape:Shape=job==='swordsman'?'stoneshard':job==='mage'?(branch?'leaf':'goldstar'):branch?'petal':'spark';
+  for(let i=0;i<n;i++){const a=i*Math.PI*2/n;const m=sculpt(shape,c[i%3],cx+Math.sin(a)*3,.35+i%3*.35,cz+Math.cos(a)*3,.42,.95,[1,1,1],.3+i%3*.07,Math.sin(a)*10.8,.55,Math.cos(a)*10.8,-.08,1);if(m)m.rotation.y=a;}
+ }
  basic(job:ClassId,x:number,z:number){this.emit(job==='swordsman'?'crescent':'star',job==='mage'?0xb5d9ff:0xffe5a3,x,.75,z,job==='swordsman'?.65:.14,.3,0,.4,0,.5,4);}
  update(dt:number){for(let i=this.active.length-1;i>=0;i--){const p=this.active[i];let elapsed=dt;if(p.delay>0){p.delay-=dt;if(p.delay>0)continue;elapsed=-p.delay;p.delay=0;p.mesh.setEnabled(true);}p.life-=elapsed;if(p.life<=0){p.mesh.setEnabled(false);const shape=p.mesh.metadata.vfxShape as Shape;let list=this.free.get(shape);if(!list){list=[];this.free.set(shape,list);}list.push(p.mesh);this.active.splice(i,1);continue;}const t=p.duration-p.life;p.mesh.position.set(p.x+p.vx*t,p.y+p.vy*t-(p.gravity?t*t*3:0),p.z+p.vz*t);p.mesh.rotation.y+=p.spin*elapsed;p.mesh.visibility=Math.min(1,p.life/.08);const scale=Math.max(.01,p.size+p.grow*t);p.mesh.scaling.set(scale*p.stretch[0],scale*p.stretch[1],scale*p.stretch[2]);}}
- clear(){this.lv80Cue=null;this.lv70Cue=null;this.lv60Cue=null;this.lv50Cue=null;this.lv40Cue=null;this.lv10Cue=null;this.lv20Cue=null;this.lv30Cue=null;for(const p of this.active){p.mesh.setEnabled(false);const shape=p.mesh.metadata.vfxShape as Shape;const list=this.free.get(shape)||[];list.push(p.mesh);this.free.set(shape,list);}this.active.length=0;}
+ clear(){this.lv90Cue=null;this.lv80Cue=null;this.lv70Cue=null;this.lv60Cue=null;this.lv50Cue=null;this.lv40Cue=null;this.lv10Cue=null;this.lv20Cue=null;this.lv30Cue=null;for(const p of this.active){p.mesh.setEnabled(false);const shape=p.mesh.metadata.vfxShape as Shape;const list=this.free.get(shape)||[];list.push(p.mesh);this.free.set(shape,list);}this.active.length=0;}
  dispose(){this.clear();this.free.forEach(list=>list.forEach(mesh=>mesh.dispose()));this.templates.forEach(mesh=>mesh.dispose());this.materials.forEach(material=>material.dispose());this.free.clear();this.templates.clear();this.materials.clear();this.created=0;}
 }

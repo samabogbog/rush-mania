@@ -37,7 +37,7 @@ test('full pool reclaims inactive shapes for new focal effects and arrows face t
  const sparks=[];for(let i=0;i<SkillVFX.MAX_MESHES;i++)sparks.push(allocator.mesh('spark',0xffeeaa));
  for(const mesh of sparks)mesh.setEnabled(false);allocator.free.set('spark',sparks);
  expect(vfx.diagnostics.pooled).toBe(160);
- for(const [job,name,shape] of [['mage','Lightning','lightning'],['mage','Worldtree Bloom Burst','tree'],['swordsman','Earthbreaker','slab'],['mage','Astral Storm','star'],['archer','Power Shot','arrow']] as const){const skill=skills[job].find(s=>s.name===name)!;vfx.release(skill,job,0,0,-4,0);vfx.update(.18);expect(scene.meshes.some(m=>m.isEnabled()&&m.metadata?.vfxShape===shape)).toBe(true);expect(vfx.diagnostics.pooled).toBeLessThanOrEqual(160);vfx.clear();}
+ for(const [job,name,shape] of [['mage','Lightning','lightning'],['mage','Worldtree Bloom Burst','tree'],['swordsman','Earthbreaker','stoneshard'],['mage','Astral Storm','star'],['archer','Power Shot','arrow']] as const){const skill=skills[job].find(s=>s.name===name)!;vfx.release(skill,job,0,0,-4,0);vfx.update(.18);expect(scene.meshes.some(m=>m.isEnabled()&&m.metadata?.vfxShape===shape)).toBe(true);expect(vfx.diagnostics.pooled).toBeLessThanOrEqual(160);vfx.clear();}
  const hunt=skills.archer.find(s=>s.name==='Wild Hunt Strike')!;vfx.release(hunt,'archer',0,0,-4,0);vfx.update(.12);
  const arrows=scene.meshes.filter(m=>m.isEnabled()&&m.metadata?.vfxShape==='arrow');expect(arrows.length).toBeGreaterThan(3);expect(arrows.every(m=>m.rotation.y<-.7&&m.rotation.y>-2.4)).toBe(true);
  vfx.dispose();scene.dispose();engine.dispose();
