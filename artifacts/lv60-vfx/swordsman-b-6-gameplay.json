@@ -1,0 +1,371 @@
+{
+  "environment": "Chromium ANGLE SwiftShader; authentic learned Lv60 skill rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+  "before": {
+    "job": "swordsman",
+    "zone": "glade",
+    "x": 0.9530400000000018,
+    "z": 17.253919999999958,
+    "hp": 1294.0686307999965,
+    "mp": 852,
+    "kills": 0,
+    "hotbar": [
+      "swordsman-b-6",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "swordsman-1",
+      "swordsman-2",
+      "swordsman-3",
+      "swordsman-4",
+      "swordsman-5",
+      "swordsman-b-6"
+    ],
+    "skillCooldowns": {},
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "drawCount": 0
+    },
+    "modelErrors": 0,
+    "drawCalls": 51
+  },
+  "after": {
+    "job": "swordsman",
+    "zone": "glade",
+    "x": 0.9530400000000018,
+    "z": 17.253919999999958,
+    "hp": 1295.0496307999958,
+    "mp": 827.0649999999998,
+    "kills": 4,
+    "hotbar": [
+      "swordsman-b-6",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "swordsman-1",
+      "swordsman-2",
+      "swordsman-3",
+      "swordsman-4",
+      "swordsman-5",
+      "swordsman-b-6"
+    ],
+    "skillCooldowns": {
+      "swordsman-b-6": 10.749999999999996
+    },
+    "skillMotion": {
+      "skillId": "swordsman-b-6",
+      "duration": 1.296,
+      "job": "swordsman",
+      "stage": 6,
+      "branch": 1,
+      "effect": "slow",
+      "phase": "release",
+      "progress": 0
+    },
+    "vfx": {
+      "active": 22,
+      "pooled": 26,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "crescent",
+        "ring",
+        "scream",
+        "core",
+        "beam",
+        "arrow"
+      ],
+      "materials": 6,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": {
+        "skillId": "swordsman-b-6",
+        "style": "crushing-advance-crimson-thrust",
+        "impactSeconds": 0,
+        "heroSeconds": 0.78,
+        "focal": {
+          "x": 1.9530400000000019,
+          "z": 18.253919999999958
+        },
+        "decorativeRadius": 10.8,
+        "palette": [
+          16733230,
+          16769184,
+          9840953
+        ],
+        "endSeconds": 1.22
+      },
+      "drawCount": 17
+    },
+    "modelErrors": 0,
+    "drawCalls": 69
+  },
+  "recovered": {
+    "job": "swordsman",
+    "zone": "glade",
+    "x": 0.9530400000000018,
+    "z": 17.253919999999958,
+    "hp": 1305.3179539999885,
+    "mp": 838.2125679999981,
+    "kills": 4,
+    "hotbar": [
+      "swordsman-b-6",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "swordsman-1",
+      "swordsman-2",
+      "swordsman-3",
+      "swordsman-4",
+      "swordsman-5",
+      "swordsman-b-6"
+    ],
+    "skillCooldowns": {
+      "swordsman-b-6": 8.133199999999967
+    },
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 26,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "crescent",
+        "ring",
+        "scream",
+        "core",
+        "beam",
+        "arrow"
+      ],
+      "materials": 6,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": {
+        "skillId": "swordsman-b-6",
+        "style": "crushing-advance-crimson-thrust",
+        "impactSeconds": 0,
+        "heroSeconds": 0.78,
+        "focal": {
+          "x": 1.9530400000000019,
+          "z": 18.253919999999958
+        },
+        "decorativeRadius": 10.8,
+        "palette": [
+          16733230,
+          16769184,
+          9840953
+        ],
+        "endSeconds": 1.22
+      },
+      "drawCount": 0
+    },
+    "modelErrors": 0,
+    "drawCalls": 50
+  },
+  "timeline": [
+    {
+      "hp": 1295.0496307999958,
+      "cast": null,
+      "motion": {
+        "skillId": "swordsman-b-6",
+        "duration": 1.296,
+        "job": "swordsman",
+        "stage": 6,
+        "branch": 1,
+        "effect": "slow",
+        "phase": "release",
+        "progress": 0
+      },
+      "active": 22,
+      "cue": "swordsman-b-6"
+    },
+    {
+      "hp": 1295.8348231999953,
+      "cast": null,
+      "motion": {
+        "skillId": "swordsman-b-6",
+        "duration": 1.296,
+        "job": "swordsman",
+        "stage": 6,
+        "branch": 1,
+        "effect": "slow",
+        "phase": "release",
+        "progress": 0.15439814814814712
+      },
+      "active": 21,
+      "cue": "swordsman-b-6"
+    },
+    {
+      "hp": 1296.8158231999946,
+      "cast": null,
+      "motion": {
+        "skillId": "swordsman-b-6",
+        "duration": 1.296,
+        "job": "swordsman",
+        "stage": 6,
+        "branch": 1,
+        "effect": "slow",
+        "phase": "release",
+        "progress": 0.3472993827160483
+      },
+      "active": 19,
+      "cue": "swordsman-b-6"
+    },
+    {
+      "hp": 1297.600623199994,
+      "cast": null,
+      "motion": {
+        "skillId": "swordsman-b-6",
+        "duration": 1.296,
+        "job": "swordsman",
+        "stage": 6,
+        "branch": 1,
+        "effect": "slow",
+        "phase": "release",
+        "progress": 0.5016203703703692
+      },
+      "active": 5,
+      "cue": "swordsman-b-6"
+    },
+    {
+      "hp": 1297.731684799994,
+      "cast": null,
+      "motion": {
+        "skillId": "swordsman-b-6",
+        "duration": 1.296,
+        "job": "swordsman",
+        "stage": 6,
+        "branch": 1,
+        "effect": "slow",
+        "phase": "release",
+        "progress": 0.5273919753086406
+      },
+      "active": 5,
+      "cue": "swordsman-b-6"
+    },
+    {
+      "hp": 1298.7122923999932,
+      "cast": null,
+      "motion": {
+        "skillId": "swordsman-b-6",
+        "duration": 1.296,
+        "job": "swordsman",
+        "stage": 6,
+        "branch": 1,
+        "effect": "slow",
+        "phase": "recovery",
+        "progress": 0.7202160493827143
+      },
+      "active": 1,
+      "cue": "swordsman-b-6"
+    },
+    {
+      "hp": 1299.4970923999927,
+      "cast": null,
+      "motion": {
+        "skillId": "swordsman-b-6",
+        "duration": 1.296,
+        "job": "swordsman",
+        "stage": 6,
+        "branch": 1,
+        "effect": "slow",
+        "phase": "recovery",
+        "progress": 0.8745370370370353
+      },
+      "active": 0,
+      "cue": "swordsman-b-6"
+    },
+    {
+      "hp": 1300.3474231999921,
+      "cast": null,
+      "motion": null,
+      "active": 0,
+      "cue": "swordsman-b-6"
+    },
+    {
+      "hp": 1300.8704923999917,
+      "cast": null,
+      "motion": null,
+      "active": 0,
+      "cue": "swordsman-b-6"
+    },
+    {
+      "hp": 1301.6552923999911,
+      "cast": null,
+      "motion": null,
+      "active": 0,
+      "cue": "swordsman-b-6"
+    },
+    {
+      "hp": 1302.3745615999906,
+      "cast": null,
+      "motion": null,
+      "active": 0,
+      "cue": "swordsman-b-6"
+    },
+    {
+      "hp": 1302.8980231999901,
+      "cast": null,
+      "motion": null,
+      "active": 0,
+      "cue": "swordsman-b-6"
+    },
+    {
+      "hp": 1303.8790231999894,
+      "cast": null,
+      "motion": null,
+      "active": 0,
+      "cue": "swordsman-b-6"
+    },
+    {
+      "hp": 1304.729353999989,
+      "cast": null,
+      "motion": null,
+      "active": 0,
+      "cue": "swordsman-b-6"
+    },
+    {
+      "hp": 1305.3179539999885,
+      "cast": null,
+      "motion": null,
+      "active": 0,
+      "cue": "swordsman-b-6"
+    }
+  ],
+  "errors": []
+}

@@ -73,7 +73,6 @@ export class World implements GameWorld {
   private previousAction=0;
   private previewHeld=false;
   private visualJob:string|null=null;
-  private visualHP=Infinity;
   private skillSequence: {preview:boolean;skill:Skill;remaining:number;total:number;released:boolean;x:number;z:number;tx:number;tz:number}|null=null;
   private skillMotion: SkillMotion|null=null;
   private readonly events = new AbortController();
@@ -463,8 +462,10 @@ export class World implements GameWorld {
     if(this.quality==="auto"&&!this.autoReduced&&this.frameTimes.length>=12&&this.frameTimes.slice(-10).reduce((a,b)=>a+b,0)/10>40){this.autoReduced=true;this.applyQuality();this.resize();}
     this.labelClock+=dt;const updateLabels=this.labelClock>=1/(this.quality==='low'||this.autoReduced?20:30)||dt===0;if(updateLabels)this.labelClock=0;
     this.visualTime+=dt;
-    if(this.visualJob!==this.sim.save.job||this.sim.save.hp<this.visualHP||this.sim.save.hp<=0){this.previewHeld=false;this.skillVFX.clear();this.skillSequence=null;this.skillMotion=null;}
-    this.visualJob=this.sim.save.job;this.visualHP=this.sim.save.hp;
+    // Hurt does not cancel a simulation cast. Keep its sequence until release,
+    // or until castVisualTransition observes an actual interruption.
+    if(this.visualJob!==this.sim.save.job||this.sim.save.hp<=0){this.previewHeld=false;this.skillVFX.clear();this.skillSequence=null;this.skillMotion=null;}
+    this.visualJob=this.sim.save.job;
     this.updateSkillVisual(dt);
     const renderX=this.sim.renderX,renderZ=this.sim.renderZ;
     for(const territory of this.farmTerritories){

@@ -71,3 +71,7 @@ artifacts/lv40-vfx/*.webm
 # Lv50 raw recordings stay local; curated review evidence is retained.
 artifacts/lv50-vfx/raw/
 artifacts/lv50-vfx/*.webm
+
+# Lv60 raw recordings remain local; reviewed frames and compact evidence are packaged.
+artifacts/lv60-vfx/raw/
+artifacts/lv60-vfx/*.webm
