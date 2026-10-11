@@ -1,0 +1,533 @@
+{
+  "environment": "Chromium ANGLE SwiftShader; authentic learned Lv70 skill rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+  "before": {
+    "job": "mage",
+    "zone": "glade",
+    "x": 0.8800000000000001,
+    "z": 17.252159999999968,
+    "hp": 1288.575407599992,
+    "mp": 852,
+    "kills": 0,
+    "hotbar": [
+      "mage-7",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "mage-1",
+      "mage-2",
+      "mage-3",
+      "mage-4",
+      "mage-5",
+      "mage-6",
+      "mage-7"
+    ],
+    "skillCooldowns": {},
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "drawCount": 0
+    },
+    "modelErrors": 0,
+    "drawCalls": 51
+  },
+  "after": {
+    "job": "mage",
+    "zone": "glade",
+    "x": 0.8800000000000001,
+    "z": 17.252159999999968,
+    "hp": 1269.2078151999858,
+    "mp": 826.3715739999986,
+    "kills": 6,
+    "hotbar": [
+      "mage-7",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "mage-1",
+      "mage-2",
+      "mage-3",
+      "mage-4",
+      "mage-5",
+      "mage-6",
+      "mage-7"
+    ],
+    "skillCooldowns": {
+      "mage-7": 9.800099999999972
+    },
+    "skillMotion": {
+      "skillId": "mage-7",
+      "duration": 1.332,
+      "job": "mage",
+      "stage": 7,
+      "branch": 0,
+      "effect": "area",
+      "phase": "release",
+      "progress": 0
+    },
+    "vfx": {
+      "active": 27,
+      "pooled": 30,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "ring",
+        "ice",
+        "core",
+        "crescent"
+      ],
+      "materials": 4,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": {
+        "skillId": "mage-7",
+        "style": "blizzard-glacial-shard-tempest",
+        "impactSeconds": 0,
+        "heroSeconds": 0.96,
+        "focal": {
+          "x": 0.2722731053120088,
+          "z": 18.084870797641177
+        },
+        "decorativeRadius": 12.6,
+        "palette": [
+          3719167,
+          14875391,
+          2386355
+        ],
+        "endSeconds": 1.54
+      },
+      "drawCount": 13
+    },
+    "modelErrors": 0,
+    "drawCalls": 67
+  },
+  "recovered": {
+    "job": "mage",
+    "zone": "glade",
+    "x": 0.8800000000000001,
+    "z": 17.252159999999968,
+    "hp": 1279.9328919999784,
+    "mp": 838.0150059999967,
+    "kills": 6,
+    "hotbar": [
+      "mage-7",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "mage-1",
+      "mage-2",
+      "mage-3",
+      "mage-4",
+      "mage-5",
+      "mage-6",
+      "mage-7"
+    ],
+    "skillCooldowns": {
+      "mage-7": 7.066899999999933
+    },
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 30,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "ring",
+        "ice",
+        "core",
+        "crescent"
+      ],
+      "materials": 4,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": {
+        "skillId": "mage-7",
+        "style": "blizzard-glacial-shard-tempest",
+        "impactSeconds": 0,
+        "heroSeconds": 0.96,
+        "focal": {
+          "x": 0.2722731053120088,
+          "z": 18.084870797641177
+        },
+        "decorativeRadius": 12.6,
+        "palette": [
+          3719167,
+          14875391,
+          2386355
+        ],
+        "endSeconds": 1.54
+      },
+      "drawCount": 0
+    },
+    "modelErrors": 0,
+    "drawCalls": 48
+  },
+  "timeline": [
+    {
+      "hp": 1289.3605999999916,
+      "cast": "mage-7",
+      "motion": {
+        "skillId": "mage-7",
+        "duration": 2.0999999999999996,
+        "job": "mage",
+        "stage": 7,
+        "branch": 0,
+        "effect": "area",
+        "phase": "anticipation",
+        "progress": 0.0952857142857142
+      },
+      "active": 4,
+      "cue": null
+    },
+    {
+      "hp": 1290.145007599991,
+      "cast": "mage-7",
+      "motion": {
+        "skillId": "mage-7",
+        "duration": 2.0999999999999996,
+        "job": "mage",
+        "stage": 7,
+        "branch": 0,
+        "effect": "area",
+        "phase": "anticipation",
+        "progress": 0.1904761904761899
+      },
+      "active": 4,
+      "cue": null
+    },
+    {
+      "hp": 1290.8646691999904,
+      "cast": "mage-7",
+      "motion": {
+        "skillId": "mage-7",
+        "duration": 2.0999999999999996,
+        "job": "mage",
+        "stage": 7,
+        "branch": 0,
+        "effect": "area",
+        "phase": "anticipation",
+        "progress": 0.27780952380952284
+      },
+      "active": 4,
+      "cue": null
+    },
+    {
+      "hp": 1281.71460759999,
+      "cast": "mage-7",
+      "motion": {
+        "skillId": "mage-7",
+        "duration": 2.0999999999999996,
+        "job": "mage",
+        "stage": 7,
+        "branch": 0,
+        "effect": "area",
+        "phase": "anticipation",
+        "progress": 0.3809523809523798
+      },
+      "active": 4,
+      "cue": null
+    },
+    {
+      "hp": 1282.4342691999893,
+      "cast": "mage-7",
+      "motion": {
+        "skillId": "mage-7",
+        "duration": 2.0999999999999996,
+        "job": "mage",
+        "stage": 7,
+        "branch": 0,
+        "effect": "area",
+        "phase": "anticipation",
+        "progress": 0.46828571428571275
+      },
+      "active": 4,
+      "cue": null
+    },
+    {
+      "hp": 1283.2190691999888,
+      "cast": "mage-7",
+      "motion": {
+        "skillId": "mage-7",
+        "duration": 2.0999999999999996,
+        "job": "mage",
+        "stage": 7,
+        "branch": 0,
+        "effect": "area",
+        "phase": "anticipation",
+        "progress": 0.563523809523808
+      },
+      "active": 4,
+      "cue": null
+    },
+    {
+      "hp": 1266.0038691999882,
+      "cast": "mage-7",
+      "motion": {
+        "skillId": "mage-7",
+        "duration": 2.0999999999999996,
+        "job": "mage",
+        "stage": 7,
+        "branch": 0,
+        "effect": "area",
+        "phase": "anticipation",
+        "progress": 0.6587619047619033
+      },
+      "active": 4,
+      "cue": null
+    },
+    {
+      "hp": 1266.7882767999877,
+      "cast": "mage-7",
+      "motion": {
+        "skillId": "mage-7",
+        "duration": 2.0999999999999996,
+        "job": "mage",
+        "stage": 7,
+        "branch": 0,
+        "effect": "area",
+        "phase": "anticipation",
+        "progress": 0.7539523809523794
+      },
+      "active": 4,
+      "cue": null
+    },
+    {
+      "hp": 1267.704138399987,
+      "cast": "mage-7",
+      "motion": {
+        "skillId": "mage-7",
+        "duration": 2.0999999999999996,
+        "job": "mage",
+        "stage": 7,
+        "branch": 0,
+        "effect": "area",
+        "phase": "anticipation",
+        "progress": 0.8650952380952365
+      },
+      "active": 4,
+      "cue": null
+    },
+    {
+      "hp": 1268.4234075999864,
+      "cast": "mage-7",
+      "motion": {
+        "skillId": "mage-7",
+        "duration": 2.0999999999999996,
+        "job": "mage",
+        "stage": 7,
+        "branch": 0,
+        "effect": "area",
+        "phase": "anticipation",
+        "progress": 0.9523809523809513
+      },
+      "active": 4,
+      "cue": null
+    },
+    {
+      "hp": 1269.2078151999858,
+      "cast": null,
+      "motion": {
+        "skillId": "mage-7",
+        "duration": 1.332,
+        "job": "mage",
+        "stage": 7,
+        "branch": 0,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0
+      },
+      "active": 27,
+      "cue": "mage-7"
+    },
+    {
+      "hp": 1270.1888151999851,
+      "cast": null,
+      "motion": {
+        "skillId": "mage-7",
+        "duration": 1.332,
+        "job": "mage",
+        "stage": 7,
+        "branch": 0,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.18768768768768773
+      },
+      "active": 27,
+      "cue": "mage-7"
+    },
+    {
+      "hp": 1271.1698151999844,
+      "cast": null,
+      "motion": {
+        "skillId": "mage-7",
+        "duration": 1.332,
+        "job": "mage",
+        "stage": 7,
+        "branch": 0,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.37537537537537535
+      },
+      "active": 27,
+      "cue": "mage-7"
+    },
+    {
+      "hp": 1271.4311535999843,
+      "cast": null,
+      "motion": {
+        "skillId": "mage-7",
+        "duration": 1.332,
+        "job": "mage",
+        "stage": 7,
+        "branch": 0,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.4253753753753756
+      },
+      "active": 27,
+      "cue": "mage-7"
+    },
+    {
+      "hp": 1272.2814843999838,
+      "cast": null,
+      "motion": {
+        "skillId": "mage-7",
+        "duration": 1.332,
+        "job": "mage",
+        "stage": 7,
+        "branch": 0,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.5880630630630638
+      },
+      "active": 21,
+      "cue": "mage-7"
+    },
+    {
+      "hp": 1273.196953599983,
+      "cast": null,
+      "motion": {
+        "skillId": "mage-7",
+        "duration": 1.332,
+        "job": "mage",
+        "stage": 7,
+        "branch": 0,
+        "effect": "area",
+        "phase": "recovery",
+        "progress": 0.7632132132132134
+      },
+      "active": 4,
+      "cue": "mage-7"
+    },
+    {
+      "hp": 1274.1779535999824,
+      "cast": null,
+      "motion": {
+        "skillId": "mage-7",
+        "duration": 1.332,
+        "job": "mage",
+        "stage": 7,
+        "branch": 0,
+        "effect": "area",
+        "phase": "recovery",
+        "progress": 0.9509009009009011
+      },
+      "active": 1,
+      "cue": "mage-7"
+    },
+    {
+      "hp": 1275.0934227999817,
+      "cast": null,
+      "motion": null,
+      "active": 0,
+      "cue": "mage-7"
+    },
+    {
+      "hp": 1276.008891999981,
+      "cast": null,
+      "motion": null,
+      "active": 0,
+      "cue": "mage-7"
+    },
+    {
+      "hp": 1276.8592227999804,
+      "cast": null,
+      "motion": null,
+      "active": 0,
+      "cue": "mage-7"
+    },
+    {
+      "hp": 1277.8402227999798,
+      "cast": null,
+      "motion": null,
+      "active": 0,
+      "cue": "mage-7"
+    },
+    {
+      "hp": 1277.9057535999798,
+      "cast": null,
+      "motion": null,
+      "active": 0,
+      "cue": "mage-7"
+    },
+    {
+      "hp": 1278.7556919999793,
+      "cast": null,
+      "motion": null,
+      "active": 0,
+      "cue": "mage-7"
+    },
+    {
+      "hp": 1279.7366919999786,
+      "cast": null,
+      "motion": null,
+      "active": 0,
+      "cue": "mage-7"
+    },
+    {
+      "hp": 1279.9328919999784,
+      "cast": null,
+      "motion": null,
+      "active": 0,
+      "cue": "mage-7"
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,402 @@
+{
+  "environment": "Chromium ANGLE SwiftShader; authentic learned Lv70 skill rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+  "before": {
+    "job": "archer",
+    "zone": "glade",
+    "x": 0.8795599999999986,
+    "z": 17.253479999999968,
+    "hp": 1278.5754075999919,
+    "mp": 852,
+    "kills": 0,
+    "hotbar": [
+      "archer-b-7",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "archer-1",
+      "archer-2",
+      "archer-3",
+      "archer-4",
+      "archer-5",
+      "archer-6",
+      "archer-b-7"
+    ],
+    "skillCooldowns": {},
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "drawCount": 0
+    },
+    "modelErrors": 0,
+    "drawCalls": 50
+  },
+  "after": {
+    "job": "archer",
+    "zone": "glade",
+    "x": 0.8795599999999986,
+    "z": 17.253479999999968,
+    "hp": 1279.0329459999916,
+    "mp": 822.4967159999999,
+    "kills": 4,
+    "hotbar": [
+      "archer-b-7",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "archer-1",
+      "archer-2",
+      "archer-3",
+      "archer-4",
+      "archer-5",
+      "archer-6",
+      "archer-b-7"
+    ],
+    "skillCooldowns": {
+      "archer-b-7": 17.883400000000005
+    },
+    "skillMotion": {
+      "skillId": "archer-b-7",
+      "duration": 1.332,
+      "job": "archer",
+      "stage": 7,
+      "branch": 1,
+      "effect": "area",
+      "phase": "release",
+      "progress": 0
+    },
+    "vfx": {
+      "active": 27,
+      "pooled": 27,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "star",
+        "ring",
+        "shield",
+        "leaf",
+        "core",
+        "arrow",
+        "crescent"
+      ],
+      "materials": 6,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": {
+        "skillId": "archer-b-7",
+        "style": "camouflage-guard-leaf-crash",
+        "impactSeconds": 0,
+        "heroSeconds": 0.96,
+        "focal": {
+          "x": 1.8795599999999986,
+          "z": 18.253479999999968
+        },
+        "decorativeRadius": 12.6,
+        "palette": [
+          9561391,
+          15663056,
+          3372870
+        ],
+        "endSeconds": 1.54
+      },
+      "drawCount": 14
+    },
+    "modelErrors": 0,
+    "drawCalls": 66
+  },
+  "recovered": {
+    "job": "archer",
+    "zone": "glade",
+    "x": 0.8795599999999986,
+    "z": 17.253479999999968,
+    "hp": 1290.2155611999838,
+    "mp": 834.6368639999979,
+    "kills": 4,
+    "hotbar": [
+      "archer-b-7",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "archer-1",
+      "archer-2",
+      "archer-3",
+      "archer-4",
+      "archer-5",
+      "archer-6",
+      "archer-b-7"
+    ],
+    "skillCooldowns": {
+      "archer-b-7": 15.0336000000001
+    },
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 27,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "star",
+        "ring",
+        "shield",
+        "leaf",
+        "core",
+        "arrow",
+        "crescent"
+      ],
+      "materials": 6,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": {
+        "skillId": "archer-b-7",
+        "style": "camouflage-guard-leaf-crash",
+        "impactSeconds": 0,
+        "heroSeconds": 0.96,
+        "focal": {
+          "x": 1.8795599999999986,
+          "z": 18.253479999999968
+        },
+        "decorativeRadius": 12.6,
+        "palette": [
+          9561391,
+          15663056,
+          3372870
+        ],
+        "endSeconds": 1.54
+      },
+      "drawCount": 0
+    },
+    "modelErrors": 0,
+    "drawCalls": 49
+  },
+  "timeline": [
+    {
+      "hp": 1279.0329459999916,
+      "cast": null,
+      "motion": {
+        "skillId": "archer-b-7",
+        "duration": 1.332,
+        "job": "archer",
+        "stage": 7,
+        "branch": 1,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0
+      },
+      "active": 27,
+      "cue": "archer-b-7"
+    },
+    {
+      "hp": 1280.013945999991,
+      "cast": null,
+      "motion": {
+        "skillId": "archer-b-7",
+        "duration": 1.332,
+        "job": "archer",
+        "stage": 7,
+        "branch": 1,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.18768768768768773
+      },
+      "active": 24,
+      "cue": "archer-b-7"
+    },
+    {
+      "hp": 1280.2101459999908,
+      "cast": null,
+      "motion": {
+        "skillId": "archer-b-7",
+        "duration": 1.332,
+        "job": "archer",
+        "stage": 7,
+        "branch": 1,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.22522522522522526
+      },
+      "active": 24,
+      "cue": "archer-b-7"
+    },
+    {
+      "hp": 1280.4718767999907,
+      "cast": null,
+      "motion": {
+        "skillId": "archer-b-7",
+        "duration": 1.332,
+        "job": "archer",
+        "stage": 7,
+        "branch": 1,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.2753003003002995
+      },
+      "active": 24,
+      "cue": "archer-b-7"
+    },
+    {
+      "hp": 1281.3218151999902,
+      "cast": null,
+      "motion": {
+        "skillId": "archer-b-7",
+        "duration": 1.332,
+        "job": "archer",
+        "stage": 7,
+        "branch": 1,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.43791291291291234
+      },
+      "active": 24,
+      "cue": "archer-b-7"
+    },
+    {
+      "hp": 1282.0414767999896,
+      "cast": null,
+      "motion": {
+        "skillId": "archer-b-7",
+        "duration": 1.332,
+        "job": "archer",
+        "stage": 7,
+        "branch": 1,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.5756006006005998
+      },
+      "active": 24,
+      "cue": "archer-b-7"
+    },
+    {
+      "hp": 1282.760745999989,
+      "cast": null,
+      "motion": {
+        "skillId": "archer-b-7",
+        "duration": 1.332,
+        "job": "archer",
+        "stage": 7,
+        "branch": 1,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.7132132132132132
+      },
+      "active": 10,
+      "cue": "archer-b-7"
+    },
+    {
+      "hp": 1283.7413535999883,
+      "cast": null,
+      "motion": {
+        "skillId": "archer-b-7",
+        "duration": 1.332,
+        "job": "archer",
+        "stage": 7,
+        "branch": 1,
+        "effect": "area",
+        "phase": "recovery",
+        "progress": 0.9008258258258255
+      },
+      "active": 2,
+      "cue": "archer-b-7"
+    },
+    {
+      "hp": 1284.7223535999876,
+      "cast": null,
+      "motion": null,
+      "active": 0,
+      "cue": "archer-b-7"
+    },
+    {
+      "hp": 1285.441622799987,
+      "cast": null,
+      "motion": null,
+      "active": 0,
+      "cue": "archer-b-7"
+    },
+    {
+      "hp": 1285.506761199987,
+      "cast": null,
+      "motion": null,
+      "active": 0,
+      "cue": "archer-b-7"
+    },
+    {
+      "hp": 1286.4877611999864,
+      "cast": null,
+      "motion": null,
+      "active": 0,
+      "cue": "archer-b-7"
+    },
+    {
+      "hp": 1287.4687611999857,
+      "cast": null,
+      "motion": null,
+      "active": 0,
+      "cue": "archer-b-7"
+    },
+    {
+      "hp": 1287.7956303999854,
+      "cast": null,
+      "motion": null,
+      "active": 0,
+      "cue": "archer-b-7"
+    },
+    {
+      "hp": 1288.5804303999848,
+      "cast": null,
+      "motion": null,
+      "active": 0,
+      "cue": "archer-b-7"
+    },
+    {
+      "hp": 1289.5614303999841,
+      "cast": null,
+      "motion": null,
+      "active": 0,
+      "cue": "archer-b-7"
+    },
+    {
+      "hp": 1290.2155611999838,
+      "cast": null,
+      "motion": null,
+      "active": 0,
+      "cue": "archer-b-7"
+    }
+  ],
+  "errors": []
+}

@@ -7,7 +7,7 @@ import { Vector3 } from '@babylonjs/core/Maths/math.vector.js';
 import { Color3 } from '@babylonjs/core/Maths/math.color.js';
 import type { Scene } from '@babylonjs/core/scene.js';
 import type { Skill, ClassId } from '../game/classes';
-type Shape='spark'|'ring'|'petal'|'crescent'|'shield'|'lightning'|'branch'|'slab'|'arrow'|'spiral'|'comet'|'ice'|'star'|'tree'|'beam'|'core'|'ray'|'arch'|'vault'|'bastion'|'leaf'|'shockbolt'|'scream';
+type Shape='spark'|'ring'|'petal'|'crescent'|'shield'|'lightning'|'branch'|'slab'|'arrow'|'spiral'|'comet'|'ice'|'star'|'tree'|'beam'|'core'|'ray'|'arch'|'vault'|'bastion'|'leaf'|'shockbolt'|'scream'|'sword';
 type Particle={mesh:Mesh;life:number;duration:number;x:number;y:number;z:number;vx:number;vy:number;vz:number;size:number;spin:number;grow:number;delay:number;gravity:boolean;stretch:[number,number,number]};
 export type SkillMotion={job:ClassId;stage:number;branch:number;effect:string;phase:'anticipation'|'release'|'recovery';progress:number;skillId?:string;duration?:number;frozen?:boolean};
 export function skillPalette(job:ClassId, skill:Skill):number[] {
@@ -26,10 +26,15 @@ function lv50Palette(job:ClassId,branch:number):number[]{
 export function lv60Palette(job:ClassId,branch:number):number[]{
  return job==='swordsman'?(branch?[0xff542e,0xffe0a0,0x962939]:[0xe82d43,0xffbf64,0x9c193f]):job==='mage'?(branch?[0xffd451,0xfff4c1,0xc79035]:[0x9c43ef,0xead0ff,0x5d2ba8]):branch?[0x36dfff,0xffe176,0x168aa5]:[0xe4b43e,0xfff1ac,0x727b29];
 }
+/** Lv70 colors sampled from the authored v4 icons, never inferred from buff names. */
+export function lv70Palette(job:ClassId,branch:number):number[]{
+ return job==='swordsman'?(branch?[0x28dfe7,0xe5ffff,0x73634b]:[0xf43d23,0xffedbf,0xad1529]):job==='mage'?(branch?[0x83e632,0xf1ffd4,0x26883f]:[0x38bfff,0xe2faff,0x2469b3]):branch?[0x91e52f,0xeeffd0,0x337746]:[0x72caff,0xe9f4ff,0x416dac];
+}
 /** Immutable shared volumetric geometry, persistent shaded materials and a bounded mesh pool. */
 export class SkillVFX {
  private templates=new Map<Shape,Mesh>();private materials=new Map<string,StandardMaterial>();
  private active:Particle[]=[];private free=new Map<Shape,Mesh[]>();private created=0;private serial=0;private low=false;
+ private lv70Cue:{skillId:string;style:string;impactSeconds:number;heroSeconds:number;focal:{x:number;z:number};decorativeRadius:number;palette:number[];endSeconds:number}|null=null;
  private lv60Cue:{skillId:string;style:string;impactSeconds:number;heroSeconds:number;focal:{x:number;z:number};decorativeRadius:number;palette:number[];endSeconds:number}|null=null;
  private lv50Cue:{skillId:string;style:string;impactSeconds:number;heroSeconds:number;focal:{x:number;z:number};decorativeRadius:number}|null=null;
  private lv40Cue:{skillId:string;style:string;impactSeconds:number;heroSeconds:number;focal:{x:number;z:number};decorativeRadius:number}|null=null;
@@ -39,7 +44,7 @@ export class SkillVFX {
  static readonly MAX_MESHES=160;
  constructor(private scene:Scene){}
  setLowQuality(low:boolean){this.low=low;}
- get diagnostics(){return {active:this.active.length,pooled:this.created,limit:this.low?40:96,geometry3D:true,noSprites:true,textures:0,shapes:[...this.templates.keys()],materials:this.materials.size,lv10Cue:this.lv10Cue,lv20Cue:this.lv20Cue,lv30Cue:this.lv30Cue,lv40Cue:this.lv40Cue,lv50Cue:this.lv50Cue,lv60Cue:this.lv60Cue,drawCount:this.active.filter(p=>p.mesh.isEnabled()).length};}
+ get diagnostics(){return {active:this.active.length,pooled:this.created,limit:this.low?40:96,geometry3D:true,noSprites:true,textures:0,shapes:[...this.templates.keys()],materials:this.materials.size,lv10Cue:this.lv10Cue,lv20Cue:this.lv20Cue,lv30Cue:this.lv30Cue,lv40Cue:this.lv40Cue,lv50Cue:this.lv50Cue,lv60Cue:this.lv60Cue,lv70Cue:this.lv70Cue,drawCount:this.active.filter(p=>p.mesh.isEnabled()).length};}
  private template(shape:Shape){
   const name='vfx-template-'+shape,parts:Mesh[]=[];
   const tube=(path:Vector3[],radius:number)=>{const m=MeshBuilder.CreateTube(name,{path,radius,tessellation:7},this.scene);parts.push(m);return m;};
@@ -50,6 +55,12 @@ export class SkillVFX {
    const path=[new Vector3(0,0,-1.8),new Vector3(.35,.12,-1),new Vector3(-.22,-.08,-.45),new Vector3(.42,.14,.2),new Vector3(0,0,1.6)];tube(path,.09);
    tube([path[2],new Vector3(-.7,.2,.1),new Vector3(-.45,.1,.65)],.055);
    tube([path[3],new Vector3(.9,-.1,.7),new Vector3(.65,0,1.1)],.055);
+  }
+  else if(shape==='sword'){
+   // A solid faceted sword has a pointed blade, broad guard and separate grip.
+   const blade=MeshBuilder.CreateCylinder(name,{height:2.7,diameterTop:0,diameterBottom:.38,tessellation:4},this.scene);blade.position.y=1.55;parts.push(blade);
+   const guard=MeshBuilder.CreateBox(name,{width:1.05,height:.16,depth:.25},this.scene);guard.position.y=.22;parts.push(guard);
+   const grip=MeshBuilder.CreateCylinder(name,{height:.65,diameter:.15,tessellation:7},this.scene);grip.position.y=-.18;parts.push(grip);sphere(0,-.52,0,.25);
   }
   else if(shape==='scream'){
    // Three open crimson wind blades make a broad shout front with a clear center.
@@ -125,7 +136,15 @@ export class SkillVFX {
   mesh.position.set(x,y,z);mesh.scaling.setAll(size);if(shape==='arrow'||shape==='comet'){mesh.rotation.y=Math.atan2(vx,vz);mesh.rotation.x=-Math.atan2(vy,Math.hypot(vx,vz));}if(delay>0)mesh.setEnabled(false);
   this.active.push({mesh,life:duration,duration,x,y,z,vx,vy,vz,size,grow,spin,delay,gravity,stretch:[1,1,1]});return mesh;
  }
- anticipation(skill:Skill,job:ClassId,x:number,z:number){if(skill.level===60){
+ anticipation(skill:Skill,job:ClassId,x:number,z:number){if(skill.level===70){
+  const c=lv70Palette(job,skill.branch),d=skillCastDuration(skill.cast)||.2;
+  this.emit('ring',c[2],x,.09,z,2.7,d,0,0,0,-1.2);
+  if(job==='swordsman'){const m=this.emit('sword',c[1],x,1.1,z,.8,d,0,.3,0,.12);if(m)m.rotation.z=skill.branch?-.25:-1;}
+  else if(job==='mage'){for(let i=0;i<3;i++){const a=i*Math.PI*2/3;const m=this.emit(skill.branch?'leaf':'ice',c[i],x+Math.sin(a)*1.3,1.5,z+Math.cos(a)*1.3,.5,d,-Math.sin(a)*.3,.3,-Math.cos(a)*.3,.12);if(m)m.rotation.y=a;}}
+  else if(skill.branch){this.emit('shield',c[2],x,.2,z,1.25,d);this.emit('leaf',c[0],x,1.5,z,.9,d,0,.3,0,.1,1);}
+  else {for(let i=0;i<3;i++)this.emit('arrow',c[i],x+(i-1)*.5,1.3,z,.65,d,0,.1,.2);}
+  return;}
+ if(skill.level===60){
   const c=lv60Palette(job,skill.branch),d=skillCastDuration(skill.cast)||.2;
   this.emit('ring',c[2],x,.09,z,2.2,d,0,0,0,-1.4);
   if(job==='mage'&&skill.branch){const moon=this.emit('crescent',c[0],x,3.2,z,1.2,d,0,.35,0,.12);if(moon)moon.rotation.x=Math.PI/2;}
@@ -133,6 +152,7 @@ export class SkillVFX {
   this.emit('ring',c[1],x,.15,z,.8,d,0,0,0,.35);return;}
  if(skill.level===50){const c=lv50Palette(job,skill.branch),d=skillCastDuration(skill.cast)||.2;this.emit('ring',c[0],x,.08,z,2,d,0,0,0,-4);for(let i=0;i<3;i++){const a=i*Math.PI*2/3;const m=this.emit('arch',c[i],x,.15,z,.85,d,0,.25,0,.4);if(m)m.rotation.y=a;}return;}if(skill.level===40){const c=skillPalette(job,skill),d=skillCastDuration(skill.cast)||.2;this.emit('ring',c[0],x,.08,z,1.7,d,0,0,0,-3);this.emit(job==='mage'?'lightning':job==='archer'?'arrow':'shield',c[1],x,1,z,.45,d,0,.5,0,.6,2);for(let i=0;i<3;i++){const a=i*Math.PI*2/3;this.emit('star',c[i],x+Math.sin(a),.7,z+Math.cos(a),.2,d,-Math.sin(a)*3,1,-Math.cos(a)*3);}return;}if(skill.level===10){const c=skillPalette(job,skill),d=skillCastDuration(skill.cast)||.18;this.emit('ring',c[0],x,.09,z,1.1,d,0,0,0,-2);this.emit('core',c[1],x,1,z,.13,d,0,.2,0,.75);for(let i=0;i<(this.low?3:6);i++){const a=i*Math.PI*2/(this.low?3:6);this.emit('ray',c[0],x+Math.cos(a)*.75,.5,z+Math.sin(a)*.75,.12,d,-Math.cos(a)*3,2,-Math.sin(a)*3);}return;}const c=skillPalette(job,skill),duration=skillCastDuration(skill.cast)||.2;this.emit('ring',c[1],x,.08,z,.65+skill.stage*.035,duration,0,0,0,.25,.5);this.emit(skill.branch?'petal':'star',c[0],x,1,z,.16,duration,0,.4,0,.15,2);}
  release(skill:Skill,job:ClassId,x:number,z:number,tx:number,tz:number){
+  if(skill.level===70){this.releaseLv70(skill,job,x,z,tx,tz);return;}
   if(skill.level===60){this.releaseLv60(skill,job,x,z,tx,tz);return;}
   if(skill.level===50){this.releaseLv50(skill,job,x,z,tx,tz);return;}
   if(skill.level===40){this.releaseLv40(skill,job,x,z,tx,tz);return;}
@@ -454,8 +474,60 @@ export class SkillVFX {
   const n=this.low?10:34,shape:Shape=job==='swordsman'?'crescent':job==='mage'?(branch?'star':'ray'):branch?'shockbolt':'arrow';
   for(let i=0;i<n;i++){const a=i*Math.PI*2/n,r=3;const m=sculpt(shape,c[i%3],cx+Math.sin(a)*r,.6+i%3*.4,cz+Math.cos(a)*r,shape==='ray'?.26:.4,.68,[1,.7,shape==='ray'?3:1],.18+i%3*.04,Math.sin(a)*9,1.1,Math.cos(a)*9,-.15);if(m)m.rotation.y=a;}
  }
+ /** Six Lv70 offensive icon silhouettes; expansion is decorative, never damage reach. */
+ private releaseLv70(skill:Skill,job:ClassId,x:number,z:number,tx:number,tz:number){
+  const branch=skill.branch,c=lv70Palette(job,branch),dir=Math.atan2(tx-x,tz-z),cx=job==='swordsman'?x:tx,cz=job==='swordsman'?z:tz;
+  const style=job==='swordsman'?(branch?'battle-renewal-cyan-sword-cyclone':'cleave-crimson-grand-sweep'):job==='mage'?(branch?'verdant-renewal-leaf-vortex':'blizzard-glacial-shard-tempest'):(branch?'camouflage-guard-leaf-crash':'piercing-volley-silver-arrow-lanes');
+  this.lv70Cue={skillId:skill.id,style,impactSeconds:0,heroSeconds:.96,focal:{x:cx,z:cz},decorativeRadius:12.6,palette:[...c],endSeconds:1.54};
+  // Preserve the complete Low composition and late crescendos under overlapping casts.
+  const limit=this.low?40:96,reserve=this.low?38:84;
+  while(this.active.length>limit-reserve){const p=this.active.pop()!;p.mesh.setEnabled(false);const shape=p.mesh.metadata.vfxShape as Shape,list=this.free.get(shape)||[];list.push(p.mesh);this.free.set(shape,list);}
+  const sculpt=(shape:Shape,color:number,px:number,py:number,pz:number,size:number,duration=.96,stretch:[number,number,number]=[1,1,1],delay=0,vx=0,vy=0,vz=0,grow=0,spin=0)=>{
+   const m=this.emit(shape,color,px,py,pz,size,duration,vx,vy,vz,grow,spin,delay);if(m){this.active[this.active.length-1].stretch=stretch;m.scaling.set(size*stretch[0],size*stretch[1],size*stretch[2]);}return m;
+  };
+  sculpt('core',c[1],cx,.2,cz,.5,.18,[1,.4,1],0,0,0,0,2);
+  sculpt('ring',c[0],cx,.1,cz,1.8,.96,[1,.5,1],0,0,0,0,3);
+  for(let i=0;i<3;i++)sculpt('ring',c[i],cx,.12+i*.09,cz,2.6,.76,[1,.5,1],.36+i*.21,0,0,0,(12.6-2.6)/.76);
+  if(job==='swordsman'&&!branch){
+   // Three staggered enormous red/orange blade faces carry the icon's sweeping cut.
+   for(let i=0;i<3;i++){const m=sculpt('crescent',c[i===1?1:0],cx,1.1+i*.45,cz,4.7+i*.45,.96,[1,.85,1],i===2?.1:0,Math.sin(dir)*1.5,.3,Math.cos(dir)*1.5,.65,1.6);if(m)m.rotation.set(.18+i*.13,dir+i*.4,.22);}
+   const sword=sculpt('sword',c[1],cx+Math.sin(dir)*2,1.2,cz+Math.cos(dir)*2,1.7,.96,[1,1.4,1],0);if(sword)sword.rotation.set(.3,dir,-1.05);
+   for(let i=0;i<4;i++){const a=dir-.8+i*.5;const m=sculpt('crescent',c[2],cx+Math.sin(a)*3,.4,cz+Math.cos(a)*3,1.7,.9,[1,.7,1],i<2?0:.24,Math.sin(a)*4,.4,Math.cos(a)*4,.2);if(m)m.rotation.y=a;}
+  }else if(job==='swordsman'){
+   sculpt('sword',c[1],cx,1.3,cz,1.9,.96,[1,1.5,1],0,0,1.4,0);
+   for(let i=0;i<3;i++){const m=sculpt('spiral',c[i===2?1:0],cx,.15,cz,2.6+i*.4,.96,[1,1.45,1],i===2?.16:0,0,.4,0,.35,2+i);if(m)m.rotation.y=dir+i*Math.PI*2/3;}
+   for(let i=0;i<6;i++){const a=i*Math.PI/3;sculpt('slab',c[2],cx+Math.sin(a)*2.4,.3,cz+Math.cos(a)*2.4,.85,.96,[1,1.8,1],i<2?0:.09+i%2*.06,Math.sin(a)*2.7,3.6,Math.cos(a)*2.7,-.12,2);}
+   for(let i=0;i<3;i++){const m=sculpt('crescent',c[0],cx,1.8+i*.9,cz,3.8,.96,[1,.7,1],i===0?0:.12+i*.06,0,.6,0,.5,2);if(m)m.rotation.set(.35,dir+i*2.1,.2);}
+  }else if(job==='mage'&&!branch){
+   // An open icy storm: descending diagonal shards and frozen teeth, no opaque cloud.
+   for(let i=0;i<8;i++){const a=i*Math.PI/4,r=2.8+i%2;const m=sculpt('ice',c[i%2],cx+Math.sin(a)*r,5.4+i%2,cz+Math.cos(a)*r,1.05,.96,[.75,1.8,.75],i<4?0:i%3*.075,-Math.sin(a)*1.8,-3.2,-Math.cos(a)*1.8);if(m)m.rotation.set(.55,a,.35);}
+   for(let i=0;i<4;i++){const a=i*Math.PI/2;sculpt('ice',c[0],cx+Math.sin(a)*3.5,.1,cz+Math.cos(a)*3.5,1.45,.96,[1,1.3,1],.19+i%2*.09);}
+   for(let i=0;i<3;i++){const m=sculpt('crescent',c[i],cx,1.2+i*1.2,cz,4.1,.96,[1,.55,1],.08+i*.07,0,-.2,0,.35,-1.2);if(m)m.rotation.set(.2,dir+i*2.1,.15);}
+  }else if(job==='mage'){
+   // Broad outward leaf blades and a double helix mark damaging renewal, never healing.
+   for(let i=0;i<8;i++){const a=i*Math.PI/4;const m=sculpt('leaf',c[i%2],cx+Math.sin(a)*2.8,1.5+i%2*1.4,cz+Math.cos(a)*2.8,1.8,.96,[1,1,1.6],i<4?0:i%2*.08,Math.sin(a)*3.3,.7,Math.cos(a)*3.3,.15,1);if(m)m.rotation.set(-.5,a,.25);}
+   for(let i=0;i<2;i++){const m=sculpt('spiral',c[i?2:0],cx,.1,cz,3.1,.96,[1,1.5,1],i*.09,0,.2,0,.35,2);if(m)m.rotation.y=i*Math.PI;}
+   for(let i=0;i<4;i++){const a=i*Math.PI/2;const m=sculpt('leaf',c[1],cx+Math.sin(a)*2,4.8,cz+Math.cos(a)*2,1.45,.96,[1,.8,1.6],.22,Math.sin(a)*2.8,-1,Math.cos(a)*2.8,.1);if(m)m.rotation.set(.55,a,0);}
+  }else if(!branch){
+   // Five silver piercing lanes cross the victim; blue rails and later arrows echo them.
+   for(let i=0;i<5;i++){const offset=(i-2)*1.05,px=cx+Math.cos(dir)*offset,pz=cz-Math.sin(dir)*offset;
+    const m=sculpt('arrow',c[1],px-Math.sin(dir)*2.4,1+i%2*.6,pz-Math.cos(dir)*2.4,1.65,.96,[1,1,3],i%2*.055,Math.sin(dir)*6.2,0,Math.cos(dir)*6.2);if(m)m.rotation.y=dir;
+    const rail=sculpt('ray',c[0],px,1+i%2*.6,pz,1,.8,[.55,.55,5.4],i%2*.055);if(rail)rail.rotation.y=dir;
+    const echo=sculpt('arrow',c[0],px-Math.sin(dir)*3.4,1.2,pz-Math.cos(dir)*3.4,1.05,.96,[1,1,2.4],.35,Math.sin(dir)*7.4,0,Math.cos(dir)*7.4);if(echo)echo.rotation.y=dir;
+   }
+  }else{
+   // A translucent guarded figure framed by a side-on leafy wreath that crashes outward.
+   const guard=sculpt('shield',c[2],cx,.3,cz,2,.96,[1,1.25,1],0,0,0,0,.15);if(guard)guard.rotation.y=dir;
+   const arrow=sculpt('arrow',c[1],cx,1.6,cz,1.4,.96,[1,1,2.2]);if(arrow)arrow.rotation.y=dir;
+   for(let i=0;i<8;i++){const a=i*Math.PI/4,side=Math.cos(a)*3.2;const m=sculpt('leaf',c[i%2],cx+Math.cos(dir)*side,3+Math.sin(a)*2.5,cz-Math.sin(dir)*side,1.4,.96,[1,1,1.6],i%2*.055,Math.cos(dir)*Math.cos(a)*1.5,.15,-Math.sin(dir)*Math.cos(a)*1.5,.15,.8);if(m)m.rotation.set(.25,dir,a+.6);}
+   for(const side of [-1,1]){const m=sculpt('crescent',c[0],cx,1,cz,4,.96,[1,.7,1],.25,Math.cos(dir)*side*2,.2,-Math.sin(dir)*side*2,.5,side);if(m)m.rotation.set(.45,dir+side*.65,.2);}
+  }
+  // Essential forms and all three finale waves are already reserved before satellites.
+  const n=this.low?8:38,shape:Shape=job==='swordsman'?(branch?'slab':'crescent'):job==='mage'?(branch?'leaf':'ice'):branch?'leaf':'arrow';
+  for(let i=0;i<n;i++){const a=i*Math.PI*2/n;const m=sculpt(shape,c[i%3],cx+Math.sin(a)*3.2,.6+i%3*.5,cz+Math.cos(a)*3.2,.48,.82,[1,1,shape==='arrow'?1.6:1],.22+i%3*.055,Math.sin(a)*9.4,1.4,Math.cos(a)*9.4,-.15,shape==='arrow'?0:1.5);if(m)m.rotation.y=a;}
+ }
  basic(job:ClassId,x:number,z:number){this.emit(job==='swordsman'?'crescent':'star',job==='mage'?0xb5d9ff:0xffe5a3,x,.75,z,job==='swordsman'?.65:.14,.3,0,.4,0,.5,4);}
  update(dt:number){for(let i=this.active.length-1;i>=0;i--){const p=this.active[i];let elapsed=dt;if(p.delay>0){p.delay-=dt;if(p.delay>0)continue;elapsed=-p.delay;p.delay=0;p.mesh.setEnabled(true);}p.life-=elapsed;if(p.life<=0){p.mesh.setEnabled(false);const shape=p.mesh.metadata.vfxShape as Shape;let list=this.free.get(shape);if(!list){list=[];this.free.set(shape,list);}list.push(p.mesh);this.active.splice(i,1);continue;}const t=p.duration-p.life;p.mesh.position.set(p.x+p.vx*t,p.y+p.vy*t-(p.gravity?t*t*3:0),p.z+p.vz*t);p.mesh.rotation.y+=p.spin*elapsed;p.mesh.visibility=Math.min(1,p.life/.08);const scale=Math.max(.01,p.size+p.grow*t);p.mesh.scaling.set(scale*p.stretch[0],scale*p.stretch[1],scale*p.stretch[2]);}}
- clear(){this.lv60Cue=null;this.lv50Cue=null;this.lv40Cue=null;this.lv10Cue=null;this.lv20Cue=null;this.lv30Cue=null;for(const p of this.active){p.mesh.setEnabled(false);const shape=p.mesh.metadata.vfxShape as Shape;const list=this.free.get(shape)||[];list.push(p.mesh);this.free.set(shape,list);}this.active.length=0;}
+ clear(){this.lv70Cue=null;this.lv60Cue=null;this.lv50Cue=null;this.lv40Cue=null;this.lv10Cue=null;this.lv20Cue=null;this.lv30Cue=null;for(const p of this.active){p.mesh.setEnabled(false);const shape=p.mesh.metadata.vfxShape as Shape;const list=this.free.get(shape)||[];list.push(p.mesh);this.free.set(shape,list);}this.active.length=0;}
  dispose(){this.clear();this.free.forEach(list=>list.forEach(mesh=>mesh.dispose()));this.templates.forEach(mesh=>mesh.dispose());this.materials.forEach(material=>material.dispose());this.free.clear();this.templates.clear();this.materials.clear();this.created=0;}
 }

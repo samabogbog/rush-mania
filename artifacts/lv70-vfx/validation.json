@@ -1,0 +1,3051 @@
+{
+  "runtimeSHA256": "b3b84b53ddc44b115f658a25928d652e0ef7a34e7abb7db6f1f44cf8f9cdae26",
+  "worldSHA256": "42e35fd1b6e2ca48ae9b7b514d3bbab9e9cd3aaac15e6ff72f7529ee63c25be6",
+  "sourceBaseline": "511d194f2e5d06b2778b62e4b180ece60bacd73d",
+  "environment": "Node24.19.0; Chromium151 ANGLE SwiftShader; Debian13 x86_64",
+  "build": "passed",
+  "checks": {
+    "code": 48,
+    "browser": 9,
+    "total": 57
+  },
+  "readiness": {
+    "frontend": 200,
+    "authStatus": 200
+  },
+  "previewFrames": 96,
+  "performance": [
+    {
+      "skill": "swordsman-6",
+      "low": false,
+      "idle": {
+        "frameP50": 54.80000000074506,
+        "frameP95": 120.69999999925494,
+        "vfxDrawCount": 0,
+        "drawCalls": 11,
+        "meshes": 12,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 58.900000002235174,
+        "frameP95": 182.20000000298023,
+        "vfxDrawCount": 41,
+        "drawCalls": 52,
+        "meshes": 60,
+        "materials": 6
+      }
+    },
+    {
+      "skill": "swordsman-7",
+      "low": false,
+      "idle": {
+        "frameP50": 54.80000000074506,
+        "frameP95": 120.69999999925494,
+        "vfxDrawCount": 0,
+        "drawCalls": 11,
+        "meshes": 12,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 87.70000000298023,
+        "frameP95": 155,
+        "vfxDrawCount": 48,
+        "drawCalls": 59,
+        "meshes": 72,
+        "materials": 10
+      }
+    },
+    {
+      "skill": "swordsman-b-6",
+      "low": false,
+      "idle": {
+        "frameP50": 54.80000000074506,
+        "frameP95": 120.69999999925494,
+        "vfxDrawCount": 0,
+        "drawCalls": 11,
+        "meshes": 12,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 61.899999998509884,
+        "frameP95": 153.09999999776483,
+        "vfxDrawCount": 43,
+        "drawCalls": 54,
+        "meshes": 76,
+        "materials": 15
+      }
+    },
+    {
+      "skill": "swordsman-b-7",
+      "low": false,
+      "idle": {
+        "frameP50": 54.80000000074506,
+        "frameP95": 120.69999999925494,
+        "vfxDrawCount": 0,
+        "drawCalls": 11,
+        "meshes": 12,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 71.70000000298023,
+        "frameP95": 204.30000000074506,
+        "vfxDrawCount": 53,
+        "drawCalls": 64,
+        "meshes": 125,
+        "materials": 19
+      }
+    },
+    {
+      "skill": "swordsman-6",
+      "low": true,
+      "idle": {
+        "frameP50": 47.5,
+        "frameP95": 90.89999999850988,
+        "vfxDrawCount": 0,
+        "drawCalls": 11,
+        "meshes": 125,
+        "materials": 21
+      },
+      "burst": {
+        "frameP50": 78.60000000149012,
+        "frameP95": 112,
+        "vfxDrawCount": 17,
+        "drawCalls": 28,
+        "meshes": 125,
+        "materials": 21
+      }
+    },
+    {
+      "skill": "swordsman-7",
+      "low": true,
+      "idle": {
+        "frameP50": 47.5,
+        "frameP95": 90.89999999850988,
+        "vfxDrawCount": 0,
+        "drawCalls": 11,
+        "meshes": 125,
+        "materials": 21
+      },
+      "burst": {
+        "frameP50": 76.90000000223517,
+        "frameP95": 164.69999999925494,
+        "vfxDrawCount": 18,
+        "drawCalls": 29,
+        "meshes": 125,
+        "materials": 21
+      }
+    },
+    {
+      "skill": "swordsman-b-6",
+      "low": true,
+      "idle": {
+        "frameP50": 47.5,
+        "frameP95": 90.89999999850988,
+        "vfxDrawCount": 0,
+        "drawCalls": 11,
+        "meshes": 125,
+        "materials": 21
+      },
+      "burst": {
+        "frameP50": 77.39999999850988,
+        "frameP95": 104.20000000298023,
+        "vfxDrawCount": 19,
+        "drawCalls": 30,
+        "meshes": 125,
+        "materials": 21
+      }
+    },
+    {
+      "skill": "swordsman-b-7",
+      "low": true,
+      "idle": {
+        "frameP50": 47.5,
+        "frameP95": 90.89999999850988,
+        "vfxDrawCount": 0,
+        "drawCalls": 11,
+        "meshes": 125,
+        "materials": 21
+      },
+      "burst": {
+        "frameP50": 81.5,
+        "frameP95": 116.19999999925494,
+        "vfxDrawCount": 23,
+        "drawCalls": 34,
+        "meshes": 125,
+        "materials": 21
+      }
+    },
+    {
+      "skill": "mage-6",
+      "low": false,
+      "idle": {
+        "frameP50": 53.29999999701977,
+        "frameP95": 124,
+        "vfxDrawCount": 0,
+        "drawCalls": 10,
+        "meshes": 11,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 75.80000000074506,
+        "frameP95": 116.10000000149012,
+        "vfxDrawCount": 44,
+        "drawCalls": 54,
+        "meshes": 63,
+        "materials": 10
+      }
+    },
+    {
+      "skill": "mage-7",
+      "low": false,
+      "idle": {
+        "frameP50": 53.29999999701977,
+        "frameP95": 124,
+        "vfxDrawCount": 0,
+        "drawCalls": 10,
+        "meshes": 11,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 79.19999999925494,
+        "frameP95": 188.40000000223517,
+        "vfxDrawCount": 55,
+        "drawCalls": 65,
+        "meshes": 115,
+        "materials": 14
+      }
+    },
+    {
+      "skill": "mage-b-6",
+      "low": false,
+      "idle": {
+        "frameP50": 53.29999999701977,
+        "frameP95": 124,
+        "vfxDrawCount": 0,
+        "drawCalls": 10,
+        "meshes": 11,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 82.30000000074506,
+        "frameP95": 146.60000000149012,
+        "vfxDrawCount": 46,
+        "drawCalls": 56,
+        "meshes": 154,
+        "materials": 20
+      }
+    },
+    {
+      "skill": "mage-b-7",
+      "low": false,
+      "idle": {
+        "frameP50": 53.29999999701977,
+        "frameP95": 124,
+        "vfxDrawCount": 0,
+        "drawCalls": 10,
+        "meshes": 11,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 90.79999999701977,
+        "frameP95": 140.60000000149012,
+        "vfxDrawCount": 54,
+        "drawCalls": 64,
+        "meshes": 180,
+        "materials": 24
+      }
+    },
+    {
+      "skill": "mage-6",
+      "low": true,
+      "idle": {
+        "frameP50": 49.69999999925494,
+        "frameP95": 98,
+        "vfxDrawCount": 0,
+        "drawCalls": 10,
+        "meshes": 180,
+        "materials": 26
+      },
+      "burst": {
+        "frameP50": 83.70000000298023,
+        "frameP95": 158.59999999776483,
+        "vfxDrawCount": 20,
+        "drawCalls": 30,
+        "meshes": 180,
+        "materials": 26
+      }
+    },
+    {
+      "skill": "mage-7",
+      "low": true,
+      "idle": {
+        "frameP50": 49.69999999925494,
+        "frameP95": 98,
+        "vfxDrawCount": 0,
+        "drawCalls": 10,
+        "meshes": 180,
+        "materials": 26
+      },
+      "burst": {
+        "frameP50": 83.90000000223517,
+        "frameP95": 122,
+        "vfxDrawCount": 25,
+        "drawCalls": 35,
+        "meshes": 180,
+        "materials": 26
+      }
+    },
+    {
+      "skill": "mage-b-6",
+      "low": true,
+      "idle": {
+        "frameP50": 49.69999999925494,
+        "frameP95": 98,
+        "vfxDrawCount": 0,
+        "drawCalls": 10,
+        "meshes": 180,
+        "materials": 26
+      },
+      "burst": {
+        "frameP50": 67.10000000149012,
+        "frameP95": 116.89999999850988,
+        "vfxDrawCount": 22,
+        "drawCalls": 32,
+        "meshes": 180,
+        "materials": 26
+      }
+    },
+    {
+      "skill": "mage-b-7",
+      "low": true,
+      "idle": {
+        "frameP50": 49.69999999925494,
+        "frameP95": 98,
+        "vfxDrawCount": 0,
+        "drawCalls": 10,
+        "meshes": 180,
+        "materials": 26
+      },
+      "burst": {
+        "frameP50": 75.10000000149012,
+        "frameP95": 107.69999999925494,
+        "vfxDrawCount": 24,
+        "drawCalls": 34,
+        "meshes": 180,
+        "materials": 26
+      }
+    },
+    {
+      "skill": "archer-6",
+      "low": false,
+      "idle": {
+        "frameP50": 43.20000000298023,
+        "frameP95": 108.69999999925494,
+        "vfxDrawCount": 0,
+        "drawCalls": 9,
+        "meshes": 10,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 59.599999997764826,
+        "frameP95": 102.5,
+        "vfxDrawCount": 47,
+        "drawCalls": 56,
+        "meshes": 66,
+        "materials": 7
+      }
+    },
+    {
+      "skill": "archer-7",
+      "low": false,
+      "idle": {
+        "frameP50": 43.20000000298023,
+        "frameP95": 108.69999999925494,
+        "vfxDrawCount": 0,
+        "drawCalls": 9,
+        "meshes": 10,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 68.30000000074506,
+        "frameP95": 124.30000000074506,
+        "vfxDrawCount": 55,
+        "drawCalls": 64,
+        "meshes": 82,
+        "materials": 12
+      }
+    },
+    {
+      "skill": "archer-b-6",
+      "low": false,
+      "idle": {
+        "frameP50": 43.20000000298023,
+        "frameP95": 108.69999999925494,
+        "vfxDrawCount": 0,
+        "drawCalls": 9,
+        "meshes": 10,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 58.099999997764826,
+        "frameP95": 82.80000000074506,
+        "vfxDrawCount": 43,
+        "drawCalls": 52,
+        "meshes": 123,
+        "materials": 16
+      }
+    },
+    {
+      "skill": "archer-b-7",
+      "low": false,
+      "idle": {
+        "frameP50": 43.20000000298023,
+        "frameP95": 108.69999999925494,
+        "vfxDrawCount": 0,
+        "drawCalls": 9,
+        "meshes": 10,
+        "materials": 2
+      },
+      "burst": {
+        "frameP50": 79.70000000298023,
+        "frameP95": 118.19999999925494,
+        "vfxDrawCount": 52,
+        "drawCalls": 62,
+        "meshes": 175,
+        "materials": 22
+      }
+    },
+    {
+      "skill": "archer-6",
+      "low": true,
+      "idle": {
+        "frameP50": 50.599999997764826,
+        "frameP95": 94.69999999925494,
+        "vfxDrawCount": 0,
+        "drawCalls": 9,
+        "meshes": 175,
+        "materials": 23
+      },
+      "burst": {
+        "frameP50": 72.19999999925494,
+        "frameP95": 106,
+        "vfxDrawCount": 23,
+        "drawCalls": 32,
+        "meshes": 175,
+        "materials": 23
+      }
+    },
+    {
+      "skill": "archer-7",
+      "low": true,
+      "idle": {
+        "frameP50": 50.599999997764826,
+        "frameP95": 94.69999999925494,
+        "vfxDrawCount": 0,
+        "drawCalls": 9,
+        "meshes": 175,
+        "materials": 23
+      },
+      "burst": {
+        "frameP50": 75.30000000074506,
+        "frameP95": 101.5,
+        "vfxDrawCount": 25,
+        "drawCalls": 34,
+        "meshes": 175,
+        "materials": 23
+      }
+    },
+    {
+      "skill": "archer-b-6",
+      "low": true,
+      "idle": {
+        "frameP50": 50.599999997764826,
+        "frameP95": 94.69999999925494,
+        "vfxDrawCount": 0,
+        "drawCalls": 9,
+        "meshes": 175,
+        "materials": 23
+      },
+      "burst": {
+        "frameP50": 50.5,
+        "frameP95": 104,
+        "vfxDrawCount": 19,
+        "drawCalls": 28,
+        "meshes": 175,
+        "materials": 23
+      }
+    },
+    {
+      "skill": "archer-b-7",
+      "low": true,
+      "idle": {
+        "frameP50": 50.599999997764826,
+        "frameP95": 94.69999999925494,
+        "vfxDrawCount": 0,
+        "drawCalls": 9,
+        "meshes": 175,
+        "materials": 23
+      },
+      "burst": {
+        "frameP50": 83.89999999850988,
+        "frameP95": 119.79999999701977,
+        "vfxDrawCount": 22,
+        "drawCalls": 32,
+        "meshes": 175,
+        "materials": 23
+      }
+    }
+  ],
+  "gameplay": {
+    "swordsman-7": {
+      "environment": "Chromium ANGLE SwiftShader; authentic learned Lv70 skill rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+      "before": {
+        "job": "swordsman",
+        "zone": "glade",
+        "x": 0.9534800000000033,
+        "z": 17.252599999999966,
+        "hp": 1278.6413307999915,
+        "mp": 852,
+        "kills": 0,
+        "hotbar": [
+          "swordsman-7",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "swordsman-1",
+          "swordsman-2",
+          "swordsman-3",
+          "swordsman-4",
+          "swordsman-5",
+          "swordsman-6",
+          "swordsman-7"
+        ],
+        "skillCooldowns": {},
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 0,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [],
+          "materials": 0,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "drawCount": 0
+        },
+        "modelErrors": 0,
+        "drawCalls": 52
+      },
+      "after": {
+        "job": "swordsman",
+        "zone": "glade",
+        "x": 0.9534800000000033,
+        "z": 17.252599999999966,
+        "hp": 1279.491269199991,
+        "mp": 824.9227159999998,
+        "kills": 4,
+        "hotbar": [
+          "swordsman-7",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "swordsman-1",
+          "swordsman-2",
+          "swordsman-3",
+          "swordsman-4",
+          "swordsman-5",
+          "swordsman-6",
+          "swordsman-7"
+        ],
+        "skillCooldowns": {
+          "swordsman-7": 9.783399999999999
+        },
+        "skillMotion": {
+          "skillId": "swordsman-7",
+          "duration": 1.332,
+          "job": "swordsman",
+          "stage": 7,
+          "branch": 0,
+          "effect": "area",
+          "phase": "release",
+          "progress": 0
+        },
+        "vfx": {
+          "active": 21,
+          "pooled": 23,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "crescent",
+            "ring",
+            "sword",
+            "core"
+          ],
+          "materials": 5,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": {
+            "skillId": "swordsman-7",
+            "style": "cleave-crimson-grand-sweep",
+            "impactSeconds": 0,
+            "heroSeconds": 0.96,
+            "focal": {
+              "x": 0.9534800000000033,
+              "z": 17.252599999999966
+            },
+            "decorativeRadius": 12.6,
+            "palette": [
+              16006435,
+              16772543,
+              11343145
+            ],
+            "endSeconds": 1.54
+          },
+          "drawCount": 8
+        },
+        "modelErrors": 0,
+        "drawCalls": 59
+      },
+      "recovered": {
+        "job": "swordsman",
+        "zone": "glade",
+        "x": 0.9534800000000033,
+        "z": 17.252599999999966,
+        "hp": 1289.3008767999843,
+        "mp": 835.5722899999981,
+        "kills": 4,
+        "hotbar": [
+          "swordsman-7",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "swordsman-1",
+          "swordsman-2",
+          "swordsman-3",
+          "swordsman-4",
+          "swordsman-5",
+          "swordsman-6",
+          "swordsman-7"
+        ],
+        "skillCooldowns": {
+          "swordsman-7": 7.283499999999969
+        },
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 23,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "crescent",
+            "ring",
+            "sword",
+            "core"
+          ],
+          "materials": 5,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": {
+            "skillId": "swordsman-7",
+            "style": "cleave-crimson-grand-sweep",
+            "impactSeconds": 0,
+            "heroSeconds": 0.96,
+            "focal": {
+              "x": 0.9534800000000033,
+              "z": 17.252599999999966
+            },
+            "decorativeRadius": 12.6,
+            "palette": [
+              16006435,
+              16772543,
+              11343145
+            ],
+            "endSeconds": 1.54
+          },
+          "drawCount": 0
+        },
+        "modelErrors": 0,
+        "drawCalls": 49
+      },
+      "timeline": [
+        {
+          "hp": 1279.491269199991,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-7",
+            "duration": 1.332,
+            "job": "swordsman",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0
+          },
+          "active": 21,
+          "cue": "swordsman-7"
+        },
+        {
+          "hp": 1280.4722691999903,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-7",
+            "duration": 1.332,
+            "job": "swordsman",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.18768768768768773
+          },
+          "active": 20,
+          "cue": "swordsman-7"
+        },
+        {
+          "hp": 1280.5377999999903,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-7",
+            "duration": 1.332,
+            "job": "swordsman",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.2002252252252258
+          },
+          "active": 20,
+          "cue": "swordsman-7"
+        },
+        {
+          "hp": 1281.3222075999897,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-7",
+            "duration": 1.332,
+            "job": "swordsman",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.35030030030030057
+          },
+          "active": 20,
+          "cue": "swordsman-7"
+        },
+        {
+          "hp": 1281.9763383999893,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-7",
+            "duration": 1.332,
+            "job": "swordsman",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.4754504504504513
+          },
+          "active": 20,
+          "cue": "swordsman-7"
+        },
+        {
+          "hp": 1282.8266691999888,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-7",
+            "duration": 1.332,
+            "job": "swordsman",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.6381381381381381
+          },
+          "active": 10,
+          "cue": "swordsman-7"
+        },
+        {
+          "hp": 1283.8076691999881,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-7",
+            "duration": 1.332,
+            "job": "swordsman",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.8258258258258259
+          },
+          "active": 2,
+          "cue": "swordsman-7"
+        },
+        {
+          "hp": 1283.938730799988,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-7",
+            "duration": 1.332,
+            "job": "swordsman",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.8509009009009006
+          },
+          "active": 1,
+          "cue": "swordsman-7"
+        },
+        {
+          "hp": 1284.6579999999874,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-7",
+            "duration": 1.332,
+            "job": "swordsman",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.9885135135135127
+          },
+          "active": 1,
+          "cue": "swordsman-7"
+        },
+        {
+          "hp": 1285.4427999999868,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "swordsman-7"
+        },
+        {
+          "hp": 1285.5079383999869,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "swordsman-7"
+        },
+        {
+          "hp": 1286.1620691999865,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "swordsman-7"
+        },
+        {
+          "hp": 1286.2272075999865,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "swordsman-7"
+        },
+        {
+          "hp": 1287.2082075999858,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "swordsman-7"
+        },
+        {
+          "hp": 1288.1892075999851,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "swordsman-7"
+        },
+        {
+          "hp": 1288.9084767999846,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "swordsman-7"
+        },
+        {
+          "hp": 1289.3008767999843,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "swordsman-7"
+        }
+      ],
+      "errors": []
+    },
+    "mage-7": {
+      "environment": "Chromium ANGLE SwiftShader; authentic learned Lv70 skill rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+      "before": {
+        "job": "mage",
+        "zone": "glade",
+        "x": 0.8800000000000001,
+        "z": 17.252159999999968,
+        "hp": 1288.575407599992,
+        "mp": 852,
+        "kills": 0,
+        "hotbar": [
+          "mage-7",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "mage-1",
+          "mage-2",
+          "mage-3",
+          "mage-4",
+          "mage-5",
+          "mage-6",
+          "mage-7"
+        ],
+        "skillCooldowns": {},
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 0,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [],
+          "materials": 0,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "drawCount": 0
+        },
+        "modelErrors": 0,
+        "drawCalls": 51
+      },
+      "after": {
+        "job": "mage",
+        "zone": "glade",
+        "x": 0.8800000000000001,
+        "z": 17.252159999999968,
+        "hp": 1269.2078151999858,
+        "mp": 826.3715739999986,
+        "kills": 6,
+        "hotbar": [
+          "mage-7",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "mage-1",
+          "mage-2",
+          "mage-3",
+          "mage-4",
+          "mage-5",
+          "mage-6",
+          "mage-7"
+        ],
+        "skillCooldowns": {
+          "mage-7": 9.800099999999972
+        },
+        "skillMotion": {
+          "skillId": "mage-7",
+          "duration": 1.332,
+          "job": "mage",
+          "stage": 7,
+          "branch": 0,
+          "effect": "area",
+          "phase": "release",
+          "progress": 0
+        },
+        "vfx": {
+          "active": 27,
+          "pooled": 30,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "ring",
+            "ice",
+            "core",
+            "crescent"
+          ],
+          "materials": 4,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": {
+            "skillId": "mage-7",
+            "style": "blizzard-glacial-shard-tempest",
+            "impactSeconds": 0,
+            "heroSeconds": 0.96,
+            "focal": {
+              "x": 0.2722731053120088,
+              "z": 18.084870797641177
+            },
+            "decorativeRadius": 12.6,
+            "palette": [
+              3719167,
+              14875391,
+              2386355
+            ],
+            "endSeconds": 1.54
+          },
+          "drawCount": 13
+        },
+        "modelErrors": 0,
+        "drawCalls": 67
+      },
+      "recovered": {
+        "job": "mage",
+        "zone": "glade",
+        "x": 0.8800000000000001,
+        "z": 17.252159999999968,
+        "hp": 1279.9328919999784,
+        "mp": 838.0150059999967,
+        "kills": 6,
+        "hotbar": [
+          "mage-7",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "mage-1",
+          "mage-2",
+          "mage-3",
+          "mage-4",
+          "mage-5",
+          "mage-6",
+          "mage-7"
+        ],
+        "skillCooldowns": {
+          "mage-7": 7.066899999999933
+        },
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 30,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "ring",
+            "ice",
+            "core",
+            "crescent"
+          ],
+          "materials": 4,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": {
+            "skillId": "mage-7",
+            "style": "blizzard-glacial-shard-tempest",
+            "impactSeconds": 0,
+            "heroSeconds": 0.96,
+            "focal": {
+              "x": 0.2722731053120088,
+              "z": 18.084870797641177
+            },
+            "decorativeRadius": 12.6,
+            "palette": [
+              3719167,
+              14875391,
+              2386355
+            ],
+            "endSeconds": 1.54
+          },
+          "drawCount": 0
+        },
+        "modelErrors": 0,
+        "drawCalls": 48
+      },
+      "timeline": [
+        {
+          "hp": 1289.3605999999916,
+          "cast": "mage-7",
+          "motion": {
+            "skillId": "mage-7",
+            "duration": 2.0999999999999996,
+            "job": "mage",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.0952857142857142
+          },
+          "active": 4,
+          "cue": null
+        },
+        {
+          "hp": 1290.145007599991,
+          "cast": "mage-7",
+          "motion": {
+            "skillId": "mage-7",
+            "duration": 2.0999999999999996,
+            "job": "mage",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.1904761904761899
+          },
+          "active": 4,
+          "cue": null
+        },
+        {
+          "hp": 1290.8646691999904,
+          "cast": "mage-7",
+          "motion": {
+            "skillId": "mage-7",
+            "duration": 2.0999999999999996,
+            "job": "mage",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.27780952380952284
+          },
+          "active": 4,
+          "cue": null
+        },
+        {
+          "hp": 1281.71460759999,
+          "cast": "mage-7",
+          "motion": {
+            "skillId": "mage-7",
+            "duration": 2.0999999999999996,
+            "job": "mage",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.3809523809523798
+          },
+          "active": 4,
+          "cue": null
+        },
+        {
+          "hp": 1282.4342691999893,
+          "cast": "mage-7",
+          "motion": {
+            "skillId": "mage-7",
+            "duration": 2.0999999999999996,
+            "job": "mage",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.46828571428571275
+          },
+          "active": 4,
+          "cue": null
+        },
+        {
+          "hp": 1283.2190691999888,
+          "cast": "mage-7",
+          "motion": {
+            "skillId": "mage-7",
+            "duration": 2.0999999999999996,
+            "job": "mage",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.563523809523808
+          },
+          "active": 4,
+          "cue": null
+        },
+        {
+          "hp": 1266.0038691999882,
+          "cast": "mage-7",
+          "motion": {
+            "skillId": "mage-7",
+            "duration": 2.0999999999999996,
+            "job": "mage",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.6587619047619033
+          },
+          "active": 4,
+          "cue": null
+        },
+        {
+          "hp": 1266.7882767999877,
+          "cast": "mage-7",
+          "motion": {
+            "skillId": "mage-7",
+            "duration": 2.0999999999999996,
+            "job": "mage",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.7539523809523794
+          },
+          "active": 4,
+          "cue": null
+        },
+        {
+          "hp": 1267.704138399987,
+          "cast": "mage-7",
+          "motion": {
+            "skillId": "mage-7",
+            "duration": 2.0999999999999996,
+            "job": "mage",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.8650952380952365
+          },
+          "active": 4,
+          "cue": null
+        },
+        {
+          "hp": 1268.4234075999864,
+          "cast": "mage-7",
+          "motion": {
+            "skillId": "mage-7",
+            "duration": 2.0999999999999996,
+            "job": "mage",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "anticipation",
+            "progress": 0.9523809523809513
+          },
+          "active": 4,
+          "cue": null
+        },
+        {
+          "hp": 1269.2078151999858,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-7",
+            "duration": 1.332,
+            "job": "mage",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0
+          },
+          "active": 27,
+          "cue": "mage-7"
+        },
+        {
+          "hp": 1270.1888151999851,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-7",
+            "duration": 1.332,
+            "job": "mage",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.18768768768768773
+          },
+          "active": 27,
+          "cue": "mage-7"
+        },
+        {
+          "hp": 1271.1698151999844,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-7",
+            "duration": 1.332,
+            "job": "mage",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.37537537537537535
+          },
+          "active": 27,
+          "cue": "mage-7"
+        },
+        {
+          "hp": 1271.4311535999843,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-7",
+            "duration": 1.332,
+            "job": "mage",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.4253753753753756
+          },
+          "active": 27,
+          "cue": "mage-7"
+        },
+        {
+          "hp": 1272.2814843999838,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-7",
+            "duration": 1.332,
+            "job": "mage",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.5880630630630638
+          },
+          "active": 21,
+          "cue": "mage-7"
+        },
+        {
+          "hp": 1273.196953599983,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-7",
+            "duration": 1.332,
+            "job": "mage",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.7632132132132134
+          },
+          "active": 4,
+          "cue": "mage-7"
+        },
+        {
+          "hp": 1274.1779535999824,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-7",
+            "duration": 1.332,
+            "job": "mage",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.9509009009009011
+          },
+          "active": 1,
+          "cue": "mage-7"
+        },
+        {
+          "hp": 1275.0934227999817,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "mage-7"
+        },
+        {
+          "hp": 1276.008891999981,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "mage-7"
+        },
+        {
+          "hp": 1276.8592227999804,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "mage-7"
+        },
+        {
+          "hp": 1277.8402227999798,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "mage-7"
+        },
+        {
+          "hp": 1277.9057535999798,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "mage-7"
+        },
+        {
+          "hp": 1278.7556919999793,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "mage-7"
+        },
+        {
+          "hp": 1279.7366919999786,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "mage-7"
+        },
+        {
+          "hp": 1279.9328919999784,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "mage-7"
+        }
+      ],
+      "errors": []
+    },
+    "archer-7": {
+      "environment": "Chromium ANGLE SwiftShader; authentic learned Lv70 skill rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+      "before": {
+        "job": "archer",
+        "zone": "glade",
+        "x": 1.026520000000005,
+        "z": 17.47259999999996,
+        "hp": 1282.1775767999902,
+        "mp": 852,
+        "kills": 0,
+        "hotbar": [
+          "archer-7",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "archer-1",
+          "archer-2",
+          "archer-3",
+          "archer-4",
+          "archer-5",
+          "archer-6",
+          "archer-7"
+        ],
+        "skillCooldowns": {},
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 0,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [],
+          "materials": 0,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "drawCount": 0
+        },
+        "modelErrors": 0,
+        "drawCalls": 50
+      },
+      "after": {
+        "job": "archer",
+        "zone": "glade",
+        "x": 1.026520000000005,
+        "z": 17.47259999999996,
+        "hp": 1283.0279075999897,
+        "mp": 824.9231419999999,
+        "kills": 4,
+        "hotbar": [
+          "archer-7",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "archer-1",
+          "archer-2",
+          "archer-3",
+          "archer-4",
+          "archer-5",
+          "archer-6",
+          "archer-7"
+        ],
+        "skillCooldowns": {
+          "archer-7": 9.783299999999997
+        },
+        "skillMotion": {
+          "skillId": "archer-7",
+          "duration": 1.332,
+          "job": "archer",
+          "stage": 7,
+          "branch": 0,
+          "effect": "area",
+          "phase": "release",
+          "progress": 0
+        },
+        "vfx": {
+          "active": 28,
+          "pooled": 30,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "star",
+            "ring",
+            "arrow",
+            "core",
+            "ray"
+          ],
+          "materials": 6,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": {
+            "skillId": "archer-7",
+            "style": "piercing-volley-silver-arrow-lanes",
+            "impactSeconds": 0,
+            "heroSeconds": 0.96,
+            "focal": {
+              "x": 2.026520000000005,
+              "z": 18.47259999999996
+            },
+            "decorativeRadius": 12.6,
+            "palette": [
+              7523071,
+              15332607,
+              4287916
+            ],
+            "endSeconds": 1.54
+          },
+          "drawCount": 12
+        },
+        "modelErrors": 0,
+        "drawCalls": 63
+      },
+      "recovered": {
+        "job": "archer",
+        "zone": "glade",
+        "x": 1.026520000000005,
+        "z": 17.47259999999996,
+        "hp": 1283.2113075999816,
+        "mp": 837.064141999998,
+        "kills": 4,
+        "hotbar": [
+          "archer-7",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "archer-1",
+          "archer-2",
+          "archer-3",
+          "archer-4",
+          "archer-5",
+          "archer-6",
+          "archer-7"
+        ],
+        "skillCooldowns": {
+          "archer-7": 6.933299999999958
+        },
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 30,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "star",
+            "ring",
+            "arrow",
+            "core",
+            "ray"
+          ],
+          "materials": 6,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": {
+            "skillId": "archer-7",
+            "style": "piercing-volley-silver-arrow-lanes",
+            "impactSeconds": 0,
+            "heroSeconds": 0.96,
+            "focal": {
+              "x": 2.026520000000005,
+              "z": 18.47259999999996
+            },
+            "decorativeRadius": 12.6,
+            "palette": [
+              7523071,
+              15332607,
+              4287916
+            ],
+            "endSeconds": 1.54
+          },
+          "drawCount": 0
+        },
+        "modelErrors": 0,
+        "drawCalls": 48
+      },
+      "timeline": [
+        {
+          "hp": 1283.0279075999897,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-7",
+            "duration": 1.332,
+            "job": "archer",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0
+          },
+          "active": 28,
+          "cue": "archer-7"
+        },
+        {
+          "hp": 1283.8782383999892,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-7",
+            "duration": 1.332,
+            "job": "archer",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.16268768768768693
+          },
+          "active": 27,
+          "cue": "archer-7"
+        },
+        {
+          "hp": 1284.5975075999886,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-7",
+            "duration": 1.332,
+            "job": "archer",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.3003003003003004
+          },
+          "active": 27,
+          "cue": "archer-7"
+        },
+        {
+          "hp": 1285.578507599988,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-7",
+            "duration": 1.332,
+            "job": "archer",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.48798798798798804
+          },
+          "active": 22,
+          "cue": "archer-7"
+        },
+        {
+          "hp": 1285.9709075999876,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-7",
+            "duration": 1.332,
+            "job": "archer",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.5630630630630631
+          },
+          "active": 18,
+          "cue": "archer-7"
+        },
+        {
+          "hp": 1286.755707599987,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-7",
+            "duration": 1.332,
+            "job": "archer",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.7132132132132133
+          },
+          "active": 7,
+          "cue": "archer-7"
+        },
+        {
+          "hp": 1287.7367075999864,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-7",
+            "duration": 1.332,
+            "job": "archer",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.9009009009009009
+          },
+          "active": 1,
+          "cue": "archer-7"
+        },
+        {
+          "hp": 1288.063576799986,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-7",
+            "duration": 1.332,
+            "job": "archer",
+            "stage": 7,
+            "branch": 0,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.9634384384384379
+          },
+          "active": 1,
+          "cue": "archer-7"
+        },
+        {
+          "hp": 1277.8483767999855,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "archer-7"
+        },
+        {
+          "hp": 1278.698707599985,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "archer-7"
+        },
+        {
+          "hp": 1279.6797075999843,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "archer-7"
+        },
+        {
+          "hp": 1280.006969199984,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "archer-7"
+        },
+        {
+          "hp": 1280.7258459999834,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "archer-7"
+        },
+        {
+          "hp": 1281.510645999983,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "archer-7"
+        },
+        {
+          "hp": 1282.4916459999822,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "archer-7"
+        },
+        {
+          "hp": 1283.2113075999816,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "archer-7"
+        }
+      ],
+      "errors": []
+    },
+    "swordsman-b-7": {
+      "environment": "Chromium ANGLE SwiftShader; authentic learned Lv70 skill rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+      "before": {
+        "job": "swordsman",
+        "zone": "glade",
+        "x": 1.1000000000000003,
+        "z": 17.032159999999973,
+        "hp": 1292.7657843999903,
+        "mp": 852,
+        "kills": 0,
+        "hotbar": [
+          "swordsman-b-7",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "swordsman-1",
+          "swordsman-2",
+          "swordsman-3",
+          "swordsman-4",
+          "swordsman-5",
+          "swordsman-6",
+          "swordsman-b-7"
+        ],
+        "skillCooldowns": {},
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 0,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [],
+          "materials": 0,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "drawCount": 0
+        },
+        "modelErrors": 0,
+        "drawCalls": 53
+      },
+      "after": {
+        "job": "swordsman",
+        "zone": "glade",
+        "x": 1.1000000000000003,
+        "z": 17.032159999999973,
+        "hp": 1293.6161151999897,
+        "mp": 820.9231419999999,
+        "kills": 4,
+        "hotbar": [
+          "swordsman-b-7",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "swordsman-1",
+          "swordsman-2",
+          "swordsman-3",
+          "swordsman-4",
+          "swordsman-5",
+          "swordsman-6",
+          "swordsman-b-7"
+        ],
+        "skillCooldowns": {
+          "swordsman-b-7": 21.78330000000001
+        },
+        "skillMotion": {
+          "skillId": "swordsman-b-7",
+          "duration": 1.332,
+          "job": "swordsman",
+          "stage": 7,
+          "branch": 1,
+          "effect": "area",
+          "phase": "release",
+          "progress": 0
+        },
+        "vfx": {
+          "active": 26,
+          "pooled": 28,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "crescent",
+            "ring",
+            "sword",
+            "core",
+            "spiral",
+            "slab"
+          ],
+          "materials": 5,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": {
+            "skillId": "swordsman-b-7",
+            "style": "battle-renewal-cyan-sword-cyclone",
+            "impactSeconds": 0,
+            "heroSeconds": 0.96,
+            "focal": {
+              "x": 1.1000000000000003,
+              "z": 17.032159999999973
+            },
+            "decorativeRadius": 12.6,
+            "palette": [
+              2678759,
+              15073279,
+              7562059
+            ],
+            "endSeconds": 1.54
+          },
+          "drawCount": 14
+        },
+        "modelErrors": 0,
+        "drawCalls": 66
+      },
+      "recovered": {
+        "job": "swordsman",
+        "zone": "glade",
+        "x": 1.1000000000000003,
+        "z": 17.032159999999973,
+        "hp": 1294.0608535999816,
+        "mp": 833.3478579999978,
+        "kills": 4,
+        "hotbar": [
+          "swordsman-b-7",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "swordsman-1",
+          "swordsman-2",
+          "swordsman-3",
+          "swordsman-4",
+          "swordsman-5",
+          "swordsman-6",
+          "swordsman-b-7"
+        ],
+        "skillCooldowns": {
+          "swordsman-b-7": 18.866700000000176
+        },
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 28,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "crescent",
+            "ring",
+            "sword",
+            "core",
+            "spiral",
+            "slab"
+          ],
+          "materials": 5,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": {
+            "skillId": "swordsman-b-7",
+            "style": "battle-renewal-cyan-sword-cyclone",
+            "impactSeconds": 0,
+            "heroSeconds": 0.96,
+            "focal": {
+              "x": 1.1000000000000003,
+              "z": 17.032159999999973
+            },
+            "decorativeRadius": 12.6,
+            "palette": [
+              2678759,
+              15073279,
+              7562059
+            ],
+            "endSeconds": 1.54
+          },
+          "drawCount": 0
+        },
+        "modelErrors": 0,
+        "drawCalls": 49
+      },
+      "timeline": [
+        {
+          "hp": 1293.6161151999897,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-b-7",
+            "duration": 1.332,
+            "job": "swordsman",
+            "stage": 7,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0
+          },
+          "active": 26,
+          "cue": "swordsman-b-7"
+        },
+        {
+          "hp": 1294.531584399989,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-b-7",
+            "duration": 1.332,
+            "job": "swordsman",
+            "stage": 7,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.17515015015014956
+          },
+          "active": 25,
+          "cue": "swordsman-b-7"
+        },
+        {
+          "hp": 1295.3163843999885,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-b-7",
+            "duration": 1.332,
+            "job": "swordsman",
+            "stage": 7,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.32530030030029966
+          },
+          "active": 25,
+          "cue": "swordsman-b-7"
+        },
+        {
+          "hp": 1296.2973843999878,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-b-7",
+            "duration": 1.332,
+            "job": "swordsman",
+            "stage": 7,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.5129879879879873
+          },
+          "active": 25,
+          "cue": "swordsman-b-7"
+        },
+        {
+          "hp": 1296.6242535999875,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-b-7",
+            "duration": 1.332,
+            "job": "swordsman",
+            "stage": 7,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.5755255255255243
+          },
+          "active": 18,
+          "cue": "swordsman-b-7"
+        },
+        {
+          "hp": 1297.6052535999868,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-b-7",
+            "duration": 1.332,
+            "job": "swordsman",
+            "stage": 7,
+            "branch": 1,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.763213213213212
+          },
+          "active": 2,
+          "cue": "swordsman-b-7"
+        },
+        {
+          "hp": 1298.586253599986,
+          "cast": null,
+          "motion": {
+            "skillId": "swordsman-b-7",
+            "duration": 1.332,
+            "job": "swordsman",
+            "stage": 7,
+            "branch": 1,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.9509009009008996
+          },
+          "active": 1,
+          "cue": "swordsman-b-7"
+        },
+        {
+          "hp": 1299.3710535999855,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "swordsman-b-7"
+        },
+        {
+          "hp": 1300.220991999985,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "swordsman-b-7"
+        },
+        {
+          "hp": 1300.4171919999849,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "swordsman-b-7"
+        },
+        {
+          "hp": 1301.3981919999842,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "swordsman-b-7"
+        },
+        {
+          "hp": 1302.1829919999836,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "swordsman-b-7"
+        },
+        {
+          "hp": 1302.902653599983,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "swordsman-b-7"
+        },
+        {
+          "hp": 1303.8836535999824,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "swordsman-b-7"
+        },
+        {
+          "hp": 1304.276053599982,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "swordsman-b-7"
+        },
+        {
+          "hp": 1294.0608535999816,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "swordsman-b-7"
+        }
+      ],
+      "errors": []
+    },
+    "mage-b-7": {
+      "environment": "Chromium ANGLE SwiftShader; authentic learned Lv70 skill rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+      "before": {
+        "job": "mage",
+        "zone": "glade",
+        "x": 0.8800000000000001,
+        "z": 17.693919999999956,
+        "hp": 1290.825507599997,
+        "mp": 852,
+        "kills": 0,
+        "hotbar": [
+          "mage-b-7",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "mage-1",
+          "mage-2",
+          "mage-3",
+          "mage-4",
+          "mage-5",
+          "mage-6",
+          "mage-b-7"
+        ],
+        "skillCooldowns": {},
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 0,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [],
+          "materials": 0,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "drawCount": 0
+        },
+        "modelErrors": 0,
+        "drawCalls": 51
+      },
+      "after": {
+        "job": "mage",
+        "zone": "glade",
+        "x": 0.8800000000000001,
+        "z": 17.693919999999956,
+        "hp": 1291.6103075999965,
+        "mp": 814.8519999999999,
+        "kills": 4,
+        "hotbar": [
+          "mage-b-7",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "mage-1",
+          "mage-2",
+          "mage-3",
+          "mage-4",
+          "mage-5",
+          "mage-6",
+          "mage-b-7"
+        ],
+        "skillCooldowns": {
+          "mage-b-7": 23.80000000000001
+        },
+        "skillMotion": {
+          "skillId": "mage-b-7",
+          "duration": 1.332,
+          "job": "mage",
+          "stage": 7,
+          "branch": 1,
+          "effect": "area",
+          "phase": "release",
+          "progress": 0
+        },
+        "vfx": {
+          "active": 27,
+          "pooled": 29,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "star",
+            "ring",
+            "leaf",
+            "core",
+            "spiral"
+          ],
+          "materials": 5,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": {
+            "skillId": "mage-b-7",
+            "style": "verdant-renewal-leaf-vortex",
+            "impactSeconds": 0,
+            "heroSeconds": 0.96,
+            "focal": {
+              "x": 1.8800000000000001,
+              "z": 18.693919999999956
+            },
+            "decorativeRadius": 12.6,
+            "palette": [
+              8644146,
+              15859668,
+              2525247
+            ],
+            "endSeconds": 1.54
+          },
+          "drawCount": 12
+        },
+        "modelErrors": 0,
+        "drawCalls": 64
+      },
+      "recovered": {
+        "job": "mage",
+        "zone": "glade",
+        "x": 0.8800000000000001,
+        "z": 17.693919999999956,
+        "hp": 1302.5319767999886,
+        "mp": 826.708857999998,
+        "kills": 4,
+        "hotbar": [
+          "mage-b-7",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "mage-1",
+          "mage-2",
+          "mage-3",
+          "mage-4",
+          "mage-5",
+          "mage-6",
+          "mage-b-7"
+        ],
+        "skillCooldowns": {
+          "mage-b-7": 21.016700000000164
+        },
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 29,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "star",
+            "ring",
+            "leaf",
+            "core",
+            "spiral"
+          ],
+          "materials": 5,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": {
+            "skillId": "mage-b-7",
+            "style": "verdant-renewal-leaf-vortex",
+            "impactSeconds": 0,
+            "heroSeconds": 0.96,
+            "focal": {
+              "x": 1.8800000000000001,
+              "z": 18.693919999999956
+            },
+            "decorativeRadius": 12.6,
+            "palette": [
+              8644146,
+              15859668,
+              2525247
+            ],
+            "endSeconds": 1.54
+          },
+          "drawCount": 0
+        },
+        "modelErrors": 0,
+        "drawCalls": 49
+      },
+      "timeline": [
+        {
+          "hp": 1291.6103075999965,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-b-7",
+            "duration": 1.332,
+            "job": "mage",
+            "stage": 7,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0
+          },
+          "active": 27,
+          "cue": "mage-b-7"
+        },
+        {
+          "hp": 1292.395107599996,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-b-7",
+            "duration": 1.332,
+            "job": "mage",
+            "stage": 7,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.1501501501501501
+          },
+          "active": 26,
+          "cue": "mage-b-7"
+        },
+        {
+          "hp": 1293.1795151999954,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-b-7",
+            "duration": 1.332,
+            "job": "mage",
+            "stage": 7,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.3002252252252249
+          },
+          "active": 26,
+          "cue": "mage-b-7"
+        },
+        {
+          "hp": 1293.8987843999948,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-b-7",
+            "duration": 1.332,
+            "job": "mage",
+            "stage": 7,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.43783783783783836
+          },
+          "active": 26,
+          "cue": "mage-b-7"
+        },
+        {
+          "hp": 1294.7495075999943,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-b-7",
+            "duration": 1.332,
+            "job": "mage",
+            "stage": 7,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.6006006006006006
+          },
+          "active": 18,
+          "cue": "mage-b-7"
+        },
+        {
+          "hp": 1295.7305075999936,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-b-7",
+            "duration": 1.332,
+            "job": "mage",
+            "stage": 7,
+            "branch": 1,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.7882882882882882
+          },
+          "active": 2,
+          "cue": "mage-b-7"
+        },
+        {
+          "hp": 1295.8615691999935,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-b-7",
+            "duration": 1.332,
+            "job": "mage",
+            "stage": 7,
+            "branch": 1,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.8133633633633631
+          },
+          "active": 2,
+          "cue": "mage-b-7"
+        },
+        {
+          "hp": 1296.776645999993,
+          "cast": null,
+          "motion": {
+            "skillId": "mage-b-7",
+            "duration": 1.332,
+            "job": "mage",
+            "stage": 7,
+            "branch": 1,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.9884384384384387
+          },
+          "active": 1,
+          "cue": "mage-b-7"
+        },
+        {
+          "hp": 1297.4963075999924,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "mage-b-7"
+        },
+        {
+          "hp": 1298.2155767999918,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "mage-b-7"
+        },
+        {
+          "hp": 1299.1965767999911,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "mage-b-7"
+        },
+        {
+          "hp": 1299.9162383999906,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "mage-b-7"
+        },
+        {
+          "hp": 1300.0469075999904,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "mage-b-7"
+        },
+        {
+          "hp": 1301.0279075999897,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "mage-b-7"
+        },
+        {
+          "hp": 1301.7471767999891,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "mage-b-7"
+        },
+        {
+          "hp": 1302.5319767999886,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "mage-b-7"
+        }
+      ],
+      "errors": []
+    },
+    "archer-b-7": {
+      "environment": "Chromium ANGLE SwiftShader; authentic learned Lv70 skill rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+      "before": {
+        "job": "archer",
+        "zone": "glade",
+        "x": 0.8795599999999986,
+        "z": 17.253479999999968,
+        "hp": 1278.5754075999919,
+        "mp": 852,
+        "kills": 0,
+        "hotbar": [
+          "archer-b-7",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "archer-1",
+          "archer-2",
+          "archer-3",
+          "archer-4",
+          "archer-5",
+          "archer-6",
+          "archer-b-7"
+        ],
+        "skillCooldowns": {},
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 0,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [],
+          "materials": 0,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": null,
+          "drawCount": 0
+        },
+        "modelErrors": 0,
+        "drawCalls": 50
+      },
+      "after": {
+        "job": "archer",
+        "zone": "glade",
+        "x": 0.8795599999999986,
+        "z": 17.253479999999968,
+        "hp": 1279.0329459999916,
+        "mp": 822.4967159999999,
+        "kills": 4,
+        "hotbar": [
+          "archer-b-7",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "archer-1",
+          "archer-2",
+          "archer-3",
+          "archer-4",
+          "archer-5",
+          "archer-6",
+          "archer-b-7"
+        ],
+        "skillCooldowns": {
+          "archer-b-7": 17.883400000000005
+        },
+        "skillMotion": {
+          "skillId": "archer-b-7",
+          "duration": 1.332,
+          "job": "archer",
+          "stage": 7,
+          "branch": 1,
+          "effect": "area",
+          "phase": "release",
+          "progress": 0
+        },
+        "vfx": {
+          "active": 27,
+          "pooled": 27,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "star",
+            "ring",
+            "shield",
+            "leaf",
+            "core",
+            "arrow",
+            "crescent"
+          ],
+          "materials": 6,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": {
+            "skillId": "archer-b-7",
+            "style": "camouflage-guard-leaf-crash",
+            "impactSeconds": 0,
+            "heroSeconds": 0.96,
+            "focal": {
+              "x": 1.8795599999999986,
+              "z": 18.253479999999968
+            },
+            "decorativeRadius": 12.6,
+            "palette": [
+              9561391,
+              15663056,
+              3372870
+            ],
+            "endSeconds": 1.54
+          },
+          "drawCount": 14
+        },
+        "modelErrors": 0,
+        "drawCalls": 66
+      },
+      "recovered": {
+        "job": "archer",
+        "zone": "glade",
+        "x": 0.8795599999999986,
+        "z": 17.253479999999968,
+        "hp": 1290.2155611999838,
+        "mp": 834.6368639999979,
+        "kills": 4,
+        "hotbar": [
+          "archer-b-7",
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unlockedSkills": [
+          "archer-1",
+          "archer-2",
+          "archer-3",
+          "archer-4",
+          "archer-5",
+          "archer-6",
+          "archer-b-7"
+        ],
+        "skillCooldowns": {
+          "archer-b-7": 15.0336000000001
+        },
+        "skillMotion": null,
+        "vfx": {
+          "active": 0,
+          "pooled": 27,
+          "limit": 40,
+          "geometry3D": true,
+          "noSprites": true,
+          "textures": 0,
+          "shapes": [
+            "star",
+            "ring",
+            "shield",
+            "leaf",
+            "core",
+            "arrow",
+            "crescent"
+          ],
+          "materials": 6,
+          "lv10Cue": null,
+          "lv20Cue": null,
+          "lv30Cue": null,
+          "lv40Cue": null,
+          "lv50Cue": null,
+          "lv60Cue": null,
+          "lv70Cue": {
+            "skillId": "archer-b-7",
+            "style": "camouflage-guard-leaf-crash",
+            "impactSeconds": 0,
+            "heroSeconds": 0.96,
+            "focal": {
+              "x": 1.8795599999999986,
+              "z": 18.253479999999968
+            },
+            "decorativeRadius": 12.6,
+            "palette": [
+              9561391,
+              15663056,
+              3372870
+            ],
+            "endSeconds": 1.54
+          },
+          "drawCount": 0
+        },
+        "modelErrors": 0,
+        "drawCalls": 49
+      },
+      "timeline": [
+        {
+          "hp": 1279.0329459999916,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-b-7",
+            "duration": 1.332,
+            "job": "archer",
+            "stage": 7,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0
+          },
+          "active": 27,
+          "cue": "archer-b-7"
+        },
+        {
+          "hp": 1280.013945999991,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-b-7",
+            "duration": 1.332,
+            "job": "archer",
+            "stage": 7,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.18768768768768773
+          },
+          "active": 24,
+          "cue": "archer-b-7"
+        },
+        {
+          "hp": 1280.2101459999908,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-b-7",
+            "duration": 1.332,
+            "job": "archer",
+            "stage": 7,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.22522522522522526
+          },
+          "active": 24,
+          "cue": "archer-b-7"
+        },
+        {
+          "hp": 1280.4718767999907,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-b-7",
+            "duration": 1.332,
+            "job": "archer",
+            "stage": 7,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.2753003003002995
+          },
+          "active": 24,
+          "cue": "archer-b-7"
+        },
+        {
+          "hp": 1281.3218151999902,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-b-7",
+            "duration": 1.332,
+            "job": "archer",
+            "stage": 7,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.43791291291291234
+          },
+          "active": 24,
+          "cue": "archer-b-7"
+        },
+        {
+          "hp": 1282.0414767999896,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-b-7",
+            "duration": 1.332,
+            "job": "archer",
+            "stage": 7,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.5756006006005998
+          },
+          "active": 24,
+          "cue": "archer-b-7"
+        },
+        {
+          "hp": 1282.760745999989,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-b-7",
+            "duration": 1.332,
+            "job": "archer",
+            "stage": 7,
+            "branch": 1,
+            "effect": "area",
+            "phase": "release",
+            "progress": 0.7132132132132132
+          },
+          "active": 10,
+          "cue": "archer-b-7"
+        },
+        {
+          "hp": 1283.7413535999883,
+          "cast": null,
+          "motion": {
+            "skillId": "archer-b-7",
+            "duration": 1.332,
+            "job": "archer",
+            "stage": 7,
+            "branch": 1,
+            "effect": "area",
+            "phase": "recovery",
+            "progress": 0.9008258258258255
+          },
+          "active": 2,
+          "cue": "archer-b-7"
+        },
+        {
+          "hp": 1284.7223535999876,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "archer-b-7"
+        },
+        {
+          "hp": 1285.441622799987,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "archer-b-7"
+        },
+        {
+          "hp": 1285.506761199987,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "archer-b-7"
+        },
+        {
+          "hp": 1286.4877611999864,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "archer-b-7"
+        },
+        {
+          "hp": 1287.4687611999857,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "archer-b-7"
+        },
+        {
+          "hp": 1287.7956303999854,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "archer-b-7"
+        },
+        {
+          "hp": 1288.5804303999848,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "archer-b-7"
+        },
+        {
+          "hp": 1289.5614303999841,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "archer-b-7"
+        },
+        {
+          "hp": 1290.2155611999838,
+          "cast": null,
+          "motion": null,
+          "active": 0,
+          "cue": "archer-b-7"
+        }
+      ],
+      "errors": []
+    }
+  },
+  "limits": {
+    "lowActive": 40,
+    "highActive": 96,
+    "allocated": 160
+  },
+  "pageErrors": [],
+  "limitations": [
+    "Software renderer measurements are not player-device FPS. Desktop60/mobile30 targets not verified.",
+    "Render-only comparison previews are separate from actual learned rank1 practice casts.",
+    "Deployment status is recorded separately in post-deploy.json."
+  ],
+  "iconReference": {
+    "directory": "public/icons/skills-v4",
+    "descriptionSource": "src/config/classes.json",
+    "audit": "ICON-AUDIT-TH.md",
+    "allSixVisuallyCompared": true
+  },
+  "captureTimes": {
+    "swordsman-preview.json": 1791719602.1930048,
+    "archer-preview.json": 1791719697.132295,
+    "mage-preview.json": 1791719651.748634,
+    "archer-b-7-gameplay.json": 1791719804.4314923,
+    "swordsman-b-7-gameplay.json": 1791719732.6960285,
+    "mage-b-7-gameplay.json": 1791719769.5917525,
+    "mage-7-gameplay.json": 1791719752.2518823,
+    "swordsman-7-gameplay.json": 1791719714.8081625,
+    "archer-7-gameplay.json": 1791719786.8436236
+  },
+  "visualReview": {
+    "approvedScope": "six Lv70 VFX only",
+    "reviewed": [
+      "actual six icons",
+      "all low/high hero contact sheets",
+      "three Lv60/Lv70 comparisons",
+      "three preview motion sheets",
+      "six authentic gameplay motion sheets"
+    ],
+    "notes": [
+      "Distinct red sword, cyan sword/rock cyclone, glacial shards, verdant leaf helix, silver arrow lanes and leaf guard silhouette.",
+      "Low retains hero forms; layered finale expands beyond baseline.",
+      "Actual gameplay releases retain readable target center; all effects disappear."
+    ],
+    "reviewer": "production controller"
+  }
+}

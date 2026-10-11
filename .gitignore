@@ -75,3 +75,6 @@ artifacts/lv50-vfx/*.webm
 # Lv60 raw recordings remain local; reviewed frames and compact evidence are packaged.
 artifacts/lv60-vfx/raw/
 artifacts/lv60-vfx/*.webm
+
+artifacts/lv70-vfx/raw/
+artifacts/lv70-vfx/*.webm
