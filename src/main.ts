@@ -852,8 +852,8 @@ function frame(now: number) {
     const chatInput = $("#chat-input") as HTMLInputElement;
     chatInput.placeholder = sim.online ? "Say something to the realm…" : "Leave a local note…";
     const s = sim.save;
-    $("#hp-text").textContent = `${Math.ceil(s.hp)} / ${sim.maxHp}`;
-    $("#mp-text").textContent = `${Math.floor(s.mp)} / ${sim.maxMp}`;
+    $("#hp-text").textContent = `${Math.round(s.hp)} / ${Math.round(sim.maxHp)}`;
+    $("#mp-text").textContent = `${Math.round(s.mp)} / ${Math.round(sim.maxMp)}`;
     $("#hp-fill").style.width = (s.hp / sim.maxHp) * 100 + "%";
     $("#mp-fill").style.width = (s.mp / sim.maxMp) * 100 + "%";
     $("#xp-fill").style.width = $("#exp-fill").style.width =

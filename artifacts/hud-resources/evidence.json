@@ -1,0 +1,147 @@
+{
+  "results": [
+    {
+      "width": 1200,
+      "height": 800,
+      "metrics": [
+        {
+          "className": "resource hp",
+          "left": 73.1875,
+          "right": -36.390625,
+          "top": 54.578125,
+          "bottom": -33.984375
+        },
+        {
+          "className": "resource mp",
+          "left": 73.1875,
+          "right": -36.390625,
+          "top": 70.578125,
+          "bottom": -17.984375
+        },
+        {
+          "className": "xp-mini",
+          "left": 73.1875,
+          "right": -36.390625,
+          "top": 87.375,
+          "bottom": -10
+        },
+        {
+          "className": "identity-more",
+          "left": 199.59375,
+          "right": -10,
+          "top": 40.921875,
+          "bottom": -40.9375
+        }
+      ]
+    },
+    {
+      "width": 800,
+      "height": 600,
+      "metrics": [
+        {
+          "className": "resource hp",
+          "left": 62,
+          "right": -11,
+          "top": 57,
+          "bottom": -41
+        },
+        {
+          "className": "resource mp",
+          "left": 62,
+          "right": -11,
+          "top": 77,
+          "bottom": -21
+        },
+        {
+          "className": "xp-mini",
+          "left": 62,
+          "right": -11,
+          "top": 98,
+          "bottom": -11
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "metrics": [
+        {
+          "className": "resource hp",
+          "left": 62,
+          "right": -11,
+          "top": 57,
+          "bottom": -41
+        },
+        {
+          "className": "resource mp",
+          "left": 62,
+          "right": -11,
+          "top": 77,
+          "bottom": -21
+        },
+        {
+          "className": "xp-mini",
+          "left": 62,
+          "right": -11,
+          "top": 98,
+          "bottom": -11
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "height": 568,
+      "metrics": [
+        {
+          "className": "resource hp",
+          "left": 62,
+          "right": -11,
+          "top": 57,
+          "bottom": -41
+        },
+        {
+          "className": "resource mp",
+          "left": 62,
+          "right": -11,
+          "top": 77,
+          "bottom": -21
+        },
+        {
+          "className": "xp-mini",
+          "left": 62,
+          "right": -11,
+          "top": 98,
+          "bottom": -11
+        }
+      ]
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "metrics": [
+        {
+          "className": "resource hp",
+          "left": 64,
+          "right": -13,
+          "top": 61,
+          "bottom": -43
+        },
+        {
+          "className": "resource mp",
+          "left": 64,
+          "right": -13,
+          "top": 81,
+          "bottom": -23
+        },
+        {
+          "className": "xp-mini",
+          "left": 64,
+          "right": -13,
+          "top": 102,
+          "bottom": -13
+        }
+      ]
+    }
+  ],
+  "pageErrors": []
+}

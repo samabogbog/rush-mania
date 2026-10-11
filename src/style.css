@@ -67,6 +67,7 @@ button:active:not(:disabled) {
   overflow: hidden;
 }
 .identity {
+  box-sizing: border-box;
   position: absolute;
   left: 26px;
   top: 25px;
@@ -107,18 +108,29 @@ button:active:not(:disabled) {
   border: 2px solid #302638;
 }
 .identity-info {
-  flex: 1;
+  flex: 1 1 0;
+  min-width: 0;
 }
 .name-line {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 6px;
   margin-bottom: 7px;
 }
 .name-line strong {
+  grid-column: 1 / -1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 16px;
 }
 .name-line span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 8px;
   letter-spacing: 1px;
   color: #ccb9df;
@@ -129,6 +141,9 @@ button:active:not(:disabled) {
   color: var(--mint);
 }
 .resource {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
   height: 14px;
   position: relative;
   background: #1515219e;
@@ -163,6 +178,9 @@ button:active:not(:disabled) {
   font-size: 9px;
 }
 .xp-mini {
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
   height: 3px;
   background: #ffffff15;
   margin-top: 6px;
@@ -174,6 +192,7 @@ button:active:not(:disabled) {
   background: var(--gold);
 }
 .identity-more {
+  flex: 0 0 auto;
   background: none;
   padding: 0;
   color: #b5a3cc;
