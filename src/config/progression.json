@@ -649,5 +649,11 @@
       "multiplier": 508,
       "nextLevelXp": 628090.4480474116
     }
-  ]
+  ],
+  "attributes": {
+    "vitalityArmorShare": 0.1,
+    "agilityCadenceShare": 0,
+    "agilityCriticalShare": 0.15,
+    "pointPower": 1.00075
+  }
 }

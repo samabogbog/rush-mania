@@ -82,8 +82,9 @@ test("all three classes expose twenty gated selectable skills and respect mana a
       expect(sim.castSkill(skill.id)).toBe(false);
       sim.save.mp = sim.maxMp;
       sim.save.hp = sim.maxHp * 0.4;
+      const monsterHpBefore=monster.hp;
       expect(sim.castSkill(skill.id)).toBe(true);
-      if (sim.cast) sim.tick(skill.cast! + 0.01, 0, 0);
+      if (sim.cast) sim.tick(sim.cast.remaining + 0.01, 0, 0);
       expect(sim.skillCooldowns[skill.id]).toBeGreaterThan(0);
       expect(sim.castSkill(skill.id)).toBe(false);
       if (skill.effect === "heal")
@@ -92,7 +93,7 @@ test("all three classes expose twenty gated selectable skills and respect mana a
         expect(sim.guard.time).toBeGreaterThan(0);
       else if (skill.effect === "fury")
         expect(sim.fury.time).toBeGreaterThan(0);
-      else expect(monster.hp).toBeLessThan(55);
+      else expect(monster.hp).toBeLessThan(monsterHpBefore);
     }
   }
 });

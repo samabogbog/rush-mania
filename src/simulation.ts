@@ -1,5 +1,6 @@
 import {migrateStoredItem,isRetiredMaterial} from './game/item-migration.js';
 import {skillCastDuration,skillRecoveryDuration} from './game/skill-timing.js';
+import {attributeCombat,equippedAttributeBonuses} from './game/attribute-combat.js';
 import {inventoryKey,salvageYield,itemSalePrice} from './game/inventory-actions.js';
 import {isCraftMaterial,isRarity,materialRarity,materialKey,sameStack,gearRecipe,craftCost,materialCount,rollMaterialDrops} from './game/crafting.js';
 import {materialIcons} from './game/items.js';
@@ -18,7 +19,7 @@ import {
   type Skill,
 } from "./game/classes.js";
 import { normalMonsterBalance, species, zones, isZone, questDefinitions, type Kind, type ZoneId, type AttackShape } from "./game/content.js";
-import { rarityOrder, equipment, gearById, gearByName, type GearSlot, type Bonuses, type Rarity, BAG_CAPACITY, gearSlots, itemBonuses, normalizeSecondary, rollGear, rollEquipmentDrops, setBonuses, gearSets } from "./game/equipment.js";
+import { rarityOrder, equipment, gearById, gearByName, type GearSlot, type Bonuses, type Rarity, BAG_CAPACITY, gearSlots, normalizeSecondary, rollGear, rollEquipmentDrops, gearSets } from "./game/equipment.js";
 import { zoneObstacles, zoneSpawns, WORLD_BOUNDS, PORTAL_POSITION, protectedPosition, insideMonsterGroup, zoneMonsterGroups, monsterGroupConfig } from "./game/map-data.js";
 export { species } from "./game/content.js";
 export type { Kind } from "./game/content.js";
@@ -231,24 +232,26 @@ export class Simulation {
   get gearBonuses(): Bonuses {
     const key=this.save.job+':'+Object.values(this.save.equipped).map(id=>id+':'+(this.save.items.find(i=>i.id===id)?.refine||0)).join(',');
     if(this.bonusCache?.save===this.save&&this.bonusCache.key===key)return this.bonusCache.value;
-    const out:Bonuses={},sets=new Map<string,number>();
-    for(const id of Object.values(this.save.equipped)) {
-      const item=this.save.items.find(i=>i.id===id&&i.count===1), gear=item?.gearId?gearById(item.gearId):undefined;
-      if(gear?.setId&&(!gear.job||gear.job===this.save.job))sets.set(gear.setId,(sets.get(gear.setId)||0)+1);
-      if(gear && (!gear.job || gear.job===this.save.job)) for(const [key,value] of Object.entries(itemBonuses(item!))) out[key as keyof Bonuses]=(out[key as keyof Bonuses]||0)+value;
-    }
-    for(const [id,count] of sets)for(const [stat,value] of Object.entries(setBonuses(id,count)))out[stat as keyof Bonuses]=(out[stat as keyof Bonuses]||0)+value;
+    const out=equippedAttributeBonuses(this.save);
     this.bonusCache={save:this.save,key,value:out};return out;
   }
   get activeSets(){return gearSets.map(set=>({set,pieces:Object.values(this.save.equipped).filter(id=>this.save.items.some(i=>i.id===id&&gearById(i.gearId||'')?.setId===set.id)).length})).filter(s=>s.pieces>0)}
-  get criticalChance(){return Math.min(progression.caps.crit,progression.critBase+this.agility*progression.critAgi+(this.gearBonuses.critChance||0)/100)}
+  private attributeCache?:{save:Save;level:number;str:number;vit:number;agi:number;job:ClassId;gear:Bonuses;value:ReturnType<typeof attributeCombat>};
+  get attributeCombat(){
+    const save=this.save,gear=this.gearBonuses,cached=this.attributeCache;
+    if(cached?.save===save&&cached.level===save.level&&cached.str===save.stats.str&&cached.vit===save.stats.vit&&cached.agi===save.stats.agi&&cached.job===save.job&&cached.gear===gear)return cached.value;
+    const value=attributeCombat(save,gear,this.job.speed);
+    this.attributeCache={save,level:save.level,str:save.stats.str,vit:save.stats.vit,agi:save.stats.agi,job:save.job,gear,value};
+    return value;
+  }
+  get criticalChance(){return this.attributeCombat.criticalChance}
+  get skillDamageMultiplier(){return this.attributeCombat.skillDamageMultiplier}
+  get equipmentStatContributions(){const base=attributeCombat(this.save,{},this.job.speed),total=this.attributeCombat;return {hp:total.hp-base.hp,mp:this.gearBonuses.mp||0,atk:total.damage-base.damage,def:total.defense-base.defense}}
   get criticalMultiplier(){return progression.critMultiplier+(this.gearBonuses.critDamage||0)/100}
   get movementSpeed(){return progression.moveBase*(1+Math.min(progression.caps.move,(this.gearBonuses.moveSpeed||0)/100))}
   get attackSpeedBonus(){return Math.min(progression.caps.attackSpeed*100,this.gearBonuses.attackSpeed||0)}
   get attackInterval(){
-    const baseRate=1/this.job.speed,extraAgi=Math.max(0,this.agility-progression.attackAgiBase);
-    const rate=baseRate+(progression.attackRateCeiling-baseRate)*extraAgi/(extraAgi+progression.attackAgiHalfSaturation);
-    return 1/(rate*(1+this.attackSpeedBonus/100));
+    return this.attributeCombat.attackInterval;
   }
   get cooldownMultiplier(){return 1-Math.min(progression.caps.cooldown,(this.gearBonuses.cooldownReduction||0)/100)}
   get mpRegenPercent(){return progression.mpRegenPercent+(this.gearBonuses.mpRegen||0)}
@@ -322,7 +325,7 @@ export class Simulation {
   }
   unequip(slot:GearSlot) { if(!gearSlots.includes(slot))return;this.save.equipped[slot]=null;this.save.hp=Math.min(this.maxHp,this.save.hp);this.save.mp=Math.min(this.maxMp,this.save.mp);this.persist(); }
   get maxHp() {
-    return progression.hpBase + (this.save.stats.vit+(this.gearBonuses.vit||0)) * progression.hpVit + (this.save.level - 1) * progression.hpPerLevel+(this.gearBonuses.hp||0);
+    return this.attributeCombat.hp;
   }
   get maxMp() {
     return progression.mpBase + (this.save.level - 1) * progression.mpPerLevel+(this.gearBonuses.mp||0);
@@ -331,14 +334,10 @@ export class Simulation {
     return this.save.level >= MAX_LEVEL ? 0 : progression.levels[this.save.level-1].nextLevelXp;
   }
   get damage() {
-    const primary =
-      this.save.job === "archer" ? this.agility : this.save.stats.str+(this.gearBonuses.str||0);
-    return (
-      progression.atkBase + primary * progression.atkPrimary + (this.save.level - 1) * progression.atkPerLevel+(this.gearBonuses.atk||0)
-    );
+    return this.attributeCombat.damage;
   }
   get defense() {
-    return (this.save.stats.vit+(this.gearBonuses.vit||0)) * progression.defVit + this.save.level * progression.defPerLevel+(this.gearBonuses.def||0);
+    return this.attributeCombat.defense;
   }
   get job() {
     return classes[this.save.job];
@@ -550,7 +549,7 @@ export class Simulation {
         damageAfterDefense(
           amount *
             variance *
-            (critical ? this.criticalMultiplier : 1) * (1+(this.gearBonuses.damageBonus||0)/100) * (skill?1+(this.gearBonuses.skillDamage||0)/100:1) *
+            (critical ? this.criticalMultiplier : 1) * (1+(this.gearBonuses.damageBonus||0)/100) * (skill?this.skillDamageMultiplier:1) *
             (1 + (this.fury.time > 0 ? this.fury.power : 0)),
           this.monsterSpec(m.kind).defense*(1-Math.min(progression.caps.armorPen,(this.gearBonuses.armorPen||0)/100)),
         ),

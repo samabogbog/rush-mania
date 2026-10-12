@@ -1,0 +1,254 @@
+{
+  "baselineSource": "11b05a0edce4de7ccfb0a564a1b2e535fd024440",
+  "attributes": {
+    "vitalityArmorShare": 0.1,
+    "agilityCadenceShare": 0,
+    "agilityCriticalShare": 0.15,
+    "pointPower": 1.00075
+  },
+  "before": {
+    "scenarios": 324,
+    "trials": 64800,
+    "outside40to60": 311,
+    "draws": 2167,
+    "timeouts": 0,
+    "minimumScore": 0,
+    "maximumScore": 1
+  },
+  "after": {
+    "scenarios": 324,
+    "trials": 64800,
+    "outside40to60": 0,
+    "draws": 37359,
+    "timeouts": 0,
+    "minimumScore": 0.4275,
+    "maximumScore": 0.595
+  },
+  "beforeByClass": [
+    {
+      "job": "swordsman",
+      "a": "str",
+      "b": "vit",
+      "score": 0.06590277777777778,
+      "wins": 204,
+      "losses": 6455,
+      "draws": 541,
+      "trials": 7200,
+      "decisiveWinRate": 0.030635230515092357
+    },
+    {
+      "job": "swordsman",
+      "a": "str",
+      "b": "agi",
+      "score": 0.6503472222222222,
+      "wins": 4573,
+      "losses": 2408,
+      "draws": 219,
+      "trials": 7200,
+      "decisiveWinRate": 0.6550637444492193
+    },
+    {
+      "job": "swordsman",
+      "a": "vit",
+      "b": "agi",
+      "score": 0.86375,
+      "wins": 6210,
+      "losses": 972,
+      "draws": 18,
+      "trials": 7200,
+      "decisiveWinRate": 0.8646616541353384
+    },
+    {
+      "job": "mage",
+      "a": "str",
+      "b": "vit",
+      "score": 0.07354166666666667,
+      "wins": 159,
+      "losses": 6300,
+      "draws": 741,
+      "trials": 7200,
+      "decisiveWinRate": 0.024616813748258245
+    },
+    {
+      "job": "mage",
+      "a": "str",
+      "b": "agi",
+      "score": 0.6486805555555556,
+      "wins": 4578,
+      "losses": 2437,
+      "draws": 185,
+      "trials": 7200,
+      "decisiveWinRate": 0.6526015680684248
+    },
+    {
+      "job": "mage",
+      "a": "vit",
+      "b": "agi",
+      "score": 0.8301388888888889,
+      "wins": 5973,
+      "losses": 1219,
+      "draws": 8,
+      "trials": 7200,
+      "decisiveWinRate": 0.8305061179087876
+    },
+    {
+      "job": "archer",
+      "a": "str",
+      "b": "vit",
+      "score": 6.944444444444444e-05,
+      "wins": 0,
+      "losses": 7199,
+      "draws": 1,
+      "trials": 7200,
+      "decisiveWinRate": 0.0
+    },
+    {
+      "job": "archer",
+      "a": "str",
+      "b": "agi",
+      "score": 0.0004166666666666667,
+      "wins": 3,
+      "losses": 7197,
+      "draws": 0,
+      "trials": 7200,
+      "decisiveWinRate": 0.0004166666666666667
+    },
+    {
+      "job": "archer",
+      "a": "vit",
+      "b": "agi",
+      "score": 0.3154166666666667,
+      "wins": 2044,
+      "losses": 4702,
+      "draws": 454,
+      "trials": 7200,
+      "decisiveWinRate": 0.30299436703231547
+    }
+  ],
+  "afterByClass": [
+    {
+      "job": "swordsman",
+      "a": "str",
+      "b": "vit",
+      "score": 0.5150694444444445,
+      "wins": 1579,
+      "losses": 1362,
+      "draws": 4259,
+      "trials": 7200,
+      "decisiveWinRate": 0.536892213532812
+    },
+    {
+      "job": "swordsman",
+      "a": "str",
+      "b": "agi",
+      "score": 0.5113194444444444,
+      "wins": 1647,
+      "losses": 1484,
+      "draws": 4069,
+      "trials": 7200,
+      "decisiveWinRate": 0.5260300223570744
+    },
+    {
+      "job": "swordsman",
+      "a": "vit",
+      "b": "agi",
+      "score": 0.5071527777777778,
+      "wins": 1612,
+      "losses": 1509,
+      "draws": 4079,
+      "trials": 7200,
+      "decisiveWinRate": 0.5165011214354374
+    },
+    {
+      "job": "mage",
+      "a": "str",
+      "b": "vit",
+      "score": 0.5109722222222223,
+      "wins": 1515,
+      "losses": 1357,
+      "draws": 4328,
+      "trials": 7200,
+      "decisiveWinRate": 0.5275069637883009
+    },
+    {
+      "job": "mage",
+      "a": "str",
+      "b": "agi",
+      "score": 0.5120833333333333,
+      "wins": 1588,
+      "losses": 1414,
+      "draws": 4198,
+      "trials": 7200,
+      "decisiveWinRate": 0.5289806795469687
+    },
+    {
+      "job": "mage",
+      "a": "vit",
+      "b": "agi",
+      "score": 0.5034722222222222,
+      "wins": 1556,
+      "losses": 1506,
+      "draws": 4138,
+      "trials": 7200,
+      "decisiveWinRate": 0.5081645983017635
+    },
+    {
+      "job": "archer",
+      "a": "str",
+      "b": "vit",
+      "score": 0.5138888888888888,
+      "wins": 1616,
+      "losses": 1416,
+      "draws": 4168,
+      "trials": 7200,
+      "decisiveWinRate": 0.5329815303430079
+    },
+    {
+      "job": "archer",
+      "a": "str",
+      "b": "agi",
+      "score": 0.5102777777777778,
+      "wins": 1614,
+      "losses": 1466,
+      "draws": 4120,
+      "trials": 7200,
+      "decisiveWinRate": 0.5240259740259741
+    },
+    {
+      "job": "archer",
+      "a": "vit",
+      "b": "agi",
+      "score": 0.5047222222222222,
+      "wins": 1634,
+      "losses": 1566,
+      "draws": 4000,
+      "trials": 7200,
+      "decisiveWinRate": 0.510625
+    }
+  ],
+  "verification": {
+    "unitChecks": 76,
+    "browserChecks": 4,
+    "build": "passed",
+    "localBrowser": "Chromium/SwiftShader, no player-device FPS claim"
+  },
+  "scope": "Counterfactual same-class static duels, no real PvP feature; player CC excluded, poison retained; equal gear; legendRolled includes reproducible legal random affixes.",
+  "sourceDigests": {
+    "src/game/attribute-combat.ts": "0772ce08d426f76d2a1ebf07733c145803de8f7b6166cdbbbc7530ad7c85adc7",
+    "src/simulation.ts": "c1b203799540bb8a73f8f3996864636b0e6842bf29e8f1453ed6d4da7b3ee636",
+    "src/config/progression.json": "698471c2dc4e71403eee1ab7196a9dad2713446fd02495a46956876b4b1ec486",
+    "server/realm.ts": "26f2339e4ea4b78374a8d4722744532ec81b5febc9f1cb391bd58bdfa4a60e30",
+    "src/main.ts": "a1e56d20c28bc8ebc71ec45245dbd31c3f3ec5dc0628206cbd7064b8ae4cde7e"
+  },
+  "outsideBand": [],
+  "rank5": {
+    "scenarios": 72,
+    "trials": 14400,
+    "outside40to60": 0,
+    "minimumScore": 0.475,
+    "maximumScore": 0.5775,
+    "draws": 7645,
+    "timeouts": 0
+  },
+  "finalDuelTrials": 79200
+}

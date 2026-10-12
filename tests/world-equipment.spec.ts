@@ -9,7 +9,7 @@ class Store implements RealmStore {revision=0;realm:Realm|null=null;async read()
 const identity={id:'hero',name:'Sprout'};
 const command=(s:Snapshot,type:string,args:unknown[]=[])=>({id:`${s.player.session.id}:${s.player.session.sequence+1}`,type,args});
 test('crafting consumes exact ingredients, creates unique weapons and keeps refinement on its instance',()=>{
- const sim=new Simulation(()=>.5,undefined,null);sim.save.gold=200;const before=structuredClone(sim.save);
+ const sim=new Simulation(()=>.5,undefined,null);while(sim.save.points)sim.stat('str');sim.save.gold=200;const before=structuredClone(sim.save);
  expect(sim.craft('sprout-blade')).toBe(false);expect(sim.save).toEqual(before);
  sim.addItem('Shade essence','💧',8);sim.addItem('Rune stone','🌿',6);expect(sim.craft('sprout-blade')).toBe(true);
  const first=sim.save.items.find(i=>i.gearId==='sprout-weapon')!;expect(sim.save.gold).toBe(188);const damage=sim.damage;

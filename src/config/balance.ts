@@ -48,6 +48,19 @@ export function validateConfiguration(config:typeof data){
  config.progression.levels.forEach((row,i)=>{if(row.level!==i+1)throw new Error('Invalid balance config progression.levels: levels must be ordered 1–100');positive(row.monsterXp,'progression.levels.monsterXp');positive(row.multiplier,'progression.levels.multiplier');positive(row.nextLevelXp,'progression.levels.nextLevelXp');});
  positive(config.progression.attackRateCeiling,'progression.attackRateCeiling');
  positive(config.progression.attackAgiHalfSaturation,'progression.attackAgiHalfSaturation');
+ const attributes=config.progression.attributes;
+ positive(config.progression.atkBase,'progression.atkBase');
+ if(attributes.pointPower<1)throw new Error('Invalid balance config progression.attributes.pointPower: must be at least 1');
+ // A conservative generated-equipment bound keeps every spent point's attack growth positive for a tank
+ // holding the strongest legal legendary +10 attack pieces. Affixes do not generate ATK/STR.
+ const p=config.progression,e=config.equipment,c=config.crafting.primary.offense;
+ const strongestAtk=Math.max(p.maxLevel*c.atkPerLevel+c.atkBase,...e.crafted.map(g=>('atk' in g.bonuses?(g.bonuses.atk||0):0)),...e.sets.map(s=>e.pieceFormulas.blade.atk[0]*s.level+e.pieceFormulas.blade.atk[1]));
+ const rarity=Math.max(...Object.values(e.rarityMultiplier)),refine=1+config.refinement.cap*(config.refinement.bonusLinear+config.refinement.cap)/200;
+ const gearAttackBound=(2*Math.ceil(strongestAtk*rarity)+p.atkPrimary*Math.ceil(Math.ceil(p.maxLevel/c.primaryLevelDivisor)*rarity))*refine+Math.ceil(p.maxLevel*e.setBonuses.atkLevel);
+ const maxBudget=p.initial.points+(p.maxLevel-1)*p.pointsPerLevel;
+ const maxAttack=p.atkBase+p.initial.stats.str*p.atkPrimary+(p.maxLevel-1)*p.atkPerLevel+p.atkPrimary*maxBudget+gearAttackBound;
+ if(Math.log(attributes.pointPower)*maxAttack>=p.atkPrimary)throw new Error('Invalid balance config progression.attributes.pointPower: would reduce attack when allocating a point with legal equipment');
+ if(attributes.vitalityArmorShare>1||attributes.agilityCadenceShare+attributes.agilityCriticalShare>1)throw new Error('Invalid balance config progression.attributes: allocation shares');
  for(const [job,entry] of Object.entries(config.classes.classes)){
   positive(entry.speed,`classes.classes.${job}.speed`);
   if(1/entry.speed>config.progression.attackRateCeiling)throw new Error(`Invalid balance config classes.classes.${job}.speed: base attack rate exceeds progression.attackRateCeiling`);

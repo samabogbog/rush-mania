@@ -29,3 +29,8 @@ test('shared runtime consumes edited balance values, then restores them',()=>{
 test('bad edits fail clearly before gameplay',()=>{
  for(const change of [(c:ReturnType<typeof config>)=>c.refinement.success[0]=2,c=>c.refinement.costBase=-1,c=>c.content.zones.glade.species[0]='Typo',c=>c.equipment.crafted[1].id=c.equipment.crafted[0].id,c=>c.equipment.drops.levels[1].monsterLevel=4,c=>Object.assign(c.equipment.affixRanges,{typo:[1,2]}),c=>c.economy.potionCooldown=Number.NaN]){const c=config();change(c);expect(()=>validateConfiguration(c)).toThrow(/Invalid balance config/);}
 });
+test('attribute tuning rejects negative shares, overspending and level regressions',()=>{
+ for(const mutate of [(c:ReturnType<typeof config>)=>c.progression.attributes.pointPower=1.1,c=>c.progression.attributes.pointPower=.9,c=>c.progression.attributes.agilityCriticalShare=-.1,c=>Object.assign(c.progression.attributes,{agilityCriticalShare:.8,agilityCadenceShare:.5})]){
+  const c=config();mutate(c);expect(()=>validateConfiguration(c)).toThrow(/Invalid balance config/);
+ }
+});

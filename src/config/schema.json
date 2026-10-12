@@ -650,7 +650,13 @@
         "multiplier": "number",
         "nextLevelXp": "number"
       }
-    ]
+    ],
+    "attributes": {
+      "vitalityArmorShare": "number",
+      "agilityCadenceShare": "number",
+      "agilityCriticalShare": "number",
+      "pointPower": "number"
+    }
   },
   "equipment": {
     "crafted": [

@@ -6,6 +6,7 @@ import {rollGear,gearById,rarityOrder,BAG_CAPACITY,type Rarity} from '../src/gam
 import {isStoneTier} from '../src/game/refinement.js';
 import {communityCommand,communitySnapshot,partyOf,shareKill} from './community.js';
 import { Simulation, type Save } from '../src/simulation.js';
+import {savedAttributeCombat} from '../src/game/attribute-combat.js';
 import { zoneObstacles, protectedPosition, insideMonsterGroup, zoneMonsterGroups } from '../src/game/map-data.js';
 import {species,isZone, type ZoneId} from '../src/game/content.js';
 import {isGearSlot} from '../src/game/equipment.js';
@@ -274,5 +275,5 @@ export async function transact(store:RealmStore,identity:{id:string;name:string;
 }
 export function realmSnapshot(realm:Realm,playerId:string,revision:number,now=Date.now()):Snapshot {
   const player=realm.players[playerId];if(!player)throw new GameError('Player unavailable',404);
-  return {balance:realm.balance||{},community:communitySnapshot(realm,player,now),player:structuredClone(player),monsters:structuredClone(roomFor(realm,player.room||player.actor.save.zone,player.actor.save.zone).monsters),peers:Object.values(realm.players).filter(p=>p.id!==playerId&&p.room===player.room&&now-p.lastSeen<10_000).map(p=>({id:p.id,name:p.name,job:p.actor.save.job,x:p.actor.x,z:p.actor.z,hp:p.actor.save.hp,maxHp:progression.hpBase+p.actor.save.stats.vit*progression.hpVit+(p.actor.save.level-1)*progression.hpPerLevel})),chat:structuredClone(realm.chat),revision,serverTime:now};
+  return {balance:realm.balance||{},community:communitySnapshot(realm,player,now),player:structuredClone(player),monsters:structuredClone(roomFor(realm,player.room||player.actor.save.zone,player.actor.save.zone).monsters),peers:Object.values(realm.players).filter(p=>p.id!==playerId&&p.room===player.room&&now-p.lastSeen<10_000).map(p=>({id:p.id,name:p.name,job:p.actor.save.job,x:p.actor.x,z:p.actor.z,hp:p.actor.save.hp,maxHp:savedAttributeCombat(p.actor.save).hp})),chat:structuredClone(realm.chat),revision,serverTime:now};
 }
