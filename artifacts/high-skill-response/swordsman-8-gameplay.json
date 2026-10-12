@@ -1,0 +1,774 @@
+{
+  "level": 80,
+  "environment": "Chromium ANGLE SwiftShader; authentic learned skill rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+  "before": {
+    "job": "swordsman",
+    "zone": "glade",
+    "x": 0.8804400000000017,
+    "z": 17.399119999999968,
+    "hp": 1283.5261691999958,
+    "mp": 852,
+    "kills": 0,
+    "hotbar": [
+      "swordsman-8",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "swordsman-1",
+      "swordsman-2",
+      "swordsman-3",
+      "swordsman-4",
+      "swordsman-5",
+      "swordsman-6",
+      "swordsman-7",
+      "swordsman-8"
+    ],
+    "skillCooldowns": {},
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "lv80Cue": null,
+      "lv90Cue": null,
+      "lv100Cue": null,
+      "drawCount": 0
+    },
+    "cameraShake": {
+      "level": 0,
+      "elapsed": 0,
+      "duration": 0,
+      "active": false,
+      "amplitude": 0,
+      "offset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "triggerCount": 0
+    },
+    "modelErrors": 0,
+    "drawCalls": 53
+  },
+  "after": {
+    "job": "swordsman",
+    "zone": "glade",
+    "x": 0.8804400000000017,
+    "z": 17.399119999999968,
+    "hp": 1284.3764999999953,
+    "mp": 827.9231419999999,
+    "kills": 3,
+    "hotbar": [
+      "swordsman-8",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "swordsman-1",
+      "swordsman-2",
+      "swordsman-3",
+      "swordsman-4",
+      "swordsman-5",
+      "swordsman-6",
+      "swordsman-7",
+      "swordsman-8"
+    ],
+    "skillCooldowns": {
+      "swordsman-8": 11.783299999999997
+    },
+    "skillMotion": {
+      "skillId": "swordsman-8",
+      "duration": 1.3679999999999999,
+      "job": "swordsman",
+      "stage": 8,
+      "branch": 0,
+      "effect": "slow",
+      "phase": "release",
+      "progress": 0
+    },
+    "vfx": {
+      "active": 21,
+      "pooled": 25,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "crescent",
+        "ring",
+        "spark",
+        "core",
+        "spiral"
+      ],
+      "materials": 5,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "lv80Cue": {
+        "skillId": "swordsman-8",
+        "style": "hamstring-violet-ankle-cut",
+        "impactSeconds": 0,
+        "heroSeconds": 1.16,
+        "focal": {
+          "x": 1.8804400000000017,
+          "z": 18.399119999999968
+        },
+        "decorativeRadius": 14.4,
+        "palette": [
+          11293428,
+          15780607,
+          6365860
+        ],
+        "endSeconds": 1.86
+      },
+      "lv90Cue": null,
+      "lv100Cue": null,
+      "drawCount": 6
+    },
+    "cameraShake": {
+      "level": 80,
+      "elapsed": 0,
+      "duration": 0.36,
+      "active": true,
+      "amplitude": 0.085,
+      "offset": {
+        "x": 0.07575262560522202,
+        "y": 0.024641326536841684,
+        "z": 0.050238682832118915
+      },
+      "triggerCount": 1
+    },
+    "modelErrors": 0,
+    "drawCalls": 58
+  },
+  "recovered": {
+    "job": "swordsman",
+    "zone": "glade",
+    "x": 0.8804400000000017,
+    "z": 17.399119999999968,
+    "hp": 1265.6711767999866,
+    "mp": 841.2705739999979,
+    "kills": 3,
+    "hotbar": [
+      "swordsman-8",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "swordsman-1",
+      "swordsman-2",
+      "swordsman-3",
+      "swordsman-4",
+      "swordsman-5",
+      "swordsman-6",
+      "swordsman-7",
+      "swordsman-8"
+    ],
+    "skillCooldowns": {
+      "swordsman-8": 8.650099999999963
+    },
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 25,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "crescent",
+        "ring",
+        "spark",
+        "core",
+        "spiral"
+      ],
+      "materials": 5,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "lv80Cue": {
+        "skillId": "swordsman-8",
+        "style": "hamstring-violet-ankle-cut",
+        "impactSeconds": 0,
+        "heroSeconds": 1.16,
+        "focal": {
+          "x": 1.8804400000000017,
+          "z": 18.399119999999968
+        },
+        "decorativeRadius": 14.4,
+        "palette": [
+          11293428,
+          15780607,
+          6365860
+        ],
+        "endSeconds": 1.86
+      },
+      "lv90Cue": null,
+      "lv100Cue": null,
+      "drawCount": 0
+    },
+    "cameraShake": {
+      "level": 80,
+      "elapsed": 0.36,
+      "duration": 0.36,
+      "active": false,
+      "amplitude": 0.085,
+      "offset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "triggerCount": 1
+    },
+    "modelErrors": 0,
+    "drawCalls": 49
+  },
+  "latency": {
+    "inputAt": 13195.300000000047,
+    "damageObservedMs": 184.9000000001397,
+    "vfxObservedMs": 184.9000000001397,
+    "clock": "wall time; RAF observation and software-renderer scheduling included"
+  },
+  "timeline": [
+    {
+      "at": 13380.200000000186,
+      "kills": 3,
+      "hp": 1284.3764999999953,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "swordsman-8",
+        "duration": 1.3679999999999999,
+        "job": "swordsman",
+        "stage": 8,
+        "branch": 0,
+        "effect": "slow",
+        "phase": "release",
+        "progress": 0
+      },
+      "shake": {
+        "level": 80,
+        "elapsed": 0,
+        "duration": 0.36,
+        "active": true,
+        "amplitude": 0.085,
+        "offset": {
+          "x": 0.07575262560522202,
+          "y": 0.024641326536841684,
+          "z": 0.050238682832118915
+        },
+        "triggerCount": 1
+      },
+      "active": 21,
+      "cue": "swordsman-8"
+    },
+    {
+      "at": 13552.90000000014,
+      "kills": 3,
+      "hp": 1285.2268307999948,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "swordsman-8",
+        "duration": 1.3679999999999999,
+        "job": "swordsman",
+        "stage": 8,
+        "branch": 0,
+        "effect": "slow",
+        "phase": "release",
+        "progress": 0.15840643274853727
+      },
+      "shake": {
+        "level": 80,
+        "elapsed": 0.21669999999999892,
+        "duration": 0.36,
+        "active": true,
+        "amplitude": 0.085,
+        "offset": {
+          "x": 0.009061950752812492,
+          "y": 0.004826110053302552,
+          "z": 0.005660675675549275
+        },
+        "triggerCount": 1
+      },
+      "active": 21,
+      "cue": "swordsman-8"
+    },
+    {
+      "at": 13703.200000000186,
+      "kills": 3,
+      "hp": 1285.9460999999942,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "swordsman-8",
+        "duration": 1.3679999999999999,
+        "job": "swordsman",
+        "stage": 8,
+        "branch": 0,
+        "effect": "slow",
+        "phase": "release",
+        "progress": 0.29239766081871355
+      },
+      "shake": {
+        "level": 80,
+        "elapsed": 0.36,
+        "duration": 0.36,
+        "active": false,
+        "amplitude": 0.085,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 21,
+      "cue": "swordsman-8"
+    },
+    {
+      "at": 13875.300000000047,
+      "kills": 3,
+      "hp": 1286.5998383999938,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "swordsman-8",
+        "duration": 1.3679999999999999,
+        "job": "swordsman",
+        "stage": 8,
+        "branch": 0,
+        "effect": "slow",
+        "phase": "release",
+        "progress": 0.41418128654970665
+      },
+      "shake": {
+        "level": 80,
+        "elapsed": 0.36,
+        "duration": 0.36,
+        "active": false,
+        "amplitude": 0.085,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 21,
+      "cue": "swordsman-8"
+    },
+    {
+      "at": 14054,
+      "kills": 3,
+      "hp": 1287.1884383999934,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "swordsman-8",
+        "duration": 1.3679999999999999,
+        "job": "swordsman",
+        "stage": 8,
+        "branch": 0,
+        "effect": "slow",
+        "phase": "release",
+        "progress": 0.5238304093567242
+      },
+      "shake": {
+        "level": 80,
+        "elapsed": 0.36,
+        "duration": 0.36,
+        "active": false,
+        "amplitude": 0.085,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 21,
+      "cue": "swordsman-8"
+    },
+    {
+      "at": 14406.200000000186,
+      "kills": 3,
+      "hp": 1288.1694383999927,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "swordsman-8",
+        "duration": 1.3679999999999999,
+        "job": "swordsman",
+        "stage": 8,
+        "branch": 0,
+        "effect": "slow",
+        "phase": "release",
+        "progress": 0.7065789473684201
+      },
+      "shake": {
+        "level": 80,
+        "elapsed": 0.36,
+        "duration": 0.36,
+        "active": false,
+        "amplitude": 0.085,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 20,
+      "cue": "swordsman-8"
+    },
+    {
+      "at": 14597,
+      "kills": 3,
+      "hp": 1288.9538459999922,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "swordsman-8",
+        "duration": 1.3679999999999999,
+        "job": "swordsman",
+        "stage": 8,
+        "branch": 0,
+        "effect": "slow",
+        "phase": "recovery",
+        "progress": 0.8527046783625719
+      },
+      "shake": {
+        "level": 80,
+        "elapsed": 0.36,
+        "duration": 0.36,
+        "active": false,
+        "amplitude": 0.085,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 7,
+      "cue": "swordsman-8"
+    },
+    {
+      "at": 14685.800000000047,
+      "kills": 3,
+      "hp": 1289.2807151999918,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "swordsman-8",
+        "duration": 1.3679999999999999,
+        "job": "swordsman",
+        "stage": 8,
+        "branch": 0,
+        "effect": "slow",
+        "phase": "recovery",
+        "progress": 0.9135964912280685
+      },
+      "shake": {
+        "level": 80,
+        "elapsed": 0.36,
+        "duration": 0.36,
+        "active": false,
+        "amplitude": 0.085,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 4,
+      "cue": "swordsman-8"
+    },
+    {
+      "at": 14876,
+      "kills": 3,
+      "hp": 1280.0003767999913,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 80,
+        "elapsed": 0.36,
+        "duration": 0.36,
+        "active": false,
+        "amplitude": 0.085,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 1,
+      "cue": "swordsman-8"
+    },
+    {
+      "at": 15064.100000000093,
+      "kills": 3,
+      "hp": 1280.7200383999907,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 80,
+        "elapsed": 0.36,
+        "duration": 0.36,
+        "active": false,
+        "amplitude": 0.085,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 1,
+      "cue": "swordsman-8"
+    },
+    {
+      "at": 15210.90000000014,
+      "kills": 3,
+      "hp": 1281.3082459999903,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 80,
+        "elapsed": 0.36,
+        "duration": 0.36,
+        "active": false,
+        "amplitude": 0.085,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "swordsman-8"
+    },
+    {
+      "at": 15401.700000000186,
+      "kills": 3,
+      "hp": 1282.0275151999897,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 80,
+        "elapsed": 0.36,
+        "duration": 0.36,
+        "active": false,
+        "amplitude": 0.085,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "swordsman-8"
+    },
+    {
+      "at": 15571,
+      "kills": 3,
+      "hp": 1282.7471767999891,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 80,
+        "elapsed": 0.36,
+        "duration": 0.36,
+        "active": false,
+        "amplitude": 0.085,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "swordsman-8"
+    },
+    {
+      "at": 15716.800000000047,
+      "kills": 3,
+      "hp": 1283.3357767999887,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 80,
+        "elapsed": 0.36,
+        "duration": 0.36,
+        "active": false,
+        "amplitude": 0.085,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "swordsman-8"
+    },
+    {
+      "at": 15877.800000000047,
+      "kills": 3,
+      "hp": 1283.9895151999883,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 80,
+        "elapsed": 0.36,
+        "duration": 0.36,
+        "active": false,
+        "amplitude": 0.085,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "swordsman-8"
+    },
+    {
+      "at": 16066.200000000186,
+      "kills": 3,
+      "hp": 1273.643645999988,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 80,
+        "elapsed": 0.36,
+        "duration": 0.36,
+        "active": false,
+        "amplitude": 0.085,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "swordsman-8"
+    },
+    {
+      "at": 16265.40000000014,
+      "kills": 3,
+      "hp": 1274.4284459999874,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 80,
+        "elapsed": 0.36,
+        "duration": 0.36,
+        "active": false,
+        "amplitude": 0.085,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "swordsman-8"
+    },
+    {
+      "at": 16578.90000000014,
+      "kills": 3,
+      "hp": 1265.4094459999867,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 80,
+        "elapsed": 0.36,
+        "duration": 0.36,
+        "active": false,
+        "amplitude": 0.085,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "swordsman-8"
+    },
+    {
+      "at": 16659.600000000093,
+      "kills": 3,
+      "hp": 1265.6711767999866,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 80,
+        "elapsed": 0.36,
+        "duration": 0.36,
+        "active": false,
+        "amplitude": 0.085,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "swordsman-8"
+    }
+  ],
+  "errors": []
+}

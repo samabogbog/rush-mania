@@ -1,0 +1,754 @@
+{
+  "level": 90,
+  "environment": "Chromium ANGLE SwiftShader; authentic learned skill rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+  "before": {
+    "job": "mage",
+    "zone": "glade",
+    "x": 0.8795599999999986,
+    "z": 17.83911999999996,
+    "hp": 1291.3679691999976,
+    "mp": 852,
+    "kills": 0,
+    "hotbar": [
+      "mage-9",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "mage-1",
+      "mage-2",
+      "mage-3",
+      "mage-4",
+      "mage-5",
+      "mage-6",
+      "mage-7",
+      "mage-8",
+      "mage-9"
+    ],
+    "skillCooldowns": {},
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "lv80Cue": null,
+      "lv90Cue": null,
+      "lv100Cue": null,
+      "drawCount": 0
+    },
+    "cameraShake": {
+      "level": 0,
+      "elapsed": 0,
+      "duration": 0,
+      "active": false,
+      "amplitude": 0,
+      "offset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "triggerCount": 0
+    },
+    "modelErrors": 0,
+    "drawCalls": 50
+  },
+  "after": {
+    "job": "mage",
+    "zone": "glade",
+    "x": 0.8795599999999986,
+    "z": 17.83911999999996,
+    "hp": 1292.3489691999969,
+    "mp": 811.0649999999998,
+    "kills": 4,
+    "hotbar": [
+      "mage-9",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "mage-1",
+      "mage-2",
+      "mage-3",
+      "mage-4",
+      "mage-5",
+      "mage-6",
+      "mage-7",
+      "mage-8",
+      "mage-9"
+    ],
+    "skillCooldowns": {
+      "mage-9": 17.750000000000014
+    },
+    "skillMotion": {
+      "skillId": "mage-9",
+      "duration": 1.404,
+      "job": "mage",
+      "stage": 9,
+      "branch": 0,
+      "effect": "area",
+      "phase": "release",
+      "progress": 0
+    },
+    "vfx": {
+      "active": 21,
+      "pooled": 23,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "star",
+        "ring",
+        "goldstar",
+        "core",
+        "comet"
+      ],
+      "materials": 5,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "lv80Cue": null,
+      "lv90Cue": {
+        "skillId": "mage-9",
+        "style": "starfall-five-point-golden-meteor",
+        "impactSeconds": 0,
+        "heroSeconds": 1.38,
+        "focal": {
+          "x": 1.8795599999999986,
+          "z": 18.83911999999996
+        },
+        "decorativeRadius": 15.6,
+        "palette": [
+          16765774,
+          16775115,
+          15308072
+        ],
+        "endSeconds": 2.12
+      },
+      "lv100Cue": null,
+      "drawCount": 7
+    },
+    "cameraShake": {
+      "level": 90,
+      "elapsed": 0,
+      "duration": 0.45,
+      "active": true,
+      "amplitude": 0.105,
+      "offset": {
+        "x": 0.09357677280645071,
+        "y": 0.0304392857219809,
+        "z": 0.06205954938085278
+      },
+      "triggerCount": 1
+    },
+    "modelErrors": 0,
+    "drawCalls": 59
+  },
+  "recovered": {
+    "job": "mage",
+    "zone": "glade",
+    "x": 0.8795599999999986,
+    "z": 17.83911999999996,
+    "hp": 1294.4939767999876,
+    "mp": 825.3355739999976,
+    "kills": 4,
+    "hotbar": [
+      "mage-9",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "mage-1",
+      "mage-2",
+      "mage-3",
+      "mage-4",
+      "mage-5",
+      "mage-6",
+      "mage-7",
+      "mage-8",
+      "mage-9"
+    ],
+    "skillCooldowns": {
+      "mage-9": 14.400100000000085
+    },
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 23,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "star",
+        "ring",
+        "goldstar",
+        "core",
+        "comet"
+      ],
+      "materials": 5,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "lv80Cue": null,
+      "lv90Cue": {
+        "skillId": "mage-9",
+        "style": "starfall-five-point-golden-meteor",
+        "impactSeconds": 0,
+        "heroSeconds": 1.38,
+        "focal": {
+          "x": 1.8795599999999986,
+          "z": 18.83911999999996
+        },
+        "decorativeRadius": 15.6,
+        "palette": [
+          16765774,
+          16775115,
+          15308072
+        ],
+        "endSeconds": 2.12
+      },
+      "lv100Cue": null,
+      "drawCount": 0
+    },
+    "cameraShake": {
+      "level": 90,
+      "elapsed": 0.45,
+      "duration": 0.45,
+      "active": false,
+      "amplitude": 0.105,
+      "offset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "triggerCount": 1
+    },
+    "modelErrors": 0,
+    "drawCalls": 49
+  },
+  "latency": {
+    "inputAt": 12875.699999999953,
+    "damageObservedMs": 203.89999999990687,
+    "vfxObservedMs": 203.89999999990687,
+    "clock": "wall time; RAF observation and software-renderer scheduling included"
+  },
+  "timeline": [
+    {
+      "at": 13079.59999999986,
+      "kills": 4,
+      "hp": 1292.3489691999969,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "mage-9",
+        "duration": 1.404,
+        "job": "mage",
+        "stage": 9,
+        "branch": 0,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0
+      },
+      "shake": {
+        "level": 90,
+        "elapsed": 0,
+        "duration": 0.45,
+        "active": true,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0.09357677280645071,
+          "y": 0.0304392857219809,
+          "z": 0.06205954938085278
+        },
+        "triggerCount": 1
+      },
+      "active": 21,
+      "cue": "mage-9"
+    },
+    {
+      "at": 13235.699999999953,
+      "kills": 4,
+      "hp": 1293.1992999999964,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "mage-9",
+        "duration": 1.404,
+        "job": "mage",
+        "stage": 9,
+        "branch": 0,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.15434472934472987
+      },
+      "shake": {
+        "level": 90,
+        "elapsed": 0.21670000000000073,
+        "duration": 0.45,
+        "active": true,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0.01898930813775791,
+          "y": 0.010113108469551305,
+          "z": 0.01186193984088831
+        },
+        "triggerCount": 1
+      },
+      "active": 20,
+      "cue": "mage-9"
+    },
+    {
+      "at": 13562.300000000047,
+      "kills": 4,
+      "hp": 1294.1802999999957,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "mage-9",
+        "duration": 1.404,
+        "job": "mage",
+        "stage": 9,
+        "branch": 0,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.33240740740740793
+      },
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 16,
+      "cue": "mage-9"
+    },
+    {
+      "at": 13747.5,
+      "kills": 4,
+      "hp": 1294.9650999999951,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "mage-9",
+        "duration": 1.404,
+        "job": "mage",
+        "stage": 9,
+        "branch": 0,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.47485754985755046
+      },
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 13,
+      "cue": "mage-9"
+    },
+    {
+      "at": 13781.399999999907,
+      "kills": 4,
+      "hp": 1295.226830799995,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "mage-9",
+        "duration": 1.404,
+        "job": "mage",
+        "stage": 9,
+        "branch": 0,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.5223646723646735
+      },
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 13,
+      "cue": "mage-9"
+    },
+    {
+      "at": 14061,
+      "kills": 4,
+      "hp": 1296.2078307999943,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "mage-9",
+        "duration": 1.404,
+        "job": "mage",
+        "stage": 9,
+        "branch": 0,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.7004273504273515
+      },
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 13,
+      "cue": "mage-9"
+    },
+    {
+      "at": 14460,
+      "kills": 4,
+      "hp": 1297.1888307999936,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "mage-9",
+        "duration": 1.404,
+        "job": "mage",
+        "stage": 9,
+        "branch": 0,
+        "effect": "area",
+        "phase": "recovery",
+        "progress": 0.8784900284900297
+      },
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 4,
+      "cue": "mage-9"
+    },
+    {
+      "at": 14600,
+      "kills": 4,
+      "hp": 1297.7770383999932,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "mage-9",
+        "duration": 1.404,
+        "job": "mage",
+        "stage": 9,
+        "branch": 0,
+        "effect": "area",
+        "phase": "recovery",
+        "progress": 0.9852564102564111
+      },
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 2,
+      "cue": "mage-9"
+    },
+    {
+      "at": 14738.5,
+      "kills": 4,
+      "hp": 1298.234576799993,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 2,
+      "cue": "mage-9"
+    },
+    {
+      "at": 14940.300000000047,
+      "kills": 4,
+      "hp": 1299.0197691999924,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 1,
+      "cue": "mage-9"
+    },
+    {
+      "at": 15147.199999999953,
+      "kills": 4,
+      "hp": 1299.9352383999917,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "mage-9"
+    },
+    {
+      "at": 15335.800000000047,
+      "kills": 4,
+      "hp": 1300.5238383999913,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "mage-9"
+    },
+    {
+      "at": 15500,
+      "kills": 4,
+      "hp": 1301.3082459999907,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "mage-9"
+    },
+    {
+      "at": 15683.699999999953,
+      "kills": 4,
+      "hp": 1302.0279075999902,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "mage-9"
+    },
+    {
+      "at": 15870.09999999986,
+      "kills": 4,
+      "hp": 1302.7471767999896,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "mage-9"
+    },
+    {
+      "at": 16094.5,
+      "kills": 4,
+      "hp": 1303.6630383999889,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "mage-9"
+    },
+    {
+      "at": 16358.09999999986,
+      "kills": 4,
+      "hp": 1304.6440383999882,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "mage-9"
+    },
+    {
+      "at": 16564.699999999953,
+      "kills": 4,
+      "hp": 1294.4939767999876,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "mage-9"
+    }
+  ],
+  "errors": []
+}

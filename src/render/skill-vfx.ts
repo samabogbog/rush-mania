@@ -252,26 +252,26 @@ export class SkillVFX {
   this.active.push({mesh,life:duration,duration,x,y,z,vx,vy,vz,size,grow,spin,delay,gravity,stretch:[1,1,1]});return mesh;
  }
  anticipation(skill:Skill,job:ClassId,x:number,z:number){if(skill.level===100){
-  const c=lv100Palette(job,skill.branch),d=skillCastDuration(skill.cast)||.2;
+  const c=lv100Palette(job,skill.branch),d=skillCastDuration(skill.cast,skill.level)||.2;
   this.emit('ring',c[0],x,.09,z,3.8,d,0,0,0,-2);
   const shape:Shape=job==='swordsman'?(skill.branch?'sword':'fireblade'):job==='mage'?(skill.branch?'worldcrown':'galaxyarm'):skill.branch?'stag':'arrow';
   const m=this.emit(shape,c[0],x,job==='mage'?2.2:1,z,shape==='stag'?.55:.8,d,0,.2,0,.2,.3);if(m&&shape==='arrow')m.rotation.x=-Math.PI/2;
   return;}
  if(skill.level===90){
-  const c=lv90Palette(job,skill.branch),d=skillCastDuration(skill.cast)||.2;
+  const c=lv90Palette(job,skill.branch),d=skillCastDuration(skill.cast,skill.level)||.2;
   this.emit('ring',c[2],x,.09,z,3.4,d,0,0,0,-1.5);
   const shape:Shape=job==='swordsman'?(skill.branch?'impactshield':'sword'):job==='mage'?(skill.branch?'rootclaw':'goldstar'):'arrow';
   const m=this.emit(shape,c[0],x,1.1,z,.85,d,0,.2,0,.15);if(m&&shape==='sword')m.rotation.z=-.6;
   return;}
  if(skill.level===80){
-  const c=lv80Palette(job,skill.branch),d=skillCastDuration(skill.cast)||.2;
+  const c=lv80Palette(job,skill.branch),d=skillCastDuration(skill.cast,skill.level)||.2;
   this.emit('ring',c[2],x,.09,z,3.1,d,0,0,0,-1.5);
   const shape:Shape=job==='swordsman'?(skill.branch?'banner':'crescent'):job==='mage'?(skill.branch?'stag':'cloud'):'arrow';
   const m=this.emit(shape,c[0],x,job==='mage'&&skill.branch?.25:1.1,z,shape==='stag'?.65:.9,d,0,.2,0,.1);if(m&&shape==='crescent')m.rotation.z=-.3;
   for(let i=0;i<3;i++){const a=i*Math.PI*2/3;this.emit(job==='archer'&&skill.branch?'branch':'spark',c[i],x+Math.sin(a)*1.6,.4,z+Math.cos(a)*1.6,.35,d,-Math.sin(a)*.4,.3,-Math.cos(a)*.4);}
   return;}
  if(skill.level===70){
-  const c=lv70Palette(job,skill.branch),d=skillCastDuration(skill.cast)||.2;
+  const c=lv70Palette(job,skill.branch),d=skillCastDuration(skill.cast,skill.level)||.2;
   this.emit('ring',c[2],x,.09,z,2.7,d,0,0,0,-1.2);
   if(job==='swordsman'){const m=this.emit('sword',c[1],x,1.1,z,.8,d,0,.3,0,.12);if(m)m.rotation.z=skill.branch?-.25:-1;}
   else if(job==='mage'){for(let i=0;i<3;i++){const a=i*Math.PI*2/3;const m=this.emit(skill.branch?'leaf':'ice',c[i],x+Math.sin(a)*1.3,1.5,z+Math.cos(a)*1.3,.5,d,-Math.sin(a)*.3,.3,-Math.cos(a)*.3,.12);if(m)m.rotation.y=a;}}
@@ -279,12 +279,12 @@ export class SkillVFX {
   else {for(let i=0;i<3;i++)this.emit('arrow',c[i],x+(i-1)*.5,1.3,z,.65,d,0,.1,.2);}
   return;}
  if(skill.level===60){
-  const c=lv60Palette(job,skill.branch),d=skillCastDuration(skill.cast)||.2;
+  const c=lv60Palette(job,skill.branch),d=skillCastDuration(skill.cast,skill.level)||.2;
   this.emit('ring',c[2],x,.09,z,2.2,d,0,0,0,-1.4);
   if(job==='mage'&&skill.branch){const moon=this.emit('crescent',c[0],x,3.2,z,1.2,d,0,.35,0,.12);if(moon)moon.rotation.x=Math.PI/2;}
   else {const m=this.emit(job==='mage'?'core':job==='archer'?'arrow':'scream',c[0],x,1.3,z,job==='mage'?.42:.7,d,0,.25,0,.2);if(m&&job==='swordsman')m.rotation.y=Math.PI;}
   this.emit('ring',c[1],x,.15,z,.8,d,0,0,0,.35);return;}
- if(skill.level===50){const c=lv50Palette(job,skill.branch),d=skillCastDuration(skill.cast)||.2;this.emit('ring',c[0],x,.08,z,2,d,0,0,0,-4);for(let i=0;i<3;i++){const a=i*Math.PI*2/3;const m=this.emit('arch',c[i],x,.15,z,.85,d,0,.25,0,.4);if(m)m.rotation.y=a;}return;}if(skill.level===40){const c=skillPalette(job,skill),d=skillCastDuration(skill.cast)||.2;this.emit('ring',c[0],x,.08,z,1.7,d,0,0,0,-3);this.emit(job==='mage'?'lightning':job==='archer'?'arrow':'shield',c[1],x,1,z,.45,d,0,.5,0,.6,2);for(let i=0;i<3;i++){const a=i*Math.PI*2/3;this.emit('star',c[i],x+Math.sin(a),.7,z+Math.cos(a),.2,d,-Math.sin(a)*3,1,-Math.cos(a)*3);}return;}if(skill.level===10){const c=skillPalette(job,skill),d=skillCastDuration(skill.cast)||.18;this.emit('ring',c[0],x,.09,z,1.1,d,0,0,0,-2);this.emit('core',c[1],x,1,z,.13,d,0,.2,0,.75);for(let i=0;i<(this.low?3:6);i++){const a=i*Math.PI*2/(this.low?3:6);this.emit('ray',c[0],x+Math.cos(a)*.75,.5,z+Math.sin(a)*.75,.12,d,-Math.cos(a)*3,2,-Math.sin(a)*3);}return;}const c=skillPalette(job,skill),duration=skillCastDuration(skill.cast)||.2;this.emit('ring',c[1],x,.08,z,.65+skill.stage*.035,duration,0,0,0,.25,.5);this.emit(skill.branch?'petal':'star',c[0],x,1,z,.16,duration,0,.4,0,.15,2);}
+ if(skill.level===50){const c=lv50Palette(job,skill.branch),d=skillCastDuration(skill.cast,skill.level)||.2;this.emit('ring',c[0],x,.08,z,2,d,0,0,0,-4);for(let i=0;i<3;i++){const a=i*Math.PI*2/3;const m=this.emit('arch',c[i],x,.15,z,.85,d,0,.25,0,.4);if(m)m.rotation.y=a;}return;}if(skill.level===40){const c=skillPalette(job,skill),d=skillCastDuration(skill.cast,skill.level)||.2;this.emit('ring',c[0],x,.08,z,1.7,d,0,0,0,-3);this.emit(job==='mage'?'lightning':job==='archer'?'arrow':'shield',c[1],x,1,z,.45,d,0,.5,0,.6,2);for(let i=0;i<3;i++){const a=i*Math.PI*2/3;this.emit('star',c[i],x+Math.sin(a),.7,z+Math.cos(a),.2,d,-Math.sin(a)*3,1,-Math.cos(a)*3);}return;}if(skill.level===10){const c=skillPalette(job,skill),d=skillCastDuration(skill.cast,skill.level)||.18;this.emit('ring',c[0],x,.09,z,1.1,d,0,0,0,-2);this.emit('core',c[1],x,1,z,.13,d,0,.2,0,.75);for(let i=0;i<(this.low?3:6);i++){const a=i*Math.PI*2/(this.low?3:6);this.emit('ray',c[0],x+Math.cos(a)*.75,.5,z+Math.sin(a)*.75,.12,d,-Math.cos(a)*3,2,-Math.sin(a)*3);}return;}const c=skillPalette(job,skill),duration=skillCastDuration(skill.cast,skill.level)||.2;this.emit('ring',c[1],x,.08,z,.65+skill.stage*.035,duration,0,0,0,.25,.5);this.emit(skill.branch?'petal':'star',c[0],x,1,z,.16,duration,0,.4,0,.15,2);}
  release(skill:Skill,job:ClassId,x:number,z:number,tx:number,tz:number){
   if(skill.level===100){this.releaseLv100(skill,job,x,z,tx,tz);return;}
   if(skill.level===90){this.releaseLv90(skill,job,x,z,tx,tz);return;}

@@ -1,0 +1,694 @@
+{
+  "environment": "Chromium ANGLE SwiftShader; authentic learned high-level skill and camera response rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+  "before": {
+    "job": "archer",
+    "zone": "glade",
+    "x": 0.8800000000000001,
+    "z": 17.69259999999996,
+    "hp": 1290.858076799997,
+    "mp": 852,
+    "kills": 0,
+    "hotbar": [
+      "archer-8",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "archer-1",
+      "archer-2",
+      "archer-3",
+      "archer-4",
+      "archer-5",
+      "archer-6",
+      "archer-7",
+      "archer-8"
+    ],
+    "skillCooldowns": {},
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "lv80Cue": null,
+      "lv90Cue": null,
+      "lv100Cue": null,
+      "drawCount": 0
+    },
+    "cameraShake": {
+      "level": 0,
+      "elapsed": 0,
+      "duration": 0,
+      "active": false,
+      "amplitude": 0,
+      "offset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "triggerCount": 0
+    },
+    "modelErrors": 0,
+    "drawCalls": 50
+  },
+  "after": {
+    "job": "archer",
+    "zone": "glade",
+    "x": 0.8800000000000001,
+    "z": 17.69259999999996,
+    "hp": 1291.6432691999964,
+    "mp": 828.8524259999998,
+    "kills": 4,
+    "hotbar": [
+      "archer-8",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "archer-1",
+      "archer-2",
+      "archer-3",
+      "archer-4",
+      "archer-5",
+      "archer-6",
+      "archer-7",
+      "archer-8"
+    ],
+    "skillCooldowns": {
+      "archer-8": 11.799899999999997
+    },
+    "skillMotion": {
+      "skillId": "archer-8",
+      "duration": 1.3679999999999999,
+      "job": "archer",
+      "stage": 8,
+      "branch": 0,
+      "effect": "poison",
+      "phase": "release",
+      "progress": 0
+    },
+    "vfx": {
+      "active": 22,
+      "pooled": 24,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "star",
+        "ring",
+        "arrow",
+        "spark",
+        "core",
+        "cloud",
+        "spiral"
+      ],
+      "materials": 5,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "lv80Cue": {
+        "skillId": "archer-8",
+        "style": "poison-arrow-lime-purple-toxic-tail",
+        "impactSeconds": 0,
+        "heroSeconds": 1.16,
+        "focal": {
+          "x": 1.8800000000000001,
+          "z": 18.69259999999996
+        },
+        "decorativeRadius": 14.4,
+        "palette": [
+          10285874,
+          13867263,
+          7547319
+        ],
+        "endSeconds": 1.86
+      },
+      "lv90Cue": null,
+      "lv100Cue": null,
+      "drawCount": 9
+    },
+    "cameraShake": {
+      "level": 0,
+      "elapsed": 0,
+      "duration": 0,
+      "active": false,
+      "amplitude": 0,
+      "offset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "triggerCount": 0
+    },
+    "modelErrors": 0,
+    "drawCalls": 58
+  },
+  "recovered": {
+    "job": "archer",
+    "zone": "glade",
+    "x": 0.8800000000000001,
+    "z": 17.69259999999996,
+    "hp": 1303.217891999988,
+    "mp": 841.4181479999977,
+    "kills": 4,
+    "hotbar": [
+      "archer-8",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "archer-1",
+      "archer-2",
+      "archer-3",
+      "archer-4",
+      "archer-5",
+      "archer-6",
+      "archer-7",
+      "archer-8"
+    ],
+    "skillCooldowns": {
+      "archer-8": 8.85019999999996
+    },
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 24,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "star",
+        "ring",
+        "arrow",
+        "spark",
+        "core",
+        "cloud",
+        "spiral"
+      ],
+      "materials": 5,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "lv80Cue": {
+        "skillId": "archer-8",
+        "style": "poison-arrow-lime-purple-toxic-tail",
+        "impactSeconds": 0,
+        "heroSeconds": 1.16,
+        "focal": {
+          "x": 1.8800000000000001,
+          "z": 18.69259999999996
+        },
+        "decorativeRadius": 14.4,
+        "palette": [
+          10285874,
+          13867263,
+          7547319
+        ],
+        "endSeconds": 1.86
+      },
+      "lv90Cue": null,
+      "lv100Cue": null,
+      "drawCount": 0
+    },
+    "cameraShake": {
+      "level": 0,
+      "elapsed": 0,
+      "duration": 0,
+      "active": false,
+      "amplitude": 0,
+      "offset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "triggerCount": 0
+    },
+    "modelErrors": 0,
+    "drawCalls": 46
+  },
+  "timeline": [
+    {
+      "hp": 1291.6432691999964,
+      "cast": null,
+      "motion": {
+        "skillId": "archer-8",
+        "duration": 1.3679999999999999,
+        "job": "archer",
+        "stage": 8,
+        "branch": 0,
+        "effect": "poison",
+        "phase": "release",
+        "progress": 0
+      },
+      "shake": {
+        "level": 0,
+        "elapsed": 0,
+        "duration": 0,
+        "active": false,
+        "amplitude": 0,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 0
+      },
+      "active": 22,
+      "cue": null
+    },
+    {
+      "hp": 1292.3625383999959,
+      "cast": null,
+      "motion": {
+        "skillId": "archer-8",
+        "duration": 1.3679999999999999,
+        "job": "archer",
+        "stage": 8,
+        "branch": 0,
+        "effect": "poison",
+        "phase": "release",
+        "progress": 0.13399122807017494
+      },
+      "shake": {
+        "level": 0,
+        "elapsed": 0,
+        "duration": 0,
+        "active": false,
+        "amplitude": 0,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 0
+      },
+      "active": 22,
+      "cue": null
+    },
+    {
+      "hp": 1292.4276767999959,
+      "cast": null,
+      "motion": {
+        "skillId": "archer-8",
+        "duration": 1.3679999999999999,
+        "job": "archer",
+        "stage": 8,
+        "branch": 0,
+        "effect": "poison",
+        "phase": "release",
+        "progress": 0.14612573099415183
+      },
+      "shake": {
+        "level": 0,
+        "elapsed": 0,
+        "duration": 0,
+        "active": false,
+        "amplitude": 0,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 0
+      },
+      "active": 22,
+      "cue": null
+    },
+    {
+      "hp": 1293.4086767999952,
+      "cast": null,
+      "motion": {
+        "skillId": "archer-8",
+        "duration": 1.3679999999999999,
+        "job": "archer",
+        "stage": 8,
+        "branch": 0,
+        "effect": "poison",
+        "phase": "release",
+        "progress": 0.3288742690058478
+      },
+      "shake": {
+        "level": 0,
+        "elapsed": 0,
+        "duration": 0,
+        "active": false,
+        "amplitude": 0,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 0
+      },
+      "active": 22,
+      "cue": null
+    },
+    {
+      "hp": 1294.1930843999946,
+      "cast": null,
+      "motion": {
+        "skillId": "archer-8",
+        "duration": 1.3679999999999999,
+        "job": "archer",
+        "stage": 8,
+        "branch": 0,
+        "effect": "poison",
+        "phase": "release",
+        "progress": 0.475000000000001
+      },
+      "shake": {
+        "level": 0,
+        "elapsed": 0,
+        "duration": 0,
+        "active": false,
+        "amplitude": 0,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 0
+      },
+      "active": 22,
+      "cue": null
+    },
+    {
+      "hp": 1295.174084399994,
+      "cast": null,
+      "motion": {
+        "skillId": "archer-8",
+        "duration": 1.3679999999999999,
+        "job": "archer",
+        "stage": 8,
+        "branch": 0,
+        "effect": "poison",
+        "phase": "release",
+        "progress": 0.657748538011697
+      },
+      "shake": {
+        "level": 0,
+        "elapsed": 0,
+        "duration": 0,
+        "active": false,
+        "amplitude": 0,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 0
+      },
+      "active": 22,
+      "cue": null
+    },
+    {
+      "hp": 1296.1550843999933,
+      "cast": null,
+      "motion": {
+        "skillId": "archer-8",
+        "duration": 1.3679999999999999,
+        "job": "archer",
+        "stage": 8,
+        "branch": 0,
+        "effect": "poison",
+        "phase": "recovery",
+        "progress": 0.8404970760233927
+      },
+      "shake": {
+        "level": 0,
+        "elapsed": 0,
+        "duration": 0,
+        "active": false,
+        "amplitude": 0,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 0
+      },
+      "active": 7,
+      "cue": null
+    },
+    {
+      "hp": 1296.481953599993,
+      "cast": null,
+      "motion": {
+        "skillId": "archer-8",
+        "duration": 1.3679999999999999,
+        "job": "archer",
+        "stage": 8,
+        "branch": 0,
+        "effect": "poison",
+        "phase": "recovery",
+        "progress": 0.9013888888888907
+      },
+      "shake": {
+        "level": 0,
+        "elapsed": 0,
+        "duration": 0,
+        "active": false,
+        "amplitude": 0,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 0
+      },
+      "active": 4,
+      "cue": null
+    },
+    {
+      "hp": 1297.2667535999924,
+      "cast": null,
+      "motion": null,
+      "shake": {
+        "level": 0,
+        "elapsed": 0,
+        "duration": 0,
+        "active": false,
+        "amplitude": 0,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 0
+      },
+      "active": 1,
+      "cue": null
+    },
+    {
+      "hp": 1298.0511611999918,
+      "cast": null,
+      "motion": null,
+      "shake": {
+        "level": 0,
+        "elapsed": 0,
+        "duration": 0,
+        "active": false,
+        "amplitude": 0,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 0
+      },
+      "active": 1,
+      "cue": null
+    },
+    {
+      "hp": 1298.8363535999913,
+      "cast": null,
+      "motion": null,
+      "shake": {
+        "level": 0,
+        "elapsed": 0,
+        "duration": 0,
+        "active": false,
+        "amplitude": 0,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 0
+      },
+      "active": 0,
+      "cue": null
+    },
+    {
+      "hp": 1299.3594227999909,
+      "cast": null,
+      "motion": null,
+      "shake": {
+        "level": 0,
+        "elapsed": 0,
+        "duration": 0,
+        "active": false,
+        "amplitude": 0,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 0
+      },
+      "active": 0,
+      "cue": null
+    },
+    {
+      "hp": 1300.3404227999902,
+      "cast": null,
+      "motion": null,
+      "shake": {
+        "level": 0,
+        "elapsed": 0,
+        "duration": 0,
+        "active": false,
+        "amplitude": 0,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 0
+      },
+      "active": 0,
+      "cue": null
+    },
+    {
+      "hp": 1301.0596919999896,
+      "cast": null,
+      "motion": null,
+      "shake": {
+        "level": 0,
+        "elapsed": 0,
+        "duration": 0,
+        "active": false,
+        "amplitude": 0,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 0
+      },
+      "active": 0,
+      "cue": null
+    },
+    {
+      "hp": 1301.3865611999893,
+      "cast": null,
+      "motion": null,
+      "shake": {
+        "level": 0,
+        "elapsed": 0,
+        "duration": 0,
+        "active": false,
+        "amplitude": 0,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 0
+      },
+      "active": 0,
+      "cue": null
+    },
+    {
+      "hp": 1302.3675611999886,
+      "cast": null,
+      "motion": null,
+      "shake": {
+        "level": 0,
+        "elapsed": 0,
+        "duration": 0,
+        "active": false,
+        "amplitude": 0,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 0
+      },
+      "active": 0,
+      "cue": null
+    },
+    {
+      "hp": 1302.9565535999882,
+      "cast": null,
+      "motion": null,
+      "shake": {
+        "level": 0,
+        "elapsed": 0,
+        "duration": 0,
+        "active": false,
+        "amplitude": 0,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 0
+      },
+      "active": 0,
+      "cue": null
+    },
+    {
+      "hp": 1303.217891999988,
+      "cast": null,
+      "motion": null,
+      "shake": {
+        "level": 0,
+        "elapsed": 0,
+        "duration": 0,
+        "active": false,
+        "amplitude": 0,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 0
+      },
+      "active": 0,
+      "cue": null
+    }
+  ],
+  "errors": []
+}

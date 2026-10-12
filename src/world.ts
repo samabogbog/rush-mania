@@ -430,7 +430,7 @@ export class World implements GameWorld {
   clearSkillPreview(){if(this.sim.online)return false;this.previewHeld=false;this.skillVFX.clear();this.skillCameraShake.reset();this.skillSequence=null;this.skillMotion=null;return true;}
   private beginSkillVisual(skill:Skill,tx:number,tz:number,preview=false) {
     if(this.previewHeld){this.skillVFX.clear();this.skillCameraShake.reset();this.previewHeld=false;}
-    const total=preview?(skillCastDuration(skill.cast)||.18):(this.sim.renderCast?.total||.001),remaining=preview?total:(this.sim.renderCast?.remaining||0);
+    const total=preview?(skillCastDuration(skill.cast,skill.level)||.18):(this.sim.renderCast?.total||.001),remaining=preview?total:(this.sim.renderCast?.remaining||0);
     this.skillSequence={preview,skill,remaining,total,released:false,x:this.player.position.x,z:this.player.position.z,tx,tz};
     this.skillVFX.anticipation(skill,this.sim.save.job,this.player.position.x,this.player.position.z);
   }

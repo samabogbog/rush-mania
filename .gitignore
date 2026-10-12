@@ -90,3 +90,6 @@ artifacts/lv90-vfx/*.webm
 
 artifacts/lv100-vfx/raw/
 artifacts/lv100-vfx/*.webm
+
+artifacts/high-skill-response/raw/
+artifacts/high-skill-response/*.webm

@@ -638,8 +638,8 @@ export class Simulation {
       this.cast = {
         skillId: id,
         targetId: target?.id ?? null,
-        remaining: skillCastDuration(skill.cast),
-        total: skillCastDuration(skill.cast),
+        remaining: skillCastDuration(skill.cast,skill.level),
+        total: skillCastDuration(skill.cast,skill.level),
       };
     else this.resolveSkill(skill, target?.id ?? null);
     this.refreshCooldowns();
@@ -859,7 +859,8 @@ export class Simulation {
         this.onEvent("Cast interrupted by movement.");
       } else {
         this.cast.remaining -= dt;
-        if (this.cast.remaining <= 0) {
+        // Do not defer a boundary release by a tick because of float residue.
+        if (this.cast.remaining <= 1e-9) {
           const cast = this.cast;
           this.cast = null;
           const skill = this.skillList.find(

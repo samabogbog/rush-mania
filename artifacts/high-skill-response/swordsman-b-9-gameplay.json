@@ -1,0 +1,783 @@
+{
+  "level": 90,
+  "environment": "Chromium ANGLE SwiftShader; authentic learned skill rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+  "before": {
+    "job": "swordsman",
+    "zone": "glade",
+    "x": 0.4400000000000001,
+    "z": 17.473039999999965,
+    "hp": 1293.6103075999965,
+    "mp": 852,
+    "kills": 0,
+    "hotbar": [
+      "swordsman-b-9",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "swordsman-1",
+      "swordsman-2",
+      "swordsman-3",
+      "swordsman-4",
+      "swordsman-5",
+      "swordsman-6",
+      "swordsman-7",
+      "swordsman-8",
+      "swordsman-b-9"
+    ],
+    "skillCooldowns": {},
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "lv80Cue": null,
+      "lv90Cue": null,
+      "lv100Cue": null,
+      "drawCount": 0
+    },
+    "cameraShake": {
+      "level": 0,
+      "elapsed": 0,
+      "duration": 0,
+      "active": false,
+      "amplitude": 0,
+      "offset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "triggerCount": 0
+    },
+    "modelErrors": 0,
+    "drawCalls": 52
+  },
+  "after": {
+    "job": "swordsman",
+    "zone": "glade",
+    "x": 0.4400000000000001,
+    "z": 17.473039999999965,
+    "hp": 1294.329969199996,
+    "mp": 812.7812839999999,
+    "kills": 4,
+    "hotbar": [
+      "swordsman-b-9",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "swordsman-1",
+      "swordsman-2",
+      "swordsman-3",
+      "swordsman-4",
+      "swordsman-5",
+      "swordsman-6",
+      "swordsman-7",
+      "swordsman-8",
+      "swordsman-b-9"
+    ],
+    "skillCooldowns": {
+      "swordsman-b-9": 24.81660000000001
+    },
+    "skillMotion": {
+      "skillId": "swordsman-b-9",
+      "duration": 1.404,
+      "job": "swordsman",
+      "stage": 9,
+      "branch": 1,
+      "effect": "area",
+      "phase": "release",
+      "progress": 0
+    },
+    "vfx": {
+      "active": 29,
+      "pooled": 30,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "crescent",
+        "ring",
+        "impactshield",
+        "core",
+        "scream",
+        "ray",
+        "slab",
+        "stoneshard"
+      ],
+      "materials": 7,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "lv80Cue": null,
+      "lv90Cue": {
+        "skillId": "swordsman-b-9",
+        "style": "unbreakable-crash-solid-gold-shield-collision",
+        "impactSeconds": 0,
+        "heroSeconds": 1.38,
+        "focal": {
+          "x": 0.4400000000000001,
+          "z": 17.473039999999965
+        },
+        "decorativeRadius": 15.6,
+        "palette": [
+          16761923,
+          16774859,
+          9201467
+        ],
+        "endSeconds": 2.12
+      },
+      "lv100Cue": null,
+      "drawCount": 15
+    },
+    "cameraShake": {
+      "level": 90,
+      "elapsed": 0,
+      "duration": 0.45,
+      "active": true,
+      "amplitude": 0.105,
+      "offset": {
+        "x": 0.09357677280645071,
+        "y": 0.0304392857219809,
+        "z": 0.06205954938085278
+      },
+      "triggerCount": 1
+    },
+    "modelErrors": 0,
+    "drawCalls": 67
+  },
+  "recovered": {
+    "job": "swordsman",
+    "zone": "glade",
+    "x": 0.4400000000000001,
+    "z": 17.473039999999965,
+    "hp": 1296.147322799987,
+    "mp": 826.6961479999977,
+    "kills": 4,
+    "hotbar": [
+      "swordsman-b-9",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "swordsman-1",
+      "swordsman-2",
+      "swordsman-3",
+      "swordsman-4",
+      "swordsman-5",
+      "swordsman-6",
+      "swordsman-7",
+      "swordsman-8",
+      "swordsman-b-9"
+    ],
+    "skillCooldowns": {
+      "swordsman-b-9": 21.550200000000196
+    },
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 30,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "crescent",
+        "ring",
+        "impactshield",
+        "core",
+        "scream",
+        "ray",
+        "slab",
+        "stoneshard"
+      ],
+      "materials": 7,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "lv80Cue": null,
+      "lv90Cue": {
+        "skillId": "swordsman-b-9",
+        "style": "unbreakable-crash-solid-gold-shield-collision",
+        "impactSeconds": 0,
+        "heroSeconds": 1.38,
+        "focal": {
+          "x": 0.4400000000000001,
+          "z": 17.473039999999965
+        },
+        "decorativeRadius": 15.6,
+        "palette": [
+          16761923,
+          16774859,
+          9201467
+        ],
+        "endSeconds": 2.12
+      },
+      "lv100Cue": null,
+      "drawCount": 0
+    },
+    "cameraShake": {
+      "level": 90,
+      "elapsed": 0.45,
+      "duration": 0.45,
+      "active": false,
+      "amplitude": 0.105,
+      "offset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "triggerCount": 1
+    },
+    "modelErrors": 0,
+    "drawCalls": 49
+  },
+  "latency": {
+    "inputAt": 13222.899999999907,
+    "damageObservedMs": 250.19999999995343,
+    "vfxObservedMs": 250.19999999995343,
+    "clock": "wall time; RAF observation and software-renderer scheduling included"
+  },
+  "timeline": [
+    {
+      "at": 13473.09999999986,
+      "kills": 4,
+      "hp": 1294.329969199996,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "swordsman-b-9",
+        "duration": 1.404,
+        "job": "swordsman",
+        "stage": 9,
+        "branch": 1,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0
+      },
+      "shake": {
+        "level": 90,
+        "elapsed": 0,
+        "duration": 0.45,
+        "active": true,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0.09357677280645071,
+          "y": 0.0304392857219809,
+          "z": 0.06205954938085278
+        },
+        "triggerCount": 1
+      },
+      "active": 29,
+      "cue": "swordsman-b-9"
+    },
+    {
+      "at": 13527.09999999986,
+      "kills": 4,
+      "hp": 1295.1143767999954,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "swordsman-b-9",
+        "duration": 1.404,
+        "job": "swordsman",
+        "stage": 9,
+        "branch": 1,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.14237891737891706
+      },
+      "shake": {
+        "level": 90,
+        "elapsed": 0.19989999999999963,
+        "duration": 0.45,
+        "active": true,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0.024176013639309532,
+          "y": -0.012619480534293818,
+          "z": -0.012886452576101885
+        },
+        "triggerCount": 1
+      },
+      "active": 28,
+      "cue": "swordsman-b-9"
+    },
+    {
+      "at": 13715.300000000047,
+      "kills": 4,
+      "hp": 1295.8340383999948,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "swordsman-b-9",
+        "duration": 1.404,
+        "job": "swordsman",
+        "stage": 9,
+        "branch": 1,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.2730056980056974
+      },
+      "shake": {
+        "level": 90,
+        "elapsed": 0.3832999999999993,
+        "duration": 0.45,
+        "active": true,
+        "amplitude": 0.105,
+        "offset": {
+          "x": -0.0018793761536281112,
+          "y": 0.001038048947992702,
+          "z": 0.001496690378925681
+        },
+        "triggerCount": 1
+      },
+      "active": 28,
+      "cue": "swordsman-b-9"
+    },
+    {
+      "at": 13915.199999999953,
+      "kills": 4,
+      "hp": 1296.6188383999943,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "swordsman-b-9",
+        "duration": 1.404,
+        "job": "swordsman",
+        "stage": 9,
+        "branch": 1,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.41545584045583983
+      },
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 22,
+      "cue": "swordsman-b-9"
+    },
+    {
+      "at": 14124.899999999907,
+      "kills": 4,
+      "hp": 1297.4691691999938,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "swordsman-b-9",
+        "duration": 1.404,
+        "job": "swordsman",
+        "stage": 9,
+        "branch": 1,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.5698005698005697
+      },
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 22,
+      "cue": "swordsman-b-9"
+    },
+    {
+      "at": 14383.5,
+      "kills": 4,
+      "hp": 1298.3187151999932,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "swordsman-b-9",
+        "duration": 1.404,
+        "job": "swordsman",
+        "stage": 9,
+        "branch": 1,
+        "effect": "area",
+        "phase": "recovery",
+        "progress": 0.724002849002849
+      },
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 17,
+      "cue": "swordsman-b-9"
+    },
+    {
+      "at": 14713.09999999986,
+      "kills": 4,
+      "hp": 1299.2997151999925,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "swordsman-b-9",
+        "duration": 1.404,
+        "job": "swordsman",
+        "stage": 9,
+        "branch": 1,
+        "effect": "area",
+        "phase": "recovery",
+        "progress": 0.902065527065527
+      },
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 6,
+      "cue": "swordsman-b-9"
+    },
+    {
+      "at": 14785.59999999986,
+      "kills": 4,
+      "hp": 1299.5610535999924,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "swordsman-b-9",
+        "duration": 1.404,
+        "job": "swordsman",
+        "stage": 9,
+        "branch": 1,
+        "effect": "area",
+        "phase": "recovery",
+        "progress": 0.9495014245014247
+      },
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 5,
+      "cue": "swordsman-b-9"
+    },
+    {
+      "at": 14984.09999999986,
+      "kills": 4,
+      "hp": 1300.2807151999918,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 2,
+      "cue": "swordsman-b-9"
+    },
+    {
+      "at": 15130.899999999907,
+      "kills": 4,
+      "hp": 1300.9348459999915,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 1,
+      "cue": "swordsman-b-9"
+    },
+    {
+      "at": 15296.699999999953,
+      "kills": 4,
+      "hp": 1301.588584399991,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 1,
+      "cue": "swordsman-b-9"
+    },
+    {
+      "at": 15482.899999999907,
+      "kills": 4,
+      "hp": 1302.3078535999905,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "swordsman-b-9"
+    },
+    {
+      "at": 15629.699999999953,
+      "kills": 4,
+      "hp": 1302.83092279999,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "swordsman-b-9"
+    },
+    {
+      "at": 15816.300000000047,
+      "kills": 4,
+      "hp": 1303.6161151999895,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "swordsman-b-9"
+    },
+    {
+      "at": 16006.899999999907,
+      "kills": 4,
+      "hp": 1304.3349919999891,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "swordsman-b-9"
+    },
+    {
+      "at": 16183.59999999986,
+      "kills": 4,
+      "hp": 1305.0546535999886,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "swordsman-b-9"
+    },
+    {
+      "at": 16482.699999999953,
+      "kills": 4,
+      "hp": 1306.0356535999879,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "swordsman-b-9"
+    },
+    {
+      "at": 16633.399999999907,
+      "kills": 4,
+      "hp": 1306.8204535999873,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "swordsman-b-9"
+    },
+    {
+      "at": 16715.09999999986,
+      "kills": 4,
+      "hp": 1296.147322799987,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 90,
+        "elapsed": 0.45,
+        "duration": 0.45,
+        "active": false,
+        "amplitude": 0.105,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "swordsman-b-9"
+    }
+  ],
+  "errors": []
+}

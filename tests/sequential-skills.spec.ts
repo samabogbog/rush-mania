@@ -37,7 +37,7 @@ test('authoritative server rejects six same-packet instant commands, retains gat
  snap=await transact(store,user,{commands:[{id:snap.player.session.id+':8',type:'skill',args:[1]}]},2200);expect(snap.player.actor.skillCooldowns['swordsman-2']).toBeGreaterThan(0);
 });
 
-test('cast and recovery are exactly triple the previous durations for every class and stage',()=>{
- for(const job of ['swordsman','mage','archer'] as const){const s=fighter(job);for(let stage=7;stage<=10;stage++)expect(s.chooseSkill(`${job}-${stage}`)).toBe(true);for(const skill of s.skillList){s.cast=null;s.actionTime=0;s.skillCooldowns={};s.save.mp=s.maxMp;if(!s.unlockedSkills.some(k=>k.id===skill.id))continue;expect(s.castSkill(skill.id)).toBe(true);if(skill.cast){expect(s.cast!.total).toBeCloseTo(skill.cast*3);expect(s.cast!.remaining).toBeCloseTo(skill.cast*3);}else expect(s.actionTime).toBeCloseTo((.36+Math.min(10,skill.stage)*.012)*3);}}
+test('lower-tier casts and all recovery stay triple; Lv90/100 casts release within 50ms',()=>{
+ for(const job of ['swordsman','mage','archer'] as const){const s=fighter(job);for(let stage=7;stage<=10;stage++)expect(s.chooseSkill(`${job}-${stage}`)).toBe(true);for(const skill of s.skillList){s.cast=null;s.actionTime=0;s.skillCooldowns={};s.save.mp=s.maxMp;if(!s.unlockedSkills.some(k=>k.id===skill.id))continue;expect(s.castSkill(skill.id)).toBe(true);if(skill.cast){expect(s.cast!.total).toBeCloseTo(skill.level>=90?Math.min(skill.cast*3,.05):skill.cast*3);expect(s.cast!.remaining).toBeCloseTo(skill.level>=90?Math.min(skill.cast*3,.05):skill.cast*3);}else expect(s.actionTime).toBeCloseTo((.36+Math.min(10,skill.stage)*.012)*3);}}
  for(let stage=1;stage<=10;stage++)expect(skillRecoveryDuration(stage)).toBeCloseTo((.36+stage*.012)*3);
 });

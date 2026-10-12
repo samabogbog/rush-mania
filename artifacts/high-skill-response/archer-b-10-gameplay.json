@@ -1,0 +1,821 @@
+{
+  "level": 100,
+  "environment": "Chromium ANGLE SwiftShader; authentic learned skill rank1; prerequisite learned; level100 hero fixture protects recording from deaths",
+  "before": {
+    "job": "archer",
+    "zone": "glade",
+    "x": 0.8065199999999969,
+    "z": 17.32651999999997,
+    "hp": 1288.7390383999918,
+    "mp": 852,
+    "kills": 0,
+    "hotbar": [
+      "archer-b-10",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "archer-1",
+      "archer-2",
+      "archer-3",
+      "archer-4",
+      "archer-5",
+      "archer-6",
+      "archer-7",
+      "archer-8",
+      "archer-9",
+      "archer-b-10"
+    ],
+    "skillCooldowns": {},
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "lv80Cue": null,
+      "lv90Cue": null,
+      "lv100Cue": null,
+      "drawCount": 0
+    },
+    "cameraShake": {
+      "level": 0,
+      "elapsed": 0,
+      "duration": 0,
+      "active": false,
+      "amplitude": 0,
+      "offset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "triggerCount": 0
+    },
+    "modelErrors": 0,
+    "drawCalls": 50
+  },
+  "after": {
+    "job": "archer",
+    "zone": "glade",
+    "x": 0.8065199999999969,
+    "z": 17.32651999999997,
+    "hp": 1289.7196459999911,
+    "mp": 805.0645739999999,
+    "kills": 3,
+    "hotbar": [
+      "archer-b-10",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "archer-1",
+      "archer-2",
+      "archer-3",
+      "archer-4",
+      "archer-5",
+      "archer-6",
+      "archer-7",
+      "archer-8",
+      "archer-9",
+      "archer-b-10"
+    ],
+    "skillCooldowns": {
+      "archer-b-10": 27.75010000000001
+    },
+    "skillMotion": {
+      "skillId": "archer-b-10",
+      "duration": 1.44,
+      "job": "archer",
+      "stage": 10,
+      "branch": 1,
+      "effect": "area",
+      "phase": "release",
+      "progress": 0
+    },
+    "vfx": {
+      "active": 29,
+      "pooled": 30,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "star",
+        "ring",
+        "stag",
+        "core",
+        "arrow",
+        "ray",
+        "scream"
+      ],
+      "materials": 6,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "lv80Cue": null,
+      "lv90Cue": null,
+      "lv100Cue": {
+        "skillId": "archer-b-10",
+        "style": "wild-hunt-golden-antler-arrow-fan",
+        "impactSeconds": 0,
+        "heroSeconds": 1.9,
+        "focal": {
+          "x": 1.8065199999999968,
+          "z": 18.32651999999997
+        },
+        "decorativeRadius": 17.4,
+        "palette": [
+          16764217,
+          16774845,
+          11895331
+        ],
+        "endSeconds": 2.65
+      },
+      "drawCount": 15
+    },
+    "cameraShake": {
+      "level": 100,
+      "elapsed": 0,
+      "duration": 0.54,
+      "active": true,
+      "amplitude": 0.11,
+      "offset": {
+        "x": 0.09803280960675789,
+        "y": 0.03188877551826571,
+        "z": 0.06501476601803624
+      },
+      "triggerCount": 1
+    },
+    "modelErrors": 0,
+    "drawCalls": 65
+  },
+  "recovered": {
+    "job": "archer",
+    "zone": "glade",
+    "x": 0.8065199999999969,
+    "z": 17.32651999999997,
+    "hp": 1265.34972279998,
+    "mp": 822.0330059999972,
+    "kills": 3,
+    "hotbar": [
+      "archer-b-10",
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "unlockedSkills": [
+      "archer-1",
+      "archer-2",
+      "archer-3",
+      "archer-4",
+      "archer-5",
+      "archer-6",
+      "archer-7",
+      "archer-8",
+      "archer-9",
+      "archer-b-10"
+    ],
+    "skillCooldowns": {
+      "archer-b-10": 23.766900000000238
+    },
+    "skillMotion": null,
+    "vfx": {
+      "active": 0,
+      "pooled": 30,
+      "limit": 40,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "star",
+        "ring",
+        "stag",
+        "core",
+        "arrow",
+        "ray",
+        "scream"
+      ],
+      "materials": 6,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "lv80Cue": null,
+      "lv90Cue": null,
+      "lv100Cue": {
+        "skillId": "archer-b-10",
+        "style": "wild-hunt-golden-antler-arrow-fan",
+        "impactSeconds": 0,
+        "heroSeconds": 1.9,
+        "focal": {
+          "x": 1.8065199999999968,
+          "z": 18.32651999999997
+        },
+        "decorativeRadius": 17.4,
+        "palette": [
+          16764217,
+          16774845,
+          11895331
+        ],
+        "endSeconds": 2.65
+      },
+      "drawCount": 0
+    },
+    "cameraShake": {
+      "level": 100,
+      "elapsed": 0.54,
+      "duration": 0.54,
+      "active": false,
+      "amplitude": 0.11,
+      "offset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "triggerCount": 1
+    },
+    "modelErrors": 0,
+    "drawCalls": 47
+  },
+  "latency": {
+    "inputAt": 13364.59999999986,
+    "damageObservedMs": 256,
+    "vfxObservedMs": 256,
+    "clock": "wall time; RAF observation and software-renderer scheduling included"
+  },
+  "timeline": [
+    {
+      "at": 13620.59999999986,
+      "kills": 3,
+      "hp": 1289.7196459999911,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "archer-b-10",
+        "duration": 1.44,
+        "job": "archer",
+        "stage": 10,
+        "branch": 1,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0
+      },
+      "shake": {
+        "level": 100,
+        "elapsed": 0,
+        "duration": 0.54,
+        "active": true,
+        "amplitude": 0.11,
+        "offset": {
+          "x": 0.09803280960675789,
+          "y": 0.03188877551826571,
+          "z": 0.06501476601803624
+        },
+        "triggerCount": 1
+      },
+      "active": 29,
+      "cue": "archer-b-10"
+    },
+    {
+      "at": 13750.699999999953,
+      "kills": 3,
+      "hp": 1290.5699767999906,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "archer-b-10",
+        "duration": 1.44,
+        "job": "archer",
+        "stage": 10,
+        "branch": 1,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.15048611111111043
+      },
+      "shake": {
+        "level": 100,
+        "elapsed": 0.21669999999999892,
+        "duration": 0.54,
+        "active": true,
+        "amplitude": 0.11,
+        "offset": {
+          "x": 0.026529677304004302,
+          "y": 0.014128872010034967,
+          "z": 0.016572138062915406
+        },
+        "triggerCount": 1
+      },
+      "active": 29,
+      "cue": "archer-b-10"
+    },
+    {
+      "at": 13959.299999999814,
+      "kills": 3,
+      "hp": 1291.35477679999,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "archer-b-10",
+        "duration": 1.44,
+        "job": "archer",
+        "stage": 10,
+        "branch": 1,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.28937499999999927
+      },
+      "shake": {
+        "level": 100,
+        "elapsed": 0.41669999999999896,
+        "duration": 0.54,
+        "active": true,
+        "amplitude": 0.11,
+        "offset": {
+          "x": 0.004787034033930396,
+          "y": -0.0018720085777475383,
+          "z": -0.0034678419248455016
+        },
+        "triggerCount": 1
+      },
+      "active": 29,
+      "cue": "archer-b-10"
+    },
+    {
+      "at": 14143.299999999814,
+      "kills": 3,
+      "hp": 1292.1395767999895,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "archer-b-10",
+        "duration": 1.44,
+        "job": "archer",
+        "stage": 10,
+        "branch": 1,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.4282638888888881
+      },
+      "shake": {
+        "level": 100,
+        "elapsed": 0.54,
+        "duration": 0.54,
+        "active": false,
+        "amplitude": 0.11,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 29,
+      "cue": "archer-b-10"
+    },
+    {
+      "at": 14365.59999999986,
+      "kills": 3,
+      "hp": 1292.989907599989,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "archer-b-10",
+        "duration": 1.44,
+        "job": "archer",
+        "stage": 10,
+        "branch": 1,
+        "effect": "area",
+        "phase": "release",
+        "progress": 0.5787499999999999
+      },
+      "shake": {
+        "level": 100,
+        "elapsed": 0.54,
+        "duration": 0.54,
+        "active": false,
+        "amplitude": 0.11,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 29,
+      "cue": "archer-b-10"
+    },
+    {
+      "at": 14614.299999999814,
+      "kills": 3,
+      "hp": 1283.9705151999883,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "archer-b-10",
+        "duration": 1.44,
+        "job": "archer",
+        "stage": 10,
+        "branch": 1,
+        "effect": "area",
+        "phase": "recovery",
+        "progress": 0.7522916666666662
+      },
+      "shake": {
+        "level": 100,
+        "elapsed": 0.54,
+        "duration": 0.54,
+        "active": false,
+        "amplitude": 0.11,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 29,
+      "cue": "archer-b-10"
+    },
+    {
+      "at": 14848.799999999814,
+      "kills": 3,
+      "hp": 1284.8863767999876,
+      "cast": null,
+      "castTotal": 0,
+      "motion": {
+        "skillId": "archer-b-10",
+        "duration": 1.44,
+        "job": "archer",
+        "stage": 10,
+        "branch": 1,
+        "effect": "area",
+        "phase": "recovery",
+        "progress": 0.9143749999999993
+      },
+      "shake": {
+        "level": 100,
+        "elapsed": 0.54,
+        "duration": 0.54,
+        "active": false,
+        "amplitude": 0.11,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 28,
+      "cue": "archer-b-10"
+    },
+    {
+      "at": 15100.5,
+      "kills": 3,
+      "hp": 1285.736315199987,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 100,
+        "elapsed": 0.54,
+        "duration": 0.54,
+        "active": false,
+        "amplitude": 0.11,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 17,
+      "cue": "archer-b-10"
+    },
+    {
+      "at": 15264.199999999953,
+      "kills": 3,
+      "hp": 1286.5211151999865,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 100,
+        "elapsed": 0.54,
+        "duration": 0.54,
+        "active": false,
+        "amplitude": 0.11,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 4,
+      "cue": "archer-b-10"
+    },
+    {
+      "at": 15436.799999999814,
+      "kills": 3,
+      "hp": 1287.240776799986,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 100,
+        "elapsed": 0.54,
+        "duration": 0.54,
+        "active": false,
+        "amplitude": 0.11,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 2,
+      "cue": "archer-b-10"
+    },
+    {
+      "at": 15620.59999999986,
+      "kills": 3,
+      "hp": 1287.9596535999856,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 100,
+        "elapsed": 0.54,
+        "duration": 0.54,
+        "active": false,
+        "amplitude": 0.11,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 2,
+      "cue": "archer-b-10"
+    },
+    {
+      "at": 15821.5,
+      "kills": 3,
+      "hp": 1288.744845999985,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 100,
+        "elapsed": 0.54,
+        "duration": 0.54,
+        "active": false,
+        "amplitude": 0.11,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 1,
+      "cue": "archer-b-10"
+    },
+    {
+      "at": 16015.899999999907,
+      "kills": 3,
+      "hp": 1289.3334459999846,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 100,
+        "elapsed": 0.54,
+        "duration": 0.54,
+        "active": false,
+        "amplitude": 0.11,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "archer-b-10"
+    },
+    {
+      "at": 16147.5,
+      "kills": 3,
+      "hp": 1279.9871843999842,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 100,
+        "elapsed": 0.54,
+        "duration": 0.54,
+        "active": false,
+        "amplitude": 0.11,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "archer-b-10"
+    },
+    {
+      "at": 16339.699999999953,
+      "kills": 3,
+      "hp": 1280.7723767999837,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 100,
+        "elapsed": 0.54,
+        "duration": 0.54,
+        "active": false,
+        "amplitude": 0.11,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "archer-b-10"
+    },
+    {
+      "at": 16508.09999999986,
+      "kills": 3,
+      "hp": 1281.2950535999832,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 100,
+        "elapsed": 0.54,
+        "duration": 0.54,
+        "active": false,
+        "amplitude": 0.11,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "archer-b-10"
+    },
+    {
+      "at": 16654.59999999986,
+      "kills": 3,
+      "hp": 1272.0147151999827,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 100,
+        "elapsed": 0.54,
+        "duration": 0.54,
+        "active": false,
+        "amplitude": 0.11,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "archer-b-10"
+    },
+    {
+      "at": 16835.199999999953,
+      "kills": 3,
+      "hp": 1272.733984399982,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 100,
+        "elapsed": 0.54,
+        "duration": 0.54,
+        "active": false,
+        "amplitude": 0.11,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "archer-b-10"
+    },
+    {
+      "at": 17108.5,
+      "kills": 3,
+      "hp": 1263.6494535999814,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 100,
+        "elapsed": 0.54,
+        "duration": 0.54,
+        "active": false,
+        "amplitude": 0.11,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "archer-b-10"
+    },
+    {
+      "at": 17340.59999999986,
+      "kills": 3,
+      "hp": 1264.6304535999807,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 100,
+        "elapsed": 0.54,
+        "duration": 0.54,
+        "active": false,
+        "amplitude": 0.11,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "archer-b-10"
+    },
+    {
+      "at": 17529.59999999986,
+      "kills": 3,
+      "hp": 1265.34972279998,
+      "cast": null,
+      "castTotal": 0,
+      "motion": null,
+      "shake": {
+        "level": 100,
+        "elapsed": 0.54,
+        "duration": 0.54,
+        "active": false,
+        "amplitude": 0.11,
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "triggerCount": 1
+      },
+      "active": 0,
+      "cue": "archer-b-10"
+    }
+  ],
+  "errors": []
+}

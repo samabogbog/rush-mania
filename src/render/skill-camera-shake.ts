@@ -4,7 +4,7 @@ export class SkillCameraShake {
  private offset={x:0,y:0,z:0};
  trigger(level:number,reducedMotion=false){
   if(reducedMotion||![80,90,100].includes(level))return false;
-  const amplitude=level===80?.045:level===90?.075:.11,duration=level===80?.24:level===90?.30:.36;
+  const amplitude=level===80?.085:level===90?.105:.11,duration=level===80?.36:level===90?.45:.54;
   // A stronger overlapping impulse replaces the weaker one; amplitudes never add.
   if(this.elapsed<this.duration&&this.amplitude>amplitude)return false;
   this.level=level;this.elapsed=0;this.duration=duration;this.amplitude=amplitude;this.triggerCount++;this.sample();return true;
