@@ -18,7 +18,7 @@ import {
   type ClassId,
   type Skill,
 } from "./game/classes.js";
-import { normalMonsterBalance, species, zones, isZone, questDefinitions, type Kind, type ZoneId, type AttackShape } from "./game/content.js";
+import { normalMonsterBalance, miniMonsterDrops, species, zones, isZone, questDefinitions, type Kind, type ZoneId, type AttackShape } from "./game/content.js";
 import { rarityOrder, equipment, gearById, gearByName, type GearSlot, type Bonuses, type Rarity, BAG_CAPACITY, gearSlots, normalizeSecondary, rollGear, rollEquipmentDrops, gearSets } from "./game/equipment.js";
 import { zoneObstacles, zoneSpawns, WORLD_BOUNDS, PORTAL_POSITION, protectedPosition, insideMonsterGroup, zoneMonsterGroups, monsterGroupConfig } from "./game/map-data.js";
 export { species } from "./game/content.js";
@@ -258,9 +258,9 @@ export class Simulation {
   get hpRegenPercent(){return progression.hpRegenPercent+(this.gearBonuses.hpRegen||0)}
   get healingMultiplier(){return 1+Math.min(progression.caps.healing,(this.gearBonuses.healingBonus||0)/100)}
   addEquipmentItem(item:Item){if(this.save.items.some(i=>i.id===item.id))return false;if(this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY){this.onEvent('Bag full. Make room before collecting.');return false;}this.save.items.push({...structuredClone(item),category:itemCategory(item),secondary:normalizeSecondary(item.secondary),refine:refineLevel(item.refine)});return true;}
-  rollStoneLoot(monster:Monster){const spec=this.monsterSpec(monster.kind),tier=spec.boss?rollStoneDrop(true,this.random):this.random()<normalMonsterBalance(spec.level).drops.commonStone?'common':undefined;return tier?refineStones[tier]:undefined;}
+  rollStoneLoot(monster:Monster){const spec=this.monsterSpec(monster.kind),rates=spec.miniBoss?miniMonsterDrops(spec.level):normalMonsterBalance(spec.level).drops,tier=spec.boss?rollStoneDrop(true,this.random):this.random()<rates.commonStone?'common':undefined;return tier?refineStones[tier]:undefined;}
   rollMaterialLoot(monster:Monster):Item[]{
-    const spec=this.monsterSpec(monster.kind),rates=normalMonsterBalance(spec.level).drops;
+    const spec=this.monsterSpec(monster.kind),rates=spec.miniBoss?miniMonsterDrops(spec.level):normalMonsterBalance(spec.level).drops;
     const drops=spec.boss?rollMaterialDrops(true,this.random):(['shade','rune','sky'] as const).flatMap(key=>(['common','rare'] as const).flatMap(rarity=>this.random()<rates[`${key}_${rarity}`]?[{name:({shade:'Shade essence',rune:'Rune stone',sky:'Sky feather'} as const)[key],rarity,count:1}]:[]));
     return drops.map(drop=>({...drop,icon:materialIcon(drop.name,drop.rarity),id:materialKey(drop.name,drop.rarity),category:'material'}));
   }

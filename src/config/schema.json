@@ -3909,7 +3909,237 @@
         "IceboundSentinel": "number",
         "RootheartGuardian": "number",
         "RuinShadeHerald": "number"
-      }
+      },
+      "miniDrops": [
+        {
+          "level": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        },
+        {
+          "level": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
+        }
+      ]
     }
   },
   "economy": {

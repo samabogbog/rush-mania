@@ -1430,6 +1430,236 @@
       "IceboundSentinel": 29880,
       "RootheartGuardian": 167040,
       "RuinShadeHerald": 83520
-    }
+    },
+    "miniDrops": [
+      {
+        "level": 5,
+        "drops": {
+          "commonStone": 0.02,
+          "shade_common": 0.036,
+          "rune_common": 0.012,
+          "sky_common": 0.024,
+          "shade_rare": 0,
+          "rune_rare": 0,
+          "sky_rare": 0
+        }
+      },
+      {
+        "level": 10,
+        "drops": {
+          "commonStone": 0.0215,
+          "shade_common": 0.039,
+          "rune_common": 0.013,
+          "sky_common": 0.026,
+          "shade_rare": 0,
+          "rune_rare": 0,
+          "sky_rare": 0
+        }
+      },
+      {
+        "level": 15,
+        "drops": {
+          "commonStone": 0.023,
+          "shade_common": 0.042,
+          "rune_common": 0.014,
+          "sky_common": 0.028,
+          "shade_rare": 0,
+          "rune_rare": 0,
+          "sky_rare": 0
+        }
+      },
+      {
+        "level": 20,
+        "drops": {
+          "commonStone": 0.0245,
+          "shade_common": 0.045,
+          "rune_common": 0.015,
+          "sky_common": 0.03,
+          "shade_rare": 0,
+          "rune_rare": 0,
+          "sky_rare": 0
+        }
+      },
+      {
+        "level": 25,
+        "drops": {
+          "commonStone": 0.026,
+          "shade_common": 0.048,
+          "rune_common": 0.016,
+          "sky_common": 0.032,
+          "shade_rare": 0,
+          "rune_rare": 0,
+          "sky_rare": 0
+        }
+      },
+      {
+        "level": 30,
+        "drops": {
+          "commonStone": 0.0275,
+          "shade_common": 0.051,
+          "rune_common": 0.017,
+          "sky_common": 0.034,
+          "shade_rare": 0,
+          "rune_rare": 0,
+          "sky_rare": 0
+        }
+      },
+      {
+        "level": 35,
+        "drops": {
+          "commonStone": 0.029,
+          "shade_common": 0.054,
+          "rune_common": 0.018,
+          "sky_common": 0.036,
+          "shade_rare": 0,
+          "rune_rare": 0,
+          "sky_rare": 0
+        }
+      },
+      {
+        "level": 40,
+        "drops": {
+          "commonStone": 0.0305,
+          "shade_common": 0.057,
+          "rune_common": 0.019,
+          "sky_common": 0.038,
+          "shade_rare": 0.009,
+          "rune_rare": 0.003,
+          "sky_rare": 0.006
+        }
+      },
+      {
+        "level": 45,
+        "drops": {
+          "commonStone": 0.032,
+          "shade_common": 0.06,
+          "rune_common": 0.02,
+          "sky_common": 0.04,
+          "shade_rare": 0.0105,
+          "rune_rare": 0.0035,
+          "sky_rare": 0.007
+        }
+      },
+      {
+        "level": 50,
+        "drops": {
+          "commonStone": 0.0335,
+          "shade_common": 0.063,
+          "rune_common": 0.021,
+          "sky_common": 0.042,
+          "shade_rare": 0.012,
+          "rune_rare": 0.004,
+          "sky_rare": 0.008
+        }
+      },
+      {
+        "level": 55,
+        "drops": {
+          "commonStone": 0.035,
+          "shade_common": 0.066,
+          "rune_common": 0.022,
+          "sky_common": 0.044,
+          "shade_rare": 0.0135,
+          "rune_rare": 0.0045,
+          "sky_rare": 0.009
+        }
+      },
+      {
+        "level": 60,
+        "drops": {
+          "commonStone": 0.0365,
+          "shade_common": 0.069,
+          "rune_common": 0.023,
+          "sky_common": 0.046,
+          "shade_rare": 0.015,
+          "rune_rare": 0.005,
+          "sky_rare": 0.01
+        }
+      },
+      {
+        "level": 65,
+        "drops": {
+          "commonStone": 0.038,
+          "shade_common": 0.072,
+          "rune_common": 0.024,
+          "sky_common": 0.048,
+          "shade_rare": 0.0165,
+          "rune_rare": 0.0055,
+          "sky_rare": 0.011
+        }
+      },
+      {
+        "level": 70,
+        "drops": {
+          "commonStone": 0.0395,
+          "shade_common": 0.075,
+          "rune_common": 0.025,
+          "sky_common": 0.05,
+          "shade_rare": 0.018,
+          "rune_rare": 0.006,
+          "sky_rare": 0.012
+        }
+      },
+      {
+        "level": 75,
+        "drops": {
+          "commonStone": 0.041,
+          "shade_common": 0.075,
+          "rune_common": 0.025,
+          "sky_common": 0.05,
+          "shade_rare": 0.0195,
+          "rune_rare": 0.0065,
+          "sky_rare": 0.013
+        }
+      },
+      {
+        "level": 80,
+        "drops": {
+          "commonStone": 0.0425,
+          "shade_common": 0.075,
+          "rune_common": 0.025,
+          "sky_common": 0.05,
+          "shade_rare": 0.021,
+          "rune_rare": 0.007,
+          "sky_rare": 0.014
+        }
+      },
+      {
+        "level": 85,
+        "drops": {
+          "commonStone": 0.044,
+          "shade_common": 0.075,
+          "rune_common": 0.025,
+          "sky_common": 0.05,
+          "shade_rare": 0.0225,
+          "rune_rare": 0.0075,
+          "sky_rare": 0.015
+        }
+      },
+      {
+        "level": 90,
+        "drops": {
+          "commonStone": 0.0455,
+          "shade_common": 0.075,
+          "rune_common": 0.025,
+          "sky_common": 0.05,
+          "shade_rare": 0.024,
+          "rune_rare": 0.008,
+          "sky_rare": 0.016
+        }
+      },
+      {
+        "level": 95,
+        "drops": {
+          "commonStone": 0.047,
+          "shade_common": 0.075,
+          "rune_common": 0.025,
+          "sky_common": 0.05,
+          "shade_rare": 0.0255,
+          "rune_rare": 0.0085,
+          "sky_rare": 0.017
+        }
+      }
+    ]
   }
 }

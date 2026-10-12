@@ -10,6 +10,16 @@ export const zones = contentConfig.zones as Record<ZoneId,Zone>;
 export function isZone(value:unknown):value is ZoneId {return typeof value==='string'&&Object.hasOwn(zones,value)}
 export const questDefinitions = contentConfig.quests as (Omit<typeof contentConfig.quests[number], "zone"> & {zone:ZoneId})[];
 
+function checkpointDrops(level:number,rows:readonly {level:number;drops:typeof contentConfig.normalBalance.checkpoints[number]['drops']}[]){
+ const first=rows[0],last=rows[rows.length-1];
+ const upper=rows.find(row=>row.level>=level)||last,lower=[...rows].reverse().find(row=>row.level<=level)||first;
+ const t=upper.level===lower.level?0:(level-lower.level)/(upper.level-lower.level);
+ return Object.fromEntries(Object.keys(first.drops).map(key=>[key,lower.drops[key as keyof typeof first.drops]+(upper.drops[key as keyof typeof first.drops]-lower.drops[key as keyof typeof first.drops])*t])) as typeof first.drops;
+}
+
+/** Mini-boss rewards retain their pre-V3 rates, including the old level-95 clamp. */
+export function miniMonsterDrops(level:number){return checkpointDrops(level,contentConfig.normalBalance.miniDrops)}
+
 /** Checkpoints are exact; interpolate between them, clamp rates outside them. */
 export function normalMonsterBalance(level:number){
  const rows=contentConfig.normalBalance.checkpoints,first=rows[0],last=rows[rows.length-1];

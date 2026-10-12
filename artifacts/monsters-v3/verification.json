@@ -1,0 +1,10 @@
+{
+  "build": "passed",
+  "codeTests": 78,
+  "browserTests": 1,
+  "totalPassed": 79,
+  "miniMaterialPreservation": "all 6 species against original v2 CSV",
+  "csvSha256": "f7698d38f2abfb308d565e28f49a1447ddea275e114ae8f4ac8b067a95985b2e",
+  "builtEntry": "/assets/index-C_97S0lK.js",
+  "environment": "Chromium SwiftShader; browser practice; server authority via code regression"
+}
