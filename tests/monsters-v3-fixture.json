@@ -1,0 +1,475 @@
+{
+  "sourceSha256": "f7698d38f2abfb308d565e28f49a1447ddea275e114ae8f4ac8b067a95985b2e",
+  "rows": [
+    {
+      "level": 5,
+      "hp": 125,
+      "atk": 14,
+      "defense": 5,
+      "gold": 10,
+      "drops": {
+        "commonStone": 0.02,
+        "shade_common": 0.036000000000000004,
+        "rune_common": 0.015,
+        "sky_common": 0.024,
+        "shade_rare": 0,
+        "rune_rare": 0,
+        "sky_rare": 0
+      },
+      "gearLevel": 10,
+      "equipment": {
+        "defenseCommon": 0.004,
+        "defenseRare": 0.001,
+        "attackCommon": 0.006,
+        "attackRare": 0.0015
+      }
+    },
+    {
+      "level": 10,
+      "hp": 300,
+      "atk": 40,
+      "defense": 10,
+      "gold": 20,
+      "drops": {
+        "commonStone": 0.0215,
+        "shade_common": 0.039,
+        "rune_common": 0.0155,
+        "sky_common": 0.026000000000000002,
+        "shade_rare": 0,
+        "rune_rare": 0,
+        "sky_rare": 0
+      },
+      "gearLevel": 10,
+      "equipment": {
+        "defenseCommon": 0.0048,
+        "defenseRare": 0.0012,
+        "attackCommon": 0.0072,
+        "attackRare": 0.0018
+      }
+    },
+    {
+      "level": 15,
+      "hp": 525,
+      "atk": 79,
+      "defense": 15,
+      "gold": 30,
+      "drops": {
+        "commonStone": 0.023,
+        "shade_common": 0.042,
+        "rune_common": 0.016,
+        "sky_common": 0.027999999999999997,
+        "shade_rare": 0,
+        "rune_rare": 0,
+        "sky_rare": 0
+      },
+      "gearLevel": 10,
+      "equipment": {
+        "defenseCommon": 0.005600000000000001,
+        "defenseRare": 0.0014000000000000002,
+        "attackCommon": 0.0084,
+        "attackRare": 0.0021
+      }
+    },
+    {
+      "level": 20,
+      "hp": 800,
+      "atk": 130,
+      "defense": 20,
+      "gold": 40,
+      "drops": {
+        "commonStone": 0.0245,
+        "shade_common": 0.045,
+        "rune_common": 0.0165,
+        "sky_common": 0.03,
+        "shade_rare": 0,
+        "rune_rare": 0,
+        "sky_rare": 0
+      },
+      "gearLevel": 10,
+      "equipment": {
+        "defenseCommon": 0.0064,
+        "defenseRare": 0.0016,
+        "attackCommon": 0.0096,
+        "attackRare": 0.0024
+      }
+    },
+    {
+      "level": 25,
+      "hp": 1125,
+      "atk": 194,
+      "defense": 25,
+      "gold": 50,
+      "drops": {
+        "commonStone": 0.026000000000000002,
+        "shade_common": 0.048,
+        "rune_common": 0.017,
+        "sky_common": 0.032,
+        "shade_rare": 0,
+        "rune_rare": 0,
+        "sky_rare": 0
+      },
+      "gearLevel": 30,
+      "equipment": {
+        "defenseCommon": 0.004,
+        "defenseRare": 0.001,
+        "attackCommon": 0.006,
+        "attackRare": 0.0015
+      }
+    },
+    {
+      "level": 30,
+      "hp": 1500,
+      "atk": 270,
+      "defense": 30,
+      "gold": 60,
+      "drops": {
+        "commonStone": 0.0275,
+        "shade_common": 0.051,
+        "rune_common": 0.0175,
+        "sky_common": 0.034,
+        "shade_rare": 0,
+        "rune_rare": 0,
+        "sky_rare": 0
+      },
+      "gearLevel": 30,
+      "equipment": {
+        "defenseCommon": 0.0048,
+        "defenseRare": 0.0012,
+        "attackCommon": 0.0072,
+        "attackRare": 0.0018
+      }
+    },
+    {
+      "level": 35,
+      "hp": 1925,
+      "atk": 359,
+      "defense": 35,
+      "gold": 70,
+      "drops": {
+        "commonStone": 0.028999999999999998,
+        "shade_common": 0.054000000000000006,
+        "rune_common": 0.018000000000000002,
+        "sky_common": 0.036000000000000004,
+        "shade_rare": 0,
+        "rune_rare": 0,
+        "sky_rare": 0
+      },
+      "gearLevel": 30,
+      "equipment": {
+        "defenseCommon": 0.005600000000000001,
+        "defenseRare": 0.0014000000000000002,
+        "attackCommon": 0.0084,
+        "attackRare": 0.0021
+      }
+    },
+    {
+      "level": 40,
+      "hp": 2400,
+      "atk": 460,
+      "defense": 40,
+      "gold": 80,
+      "drops": {
+        "commonStone": 0.0305,
+        "shade_common": 0.0546,
+        "rune_common": 0.0182,
+        "sky_common": 0.0364,
+        "shade_rare": 0.009000000000000001,
+        "rune_rare": 0.003,
+        "sky_rare": 0.006
+      },
+      "gearLevel": 30,
+      "equipment": {
+        "defenseCommon": 0.0064,
+        "defenseRare": 0.0016,
+        "attackCommon": 0.0096,
+        "attackRare": 0.0024
+      }
+    },
+    {
+      "level": 45,
+      "hp": 2925,
+      "atk": 574,
+      "defense": 45,
+      "gold": 90,
+      "drops": {
+        "commonStone": 0.032,
+        "shade_common": 0.0552,
+        "rune_common": 0.0184,
+        "sky_common": 0.0368,
+        "shade_rare": 0.0105,
+        "rune_rare": 0.0034999999999999996,
+        "sky_rare": 0.006999999999999999
+      },
+      "gearLevel": 50,
+      "equipment": {
+        "defenseCommon": 0.004,
+        "defenseRare": 0.001,
+        "attackCommon": 0.006,
+        "attackRare": 0.0015
+      }
+    },
+    {
+      "level": 50,
+      "hp": 3500,
+      "atk": 700,
+      "defense": 50,
+      "gold": 100,
+      "drops": {
+        "commonStone": 0.0335,
+        "shade_common": 0.0558,
+        "rune_common": 0.018600000000000002,
+        "sky_common": 0.037200000000000004,
+        "shade_rare": 0.012,
+        "rune_rare": 0.004,
+        "sky_rare": 0.008
+      },
+      "gearLevel": 50,
+      "equipment": {
+        "defenseCommon": 0.0048,
+        "defenseRare": 0.0012,
+        "attackCommon": 0.0072,
+        "attackRare": 0.0018
+      }
+    },
+    {
+      "level": 55,
+      "hp": 4125,
+      "atk": 839,
+      "defense": 55,
+      "gold": 110,
+      "drops": {
+        "commonStone": 0.035,
+        "shade_common": 0.0564,
+        "rune_common": 0.018799999999999997,
+        "sky_common": 0.037599999999999995,
+        "shade_rare": 0.013500000000000002,
+        "rune_rare": 0.0045000000000000005,
+        "sky_rare": 0.009000000000000001
+      },
+      "gearLevel": 50,
+      "equipment": {
+        "defenseCommon": 0.005600000000000001,
+        "defenseRare": 0.0014000000000000002,
+        "attackCommon": 0.0084,
+        "attackRare": 0.0021
+      }
+    },
+    {
+      "level": 60,
+      "hp": 4800,
+      "atk": 990,
+      "defense": 60,
+      "gold": 120,
+      "drops": {
+        "commonStone": 0.0365,
+        "shade_common": 0.057,
+        "rune_common": 0.019,
+        "sky_common": 0.038,
+        "shade_rare": 0.015,
+        "rune_rare": 0.005,
+        "sky_rare": 0.01
+      },
+      "gearLevel": 50,
+      "equipment": {
+        "defenseCommon": 0.0064,
+        "defenseRare": 0.0016,
+        "attackCommon": 0.0096,
+        "attackRare": 0.0024
+      }
+    },
+    {
+      "level": 65,
+      "hp": 5525,
+      "atk": 1154,
+      "defense": 65,
+      "gold": 130,
+      "drops": {
+        "commonStone": 0.038,
+        "shade_common": 0.0576,
+        "rune_common": 0.0192,
+        "sky_common": 0.0384,
+        "shade_rare": 0.0165,
+        "rune_rare": 0.0055000000000000005,
+        "sky_rare": 0.011000000000000001
+      },
+      "gearLevel": 70,
+      "equipment": {
+        "defenseCommon": 0.004,
+        "defenseRare": 0.001,
+        "attackCommon": 0.006,
+        "attackRare": 0.0015
+      }
+    },
+    {
+      "level": 70,
+      "hp": 6300,
+      "atk": 1330,
+      "defense": 70,
+      "gold": 140,
+      "drops": {
+        "commonStone": 0.0395,
+        "shade_common": 0.0582,
+        "rune_common": 0.0194,
+        "sky_common": 0.0388,
+        "shade_rare": 0.018000000000000002,
+        "rune_rare": 0.006,
+        "sky_rare": 0.012
+      },
+      "gearLevel": 70,
+      "equipment": {
+        "defenseCommon": 0.0048,
+        "defenseRare": 0.0012,
+        "attackCommon": 0.0072,
+        "attackRare": 0.0018
+      }
+    },
+    {
+      "level": 75,
+      "hp": 7125,
+      "atk": 1519,
+      "defense": 75,
+      "gold": 150,
+      "drops": {
+        "commonStone": 0.040999999999999995,
+        "shade_common": 0.0588,
+        "rune_common": 0.0196,
+        "sky_common": 0.0392,
+        "shade_rare": 0.0195,
+        "rune_rare": 0.006500000000000001,
+        "sky_rare": 0.013000000000000001
+      },
+      "gearLevel": 70,
+      "equipment": {
+        "defenseCommon": 0.005600000000000001,
+        "defenseRare": 0.0014000000000000002,
+        "attackCommon": 0.0084,
+        "attackRare": 0.0021
+      }
+    },
+    {
+      "level": 80,
+      "hp": 8000,
+      "atk": 1720,
+      "defense": 80,
+      "gold": 160,
+      "drops": {
+        "commonStone": 0.0425,
+        "shade_common": 0.0594,
+        "rune_common": 0.019799999999999998,
+        "sky_common": 0.039599999999999996,
+        "shade_rare": 0.021,
+        "rune_rare": 0.006999999999999999,
+        "sky_rare": 0.013999999999999999
+      },
+      "gearLevel": 70,
+      "equipment": {
+        "defenseCommon": 0.0064,
+        "defenseRare": 0.0016,
+        "attackCommon": 0.0096,
+        "attackRare": 0.0024
+      }
+    },
+    {
+      "level": 85,
+      "hp": 8925,
+      "atk": 1934,
+      "defense": 85,
+      "gold": 170,
+      "drops": {
+        "commonStone": 0.044000000000000004,
+        "shade_common": 0.06,
+        "rune_common": 0.02,
+        "sky_common": 0.04,
+        "shade_rare": 0.0225,
+        "rune_rare": 0.0075,
+        "sky_rare": 0.015
+      },
+      "gearLevel": 90,
+      "equipment": {
+        "defenseCommon": 0.004,
+        "defenseRare": 0.001,
+        "attackCommon": 0.006,
+        "attackRare": 0.0015
+      }
+    },
+    {
+      "level": 90,
+      "hp": 9900,
+      "atk": 2160,
+      "defense": 90,
+      "gold": 180,
+      "drops": {
+        "commonStone": 0.0455,
+        "shade_common": 0.060599999999999994,
+        "rune_common": 0.0202,
+        "sky_common": 0.0404,
+        "shade_rare": 0.024,
+        "rune_rare": 0.008,
+        "sky_rare": 0.016
+      },
+      "gearLevel": 90,
+      "equipment": {
+        "defenseCommon": 0.0048,
+        "defenseRare": 0.0012,
+        "attackCommon": 0.0072,
+        "attackRare": 0.0018
+      }
+    },
+    {
+      "level": 95,
+      "hp": 10925,
+      "atk": 2399,
+      "defense": 95,
+      "gold": 190,
+      "drops": {
+        "commonStone": 0.047,
+        "shade_common": 0.061200000000000004,
+        "rune_common": 0.0204,
+        "sky_common": 0.0408,
+        "shade_rare": 0.0255,
+        "rune_rare": 0.0085,
+        "sky_rare": 0.017
+      },
+      "gearLevel": 90,
+      "equipment": {
+        "defenseCommon": 0.005600000000000001,
+        "defenseRare": 0.0014000000000000002,
+        "attackCommon": 0.0084,
+        "attackRare": 0.0021
+      }
+    },
+    {
+      "level": 100,
+      "hp": 12000,
+      "atk": 2650,
+      "defense": 100,
+      "gold": 200,
+      "drops": {
+        "commonStone": 0.047,
+        "shade_common": 0.061200000000000004,
+        "rune_common": 0.0204,
+        "sky_common": 0.0408,
+        "shade_rare": 0.0255,
+        "rune_rare": 0.0085,
+        "sky_rare": 0.017
+      },
+      "gearLevel": 90,
+      "equipment": {
+        "defenseCommon": 0.0064,
+        "defenseRare": 0.0016,
+        "attackCommon": 0.0096,
+        "attackRare": 0.0024
+      }
+    }
+  ],
+  "boss": {
+    "hp": 40,
+    "atk": 12,
+    "defense": 2
+  },
+  "mini": {
+    "hp": 20,
+    "atk": 6,
+    "defense": 1.5
+  }
+}

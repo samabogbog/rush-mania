@@ -568,78 +568,132 @@
   "drops": {
     "slotMultipliers": {
       "weapon": 1,
-      "helmet": 1.5,
-      "armor": 1.5,
-      "pants": 1.5,
-      "boots": 1.5,
+      "helmet": 0.6666666666666666,
+      "armor": 0.6666666666666666,
+      "pants": 0.6666666666666666,
+      "boots": 0.6666666666666666,
       "accessory": 1
     },
     "levels": [
       {
         "monsterLevel": 5,
         "gearLevel": 10,
-        "common": 0.01,
-        "rare": 0.002
+        "common": 0.006,
+        "rare": 0.0015
       },
       {
         "monsterLevel": 10,
         "gearLevel": 10,
-        "common": 0.015,
-        "rare": 0.003
+        "common": 0.0072,
+        "rare": 0.0018
       },
       {
         "monsterLevel": 15,
         "gearLevel": 10,
-        "common": 0.02,
-        "rare": 0.004
+        "common": 0.0084,
+        "rare": 0.0021
+      },
+      {
+        "monsterLevel": 20,
+        "gearLevel": 10,
+        "common": 0.0096,
+        "rare": 0.0024
       },
       {
         "monsterLevel": 25,
         "gearLevel": 30,
-        "common": 0.01,
-        "rare": 0.002
+        "common": 0.006,
+        "rare": 0.0015
+      },
+      {
+        "monsterLevel": 30,
+        "gearLevel": 30,
+        "common": 0.0072,
+        "rare": 0.0018
       },
       {
         "monsterLevel": 35,
         "gearLevel": 30,
-        "common": 0.02,
-        "rare": 0.004
+        "common": 0.0084,
+        "rare": 0.0021
+      },
+      {
+        "monsterLevel": 40,
+        "gearLevel": 30,
+        "common": 0.0096,
+        "rare": 0.0024
       },
       {
         "monsterLevel": 45,
         "gearLevel": 50,
-        "common": 0.01,
-        "rare": 0.002
+        "common": 0.006,
+        "rare": 0.0015
+      },
+      {
+        "monsterLevel": 50,
+        "gearLevel": 50,
+        "common": 0.0072,
+        "rare": 0.0018
       },
       {
         "monsterLevel": 55,
         "gearLevel": 50,
-        "common": 0.02,
-        "rare": 0.004
+        "common": 0.0084,
+        "rare": 0.0021
+      },
+      {
+        "monsterLevel": 60,
+        "gearLevel": 50,
+        "common": 0.0096,
+        "rare": 0.0024
       },
       {
         "monsterLevel": 65,
         "gearLevel": 70,
-        "common": 0.01,
-        "rare": 0.002
+        "common": 0.006,
+        "rare": 0.0015
+      },
+      {
+        "monsterLevel": 70,
+        "gearLevel": 70,
+        "common": 0.0072,
+        "rare": 0.0018
       },
       {
         "monsterLevel": 75,
         "gearLevel": 70,
-        "common": 0.02,
-        "rare": 0.004
+        "common": 0.0084,
+        "rare": 0.0021
+      },
+      {
+        "monsterLevel": 80,
+        "gearLevel": 70,
+        "common": 0.0096,
+        "rare": 0.0024
       },
       {
         "monsterLevel": 85,
         "gearLevel": 90,
-        "common": 0.01,
-        "rare": 0.002
+        "common": 0.006,
+        "rare": 0.0015
+      },
+      {
+        "monsterLevel": 90,
+        "gearLevel": 90,
+        "common": 0.0072,
+        "rare": 0.0018
       },
       {
         "monsterLevel": 95,
         "gearLevel": 90,
-        "common": 0.02,
-        "rare": 0.004
+        "common": 0.0084,
+        "rare": 0.0021
+      },
+      {
+        "monsterLevel": 100,
+        "gearLevel": 90,
+        "common": 0.0096,
+        "rare": 0.0024
       }
     ]
   },

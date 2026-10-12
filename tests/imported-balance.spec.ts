@@ -16,9 +16,9 @@ test('all 100 spreadsheet levels are exact and cap does not expose level 101',()
 test('normal checkpoints, interpolation, early levels, and elite multipliers share one runtime',()=>{
  const points=contentConfig.normalBalance.checkpoints;
  for(const row of points)expect(normalMonsterBalance(row.level)).toEqual({hp:row.hp,atk:row.atk,defense:row.defense,gold:row.gold,drops:row.drops});
- expect(normalMonsterBalance(1).hp).toBeCloseTo(19.2);expect(normalMonsterBalance(1).drops).toEqual(points[0].drops);expect(normalMonsterBalance(100)).toEqual(normalMonsterBalance(95));
- expect(normalMonsterBalance(35).hp).toBe(984);expect(normalMonsterBalance(35).drops.shade_rare).toBe(0);
- expect(normalMonsterBalance(37.5).hp).toBe(942);expect(normalMonsterBalance(37.5).drops.shade_rare).toBe(.0045);
+ expect(normalMonsterBalance(1).hp).toBeCloseTo(25);expect(normalMonsterBalance(1).drops).toEqual(points[0].drops);expect(normalMonsterBalance(105)).toEqual(normalMonsterBalance(100));
+ expect(normalMonsterBalance(35).hp).toBe(1925);expect(normalMonsterBalance(35).drops.shade_rare).toBe(0);
+ expect(normalMonsterBalance(37.5).hp).toBe(2162.5);expect(normalMonsterBalance(37.5).drops.shade_rare).toBe(.0045);
  const sim=new Simulation(()=>.5,undefined,null);
  for(const [kind,base] of Object.entries(species)){const spec=sim.monsterSpec(kind as keyof typeof species),normal=normalMonsterBalance(base.level),tier=base.boss?contentConfig.normalBalance.boss:base.miniBoss?contentConfig.normalBalance.mini:{hp:1,atk:1,defense:1,goldPerLevel:0,xp:1};for(const key of ['hp','atk','defense'] as const)expect(spec[key]).toBe(normal[key]*tier[key]);expect(spec.gold).toBe(base.boss||base.miniBoss?base.level*tier.goldPerLevel:normal.gold);expect(spec.xp).toBe(progression.levels[base.level-1].monsterXp*tier.xp);}
  sim.balance.Dewdrop={hp:999,xp:123};expect(sim.monsterSpec('Dewdrop').hp).toBe(999);expect(sim.monsterSpec('Dewdrop').xp).toBe(123);

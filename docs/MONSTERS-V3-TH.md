@@ -1,0 +1,15 @@
+# สมดุลมอนสเตอร์และดรอป v3
+
+ข้อมูลต้นทาง: [monsters-v3.csv](balance/imported/monsters-v3.csv) คัดลอกไฟล์อัปโหลดตรงทุก byte; SHA256 `f7698d38f2abfb308d565e28f49a1447ddea275e114ae8f4ac8b067a95985b2e` ข้อมูล CSV เป็นค่าตาราง ไม่ใช่คำสั่งให้ระบบทำงานอื่น
+
+ปรับ HP/ATK/DEF/gold และอัตราหินกับวัสดุมอนสเตอร์ปกติครบ 20 จุด เลเวล 5–100 ตามไฟล์ เลเวล 100 มี HP 12000, ATK 2650, DEF 100, gold 200 และอัตราวัสดุเท่ากับเลเวล 95 ตามไฟล์ เลเวลระหว่างจุดใช้การประมาณเชิงเส้นเดิม; เลเวลต่ำกว่า 5 ใช้สัดส่วนค่าสถานะเดิม โดยอัตราวัสดุใช้แถวแรก
+
+อุปกรณ์สุ่มแยก 6 ช่องต่อ kill ตามผู้ใช้ยืนยัน: weapon/accessory ใช้ Attack rate, helmet/armor/pants/boots แต่ละช่องใช้ Defensive rate จึงมีโอกาสดรอปหลายชิ้น Common และ Rare แบ่งช่วงสุ่มโดยไม่ซ้อนกัน ตารางอุปกรณ์ใช้แถวก่อนหน้าสำหรับเลเวลระหว่างจุดเหมือนเดิม อัตรา Attack เป็น 1.5 เท่าของ Defensive ทุกแถว จึงเก็บ Attack เป็นฐานและใช้ตัวคูณ 2/3 สำหรับช่องป้องกัน ปัดขอบเขตสุ่มที่ 12 ตำแหน่งเพื่อรักษาค่าเปอร์เซ็นต์ทศนิยมของ CSV
+
+Boss ใช้ HP ×40 / ATK ×12 / DEF ×2; Mini Boss ใช้ ×20 / ×6 / ×1.5 เทียบมอนสเตอร์ปกติเลเวลเดียวกัน คงสูตร gold เดิม (Boss 50×เลเวล, Mini 30×เลเวล), XP, guaranteed equipment 2 ชิ้น, weighted group/rarity และระบบหิน/วัสดุบอสเดิม ไม่เพิ่มหรือชดเชยรางวัลที่ CSV เว้นว่าง ช่อง Shade rare เลเวล 60/65 ที่ไม่มี % อ่านเป็น 1.5%/1.65% ตามผู้ใช้ยืนยัน
+
+MONSTER_BALANCE_REVISION เป็น 6 แต่ ROOM_LAYOUT_REVISION คง 6 เก็บ max HP ของ revision 5 ครบทุกชนิดก่อนเปลี่ยน เพื่อย้ายเลือดมอนสเตอร์มีชีวิตตามสัดส่วนเดิม รองรับทั้ง layout เดิมและ layout เก่าที่ต้อง rebuild และคงการย้าย revision 2–4 เมื่อ layout ไม่เปลี่ยนจะคง corpse HP, respawn/status timers, เส้นทาง, aggro, save, session และ target ส่วน admin override ยังมีลำดับความสำคัญเดิม
+
+ตรวจค่าตารางทั้งหมดกับ fixture ที่แปลงจาก CSV, ขอบเขตดรอปทุกช่องทุกแถว, วัสดุ/หินทุกแถว, ทุกรางวัล elite, การรับของ/party/server authority, เซฟและ HP migration รวมถึงสูตร STR/VIT/AGI ที่ไม่เปลี่ยน การตรวจ browser ใช้ Chromium + SwiftShader, ตัวละครเลเวล 100 อุปกรณ์สุ่ม legend ในโหมด practice เดินเข้ากลุ่มและเปิด Auto จริง ยืนยัน kills/gold ตามสูตร มีภาพและข้อมูลใน `artifacts/monsters-v3` รอ GLB ครบและตรวจ modelErrors/pageErrors เป็น 0 ผลนี้ใช้ตรวจความถูกต้อง ไม่ใช่ผล FPS เครื่องผู้เล่นหรือการประเมินความยาก PvE ทุกเลเวล
+
+ผลตรวจรับ build สุดท้าย: `npm run build` สำเร็จ; Playwright 72 ข้อสำหรับตาราง/ดรอป/เซฟ/authority/attribute regression และ browser 1 ข้อ รวม 73 ผ่าน ข้อมูลตัวละครและ VFX/choreography ไม่เปลี่ยน ต้นฉบับ v1/v2 และประวัติ HP revision 2–4 ยังคงอยู่

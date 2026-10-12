@@ -1300,6 +1300,60 @@
           "gearLevel": "number",
           "common": "number",
           "rare": "number"
+        },
+        {
+          "monsterLevel": "number",
+          "gearLevel": "number",
+          "common": "number",
+          "rare": "number"
+        },
+        {
+          "monsterLevel": "number",
+          "gearLevel": "number",
+          "common": "number",
+          "rare": "number"
+        },
+        {
+          "monsterLevel": "number",
+          "gearLevel": "number",
+          "common": "number",
+          "rare": "number"
+        },
+        {
+          "monsterLevel": "number",
+          "gearLevel": "number",
+          "common": "number",
+          "rare": "number"
+        },
+        {
+          "monsterLevel": "number",
+          "gearLevel": "number",
+          "common": "number",
+          "rare": "number"
+        },
+        {
+          "monsterLevel": "number",
+          "gearLevel": "number",
+          "common": "number",
+          "rare": "number"
+        },
+        {
+          "monsterLevel": "number",
+          "gearLevel": "number",
+          "common": "number",
+          "rare": "number"
+        },
+        {
+          "monsterLevel": "number",
+          "gearLevel": "number",
+          "common": "number",
+          "rare": "number"
+        },
+        {
+          "monsterLevel": "number",
+          "gearLevel": "number",
+          "common": "number",
+          "rare": "number"
         }
       ]
     },
@@ -3668,6 +3722,22 @@
             "rune_rare": "number",
             "sky_rare": "number"
           }
+        },
+        {
+          "level": "number",
+          "hp": "number",
+          "atk": "number",
+          "defense": "number",
+          "gold": "number",
+          "drops": {
+            "commonStone": "number",
+            "shade_common": "number",
+            "rune_common": "number",
+            "sky_common": "number",
+            "shade_rare": "number",
+            "rune_rare": "number",
+            "sky_rare": "number"
+          }
         }
       ],
       "boss": {
@@ -3763,6 +3833,45 @@
         "RuinShadeHerald": "number"
       },
       "revision4Hp": {
+        "Dewdrop": "number",
+        "Wildcap": "number",
+        "Leafling": "number",
+        "Sunbee": "number",
+        "RibbonHare": "number",
+        "Applesprout": "number",
+        "AmberBoar": "number",
+        "Honeybug": "number",
+        "Sporeguard": "number",
+        "OrchardStag": "number",
+        "GlowWisp": "number",
+        "MarshTurtle": "number",
+        "ReedSprite": "number",
+        "PuddleJelly": "number",
+        "CrystalMoth": "number",
+        "FrostCub": "number",
+        "IceGolem": "number",
+        "Snowcap": "number",
+        "PeakOwl": "number",
+        "FrostWolf": "number",
+        "Rootling": "number",
+        "RuinSentinel": "number",
+        "ShadeWisp": "number",
+        "StoneWarden": "number",
+        "VineBeast": "number",
+        "TownWildwoodKing": "number",
+        "TownBrambleCaptain": "number",
+        "MooncapMonarch": "number",
+        "DewdropMatriarch": "number",
+        "AmberAntlerKing": "number",
+        "HoneyHiveMarshal": "number",
+        "CrystalShellSovereign": "number",
+        "MarshWispHerald": "number",
+        "FrostfangSovereign": "number",
+        "IceboundSentinel": "number",
+        "RootheartGuardian": "number",
+        "RuinShadeHerald": "number"
+      },
+      "revision5Hp": {
         "Dewdrop": "number",
         "Wildcap": "number",
         "Leafling": "number",

@@ -1,0 +1,202 @@
+{
+  "fixture": {
+    "level": 100,
+    "job": "swordsman",
+    "practice": true,
+    "gear": "legendRolled",
+    "hotbar": []
+  },
+  "initialHp": [
+    {
+      "kind": "Dewdrop",
+      "hp": 125
+    },
+    {
+      "kind": "Dewdrop",
+      "hp": 125
+    },
+    {
+      "kind": "Dewdrop",
+      "hp": 125
+    },
+    {
+      "kind": "Dewdrop",
+      "hp": 125
+    },
+    {
+      "kind": "Dewdrop",
+      "hp": 125
+    },
+    {
+      "kind": "Dewdrop",
+      "hp": 125
+    },
+    {
+      "kind": "Wildcap",
+      "hp": 300
+    },
+    {
+      "kind": "Wildcap",
+      "hp": 300
+    },
+    {
+      "kind": "Wildcap",
+      "hp": 300
+    },
+    {
+      "kind": "Wildcap",
+      "hp": 300
+    },
+    {
+      "kind": "Wildcap",
+      "hp": 300
+    },
+    {
+      "kind": "Wildcap",
+      "hp": 300
+    },
+    {
+      "kind": "Wildcap",
+      "hp": 300
+    },
+    {
+      "kind": "Leafling",
+      "hp": 525
+    },
+    {
+      "kind": "Leafling",
+      "hp": 525
+    },
+    {
+      "kind": "Leafling",
+      "hp": 525
+    },
+    {
+      "kind": "Leafling",
+      "hp": 525
+    },
+    {
+      "kind": "Leafling",
+      "hp": 525
+    },
+    {
+      "kind": "Leafling",
+      "hp": 525
+    },
+    {
+      "kind": "Leafling",
+      "hp": 525
+    },
+    {
+      "kind": "Leafling",
+      "hp": 525
+    },
+    {
+      "kind": "Sunbee",
+      "hp": 300
+    },
+    {
+      "kind": "Sunbee",
+      "hp": 300
+    },
+    {
+      "kind": "Sunbee",
+      "hp": 300
+    },
+    {
+      "kind": "Sunbee",
+      "hp": 300
+    },
+    {
+      "kind": "Sunbee",
+      "hp": 300
+    },
+    {
+      "kind": "Sunbee",
+      "hp": 300
+    },
+    {
+      "kind": "RibbonHare",
+      "hp": 525
+    },
+    {
+      "kind": "RibbonHare",
+      "hp": 525
+    },
+    {
+      "kind": "RibbonHare",
+      "hp": 525
+    },
+    {
+      "kind": "RibbonHare",
+      "hp": 525
+    },
+    {
+      "kind": "RibbonHare",
+      "hp": 525
+    },
+    {
+      "kind": "RibbonHare",
+      "hp": 525
+    },
+    {
+      "kind": "RibbonHare",
+      "hp": 525
+    },
+    {
+      "kind": "Dewdrop",
+      "hp": 125
+    },
+    {
+      "kind": "Dewdrop",
+      "hp": 125
+    },
+    {
+      "kind": "Dewdrop",
+      "hp": 125
+    },
+    {
+      "kind": "Dewdrop",
+      "hp": 125
+    },
+    {
+      "kind": "Dewdrop",
+      "hp": 125
+    },
+    {
+      "kind": "Dewdrop",
+      "hp": 125
+    },
+    {
+      "kind": "Dewdrop",
+      "hp": 125
+    },
+    {
+      "kind": "Dewdrop",
+      "hp": 125
+    },
+    {
+      "kind": "MooncapMonarch",
+      "hp": 32000
+    },
+    {
+      "kind": "DewdropMatriarch",
+      "hp": 16000
+    }
+  ],
+  "before": {
+    "x": 0,
+    "z": 15.351276400000012,
+    "kills": 0,
+    "gold": 120
+  },
+  "after": {
+    "x": 0,
+    "z": 17.881835200000026,
+    "kills": 1,
+    "gold": 131,
+    "hp": 7747.75
+  },
+  "modelErrors": 0,
+  "pageErrors": []
+}

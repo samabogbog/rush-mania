@@ -91,7 +91,10 @@ export function rollEquipmentDrops(level:number,tier:EquipmentDropTier|boolean,r
  const drops:GearInstance[]=[];
  for(const slot of gearSlots){
   const multiplier=config.drops.slotMultipliers[slot],roll=random();
-  const rarity:Rarity|undefined=roll<row.common*multiplier?'common':roll<(row.common+row.rare)*multiplier?'rare':undefined;
+  // Stable decimal boundaries retain the CSV's exact per-slot percentages (defense uses 2/3).
+  const common=Math.round(row.common*multiplier*1e12)/1e12;
+  const total=Math.round((row.common+row.rare)*multiplier*1e12)/1e12;
+  const rarity:Rarity|undefined=roll<common?'common':roll<total?'rare':undefined;
   if(!rarity)continue;
   const pool=equipment.filter(g=>g.setId===set.id&&g.slot===slot);
   const gear=pool.length===1?pool[0]:pool[Math.min(pool.length-1,Math.floor(random()*pool.length))];

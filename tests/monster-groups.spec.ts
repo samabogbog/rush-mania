@@ -32,7 +32,7 @@ for(const zone of Object.keys(zones) as ZoneId[])test(`${zone} packs have six to
  for(const m of entries){expect(obstacles.some(o=>Math.hypot(m.x-o.x,m.z-o.z)<o.r+.3)).toBe(false);expect(protectedPosition(zone,m.x,m.z)).toBe(false);expect(m.x).toBeGreaterThanOrEqual(WORLD_BOUNDS.minX);expect(m.x).toBeLessThanOrEqual(WORLD_BOUNDS.maxX);expect(m.z).toBeGreaterThanOrEqual(WORLD_BOUNDS.minZ);expect(m.z).toBeLessThanOrEqual(WORLD_BOUNDS.maxZ);}
 });
 test('stationary territory pulls entire pack and respawns; leaving returns without healing',()=>{
- const s=new Simulation(()=>.5,undefined,null),g=zoneMonsterGroups('glade')[0];s.x=g.x;s.z=g.z;s.save.stats.vit=10000;s.save.hp=s.maxHp;
+ const s=new Simulation(()=>.5,undefined,null),g=zoneMonsterGroups('glade')[0];s.x=g.x;s.z=g.z;s.save.level=100;s.save.stats.vit=500;s.save.hp=s.maxHp;
  const pack=s.monsters.filter(m=>m.groupId===g.id);s.tick(.025,0,0);expect(pack.every(m=>m.aggro)).toBe(true);expect(s.target).toBeNull();
  for(let n=0;n<700;n++)s.tick(.025,0,0);
  expect(pack.every(m=>Math.hypot(m.x-s.x,m.z-s.z)<1.6)).toBe(true);
