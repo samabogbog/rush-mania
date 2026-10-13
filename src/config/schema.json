@@ -1437,6 +1437,18 @@
           "weight": "number"
         }
       ]
+    },
+    "regenRolls": {
+      "minLevel": "number",
+      "maxLevel": "number",
+      "hpRegen": [
+        "number",
+        "number"
+      ],
+      "mpRegen": [
+        "number",
+        "number"
+      ]
     }
   },
   "refinement": {

@@ -34,3 +34,10 @@ test('attribute tuning rejects negative shares, overspending and level regressio
   const c=config();mutate(c);expect(()=>validateConfiguration(c)).toThrow(/Invalid balance config/);
  }
 });
+test('regen roll progression rejects reversed levels and maxima outside existing safety limits',()=>{
+ for(const edit of [
+  (c:ReturnType<typeof config>)=>{c.equipment.regenRolls.maxLevel=c.equipment.regenRolls.minLevel},
+  (c:ReturnType<typeof config>)=>{c.equipment.regenRolls.hpRegen=[.3,.2]},
+  (c:ReturnType<typeof config>)=>{c.equipment.regenRolls.mpRegen=[.3,.6]},
+ ]){const c=config();edit(c);expect(()=>validateConfiguration(c)).toThrow(/regenRolls/);}
+});

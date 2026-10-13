@@ -21,20 +21,21 @@ test('HP and MP regeneration scale with max resources and exclude healing receiv
  }
 });
 
-test('regen normalization, formatting and level-independent rolls agree',()=>{
+test('regen normalization, formatting and level-scaled rolls agree',()=>{
  expect(normalizeSecondary({hpRegen:4,mpRegen:2,healingBonus:37,lifesteal:12})).toEqual({hpRegen:.3,mpRegen:.5,healingBonus:37,lifesteal:12});
  expect(formatStat('hpRegen',.23)).toBe('0.23%/s');expect(formatStat('mpRegen',.45)).toBe('0.45%/s');
- for(const level of [1,10,90,100]){
-  expect(secondaryRollValue('hpRegen',level,0)).toBe(.1);expect(secondaryRollValue('hpRegen',level,1)).toBe(.3);
-  expect(secondaryRollValue('mpRegen',level,0)).toBe(.1);expect(secondaryRollValue('mpRegen',level,1)).toBe(.5);
-  expect(secondaryRollValue('hpRegen',level,.125)).toBe(.13);expect(secondaryRollValue('mpRegen',level,.125)).toBe(.15);
+ for(const [level,hp,mp] of [[1,.2,.3],[10,.2,.3],[30,.23,.35],[50,.25,.4],[70,.28,.45],[90,.3,.5],[100,.3,.5]]){
+  expect(secondaryRollValue('hpRegen',level,0)).toBe(.1);expect(secondaryRollValue('hpRegen',level,1)).toBe(hp);
+  expect(secondaryRollValue('mpRegen',level,0)).toBe(.1);expect(secondaryRollValue('mpRegen',level,1)).toBe(mp);
  }
+ expect(secondaryRollValue('hpRegen',10,.5)).toBe(.15);expect(secondaryRollValue('mpRegen',10,.5)).toBe(.2);
+ expect(secondaryRollValue('hpRegen',90,.125)).toBe(.13);expect(secondaryRollValue('mpRegen',90,.125)).toBe(.15);
 });
 
 test('quality uses rounded roll maximum with inclusive 80/90 boundaries and red precedence',()=>{
  for(const level of [1,10,90,100])for(const key of Object.keys(equipmentConfig.affixRanges) as SecondaryStat[]){
   const rawMax=equipmentConfig.affixRanges[key][1];
-  const expected=key==='hpRegen'?.3:key==='mpRegen'?.5:Math.round(rawMax*(.65+level/140)*10)/10;
+  const expected=key==='hpRegen'?(level<=10?.2:.3):key==='mpRegen'?(level<=10?.3:.5):Math.round(rawMax*(.65+level/140)*10)/10;
   expect(secondaryRollMaximum(key,level)).toBe(expected);
  }
  for(const [key,max] of [['hpRegen',.3],['mpRegen',.5],['critChance',secondaryRollMaximum('critChance',90)]] as [SecondaryStat,number][]){

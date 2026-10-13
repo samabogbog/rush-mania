@@ -58,10 +58,16 @@ export function itemBonuses(item:GearInstance,refinement=true):Bonuses {
  return out;
 }
 const affixRanges=config.affixRanges as Record<SecondaryStat,[number,number]>;
-/** Shared by generation and roll-quality UI; regen rolls use percent/sec without level scaling. */
+/** Shared by generation and roll-quality UI; regen maxima interpolate in percent/sec by gear level. */
 export function secondaryRollValue(key:SecondaryStat,level:number,roll:number):number {
- const [min,max]=affixRanges[key],value=min+(max-min)*roll;
- if(key==='hpRegen'||key==='mpRegen')return Math.min(key==='hpRegen'?config.hpRegenPerPieceCap:config.mpRegenPerPieceCap,Math.round(value*100)/100);
+ const [min,max]=affixRanges[key];
+ if(key==='hpRegen'||key==='mpRegen'){
+  const progression=config.regenRolls,[low,high]=progression[key];
+  const t=Math.max(0,Math.min(1,(level-progression.minLevel)/(progression.maxLevel-progression.minLevel)));
+  const maximum=low+(high-low)*t,value=min+(maximum-min)*roll;
+  return Math.min(key==='hpRegen'?config.hpRegenPerPieceCap:config.mpRegenPerPieceCap,Math.round(value*100)/100);
+ }
+ const value=min+(max-min)*roll;
  return Math.round(value*(config.affixFactorBase+level/config.affixLevelDivisor)*10)/10;
 }
 export function secondaryRollMaximum(key:SecondaryStat,level:number):number {return secondaryRollValue(key,level,1);}

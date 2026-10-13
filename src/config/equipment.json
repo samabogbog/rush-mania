@@ -777,5 +777,17 @@
         "weight": 0.3
       }
     ]
+  },
+  "regenRolls": {
+    "minLevel": 10,
+    "maxLevel": 90,
+    "hpRegen": [
+      0.2,
+      0.3
+    ],
+    "mpRegen": [
+      0.3,
+      0.5
+    ]
   }
 }
