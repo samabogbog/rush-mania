@@ -1,6 +1,7 @@
 import {migrateStoredItem,isRetiredMaterial} from './game/item-migration.js';
 import {skillCastDuration,skillRecoveryDuration} from './game/skill-timing.js';
 import {attributeCombat,equippedAttributeBonuses} from './game/attribute-combat.js';
+import {runeTypes,runeById,isRuneId,runeKey,normalizeRuneSockets,hasSocketedRunes,exchangeRuneItems,rollRuneDrops,type RuneId,type RuneSockets} from './game/runes.js';
 import {inventoryKey,salvageYield,itemSalePrice} from './game/inventory-actions.js';
 import {isCraftMaterial,isRarity,materialRarity,materialKey,sameStack,gearRecipe,craftCost,materialCount,rollMaterialDrops} from './game/crafting.js';
 import {materialIcons} from './game/items.js';
@@ -50,7 +51,7 @@ export type Monster = {
   rushGoal?: {x:number;z:number};
   facingX?: number; facingZ?: number; pattern?: number; shape?: AttackShape;
 };
-export type Item = { category?:ItemCategory; name: string; icon: string; count: number; id?:string; gearId?:string; refine?:number; rarity?:Rarity; secondary?:Bonuses };
+export type Item = { category?:ItemCategory; name: string; icon: string; count: number; id?:string; gearId?:string; refine?:number; rarity?:Rarity; secondary?:Bonuses;runeId?:RuneId;runes?:RuneSockets };
 export type Save = {
   legacyBasicRefine?:boolean;
   version: number;
@@ -164,12 +165,12 @@ export class Simulation {
     this.save.job = isClass(this.save.job) ? this.save.job : "swordsman";
     const legacyRefine=(loadedVersion<6||this.save.legacyBasicRefine)&&this.save.weapon>0;
     this.save.items=this.save.items.flatMap(item=>{const next=migrateStoredItem(item,loadedVersion<9);return next?[next]:[];});
-    this.save.version = 10;
+    this.save.version = 11;
     this.save.weapon=refineLevel(this.save.weapon);
     for(const item of this.save.items)if(isCraftMaterial(item.name)&&!item.gearId){item.rarity=isRarity(item.rarity)?item.rarity:'common';item.id=materialKey(item.name,item.rarity);}
     for(const item of this.save.items)if(item.gearId)item.refine=refineLevel(item.refine);
     for(const item of this.save.items)if(item.secondary)item.secondary=normalizeSecondary(item.secondary);
-    const materialStacks=new Map<string,Item>();this.save.items=this.save.items.filter(item=>{if(!isCraftMaterial(item.name)||item.gearId)return true;const key=materialKey(item.name,materialRarity(item)),existing=materialStacks.get(key);if(existing){existing.count+=item.count;return false;}materialStacks.set(key,item);return true;});
+    const materialStacks=new Map<string,Item>();this.save.items=this.save.items.filter(item=>{if((!isCraftMaterial(item.name)&&!isRuneId(item.runeId))||item.gearId)return true;const key=inventoryKey(item),existing=materialStacks.get(key);if(existing){existing.count+=item.count;return false;}materialStacks.set(key,item);return true;});
     this.save.zone = isZone(this.save.zone) ? this.save.zone : "glade";
     const oldEquipped=this.save.equipped as typeof this.save.equipped&{gloves?:string|null};
     this.save.equipped = {...defaults.equipped,...oldEquipped,pants:oldEquipped.pants||oldEquipped.gloves||null};
@@ -230,7 +231,7 @@ export class Simulation {
   get refinement() {return this.save.items.find(i=>i.id===this.save.equipped.weapon)?.refine || (this.save.equipped.weapon?0:this.save.weapon);}
   private bonusCache?:{save:Save;key:string;value:Bonuses};
   get gearBonuses(): Bonuses {
-    const key=this.save.job+':'+Object.values(this.save.equipped).map(id=>id+':'+(this.save.items.find(i=>i.id===id)?.refine||0)).join(',');
+    const key=this.save.job+':'+Object.values(this.save.equipped).map(id=>{const item=this.save.items.find(i=>i.id===id);return id+':'+(item?.refine||0)+':'+normalizeRuneSockets(item?.runes).map(r=>r?runeKey(r.runeId,r.rarity):'-').join('|')}).join(',');
     if(this.bonusCache?.save===this.save&&this.bonusCache.key===key)return this.bonusCache.value;
     const out=equippedAttributeBonuses(this.save);
     this.bonusCache={save:this.save,key,value:out};return out;
@@ -257,7 +258,7 @@ export class Simulation {
   get mpRegenPercent(){return progression.mpRegenPercent+(this.gearBonuses.mpRegen||0)}
   get hpRegenPercent(){return progression.hpRegenPercent+(this.gearBonuses.hpRegen||0)}
   get healingMultiplier(){return 1+Math.min(progression.caps.healing,(this.gearBonuses.healingBonus||0)/100)}
-  addEquipmentItem(item:Item){if(this.save.items.some(i=>i.id===item.id))return false;if(this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY){this.onEvent('Bag full. Make room before collecting.');return false;}this.save.items.push({...structuredClone(item),category:itemCategory(item),secondary:normalizeSecondary(item.secondary),refine:refineLevel(item.refine)});return true;}
+  addEquipmentItem(item:Item){if(this.save.items.some(i=>i.id===item.id))return false;if(this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY){this.onEvent('Bag full. Make room before collecting.');return false;}this.save.items.push({...structuredClone(item),category:itemCategory(item),secondary:normalizeSecondary(item.secondary),runes:normalizeRuneSockets(item.runes),refine:refineLevel(item.refine)});return true;}
   rollStoneLoot(monster:Monster){const spec=this.monsterSpec(monster.kind),rates=spec.miniBoss?miniMonsterDrops(spec.level):normalMonsterBalance(spec.level).drops,tier=spec.boss?rollStoneDrop(true,this.random):this.random()<rates.commonStone?'common':undefined;return tier?refineStones[tier]:undefined;}
   rollMaterialLoot(monster:Monster):Item[]{
     const spec=this.monsterSpec(monster.kind),rates=spec.miniBoss?miniMonsterDrops(spec.level):normalMonsterBalance(spec.level).drops;
@@ -265,6 +266,7 @@ export class Simulation {
     return drops.map(drop=>({...drop,icon:materialIcon(drop.name,drop.rarity),id:materialKey(drop.name,drop.rarity),category:'material'}));
   }
   rollEquipmentLoot(monster:Monster):Item[] {return rollEquipmentDrops(this.monsterSpec(monster.kind).level,this.monsterSpec(monster.kind).boss?'boss':this.monsterSpec(monster.kind).miniBoss?'mini':'normal',this.random).map(rolled=>{const gear=gearById(rolled.gearId!)!;return {...rolled,name:gear.name,category:itemCategory({name:gear.name}),icon:gear.icon,count:1};});}
+  rollRuneLoot(monster:Monster):Item[]{const spec=this.monsterSpec(monster.kind);return spec.boss||spec.miniBoss?[]:rollRuneDrops(spec.level,this.random);}
   get agility() { return this.save.stats.agi+(this.gearBonuses.agi||0); }
   toggleTutorial(){if(this.save.tutorial.includes('skip'))this.save.tutorial=this.save.tutorial.filter(s=>s!=='skip');else this.save.tutorial.push('skip');this.persist();}
   markTutorial(step:string) {if(!this.save.tutorial.includes(step))this.save.tutorial.push(step)}
@@ -299,7 +301,14 @@ export class Simulation {
     if(!this.save.items.some(i=>sameStack(i,{name,rarity:next})&&i.count>0)&&this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY&&source.count>craftingConfig.upgradeCount)return false;
     source.count-=craftingConfig.upgradeCount;this.addItem(name,materialIcons[name],1,next);this.persist();this.onEvent(`Upgraded ${name} · ${next}`,'reward');return true;
   }
-  craft(id:string,rarity:Rarity='common') {
+  craft(id:string,rarity:Rarity='common',ingredients?:RuneId[]) {
+    if(id.startsWith('rune:')){
+      const target=id.slice(5);
+      if(!isRuneId(target)||!isRarity(rarity)||!Array.isArray(ingredients)||ingredients.length!==4||ingredients.some(k=>!isRuneId(k))||new Set(ingredients).size!==4)return this.runeRejected('Choose four different rune types of the same rarity.');
+      const result=exchangeRuneItems(this.save.items,ingredients.map(runeId=>({runeId,rarity,count:1})),[{runeId:target,rarity,count:1}],BAG_CAPACITY);
+      if('error' in result)return this.runeRejected(result.error);
+      this.save.items=result.items;this.progressQuest('craft');this.persist();this.onEvent(`Rune: Converted four runes into ${runeById(target)!.name} · ${rarity}.`,'reward');return true;
+    }
     if(!isRarity(rarity))return false;
     if(id==='rare-refine-stone'){
       const common=this.save.items.find(i=>i.name===refineStones.common.name&&i.count>=refinement.stoneCraftCount);
@@ -317,6 +326,37 @@ export class Simulation {
     const item={...rollGear(gear.id,rarity,this.random),name:gear.name,icon:gear.icon,count:1};
     this.save.gold-=cost;for(const [name,count] of recipe){let remaining=count;for(const stack of this.save.items.filter(i=>i.name===name&&materialRarity(i)===rarity)){const used=Math.min(remaining,stack.count);stack.count-=used;remaining-=used;}}
     this.addEquipmentItem(item);this.progressQuest('craft');this.markTutorial('craft');this.onEvent(`Crafted ${gear.name}`,"reward");this.persist();return true;
+  }
+  private runeRejected(message:string){this.onEvent('Rune: '+message);return false;}
+  addRune(runeId:RuneId,rarity:Rarity='common',count=1){
+    if(!isRuneId(runeId)||!isRarity(rarity)||!Number.isSafeInteger(count)||count<1)return false;
+    const result=exchangeRuneItems(this.save.items,[],[{runeId,rarity,count}],BAG_CAPACITY);
+    if('error' in result){this.onEvent(result.error);return false;}this.save.items=result.items;return true;
+  }
+  upgradeRune(runeId:RuneId,rarity:Rarity){
+    if(!isRuneId(runeId)||!isRarity(rarity))return this.runeRejected('Choose a valid rune and rarity.');
+    const next=rarityOrder[rarityOrder.indexOf(rarity)+1];if(!next)return this.runeRejected('Legend is the highest rune rarity.');
+    const result=exchangeRuneItems(this.save.items,[{runeId,rarity,count:2}],[{runeId,rarity:next,count:1}],BAG_CAPACITY);
+    if('error' in result)return this.runeRejected(result.error);
+    this.save.items=result.items;this.progressQuest('craft');this.persist();this.onEvent(`Rune: Upgraded ${runeById(runeId)!.name} · ${rarity} → ${next}.`,'reward');return true;
+  }
+  socketRune(itemId:string,slot:number,runeId:RuneId,rarity:Rarity){
+    const item=this.save.items.find(i=>i.id===itemId&&i.count===1&&gearById(i.gearId||''));
+    if(!item||!Number.isInteger(slot)||slot<0||slot>1||!isRuneId(runeId)||!isRarity(rarity))return this.runeRejected('Choose owned equipment, a rune, and slot 1 or 2.');
+    const sockets=normalizeRuneSockets(item.runes),current=sockets[slot];
+    if(sockets[1-slot]?.runeId===runeId)return this.runeRejected('The two sockets must contain different rune types.');
+    if(current?.runeId===runeId&&current.rarity===rarity)return this.runeRejected('That rune is already in this socket.');
+    const result=exchangeRuneItems(this.save.items,[{runeId,rarity,count:1}],current?[{...current,count:1}]:[],BAG_CAPACITY);
+    if('error' in result)return this.runeRejected(result.error);
+    sockets[slot]={runeId,rarity};result.items.find(i=>i.id===itemId)!.runes=sockets;this.save.items=result.items;this.persist();
+    this.onEvent(`Rune: ${current?'Replaced':'Socketed'} ${runeById(runeId)!.name} · ${rarity} in slot ${slot+1}${current?'; the previous rune returned to your bag':''}.`,'reward');return true;
+  }
+  unsocketRune(itemId:string,slot:number){
+    const item=this.save.items.find(i=>i.id===itemId&&i.count===1&&gearById(i.gearId||''));
+    if(!item||!Number.isInteger(slot)||slot<0||slot>1)return this.runeRejected('Choose owned equipment and slot 1 or 2.');
+    const sockets=normalizeRuneSockets(item.runes),current=sockets[slot];if(!current)return this.runeRejected('That socket is empty.');
+    const result=exchangeRuneItems(this.save.items,[],[{...current,count:1}],BAG_CAPACITY);if('error' in result)return this.runeRejected(result.error);
+    sockets[slot]=null;result.items.find(i=>i.id===itemId)!.runes=sockets;this.save.items=result.items;this.persist();this.onEvent(`Rune: Removed ${runeById(current.runeId)!.name} · ${current.rarity}; returned to your bag.`,'reward');return true;
   }
   equip(id:string) {
     const item=this.save.items.find(i=>i.id===id&&i.count===1),gear=item?.gearId?gearById(item.gearId):undefined;
@@ -426,6 +466,7 @@ export class Simulation {
     this.storage?.setItem("mossvale-save", JSON.stringify(this.save));
   }
   addItem(name: string, icon: string, count = 1, rarity:Rarity='common') {
+    const rune=runeTypes.find(r=>r.name===name);if(rune)return this.addRune(rune.id,rarity,count);
     if(isRetiredMaterial({name}))return false;
     if(!isRarity(rarity))return false;
     if(isCraftMaterial(name))icon=materialIcon(name,rarity);
@@ -520,6 +561,7 @@ export class Simulation {
     if(!Number.isSafeInteger(count)||count<1)return false;
     const item=this.save.items.find(i=>inventoryKey(i)===key&&i.count>0);
     if(!item||count>item.count||item.gearId&&(count!==1||item.count!==1)||item.id&&Object.values(this.save.equipped).includes(item.id))return false;
+    if(hasSocketedRunes(item)){this.onEvent('Rune: Remove both runes before selling this equipment.');return false;}
     const price=itemSalePrice(item);if(price<=0)return false;
     item.count-=count;this.save.items=this.save.items.filter(i=>i.count>0);this.save.gold+=price*count;
     this.onEvent(`Sold ${count} ${item.name} · +${price*count} z`,'reward');this.persist();return true;
@@ -527,6 +569,7 @@ export class Simulation {
   salvageItem(key:string){
     const item=this.save.items.find(i=>inventoryKey(i)===key&&i.gearId&&i.count===1);
     if(!item||item.id&&Object.values(this.save.equipped).includes(item.id))return false;
+    if(hasSocketedRunes(item)){this.onEvent('Rune: Remove both runes before salvaging this equipment.');return false;}
     const yields=salvageYield(item);if(!yields.length)return false;
     const next=this.save.items.filter(i=>i!==item).map(i=>structuredClone(i));
     for(const material of yields){const stack=next.find(i=>sameStack(i,material));if(stack)stack.count+=material.count;else next.push({...material,id:materialKey(material.name,material.rarity),icon:materialIcon(material.name,material.rarity),category:'material'});}
@@ -535,7 +578,7 @@ export class Simulation {
   }
   sell() {
     let count = 0;
-    this.save.items = this.save.items.filter(i => { if (i.name!==EXP_CHARM.name&&i.name!==EXP_TOME.name&&!i.name.includes("potion") && !i.gearId&&!Object.values(refineStones).some(stone=>stone.name===i.name)) { count += i.count; return false; } return true; });
+    this.save.items = this.save.items.filter(i => { if (!isRuneId(i.runeId)&&itemCategory(i)!=='rune'&&i.name!==EXP_CHARM.name&&i.name!==EXP_TOME.name&&!i.name.includes("potion") && !i.gearId&&!Object.values(refineStones).some(stone=>stone.name===i.name)) { count += i.count; return false; } return true; });
     this.save.gold += count * 6; this.persist(); this.onEvent(count ? `Sold ${count} materials for ${count * 6} z` : "Gather monster drops to sell them.", "reward");
   }
   hit(m: Monster, amount: number, skill=false) {
@@ -585,6 +628,7 @@ export class Simulation {
       const stone=this.rollStoneLoot(m);if(stone)this.loot.push({x:m.x,z:m.z,name:stone.name,icon:stone.icon});
       for(const equipmentDrop of this.rollEquipmentLoot(m))this.loot.push({x:m.x,z:m.z,name:equipmentDrop.name,icon:equipmentDrop.icon,item:equipmentDrop});
       for(const item of this.rollMaterialLoot(m))this.loot.push({x:m.x,z:m.z,name:item.name,icon:item.icon,item});
+      for(const item of this.rollRuneLoot(m))this.loot.push({x:m.x,z:m.z,name:item.name,icon:item.icon,item});
       this.loot=this.loot.slice(-40);
       }
       this.onEvent(

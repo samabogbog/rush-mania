@@ -6,6 +6,7 @@ import {GameError} from './realm.js';
 import {Simulation,type Item} from '../src/simulation.js';
 import {BAG_CAPACITY,normalizeSecondary} from '../src/game/equipment.js';
 import {species} from '../src/game/content.js';
+import {normalizeRuneSockets} from '../src/game/runes.js';
 import type {Player,Realm} from './protocol.js';
 export type Party={id:string;leader:string;members:string[];invites:string[];lootCursor:number};
 export type Trade={id:string;players:[string,string];accepted:boolean;offers:Record<string,{item:string;count:number;gold:number}>;confirmed:string[];at:number};
@@ -22,7 +23,7 @@ function available(player:Player,key:string,count:number) {
 }
 function receive(player:Player,item:Item) {
  const items=player.actor.save.items,stack=!item.gearId&&items.find(i=>sameStack(i,item));
- if(stack)stack.count+=item.count;else {if(items.filter(i=>i.count>0).length>=BAG_CAPACITY)reject('Recipient bag is full');items.push({...structuredClone(item),category:itemCategory(item),secondary:normalizeSecondary(item.secondary),...(item.gearId?{refine:refineLevel(item.refine)}:{})});}
+ if(stack)stack.count+=item.count;else {if(items.filter(i=>i.count>0).length>=BAG_CAPACITY)reject('Recipient bag is full');items.push({...structuredClone(item),category:itemCategory(item),secondary:normalizeSecondary(item.secondary),...(item.gearId?{refine:refineLevel(item.refine),runes:normalizeRuneSockets(item.runes)}:{})});}
 }
 function remove(player:Player,item:Item,count:number){item.count-=count;player.actor.save.items=player.actor.save.items.filter(i=>i.count>0)}
 function ledger(r:Realm,id:string,player:string,action:string,at:number,goldDelta:number){r.ledger.push({id,player,action,at,goldDelta})}
@@ -68,6 +69,7 @@ export function shareKill(r:Realm,p:Player,monster:Simulation['monsters'][number
  for(const {p:member,sim} of members){const rewardGold=Math.round(gold*(1+(sim.gearBonuses.goldBonus||0)/100)),rewardXp=xp*(1+(sim.gearBonuses.expBonus||0)/100);sim.addExperience(rewardXp);sim.save.gold+=rewardGold;sim.save.kills++;sim.progressQuest('kills');if(spec.boss)sim.progressQuest('boss');sim.markTutorial('attack');sim.onEvent('Party reward · +'+Math.round(rewardXp*sim.experienceMultiplier)+' EXP · +'+rewardGold+' z','reward');ledger(r,crypto.randomUUID(),member.id,'party-kill:'+monster.kind,now,rewardGold);}
  if(actors.find(a=>a.p.id===p.id)!.sim.hasLegacyDrop(monster)){const recipient=members[(party.lootCursor++)%members.length];if(!recipient.sim.addItem(spec.drop,spec.icon))recipient.sim.loot.push({x:monster.x,z:monster.z,name:spec.drop,icon:spec.icon});recipient.sim.onEvent('Party loot: '+spec.drop,'reward');}const stone=actors.find(m=>m.p.id===p.id)!.sim.rollStoneLoot(monster);if(stone){const owner=members[(party.lootCursor++)%members.length],drop=stone;if(!owner.sim.addItem(drop.name,drop.icon))owner.sim.loot.push({x:monster.x,z:monster.z,name:drop.name,icon:drop.icon});}for(const gearDrop of actors.find(m=>m.p.id===p.id)!.sim.rollEquipmentLoot(monster)){const owner=members[(party.lootCursor++)%members.length];if(!owner.sim.addEquipmentItem(gearDrop))owner.sim.loot.push({x:monster.x,z:monster.z,name:gearDrop.name,icon:gearDrop.icon,item:gearDrop});owner.sim.onEvent('Party equipment: '+gearDrop.name,'reward');}
  for(const drop of actors.find(m=>m.p.id===p.id)!.sim.rollMaterialLoot(monster)){const owner=members[(party.lootCursor++)%members.length];if(!owner.sim.addItem(drop.name,drop.icon,drop.count,drop.rarity))owner.sim.loot.push({x:monster.x,z:monster.z,name:drop.name,icon:drop.icon,item:drop});}
+ for(const drop of actors.find(m=>m.p.id===p.id)!.sim.rollRuneLoot(monster)){const owner=members[(party.lootCursor++)%members.length];if(!owner.sim.addRune(drop.runeId!,drop.rarity,drop.count))owner.sim.loot.push({x:monster.x,z:monster.z,name:drop.name,icon:drop.icon,item:drop});owner.sim.onEvent('Party rune: '+drop.name,'reward');}
  return true;
 }
 

@@ -1,5 +1,6 @@
 import {equipmentConfig as config, economy,craftingConfig as crafting} from '../config/balance.js';
 import {refineBonus} from './refinement.js';
+import {runeBonuses,normalizeRuneSockets,type RuneSockets} from './runes.js';
 import type {ClassId} from './classes.js';
 export const gearSlots=['weapon','helmet','armor','pants','boots','accessory'] as const;
 export type GearSlot=typeof gearSlots[number];
@@ -48,13 +49,14 @@ for(const gear of equipment){
  else gear.bonuses={def:gear.bonuses.def||Math.round(gear.level*d.defPerLevel+d.defBase),hp:gear.bonuses.hp||gear.level*d.hpPerLevel+d.hpBase};
  const tier=Math.floor(gear.level/crafting.recipe.levelDivisor);gear.materials=[['Shade essence',crafting.recipe.essenceBase+tier],[offensive?'Rune stone':'Sky feather',crafting.recipe.partnerBase+tier]];gear.cost=gear.level*crafting.recipe.zenyPerLevel;
 }
-export type GearInstance={id?:string;gearId?:string;refine?:number;rarity?:Rarity;secondary?:Bonuses};
+export type GearInstance={id?:string;gearId?:string;refine?:number;rarity?:Rarity;secondary?:Bonuses;runes?:RuneSockets};
 export const itemRarity=(item:GearInstance):Rarity=>item.rarity||gearById(item.gearId||'')?.rarity||'common';
 export function itemBonuses(item:GearInstance,refinement=true):Bonuses {
  const gear=gearById(item.gearId||'');if(!gear)return {};
  const multiplier=config.rarityMultiplier[itemRarity(item)];
  const out:Bonuses={};for(const [key,value] of Object.entries(gear.bonuses))out[key as keyof Bonuses]=Math.round(Math.round(value*multiplier)*(refinement?1+refineBonus(item.refine||0)/100:1)*100)/100;
  for(const [key,value] of Object.entries(normalizeSecondary(item.secondary)||{}))out[key as keyof Bonuses]=(out[key as keyof Bonuses]||0)+value;
+ for(const [key,value] of Object.entries(runeBonuses(item.runes)))out[key as keyof Bonuses]=(out[key as keyof Bonuses]||0)+value;
  return out;
 }
 const affixRanges=config.affixRanges as Record<SecondaryStat,[number,number]>;
@@ -82,7 +84,7 @@ export function rollGear(id:string,rarity:Rarity,random= Math.random,maxRoll=fal
  const gear=gearById(id);if(!gear)throw new Error('Unknown equipment');
  const pool=Object.keys(affixRanges) as SecondaryStat[],secondary:Bonuses={};
  for(let n=0;n<secondaryCounts[rarity];n++){const index=Math.min(pool.length-1,Math.floor(random()*pool.length)),key=pool.splice(index,1)[0];const roll=random();secondary[key]=secondaryRollValue(key,gear.level,maxRoll?1:roll);}
- return {id:crypto.randomUUID(),gearId:gear.id,refine:0,rarity,secondary};
+ return {id:crypto.randomUUID(),gearId:gear.id,refine:0,rarity,secondary,runes:normalizeRuneSockets(undefined)};
 }
 /** Rates are per slot per kill. Common/Rare are disjoint; slots roll independently.
  * Levels between table entries use the preceding row; values outside the table clamp.

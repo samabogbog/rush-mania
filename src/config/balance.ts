@@ -8,6 +8,7 @@ import refinementData from './refinement.json' with {type:'json'};
 import classData from './classes.json' with {type:'json'};
 import contentData from './content.json' with {type:'json'};
 import economyData from './economy.json' with {type:'json'};
+import runeData from './runes.json' with {type:'json'};
 import schema from './schema.json' with {type:'json'};
 /** Browser/Worker-safe validation. Reject bad edits before a game/session starts. */
 export function validateBalance(value:unknown, shape:unknown, path='balance'):void {
@@ -22,9 +23,13 @@ export function validateBalance(value:unknown, shape:unknown, path='balance'):vo
   for(const [key,s] of Object.entries(shape))validateBalance((value as Record<string,unknown>)[key],s,`${path}.${key}`);
  }
 }
-const data={itemMigration:itemMigrationData,salvage:salvageData,skillRanks:skillRankData,crafting:craftingData,progression:progressionData,equipment:equipmentData,refinement:refinementData,classes:classData,content:contentData,economy:economyData};
+const data={runes:runeData,itemMigration:itemMigrationData,salvage:salvageData,skillRanks:skillRankData,crafting:craftingData,progression:progressionData,equipment:equipmentData,refinement:refinementData,classes:classData,content:contentData,economy:economyData};
 export function validateConfiguration(config:typeof data){
  validateBalance(config,schema);
+ const runeIds=['critChance','critDamage','damageBonus','lifesteal','hpRegen','mpRegen','armorPen','damageReduction','dodgeChance','cooldownReduction'];
+ const runeLegend=[6.5,23.3,9.1,5.2,.3,.5,10.3,6.5,5.2,7.8];
+ if(config.runes.convertCount!==4||config.runes.upgradeCount!==2||config.runes.dropLevelOffset!==40||config.runes.dropDivisor!==25000||config.runes.types.some((r,i)=>r.id!==runeIds[i]||r.legend!==runeLegend[i])||new Set(config.runes.types.map(r=>r.name)).size!==10)throw new Error('Invalid balance config runes: catalog or recipes');
+ for(const [key,weight] of Object.entries({common:.4,rare:.55,epic:.7,ancient:.85,legend:1}))if(config.runes.rarityMultipliers[key as keyof typeof config.runes.rarityMultipliers]!==weight)throw new Error('Invalid balance config runes: rarity multiplier');
  if(config.itemMigration.saveVersion!==9||config.itemMigration.realmRevision!==1||new Set(config.itemMigration.retiredMaterials).size!==config.itemMigration.retiredMaterials.length||config.itemMigration.retiredMaterials.some(name=>config.crafting.materials.includes(name)))throw new Error('Invalid balance config itemMigration: revision/material identity');
 
  config.salvage.levels.forEach((row,i)=>{if(row.level!==[10,30,50,70,90][i])throw new Error('Invalid balance config salvage.levels: ordered gear tiers');for(const key of ['common','rare','epic'] as const)if(!Number.isSafeInteger(row[key])||row[key]<1)throw new Error('Invalid balance config salvage.levels: positive integer yields');});
@@ -115,3 +120,5 @@ export const skillRankConfig=skillRankData;
 export const salvageConfig=salvageData;
 
 export const itemMigrationConfig=itemMigrationData;
+
+export const runeConfig=runeData;

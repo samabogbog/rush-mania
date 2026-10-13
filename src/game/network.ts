@@ -4,6 +4,7 @@ import {type StoneTier} from './refinement';
 import { Simulation } from '../simulation';
 import type { ZoneId } from './content';
 import type { Rarity, GearSlot } from './equipment';
+import type {RuneId} from './runes.js';
 import type { ClassId } from './classes';
 import { actorFields, type Command, type Snapshot } from '../../server/protocol';
 import {EntityPresentation,LocalPresentation} from './network-presentation';
@@ -98,7 +99,10 @@ export class NetworkSimulation extends Simulation {
   override sell(){this.send('sell')}
   override toggleTutorial(){this.send('toggleTutorial')}
   override interact(id:string){this.send('interact',id)}
-  override craft(id:string,rarity:Rarity='common'){this.send('craft',id,rarity);return true}
+  override craft(id:string,rarity:Rarity='common',ingredients?:RuneId[]){if(ingredients)this.send('craft',id,rarity,ingredients);else this.send('craft',id,rarity);return true}
+  override upgradeRune(runeId:RuneId,rarity:Rarity){this.send('upgradeRune',runeId,rarity);return true}
+  override socketRune(itemId:string,slot:number,runeId:RuneId,rarity:Rarity){this.send('socketRune',itemId,slot,runeId,rarity);return true}
+  override unsocketRune(itemId:string,slot:number){this.send('unsocketRune',itemId,slot);return true}
   override upgradeMaterial(name:string,rarity:Rarity){this.send('upgradeMaterial',name,rarity);return true}
   override equip(id:string){this.send('equip',id);return true}
   override unequip(slot:GearSlot){this.send('unequip',slot)}

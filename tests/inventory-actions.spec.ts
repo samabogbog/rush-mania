@@ -3,7 +3,7 @@ import {Simulation} from '../src/simulation';
 import {equipment,rollGear,itemBonuses,BAG_CAPACITY,type Rarity} from '../src/game/equipment';
 import {inventoryKey,salvageYield,itemSalePrice} from '../src/game/inventory-actions';
 import {materialCount} from '../src/game/crafting';
-import {itemMigrationConfig,salvageConfig,skillRankConfig,contentConfig,equipmentConfig,progression,craftingConfig,refinement,classConfig,economy,validateConfiguration} from '../src/config/balance';
+import {runeConfig,itemMigrationConfig,salvageConfig,skillRankConfig,contentConfig,equipmentConfig,progression,craftingConfig,refinement,classConfig,economy,validateConfiguration} from '../src/config/balance';
 import {transact} from '../server/realm';
 import type {Realm} from '../server/protocol';
 import type {RealmStore} from '../server/store';
@@ -33,7 +33,7 @@ test('single-item sale respects exact stack rarity, counts, pricing and unique e
 });
 test('salvage config edits affect shared yields/prices and invalid edits fail early',()=>{
  const old=structuredClone(salvageConfig);try{salvageConfig.levels[0].common=7;salvageConfig.sale.gearFraction=.25;const s=fresh(),item=add(s);expect(salvageYield(item).map(y=>y.count)).toEqual([7,7]);expect(itemSalePrice(item)).toBe(Math.floor(10*craftingConfig.recipe.zenyPerLevel*.25));}finally{Object.assign(salvageConfig,old);}
- const cfg=()=>structuredClone({itemMigration:itemMigrationConfig,salvage:salvageConfig,skillRanks:skillRankConfig,content:contentConfig,equipment:equipmentConfig,progression,crafting:craftingConfig,refinement,classes:classConfig,economy});expect(()=>validateConfiguration(cfg())).not.toThrow();for(const change of [(c:ReturnType<typeof cfg>)=>c.salvage.levels[0].common=.5,c=>c.salvage.levels[0].rare=0,c=>c.salvage.levels[1].level=10,c=>c.salvage.materials.offense[0]='Typo',c=>c.salvage.sale.gearFraction=1.1,c=>Object.assign(c.salvage,{typo:1})]){const c=cfg();change(c);expect(()=>validateConfiguration(c)).toThrow(/Invalid balance config/);}
+ const cfg=()=>structuredClone({runes:runeConfig,itemMigration:itemMigrationConfig,salvage:salvageConfig,skillRanks:skillRankConfig,content:contentConfig,equipment:equipmentConfig,progression,crafting:craftingConfig,refinement,classes:classConfig,economy});expect(()=>validateConfiguration(cfg())).not.toThrow();for(const change of [(c:ReturnType<typeof cfg>)=>c.salvage.levels[0].common=.5,c=>c.salvage.levels[0].rare=0,c=>c.salvage.levels[1].level=10,c=>c.salvage.materials.offense[0]='Typo',c=>c.salvage.sale.gearFraction=1.1,c=>Object.assign(c.salvage,{typo:1})]){const c=cfg();change(c);expect(()=>validateConfiguration(c)).toThrow(/Invalid balance config/);}
 });
 class Store implements RealmStore{realm:Realm|null=null;revision=0;async read(){return this.realm?{realm:structuredClone(this.realm),revision:this.revision}:null;}async create(r:Realm){this.realm=structuredClone(r);}async commit(rev:number,r:Realm){if(rev!==this.revision)return false;this.realm=structuredClone(r);this.revision++;return true;}}
 test('server owns item sales/salvage, rejects equipped/foreign items, preserves IDs and replay spends once',async()=>{

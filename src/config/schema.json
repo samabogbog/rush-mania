@@ -4513,5 +4513,70 @@
       "string",
       "string"
     ]
+  },
+  "runes": {
+    "rarityMultipliers": {
+      "common": "number",
+      "rare": "number",
+      "epic": "number",
+      "ancient": "number",
+      "legend": "number"
+    },
+    "convertCount": "number",
+    "upgradeCount": "number",
+    "dropLevelOffset": "number",
+    "dropDivisor": "number",
+    "types": [
+      {
+        "id": "string",
+        "name": "string",
+        "legend": "number"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "legend": "number"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "legend": "number"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "legend": "number"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "legend": "number"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "legend": "number"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "legend": "number"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "legend": "number"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "legend": "number"
+      },
+      {
+        "id": "string",
+        "name": "string",
+        "legend": "number"
+      }
+    ]
   }
 }
