@@ -1736,3 +1736,22 @@ body:has(.game-panel) .mobile-controls{visibility:hidden;pointer-events:none}
 .stat-pair>span>b,.worn-summary>span>b{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:baseline;gap:2px 4px;text-align:right;font-variant-numeric:tabular-nums}
 .stat-pair .stat-bonus,.worn-summary .stat-bonus{color:#41733c;font-size:10px;font-weight:900;white-space:nowrap}
 @media(max-width:900px){.worn-summary>span{flex-direction:column;gap:2px}.worn-summary>span>b{justify-content:center}.worn-summary .stat-bonus{font-size:9px}}
+
+/* The forge uses the same parchment, gold trim and item art as the bag. */
+.forge-tabs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.forge-tabs button{display:grid;grid-template-columns:36px 1fr;gap:2px 10px;align-items:center;text-align:left;padding:11px 14px;border:2px solid #b79360;border-radius:7px;background:#efdbad;color:#765032;font-weight:900;font-size:15px}
+.forge-tabs .game-icon{grid-row:span 2;width:36px;height:36px}.forge-tabs small{font-size:10px;font-weight:700}
+.forge-tabs button[aria-pressed=true]{background:linear-gradient(#ffe895,#ffd15e);border-color:#936b30;box-shadow:inset 0 0 0 1px #fff3bc,0 3px #c59644}
+.refine-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px;align-items:start}.refine-catalog{min-width:0}.refine-catalog .section-label{margin-top:0}
+.refine-item-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.refine-item-card{min-width:0;display:flex;flex-direction:column;align-items:stretch;gap:4px;text-align:left;background:#fff0c8;border:2px solid #ba9b6a;border-radius:7px;padding:8px;color:#714b2d}
+.refine-card-art{position:relative;display:grid;place-items:center;min-height:75px;background:radial-gradient(ellipse,#fff8dd,#e9ca91);border-radius:4px;margin-bottom:3px}
+.refine-card-art .game-icon{width:64px;height:64px}.refine-card-art b{position:absolute;right:4px;top:3px;padding:2px 5px;background:#77552e;color:#fff5cc;border-radius:4px;font-size:12px}
+.refine-card-art small{position:absolute;bottom:3px;left:3px;padding:2px 5px;background:#52743c;color:#fff8d5;border-radius:3px;font-size:9px}
+.refine-item-card strong{font-size:11px;line-height:1.3}.refine-item-card>span:not(.refine-card-art){font-size:9px}.refine-item-card>small{font-size:9px;overflow-wrap:anywhere;line-height:1.3;color:#8c6339}
+.refine-item-card.rarity-uncommon{border-color:#81a35d}.refine-item-card.rarity-rare{border-color:#6b94bb}.refine-item-card.rarity-epic{border-color:#a776b4}.refine-item-card.rarity-ancient{border-color:#cb9150}.refine-item-card.rarity-legend{border-color:#d3a12e}
+.refine-item-card[aria-pressed=true]{outline:3px solid #588744;outline-offset:1px;background:#ffe494;box-shadow:0 3px #3e712c}.refine-item-card:focus-visible,.forge-tabs button:focus-visible,.refine-stones button:focus-visible{outline:3px solid #456f9d;outline-offset:3px}
+.refine-layout .refine-system{margin:0;padding:13px;min-width:0}.refine-layout .recipe-title strong{font-size:14px}.refine-item-id{overflow-wrap:anywhere;line-height:1.4}.refine-layout .equipment-compare b{white-space:normal;text-align:right}.refine-layout .refine-stones{gap:6px}.refine-layout .refine-stones button{grid-template-columns:27px 1fr;padding:7px 5px;gap:2px 5px}.refine-layout .refine-stones .game-icon{width:27px;height:27px}.refine-layout .refine-stones strong{font-size:11px}
+.refine-status{border:1px solid #c5a16c;border-left:4px solid #b99453;border-radius:5px;background:#fff0c8;padding:10px 12px;margin:0 0 16px;font-size:12px;line-height:1.5;overflow-wrap:anywhere;color:#765032}.refine-status.success{background:#e5efc5;border-color:#78934f;color:#456a32}.refine-status.failure,.refine-status.error{background:#f9dfcc;border-color:#ba7855;color:#8a4228}.refine-status.pending{background:#fff0ae;border-color:#ad8639}.refine-empty{grid-column:1/-1;padding:18px 10px;color:#8d683e;font-size:12px;line-height:1.6}
+@media(max-width:700px){.refine-layout{grid-template-columns:1fr;gap:16px}.refine-item-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.forge-tabs button{padding:9px;grid-template-columns:28px 1fr;gap:2px 7px}.forge-tabs .game-icon{width:28px;height:28px}.refine-catalog{max-height:330px;overflow-y:auto;padding:4px}.refine-item-card{padding:6px}.refine-card-art{min-height:64px}.refine-card-art .game-icon{width:54px;height:54px}}
+@media(max-width:380px){.refine-item-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.forge-tabs small{font-size:9px}}
