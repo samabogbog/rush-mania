@@ -48,7 +48,7 @@ export function validateConfiguration(config:typeof data){
 
  const unique=(list:{id:string}[],path:string)=>{const ids=new Set<string>();for(const item of list){if(ids.has(item.id))throw new Error(`Invalid balance config ${path}: duplicate id ${item.id}`);ids.add(item.id);}};
  unique(config.equipment.crafted,'equipment.crafted');unique(config.equipment.sets,'equipment.sets');unique(config.content.quests,'content.quests');
- if(config.economy.bagCapacity!==144)throw new Error('Invalid balance config economy.bagCapacity: fixed 144-slot UI contract');
+ if(config.economy.bagCapacity!==240)throw new Error('Invalid balance config economy.bagCapacity: fixed 240-slot UI contract');
  if(config.progression.maxLevel!==100)throw new Error('Invalid balance config progression.maxLevel: fixed 10 skill stages require level 100');
  const positive=(v:number,path:string)=>{if(v<=0)throw new Error(`Invalid balance config ${path}: must be greater than zero`)};
  for(const [path,v] of Object.entries({'progression.defenseScale':config.progression.defenseScale,'equipment.affixLevelDivisor':config.equipment.affixLevelDivisor,'equipment.setBonuses.hpRegenLevelDivisor':config.equipment.setBonuses.hpRegenLevelDivisor,'progression.moveBase':config.progression.moveBase}))positive(v,path);

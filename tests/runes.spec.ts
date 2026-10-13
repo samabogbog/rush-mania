@@ -8,7 +8,7 @@ const factors:Record<Rarity,number>={common:.4,rare:.55,epic:.7,ancient:.85,lege
 function setup(random=()=>.5){const s=new Simulation(random,undefined,null);s.save.level=100;s.save.zone='town';s.save.gold=10000;const g=gearById('field-coat')!;const item:Item={...rollGear(g.id,'legend',()=>.5),name:g.name,icon:g.icon,count:1,secondary:{hpRegen:.3,mpRegen:.5,critChance:2}};s.addEquipmentItem(item);s.equip(item.id!);return {s,id:item.id!};}
 function give(s:Simulation,id:RuneId,count=1,rarity:Rarity='common'){const r=runeById(id)!;expect(s.addItem(r.name,r.icon,count,rarity)).toBe(true);}
 const count=(s:Simulation,id:RuneId,rarity:Rarity='common')=>s.save.items.filter(i=>i.runeId===id&&i.rarity===rarity).reduce((n,i)=>n+i.count,0);
-const full=(s:Simulation)=>{while(s.save.items.filter(i=>i.count>0).length<144)s.save.items.push({name:'filler-'+s.save.items.length,icon:'leaf',count:1});};
+const full=(s:Simulation)=>{while(s.save.items.filter(i=>i.count>0).length<240)s.save.items.push({name:'filler-'+s.save.items.length,icon:'leaf',count:1});};
 test('all 50 rune values are fixed and physical runes never merge with Rune stone',()=>{
  expect(runeTypes.map(r=>r.id)).toEqual(Object.keys(maxima));for(const r of runeTypes)for(const rarity of rarityOrder)expect(runeValue(r.id,rarity)).toBe(Math.round(maxima[r.id]*factors[rarity]*1000)/1000);
  const {s}=setup();for(const rarity of rarityOrder){give(s,'hpRegen',2,rarity);give(s,'hpRegen',3,rarity);expect(count(s,'hpRegen',rarity)).toBe(5);}s.addItem('Rune stone','leaf',2,'common');
@@ -31,8 +31,8 @@ test('two-to-one upgrade reaches Legend from 16 Common and excludes socketed mat
 test('full-bag conversion and upgrade consume exact pieces and free source slots',()=>{
  const {s}=setup();const kinds:RuneId[]=['critChance','critDamage','hpRegen','mpRegen'];for(const kind of kinds)give(s,kind,2);full(s);
  const chosen=kinds.map(kind=>s.save.items.filter(i=>i.runeId===kind)[1].id!);
- expect(s.craft('rune:damageBonus','common',chosen)).toBe(true);expect(s.save.items).toHaveLength(141);for(const id of chosen)expect(s.save.items.some(i=>i.id===id)).toBe(false);for(const kind of kinds)expect(count(s,kind)).toBe(1);
- give(s,'armorPen',3);const pieces=s.save.items.filter(i=>i.runeId==='armorPen');expect(s.upgradeRune(pieces[1].id!,pieces[2].id!)).toBe(true);expect(s.save.items).toHaveLength(143);expect(s.save.items.some(i=>i.id===pieces[0].id)).toBe(true);expect(count(s,'armorPen','rare')).toBe(1);
+ expect(s.craft('rune:damageBonus','common',chosen)).toBe(true);expect(s.save.items).toHaveLength(237);for(const id of chosen)expect(s.save.items.some(i=>i.id===id)).toBe(false);for(const kind of kinds)expect(count(s,kind)).toBe(1);
+ give(s,'armorPen',3);const pieces=s.save.items.filter(i=>i.runeId==='armorPen');expect(s.upgradeRune(pieces[1].id!,pieces[2].id!)).toBe(true);expect(s.save.items).toHaveLength(239);expect(s.save.items.some(i=>i.id===pieces[0].id)).toBe(true);expect(count(s,'armorPen','rare')).toBe(1);
 });
 test('socket, swap and removal update cached stats; duplicate kinds reject across rarity',()=>{
  const {s,id}=setup();give(s,'hpRegen',1,'legend');give(s,'mpRegen',1,'legend');give(s,'hpRegen',1,'common');const before=s.gearBonuses;
@@ -43,7 +43,7 @@ test('socket, swap and removal update cached stats; duplicate kinds reject acros
 });
 test('full bag blocks removal but swapping a physical piece returns the old rune without loss',()=>{
  const {s,id}=setup();give(s,'hpRegen');give(s,'mpRegen',2);expect(s.socketRune(id,0,'hpRegen','common')).toBe(true);full(s);const before=structuredClone(s.save);expect(s.unsocketRune(id,0)).toBe(false);expect(s.save).toEqual(before);
- const incoming=s.save.items.filter(i=>i.runeId==='mpRegen')[1].id!;expect(s.socketRune(id,0,incoming)).toBe(true);expect(count(s,'hpRegen')).toBe(1);expect(count(s,'mpRegen')).toBe(1);expect(s.save.items.some(i=>i.id===incoming)).toBe(false);expect(s.save.items).toHaveLength(144);
+ const incoming=s.save.items.filter(i=>i.runeId==='mpRegen')[1].id!;expect(s.socketRune(id,0,incoming)).toBe(true);expect(count(s,'hpRegen')).toBe(1);expect(count(s,'mpRegen')).toBe(1);expect(s.save.items.some(i=>i.id===incoming)).toBe(false);expect(s.save.items).toHaveLength(240);
 });
 test('socketed gear cannot sell/salvage and standalone runes survive bulk material sale',()=>{
  const {s,id}=setup();give(s,'hpRegen',2);expect(s.socketRune(id,0,'hpRegen','common')).toBe(true);s.unequip('armor');expect(s.sellItem(id)).toBe(false);expect(s.salvageItem(id)).toBe(false);s.sell();expect(count(s,'hpRegen')).toBe(1);expect(s.save.items.find(i=>i.id===id)!.runes![0]).toMatchObject({runeId:'hpRegen',rarity:'common'});

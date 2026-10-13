@@ -1,5 +1,5 @@
 {
-  "bagCapacity": 144,
+  "bagCapacity": 240,
   "redPotion": {
     "cost": 15,
     "recoveryPercent": 0.2,
