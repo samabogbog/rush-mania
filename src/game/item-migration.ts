@@ -5,6 +5,7 @@ import {isCraftMaterial,materialKey} from './crafting.js';
 import type {Item,Simulation} from '../simulation.js';
 import {isRuneId,makeRuneItem,normalizeRuneSockets} from './runes.js';
 import {isRarity} from './crafting.js';
+import {refineStones} from './refinement.js';
 export const retiredMaterials=new Set(itemMigrationConfig.retiredMaterials);
 export const isRetiredMaterial=(item:{name:string;gearId?:string})=>!item.gearId&&retiredMaterials.has(item.name);
 /** Retired materials are removed; gear UUIDs and all rolled/refined values stay intact. */
@@ -12,6 +13,7 @@ export function migrateStoredItem(item:Item,renameLegend:boolean):Item|null {
  if(isRetiredMaterial(item))return null;
  const next=structuredClone(item);
  const gear=next.gearId?gearById(next.gearId):undefined;if(gear){next.gearId=gear.id;next.name=gear.name;next.icon=gear.icon;next.runes=normalizeRuneSockets(next.runes);}
+ const stone=!next.gearId&&Object.values(refineStones).find(s=>s.name===next.name);if(stone)next.icon=stone.icon;
  if(isRuneId(next.runeId)&&!next.gearId)return makeRuneItem(next.runeId,isRarity(next.rarity)?next.rarity:'common',next.count);
  if(renameLegend&&next.rarity==='legend')next.rarity='ancient';
  if(isCraftMaterial(next.name)&&!next.gearId){next.rarity ||= 'common';next.id=materialKey(next.name,next.rarity);next.icon=materialIcon(next.name,next.rarity);}
@@ -21,6 +23,7 @@ export function migrateStoredLoot(loot:Simulation['loot'],renameLegend:boolean):
  return loot.flatMap(drop=>{
   if(isRetiredMaterial(drop.item||drop))return [];
   const item=drop.item?migrateStoredItem(drop.item,renameLegend):undefined;
-  return [{...drop,...(item?{item,name:item.name,icon:item.icon}:isCraftMaterial(drop.name)?{icon:materialIcon(drop.name)}:{})}];
+  const stone=Object.values(refineStones).find(s=>s.name===drop.name);
+  return [{...drop,...(item?{item,name:item.name,icon:item.icon}:stone?{icon:stone.icon}:isCraftMaterial(drop.name)?{icon:materialIcon(drop.name)}:{})}];
  });
 }

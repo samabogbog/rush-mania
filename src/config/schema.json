@@ -4157,12 +4157,14 @@
   "economy": {
     "bagCapacity": "number",
     "redPotion": {
-      "heal": "number",
-      "cost": "number"
+      "cost": "number",
+      "recoveryPercent": "number",
+      "duration": "number"
     },
     "bluePotion": {
-      "heal": "number",
-      "cost": "number"
+      "cost": "number",
+      "recoveryPercent": "number",
+      "duration": "number"
     },
     "potionCooldown": "number",
     "deathGold": "number",
@@ -4202,6 +4204,10 @@
       "townSafeRadius": "number",
       "portalSafeRadius": "number",
       "npcSafeRadius": "number"
+    },
+    "potionDrops": {
+      "red": "number",
+      "blue": "number"
     }
   },
   "crafting": {

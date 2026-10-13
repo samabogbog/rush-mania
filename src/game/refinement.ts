@@ -3,7 +3,7 @@ export const REFINE_CAP=config.cap;
 export const refineSuccess=config.success;
 export type StoneTier='common'|'rare';
 export const isStoneTier=(value:unknown):value is StoneTier=>value==='common'||value==='rare';
-export const refineStones={common:{name:'Common refine stone',icon:'ice-shard'},rare:{name:'Rare refine stone',icon:'crystal-dust'}} as const;
+export const refineStones={common:{name:'Common refine stone',icon:'refine-stone-common'},rare:{name:'Rare refine stone',icon:'refine-stone-rare'}} as const;
 export const refineLevel=(value:number|undefined)=>Math.max(0,Math.min(REFINE_CAP,Math.floor(value||0)));
 export const refineBonus=(level:number)=>{const n=refineLevel(level);return n*(config.bonusLinear+n)/2;};
 export const refineChance=(current:number,tier:StoneTier)=>current>=REFINE_CAP?0:Math.min(1,refineSuccess[refineLevel(current)]*(tier==='rare'?config.rareMultiplier:1));

@@ -2,6 +2,7 @@ import {migrateStoredItem,isRetiredMaterial} from './game/item-migration.js';
 import {skillCastDuration,skillRecoveryDuration} from './game/skill-timing.js';
 import {attributeCombat,equippedAttributeBonuses} from './game/attribute-combat.js';
 import {runeTypes,runeById,isRuneId,runeKey,normalizeRuneSockets,hasSocketedRunes,exchangeRuneItems,rollRuneDrops,type RuneId,type RuneSockets} from './game/runes.js';
+import {rollPotionDrops,type PotionRecovery} from './game/potions.js';
 import {inventoryKey,salvageYield,itemSalePrice} from './game/inventory-actions.js';
 import {isCraftMaterial,isRarity,materialRarity,materialKey,sameStack,gearRecipe,craftCost,materialCount,rollMaterialDrops} from './game/crafting.js';
 import {materialIcons} from './game/items.js';
@@ -124,6 +125,7 @@ export class Simulation {
   auto = false;
   cooldowns = Array(10).fill(0) as number[];
   auxiliaryCooldown=0;
+  potionRecovery:PotionRecovery={hp:null,mp:null};
   skillCooldowns: Record<string, number> = {};
   skillCooldownTotals: Record<string, number> = {};
   autoSkillCursor = 0;
@@ -267,6 +269,7 @@ export class Simulation {
   }
   rollEquipmentLoot(monster:Monster):Item[] {return rollEquipmentDrops(this.monsterSpec(monster.kind).level,this.monsterSpec(monster.kind).boss?'boss':this.monsterSpec(monster.kind).miniBoss?'mini':'normal',this.random).map(rolled=>{const gear=gearById(rolled.gearId!)!;return {...rolled,name:gear.name,category:itemCategory({name:gear.name}),icon:gear.icon,count:1};});}
   rollRuneLoot(monster:Monster):Item[]{const spec=this.monsterSpec(monster.kind);return spec.boss||spec.miniBoss?[]:rollRuneDrops(spec.level,this.random);}
+  rollPotionLoot(monster:Monster):Item[]{const spec=this.monsterSpec(monster.kind);return spec.boss||spec.miniBoss?[]:rollPotionDrops(this.random);}
   get agility() { return this.save.stats.agi+(this.gearBonuses.agi||0); }
   toggleTutorial(){if(this.save.tutorial.includes('skip'))this.save.tutorial=this.save.tutorial.filter(s=>s!=='skip');else this.save.tutorial.push('skip');this.persist();}
   markTutorial(step:string) {if(!this.save.tutorial.includes(step))this.save.tutorial.push(step)}
@@ -490,7 +493,7 @@ export class Simulation {
   }
   usePotion(blue = false) {
     const item = this.save.items.find(
-      (i) => i.name === (blue ? "Blue potion" : "Red potion"),
+      (i) => i.name === (blue ? "Blue potion" : "Red potion")&&i.count>0,
     );
     if(this.deathTime>0||this.save.hp<=0||this.auxiliaryCooldown>0)return false;
     if (!item?.count) {
@@ -502,17 +505,17 @@ export class Simulation {
         this.onEvent("Mana is already full");
         return false;
       }
-      this.save.mp = Math.min(this.maxMp, this.save.mp + economy.bluePotion.heal*this.healingMultiplier);
     } else {
       if (this.save.hp >= this.maxHp) {
         this.onEvent("Health is already full");
         return false;
       }
-      this.save.hp = Math.min(this.maxHp, this.save.hp + economy.redPotion.heal*this.healingMultiplier);
     }
     item.count--;
+    const potion=blue?economy.bluePotion:economy.redPotion;
+    this.potionRecovery[blue?'mp':'hp']={amount:(blue?this.maxMp:this.maxHp)*potion.recoveryPercent,remaining:potion.duration,duration:potion.duration};
     this.auxiliaryCooldown=economy.potionCooldown;this.refreshCooldowns();
-    this.onEvent(`${blue?"Mana":"Health"} restored +${Math.round((blue?economy.bluePotion.heal:economy.redPotion.heal)*this.healingMultiplier)}`, "heal");
+    this.onEvent(`${blue?'Mana':'Health'} recovery started · ${potion.recoveryPercent*100}% over ${potion.duration} seconds`, 'heal');
     this.persist();
     return true;
   }
@@ -629,6 +632,7 @@ export class Simulation {
       for(const equipmentDrop of this.rollEquipmentLoot(m))this.loot.push({x:m.x,z:m.z,name:equipmentDrop.name,icon:equipmentDrop.icon,item:equipmentDrop});
       for(const item of this.rollMaterialLoot(m))this.loot.push({x:m.x,z:m.z,name:item.name,icon:item.icon,item});
       for(const item of this.rollRuneLoot(m))this.loot.push({x:m.x,z:m.z,name:item.name,icon:item.icon,item});
+      for(const item of this.rollPotionLoot(m))this.loot.push({x:m.x,z:m.z,name:item.name,icon:item.icon,item});
       this.loot=this.loot.slice(-40);
       }
       this.onEvent(
@@ -883,6 +887,7 @@ export class Simulation {
   }
   tick(dt: number, dx: number, dz: number) {
     if (this.paused) return;
+    if(this.save.hp<=0||this.deathTime>0)this.potionRecovery={hp:null,mp:null};
     if(this.deathTime>0){this.deathTime=Math.max(0,this.deathTime-dt);if(this.deathTime===0){this.save.hp=this.maxHp;this.save.mp=this.maxMp;this.x=0;this.z=2;this.onEvent("Rescued at camp", "level");this.persist();}return;}
     this.time += dt;
     this.routeTimer -= dt;
@@ -914,7 +919,14 @@ export class Simulation {
       }
     }
     this.save.mp = Math.min(this.maxMp, this.save.mp + dt*this.maxMp*this.mpRegenPercent/100);
-    this.save.hp=Math.min(this.maxHp,this.save.hp+dt*this.maxHp*this.hpRegenPercent/100);
+    if(this.save.hp>0)this.save.hp=Math.min(this.maxHp,this.save.hp+dt*this.maxHp*this.hpRegenPercent/100);
+    for(const resource of ['hp','mp'] as const){
+      const effect=this.potionRecovery[resource];if(!effect)continue;
+      let elapsed=Math.min(Math.max(0,dt),effect.remaining);
+      if(effect.remaining-elapsed<=1e-9)elapsed=effect.remaining;
+      this.save[resource]=Math.min(resource==='hp'?this.maxHp:this.maxMp,this.save[resource]+effect.amount*elapsed/effect.duration);
+      effect.remaining=Math.max(0,effect.remaining-elapsed);if(effect.remaining<=1e-9)this.potionRecovery[resource]=null;
+    }
     if (dx || dz) {
       this.markTutorial("move");
       this.target = null;
@@ -1075,6 +1087,7 @@ export class Simulation {
       }
     }
     if (this.save.hp <= 0) {
+      this.potionRecovery={hp:null,mp:null};
       this.save.hp = 0;this.deathTime=economy.deathDelay;
       this.target = null;
       this.cast = null;

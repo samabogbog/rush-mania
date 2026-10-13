@@ -5,7 +5,7 @@ import type {Item} from '../simulation.js';
 export type RuneId='critChance'|'critDamage'|'damageBonus'|'lifesteal'|'hpRegen'|'mpRegen'|'armorPen'|'damageReduction'|'dodgeChance'|'cooldownReduction';
 export type RuneSocket={runeId:RuneId;rarity:Rarity};
 export type RuneSockets=[RuneSocket|null,RuneSocket|null];
-export const runeTypes=runeConfig.types.map(r=>({...r,id:r.id as RuneId,stat:r.id as RuneId,icon:'runes/'+r.id}));
+export const runeTypes=runeConfig.types.map(r=>({...r,id:r.id as RuneId,stat:r.id as RuneId,icon:'runes-v2/'+r.id}));
 export const runeById=(id:unknown)=>runeTypes.find(r=>r.id===id);
 export const isRuneId=(id:unknown):id is RuneId=>typeof id==='string'&&!!runeById(id);
 const runeRarity=(value:unknown):value is Rarity=>typeof value==='string'&&Object.hasOwn(runeConfig.rarityMultipliers,value);

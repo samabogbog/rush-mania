@@ -3,7 +3,7 @@ import {economy,progression,contentConfig} from '../src/config/balance.js';
 import {EXP_CHARM,EXP_TOME,EXP_TEST_GRANT_COUNT,itemCatalog,itemCategory} from '../src/game/items.js';
 import {sameStack,isRarity,isCraftMaterial} from '../src/game/crafting.js';
 import {rollGear,gearById,rarityOrder,BAG_CAPACITY,type Rarity} from '../src/game/equipment.js';
-import {isStoneTier} from '../src/game/refinement.js';
+import {isStoneTier,refineStones} from '../src/game/refinement.js';
 import {communityCommand,communitySnapshot,partyOf,shareKill} from './community.js';
 import { Simulation, type Save } from '../src/simulation.js';
 import {savedAttributeCombat} from '../src/game/attribute-combat.js';
@@ -59,6 +59,8 @@ function hydrate(player:Player, realm:Realm) {
   }
   const room=roomFor(realm,player.room,normalizedSave.zone);
   Object.assign(sim,structuredClone(player.actor));sim.save=normalizedSave;sim.skillCooldownTotals=player.actor.skillCooldownTotals||{...sim.skillCooldowns};sim.autoSkillCursor=Number.isInteger(sim.autoSkillCursor)?((sim.autoSkillCursor%6)+6)%6:0;sim.cooldowns=Array.from({length:10},(_,n)=>n<6?sim.skillCooldowns[sim.save.hotbar[n]||'']||0:sim.auxiliaryCooldown||0);sim.online=true;sim.balance=realm.balance||{};
+  sim.potionRecovery ||= {hp:null,mp:null};
+  for(const drop of sim.loot||[]){const stone=drop.name===refineStones.common.name?refineStones.common:drop.name===refineStones.rare.name?refineStones.rare:undefined;if(stone){drop.icon=stone.icon;if(drop.item)drop.item.icon=stone.icon;}}
   sim.monsters=room.monsters;sim.obstacles=zoneObstacles(sim.save.zone);sim.actorId=player.id;
   sim.onEvent=(text,type='system',x,z)=>{player.events.push({id:++player.serial,text,type,x,z});player.events=player.events.slice(-40)};
   return sim;
