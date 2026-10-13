@@ -1,0 +1,13 @@
+{
+  "phase": "before",
+  "quality": "low",
+  "render": {
+    "shadows": true,
+    "filter": "pcss-contact-hardening",
+    "drawCalls": 131,
+    "materials": 132,
+    "textures": 68,
+    "meshes": 373
+  },
+  "pageErrors": []
+}

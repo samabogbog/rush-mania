@@ -1,0 +1,42 @@
+[
+  {
+    "quality": "high",
+    "ROI": [
+      250,
+      450,
+      430,
+      610
+    ],
+    "measurements": [
+      {
+        "phase": "before",
+        "meanHSV_S": 0.3993080968611988
+      },
+      {
+        "phase": "after",
+        "meanHSV_S": 0.6167823437993564
+      }
+    ],
+    "ratio": 1.5446276913682333
+  },
+  {
+    "quality": "low",
+    "ROI": [
+      250,
+      450,
+      430,
+      610
+    ],
+    "measurements": [
+      {
+        "phase": "before",
+        "meanHSV_S": 0.4000524784785977
+      },
+      {
+        "phase": "after",
+        "meanHSV_S": 0.6169540387283865
+      }
+    ],
+    "ratio": 1.5421827683074654
+  }
+]

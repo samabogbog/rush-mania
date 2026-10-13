@@ -1,0 +1,23 @@
+{
+  "phase": "after",
+  "quality": "low",
+  "render": {
+    "shadows": true,
+    "filter": "pcss-contact-hardening",
+    "grade": {
+      "mode": "camera-pass",
+      "passes": 1,
+      "fromLinearSpace": true,
+      "enabled": true,
+      "saturation": 60,
+      "saturationFactor": 1.6,
+      "exposure": 1,
+      "contrast": 1
+    },
+    "drawCalls": 163,
+    "materials": 132,
+    "textures": 68,
+    "meshes": 373
+  },
+  "pageErrors": []
+}

@@ -12,6 +12,8 @@ import { Camera } from "@babylonjs/core/Cameras/camera";
 import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { Color4 } from "@babylonjs/core/Maths/math.color";
+import { ColorCurves } from "@babylonjs/core/Materials/colorCurves";
+import { ImageProcessingPostProcess } from "@babylonjs/core/PostProcesses/imageProcessingPostProcess";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { Matrix } from "@babylonjs/core/Maths/math.vector";
 import { DirectionalLight } from "@babylonjs/core/Lights/directionalLight";
@@ -52,6 +54,7 @@ export class World implements GameWorld {
   private outfitKey="";private outfit:TransformNode[]=[];
   private readonly shadows: ShadowGenerator;
   private readonly sunlight: DirectionalLight;
+  private readonly colorGrade: ImageProcessingPostProcess;
   private currentZone: ZoneId | null=null;
   private farmTerritories: {group:ReturnType<typeof zoneMonsterGroups>[number];root:TransformNode;fill:Mesh;border:Mesh;active:boolean}[]=[];
   private territoryMaterials: StandardMaterial[]=[];
@@ -107,6 +110,13 @@ export class World implements GameWorld {
     this.engine.setHardwareScalingLevel(1 / Math.min(devicePixelRatio, 1.7));
     this.scene = new Scene(this.engine);
     this.scene.useRightHandedSystem = true;
+    // Grade the final canvas once. Material shaders retain linear output, avoiding
+    // the unready PBR inline color-curve variant while the DOM HUD stays untouched.
+    const colorCurves=new ColorCurves();
+    colorCurves.globalSaturation=60; // Babylon: 1 + saturation * .01 = 1.6× chroma.
+    this.scene.imageProcessingConfiguration.colorCurves=colorCurves;
+    this.scene.imageProcessingConfiguration.colorCurvesEnabled=true;
+    this.scene.imageProcessingConfiguration.applyByPostProcess=true;
     this.scene.clearColor = Color4.FromHexString("#b7c6aaff");
     this.scene.ambientColor = new Color3(0.035, 0.045, 0.04);
     this.scene.detachControl();
@@ -118,6 +128,8 @@ export class World implements GameWorld {
     this.camera.mode = Camera.ORTHOGRAPHIC_CAMERA;
     this.camera.minZ = 0.1;
     this.camera.maxZ = 150;
+    this.colorGrade=new ImageProcessingPostProcess('canvas-saturation',1,this.camera,undefined,this.engine,false,undefined,this.scene.imageProcessingConfiguration);
+    this.colorGrade.fromLinearSpace=true;
     const sky = new HemisphericLight("sky", Vector3.Up(), this.scene);
     sky.intensity = 0.48;
     sky.diffuse = Color3.FromHexString("#d1e0dc");
@@ -359,6 +371,7 @@ export class World implements GameWorld {
   get diagnostics() {
     return {
       engine: "Babylon.js",...this.factory.surfaces.diagnostics,
+      colorGrading:{mode:'camera-pass',passes:1,fromLinearSpace:this.colorGrade.fromLinearSpace,enabled:this.scene.imageProcessingConfiguration.colorCurvesEnabled,saturation:this.scene.imageProcessingConfiguration.colorCurves?.globalSaturation??0,saturationFactor:1+(this.scene.imageProcessingConfiguration.colorCurves?.globalSaturation??0)*.01,exposure:this.scene.imageProcessingConfiguration.exposure,contrast:this.scene.imageProcessingConfiguration.contrast},
       sceneTextures:this.scene.textures.length,sceneMaterials:this.scene.materials.length,
       texturedMapMeshes:this.mapMeshes.filter(m=>(m.material as StandardMaterial)?.diffuseTexture).length+1,
       shadowsEnabled:this.scene.shadowsEnabled,shadowFilter:this.shadows.useContactHardeningShadow?'pcss-contact-hardening':'blur-exponential',shadowFilterId:this.shadows.filter,shadowPCSSSupported:this.engine._features.supportShadowSamplers,shadowWebGLVersion:this.engine.webGLVersion,shadowSourceSizeUV:this.shadows.useContactHardeningShadow?this.shadows.contactHardeningLightSizeUVRatio:null,shadowSampling:this.shadows.useContactHardeningShadow?(this.shadows.filteringQuality===ShadowGenerator.QUALITY_LOW?'16 blocker / 16 PCF':'16 blocker / 32 PCF'):'separable exponential blur',shadowBlurKernel:this.shadows.blurKernel,shadowBlurScale:this.shadows.blurScale,shadowDarkness:this.shadows.darkness,shadowDepthScale:this.shadows.depthScale,shadowMapSize:this.shadows.getShadowMap()?.getSize().width,
@@ -630,6 +643,7 @@ export class World implements GameWorld {
     this.instrumentation.dispose();
     this.skillVFX.dispose();
     this.models.dispose();
+    this.colorGrade.dispose(this.camera);
     this.scene.dispose();
     this.engine.dispose();
     for (const label of this.monsterLabels.values()) label.remove();
