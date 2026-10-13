@@ -1,0 +1,31 @@
+{
+  "build": "passed",
+  "codeTests": 15,
+  "browserUniqueTests": 10,
+  "totalUniquePassed": 25,
+  "renderViews": [
+    "town-high-1200",
+    "glade-high-1200",
+    "glade-low-390",
+    "orchard-high-1200",
+    "marsh-high-1200",
+    "frost-high-1200",
+    "ruins-high-1200",
+    "cottage-close-high"
+  ],
+  "maxStaticVertices": 217708,
+  "staticVertexBudget": 220000,
+  "decorationClusters": 990,
+  "baseClustersPerSector": 80,
+  "extraHighClustersPerSector": 30,
+  "travel": "one warm-up plus two complete six-zone cycles; mesh/material/texture counts equal per zone on the final two cycles",
+  "builtEntry": "/assets/index-CqsHSry9.js",
+  "runtimeScope": [
+    "src/world.ts",
+    "src/render/environment-art.ts",
+    "src/render/procedural.ts",
+    "src/render/surface-materials.ts"
+  ],
+  "unchangedGameplayAndVfx": true,
+  "performanceEnvironment": "Chromium SwiftShader; no player hardware FPS certification"
+}

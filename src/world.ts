@@ -33,6 +33,7 @@ import {
   creature,
   type Obstacle,
 } from "./render/procedural";
+import { environmentPalette } from './render/environment-art';
 import type { GameWorld } from "./render/contracts";
 
 /** Babylon owns graphics resources; Simulation owns all gameplay and saved state. */
@@ -106,29 +107,29 @@ export class World implements GameWorld {
     this.engine.setHardwareScalingLevel(1 / Math.min(devicePixelRatio, 1.7));
     this.scene = new Scene(this.engine);
     this.scene.useRightHandedSystem = true;
-    this.scene.clearColor = Color4.FromHexString("#4e4abcff");
-    this.scene.ambientColor = new Color3(0.045, 0.055, 0.075);
+    this.scene.clearColor = Color4.FromHexString("#b7c6aaff");
+    this.scene.ambientColor = new Color3(0.035, 0.045, 0.04);
     this.scene.detachControl();
     this.camera = new FreeCamera(
       "isometric-camera",
-      new Vector3(0, 29, 24),
+      new Vector3(0, 26, 28),
       this.scene,
     );
     this.camera.mode = Camera.ORTHOGRAPHIC_CAMERA;
     this.camera.minZ = 0.1;
     this.camera.maxZ = 150;
     const sky = new HemisphericLight("sky", Vector3.Up(), this.scene);
-    sky.intensity = 0.65;
-    sky.diffuse = Color3.FromHexString("#dcecff");
-    sky.groundColor = Color3.FromHexString("#b6c498");
+    sky.intensity = 0.48;
+    sky.diffuse = Color3.FromHexString("#d1e0dc");
+    sky.groundColor = Color3.FromHexString("#697e6f");
     const sun = this.sunlight = new DirectionalLight(
       "sun",
       new Vector3(18, -30, -18).normalize(),
       this.scene,
     );
     sun.position.set(-18, 30, 18);
-    sun.diffuse = Color3.FromHexString("#fff1ce");
-    sun.intensity = 0.72;
+    sun.diffuse = Color3.FromHexString("#ffe9bc");
+    sun.intensity = 0.91;
     sun.autoUpdateExtends = false;
     sun.orthoLeft = -34;
     sun.orthoRight = 34;
@@ -144,7 +145,7 @@ export class World implements GameWorld {
     shadows.blurKernel = 20;
     shadows.depthScale = 50;
     shadows.bias = 0.00035;
-    shadows.darkness = 0.25;
+    shadows.darkness = 0.12;
     shadows.normalBias = 0.025;
     this.factory = new Primitives(this.scene);
     this.models = new ModelLibrary(this.scene);
@@ -254,7 +255,7 @@ export class World implements GameWorld {
     for(const entry of this.zoneLabels)entry.label.remove();this.zoneLabels=[];
     const oldMeshes=new Set(this.scene.meshes),oldNodes=new Set(this.scene.transformNodes);
     this.blocking=[];this.currentZone=this.sim.save.zone;
-    const groundColor=zones[this.currentZone].ground;
+    const groundColor=environmentPalette(this.currentZone).ground;
     // Shared texture and vertex tint cover the entire 96×96 world, including outer sectors.
     this.ground.material=this.factory.surfaces.material('grass');
     this.factory.surface(this.ground,'grass');
@@ -272,8 +273,9 @@ export class World implements GameWorld {
     const portalLabel=document.createElement('div');portalLabel.className='world-label npc-label';portalLabel.textContent='NORTH PORTAL · Open Map to travel';this.labels.append(portalLabel);this.zoneLabels.push({label:portalLabel,x:PORTAL_POSITION.x,z:PORTAL_POSITION.z});
     this.mapMeshes=this.scene.meshes.filter((m):m is Mesh=>m instanceof Mesh&&!oldMeshes.has(m));
     this.mapNodes=this.scene.transformNodes.filter(n=>!oldNodes.has(n));
-    for(const mesh of this.mapMeshes)if(mesh.getBoundingInfo().boundingBox.extendSizeWorld.y>.1)this.shadows.addShadowCaster(mesh);
+    for(const mesh of this.mapMeshes)if(!mesh.metadata?.environmentDetail&&!mesh.metadata?.contactShadows&&mesh.getBoundingInfo().boundingBox.extendSizeWorld.y>.1)this.shadows.addShadowCaster(mesh);
     this.buildTerritories();
+    this.applyEnvironmentQuality();
   }
   private rebuildMonsters() {
     for(const node of this.monsters.values()){for(const mesh of node.getChildMeshes())this.shadows.removeShadowCaster(mesh);node.dispose();}
@@ -310,11 +312,16 @@ export class World implements GameWorld {
   }
 
   setQuality(quality:"auto"|"high"|"low") {this.quality=quality;this.autoReduced=false;this.frameTimes=[];this.lastFrame=performance.now();localStorage.setItem("mossvale-quality",quality);this.applyQuality();this.resize();}
+  private applyEnvironmentQuality(){
+    const low=this.quality==='low'||this.autoReduced;
+    for(const mesh of this.mapMeshes)if(mesh.metadata?.environmentDetail)mesh.setEnabled(!mesh.metadata.highOnly||!low);
+  }
   private applyQuality(){
     const low=this.quality==='low'||this.autoReduced;
     this.scene.shadowsEnabled=!low;
     this.models.setLowQuality(low);this.skillVFX.setLowQuality(low);
     this.factory.surfaces.setLowQuality(low);
+    this.applyEnvironmentQuality();
     // Setters dispose old blur targets/passes; unchanged settings are no-ops.
     this.shadows.blurScale=this.quality==='high'?2:1;
     this.shadows.blurKernel=this.quality==='high'?20:10;
@@ -343,7 +350,7 @@ export class World implements GameWorld {
       sceneTextures:this.scene.textures.length,sceneMaterials:this.scene.materials.length,
       texturedMapMeshes:this.mapMeshes.filter(m=>(m.material as StandardMaterial)?.diffuseTexture).length+1,
       shadowsEnabled:this.scene.shadowsEnabled,shadowFilter:'blur-close-exponential',shadowBlurKernel:this.shadows.blurKernel,shadowBlurScale:this.shadows.blurScale,shadowDarkness:this.shadows.darkness,shadowDepthScale:this.shadows.depthScale,shadowMapSize:this.shadows.getShadowMap()?.getSize().width,
-      lighting:'warm directional sunlight / cool sky fill',territoriesCount:this.farmTerritories.length,activeGroupId:this.farmTerritories.find(t=>t.active)?.group.id??null,groupCenters:this.farmTerritories.map(t=>({...t.group,visible:t.root.isEnabled()})),worldSize:WORLD_SIZE,worldBounds:WORLD_BOUNDS,modelsLoaded:this.models.loaded,modelsExpected:3+this.sim.monsters.length,
+      lighting:'warm honey sun / sage sky fill',environmentPalette:environmentPalette(this.currentZone??'glade'),environmentDetails:{clusters:this.mapMeshes.reduce((n,m)=>n+(m.metadata?.clusters??0),0),vertices:this.mapMeshes.filter(m=>m.metadata?.environmentDetail).reduce((n,m)=>n+m.getTotalVertices(),0),visibleMeshes:this.mapMeshes.filter(m=>m.metadata?.environmentDetail&&m.isEnabled()).length,contactShadows:this.mapMeshes.reduce((n,m)=>n+(m.metadata?.contactShadows??0),0)},territoriesCount:this.farmTerritories.length,activeGroupId:this.farmTerritories.find(t=>t.active)?.group.id??null,groupCenters:this.farmTerritories.map(t=>({...t.group,visible:t.root.isEnabled()})),worldSize:WORLD_SIZE,worldBounds:WORLD_BOUNDS,modelsLoaded:this.models.loaded,modelsExpected:3+this.sim.monsters.length,
       cameraShake:this.skillCameraShake.diagnostics,previewHeld:this.previewHeld,vfx:this.skillVFX.diagnostics,sceneMeshes:this.scene.meshes.length,skillMotion:this.skillMotion,quality:this.quality,autoReduced:this.autoReduced,riggedActors:this.models.active,motionPoses:this.models.motionDiagnostics,modelErrors:this.models.errors,
       renderWidth:this.engine.getRenderWidth(),renderHeight:this.engine.getRenderHeight(),activeAnimations:this.scene.animatables.length,
       drawCalls: this.instrumentation.drawCallsCounter.current,
@@ -505,7 +512,7 @@ export class World implements GameWorld {
     this.camera.position
       .copyFrom(focus)
       .addInPlace(
-        new Vector3(Math.sin(this.angle) * 24, 29, Math.cos(this.angle) * 24),
+        new Vector3(Math.sin(this.angle) * 28, 26, Math.cos(this.angle) * 28),
       );
     // The release happens during this update: dt belongs to the interval before it.
     // Apply its initial sample now, then age by real elapsed seconds on subsequent frames.

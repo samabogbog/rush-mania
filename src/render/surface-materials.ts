@@ -8,7 +8,7 @@ import { Scene } from '@babylonjs/core/scene.js';
 
 export type Surface = 'grass' | 'dirt' | 'stone' | 'wood' | 'plaster' | 'water';
 const SIZE = 128;
-const TEXTURE_DETAIL = .6;
+const TEXTURE_DETAIL = .88;
 const woodColors = new Set([0xa76e43,0xbc8a56,0xa57348,0x855c3c,0x95663f,0xb48152,0xdea476,0xc79564,0xbd8758,0xa97149,0xb47e51,0xc99c68,0xcba375,0xb19d73]);
 const stoneColors = new Set([0xaab6a2,0xa6b1a3,0xb8bea8,0xaab3ac,0xc4c1ae,0x675c93,0xc6aff1,0x7c7398,0xb4a5cc,0xb2a5d1,0xe7dcff,0xd2c2e8,0xf2ce94,0xdfc9ac,0x83a4c9,0xb87374,0xe88e9c,0x81b8cb,0x96c9d6,0xf4abb4,0xc97987]);
 const waterColors = new Set([0x60d9ef,0x499fe9,0x57aab4]);
@@ -57,10 +57,10 @@ export class SurfaceMaterials {
    if(surface==='grass'){
     const cx=Math.floor(u*12),cy=Math.floor(v*12),jitter=hash(cx,cy);
     const blade=Math.max(0,1-Math.abs(fract(u*12)+Math.sin(v*Math.PI*24)*.16-.25-jitter*.45)*18)*Math.max(0,1-Math.abs(fract(v*12)-.5)*2);
-    h=broad*.55+blade*.25+grain*.12;tone=.84+broad*.13+blade*.025+grain*.045;
+    h=broad*.12+blade*.2+grain*.14;tone=.87+broad*.04+blade*.035+grain*.10;
    }else if(surface==='dirt'){
     const pebble=grain>.72?(grain-.72)*.6:0;
-    h=broad*.3+grain*.16+pebble;tone=.84+broad*.12+grain*.07;
+    h=broad*.3+grain*.16+pebble;tone=.78+broad*.15+grain*.07;
    }else if(surface==='stone'){
     const row=Math.floor(v*4),px=fract(u*3+(row%2)*.5),py=fract(v*4);
     const joint=px<.025||py<.035;
@@ -77,7 +77,7 @@ export class SurfaceMaterials {
    const index=y*SIZE+x;heights[index]=h;
    const c=Math.round((1-(1-Math.min(1,tone))*TEXTURE_DETAIL)*255);albedo.set([c,c,c,255],index*4);
   }
-  const normal=new Uint8Array(SIZE*SIZE*4),strength=surface==='stone'?.18:surface==='wood'?.14:surface==='water'?.16:.2;
+  const normal=new Uint8Array(SIZE*SIZE*4),strength=surface==='stone'?.18:surface==='wood'?.14:surface==='water'?.16:surface==='grass'?.12:.2;
   for(let y=0;y<SIZE;y++)for(let x=0;x<SIZE;x++){
    const dx=(heights[y*SIZE+wrap(x-1,SIZE)]-heights[y*SIZE+wrap(x+1,SIZE)])*strength;
    const dy=(heights[wrap(y-1,SIZE)*SIZE+x]-heights[wrap(y+1,SIZE)*SIZE+x])*strength;
@@ -89,13 +89,13 @@ export class SurfaceMaterials {
   const normalTexture=make(normal,surface+'-normal');normalTexture.level=1; // Shape relief is encoded directly; avoid inverse level amplification.
   this.normals.set(surface,normalTexture);mat.bumpTexture=this.low?null:normalTexture;
   // Broad subdued highlights suggest rough surfaces, without plastic gloss.
-  mat.specularColor=surface==='water'?new Color3(.24,.28,.3):new Color3(.035,.032,.026);mat.specularPower=surface==='water'?64:surface==='wood'?24:12;
+  mat.specularColor=surface==='water'?new Color3(.12,.17,.18):new Color3(.035,.032,.026);mat.specularPower=surface==='water'?64:surface==='wood'?24:12;
   this.materials.set(surface,mat);return mat;
  }
  /** World-space planar UVs maintain a consistent texel scale after merging and across sector edges. */
  projectUV(mesh:Mesh,surface:Surface) {
   const positions=mesh.getVerticesData('position'),normals=mesh.getVerticesData('normal');if(!positions||!normals)return;
-  const matrix=mesh.computeWorldMatrix(true),uvs:number[]=[],tile=surface==='grass'?3:surface==='dirt'?2.8:surface==='stone'?3:surface==='wood'?1.5:surface==='water'?2.5:2;
+  const matrix=mesh.computeWorldMatrix(true),uvs:number[]=[],tile=surface==='grass'?2:surface==='dirt'?2.8:surface==='stone'?3:surface==='wood'?1.5:surface==='water'?2.5:2;
   for(let i=0;i<positions.length;i+=3){
    const p=Vector3.TransformCoordinates(Vector3.FromArray(positions,i),matrix);
    const n=Vector3.TransformNormal(Vector3.FromArray(normals,i),matrix);

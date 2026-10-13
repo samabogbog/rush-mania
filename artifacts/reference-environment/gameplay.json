@@ -1,0 +1,8313 @@
+{
+  "fixture": {
+    "practice": true,
+    "job": "mage",
+    "level": 100,
+    "legalLearnedSkills": true,
+    "gear": "legendRolled"
+  },
+  "start": {
+    "zone": "glade",
+    "equipped": {
+      "weapon": "100a27b3-ba5c-46ce-8747-f4c275b4f926",
+      "helmet": "300ddfd0-3b8b-4aef-a54a-a14c67ea35dd",
+      "armor": "81b3703c-3f8f-45ec-af53-9b3ee41aa670",
+      "pants": "a5d25b6c-40e2-4c09-8c62-6248bef0df6a",
+      "boots": "add31ace-2e68-464a-b618-ddd8a3a2947b",
+      "accessory": "a65f82d7-f54b-4e80-ba35-b3e8b4e8fbc5"
+    },
+    "tutorial": [
+      "equip"
+    ],
+    "job": "mage",
+    "hotbar": [
+      "mage-5",
+      "mage-6",
+      "mage-7",
+      "mage-8",
+      "mage-9",
+      "mage-10"
+    ],
+    "auxiliary": [
+      "Red potion",
+      "Blue potion",
+      null,
+      null
+    ],
+    "skillChoices": {
+      "swordsman": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "mage": [
+        "mage-1",
+        "mage-2",
+        "mage-3",
+        "mage-4",
+        "mage-5",
+        "mage-6",
+        "mage-7",
+        "mage-8",
+        "mage-9",
+        "mage-10"
+      ],
+      "archer": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "skillRanks": {
+      "mage-1": 1,
+      "mage-2": 1,
+      "mage-3": 1,
+      "mage-4": 1,
+      "mage-5": 1,
+      "mage-6": 1,
+      "mage-7": 1,
+      "mage-8": 1,
+      "mage-9": 1,
+      "mage-10": 1
+    },
+    "skillPoints": 90,
+    "skillSpent": 10,
+    "unlockedSkills": [
+      "mage-1",
+      "mage-2",
+      "mage-3",
+      "mage-4",
+      "mage-5",
+      "mage-6",
+      "mage-7",
+      "mage-8",
+      "mage-9",
+      "mage-10"
+    ],
+    "defense": 1083.5221445150944,
+    "joystickInput": [
+      0,
+      0
+    ],
+    "joystickActive": false,
+    "auto": false,
+    "autoSkillCursor": 0,
+    "cooldownRatios": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "skillCooldownTotals": {},
+    "cooldowns": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "skillCooldowns": {},
+    "cast": null,
+    "renderX": 0,
+    "renderZ": 2,
+    "network": null,
+    "x": 0,
+    "z": 2,
+    "level": 100,
+    "hp": 9486.090607146283,
+    "mp": 852,
+    "kills": 0,
+    "items": [
+      {
+        "name": "Red potion",
+        "icon": "🧪",
+        "count": 8,
+        "category": "consumable"
+      },
+      {
+        "name": "Blue potion",
+        "icon": "💠",
+        "count": 4,
+        "category": "consumable"
+      },
+      {
+        "id": "100a27b3-ba5c-46ce-8747-f4c275b4f926",
+        "gearId": "starfall-weapon",
+        "refine": 10,
+        "rarity": "legend",
+        "secondary": {
+          "mpRegen": 0.46,
+          "damageBonus": 5.6,
+          "cooldownReduction": 4,
+          "damageReduction": 2.9,
+          "skillDamage": 5.8
+        },
+        "name": "Starfall Weapon",
+        "icon": "starfall-blade",
+        "count": 1,
+        "category": "weapon"
+      },
+      {
+        "id": "300ddfd0-3b8b-4aef-a54a-a14c67ea35dd",
+        "gearId": "starfall-helmet",
+        "refine": 10,
+        "rarity": "legend",
+        "secondary": {
+          "critChance": 2,
+          "moveSpeed": 6.3,
+          "goldBonus": 10.3,
+          "hpRegen": 0.22,
+          "critDamage": 9.6
+        },
+        "name": "Starfall Helmet",
+        "icon": "starfall-helmet",
+        "count": 1,
+        "category": "armor"
+      },
+      {
+        "id": "81b3703c-3f8f-45ec-af53-9b3ee41aa670",
+        "gearId": "starfall-coat",
+        "refine": 10,
+        "rarity": "legend",
+        "secondary": {
+          "cooldownReduction": 3.9,
+          "dodgeChance": 4.2,
+          "mpRegen": 0.41,
+          "skillDamage": 9.1,
+          "healingBonus": 4.3
+        },
+        "name": "Starfall Coat",
+        "icon": "starfall-coat",
+        "count": 1,
+        "category": "armor"
+      },
+      {
+        "id": "a5d25b6c-40e2-4c09-8c62-6248bef0df6a",
+        "gearId": "starfall-pants",
+        "refine": 10,
+        "rarity": "legend",
+        "secondary": {
+          "cooldownReduction": 5.9,
+          "damageReduction": 1.6,
+          "critDamage": 14.3,
+          "armorPen": 6.9,
+          "damageBonus": 2.8
+        },
+        "name": "Starfall Pants",
+        "icon": "starfall-pants",
+        "count": 1,
+        "category": "armor"
+      },
+      {
+        "id": "add31ace-2e68-464a-b618-ddd8a3a2947b",
+        "gearId": "starfall-boots",
+        "refine": 10,
+        "rarity": "legend",
+        "secondary": {
+          "moveSpeed": 7.7,
+          "expBonus": 8,
+          "armorPen": 8.3,
+          "critChance": 2.9,
+          "attackSpeed": 9.1
+        },
+        "name": "Starfall Boots",
+        "icon": "starfall-boots",
+        "count": 1,
+        "category": "armor"
+      },
+      {
+        "id": "a65f82d7-f54b-4e80-ba35-b3e8b4e8fbc5",
+        "gearId": "starfall-charm",
+        "refine": 10,
+        "rarity": "legend",
+        "secondary": {
+          "damageReduction": 5.1,
+          "damageBonus": 5.3,
+          "hpRegen": 0.18,
+          "dodgeChance": 1.4,
+          "cooldownReduction": 6.7
+        },
+        "name": "Starfall Charm",
+        "icon": "starfall-charm",
+        "count": 1,
+        "category": "accessory"
+      }
+    ],
+    "gold": 120,
+    "weapon": 0,
+    "target": null,
+    "loot": 0,
+    "paused": false,
+    "monsters": [
+      {
+        "id": 0,
+        "kind": "Dewdrop",
+        "x": 4.021315465957252,
+        "z": 11.993477061294673,
+        "groupId": "glade-1",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 3.7709970544092357,
+        "homeZ": 11.474506619386375,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 4.021315465957252,
+        "renderZ": 11.993477061294673,
+        "screen": {
+          "x": 748.9376092821167,
+          "y": 638.2843267149726
+        }
+      },
+      {
+        "id": 1,
+        "kind": "Dewdrop",
+        "x": -23.545285121512226,
+        "z": 24.626310436710238,
+        "groupId": "glade-1",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -24.09263080637902,
+        "homeZ": 24.499162794090807,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -23.545285121512226,
+        "renderZ": 24.626310436710238,
+        "screen": {
+          "x": -272.0475937664478,
+          "y": 956.6556398692593
+        }
+      },
+      {
+        "id": 2,
+        "kind": "Dewdrop",
+        "x": 24.55428761586524,
+        "z": 24.241480250842475,
+        "groupId": "glade-1",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 24.213141756132245,
+        "homeZ": 24.623054363764822,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 24.55428761586524,
+        "renderZ": 24.241480250842475,
+        "screen": {
+          "x": 1509.418056377706,
+          "y": 946.9571907585033
+        }
+      },
+      {
+        "id": 3,
+        "kind": "Dewdrop",
+        "x": -2.9935999357102188,
+        "z": -7.235372417288296,
+        "groupId": "glade-1",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -2.8148980401456356,
+        "homeZ": -6.6958940285257995,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -2.9935999357102188,
+        "renderZ": -7.235372417288296,
+        "screen": {
+          "x": 489.12592872998,
+          "y": 153.6809224734285
+        }
+      },
+      {
+        "id": 4,
+        "kind": "Dewdrop",
+        "x": -16.3958011107867,
+        "z": 10.073792161799151,
+        "groupId": "glade-1",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -15.861549158580601,
+        "homeZ": 10.275180883705616,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -16.3958011107867,
+        "renderZ": 10.073792161799151,
+        "screen": {
+          "x": -7.251890675617801,
+          "y": 589.9046335667806
+        }
+      },
+      {
+        "id": 5,
+        "kind": "Dewdrop",
+        "x": -3.931802208356835,
+        "z": 24.521782327576023,
+        "groupId": "glade-1",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -3.533188980538398,
+        "homeZ": 24.199925520457327,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -3.931802208356835,
+        "renderZ": 24.521782327576023,
+        "screen": {
+          "x": 454.37769654228885,
+          "y": 954.0213336627547
+        }
+      },
+      {
+        "id": 6,
+        "kind": "Wildcap",
+        "x": -33.4864861841228,
+        "z": -19.872530343112643,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -33.589994844049215,
+        "homeZ": -20.421719015110284,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -33.4864861841228,
+        "renderZ": -19.872530343112643,
+        "screen": {
+          "x": -640.2402243104443,
+          "y": -164.7993775368967
+        }
+      },
+      {
+        "id": 7,
+        "kind": "Wildcap",
+        "x": -5.393992816746011,
+        "z": -41.025125110011764,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -5.90445797983557,
+        "homeZ": -41.29672411456704,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -5.393992816746011,
+        "renderZ": -41.025125110011764,
+        "screen": {
+          "x": 400.22248903075695,
+          "y": -697.8848044106311
+        }
+      },
+      {
+        "id": 8,
+        "kind": "Wildcap",
+        "x": -9.388803269224999,
+        "z": -16.409385103047992,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -9.836905618663877,
+        "homeZ": -16.153687567915767,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -9.388803269224999,
+        "renderZ": -16.409385103047992,
+        "screen": {
+          "x": 252.2665469107571,
+          "y": -77.52156226316123
+        }
+      },
+      {
+        "id": 9,
+        "kind": "Wildcap",
+        "x": -41.845397256684564,
+        "z": -41.37229525147331,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -41.81915355892852,
+        "homeZ": -40.82438831124455,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -41.845397256684564,
+        "renderZ": -41.37229525147331,
+        "screen": {
+          "x": -949.8295221132236,
+          "y": -706.6341491174305
+        }
+      },
+      {
+        "id": 10,
+        "kind": "Wildcap",
+        "x": -24.946579906830085,
+        "z": -42.47942855432699,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -24.47011849656701,
+        "homeZ": -42.1430553230457,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -24.946579906830085,
+        "renderZ": -42.47942855432699,
+        "screen": {
+          "x": -323.94740043209015,
+          "y": -734.536003989697
+        }
+      },
+      {
+        "id": 11,
+        "kind": "Wildcap",
+        "x": -20.144944658592994,
+        "z": -27.864997682656323,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -19.65632195910439,
+        "homeZ": -28.04941815789789,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -20.144944658592994,
+        "renderZ": -27.864997682656323,
+        "screen": {
+          "x": -146.10905858318995,
+          "y": -366.2246830574457
+        }
+      },
+      {
+        "id": 12,
+        "kind": "Wildcap",
+        "x": -31.983041498352673,
+        "z": -30.88041063605857,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -31.93149496614933,
+        "homeZ": -31.41606948338449,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -31.983041498352673,
+        "renderZ": -30.88041063605857,
+        "screen": {
+          "x": -584.5570880128537,
+          "y": -442.2187972159837
+        }
+      },
+      {
+        "id": 13,
+        "kind": "Leafling",
+        "x": 12.019434196257725,
+        "z": -35.86518662423835,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 11.586512917187065,
+        "homeZ": -36.259601569734514,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 12.019434196257725,
+        "renderZ": -35.86518662423835,
+        "screen": {
+          "x": 1045.16422779286,
+          "y": -567.844587565217
+        }
+      },
+      {
+        "id": 14,
+        "kind": "Leafling",
+        "x": 43.682802355112194,
+        "z": -18.54428375929322,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 43.16343909222633,
+        "homeZ": -18.434831521008164,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 43.682802355112194,
+        "renderZ": -18.54428375929322,
+        "screen": {
+          "x": 2217.8815625361303,
+          "y": -131.32504944940428
+        }
+      },
+      {
+        "id": 15,
+        "kind": "Leafling",
+        "x": 38.8315171370966,
+        "z": -44.7472444099373,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 38.70321207912639,
+        "homeZ": -44.23455487098545,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 38.8315171370966,
+        "renderZ": -44.7472444099373,
+        "screen": {
+          "x": 2038.204332924671,
+          "y": -791.6892561926309
+        }
+      },
+      {
+        "id": 16,
+        "kind": "Leafling",
+        "x": 10.41828367120451,
+        "z": -16.77284508779879,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 10.798999896738678,
+        "homeZ": -16.328282645903528,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 10.41828367120451,
+        "renderZ": -16.77284508779879,
+        "screen": {
+          "x": 985.8623567208114,
+          "y": -86.681441855125
+        }
+      },
+      {
+        "id": 17,
+        "kind": "Leafling",
+        "x": 27.02792730419341,
+        "z": -26.542114770119042,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 27.567636071238667,
+        "homeZ": -26.57440808415413,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 27.02792730419341,
+        "renderZ": -26.542114770119042,
+        "screen": {
+          "x": 1601.0343407811129,
+          "y": -332.88552963890345
+        }
+      },
+      {
+        "id": 18,
+        "kind": "Leafling",
+        "x": 26.17598088703671,
+        "z": -39.32898667228371,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 26.378476444166154,
+        "homeZ": -39.80844541825354,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 26.17598088703671,
+        "renderZ": -39.32898667228371,
+        "screen": {
+          "x": 1569.4807698956765,
+          "y": -655.1389052395216
+        }
+      },
+      {
+        "id": 19,
+        "kind": "Leafling",
+        "x": 4.404329099872246,
+        "z": -25.425376192363505,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 4.083437965717167,
+        "homeZ": -25.911188210360706,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 4.404329099872246,
+        "renderZ": -25.425376192363505,
+        "screen": {
+          "x": 763.1232993730024,
+          "y": -304.7416036577389
+        }
+      },
+      {
+        "id": 20,
+        "kind": "Leafling",
+        "x": 1.898785227094665,
+        "z": -40.06611958365768,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 1.3495332305319607,
+        "homeZ": -40.111631544772536,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 1.898785227094665,
+        "renderZ": -40.06611958365768,
+        "screen": {
+          "x": 670.3253785130139,
+          "y": -673.7160498902286
+        }
+      },
+      {
+        "id": 21,
+        "kind": "Sunbee",
+        "x": -5.5266714199633,
+        "z": -14.524790668644377,
+        "groupId": "glade-4",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -5.799304526299238,
+        "homeZ": -14.088159085717052,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -5.5266714199633,
+        "renderZ": -14.524790668644377,
+        "screen": {
+          "x": 395.3084667081214,
+          "y": -30.02621525636977
+        }
+      },
+      {
+        "id": 22,
+        "kind": "Sunbee",
+        "x": -44.339150686436106,
+        "z": 41.4987445625803,
+        "groupId": "glade-4",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -44.084507281892,
+        "homeZ": 42.016082625836134,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -44.339150686436106,
+        "renderZ": 41.4987445625803,
+        "screen": {
+          "x": -1042.1907598998396,
+          "y": 1381.8729168750795
+        }
+      },
+      {
+        "id": 23,
+        "kind": "Sunbee",
+        "x": -39.2985277140037,
+        "z": 6.003115963264295,
+        "groupId": "glade-4",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -38.75072577036917,
+        "homeZ": 6.125522277317941,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -39.2985277140037,
+        "renderZ": 6.003115963264295,
+        "screen": {
+          "x": -855.5010208922856,
+          "y": 487.31588817293033
+        }
+      },
+      {
+        "id": 24,
+        "kind": "Sunbee",
+        "x": -41.650428009651904,
+        "z": -15.591794326315155,
+        "groupId": "glade-4",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -41.31311410758644,
+        "homeZ": -15.97685956209898,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -41.650428009651904,
+        "renderZ": -15.591794326315155,
+        "screen": {
+          "x": -942.6084389173382,
+          "y": -56.91672711051643
+        }
+      },
+      {
+        "id": 25,
+        "kind": "Sunbee",
+        "x": -17.71270459891764,
+        "z": 10.819269427192962,
+        "groupId": "glade-4",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -17.896003584377468,
+        "homeZ": 10.280759843531996,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -17.71270459891764,
+        "renderZ": 10.819269427192962,
+        "screen": {
+          "x": -56.026093753667965,
+          "y": 608.6920717334212
+        }
+      },
+      {
+        "id": 26,
+        "kind": "Sunbee",
+        "x": -32.47635701480992,
+        "z": 23.611865158879333,
+        "groupId": "glade-4",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -33.01174464588985,
+        "homeZ": 23.415014455094934,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -32.47635701480992,
+        "renderZ": 23.611865158879333,
+        "screen": {
+          "x": -602.8280329971278,
+          "y": 931.0896986723529
+        }
+      },
+      {
+        "id": 27,
+        "kind": "RibbonHare",
+        "x": 41.3374041420186,
+        "z": -12.905079164819004,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 40.94216078426689,
+        "homeZ": -12.57928735949099,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 41.3374041420186,
+        "renderZ": -12.905079164819004,
+        "screen": {
+          "x": 2131.0149623825528,
+          "y": 10.793580515457677
+        }
+      },
+      {
+        "id": 28,
+        "kind": "RibbonHare",
+        "x": 41.90522682434829,
+        "z": 41.4263785550828,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 42.013512660283595,
+        "homeZ": 41.975281386170536,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 41.90522682434829,
+        "renderZ": 41.4263785550828,
+        "screen": {
+          "x": 2152.045432018242,
+          "y": 1380.0491565079437
+        }
+      },
+      {
+        "id": 29,
+        "kind": "RibbonHare",
+        "x": 20.41202328896531,
+        "z": 17.3790969588432,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 20.924280820414424,
+        "homeZ": 17.646452084183693,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 20.41202328896531,
+        "renderZ": 17.3790969588432,
+        "screen": {
+          "x": 1356.0008596703565,
+          "y": 774.012142318808
+        }
+      },
+      {
+        "id": 30,
+        "kind": "RibbonHare",
+        "x": 9.404628455559509,
+        "z": -10.010637646917159,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 9.84989047050476,
+        "homeZ": -10.270635296590626,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 9.404628455559509,
+        "renderZ": -10.010637646917159,
+        "screen": {
+          "x": 948.3195710993962,
+          "y": 83.73898551826711
+        }
+      },
+      {
+        "id": 31,
+        "kind": "RibbonHare",
+        "x": 42.24946069207068,
+        "z": 8.924638934669115,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 42.218355347402394,
+        "homeZ": 8.376329150050879,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 42.24946069207068,
+        "renderZ": 8.924638934669115,
+        "screen": {
+          "x": 2164.7948344778433,
+          "y": 560.9437970652194
+        }
+      },
+      {
+        "id": 32,
+        "kind": "RibbonHare",
+        "x": 26.718701280989425,
+        "z": -1.8774527320319208,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 26.239826687145978,
+        "homeZ": -2.209961164277047,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 26.718701280989425,
+        "renderZ": -1.8774527320319208,
+        "screen": {
+          "x": 1589.5815251505803,
+          "y": 288.71064029507755
+        }
+      },
+      {
+        "id": 33,
+        "kind": "RibbonHare",
+        "x": 35.47063066171035,
+        "z": 25.193263999717537,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 34.98426191182807,
+        "homeZ": 25.38226363901049,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 35.47063066171035,
+        "renderZ": 25.193263999717537,
+        "screen": {
+          "x": 1913.7270565333567,
+          "y": 970.9439428166729
+        }
+      },
+      {
+        "id": 34,
+        "kind": "Dewdrop",
+        "x": -28.027017215402687,
+        "z": 30.77252568552276,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -28.07371493568644,
+        "homeZ": 31.309267999604344,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -28.027017215402687,
+        "renderZ": 30.77252568552276,
+        "screen": {
+          "x": -438.0376706847444,
+          "y": 1111.5518980199747
+        }
+      },
+      {
+        "id": 35,
+        "kind": "Dewdrop",
+        "x": 38.83048385089533,
+        "z": 39.56650248908591,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 39.26639082888141,
+        "homeZ": 39.95750906970352,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 38.83048385089533,
+        "renderZ": 39.56650248908591,
+        "screen": {
+          "x": 2038.1660630655106,
+          "y": 1333.1767591732341
+        }
+      },
+      {
+        "id": 36,
+        "kind": "Dewdrop",
+        "x": 5.6545392496094955,
+        "z": 31.138427009324328,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 6.172280060593039,
+        "homeZ": 31.024208209477365,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 5.6545392496094955,
+        "renderZ": 31.138427009324328,
+        "screen": {
+          "x": 809.4273788162644,
+          "y": 1120.7733039771133
+        }
+      },
+      {
+        "id": 37,
+        "kind": "Dewdrop",
+        "x": -12.326775902287183,
+        "z": 39.43213342012977,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -12.20320977224037,
+        "homeZ": 38.91770147765055,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -12.326775902287183,
+        "renderZ": 39.43213342012977,
+        "screen": {
+          "x": 143.4527461013235,
+          "y": 1329.7904042946734
+        }
+      },
+      {
+        "id": 38,
+        "kind": "Dewdrop",
+        "x": 27.315369026628428,
+        "z": 29.572475908570695,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 26.931154345627874,
+        "homeZ": 29.13079717895016,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 27.315369026628428,
+        "renderZ": 29.572475908570695,
+        "screen": {
+          "x": 1611.6803304603172,
+          "y": 1081.3083721232224
+        }
+      },
+      {
+        "id": 39,
+        "kind": "Dewdrop",
+        "x": -38.52506505696092,
+        "z": 42.07263053671482,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -39.06381534319371,
+        "homeZ": 42.109782407060266,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -38.52506505696092,
+        "renderZ": 42.07263053671482,
+        "screen": {
+          "x": -826.8542559259058,
+          "y": 1396.3359297049326
+        }
+      },
+      {
+        "id": 40,
+        "kind": "Dewdrop",
+        "x": 16.420926786825905,
+        "z": 42.13134577866994,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 16.222965423949063,
+        "homeZ": 42.61317099072039,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 16.420926786825905,
+        "renderZ": 42.13134577866994,
+        "screen": {
+          "x": 1208.1824712661128,
+          "y": 1397.8156649415112
+        }
+      },
+      {
+        "id": 41,
+        "kind": "Dewdrop",
+        "x": -4.81886202205892,
+        "z": 24.938942022148964,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -4.494029697496444,
+        "homeZ": 25.42245269799605,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -4.81886202205892,
+        "renderZ": 24.938942022148964,
+        "screen": {
+          "x": 421.52362949346593,
+          "y": 964.5345475878818
+        }
+      },
+      {
+        "id": 42,
+        "kind": "MooncapMonarch",
+        "x": 31.451023329159927,
+        "z": 31.95934134590637,
+        "hp": 32000,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 32,
+        "homeZ": 32,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 31.451023329159927,
+        "renderZ": 31.95934134590637,
+        "screen": {
+          "x": 1764.8527114512515,
+          "y": 1141.4618991289676
+        }
+      },
+      {
+        "id": 43,
+        "kind": "DewdropMatriarch",
+        "x": -32.26839439768293,
+        "z": 32.43957474672652,
+        "hp": 16000,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -32,
+        "homeZ": 32,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -32.26839439768293,
+        "renderZ": 32.43957474672652,
+        "screen": {
+          "x": -595.1257138736585,
+          "y": 1153.5646898407647
+        }
+      }
+    ],
+    "destination": null,
+    "zoom": 1,
+    "engine": "Babylon.js",
+    "surfaceMaterials": 4,
+    "surfaceTextures": 8,
+    "textureSize": 128,
+    "textureDetail": 0.88,
+    "normalMaps": true,
+    "surfaceFamilies": [
+      "grass",
+      "wood",
+      "stone",
+      "dirt"
+    ],
+    "sceneTextures": 66,
+    "sceneMaterials": 125,
+    "texturedMapMeshes": 31,
+    "shadowsEnabled": true,
+    "shadowFilter": "blur-close-exponential",
+    "shadowBlurKernel": 20,
+    "shadowBlurScale": 2,
+    "shadowDarkness": 0.12,
+    "shadowDepthScale": 50,
+    "shadowMapSize": 2048,
+    "lighting": "warm honey sun / sage sky fill",
+    "environmentPalette": {
+      "ground": 11319938,
+      "path": 13941130
+    },
+    "environmentDetails": {
+      "clusters": 990,
+      "vertices": 18468,
+      "visibleMeshes": 18,
+      "contactShadows": 95
+    },
+    "territoriesCount": 6,
+    "activeGroupId": null,
+    "groupCenters": [
+      {
+        "id": "glade-1",
+        "x": 0,
+        "z": 18,
+        "count": 6,
+        "radius": 2.8,
+        "visible": true
+      },
+      {
+        "id": "glade-2",
+        "x": -32,
+        "z": -32,
+        "count": 7,
+        "radius": 2.8,
+        "visible": false
+      },
+      {
+        "id": "glade-3",
+        "x": 32,
+        "z": -32,
+        "count": 8,
+        "radius": 2.8,
+        "visible": false
+      },
+      {
+        "id": "glade-4",
+        "x": -32,
+        "z": 0,
+        "count": 6,
+        "radius": 2.8,
+        "visible": true
+      },
+      {
+        "id": "glade-5",
+        "x": 32,
+        "z": 0,
+        "count": 7,
+        "radius": 2.8,
+        "visible": true
+      },
+      {
+        "id": "glade-6",
+        "x": 0,
+        "z": 32,
+        "count": 8,
+        "radius": 2.8,
+        "visible": true
+      }
+    ],
+    "worldSize": 96,
+    "worldBounds": {
+      "minX": -46,
+      "maxX": 46,
+      "minZ": -46,
+      "maxZ": 46
+    },
+    "modelsLoaded": 47,
+    "modelsExpected": 47,
+    "cameraShake": {
+      "level": 0,
+      "elapsed": 0,
+      "duration": 0,
+      "active": false,
+      "amplitude": 0,
+      "offset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "triggerCount": 0
+    },
+    "previewHeld": false,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 96,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "lv80Cue": null,
+      "lv90Cue": null,
+      "lv100Cue": null,
+      "drawCount": 0
+    },
+    "sceneMeshes": 375,
+    "skillMotion": null,
+    "quality": "high",
+    "autoReduced": false,
+    "riggedActors": 47,
+    "motionPoses": [],
+    "modelErrors": 0,
+    "renderWidth": 1200,
+    "renderHeight": 800,
+    "activeAnimations": 165,
+    "drawCalls": 160,
+    "fps": 2.234137622877569,
+    "frameP95": 1341.8000000000466
+  },
+  "arrival": {
+    "zone": "glade",
+    "equipped": {
+      "weapon": "100a27b3-ba5c-46ce-8747-f4c275b4f926",
+      "helmet": "300ddfd0-3b8b-4aef-a54a-a14c67ea35dd",
+      "armor": "81b3703c-3f8f-45ec-af53-9b3ee41aa670",
+      "pants": "a5d25b6c-40e2-4c09-8c62-6248bef0df6a",
+      "boots": "add31ace-2e68-464a-b618-ddd8a3a2947b",
+      "accessory": "a65f82d7-f54b-4e80-ba35-b3e8b4e8fbc5"
+    },
+    "tutorial": [
+      "equip",
+      "move"
+    ],
+    "job": "mage",
+    "hotbar": [
+      "mage-5",
+      "mage-6",
+      "mage-7",
+      "mage-8",
+      "mage-9",
+      "mage-10"
+    ],
+    "auxiliary": [
+      "Red potion",
+      "Blue potion",
+      null,
+      null
+    ],
+    "skillChoices": {
+      "swordsman": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "mage": [
+        "mage-1",
+        "mage-2",
+        "mage-3",
+        "mage-4",
+        "mage-5",
+        "mage-6",
+        "mage-7",
+        "mage-8",
+        "mage-9",
+        "mage-10"
+      ],
+      "archer": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "skillRanks": {
+      "mage-1": 1,
+      "mage-2": 1,
+      "mage-3": 1,
+      "mage-4": 1,
+      "mage-5": 1,
+      "mage-6": 1,
+      "mage-7": 1,
+      "mage-8": 1,
+      "mage-9": 1,
+      "mage-10": 1
+    },
+    "skillPoints": 90,
+    "skillSpent": 10,
+    "unlockedSkills": [
+      "mage-1",
+      "mage-2",
+      "mage-3",
+      "mage-4",
+      "mage-5",
+      "mage-6",
+      "mage-7",
+      "mage-8",
+      "mage-9",
+      "mage-10"
+    ],
+    "defense": 1083.5221445150944,
+    "joystickInput": [
+      0,
+      0
+    ],
+    "joystickActive": false,
+    "auto": false,
+    "autoSkillCursor": 0,
+    "cooldownRatios": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "skillCooldownTotals": {},
+    "cooldowns": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "skillCooldowns": {},
+    "cast": null,
+    "renderX": 0,
+    "renderZ": 16.486441200000012,
+    "network": null,
+    "x": 0,
+    "z": 16.486441200000012,
+    "level": 100,
+    "hp": 9486.090607146283,
+    "mp": 852,
+    "kills": 0,
+    "items": [
+      {
+        "name": "Red potion",
+        "icon": "🧪",
+        "count": 8,
+        "category": "consumable"
+      },
+      {
+        "name": "Blue potion",
+        "icon": "💠",
+        "count": 4,
+        "category": "consumable"
+      },
+      {
+        "id": "100a27b3-ba5c-46ce-8747-f4c275b4f926",
+        "gearId": "starfall-weapon",
+        "refine": 10,
+        "rarity": "legend",
+        "secondary": {
+          "mpRegen": 0.46,
+          "damageBonus": 5.6,
+          "cooldownReduction": 4,
+          "damageReduction": 2.9,
+          "skillDamage": 5.8
+        },
+        "name": "Starfall Weapon",
+        "icon": "starfall-blade",
+        "count": 1,
+        "category": "weapon"
+      },
+      {
+        "id": "300ddfd0-3b8b-4aef-a54a-a14c67ea35dd",
+        "gearId": "starfall-helmet",
+        "refine": 10,
+        "rarity": "legend",
+        "secondary": {
+          "critChance": 2,
+          "moveSpeed": 6.3,
+          "goldBonus": 10.3,
+          "hpRegen": 0.22,
+          "critDamage": 9.6
+        },
+        "name": "Starfall Helmet",
+        "icon": "starfall-helmet",
+        "count": 1,
+        "category": "armor"
+      },
+      {
+        "id": "81b3703c-3f8f-45ec-af53-9b3ee41aa670",
+        "gearId": "starfall-coat",
+        "refine": 10,
+        "rarity": "legend",
+        "secondary": {
+          "cooldownReduction": 3.9,
+          "dodgeChance": 4.2,
+          "mpRegen": 0.41,
+          "skillDamage": 9.1,
+          "healingBonus": 4.3
+        },
+        "name": "Starfall Coat",
+        "icon": "starfall-coat",
+        "count": 1,
+        "category": "armor"
+      },
+      {
+        "id": "a5d25b6c-40e2-4c09-8c62-6248bef0df6a",
+        "gearId": "starfall-pants",
+        "refine": 10,
+        "rarity": "legend",
+        "secondary": {
+          "cooldownReduction": 5.9,
+          "damageReduction": 1.6,
+          "critDamage": 14.3,
+          "armorPen": 6.9,
+          "damageBonus": 2.8
+        },
+        "name": "Starfall Pants",
+        "icon": "starfall-pants",
+        "count": 1,
+        "category": "armor"
+      },
+      {
+        "id": "add31ace-2e68-464a-b618-ddd8a3a2947b",
+        "gearId": "starfall-boots",
+        "refine": 10,
+        "rarity": "legend",
+        "secondary": {
+          "moveSpeed": 7.7,
+          "expBonus": 8,
+          "armorPen": 8.3,
+          "critChance": 2.9,
+          "attackSpeed": 9.1
+        },
+        "name": "Starfall Boots",
+        "icon": "starfall-boots",
+        "count": 1,
+        "category": "armor"
+      },
+      {
+        "id": "a65f82d7-f54b-4e80-ba35-b3e8b4e8fbc5",
+        "gearId": "starfall-charm",
+        "refine": 10,
+        "rarity": "legend",
+        "secondary": {
+          "damageReduction": 5.1,
+          "damageBonus": 5.3,
+          "hpRegen": 0.18,
+          "dodgeChance": 1.4,
+          "cooldownReduction": 6.7
+        },
+        "name": "Starfall Charm",
+        "icon": "starfall-charm",
+        "count": 1,
+        "category": "accessory"
+      }
+    ],
+    "gold": 120,
+    "weapon": 0,
+    "target": null,
+    "loot": 0,
+    "paused": false,
+    "monsters": [
+      {
+        "id": 0,
+        "kind": "Dewdrop",
+        "x": 3.588820869385145,
+        "z": 12.644557651958921,
+        "groupId": "glade-1",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": -0.25,
+        "homeX": 3.7709970544092357,
+        "homeZ": 11.474506619386375,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": true,
+        "pattern": 0,
+        "rushRoute": [
+          {
+            "x": 3.25,
+            "z": 13
+          },
+          {
+            "x": 2.6,
+            "z": 13.65
+          },
+          {
+            "x": 1.9500000000000002,
+            "z": 14.3
+          },
+          {
+            "x": 1.3,
+            "z": 14.950000000000001
+          },
+          {
+            "x": 0.65,
+            "z": 14.950000000000001
+          }
+        ],
+        "rushRouteRetry": 0.7499999999999998,
+        "rushGoal": {
+          "x": 0,
+          "z": 15.308341200000008
+        },
+        "owner": "",
+        "returning": false,
+        "territoryAggro": true,
+        "renderX": 3.588820869385145,
+        "renderZ": 12.644557651958921,
+        "screen": {
+          "x": 732.9192909516622,
+          "y": 289.60705467837494
+        }
+      },
+      {
+        "id": 1,
+        "kind": "Dewdrop",
+        "x": -22.625628068020912,
+        "z": 24.05799797558531,
+        "groupId": "glade-1",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": -0.25,
+        "homeX": -24.09263080637902,
+        "homeZ": 24.499162794090807,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": true,
+        "pattern": 0,
+        "rushRoute": [
+          {
+            "x": -22.1,
+            "z": 24.05
+          },
+          {
+            "x": -21.45,
+            "z": 24.05
+          },
+          {
+            "x": -20.8,
+            "z": 24.05
+          },
+          {
+            "x": -20.150000000000002,
+            "z": 24.05
+          },
+          {
+            "x": -19.5,
+            "z": 23.400000000000002
+          },
+          {
+            "x": -18.85,
+            "z": 22.75
+          },
+          {
+            "x": -18.2,
+            "z": 22.75
+          },
+          {
+            "x": -17.55,
+            "z": 22.75
+          },
+          {
+            "x": -16.900000000000002,
+            "z": 22.75
+          },
+          {
+            "x": -16.25,
+            "z": 22.75
+          },
+          {
+            "x": -15.600000000000001,
+            "z": 22.75
+          },
+          {
+            "x": -14.950000000000001,
+            "z": 22.1
+          },
+          {
+            "x": -14.3,
+            "z": 22.1
+          },
+          {
+            "x": -13.65,
+            "z": 22.1
+          },
+          {
+            "x": -13,
+            "z": 21.45
+          },
+          {
+            "x": -12.35,
+            "z": 20.8
+          },
+          {
+            "x": -11.700000000000001,
+            "z": 20.8
+          },
+          {
+            "x": -11.05,
+            "z": 20.8
+          },
+          {
+            "x": -10.4,
+            "z": 20.150000000000002
+          },
+          {
+            "x": -9.75,
+            "z": 20.150000000000002
+          },
+          {
+            "x": -9.1,
+            "z": 19.5
+          },
+          {
+            "x": -8.450000000000001,
+            "z": 18.85
+          },
+          {
+            "x": -7.800000000000001,
+            "z": 18.85
+          },
+          {
+            "x": -7.15,
+            "z": 18.85
+          },
+          {
+            "x": -6.5,
+            "z": 18.85
+          },
+          {
+            "x": -5.8500000000000005,
+            "z": 18.2
+          },
+          {
+            "x": -5.2,
+            "z": 18.2
+          },
+          {
+            "x": -4.55,
+            "z": 17.55
+          },
+          {
+            "x": -3.9000000000000004,
+            "z": 17.55
+          },
+          {
+            "x": -3.25,
+            "z": 16.900000000000002
+          },
+          {
+            "x": -2.6,
+            "z": 16.900000000000002
+          },
+          {
+            "x": -1.9500000000000002,
+            "z": 16.25
+          },
+          {
+            "x": -1.3,
+            "z": 16.25
+          },
+          {
+            "x": -0.65,
+            "z": 16.25
+          }
+        ],
+        "rushRouteRetry": 0.7499999999999998,
+        "rushGoal": {
+          "x": 0,
+          "z": 15.308341200000008
+        },
+        "owner": "",
+        "returning": false,
+        "territoryAggro": true,
+        "renderX": -22.625628068020912,
+        "renderZ": 24.05799797558531,
+        "screen": {
+          "x": -237.9862215448516,
+          "y": 577.2473547960424
+        }
+      },
+      {
+        "id": 2,
+        "kind": "Dewdrop",
+        "x": 22.901403294793823,
+        "z": 24.051403192471987,
+        "groupId": "glade-1",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": -0.25,
+        "homeX": 24.213141756132245,
+        "homeZ": 24.623054363764822,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": true,
+        "pattern": 0,
+        "rushRoute": [
+          {
+            "x": 22.1,
+            "z": 24.05
+          },
+          {
+            "x": 21.45,
+            "z": 24.05
+          },
+          {
+            "x": 20.8,
+            "z": 24.05
+          },
+          {
+            "x": 20.150000000000002,
+            "z": 24.05
+          },
+          {
+            "x": 19.5,
+            "z": 23.400000000000002
+          },
+          {
+            "x": 18.85,
+            "z": 22.75
+          },
+          {
+            "x": 18.2,
+            "z": 22.75
+          },
+          {
+            "x": 17.55,
+            "z": 22.75
+          },
+          {
+            "x": 16.900000000000002,
+            "z": 22.75
+          },
+          {
+            "x": 16.25,
+            "z": 22.75
+          },
+          {
+            "x": 15.600000000000001,
+            "z": 22.75
+          },
+          {
+            "x": 14.950000000000001,
+            "z": 22.1
+          },
+          {
+            "x": 14.3,
+            "z": 22.1
+          },
+          {
+            "x": 13.65,
+            "z": 22.1
+          },
+          {
+            "x": 13,
+            "z": 21.45
+          },
+          {
+            "x": 12.35,
+            "z": 21.45
+          },
+          {
+            "x": 11.700000000000001,
+            "z": 21.45
+          },
+          {
+            "x": 11.05,
+            "z": 21.45
+          },
+          {
+            "x": 10.4,
+            "z": 21.45
+          },
+          {
+            "x": 9.75,
+            "z": 20.8
+          },
+          {
+            "x": 9.1,
+            "z": 20.150000000000002
+          },
+          {
+            "x": 8.450000000000001,
+            "z": 19.5
+          },
+          {
+            "x": 7.800000000000001,
+            "z": 19.5
+          },
+          {
+            "x": 7.15,
+            "z": 19.5
+          },
+          {
+            "x": 6.5,
+            "z": 19.5
+          },
+          {
+            "x": 5.8500000000000005,
+            "z": 19.5
+          },
+          {
+            "x": 5.2,
+            "z": 18.85
+          },
+          {
+            "x": 4.55,
+            "z": 18.2
+          },
+          {
+            "x": 3.9000000000000004,
+            "z": 17.55
+          },
+          {
+            "x": 3.25,
+            "z": 16.900000000000002
+          },
+          {
+            "x": 2.6,
+            "z": 16.900000000000002
+          },
+          {
+            "x": 1.9500000000000002,
+            "z": 16.25
+          },
+          {
+            "x": 1.3,
+            "z": 16.25
+          },
+          {
+            "x": 0.65,
+            "z": 16.25
+          }
+        ],
+        "rushRouteRetry": 0.7499999999999998,
+        "rushGoal": {
+          "x": 0,
+          "z": 15.308341200000008
+        },
+        "owner": "",
+        "returning": false,
+        "territoryAggro": true,
+        "renderX": 22.901403294793823,
+        "renderZ": 24.051403192471987,
+        "screen": {
+          "x": 1448.2001187937742,
+          "y": 577.081153778633
+        }
+      },
+      {
+        "id": 3,
+        "kind": "Dewdrop",
+        "x": -2.8042042725807423,
+        "z": -6.0769815609540725,
+        "groupId": "glade-1",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": -0.25,
+        "homeX": -2.8148980401456356,
+        "homeZ": -6.6958940285257995,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": true,
+        "pattern": 0,
+        "rushRoute": [
+          {
+            "x": -2.6,
+            "z": -5.8500000000000005
+          },
+          {
+            "x": -1.9500000000000002,
+            "z": -5.8500000000000005
+          },
+          {
+            "x": -1.3,
+            "z": -5.8500000000000005
+          },
+          {
+            "x": -0.65,
+            "z": -5.8500000000000005
+          },
+          {
+            "x": 0,
+            "z": -5.2
+          },
+          {
+            "x": 0,
+            "z": -4.55
+          },
+          {
+            "x": 0,
+            "z": -3.9000000000000004
+          },
+          {
+            "x": 0,
+            "z": -3.25
+          },
+          {
+            "x": 0,
+            "z": -2.6
+          },
+          {
+            "x": 0,
+            "z": -1.9500000000000002
+          },
+          {
+            "x": 0,
+            "z": -1.3
+          },
+          {
+            "x": 0,
+            "z": -0.65
+          },
+          {
+            "x": 0,
+            "z": 0
+          },
+          {
+            "x": 0,
+            "z": 0.65
+          },
+          {
+            "x": 0,
+            "z": 1.3
+          },
+          {
+            "x": 0,
+            "z": 1.9500000000000002
+          },
+          {
+            "x": 0,
+            "z": 2.6
+          },
+          {
+            "x": 0,
+            "z": 3.25
+          },
+          {
+            "x": 0,
+            "z": 3.9000000000000004
+          },
+          {
+            "x": 0,
+            "z": 4.55
+          },
+          {
+            "x": 0,
+            "z": 5.2
+          },
+          {
+            "x": 0,
+            "z": 5.8500000000000005
+          },
+          {
+            "x": 0,
+            "z": 6.5
+          },
+          {
+            "x": 0,
+            "z": 7.15
+          },
+          {
+            "x": 0,
+            "z": 7.800000000000001
+          },
+          {
+            "x": 0,
+            "z": 8.450000000000001
+          },
+          {
+            "x": 0,
+            "z": 9.1
+          },
+          {
+            "x": 0,
+            "z": 9.75
+          },
+          {
+            "x": 0,
+            "z": 10.4
+          },
+          {
+            "x": 0,
+            "z": 11.05
+          },
+          {
+            "x": 0,
+            "z": 11.700000000000001
+          },
+          {
+            "x": 0,
+            "z": 12.35
+          },
+          {
+            "x": 0,
+            "z": 13
+          },
+          {
+            "x": 0,
+            "z": 13.65
+          },
+          {
+            "x": 0,
+            "z": 14.3
+          },
+          {
+            "x": 0,
+            "z": 14.950000000000001
+          }
+        ],
+        "rushRouteRetry": 0.7499999999999998,
+        "rushGoal": {
+          "x": 0,
+          "z": 15.308341200000008
+        },
+        "owner": "",
+        "returning": false,
+        "territoryAggro": true,
+        "renderX": -2.8042042725807423,
+        "renderZ": -6.0769815609540725,
+        "screen": {
+          "x": 496.1405828932018,
+          "y": -182.21117060463754
+        }
+      },
+      {
+        "id": 4,
+        "kind": "Dewdrop",
+        "x": -15.12335322893231,
+        "z": 10.401576897169626,
+        "groupId": "glade-1",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": -0.25,
+        "homeX": -15.861549158580601,
+        "homeZ": 10.275180883705616,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": true,
+        "pattern": 0,
+        "rushRoute": [
+          {
+            "x": -14.3,
+            "z": 10.4
+          },
+          {
+            "x": -13.65,
+            "z": 11.05
+          },
+          {
+            "x": -13,
+            "z": 11.700000000000001
+          },
+          {
+            "x": -12.35,
+            "z": 12.35
+          },
+          {
+            "x": -11.700000000000001,
+            "z": 12.35
+          },
+          {
+            "x": -11.05,
+            "z": 12.35
+          },
+          {
+            "x": -10.4,
+            "z": 12.35
+          },
+          {
+            "x": -9.75,
+            "z": 12.35
+          },
+          {
+            "x": -9.1,
+            "z": 12.35
+          },
+          {
+            "x": -8.450000000000001,
+            "z": 12.35
+          },
+          {
+            "x": -7.800000000000001,
+            "z": 12.35
+          },
+          {
+            "x": -7.15,
+            "z": 12.35
+          },
+          {
+            "x": -6.5,
+            "z": 12.35
+          },
+          {
+            "x": -5.8500000000000005,
+            "z": 13
+          },
+          {
+            "x": -5.2,
+            "z": 13
+          },
+          {
+            "x": -4.55,
+            "z": 13.65
+          },
+          {
+            "x": -3.9000000000000004,
+            "z": 13.65
+          },
+          {
+            "x": -3.25,
+            "z": 14.3
+          },
+          {
+            "x": -2.6,
+            "z": 14.3
+          },
+          {
+            "x": -1.9500000000000002,
+            "z": 14.950000000000001
+          },
+          {
+            "x": -1.3,
+            "z": 14.950000000000001
+          },
+          {
+            "x": -0.65,
+            "z": 14.950000000000001
+          }
+        ],
+        "rushRouteRetry": 0.7499999999999998,
+        "rushGoal": {
+          "x": 0,
+          "z": 15.308341200000008
+        },
+        "owner": "",
+        "returning": false,
+        "territoryAggro": true,
+        "renderX": -15.12335322893231,
+        "renderZ": 10.401576897169626,
+        "screen": {
+          "x": 39.87580847254458,
+          "y": 233.07969402532026
+        }
+      },
+      {
+        "id": 5,
+        "kind": "Dewdrop",
+        "x": -3.2598671489485946,
+        "z": 23.605470596713214,
+        "groupId": "glade-1",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": -0.25,
+        "homeX": -3.533188980538398,
+        "homeZ": 24.199925520457327,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": true,
+        "pattern": 0,
+        "rushRoute": [
+          {
+            "x": -3.25,
+            "z": 23.400000000000002
+          },
+          {
+            "x": -3.25,
+            "z": 22.75
+          },
+          {
+            "x": -2.6,
+            "z": 22.1
+          },
+          {
+            "x": -1.9500000000000002,
+            "z": 21.45
+          },
+          {
+            "x": -1.3,
+            "z": 20.8
+          },
+          {
+            "x": -1.3,
+            "z": 20.150000000000002
+          },
+          {
+            "x": -1.3,
+            "z": 19.5
+          },
+          {
+            "x": -1.3,
+            "z": 18.85
+          },
+          {
+            "x": -1.3,
+            "z": 18.2
+          },
+          {
+            "x": -0.65,
+            "z": 17.55
+          },
+          {
+            "x": -0.65,
+            "z": 16.900000000000002
+          },
+          {
+            "x": -0.65,
+            "z": 16.25
+          }
+        ],
+        "rushRouteRetry": 0.7499999999999998,
+        "rushGoal": {
+          "x": 0,
+          "z": 15.308341200000008
+        },
+        "owner": "",
+        "returning": false,
+        "territoryAggro": true,
+        "renderX": -3.2598671489485946,
+        "renderZ": 23.605470596713214,
+        "screen": {
+          "x": 479.2641801291411,
+          "y": 565.842808280757
+        }
+      },
+      {
+        "id": 6,
+        "kind": "Wildcap",
+        "x": -33.068896761901485,
+        "z": -20.04189704804419,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -33.589994844049215,
+        "homeZ": -20.421719015110284,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -33.068896761901485,
+        "renderZ": -20.04189704804419,
+        "screen": {
+          "x": -624.7739494723576,
+          "y": -534.1534744084554
+        }
+      },
+      {
+        "id": 7,
+        "kind": "Wildcap",
+        "x": -5.474854523498937,
+        "z": -41.42623246930541,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -5.90445797983557,
+        "homeZ": -41.29672411456704,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -5.474854523498937,
+        "renderZ": -41.42623246930541,
+        "screen": {
+          "x": 397.22761101429535,
+          "y": -1073.0792044230573
+        }
+      },
+      {
+        "id": 8,
+        "kind": "Wildcap",
+        "x": -9.893772224676397,
+        "z": -16.67345686037052,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -9.836905618663877,
+        "homeZ": -16.153687567915767,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -9.893772224676397,
+        "renderZ": -16.67345686037052,
+        "screen": {
+          "x": 233.56399307649443,
+          "y": -449.2624057176947
+        }
+      },
+      {
+        "id": 9,
+        "kind": "Wildcap",
+        "x": -42.31020733197607,
+        "z": -41.25654505097169,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -41.81915355892852,
+        "homeZ": -40.82438831124455,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -42.31020733197607,
+        "renderZ": -41.25654505097169,
+        "screen": {
+          "x": -967.0447100213125,
+          "y": -1068.8027602877455
+        }
+      },
+      {
+        "id": 10,
+        "kind": "Wildcap",
+        "x": -24.943886862320177,
+        "z": -42.09027659653301,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -24.47011849656701,
+        "homeZ": -42.1430553230457,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -24.943886862320177,
+        "renderZ": -42.09027659653301,
+        "screen": {
+          "x": -323.8476580432148,
+          "y": -1089.8143733669672
+        }
+      },
+      {
+        "id": 11,
+        "kind": "Wildcap",
+        "x": -19.67722446698447,
+        "z": -27.560228482899568,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -19.65632195910439,
+        "homeZ": -28.04941815789789,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -19.67722446698447,
+        "renderZ": -27.560228482899568,
+        "screen": {
+          "x": -128.78608858969687,
+          "y": -723.6296576613925
+        }
+      },
+      {
+        "id": 12,
+        "kind": "Wildcap",
+        "x": -31.480313946808234,
+        "z": -30.940227591080223,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -31.93149496614933,
+        "homeZ": -31.41606948338449,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -31.480313946808234,
+        "renderZ": -30.940227591080223,
+        "screen": {
+          "x": -565.9375491377914,
+          "y": -808.8120330282641
+        }
+      },
+      {
+        "id": 13,
+        "kind": "Leafling",
+        "x": 12.094963715295009,
+        "z": -36.23459430145152,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 11.586512917187065,
+        "homeZ": -36.259601569734514,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 12.094963715295009,
+        "renderZ": -36.23459430145152,
+        "screen": {
+          "x": 1047.9616173761624,
+          "y": -942.2400955863839
+        }
+      },
+      {
+        "id": 14,
+        "kind": "Leafling",
+        "x": 43.26169235016167,
+        "z": -18.883650443878906,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 43.16343909222633,
+        "homeZ": -18.434831521008164,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 43.26169235016167,
+        "renderZ": -18.883650443878906,
+        "screen": {
+          "x": 2202.2848957456076,
+          "y": -504.963467593182
+        }
+      },
+      {
+        "id": 15,
+        "kind": "Leafling",
+        "x": 38.30093420466149,
+        "z": -44.74455793715707,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 38.70321207912639,
+        "homeZ": -44.23455487098545,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 38.30093420466149,
+        "renderZ": -44.74455793715707,
+        "screen": {
+          "x": 2018.5531132798158,
+          "y": -1156.7072873145164
+        }
+      },
+      {
+        "id": 16,
+        "kind": "Leafling",
+        "x": 10.266043312457096,
+        "z": -16.430575388337484,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 10.798999896738678,
+        "homeZ": -16.328282645903528,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 10.266043312457096,
+        "renderZ": -16.430575388337484,
+        "screen": {
+          "x": 980.2238249368611,
+          "y": -443.1413328835918
+        }
+      },
+      {
+        "id": 17,
+        "kind": "Leafling",
+        "x": 27.393998602873676,
+        "z": -26.17494302720379,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 27.567636071238667,
+        "homeZ": -26.57440808415413,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 27.393998602873676,
+        "renderZ": -26.17494302720379,
+        "screen": {
+          "x": 1614.5925369768097,
+          "y": -688.7178420364285
+        }
+      },
+      {
+        "id": 18,
+        "kind": "Leafling",
+        "x": 26.723799579362314,
+        "z": -39.274488893051554,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 26.378476444166154,
+        "homeZ": -39.80844541825354,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 26.723799579362314,
+        "renderZ": -39.274488893051554,
+        "screen": {
+          "x": 1589.7703510155225,
+          "y": -1018.8511933676432
+        }
+      },
+      {
+        "id": 19,
+        "kind": "Leafling",
+        "x": 4.630233206514358,
+        "z": -25.733657383711098,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 4.083437965717167,
+        "homeZ": -25.911188210360706,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 4.630233206514358,
+        "renderZ": -25.733657383711098,
+        "screen": {
+          "x": 771.4901181056082,
+          "y": -677.5966085316542
+        }
+      },
+      {
+        "id": 20,
+        "kind": "Leafling",
+        "x": 1.5950795542166942,
+        "z": -40.4537474399716,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 1.3495332305319607,
+        "homeZ": -40.111631544772536,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 1.5950795542166942,
+        "renderZ": -40.4537474399716,
+        "screen": {
+          "x": 659.0770203011833,
+          "y": -1048.5707409128509
+        }
+      },
+      {
+        "id": 21,
+        "kind": "Sunbee",
+        "x": -6.0807612773278175,
+        "z": -14.635381926467058,
+        "groupId": "glade-4",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -5.799304526299238,
+        "homeZ": -14.088159085717052,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -6.0807612773278175,
+        "renderZ": -14.635381926467058,
+        "screen": {
+          "x": 374.7866202173499,
+          "y": -397.8990596075164
+        }
+      },
+      {
+        "id": 22,
+        "kind": "Sunbee",
+        "x": -44.63419706874253,
+        "z": 41.76686699567332,
+        "groupId": "glade-4",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -44.084507281892,
+        "homeZ": 42.016082625836134,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -44.63419706874253,
+        "renderZ": 41.76686699567332,
+        "screen": {
+          "x": -1053.1184036472807,
+          "y": 1023.5443743842723
+        }
+      },
+      {
+        "id": 23,
+        "kind": "Sunbee",
+        "x": -39.063266338035604,
+        "z": 6.403441558797245,
+        "groupId": "glade-4",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -38.75072577036917,
+        "homeZ": 6.125522277317941,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -39.063266338035604,
+        "renderZ": 6.403441558797245,
+        "screen": {
+          "x": -846.7876366304099,
+          "y": 132.31911561673343
+        }
+      },
+      {
+        "id": 24,
+        "kind": "Sunbee",
+        "x": -41.101157099510935,
+        "z": -15.427323074679194,
+        "groupId": "glade-4",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -41.31311410758644,
+        "homeZ": -15.97685956209898,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -41.101157099510935,
+        "renderZ": -15.427323074679194,
+        "screen": {
+          "x": -922.2650719526839,
+          "y": -417.85747557046875
+        }
+      },
+      {
+        "id": 25,
+        "kind": "Sunbee",
+        "x": -17.35442129629482,
+        "z": 10.596672224675869,
+        "groupId": "glade-4",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -17.896003584377468,
+        "homeZ": 10.280759843531996,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -17.35442129629482,
+        "renderZ": 10.596672224675869,
+        "screen": {
+          "x": -42.756341855294636,
+          "y": 237.99646556521128
+        }
+      },
+      {
+        "id": 26,
+        "kind": "Sunbee",
+        "x": -32.638465335828556,
+        "z": 23.206854343643805,
+        "groupId": "glade-4",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -33.01174464588985,
+        "homeZ": 23.415014455094934,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -32.638465335828556,
+        "renderZ": 23.206854343643805,
+        "screen": {
+          "x": -608.8320448638035,
+          "y": 555.7969241815239
+        }
+      },
+      {
+        "id": 27,
+        "kind": "RibbonHare",
+        "x": 40.80394584010221,
+        "z": -13.12013851704849,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 40.94216078426689,
+        "homeZ": -12.57928735949099,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 40.80394584010221,
+        "renderZ": -13.12013851704849,
+        "screen": {
+          "x": 2111.25724757213,
+          "y": -359.71205755746377
+        }
+      },
+      {
+        "id": 28,
+        "kind": "RibbonHare",
+        "x": 41.490877644147076,
+        "z": 41.59899524250213,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 42.013512660283595,
+        "homeZ": 41.975281386170536,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 41.490877644147076,
+        "renderZ": 41.59899524250213,
+        "screen": {
+          "x": 2136.699166143405,
+          "y": 1019.3136884478431
+        }
+      },
+      {
+        "id": 29,
+        "kind": "RibbonHare",
+        "x": 20.49773395588712,
+        "z": 17.780686699560647,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 20.924280820414424,
+        "homeZ": 17.646452084183693,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 20.49773395588712,
+        "renderZ": 17.780686699560647,
+        "screen": {
+          "x": 1359.1753288034988,
+          "y": 419.047228614101
+        }
+      },
+      {
+        "id": 30,
+        "kind": "RibbonHare",
+        "x": 9.911596977711424,
+        "z": -9.749294608491233,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 9.84989047050476,
+        "homeZ": -10.270635296590626,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 9.911596977711424,
+        "renderZ": -9.749294608491233,
+        "screen": {
+          "x": 967.0961829593215,
+          "y": -274.7604105505468
+        }
+      },
+      {
+        "id": 31,
+        "kind": "RibbonHare",
+        "x": 42.71158254819135,
+        "z": 8.805457686519892,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 42.218355347402394,
+        "homeZ": 8.376329150050879,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 42.71158254819135,
+        "renderZ": 8.805457686519892,
+        "screen": {
+          "x": 2181.9104587133183,
+          "y": 192.8544686982568
+        }
+      },
+      {
+        "id": 32,
+        "kind": "RibbonHare",
+        "x": 26.71110376774564,
+        "z": -2.267583576840384,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 26.239826687145978,
+        "homeZ": -2.209961164277047,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 26.71110376774564,
+        "renderZ": -2.267583576840384,
+        "screen": {
+          "x": 1589.3001357722542,
+          "y": -86.20713077539602
+        }
+      },
+      {
+        "id": 33,
+        "kind": "RibbonHare",
+        "x": 35.00029889774072,
+        "z": 24.89086805778616,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 34.98426191182807,
+        "homeZ": 25.38226363901049,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 35.00029889774072,
+        "renderZ": 24.89086805778616,
+        "screen": {
+          "x": 1896.3073616379693,
+          "y": 598.237257367957
+        }
+      },
+      {
+        "id": 34,
+        "kind": "Dewdrop",
+        "x": -28.52766237535055,
+        "z": 30.835886080909845,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -28.07371493568644,
+        "homeZ": 31.309267999604344,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -28.52766237535055,
+        "renderZ": 30.835886080909845,
+        "screen": {
+          "x": -456.580083945413,
+          "y": 748.0629645945851
+        }
+      },
+      {
+        "id": 35,
+        "kind": "Dewdrop",
+        "x": 38.759816146181855,
+        "z": 39.937365966474005,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 39.26639082888141,
+        "homeZ": 39.95750906970352,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 38.759816146181855,
+        "renderZ": 39.937365966474005,
+        "screen": {
+          "x": 2035.5487406786997,
+          "y": 977.4374854723345
+        }
+      },
+      {
+        "id": 36,
+        "kind": "Dewdrop",
+        "x": 6.078820561943162,
+        "z": 31.475823397927368,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 6.172280060593039,
+        "homeZ": 31.024208209477365,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 6.078820561943162,
+        "renderZ": 31.475823397927368,
+        "screen": {
+          "x": 825.1415014353445,
+          "y": 764.1905962905581
+        }
+      },
+      {
+        "id": 37,
+        "kind": "Dewdrop",
+        "x": -11.79762785479243,
+        "z": 39.42586203624929,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -12.20320977224037,
+        "homeZ": 38.91770147765055,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -11.79762785479243,
+        "renderZ": 39.42586203624929,
+        "screen": {
+          "x": 163.05082185970184,
+          "y": 964.5466182290338
+        }
+      },
+      {
+        "id": 38,
+        "kind": "Dewdrop",
+        "x": 27.462887534708837,
+        "z": 29.22830263362444,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 26.931154345627874,
+        "homeZ": 29.13079717895016,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 27.462887534708837,
+        "renderZ": 29.22830263362444,
+        "screen": {
+          "x": 1617.1439788868975,
+          "y": 707.5488188041904
+        }
+      },
+      {
+        "id": 39,
+        "kind": "Dewdrop",
+        "x": -38.894803924307524,
+        "z": 41.706986692452,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -39.06381534319371,
+        "homeZ": 42.109782407060266,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -38.894803924307524,
+        "renderZ": 41.706986692452,
+        "screen": {
+          "x": -840.5482879976157,
+          "y": 1022.0352773984964
+        }
+      },
+      {
+        "id": 40,
+        "kind": "Dewdrop",
+        "x": 15.873866753552607,
+        "z": 42.0804026292528,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 16.222965423949063,
+        "homeZ": 42.61317099072039,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 15.873866753552607,
+        "renderZ": 42.0804026292528,
+        "screen": {
+          "x": 1187.920988629578,
+          "y": 1031.446065827272
+        }
+      },
+      {
+        "id": 41,
+        "kind": "Dewdrop",
+        "x": -5.040278749564047,
+        "z": 25.249536464215264,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -4.494029697496444,
+        "homeZ": 25.42245269799605,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -5.040278749564047,
+        "renderZ": 25.249536464215264,
+        "screen": {
+          "x": 413.32300998752186,
+          "y": 607.2763801164617
+        }
+      },
+      {
+        "id": 42,
+        "kind": "MooncapMonarch",
+        "x": 31.758819425575634,
+        "z": 32.3459142818,
+        "hp": 32000,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 32,
+        "homeZ": 32,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 31.758819425575634,
+        "renderZ": 32.3459142818,
+        "screen": {
+          "x": 1776.2525668305686,
+          "y": 786.1185335180998
+        }
+      },
+      {
+        "id": 43,
+        "kind": "DewdropMatriarch",
+        "x": -31.714371788916573,
+        "z": 32.54671280195931,
+        "hp": 16000,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -32,
+        "homeZ": 32,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -31.714371788916573,
+        "renderZ": 32.54671280195931,
+        "screen": {
+          "x": -574.606358071698,
+          "y": 791.1790363081521
+        }
+      }
+    ],
+    "destination": {
+      "x": 0,
+      "z": 18
+    },
+    "zoom": 1,
+    "engine": "Babylon.js",
+    "surfaceMaterials": 4,
+    "surfaceTextures": 8,
+    "textureSize": 128,
+    "textureDetail": 0.88,
+    "normalMaps": true,
+    "surfaceFamilies": [
+      "grass",
+      "wood",
+      "stone",
+      "dirt"
+    ],
+    "sceneTextures": 66,
+    "sceneMaterials": 125,
+    "texturedMapMeshes": 31,
+    "shadowsEnabled": true,
+    "shadowFilter": "blur-close-exponential",
+    "shadowBlurKernel": 20,
+    "shadowBlurScale": 2,
+    "shadowDarkness": 0.12,
+    "shadowDepthScale": 50,
+    "shadowMapSize": 2048,
+    "lighting": "warm honey sun / sage sky fill",
+    "environmentPalette": {
+      "ground": 11319938,
+      "path": 13941130
+    },
+    "environmentDetails": {
+      "clusters": 990,
+      "vertices": 18468,
+      "visibleMeshes": 18,
+      "contactShadows": 95
+    },
+    "territoriesCount": 6,
+    "activeGroupId": "glade-1",
+    "groupCenters": [
+      {
+        "id": "glade-1",
+        "x": 0,
+        "z": 18,
+        "count": 6,
+        "radius": 2.8,
+        "visible": true
+      },
+      {
+        "id": "glade-2",
+        "x": -32,
+        "z": -32,
+        "count": 7,
+        "radius": 2.8,
+        "visible": false
+      },
+      {
+        "id": "glade-3",
+        "x": 32,
+        "z": -32,
+        "count": 8,
+        "radius": 2.8,
+        "visible": false
+      },
+      {
+        "id": "glade-4",
+        "x": -32,
+        "z": 0,
+        "count": 6,
+        "radius": 2.8,
+        "visible": true
+      },
+      {
+        "id": "glade-5",
+        "x": 32,
+        "z": 0,
+        "count": 7,
+        "radius": 2.8,
+        "visible": true
+      },
+      {
+        "id": "glade-6",
+        "x": 0,
+        "z": 32,
+        "count": 8,
+        "radius": 2.8,
+        "visible": true
+      }
+    ],
+    "worldSize": 96,
+    "worldBounds": {
+      "minX": -46,
+      "maxX": 46,
+      "minZ": -46,
+      "maxZ": 46
+    },
+    "modelsLoaded": 47,
+    "modelsExpected": 47,
+    "cameraShake": {
+      "level": 0,
+      "elapsed": 0,
+      "duration": 0,
+      "active": false,
+      "amplitude": 0,
+      "offset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "triggerCount": 0
+    },
+    "previewHeld": false,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 96,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "lv80Cue": null,
+      "lv90Cue": null,
+      "lv100Cue": null,
+      "drawCount": 0
+    },
+    "sceneMeshes": 375,
+    "skillMotion": null,
+    "quality": "high",
+    "autoReduced": false,
+    "riggedActors": 47,
+    "motionPoses": [],
+    "modelErrors": 0,
+    "renderWidth": 1200,
+    "renderHeight": 800,
+    "activeAnimations": 164,
+    "drawCalls": 162,
+    "fps": 1.3029832651627562,
+    "frameP95": 1341.8000000000466
+  },
+  "target": {
+    "zone": "glade",
+    "equipped": {
+      "weapon": "100a27b3-ba5c-46ce-8747-f4c275b4f926",
+      "helmet": "300ddfd0-3b8b-4aef-a54a-a14c67ea35dd",
+      "armor": "81b3703c-3f8f-45ec-af53-9b3ee41aa670",
+      "pants": "a5d25b6c-40e2-4c09-8c62-6248bef0df6a",
+      "boots": "add31ace-2e68-464a-b618-ddd8a3a2947b",
+      "accessory": "a65f82d7-f54b-4e80-ba35-b3e8b4e8fbc5"
+    },
+    "tutorial": [
+      "equip",
+      "move"
+    ],
+    "job": "mage",
+    "hotbar": [
+      "mage-5",
+      "mage-6",
+      "mage-7",
+      "mage-8",
+      "mage-9",
+      "mage-10"
+    ],
+    "auxiliary": [
+      "Red potion",
+      "Blue potion",
+      null,
+      null
+    ],
+    "skillChoices": {
+      "swordsman": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "mage": [
+        "mage-1",
+        "mage-2",
+        "mage-3",
+        "mage-4",
+        "mage-5",
+        "mage-6",
+        "mage-7",
+        "mage-8",
+        "mage-9",
+        "mage-10"
+      ],
+      "archer": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "skillRanks": {
+      "mage-1": 1,
+      "mage-2": 1,
+      "mage-3": 1,
+      "mage-4": 1,
+      "mage-5": 1,
+      "mage-6": 1,
+      "mage-7": 1,
+      "mage-8": 1,
+      "mage-9": 1,
+      "mage-10": 1
+    },
+    "skillPoints": 90,
+    "skillSpent": 10,
+    "unlockedSkills": [
+      "mage-1",
+      "mage-2",
+      "mage-3",
+      "mage-4",
+      "mage-5",
+      "mage-6",
+      "mage-7",
+      "mage-8",
+      "mage-9",
+      "mage-10"
+    ],
+    "defense": 1083.5221445150944,
+    "joystickInput": [
+      0,
+      0
+    ],
+    "joystickActive": false,
+    "auto": false,
+    "autoSkillCursor": 0,
+    "cooldownRatios": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "skillCooldownTotals": {},
+    "cooldowns": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "skillCooldowns": {},
+    "cast": null,
+    "renderX": 0,
+    "renderZ": 16.486441200000012,
+    "network": null,
+    "x": 0,
+    "z": 16.486441200000012,
+    "level": 100,
+    "hp": 9486.090607146283,
+    "mp": 852,
+    "kills": 0,
+    "items": [
+      {
+        "name": "Red potion",
+        "icon": "🧪",
+        "count": 8,
+        "category": "consumable"
+      },
+      {
+        "name": "Blue potion",
+        "icon": "💠",
+        "count": 4,
+        "category": "consumable"
+      },
+      {
+        "id": "100a27b3-ba5c-46ce-8747-f4c275b4f926",
+        "gearId": "starfall-weapon",
+        "refine": 10,
+        "rarity": "legend",
+        "secondary": {
+          "mpRegen": 0.46,
+          "damageBonus": 5.6,
+          "cooldownReduction": 4,
+          "damageReduction": 2.9,
+          "skillDamage": 5.8
+        },
+        "name": "Starfall Weapon",
+        "icon": "starfall-blade",
+        "count": 1,
+        "category": "weapon"
+      },
+      {
+        "id": "300ddfd0-3b8b-4aef-a54a-a14c67ea35dd",
+        "gearId": "starfall-helmet",
+        "refine": 10,
+        "rarity": "legend",
+        "secondary": {
+          "critChance": 2,
+          "moveSpeed": 6.3,
+          "goldBonus": 10.3,
+          "hpRegen": 0.22,
+          "critDamage": 9.6
+        },
+        "name": "Starfall Helmet",
+        "icon": "starfall-helmet",
+        "count": 1,
+        "category": "armor"
+      },
+      {
+        "id": "81b3703c-3f8f-45ec-af53-9b3ee41aa670",
+        "gearId": "starfall-coat",
+        "refine": 10,
+        "rarity": "legend",
+        "secondary": {
+          "cooldownReduction": 3.9,
+          "dodgeChance": 4.2,
+          "mpRegen": 0.41,
+          "skillDamage": 9.1,
+          "healingBonus": 4.3
+        },
+        "name": "Starfall Coat",
+        "icon": "starfall-coat",
+        "count": 1,
+        "category": "armor"
+      },
+      {
+        "id": "a5d25b6c-40e2-4c09-8c62-6248bef0df6a",
+        "gearId": "starfall-pants",
+        "refine": 10,
+        "rarity": "legend",
+        "secondary": {
+          "cooldownReduction": 5.9,
+          "damageReduction": 1.6,
+          "critDamage": 14.3,
+          "armorPen": 6.9,
+          "damageBonus": 2.8
+        },
+        "name": "Starfall Pants",
+        "icon": "starfall-pants",
+        "count": 1,
+        "category": "armor"
+      },
+      {
+        "id": "add31ace-2e68-464a-b618-ddd8a3a2947b",
+        "gearId": "starfall-boots",
+        "refine": 10,
+        "rarity": "legend",
+        "secondary": {
+          "moveSpeed": 7.7,
+          "expBonus": 8,
+          "armorPen": 8.3,
+          "critChance": 2.9,
+          "attackSpeed": 9.1
+        },
+        "name": "Starfall Boots",
+        "icon": "starfall-boots",
+        "count": 1,
+        "category": "armor"
+      },
+      {
+        "id": "a65f82d7-f54b-4e80-ba35-b3e8b4e8fbc5",
+        "gearId": "starfall-charm",
+        "refine": 10,
+        "rarity": "legend",
+        "secondary": {
+          "damageReduction": 5.1,
+          "damageBonus": 5.3,
+          "hpRegen": 0.18,
+          "dodgeChance": 1.4,
+          "cooldownReduction": 6.7
+        },
+        "name": "Starfall Charm",
+        "icon": "starfall-charm",
+        "count": 1,
+        "category": "accessory"
+      }
+    ],
+    "gold": 120,
+    "weapon": 0,
+    "target": 0,
+    "loot": 0,
+    "paused": false,
+    "monsters": [
+      {
+        "id": 0,
+        "kind": "Dewdrop",
+        "x": 3.588820869385145,
+        "z": 12.644557651958921,
+        "groupId": "glade-1",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": -0.25,
+        "homeX": 3.7709970544092357,
+        "homeZ": 11.474506619386375,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": true,
+        "pattern": 0,
+        "rushRoute": [
+          {
+            "x": 3.25,
+            "z": 13
+          },
+          {
+            "x": 2.6,
+            "z": 13.65
+          },
+          {
+            "x": 1.9500000000000002,
+            "z": 14.3
+          },
+          {
+            "x": 1.3,
+            "z": 14.950000000000001
+          },
+          {
+            "x": 0.65,
+            "z": 14.950000000000001
+          }
+        ],
+        "rushRouteRetry": 0.7499999999999998,
+        "rushGoal": {
+          "x": 0,
+          "z": 15.308341200000008
+        },
+        "owner": "",
+        "returning": false,
+        "territoryAggro": true,
+        "renderX": 3.588820869385145,
+        "renderZ": 12.644557651958921,
+        "screen": {
+          "x": 732.9192909516622,
+          "y": 289.60705467837494
+        }
+      },
+      {
+        "id": 1,
+        "kind": "Dewdrop",
+        "x": -22.625628068020912,
+        "z": 24.05799797558531,
+        "groupId": "glade-1",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": -0.25,
+        "homeX": -24.09263080637902,
+        "homeZ": 24.499162794090807,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": true,
+        "pattern": 0,
+        "rushRoute": [
+          {
+            "x": -22.1,
+            "z": 24.05
+          },
+          {
+            "x": -21.45,
+            "z": 24.05
+          },
+          {
+            "x": -20.8,
+            "z": 24.05
+          },
+          {
+            "x": -20.150000000000002,
+            "z": 24.05
+          },
+          {
+            "x": -19.5,
+            "z": 23.400000000000002
+          },
+          {
+            "x": -18.85,
+            "z": 22.75
+          },
+          {
+            "x": -18.2,
+            "z": 22.75
+          },
+          {
+            "x": -17.55,
+            "z": 22.75
+          },
+          {
+            "x": -16.900000000000002,
+            "z": 22.75
+          },
+          {
+            "x": -16.25,
+            "z": 22.75
+          },
+          {
+            "x": -15.600000000000001,
+            "z": 22.75
+          },
+          {
+            "x": -14.950000000000001,
+            "z": 22.1
+          },
+          {
+            "x": -14.3,
+            "z": 22.1
+          },
+          {
+            "x": -13.65,
+            "z": 22.1
+          },
+          {
+            "x": -13,
+            "z": 21.45
+          },
+          {
+            "x": -12.35,
+            "z": 20.8
+          },
+          {
+            "x": -11.700000000000001,
+            "z": 20.8
+          },
+          {
+            "x": -11.05,
+            "z": 20.8
+          },
+          {
+            "x": -10.4,
+            "z": 20.150000000000002
+          },
+          {
+            "x": -9.75,
+            "z": 20.150000000000002
+          },
+          {
+            "x": -9.1,
+            "z": 19.5
+          },
+          {
+            "x": -8.450000000000001,
+            "z": 18.85
+          },
+          {
+            "x": -7.800000000000001,
+            "z": 18.85
+          },
+          {
+            "x": -7.15,
+            "z": 18.85
+          },
+          {
+            "x": -6.5,
+            "z": 18.85
+          },
+          {
+            "x": -5.8500000000000005,
+            "z": 18.2
+          },
+          {
+            "x": -5.2,
+            "z": 18.2
+          },
+          {
+            "x": -4.55,
+            "z": 17.55
+          },
+          {
+            "x": -3.9000000000000004,
+            "z": 17.55
+          },
+          {
+            "x": -3.25,
+            "z": 16.900000000000002
+          },
+          {
+            "x": -2.6,
+            "z": 16.900000000000002
+          },
+          {
+            "x": -1.9500000000000002,
+            "z": 16.25
+          },
+          {
+            "x": -1.3,
+            "z": 16.25
+          },
+          {
+            "x": -0.65,
+            "z": 16.25
+          }
+        ],
+        "rushRouteRetry": 0.7499999999999998,
+        "rushGoal": {
+          "x": 0,
+          "z": 15.308341200000008
+        },
+        "owner": "",
+        "returning": false,
+        "territoryAggro": true,
+        "renderX": -22.625628068020912,
+        "renderZ": 24.05799797558531,
+        "screen": {
+          "x": -237.9862215448516,
+          "y": 577.2473547960424
+        }
+      },
+      {
+        "id": 2,
+        "kind": "Dewdrop",
+        "x": 22.901403294793823,
+        "z": 24.051403192471987,
+        "groupId": "glade-1",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": -0.25,
+        "homeX": 24.213141756132245,
+        "homeZ": 24.623054363764822,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": true,
+        "pattern": 0,
+        "rushRoute": [
+          {
+            "x": 22.1,
+            "z": 24.05
+          },
+          {
+            "x": 21.45,
+            "z": 24.05
+          },
+          {
+            "x": 20.8,
+            "z": 24.05
+          },
+          {
+            "x": 20.150000000000002,
+            "z": 24.05
+          },
+          {
+            "x": 19.5,
+            "z": 23.400000000000002
+          },
+          {
+            "x": 18.85,
+            "z": 22.75
+          },
+          {
+            "x": 18.2,
+            "z": 22.75
+          },
+          {
+            "x": 17.55,
+            "z": 22.75
+          },
+          {
+            "x": 16.900000000000002,
+            "z": 22.75
+          },
+          {
+            "x": 16.25,
+            "z": 22.75
+          },
+          {
+            "x": 15.600000000000001,
+            "z": 22.75
+          },
+          {
+            "x": 14.950000000000001,
+            "z": 22.1
+          },
+          {
+            "x": 14.3,
+            "z": 22.1
+          },
+          {
+            "x": 13.65,
+            "z": 22.1
+          },
+          {
+            "x": 13,
+            "z": 21.45
+          },
+          {
+            "x": 12.35,
+            "z": 21.45
+          },
+          {
+            "x": 11.700000000000001,
+            "z": 21.45
+          },
+          {
+            "x": 11.05,
+            "z": 21.45
+          },
+          {
+            "x": 10.4,
+            "z": 21.45
+          },
+          {
+            "x": 9.75,
+            "z": 20.8
+          },
+          {
+            "x": 9.1,
+            "z": 20.150000000000002
+          },
+          {
+            "x": 8.450000000000001,
+            "z": 19.5
+          },
+          {
+            "x": 7.800000000000001,
+            "z": 19.5
+          },
+          {
+            "x": 7.15,
+            "z": 19.5
+          },
+          {
+            "x": 6.5,
+            "z": 19.5
+          },
+          {
+            "x": 5.8500000000000005,
+            "z": 19.5
+          },
+          {
+            "x": 5.2,
+            "z": 18.85
+          },
+          {
+            "x": 4.55,
+            "z": 18.2
+          },
+          {
+            "x": 3.9000000000000004,
+            "z": 17.55
+          },
+          {
+            "x": 3.25,
+            "z": 16.900000000000002
+          },
+          {
+            "x": 2.6,
+            "z": 16.900000000000002
+          },
+          {
+            "x": 1.9500000000000002,
+            "z": 16.25
+          },
+          {
+            "x": 1.3,
+            "z": 16.25
+          },
+          {
+            "x": 0.65,
+            "z": 16.25
+          }
+        ],
+        "rushRouteRetry": 0.7499999999999998,
+        "rushGoal": {
+          "x": 0,
+          "z": 15.308341200000008
+        },
+        "owner": "",
+        "returning": false,
+        "territoryAggro": true,
+        "renderX": 22.901403294793823,
+        "renderZ": 24.051403192471987,
+        "screen": {
+          "x": 1448.2001187937742,
+          "y": 577.081153778633
+        }
+      },
+      {
+        "id": 3,
+        "kind": "Dewdrop",
+        "x": -2.8042042725807423,
+        "z": -6.0769815609540725,
+        "groupId": "glade-1",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": -0.25,
+        "homeX": -2.8148980401456356,
+        "homeZ": -6.6958940285257995,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": true,
+        "pattern": 0,
+        "rushRoute": [
+          {
+            "x": -2.6,
+            "z": -5.8500000000000005
+          },
+          {
+            "x": -1.9500000000000002,
+            "z": -5.8500000000000005
+          },
+          {
+            "x": -1.3,
+            "z": -5.8500000000000005
+          },
+          {
+            "x": -0.65,
+            "z": -5.8500000000000005
+          },
+          {
+            "x": 0,
+            "z": -5.2
+          },
+          {
+            "x": 0,
+            "z": -4.55
+          },
+          {
+            "x": 0,
+            "z": -3.9000000000000004
+          },
+          {
+            "x": 0,
+            "z": -3.25
+          },
+          {
+            "x": 0,
+            "z": -2.6
+          },
+          {
+            "x": 0,
+            "z": -1.9500000000000002
+          },
+          {
+            "x": 0,
+            "z": -1.3
+          },
+          {
+            "x": 0,
+            "z": -0.65
+          },
+          {
+            "x": 0,
+            "z": 0
+          },
+          {
+            "x": 0,
+            "z": 0.65
+          },
+          {
+            "x": 0,
+            "z": 1.3
+          },
+          {
+            "x": 0,
+            "z": 1.9500000000000002
+          },
+          {
+            "x": 0,
+            "z": 2.6
+          },
+          {
+            "x": 0,
+            "z": 3.25
+          },
+          {
+            "x": 0,
+            "z": 3.9000000000000004
+          },
+          {
+            "x": 0,
+            "z": 4.55
+          },
+          {
+            "x": 0,
+            "z": 5.2
+          },
+          {
+            "x": 0,
+            "z": 5.8500000000000005
+          },
+          {
+            "x": 0,
+            "z": 6.5
+          },
+          {
+            "x": 0,
+            "z": 7.15
+          },
+          {
+            "x": 0,
+            "z": 7.800000000000001
+          },
+          {
+            "x": 0,
+            "z": 8.450000000000001
+          },
+          {
+            "x": 0,
+            "z": 9.1
+          },
+          {
+            "x": 0,
+            "z": 9.75
+          },
+          {
+            "x": 0,
+            "z": 10.4
+          },
+          {
+            "x": 0,
+            "z": 11.05
+          },
+          {
+            "x": 0,
+            "z": 11.700000000000001
+          },
+          {
+            "x": 0,
+            "z": 12.35
+          },
+          {
+            "x": 0,
+            "z": 13
+          },
+          {
+            "x": 0,
+            "z": 13.65
+          },
+          {
+            "x": 0,
+            "z": 14.3
+          },
+          {
+            "x": 0,
+            "z": 14.950000000000001
+          }
+        ],
+        "rushRouteRetry": 0.7499999999999998,
+        "rushGoal": {
+          "x": 0,
+          "z": 15.308341200000008
+        },
+        "owner": "",
+        "returning": false,
+        "territoryAggro": true,
+        "renderX": -2.8042042725807423,
+        "renderZ": -6.0769815609540725,
+        "screen": {
+          "x": 496.1405828932018,
+          "y": -182.21117060463754
+        }
+      },
+      {
+        "id": 4,
+        "kind": "Dewdrop",
+        "x": -15.12335322893231,
+        "z": 10.401576897169626,
+        "groupId": "glade-1",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": -0.25,
+        "homeX": -15.861549158580601,
+        "homeZ": 10.275180883705616,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": true,
+        "pattern": 0,
+        "rushRoute": [
+          {
+            "x": -14.3,
+            "z": 10.4
+          },
+          {
+            "x": -13.65,
+            "z": 11.05
+          },
+          {
+            "x": -13,
+            "z": 11.700000000000001
+          },
+          {
+            "x": -12.35,
+            "z": 12.35
+          },
+          {
+            "x": -11.700000000000001,
+            "z": 12.35
+          },
+          {
+            "x": -11.05,
+            "z": 12.35
+          },
+          {
+            "x": -10.4,
+            "z": 12.35
+          },
+          {
+            "x": -9.75,
+            "z": 12.35
+          },
+          {
+            "x": -9.1,
+            "z": 12.35
+          },
+          {
+            "x": -8.450000000000001,
+            "z": 12.35
+          },
+          {
+            "x": -7.800000000000001,
+            "z": 12.35
+          },
+          {
+            "x": -7.15,
+            "z": 12.35
+          },
+          {
+            "x": -6.5,
+            "z": 12.35
+          },
+          {
+            "x": -5.8500000000000005,
+            "z": 13
+          },
+          {
+            "x": -5.2,
+            "z": 13
+          },
+          {
+            "x": -4.55,
+            "z": 13.65
+          },
+          {
+            "x": -3.9000000000000004,
+            "z": 13.65
+          },
+          {
+            "x": -3.25,
+            "z": 14.3
+          },
+          {
+            "x": -2.6,
+            "z": 14.3
+          },
+          {
+            "x": -1.9500000000000002,
+            "z": 14.950000000000001
+          },
+          {
+            "x": -1.3,
+            "z": 14.950000000000001
+          },
+          {
+            "x": -0.65,
+            "z": 14.950000000000001
+          }
+        ],
+        "rushRouteRetry": 0.7499999999999998,
+        "rushGoal": {
+          "x": 0,
+          "z": 15.308341200000008
+        },
+        "owner": "",
+        "returning": false,
+        "territoryAggro": true,
+        "renderX": -15.12335322893231,
+        "renderZ": 10.401576897169626,
+        "screen": {
+          "x": 39.87580847254458,
+          "y": 233.07969402532026
+        }
+      },
+      {
+        "id": 5,
+        "kind": "Dewdrop",
+        "x": -3.2598671489485946,
+        "z": 23.605470596713214,
+        "groupId": "glade-1",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": -0.25,
+        "homeX": -3.533188980538398,
+        "homeZ": 24.199925520457327,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": true,
+        "pattern": 0,
+        "rushRoute": [
+          {
+            "x": -3.25,
+            "z": 23.400000000000002
+          },
+          {
+            "x": -3.25,
+            "z": 22.75
+          },
+          {
+            "x": -2.6,
+            "z": 22.1
+          },
+          {
+            "x": -1.9500000000000002,
+            "z": 21.45
+          },
+          {
+            "x": -1.3,
+            "z": 20.8
+          },
+          {
+            "x": -1.3,
+            "z": 20.150000000000002
+          },
+          {
+            "x": -1.3,
+            "z": 19.5
+          },
+          {
+            "x": -1.3,
+            "z": 18.85
+          },
+          {
+            "x": -1.3,
+            "z": 18.2
+          },
+          {
+            "x": -0.65,
+            "z": 17.55
+          },
+          {
+            "x": -0.65,
+            "z": 16.900000000000002
+          },
+          {
+            "x": -0.65,
+            "z": 16.25
+          }
+        ],
+        "rushRouteRetry": 0.7499999999999998,
+        "rushGoal": {
+          "x": 0,
+          "z": 15.308341200000008
+        },
+        "owner": "",
+        "returning": false,
+        "territoryAggro": true,
+        "renderX": -3.2598671489485946,
+        "renderZ": 23.605470596713214,
+        "screen": {
+          "x": 479.2641801291411,
+          "y": 565.842808280757
+        }
+      },
+      {
+        "id": 6,
+        "kind": "Wildcap",
+        "x": -33.068896761901485,
+        "z": -20.04189704804419,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -33.589994844049215,
+        "homeZ": -20.421719015110284,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -33.068896761901485,
+        "renderZ": -20.04189704804419,
+        "screen": {
+          "x": -624.7739494723576,
+          "y": -534.1534744084554
+        }
+      },
+      {
+        "id": 7,
+        "kind": "Wildcap",
+        "x": -5.474854523498937,
+        "z": -41.42623246930541,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -5.90445797983557,
+        "homeZ": -41.29672411456704,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -5.474854523498937,
+        "renderZ": -41.42623246930541,
+        "screen": {
+          "x": 397.22761101429535,
+          "y": -1073.0792044230573
+        }
+      },
+      {
+        "id": 8,
+        "kind": "Wildcap",
+        "x": -9.893772224676397,
+        "z": -16.67345686037052,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -9.836905618663877,
+        "homeZ": -16.153687567915767,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -9.893772224676397,
+        "renderZ": -16.67345686037052,
+        "screen": {
+          "x": 233.56399307649443,
+          "y": -449.2624057176947
+        }
+      },
+      {
+        "id": 9,
+        "kind": "Wildcap",
+        "x": -42.31020733197607,
+        "z": -41.25654505097169,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -41.81915355892852,
+        "homeZ": -40.82438831124455,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -42.31020733197607,
+        "renderZ": -41.25654505097169,
+        "screen": {
+          "x": -967.0447100213125,
+          "y": -1068.8027602877455
+        }
+      },
+      {
+        "id": 10,
+        "kind": "Wildcap",
+        "x": -24.943886862320177,
+        "z": -42.09027659653301,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -24.47011849656701,
+        "homeZ": -42.1430553230457,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -24.943886862320177,
+        "renderZ": -42.09027659653301,
+        "screen": {
+          "x": -323.8476580432148,
+          "y": -1089.8143733669672
+        }
+      },
+      {
+        "id": 11,
+        "kind": "Wildcap",
+        "x": -19.67722446698447,
+        "z": -27.560228482899568,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -19.65632195910439,
+        "homeZ": -28.04941815789789,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -19.67722446698447,
+        "renderZ": -27.560228482899568,
+        "screen": {
+          "x": -128.78608858969687,
+          "y": -723.6296576613925
+        }
+      },
+      {
+        "id": 12,
+        "kind": "Wildcap",
+        "x": -31.480313946808234,
+        "z": -30.940227591080223,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -31.93149496614933,
+        "homeZ": -31.41606948338449,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -31.480313946808234,
+        "renderZ": -30.940227591080223,
+        "screen": {
+          "x": -565.9375491377914,
+          "y": -808.8120330282641
+        }
+      },
+      {
+        "id": 13,
+        "kind": "Leafling",
+        "x": 12.094963715295009,
+        "z": -36.23459430145152,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 11.586512917187065,
+        "homeZ": -36.259601569734514,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 12.094963715295009,
+        "renderZ": -36.23459430145152,
+        "screen": {
+          "x": 1047.9616173761624,
+          "y": -942.2400955863839
+        }
+      },
+      {
+        "id": 14,
+        "kind": "Leafling",
+        "x": 43.26169235016167,
+        "z": -18.883650443878906,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 43.16343909222633,
+        "homeZ": -18.434831521008164,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 43.26169235016167,
+        "renderZ": -18.883650443878906,
+        "screen": {
+          "x": 2202.2848957456076,
+          "y": -504.963467593182
+        }
+      },
+      {
+        "id": 15,
+        "kind": "Leafling",
+        "x": 38.30093420466149,
+        "z": -44.74455793715707,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 38.70321207912639,
+        "homeZ": -44.23455487098545,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 38.30093420466149,
+        "renderZ": -44.74455793715707,
+        "screen": {
+          "x": 2018.5531132798158,
+          "y": -1156.7072873145164
+        }
+      },
+      {
+        "id": 16,
+        "kind": "Leafling",
+        "x": 10.266043312457096,
+        "z": -16.430575388337484,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 10.798999896738678,
+        "homeZ": -16.328282645903528,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 10.266043312457096,
+        "renderZ": -16.430575388337484,
+        "screen": {
+          "x": 980.2238249368611,
+          "y": -443.1413328835918
+        }
+      },
+      {
+        "id": 17,
+        "kind": "Leafling",
+        "x": 27.393998602873676,
+        "z": -26.17494302720379,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 27.567636071238667,
+        "homeZ": -26.57440808415413,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 27.393998602873676,
+        "renderZ": -26.17494302720379,
+        "screen": {
+          "x": 1614.5925369768097,
+          "y": -688.7178420364285
+        }
+      },
+      {
+        "id": 18,
+        "kind": "Leafling",
+        "x": 26.723799579362314,
+        "z": -39.274488893051554,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 26.378476444166154,
+        "homeZ": -39.80844541825354,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 26.723799579362314,
+        "renderZ": -39.274488893051554,
+        "screen": {
+          "x": 1589.7703510155225,
+          "y": -1018.8511933676432
+        }
+      },
+      {
+        "id": 19,
+        "kind": "Leafling",
+        "x": 4.630233206514358,
+        "z": -25.733657383711098,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 4.083437965717167,
+        "homeZ": -25.911188210360706,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 4.630233206514358,
+        "renderZ": -25.733657383711098,
+        "screen": {
+          "x": 771.4901181056082,
+          "y": -677.5966085316542
+        }
+      },
+      {
+        "id": 20,
+        "kind": "Leafling",
+        "x": 1.5950795542166942,
+        "z": -40.4537474399716,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 1.3495332305319607,
+        "homeZ": -40.111631544772536,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 1.5950795542166942,
+        "renderZ": -40.4537474399716,
+        "screen": {
+          "x": 659.0770203011833,
+          "y": -1048.5707409128509
+        }
+      },
+      {
+        "id": 21,
+        "kind": "Sunbee",
+        "x": -6.0807612773278175,
+        "z": -14.635381926467058,
+        "groupId": "glade-4",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -5.799304526299238,
+        "homeZ": -14.088159085717052,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -6.0807612773278175,
+        "renderZ": -14.635381926467058,
+        "screen": {
+          "x": 374.7866202173499,
+          "y": -397.8990596075164
+        }
+      },
+      {
+        "id": 22,
+        "kind": "Sunbee",
+        "x": -44.63419706874253,
+        "z": 41.76686699567332,
+        "groupId": "glade-4",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -44.084507281892,
+        "homeZ": 42.016082625836134,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -44.63419706874253,
+        "renderZ": 41.76686699567332,
+        "screen": {
+          "x": -1053.1184036472807,
+          "y": 1023.5443743842723
+        }
+      },
+      {
+        "id": 23,
+        "kind": "Sunbee",
+        "x": -39.063266338035604,
+        "z": 6.403441558797245,
+        "groupId": "glade-4",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -38.75072577036917,
+        "homeZ": 6.125522277317941,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -39.063266338035604,
+        "renderZ": 6.403441558797245,
+        "screen": {
+          "x": -846.7876366304099,
+          "y": 132.31911561673343
+        }
+      },
+      {
+        "id": 24,
+        "kind": "Sunbee",
+        "x": -41.101157099510935,
+        "z": -15.427323074679194,
+        "groupId": "glade-4",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -41.31311410758644,
+        "homeZ": -15.97685956209898,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -41.101157099510935,
+        "renderZ": -15.427323074679194,
+        "screen": {
+          "x": -922.2650719526839,
+          "y": -417.85747557046875
+        }
+      },
+      {
+        "id": 25,
+        "kind": "Sunbee",
+        "x": -17.35442129629482,
+        "z": 10.596672224675869,
+        "groupId": "glade-4",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -17.896003584377468,
+        "homeZ": 10.280759843531996,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -17.35442129629482,
+        "renderZ": 10.596672224675869,
+        "screen": {
+          "x": -42.756341855294636,
+          "y": 237.99646556521128
+        }
+      },
+      {
+        "id": 26,
+        "kind": "Sunbee",
+        "x": -32.638465335828556,
+        "z": 23.206854343643805,
+        "groupId": "glade-4",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -33.01174464588985,
+        "homeZ": 23.415014455094934,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -32.638465335828556,
+        "renderZ": 23.206854343643805,
+        "screen": {
+          "x": -608.8320448638035,
+          "y": 555.7969241815239
+        }
+      },
+      {
+        "id": 27,
+        "kind": "RibbonHare",
+        "x": 40.80394584010221,
+        "z": -13.12013851704849,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 40.94216078426689,
+        "homeZ": -12.57928735949099,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 40.80394584010221,
+        "renderZ": -13.12013851704849,
+        "screen": {
+          "x": 2111.25724757213,
+          "y": -359.71205755746377
+        }
+      },
+      {
+        "id": 28,
+        "kind": "RibbonHare",
+        "x": 41.490877644147076,
+        "z": 41.59899524250213,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 42.013512660283595,
+        "homeZ": 41.975281386170536,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 41.490877644147076,
+        "renderZ": 41.59899524250213,
+        "screen": {
+          "x": 2136.699166143405,
+          "y": 1019.3136884478431
+        }
+      },
+      {
+        "id": 29,
+        "kind": "RibbonHare",
+        "x": 20.49773395588712,
+        "z": 17.780686699560647,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 20.924280820414424,
+        "homeZ": 17.646452084183693,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 20.49773395588712,
+        "renderZ": 17.780686699560647,
+        "screen": {
+          "x": 1359.1753288034988,
+          "y": 419.047228614101
+        }
+      },
+      {
+        "id": 30,
+        "kind": "RibbonHare",
+        "x": 9.911596977711424,
+        "z": -9.749294608491233,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 9.84989047050476,
+        "homeZ": -10.270635296590626,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 9.911596977711424,
+        "renderZ": -9.749294608491233,
+        "screen": {
+          "x": 967.0961829593215,
+          "y": -274.7604105505468
+        }
+      },
+      {
+        "id": 31,
+        "kind": "RibbonHare",
+        "x": 42.71158254819135,
+        "z": 8.805457686519892,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 42.218355347402394,
+        "homeZ": 8.376329150050879,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 42.71158254819135,
+        "renderZ": 8.805457686519892,
+        "screen": {
+          "x": 2181.9104587133183,
+          "y": 192.8544686982568
+        }
+      },
+      {
+        "id": 32,
+        "kind": "RibbonHare",
+        "x": 26.71110376774564,
+        "z": -2.267583576840384,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 26.239826687145978,
+        "homeZ": -2.209961164277047,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 26.71110376774564,
+        "renderZ": -2.267583576840384,
+        "screen": {
+          "x": 1589.3001357722542,
+          "y": -86.20713077539602
+        }
+      },
+      {
+        "id": 33,
+        "kind": "RibbonHare",
+        "x": 35.00029889774072,
+        "z": 24.89086805778616,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 34.98426191182807,
+        "homeZ": 25.38226363901049,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 35.00029889774072,
+        "renderZ": 24.89086805778616,
+        "screen": {
+          "x": 1896.3073616379693,
+          "y": 598.237257367957
+        }
+      },
+      {
+        "id": 34,
+        "kind": "Dewdrop",
+        "x": -28.52766237535055,
+        "z": 30.835886080909845,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -28.07371493568644,
+        "homeZ": 31.309267999604344,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -28.52766237535055,
+        "renderZ": 30.835886080909845,
+        "screen": {
+          "x": -456.580083945413,
+          "y": 748.0629645945851
+        }
+      },
+      {
+        "id": 35,
+        "kind": "Dewdrop",
+        "x": 38.759816146181855,
+        "z": 39.937365966474005,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 39.26639082888141,
+        "homeZ": 39.95750906970352,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 38.759816146181855,
+        "renderZ": 39.937365966474005,
+        "screen": {
+          "x": 2035.5487406786997,
+          "y": 977.4374854723345
+        }
+      },
+      {
+        "id": 36,
+        "kind": "Dewdrop",
+        "x": 6.078820561943162,
+        "z": 31.475823397927368,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 6.172280060593039,
+        "homeZ": 31.024208209477365,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 6.078820561943162,
+        "renderZ": 31.475823397927368,
+        "screen": {
+          "x": 825.1415014353445,
+          "y": 764.1905962905581
+        }
+      },
+      {
+        "id": 37,
+        "kind": "Dewdrop",
+        "x": -11.79762785479243,
+        "z": 39.42586203624929,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -12.20320977224037,
+        "homeZ": 38.91770147765055,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -11.79762785479243,
+        "renderZ": 39.42586203624929,
+        "screen": {
+          "x": 163.05082185970184,
+          "y": 964.5466182290338
+        }
+      },
+      {
+        "id": 38,
+        "kind": "Dewdrop",
+        "x": 27.462887534708837,
+        "z": 29.22830263362444,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 26.931154345627874,
+        "homeZ": 29.13079717895016,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 27.462887534708837,
+        "renderZ": 29.22830263362444,
+        "screen": {
+          "x": 1617.1439788868975,
+          "y": 707.5488188041904
+        }
+      },
+      {
+        "id": 39,
+        "kind": "Dewdrop",
+        "x": -38.894803924307524,
+        "z": 41.706986692452,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -39.06381534319371,
+        "homeZ": 42.109782407060266,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -38.894803924307524,
+        "renderZ": 41.706986692452,
+        "screen": {
+          "x": -840.5482879976157,
+          "y": 1022.0352773984964
+        }
+      },
+      {
+        "id": 40,
+        "kind": "Dewdrop",
+        "x": 15.873866753552607,
+        "z": 42.0804026292528,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 16.222965423949063,
+        "homeZ": 42.61317099072039,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 15.873866753552607,
+        "renderZ": 42.0804026292528,
+        "screen": {
+          "x": 1187.920988629578,
+          "y": 1031.446065827272
+        }
+      },
+      {
+        "id": 41,
+        "kind": "Dewdrop",
+        "x": -5.040278749564047,
+        "z": 25.249536464215264,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -4.494029697496444,
+        "homeZ": 25.42245269799605,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -5.040278749564047,
+        "renderZ": 25.249536464215264,
+        "screen": {
+          "x": 413.32300998752186,
+          "y": 607.2763801164617
+        }
+      },
+      {
+        "id": 42,
+        "kind": "MooncapMonarch",
+        "x": 31.758819425575634,
+        "z": 32.3459142818,
+        "hp": 32000,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 32,
+        "homeZ": 32,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 31.758819425575634,
+        "renderZ": 32.3459142818,
+        "screen": {
+          "x": 1776.2525668305686,
+          "y": 786.1185335180998
+        }
+      },
+      {
+        "id": 43,
+        "kind": "DewdropMatriarch",
+        "x": -31.714371788916573,
+        "z": 32.54671280195931,
+        "hp": 16000,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -32,
+        "homeZ": 32,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -31.714371788916573,
+        "renderZ": 32.54671280195931,
+        "screen": {
+          "x": -574.606358071698,
+          "y": 791.1790363081521
+        }
+      }
+    ],
+    "destination": null,
+    "zoom": 1,
+    "engine": "Babylon.js",
+    "surfaceMaterials": 4,
+    "surfaceTextures": 8,
+    "textureSize": 128,
+    "textureDetail": 0.88,
+    "normalMaps": true,
+    "surfaceFamilies": [
+      "grass",
+      "wood",
+      "stone",
+      "dirt"
+    ],
+    "sceneTextures": 66,
+    "sceneMaterials": 125,
+    "texturedMapMeshes": 31,
+    "shadowsEnabled": true,
+    "shadowFilter": "blur-close-exponential",
+    "shadowBlurKernel": 20,
+    "shadowBlurScale": 2,
+    "shadowDarkness": 0.12,
+    "shadowDepthScale": 50,
+    "shadowMapSize": 2048,
+    "lighting": "warm honey sun / sage sky fill",
+    "environmentPalette": {
+      "ground": 11319938,
+      "path": 13941130
+    },
+    "environmentDetails": {
+      "clusters": 990,
+      "vertices": 18468,
+      "visibleMeshes": 18,
+      "contactShadows": 95
+    },
+    "territoriesCount": 6,
+    "activeGroupId": "glade-1",
+    "groupCenters": [
+      {
+        "id": "glade-1",
+        "x": 0,
+        "z": 18,
+        "count": 6,
+        "radius": 2.8,
+        "visible": true
+      },
+      {
+        "id": "glade-2",
+        "x": -32,
+        "z": -32,
+        "count": 7,
+        "radius": 2.8,
+        "visible": false
+      },
+      {
+        "id": "glade-3",
+        "x": 32,
+        "z": -32,
+        "count": 8,
+        "radius": 2.8,
+        "visible": false
+      },
+      {
+        "id": "glade-4",
+        "x": -32,
+        "z": 0,
+        "count": 6,
+        "radius": 2.8,
+        "visible": true
+      },
+      {
+        "id": "glade-5",
+        "x": 32,
+        "z": 0,
+        "count": 7,
+        "radius": 2.8,
+        "visible": true
+      },
+      {
+        "id": "glade-6",
+        "x": 0,
+        "z": 32,
+        "count": 8,
+        "radius": 2.8,
+        "visible": true
+      }
+    ],
+    "worldSize": 96,
+    "worldBounds": {
+      "minX": -46,
+      "maxX": 46,
+      "minZ": -46,
+      "maxZ": 46
+    },
+    "modelsLoaded": 47,
+    "modelsExpected": 47,
+    "cameraShake": {
+      "level": 0,
+      "elapsed": 0,
+      "duration": 0,
+      "active": false,
+      "amplitude": 0,
+      "offset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "triggerCount": 0
+    },
+    "previewHeld": false,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 96,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "lv80Cue": null,
+      "lv90Cue": null,
+      "lv100Cue": null,
+      "drawCount": 0
+    },
+    "sceneMeshes": 375,
+    "skillMotion": null,
+    "quality": "high",
+    "autoReduced": false,
+    "riggedActors": 47,
+    "motionPoses": [],
+    "modelErrors": 0,
+    "renderWidth": 1200,
+    "renderHeight": 800,
+    "activeAnimations": 164,
+    "drawCalls": 162,
+    "fps": 1.3029832651627562,
+    "frameP95": 1341.8000000000466
+  },
+  "released": {
+    "zone": "glade",
+    "equipped": {
+      "weapon": "100a27b3-ba5c-46ce-8747-f4c275b4f926",
+      "helmet": "300ddfd0-3b8b-4aef-a54a-a14c67ea35dd",
+      "armor": "81b3703c-3f8f-45ec-af53-9b3ee41aa670",
+      "pants": "a5d25b6c-40e2-4c09-8c62-6248bef0df6a",
+      "boots": "add31ace-2e68-464a-b618-ddd8a3a2947b",
+      "accessory": "a65f82d7-f54b-4e80-ba35-b3e8b4e8fbc5"
+    },
+    "tutorial": [
+      "equip",
+      "move",
+      "skill",
+      "attack"
+    ],
+    "job": "mage",
+    "hotbar": [
+      "mage-5",
+      "mage-6",
+      "mage-7",
+      "mage-8",
+      "mage-9",
+      "mage-10"
+    ],
+    "auxiliary": [
+      "Red potion",
+      "Blue potion",
+      null,
+      null
+    ],
+    "skillChoices": {
+      "swordsman": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "mage": [
+        "mage-1",
+        "mage-2",
+        "mage-3",
+        "mage-4",
+        "mage-5",
+        "mage-6",
+        "mage-7",
+        "mage-8",
+        "mage-9",
+        "mage-10"
+      ],
+      "archer": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "skillRanks": {
+      "mage-1": 1,
+      "mage-2": 1,
+      "mage-3": 1,
+      "mage-4": 1,
+      "mage-5": 1,
+      "mage-6": 1,
+      "mage-7": 1,
+      "mage-8": 1,
+      "mage-9": 1,
+      "mage-10": 1
+    },
+    "skillPoints": 90,
+    "skillSpent": 10,
+    "unlockedSkills": [
+      "mage-1",
+      "mage-2",
+      "mage-3",
+      "mage-4",
+      "mage-5",
+      "mage-6",
+      "mage-7",
+      "mage-8",
+      "mage-9",
+      "mage-10"
+    ],
+    "defense": 1083.5221445150944,
+    "joystickInput": [
+      0,
+      0
+    ],
+    "joystickActive": false,
+    "auto": false,
+    "autoSkillCursor": 0,
+    "cooldownRatios": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "skillCooldownTotals": {
+      "mage-5": 15.9
+    },
+    "cooldowns": [
+      15.9,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "skillCooldowns": {
+      "mage-5": 15.9
+    },
+    "cast": null,
+    "renderX": 0,
+    "renderZ": 16.486441200000012,
+    "network": null,
+    "x": 0,
+    "z": 16.486441200000012,
+    "level": 100,
+    "hp": 9486.090607146283,
+    "mp": 827,
+    "kills": 1,
+    "items": [
+      {
+        "name": "Red potion",
+        "icon": "🧪",
+        "count": 8,
+        "category": "consumable"
+      },
+      {
+        "name": "Blue potion",
+        "icon": "💠",
+        "count": 4,
+        "category": "consumable"
+      },
+      {
+        "id": "100a27b3-ba5c-46ce-8747-f4c275b4f926",
+        "gearId": "starfall-weapon",
+        "refine": 10,
+        "rarity": "legend",
+        "secondary": {
+          "mpRegen": 0.46,
+          "damageBonus": 5.6,
+          "cooldownReduction": 4,
+          "damageReduction": 2.9,
+          "skillDamage": 5.8
+        },
+        "name": "Starfall Weapon",
+        "icon": "starfall-blade",
+        "count": 1,
+        "category": "weapon"
+      },
+      {
+        "id": "300ddfd0-3b8b-4aef-a54a-a14c67ea35dd",
+        "gearId": "starfall-helmet",
+        "refine": 10,
+        "rarity": "legend",
+        "secondary": {
+          "critChance": 2,
+          "moveSpeed": 6.3,
+          "goldBonus": 10.3,
+          "hpRegen": 0.22,
+          "critDamage": 9.6
+        },
+        "name": "Starfall Helmet",
+        "icon": "starfall-helmet",
+        "count": 1,
+        "category": "armor"
+      },
+      {
+        "id": "81b3703c-3f8f-45ec-af53-9b3ee41aa670",
+        "gearId": "starfall-coat",
+        "refine": 10,
+        "rarity": "legend",
+        "secondary": {
+          "cooldownReduction": 3.9,
+          "dodgeChance": 4.2,
+          "mpRegen": 0.41,
+          "skillDamage": 9.1,
+          "healingBonus": 4.3
+        },
+        "name": "Starfall Coat",
+        "icon": "starfall-coat",
+        "count": 1,
+        "category": "armor"
+      },
+      {
+        "id": "a5d25b6c-40e2-4c09-8c62-6248bef0df6a",
+        "gearId": "starfall-pants",
+        "refine": 10,
+        "rarity": "legend",
+        "secondary": {
+          "cooldownReduction": 5.9,
+          "damageReduction": 1.6,
+          "critDamage": 14.3,
+          "armorPen": 6.9,
+          "damageBonus": 2.8
+        },
+        "name": "Starfall Pants",
+        "icon": "starfall-pants",
+        "count": 1,
+        "category": "armor"
+      },
+      {
+        "id": "add31ace-2e68-464a-b618-ddd8a3a2947b",
+        "gearId": "starfall-boots",
+        "refine": 10,
+        "rarity": "legend",
+        "secondary": {
+          "moveSpeed": 7.7,
+          "expBonus": 8,
+          "armorPen": 8.3,
+          "critChance": 2.9,
+          "attackSpeed": 9.1
+        },
+        "name": "Starfall Boots",
+        "icon": "starfall-boots",
+        "count": 1,
+        "category": "armor"
+      },
+      {
+        "id": "a65f82d7-f54b-4e80-ba35-b3e8b4e8fbc5",
+        "gearId": "starfall-charm",
+        "refine": 10,
+        "rarity": "legend",
+        "secondary": {
+          "damageReduction": 5.1,
+          "damageBonus": 5.3,
+          "hpRegen": 0.18,
+          "dodgeChance": 1.4,
+          "cooldownReduction": 6.7
+        },
+        "name": "Starfall Charm",
+        "icon": "starfall-charm",
+        "count": 1,
+        "category": "accessory"
+      }
+    ],
+    "gold": 131,
+    "weapon": 0,
+    "target": null,
+    "loot": 0,
+    "paused": false,
+    "monsters": [
+      {
+        "id": 0,
+        "kind": "Dewdrop",
+        "x": 3.588820869385145,
+        "z": 12.644557651958921,
+        "groupId": "glade-1",
+        "hp": -6819,
+        "alive": false,
+        "respawn": 13,
+        "attack": -0.25,
+        "homeX": 3.7709970544092357,
+        "homeZ": 11.474506619386375,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": true,
+        "pattern": 0,
+        "rushRoute": [
+          {
+            "x": 3.25,
+            "z": 13
+          },
+          {
+            "x": 2.6,
+            "z": 13.65
+          },
+          {
+            "x": 1.9500000000000002,
+            "z": 14.3
+          },
+          {
+            "x": 1.3,
+            "z": 14.950000000000001
+          },
+          {
+            "x": 0.65,
+            "z": 14.950000000000001
+          }
+        ],
+        "rushRouteRetry": 0.7499999999999998,
+        "rushGoal": {
+          "x": 0,
+          "z": 15.308341200000008
+        },
+        "owner": "",
+        "returning": false,
+        "territoryAggro": true,
+        "renderX": 3.588820869385145,
+        "renderZ": 12.644557651958921,
+        "screen": {
+          "x": 732.9192909516622,
+          "y": 289.60705467837494
+        }
+      },
+      {
+        "id": 1,
+        "kind": "Dewdrop",
+        "x": -22.625628068020912,
+        "z": 24.05799797558531,
+        "groupId": "glade-1",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": -0.25,
+        "homeX": -24.09263080637902,
+        "homeZ": 24.499162794090807,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": true,
+        "pattern": 0,
+        "rushRoute": [
+          {
+            "x": -22.1,
+            "z": 24.05
+          },
+          {
+            "x": -21.45,
+            "z": 24.05
+          },
+          {
+            "x": -20.8,
+            "z": 24.05
+          },
+          {
+            "x": -20.150000000000002,
+            "z": 24.05
+          },
+          {
+            "x": -19.5,
+            "z": 23.400000000000002
+          },
+          {
+            "x": -18.85,
+            "z": 22.75
+          },
+          {
+            "x": -18.2,
+            "z": 22.75
+          },
+          {
+            "x": -17.55,
+            "z": 22.75
+          },
+          {
+            "x": -16.900000000000002,
+            "z": 22.75
+          },
+          {
+            "x": -16.25,
+            "z": 22.75
+          },
+          {
+            "x": -15.600000000000001,
+            "z": 22.75
+          },
+          {
+            "x": -14.950000000000001,
+            "z": 22.1
+          },
+          {
+            "x": -14.3,
+            "z": 22.1
+          },
+          {
+            "x": -13.65,
+            "z": 22.1
+          },
+          {
+            "x": -13,
+            "z": 21.45
+          },
+          {
+            "x": -12.35,
+            "z": 20.8
+          },
+          {
+            "x": -11.700000000000001,
+            "z": 20.8
+          },
+          {
+            "x": -11.05,
+            "z": 20.8
+          },
+          {
+            "x": -10.4,
+            "z": 20.150000000000002
+          },
+          {
+            "x": -9.75,
+            "z": 20.150000000000002
+          },
+          {
+            "x": -9.1,
+            "z": 19.5
+          },
+          {
+            "x": -8.450000000000001,
+            "z": 18.85
+          },
+          {
+            "x": -7.800000000000001,
+            "z": 18.85
+          },
+          {
+            "x": -7.15,
+            "z": 18.85
+          },
+          {
+            "x": -6.5,
+            "z": 18.85
+          },
+          {
+            "x": -5.8500000000000005,
+            "z": 18.2
+          },
+          {
+            "x": -5.2,
+            "z": 18.2
+          },
+          {
+            "x": -4.55,
+            "z": 17.55
+          },
+          {
+            "x": -3.9000000000000004,
+            "z": 17.55
+          },
+          {
+            "x": -3.25,
+            "z": 16.900000000000002
+          },
+          {
+            "x": -2.6,
+            "z": 16.900000000000002
+          },
+          {
+            "x": -1.9500000000000002,
+            "z": 16.25
+          },
+          {
+            "x": -1.3,
+            "z": 16.25
+          },
+          {
+            "x": -0.65,
+            "z": 16.25
+          }
+        ],
+        "rushRouteRetry": 0.7499999999999998,
+        "rushGoal": {
+          "x": 0,
+          "z": 15.308341200000008
+        },
+        "owner": "",
+        "returning": false,
+        "territoryAggro": true,
+        "renderX": -22.625628068020912,
+        "renderZ": 24.05799797558531,
+        "screen": {
+          "x": -237.9862215448516,
+          "y": 577.2473547960424
+        }
+      },
+      {
+        "id": 2,
+        "kind": "Dewdrop",
+        "x": 22.901403294793823,
+        "z": 24.051403192471987,
+        "groupId": "glade-1",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": -0.25,
+        "homeX": 24.213141756132245,
+        "homeZ": 24.623054363764822,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": true,
+        "pattern": 0,
+        "rushRoute": [
+          {
+            "x": 22.1,
+            "z": 24.05
+          },
+          {
+            "x": 21.45,
+            "z": 24.05
+          },
+          {
+            "x": 20.8,
+            "z": 24.05
+          },
+          {
+            "x": 20.150000000000002,
+            "z": 24.05
+          },
+          {
+            "x": 19.5,
+            "z": 23.400000000000002
+          },
+          {
+            "x": 18.85,
+            "z": 22.75
+          },
+          {
+            "x": 18.2,
+            "z": 22.75
+          },
+          {
+            "x": 17.55,
+            "z": 22.75
+          },
+          {
+            "x": 16.900000000000002,
+            "z": 22.75
+          },
+          {
+            "x": 16.25,
+            "z": 22.75
+          },
+          {
+            "x": 15.600000000000001,
+            "z": 22.75
+          },
+          {
+            "x": 14.950000000000001,
+            "z": 22.1
+          },
+          {
+            "x": 14.3,
+            "z": 22.1
+          },
+          {
+            "x": 13.65,
+            "z": 22.1
+          },
+          {
+            "x": 13,
+            "z": 21.45
+          },
+          {
+            "x": 12.35,
+            "z": 21.45
+          },
+          {
+            "x": 11.700000000000001,
+            "z": 21.45
+          },
+          {
+            "x": 11.05,
+            "z": 21.45
+          },
+          {
+            "x": 10.4,
+            "z": 21.45
+          },
+          {
+            "x": 9.75,
+            "z": 20.8
+          },
+          {
+            "x": 9.1,
+            "z": 20.150000000000002
+          },
+          {
+            "x": 8.450000000000001,
+            "z": 19.5
+          },
+          {
+            "x": 7.800000000000001,
+            "z": 19.5
+          },
+          {
+            "x": 7.15,
+            "z": 19.5
+          },
+          {
+            "x": 6.5,
+            "z": 19.5
+          },
+          {
+            "x": 5.8500000000000005,
+            "z": 19.5
+          },
+          {
+            "x": 5.2,
+            "z": 18.85
+          },
+          {
+            "x": 4.55,
+            "z": 18.2
+          },
+          {
+            "x": 3.9000000000000004,
+            "z": 17.55
+          },
+          {
+            "x": 3.25,
+            "z": 16.900000000000002
+          },
+          {
+            "x": 2.6,
+            "z": 16.900000000000002
+          },
+          {
+            "x": 1.9500000000000002,
+            "z": 16.25
+          },
+          {
+            "x": 1.3,
+            "z": 16.25
+          },
+          {
+            "x": 0.65,
+            "z": 16.25
+          }
+        ],
+        "rushRouteRetry": 0.7499999999999998,
+        "rushGoal": {
+          "x": 0,
+          "z": 15.308341200000008
+        },
+        "owner": "",
+        "returning": false,
+        "territoryAggro": true,
+        "renderX": 22.901403294793823,
+        "renderZ": 24.051403192471987,
+        "screen": {
+          "x": 1448.2001187937742,
+          "y": 577.081153778633
+        }
+      },
+      {
+        "id": 3,
+        "kind": "Dewdrop",
+        "x": -2.8042042725807423,
+        "z": -6.0769815609540725,
+        "groupId": "glade-1",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": -0.25,
+        "homeX": -2.8148980401456356,
+        "homeZ": -6.6958940285257995,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": true,
+        "pattern": 0,
+        "rushRoute": [
+          {
+            "x": -2.6,
+            "z": -5.8500000000000005
+          },
+          {
+            "x": -1.9500000000000002,
+            "z": -5.8500000000000005
+          },
+          {
+            "x": -1.3,
+            "z": -5.8500000000000005
+          },
+          {
+            "x": -0.65,
+            "z": -5.8500000000000005
+          },
+          {
+            "x": 0,
+            "z": -5.2
+          },
+          {
+            "x": 0,
+            "z": -4.55
+          },
+          {
+            "x": 0,
+            "z": -3.9000000000000004
+          },
+          {
+            "x": 0,
+            "z": -3.25
+          },
+          {
+            "x": 0,
+            "z": -2.6
+          },
+          {
+            "x": 0,
+            "z": -1.9500000000000002
+          },
+          {
+            "x": 0,
+            "z": -1.3
+          },
+          {
+            "x": 0,
+            "z": -0.65
+          },
+          {
+            "x": 0,
+            "z": 0
+          },
+          {
+            "x": 0,
+            "z": 0.65
+          },
+          {
+            "x": 0,
+            "z": 1.3
+          },
+          {
+            "x": 0,
+            "z": 1.9500000000000002
+          },
+          {
+            "x": 0,
+            "z": 2.6
+          },
+          {
+            "x": 0,
+            "z": 3.25
+          },
+          {
+            "x": 0,
+            "z": 3.9000000000000004
+          },
+          {
+            "x": 0,
+            "z": 4.55
+          },
+          {
+            "x": 0,
+            "z": 5.2
+          },
+          {
+            "x": 0,
+            "z": 5.8500000000000005
+          },
+          {
+            "x": 0,
+            "z": 6.5
+          },
+          {
+            "x": 0,
+            "z": 7.15
+          },
+          {
+            "x": 0,
+            "z": 7.800000000000001
+          },
+          {
+            "x": 0,
+            "z": 8.450000000000001
+          },
+          {
+            "x": 0,
+            "z": 9.1
+          },
+          {
+            "x": 0,
+            "z": 9.75
+          },
+          {
+            "x": 0,
+            "z": 10.4
+          },
+          {
+            "x": 0,
+            "z": 11.05
+          },
+          {
+            "x": 0,
+            "z": 11.700000000000001
+          },
+          {
+            "x": 0,
+            "z": 12.35
+          },
+          {
+            "x": 0,
+            "z": 13
+          },
+          {
+            "x": 0,
+            "z": 13.65
+          },
+          {
+            "x": 0,
+            "z": 14.3
+          },
+          {
+            "x": 0,
+            "z": 14.950000000000001
+          }
+        ],
+        "rushRouteRetry": 0.7499999999999998,
+        "rushGoal": {
+          "x": 0,
+          "z": 15.308341200000008
+        },
+        "owner": "",
+        "returning": false,
+        "territoryAggro": true,
+        "renderX": -2.8042042725807423,
+        "renderZ": -6.0769815609540725,
+        "screen": {
+          "x": 496.1405828932018,
+          "y": -182.21117060463754
+        }
+      },
+      {
+        "id": 4,
+        "kind": "Dewdrop",
+        "x": -15.12335322893231,
+        "z": 10.401576897169626,
+        "groupId": "glade-1",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": -0.25,
+        "homeX": -15.861549158580601,
+        "homeZ": 10.275180883705616,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": true,
+        "pattern": 0,
+        "rushRoute": [
+          {
+            "x": -14.3,
+            "z": 10.4
+          },
+          {
+            "x": -13.65,
+            "z": 11.05
+          },
+          {
+            "x": -13,
+            "z": 11.700000000000001
+          },
+          {
+            "x": -12.35,
+            "z": 12.35
+          },
+          {
+            "x": -11.700000000000001,
+            "z": 12.35
+          },
+          {
+            "x": -11.05,
+            "z": 12.35
+          },
+          {
+            "x": -10.4,
+            "z": 12.35
+          },
+          {
+            "x": -9.75,
+            "z": 12.35
+          },
+          {
+            "x": -9.1,
+            "z": 12.35
+          },
+          {
+            "x": -8.450000000000001,
+            "z": 12.35
+          },
+          {
+            "x": -7.800000000000001,
+            "z": 12.35
+          },
+          {
+            "x": -7.15,
+            "z": 12.35
+          },
+          {
+            "x": -6.5,
+            "z": 12.35
+          },
+          {
+            "x": -5.8500000000000005,
+            "z": 13
+          },
+          {
+            "x": -5.2,
+            "z": 13
+          },
+          {
+            "x": -4.55,
+            "z": 13.65
+          },
+          {
+            "x": -3.9000000000000004,
+            "z": 13.65
+          },
+          {
+            "x": -3.25,
+            "z": 14.3
+          },
+          {
+            "x": -2.6,
+            "z": 14.3
+          },
+          {
+            "x": -1.9500000000000002,
+            "z": 14.950000000000001
+          },
+          {
+            "x": -1.3,
+            "z": 14.950000000000001
+          },
+          {
+            "x": -0.65,
+            "z": 14.950000000000001
+          }
+        ],
+        "rushRouteRetry": 0.7499999999999998,
+        "rushGoal": {
+          "x": 0,
+          "z": 15.308341200000008
+        },
+        "owner": "",
+        "returning": false,
+        "territoryAggro": true,
+        "renderX": -15.12335322893231,
+        "renderZ": 10.401576897169626,
+        "screen": {
+          "x": 39.87580847254458,
+          "y": 233.07969402532026
+        }
+      },
+      {
+        "id": 5,
+        "kind": "Dewdrop",
+        "x": -3.2598671489485946,
+        "z": 23.605470596713214,
+        "groupId": "glade-1",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": -0.25,
+        "homeX": -3.533188980538398,
+        "homeZ": 24.199925520457327,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": true,
+        "pattern": 0,
+        "rushRoute": [
+          {
+            "x": -3.25,
+            "z": 23.400000000000002
+          },
+          {
+            "x": -3.25,
+            "z": 22.75
+          },
+          {
+            "x": -2.6,
+            "z": 22.1
+          },
+          {
+            "x": -1.9500000000000002,
+            "z": 21.45
+          },
+          {
+            "x": -1.3,
+            "z": 20.8
+          },
+          {
+            "x": -1.3,
+            "z": 20.150000000000002
+          },
+          {
+            "x": -1.3,
+            "z": 19.5
+          },
+          {
+            "x": -1.3,
+            "z": 18.85
+          },
+          {
+            "x": -1.3,
+            "z": 18.2
+          },
+          {
+            "x": -0.65,
+            "z": 17.55
+          },
+          {
+            "x": -0.65,
+            "z": 16.900000000000002
+          },
+          {
+            "x": -0.65,
+            "z": 16.25
+          }
+        ],
+        "rushRouteRetry": 0.7499999999999998,
+        "rushGoal": {
+          "x": 0,
+          "z": 15.308341200000008
+        },
+        "owner": "",
+        "returning": false,
+        "territoryAggro": true,
+        "renderX": -3.2598671489485946,
+        "renderZ": 23.605470596713214,
+        "screen": {
+          "x": 479.2641801291411,
+          "y": 565.842808280757
+        }
+      },
+      {
+        "id": 6,
+        "kind": "Wildcap",
+        "x": -33.068896761901485,
+        "z": -20.04189704804419,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -33.589994844049215,
+        "homeZ": -20.421719015110284,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -33.068896761901485,
+        "renderZ": -20.04189704804419,
+        "screen": {
+          "x": -624.7739494723576,
+          "y": -534.1534744084554
+        }
+      },
+      {
+        "id": 7,
+        "kind": "Wildcap",
+        "x": -5.474854523498937,
+        "z": -41.42623246930541,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -5.90445797983557,
+        "homeZ": -41.29672411456704,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -5.474854523498937,
+        "renderZ": -41.42623246930541,
+        "screen": {
+          "x": 397.22761101429535,
+          "y": -1073.0792044230573
+        }
+      },
+      {
+        "id": 8,
+        "kind": "Wildcap",
+        "x": -9.893772224676397,
+        "z": -16.67345686037052,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -9.836905618663877,
+        "homeZ": -16.153687567915767,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -9.893772224676397,
+        "renderZ": -16.67345686037052,
+        "screen": {
+          "x": 233.56399307649443,
+          "y": -449.2624057176947
+        }
+      },
+      {
+        "id": 9,
+        "kind": "Wildcap",
+        "x": -42.31020733197607,
+        "z": -41.25654505097169,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -41.81915355892852,
+        "homeZ": -40.82438831124455,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -42.31020733197607,
+        "renderZ": -41.25654505097169,
+        "screen": {
+          "x": -967.0447100213125,
+          "y": -1068.8027602877455
+        }
+      },
+      {
+        "id": 10,
+        "kind": "Wildcap",
+        "x": -24.943886862320177,
+        "z": -42.09027659653301,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -24.47011849656701,
+        "homeZ": -42.1430553230457,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -24.943886862320177,
+        "renderZ": -42.09027659653301,
+        "screen": {
+          "x": -323.8476580432148,
+          "y": -1089.8143733669672
+        }
+      },
+      {
+        "id": 11,
+        "kind": "Wildcap",
+        "x": -19.67722446698447,
+        "z": -27.560228482899568,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -19.65632195910439,
+        "homeZ": -28.04941815789789,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -19.67722446698447,
+        "renderZ": -27.560228482899568,
+        "screen": {
+          "x": -128.78608858969687,
+          "y": -723.6296576613925
+        }
+      },
+      {
+        "id": 12,
+        "kind": "Wildcap",
+        "x": -31.480313946808234,
+        "z": -30.940227591080223,
+        "groupId": "glade-2",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -31.93149496614933,
+        "homeZ": -31.41606948338449,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -31.480313946808234,
+        "renderZ": -30.940227591080223,
+        "screen": {
+          "x": -565.9375491377914,
+          "y": -808.8120330282641
+        }
+      },
+      {
+        "id": 13,
+        "kind": "Leafling",
+        "x": 12.094963715295009,
+        "z": -36.23459430145152,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 11.586512917187065,
+        "homeZ": -36.259601569734514,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 12.094963715295009,
+        "renderZ": -36.23459430145152,
+        "screen": {
+          "x": 1047.9616173761624,
+          "y": -942.2400955863839
+        }
+      },
+      {
+        "id": 14,
+        "kind": "Leafling",
+        "x": 43.26169235016167,
+        "z": -18.883650443878906,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 43.16343909222633,
+        "homeZ": -18.434831521008164,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 43.26169235016167,
+        "renderZ": -18.883650443878906,
+        "screen": {
+          "x": 2202.2848957456076,
+          "y": -504.963467593182
+        }
+      },
+      {
+        "id": 15,
+        "kind": "Leafling",
+        "x": 38.30093420466149,
+        "z": -44.74455793715707,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 38.70321207912639,
+        "homeZ": -44.23455487098545,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 38.30093420466149,
+        "renderZ": -44.74455793715707,
+        "screen": {
+          "x": 2018.5531132798158,
+          "y": -1156.7072873145164
+        }
+      },
+      {
+        "id": 16,
+        "kind": "Leafling",
+        "x": 10.266043312457096,
+        "z": -16.430575388337484,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 10.798999896738678,
+        "homeZ": -16.328282645903528,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 10.266043312457096,
+        "renderZ": -16.430575388337484,
+        "screen": {
+          "x": 980.2238249368611,
+          "y": -443.1413328835918
+        }
+      },
+      {
+        "id": 17,
+        "kind": "Leafling",
+        "x": 27.393998602873676,
+        "z": -26.17494302720379,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 27.567636071238667,
+        "homeZ": -26.57440808415413,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 27.393998602873676,
+        "renderZ": -26.17494302720379,
+        "screen": {
+          "x": 1614.5925369768097,
+          "y": -688.7178420364285
+        }
+      },
+      {
+        "id": 18,
+        "kind": "Leafling",
+        "x": 26.723799579362314,
+        "z": -39.274488893051554,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 26.378476444166154,
+        "homeZ": -39.80844541825354,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 26.723799579362314,
+        "renderZ": -39.274488893051554,
+        "screen": {
+          "x": 1589.7703510155225,
+          "y": -1018.8511933676432
+        }
+      },
+      {
+        "id": 19,
+        "kind": "Leafling",
+        "x": 4.630233206514358,
+        "z": -25.733657383711098,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 4.083437965717167,
+        "homeZ": -25.911188210360706,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 4.630233206514358,
+        "renderZ": -25.733657383711098,
+        "screen": {
+          "x": 771.4901181056082,
+          "y": -677.5966085316542
+        }
+      },
+      {
+        "id": 20,
+        "kind": "Leafling",
+        "x": 1.5950795542166942,
+        "z": -40.4537474399716,
+        "groupId": "glade-3",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 1.3495332305319607,
+        "homeZ": -40.111631544772536,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 1.5950795542166942,
+        "renderZ": -40.4537474399716,
+        "screen": {
+          "x": 659.0770203011833,
+          "y": -1048.5707409128509
+        }
+      },
+      {
+        "id": 21,
+        "kind": "Sunbee",
+        "x": -6.0807612773278175,
+        "z": -14.635381926467058,
+        "groupId": "glade-4",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -5.799304526299238,
+        "homeZ": -14.088159085717052,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -6.0807612773278175,
+        "renderZ": -14.635381926467058,
+        "screen": {
+          "x": 374.7866202173499,
+          "y": -397.8990596075164
+        }
+      },
+      {
+        "id": 22,
+        "kind": "Sunbee",
+        "x": -44.63419706874253,
+        "z": 41.76686699567332,
+        "groupId": "glade-4",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -44.084507281892,
+        "homeZ": 42.016082625836134,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -44.63419706874253,
+        "renderZ": 41.76686699567332,
+        "screen": {
+          "x": -1053.1184036472807,
+          "y": 1023.5443743842723
+        }
+      },
+      {
+        "id": 23,
+        "kind": "Sunbee",
+        "x": -39.063266338035604,
+        "z": 6.403441558797245,
+        "groupId": "glade-4",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -38.75072577036917,
+        "homeZ": 6.125522277317941,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -39.063266338035604,
+        "renderZ": 6.403441558797245,
+        "screen": {
+          "x": -846.7876366304099,
+          "y": 132.31911561673343
+        }
+      },
+      {
+        "id": 24,
+        "kind": "Sunbee",
+        "x": -41.101157099510935,
+        "z": -15.427323074679194,
+        "groupId": "glade-4",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -41.31311410758644,
+        "homeZ": -15.97685956209898,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -41.101157099510935,
+        "renderZ": -15.427323074679194,
+        "screen": {
+          "x": -922.2650719526839,
+          "y": -417.85747557046875
+        }
+      },
+      {
+        "id": 25,
+        "kind": "Sunbee",
+        "x": -17.35442129629482,
+        "z": 10.596672224675869,
+        "groupId": "glade-4",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -17.896003584377468,
+        "homeZ": 10.280759843531996,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -17.35442129629482,
+        "renderZ": 10.596672224675869,
+        "screen": {
+          "x": -42.756341855294636,
+          "y": 237.99646556521128
+        }
+      },
+      {
+        "id": 26,
+        "kind": "Sunbee",
+        "x": -32.638465335828556,
+        "z": 23.206854343643805,
+        "groupId": "glade-4",
+        "hp": 300,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -33.01174464588985,
+        "homeZ": 23.415014455094934,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -32.638465335828556,
+        "renderZ": 23.206854343643805,
+        "screen": {
+          "x": -608.8320448638035,
+          "y": 555.7969241815239
+        }
+      },
+      {
+        "id": 27,
+        "kind": "RibbonHare",
+        "x": 40.80394584010221,
+        "z": -13.12013851704849,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 40.94216078426689,
+        "homeZ": -12.57928735949099,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 40.80394584010221,
+        "renderZ": -13.12013851704849,
+        "screen": {
+          "x": 2111.25724757213,
+          "y": -359.71205755746377
+        }
+      },
+      {
+        "id": 28,
+        "kind": "RibbonHare",
+        "x": 41.490877644147076,
+        "z": 41.59899524250213,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 42.013512660283595,
+        "homeZ": 41.975281386170536,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 41.490877644147076,
+        "renderZ": 41.59899524250213,
+        "screen": {
+          "x": 2136.699166143405,
+          "y": 1019.3136884478431
+        }
+      },
+      {
+        "id": 29,
+        "kind": "RibbonHare",
+        "x": 20.49773395588712,
+        "z": 17.780686699560647,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 20.924280820414424,
+        "homeZ": 17.646452084183693,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 20.49773395588712,
+        "renderZ": 17.780686699560647,
+        "screen": {
+          "x": 1359.1753288034988,
+          "y": 419.047228614101
+        }
+      },
+      {
+        "id": 30,
+        "kind": "RibbonHare",
+        "x": 9.911596977711424,
+        "z": -9.749294608491233,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 9.84989047050476,
+        "homeZ": -10.270635296590626,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 9.911596977711424,
+        "renderZ": -9.749294608491233,
+        "screen": {
+          "x": 967.0961829593215,
+          "y": -274.7604105505468
+        }
+      },
+      {
+        "id": 31,
+        "kind": "RibbonHare",
+        "x": 42.71158254819135,
+        "z": 8.805457686519892,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 42.218355347402394,
+        "homeZ": 8.376329150050879,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 42.71158254819135,
+        "renderZ": 8.805457686519892,
+        "screen": {
+          "x": 2181.9104587133183,
+          "y": 192.8544686982568
+        }
+      },
+      {
+        "id": 32,
+        "kind": "RibbonHare",
+        "x": 26.71110376774564,
+        "z": -2.267583576840384,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 26.239826687145978,
+        "homeZ": -2.209961164277047,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 26.71110376774564,
+        "renderZ": -2.267583576840384,
+        "screen": {
+          "x": 1589.3001357722542,
+          "y": -86.20713077539602
+        }
+      },
+      {
+        "id": 33,
+        "kind": "RibbonHare",
+        "x": 35.00029889774072,
+        "z": 24.89086805778616,
+        "groupId": "glade-5",
+        "hp": 525,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 34.98426191182807,
+        "homeZ": 25.38226363901049,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 35.00029889774072,
+        "renderZ": 24.89086805778616,
+        "screen": {
+          "x": 1896.3073616379693,
+          "y": 598.237257367957
+        }
+      },
+      {
+        "id": 34,
+        "kind": "Dewdrop",
+        "x": -28.52766237535055,
+        "z": 30.835886080909845,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -28.07371493568644,
+        "homeZ": 31.309267999604344,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -28.52766237535055,
+        "renderZ": 30.835886080909845,
+        "screen": {
+          "x": -456.580083945413,
+          "y": 748.0629645945851
+        }
+      },
+      {
+        "id": 35,
+        "kind": "Dewdrop",
+        "x": 38.759816146181855,
+        "z": 39.937365966474005,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 39.26639082888141,
+        "homeZ": 39.95750906970352,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 38.759816146181855,
+        "renderZ": 39.937365966474005,
+        "screen": {
+          "x": 2035.5487406786997,
+          "y": 977.4374854723345
+        }
+      },
+      {
+        "id": 36,
+        "kind": "Dewdrop",
+        "x": 6.078820561943162,
+        "z": 31.475823397927368,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 6.172280060593039,
+        "homeZ": 31.024208209477365,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 6.078820561943162,
+        "renderZ": 31.475823397927368,
+        "screen": {
+          "x": 825.1415014353445,
+          "y": 764.1905962905581
+        }
+      },
+      {
+        "id": 37,
+        "kind": "Dewdrop",
+        "x": -11.79762785479243,
+        "z": 39.42586203624929,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -12.20320977224037,
+        "homeZ": 38.91770147765055,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -11.79762785479243,
+        "renderZ": 39.42586203624929,
+        "screen": {
+          "x": 163.05082185970184,
+          "y": 964.5466182290338
+        }
+      },
+      {
+        "id": 38,
+        "kind": "Dewdrop",
+        "x": 27.462887534708837,
+        "z": 29.22830263362444,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 26.931154345627874,
+        "homeZ": 29.13079717895016,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 27.462887534708837,
+        "renderZ": 29.22830263362444,
+        "screen": {
+          "x": 1617.1439788868975,
+          "y": 707.5488188041904
+        }
+      },
+      {
+        "id": 39,
+        "kind": "Dewdrop",
+        "x": -38.894803924307524,
+        "z": 41.706986692452,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -39.06381534319371,
+        "homeZ": 42.109782407060266,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -38.894803924307524,
+        "renderZ": 41.706986692452,
+        "screen": {
+          "x": -840.5482879976157,
+          "y": 1022.0352773984964
+        }
+      },
+      {
+        "id": 40,
+        "kind": "Dewdrop",
+        "x": 15.873866753552607,
+        "z": 42.0804026292528,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 16.222965423949063,
+        "homeZ": 42.61317099072039,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 15.873866753552607,
+        "renderZ": 42.0804026292528,
+        "screen": {
+          "x": 1187.920988629578,
+          "y": 1031.446065827272
+        }
+      },
+      {
+        "id": 41,
+        "kind": "Dewdrop",
+        "x": -5.040278749564047,
+        "z": 25.249536464215264,
+        "groupId": "glade-6",
+        "hp": 125,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -4.494029697496444,
+        "homeZ": 25.42245269799605,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -5.040278749564047,
+        "renderZ": 25.249536464215264,
+        "screen": {
+          "x": 413.32300998752186,
+          "y": 607.2763801164617
+        }
+      },
+      {
+        "id": 42,
+        "kind": "MooncapMonarch",
+        "x": 31.758819425575634,
+        "z": 32.3459142818,
+        "hp": 32000,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": 32,
+        "homeZ": 32,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": 31.758819425575634,
+        "renderZ": 32.3459142818,
+        "screen": {
+          "x": 1776.2525668305686,
+          "y": 786.1185335180998
+        }
+      },
+      {
+        "id": 43,
+        "kind": "DewdropMatriarch",
+        "x": -31.714371788916573,
+        "z": 32.54671280195931,
+        "hp": 16000,
+        "alive": true,
+        "respawn": 0,
+        "attack": 0,
+        "homeX": -32,
+        "homeZ": 32,
+        "stun": 0,
+        "slow": 0,
+        "poison": 0,
+        "poisonTimer": 0,
+        "poisonDamage": 0,
+        "windup": 0,
+        "aggro": false,
+        "pattern": 0,
+        "renderX": -31.714371788916573,
+        "renderZ": 32.54671280195931,
+        "screen": {
+          "x": -574.606358071698,
+          "y": 791.1790363081521
+        }
+      }
+    ],
+    "destination": null,
+    "zoom": 1,
+    "engine": "Babylon.js",
+    "surfaceMaterials": 4,
+    "surfaceTextures": 8,
+    "textureSize": 128,
+    "textureDetail": 0.88,
+    "normalMaps": true,
+    "surfaceFamilies": [
+      "grass",
+      "wood",
+      "stone",
+      "dirt"
+    ],
+    "sceneTextures": 66,
+    "sceneMaterials": 126,
+    "texturedMapMeshes": 31,
+    "shadowsEnabled": true,
+    "shadowFilter": "blur-close-exponential",
+    "shadowBlurKernel": 20,
+    "shadowBlurScale": 2,
+    "shadowDarkness": 0.12,
+    "shadowDepthScale": 50,
+    "shadowMapSize": 2048,
+    "lighting": "warm honey sun / sage sky fill",
+    "environmentPalette": {
+      "ground": 11319938,
+      "path": 13941130
+    },
+    "environmentDetails": {
+      "clusters": 990,
+      "vertices": 18468,
+      "visibleMeshes": 18,
+      "contactShadows": 95
+    },
+    "territoriesCount": 6,
+    "activeGroupId": "glade-1",
+    "groupCenters": [
+      {
+        "id": "glade-1",
+        "x": 0,
+        "z": 18,
+        "count": 6,
+        "radius": 2.8,
+        "visible": true
+      },
+      {
+        "id": "glade-2",
+        "x": -32,
+        "z": -32,
+        "count": 7,
+        "radius": 2.8,
+        "visible": false
+      },
+      {
+        "id": "glade-3",
+        "x": 32,
+        "z": -32,
+        "count": 8,
+        "radius": 2.8,
+        "visible": false
+      },
+      {
+        "id": "glade-4",
+        "x": -32,
+        "z": 0,
+        "count": 6,
+        "radius": 2.8,
+        "visible": true
+      },
+      {
+        "id": "glade-5",
+        "x": 32,
+        "z": 0,
+        "count": 7,
+        "radius": 2.8,
+        "visible": true
+      },
+      {
+        "id": "glade-6",
+        "x": 0,
+        "z": 32,
+        "count": 8,
+        "radius": 2.8,
+        "visible": true
+      }
+    ],
+    "worldSize": 96,
+    "worldBounds": {
+      "minX": -46,
+      "maxX": 46,
+      "minZ": -46,
+      "maxZ": 46
+    },
+    "modelsLoaded": 47,
+    "modelsExpected": 47,
+    "cameraShake": {
+      "level": 0,
+      "elapsed": 0,
+      "duration": 0,
+      "active": false,
+      "amplitude": 0,
+      "offset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "triggerCount": 0
+    },
+    "previewHeld": false,
+    "vfx": {
+      "active": 1,
+      "pooled": 1,
+      "limit": 96,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [
+        "star"
+      ],
+      "materials": 1,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "lv80Cue": null,
+      "lv90Cue": null,
+      "lv100Cue": null,
+      "drawCount": 1
+    },
+    "sceneMeshes": 377,
+    "skillMotion": null,
+    "quality": "high",
+    "autoReduced": false,
+    "riggedActors": 47,
+    "motionPoses": [],
+    "modelErrors": 0,
+    "renderWidth": 1200,
+    "renderHeight": 800,
+    "activeAnimations": 164,
+    "drawCalls": 162,
+    "fps": 1.3029832651627562,
+    "frameP95": 1341.8000000000466
+  },
+  "samples": [
+    {
+      "frameMs": 3043.600000000093,
+      "drawCalls": 159,
+      "meshes": 440,
+      "materials": 130,
+      "textures": 66,
+      "vfx": {
+        "active": 0,
+        "pooled": 58,
+        "limit": 96,
+        "geometry3D": true,
+        "noSprites": true,
+        "textures": 0,
+        "shapes": [
+          "star",
+          "ring",
+          "arch",
+          "core",
+          "leaf",
+          "crescent",
+          "petal"
+        ],
+        "materials": 5,
+        "lv10Cue": null,
+        "lv20Cue": null,
+        "lv30Cue": null,
+        "lv40Cue": null,
+        "lv50Cue": {
+          "skillId": "mage-5",
+          "style": "vital-bloom-lotus-eruption",
+          "impactSeconds": 0,
+          "heroSeconds": 0.6,
+          "focal": {
+            "x": 1,
+            "z": 17.486441200000012
+          },
+          "decorativeRadius": 9.2
+        },
+        "lv60Cue": null,
+        "lv70Cue": null,
+        "lv80Cue": null,
+        "lv90Cue": null,
+        "lv100Cue": null,
+        "drawCount": 0
+      }
+    }
+  ],
+  "pageErrors": [],
+  "environment": "Chromium SwiftShader; not player FPS"
+}

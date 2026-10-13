@@ -5,7 +5,7 @@ import { Primitives } from "./primitives";
 import { species, type Kind } from "../simulation";
 import { zones } from "../game/content";
 import {PORTAL_POSITION, WORLD_SIZE, GROVE_OFFSETS, zoneObstacles} from "../game/map-data";
-import { meadowGround, roundTree, flowerPatch, roundedPortal, townGarden, meadowPatch, fountainRipples, gardenPath } from './environment-art';
+import { meadowGround, roundTree, flowerPatch, roundedPortal, townGarden, meadowPatch, fountainRipples, gardenPath, environmentPalette, meadowDetails, waterGarden, cottageRoof } from './environment-art';
 export type Obstacle = { x: number; z: number; r: number };
 export function buildMap(factory: Primitives, blocking: Obstacle[]) {
   const mesh = factory.mesh.bind(factory),
@@ -17,7 +17,7 @@ export function buildMap(factory: Primitives, blocking: Obstacle[]) {
     return (seed - 1) / 2147483646;
   };
 
-  for(const [x,z,r,c] of [[-9,-7,4,0x88cf7d],[8,-8,4,0x7bc672],[-7,10,3,0x8bd281],[11,6,3.5,0x7bc672]])meadowPatch(factory,x,z,r,c);
+  for(const [x,z,r,c] of [[-9,-7,4,0x99ab71],[8,-8,4,0x8fa267],[-7,10,3,0xacb984],[11,6,3.5,0x8fa267]])meadowPatch(factory,x,z,r,c);
   for(const [x,z] of [[-8,-9],[6,-10],[-9,6],[10,6],[-13,-5],[13,10]]) flowerPatch(factory,x,z,Math.abs(x+z));
   const beds = [
     [-9, -6, 4, 2],
@@ -39,7 +39,7 @@ export function buildMap(factory: Primitives, blocking: Obstacle[]) {
         for (let k = 0; k < 3; k++) {
           const grass = mesh(
             { kind: "sphere", r: 0.17, segments: 4 },
-            xx % 2 ? 0x62bd79 : 0x94d988,
+            xx % 2 ? 0x557c59 : 0x7f9a65,
             (rand() - 0.5) * 0.3,
             0.24,
             (rand() - 0.5) * 0.3,
@@ -55,6 +55,10 @@ export function buildMap(factory: Primitives, blocking: Obstacle[]) {
     const tone=[0xa6b1a3,0xb8bea8,0xaab3ac,0xc4c1ae][Math.floor(rand()*4)];
     const stone=ball(.56,tone,0,.28,0,group,.5+rand()*.12,8);stone.scaling.x=.94+rand()*.1;stone.scaling.z=.88+rand()*.12;stone.rotation.y=rand()*Math.PI;stone.rotation.z=(rand()-.5)*.15;
     const moss=ball(.28,0x7db077,.07,.57,-.02,group,.12,6);moss.scaling.x=1.3;moss.scaling.z=.85;moss.rotation.y=rand()*Math.PI;
+    // Existing collision stones host trees; scenery never introduces a new blocker.
+    if([[-6,-4],[4,-7],[-11,0],[7,8],[-6,9]].some(([tx,tz])=>x===tx&&z===tz)){
+      stone.scaling.set(.65,.65,.65);moss.setEnabled(false);roundTree(factory,x,z,0x4f7357,.7,x===7);
+    }
     blocking.push({x,z,r:.72});
   };
   [
@@ -224,7 +228,7 @@ export function creature(factory: Primitives, kind: Kind) {
 
 /** Area art stays outside rules; identical collision proxies are imported by the server. */
 export function buildZoneMap(factory:Primitives,blocking:Obstacle[],zone:import('../game/content').ZoneId) {
- const data=zones[zone],box=factory.box.bind(factory),ball=factory.ball.bind(factory),mesh=factory.mesh.bind(factory);
+ const data={...zones[zone],...environmentPalette(zone)},box=factory.box.bind(factory),ball=factory.ball.bind(factory),mesh=factory.mesh.bind(factory);
  blocking.push(...zoneObstacles(zone));
  meadowGround(factory,data.ground,data.path);
  if(zone==='glade'){buildMap(factory,[]);}
@@ -234,8 +238,8 @@ export function buildZoneMap(factory:Primitives,blocking:Obstacle[],zone:import(
    if(zone==='glade'&&Math.abs(obstacle.x)<16&&Math.abs(obstacle.z)<16)continue;
    if(zone==='town'&&Math.abs(obstacle.x)<16&&Math.abs(obstacle.z)<16)continue;
    const g=factory.group('terrain-prop');g.position.set(obstacle.x,0,obstacle.z);
-   if(zone==='orchard'){roundTree(factory,obstacle.x,obstacle.z,0x87c958,.65,true);}
-   else if(zone==='marsh'){ball(.7,0x69ad9c,0,.36,0,g,.5);mesh({kind:'cone',r:.32,h:1.5,n:5},0x87f4d3,0,1.1,0,g);}
+   if(zone==='orchard'){roundTree(factory,obstacle.x,obstacle.z,0x7f9259,.65,true);}
+   else if(zone==='marsh'){ball(.7,0x69ad9c,0,.36,0,g,.5);mesh({kind:'cone',r:.32,h:1.5,n:5},0x609987,0,1.1,0,g);}
    else if(zone==='glade'||zone==='town'){ball(obstacle.r*.8,0xaab6a2,0,.3,0,g,.6);ball(obstacle.r*.4,0x7cab6d,0,.5,0,g,.2);}
    else if(zone==='frost'){ball(.8,0x83a4c9,0,.48,0,g,.7);ball(.58,0xe9faff,0,.85,0,g,.35);}
    else {box(1,1.45,1,0x675c93,0,.75,0,g);box(1.13,.14,1.13,0xc6aff1,0,1.5,0,g);}
@@ -247,15 +251,7 @@ export function buildZoneMap(factory:Primitives,blocking:Obstacle[],zone:import(
    box(2.4,2.0,2.4,0xffedcc,0,1,0,g);
    for(const sx of [-1,1])for(const sz of [-1,1])mesh({kind:'cylinder',top:.12,bottom:.12,h:2,n:10},0xc79564,sx*1.17,1,sz*1.17,g);
    box(2.45,.14,2.45,0xbd8758,0,1.87,0,g);
-   const eave=mesh({kind:'cylinder',top:1.62,bottom:1.62,h:.16,n:24},0xb87374,0,2.04,0,g);eave.scaling.z=.94;
-   const roof=ball(1.65,index%2?0x81b8cb:0xe88e9c,0,2.23,0,g,.35,10);roof.scaling.z=.94;
-   for(const side of [-1,1]){box(.1,1.5,.13,0xc79564,side*.53,.95,1.23,g);box(2.3,.1,.12,0xc79564,0,.4,1.23,g);}
-   for(let band=0;band<3;band++){const tile=ball(.27,index%2?0x96c9d6:0xf4abb4,(band-1)*.58,2.44,1.05,g,.18,6);tile.scaling.z=.65;}
-   if(index%2===0){
-    box(.5,.48,.42,0xffedcc,-.55,2.38,.91,g);
-    const hood=ball(.39,0xc97987,-.55,2.66,.91,g,.4,6);hood.scaling.z=.8;
-    const attic=mesh({kind:'disc',r:.15,n:16},0xa8e5ef,-.55,2.4,1.13,g);attic.isPickable=false;
-   }
+   cottageRoof(factory,g,index);
    const chimney=mesh({kind:'cylinder',top:.2,bottom:.24,h:1,n:12},0xdfc9ac,.85,2.8,-.3,g);
    chimney.rotation.z=-.08;
    // Arched oak door, circular sky-glass windows and warm timber framing.
@@ -263,23 +259,24 @@ export function buildZoneMap(factory:Primitives,blocking:Obstacle[],zone:import(
    ball(.04,0xffd377,.19,.65,1.35,g);
    for(const side of [-1,1]){
     const frame=mesh({kind:'disc',r:.35,n:24},0xb47e51,side*.88,1.28,1.25,g);
-    const pane=mesh({kind:'disc',r:.26,n:24},0x9ee8f3,side*.88,1.28,1.251,g);
+    const pane=mesh({kind:'disc',r:.26,n:24},0xf2c878,side*.88,1.28,1.251,g);
     frame.isPickable=pane.isPickable=false;
     box(.035,.5,.025,0xb47e51,side*.88,1.28,1.28,g);box(.5,.035,.025,0xb47e51,side*.88,1.28,1.28,g);
     box(.52,.09,.2,0xb47e51,side*.88,.94,1.3,g);
-    for(let i=0;i<3;i++)ball(.08,0xffa2b5,side*.88+(i-1)*.15,1.04,1.35,g);
+    for(let i=0;i<3;i++)ball(.08,0xf0dfb5,side*.88+(i-1)*.15,1.04,1.35,g);
    }
    flowerPatch(factory,x-1.9,z+1.8,index);
   }
   const fountain=factory.group('fountain');fountain.position.set(0,0,6);mesh({kind:'cylinder',top:1.7,bottom:1.7,h:.5,n:32},0xf2ce94,0,.25,0,fountain);mesh({kind:'cylinder',top:1.4,bottom:1.4,h:.1,n:32},0x60d9ef,0,.53,0,fountain);box(.3,1.1,.3,0xffe8c0,0,1,0,fountain);ball(.25,0x7cddff,0,1.7,0,fountain);fountainRipples(factory,0,6);}
- if(zone==='marsh')for(const [x,z] of [[-8,-4],[8,6]]){const pool=mesh({kind:'disc',r:3.1,n:18},0x499fe9,x,.02,z);pool.rotation.x=-Math.PI/2;const bridge=box(6.5,.15,.8,0xc99c68,x,.15,z);bridge.isPickable=false;}
+ if(zone==='marsh')for(const [x,z] of [[-8,-4],[8,6]]){const pool=mesh({kind:'disc',r:3.1,n:18},0x499fe9,x,.02,z);pool.rotation.x=-Math.PI/2;const bridge=box(6.5,.15,.8,0xc99c68,x,.15,z);bridge.isPickable=false;waterGarden(factory,x,z,3.1);}
  if(zone!=='glade')roundedPortal(factory,PORTAL_POSITION.x,PORTAL_POSITION.z,data.accent);
+ meadowDetails(factory,zone,0,0);
  buildExpandedLandscape(factory,zone);
 }
 
 /** Each outer sector is baked independently: off-screen sectors can be culled. */
 function buildExpandedLandscape(f:Primitives,zone:import('../game/content').ZoneId){
- const data=zones[zone],half=WORLD_SIZE/2;
+ const data={...zones[zone],...environmentPalette(zone)},half=WORLD_SIZE/2;
  // Connected cross promenades and two parallel lanes expose all nine sectors.
  for(const offset of [-32,0,32]){
   gardenPath(f,[-half,offset+2],[half,offset+2],3,data.path);
@@ -288,7 +285,7 @@ function buildExpandedLandscape(f:Primitives,zone:import('../game/content').Zone
  for(const sx of [-32,0,32])for(const sz of [-32,0,32]){
   if(sx===0&&sz===0)continue;
   const before=new Set(f.scene.meshes);
-  const shade=zone==='frost'?0xd6edf5:zone==='ruins'?0x9a85b4:zone==='marsh'?0x4cae9d:zone==='orchard'?0x91c96b:0x86c87b;
+  const shade=zone==='frost'?0xb5cdd2:zone==='ruins'?0x8b9580:zone==='marsh'?0x6b947d:zone==='orchard'?0xa6ae71:0x8c9f69;
   meadowPatch(f,sx-5,sz-6,10,shade,data.ground);
   meadowPatch(f,sx+7,sz+6,8,shade,data.ground);
   // Irregular interior groves, clear roads and elite arenas at sector centers.
@@ -300,11 +297,12 @@ function buildExpandedLandscape(f:Primitives,zone:import('../game/content').Zone
    }else if(zone==='ruins'){
     f.mesh({kind:'cylinder',top:.55,bottom:.7,h:2.2+(i%3)*.5,n:8},0x7c7398,x,1.1,z);
     f.ball(.72,0xb4a5cc,x,2.4,z,undefined,.25,6);
-   }else roundTree(f,x,z,zone==='orchard'?0xe0b35c:zone==='marsh'?0x409e98:0x4aaa71,.8+(i%3)*.12,zone==='orchard');
+   }else roundTree(f,x,z,zone==='orchard'?0x9a9e5c:zone==='marsh'?0x446e65:0x52774f,.8+(i%3)*.12,zone==='orchard');
   }
   if(zone==='marsh'){
    const pool=f.mesh({kind:'disc',r:4,n:20},0x57aab4,sx+8,.021,sz-7);pool.rotation.x=-Math.PI/2;
    gardenPath(f,[sx+3,sz-7],[sx+13,sz-7],1.2,0xcba375);
+   waterGarden(f,sx+8,sz-7,4);
   }else if(zone!=='frost'&&zone!=='ruins'){
    flowerPatch(f,sx-7,sz+6,Math.abs(sx+sz)+4);
    flowerPatch(f,sx+6,sz-8,Math.abs(sx-sz)+7);
@@ -314,7 +312,8 @@ function buildExpandedLandscape(f:Primitives,zone:import('../game/content').Zone
    const plaza=f.mesh({kind:'plane',w:8,h:8},data.path,sx,.035,sz);plaza.rotation.x=-Math.PI/2;
    for(const x of [-4,4]){f.mesh({kind:'cylinder',top:.12,bottom:.18,h:2,n:8},0xb19d73,sx+x,1,sz-4);const gem=f.mesh({kind:'gem',r:.3},data.accent,sx+x,2.1,sz-4);gem.material=f.material(data.accent,true);}
   }
-  const included=new Set(f.scene.meshes.filter((m):m is import('@babylonjs/core/Meshes/mesh').Mesh=>m instanceof Mesh&&!before.has(m)));
+  meadowDetails(f,zone,sx,sz);
+  const included=new Set(f.scene.meshes.filter((m):m is import('@babylonjs/core/Meshes/mesh').Mesh=>m instanceof Mesh&&!before.has(m)&&!m.isWorldMatrixFrozen));
   // The dummy exclusion belongs to this sector and is disposed after the bake.
   const sentinel=new Mesh('sector-exclusion',f.scene);f.mergeStatic(sentinel,included);sentinel.dispose();
  }

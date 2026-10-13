@@ -1,0 +1,571 @@
+{
+  "phase": "after",
+  "fixture": {
+    "zone": "town",
+    "quality": "high",
+    "width": 1200,
+    "height": 800,
+    "practice": true,
+    "level": 100
+  },
+  "movement": {
+    "before": {
+      "x": 0,
+      "z": 2
+    },
+    "after": {
+      "x": 2.27348,
+      "z": 2
+    }
+  },
+  "idle": {
+    "zone": "town",
+    "equipped": {
+      "weapon": null,
+      "helmet": null,
+      "armor": null,
+      "pants": null,
+      "boots": null,
+      "accessory": null
+    },
+    "tutorial": [
+      "move"
+    ],
+    "job": "swordsman",
+    "hotbar": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "auxiliary": [
+      "Red potion",
+      "Blue potion",
+      null,
+      null
+    ],
+    "skillChoices": {
+      "swordsman": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "mage": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "archer": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "skillRanks": {},
+    "skillPoints": 100,
+    "skillSpent": 0,
+    "unlockedSkills": [],
+    "defense": 60,
+    "joystickInput": [
+      0,
+      0
+    ],
+    "joystickActive": false,
+    "auto": false,
+    "autoSkillCursor": 0,
+    "cooldownRatios": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "skillCooldownTotals": {},
+    "cooldowns": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "skillCooldowns": {},
+    "cast": null,
+    "renderX": 2.27348,
+    "renderZ": 2,
+    "network": null,
+    "x": 2.27348,
+    "z": 2,
+    "level": 100,
+    "hp": 1308,
+    "mp": 852,
+    "kills": 0,
+    "items": [
+      {
+        "name": "Red potion",
+        "icon": "🧪",
+        "count": 8,
+        "category": "consumable"
+      },
+      {
+        "name": "Blue potion",
+        "icon": "💠",
+        "count": 4,
+        "category": "consumable"
+      }
+    ],
+    "gold": 120,
+    "weapon": 0,
+    "target": null,
+    "loot": 0,
+    "paused": false,
+    "monsters": [],
+    "destination": null,
+    "zoom": 0.8200000000000001,
+    "engine": "Babylon.js",
+    "surfaceMaterials": 6,
+    "surfaceTextures": 12,
+    "textureSize": 128,
+    "textureDetail": 0.88,
+    "normalMaps": true,
+    "surfaceFamilies": [
+      "grass",
+      "wood",
+      "stone",
+      "dirt",
+      "plaster",
+      "water"
+    ],
+    "sceneTextures": 21,
+    "sceneMaterials": 104,
+    "texturedMapMeshes": 33,
+    "shadowsEnabled": true,
+    "shadowFilter": "blur-close-exponential",
+    "shadowBlurKernel": 20,
+    "shadowBlurScale": 2,
+    "shadowDarkness": 0.12,
+    "shadowDepthScale": 50,
+    "shadowMapSize": 2048,
+    "lighting": "warm honey sun / sage sky fill",
+    "environmentPalette": {
+      "ground": 11648392,
+      "path": 14138767
+    },
+    "environmentDetails": {
+      "clusters": 990,
+      "vertices": 18468,
+      "visibleMeshes": 18,
+      "contactShadows": 76
+    },
+    "territoriesCount": 0,
+    "activeGroupId": null,
+    "groupCenters": [],
+    "worldSize": 96,
+    "worldBounds": {
+      "minX": -46,
+      "maxX": 46,
+      "minZ": -46,
+      "maxZ": 46
+    },
+    "modelsLoaded": 3,
+    "modelsExpected": 3,
+    "cameraShake": {
+      "level": 0,
+      "elapsed": 0,
+      "duration": 0,
+      "active": false,
+      "amplitude": 0,
+      "offset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "triggerCount": 0
+    },
+    "previewHeld": false,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 96,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "lv80Cue": null,
+      "lv90Cue": null,
+      "lv100Cue": null,
+      "drawCount": 0
+    },
+    "sceneMeshes": 108,
+    "skillMotion": null,
+    "quality": "high",
+    "autoReduced": false,
+    "riggedActors": 3,
+    "motionPoses": [],
+    "modelErrors": 0,
+    "renderWidth": 1200,
+    "renderHeight": 800,
+    "activeAnimations": 123,
+    "drawCalls": 93,
+    "fps": 1.5999872001023872,
+    "frameP95": 2141.9000000001397
+  },
+  "final": {
+    "zone": "town",
+    "equipped": {
+      "weapon": null,
+      "helmet": null,
+      "armor": null,
+      "pants": null,
+      "boots": null,
+      "accessory": null
+    },
+    "tutorial": [
+      "move"
+    ],
+    "job": "swordsman",
+    "hotbar": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "auxiliary": [
+      "Red potion",
+      "Blue potion",
+      null,
+      null
+    ],
+    "skillChoices": {
+      "swordsman": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "mage": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "archer": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "skillRanks": {},
+    "skillPoints": 100,
+    "skillSpent": 0,
+    "unlockedSkills": [],
+    "defense": 60,
+    "joystickInput": [
+      0,
+      0
+    ],
+    "joystickActive": false,
+    "auto": false,
+    "autoSkillCursor": 0,
+    "cooldownRatios": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "skillCooldownTotals": {},
+    "cooldowns": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "skillCooldowns": {},
+    "cast": null,
+    "renderX": 2.27348,
+    "renderZ": 2,
+    "network": null,
+    "x": 2.27348,
+    "z": 2,
+    "level": 100,
+    "hp": 1308,
+    "mp": 852,
+    "kills": 0,
+    "items": [
+      {
+        "name": "Red potion",
+        "icon": "🧪",
+        "count": 8,
+        "category": "consumable"
+      },
+      {
+        "name": "Blue potion",
+        "icon": "💠",
+        "count": 4,
+        "category": "consumable"
+      }
+    ],
+    "gold": 120,
+    "weapon": 0,
+    "target": null,
+    "loot": 0,
+    "paused": false,
+    "monsters": [],
+    "destination": null,
+    "zoom": 0.8200000000000001,
+    "engine": "Babylon.js",
+    "surfaceMaterials": 6,
+    "surfaceTextures": 12,
+    "textureSize": 128,
+    "textureDetail": 0.88,
+    "normalMaps": true,
+    "surfaceFamilies": [
+      "grass",
+      "wood",
+      "stone",
+      "dirt",
+      "plaster",
+      "water"
+    ],
+    "sceneTextures": 21,
+    "sceneMaterials": 104,
+    "texturedMapMeshes": 33,
+    "shadowsEnabled": true,
+    "shadowFilter": "blur-close-exponential",
+    "shadowBlurKernel": 20,
+    "shadowBlurScale": 2,
+    "shadowDarkness": 0.12,
+    "shadowDepthScale": 50,
+    "shadowMapSize": 2048,
+    "lighting": "warm honey sun / sage sky fill",
+    "environmentPalette": {
+      "ground": 11648392,
+      "path": 14138767
+    },
+    "environmentDetails": {
+      "clusters": 990,
+      "vertices": 18468,
+      "visibleMeshes": 18,
+      "contactShadows": 76
+    },
+    "territoriesCount": 0,
+    "activeGroupId": null,
+    "groupCenters": [],
+    "worldSize": 96,
+    "worldBounds": {
+      "minX": -46,
+      "maxX": 46,
+      "minZ": -46,
+      "maxZ": 46
+    },
+    "modelsLoaded": 3,
+    "modelsExpected": 3,
+    "cameraShake": {
+      "level": 0,
+      "elapsed": 0,
+      "duration": 0,
+      "active": false,
+      "amplitude": 0,
+      "offset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "triggerCount": 0
+    },
+    "previewHeld": false,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "limit": 96,
+      "geometry3D": true,
+      "noSprites": true,
+      "textures": 0,
+      "shapes": [],
+      "materials": 0,
+      "lv10Cue": null,
+      "lv20Cue": null,
+      "lv30Cue": null,
+      "lv40Cue": null,
+      "lv50Cue": null,
+      "lv60Cue": null,
+      "lv70Cue": null,
+      "lv80Cue": null,
+      "lv90Cue": null,
+      "lv100Cue": null,
+      "drawCount": 0
+    },
+    "sceneMeshes": 108,
+    "skillMotion": null,
+    "quality": "high",
+    "autoReduced": false,
+    "riggedActors": 3,
+    "motionPoses": [],
+    "modelErrors": 0,
+    "renderWidth": 1200,
+    "renderHeight": 800,
+    "activeAnimations": 123,
+    "drawCalls": 93,
+    "fps": 1.48558309136336,
+    "frameP95": 2141.9000000001397
+  },
+  "samples": [
+    {
+      "frameMs": 915,
+      "drawCalls": 93,
+      "sceneMeshes": 108,
+      "sceneMaterials": 104,
+      "sceneTextures": 21,
+      "vfx": {
+        "active": 0,
+        "pooled": 0,
+        "limit": 96,
+        "geometry3D": true,
+        "noSprites": true,
+        "textures": 0,
+        "shapes": [],
+        "materials": 0,
+        "lv10Cue": null,
+        "lv20Cue": null,
+        "lv30Cue": null,
+        "lv40Cue": null,
+        "lv50Cue": null,
+        "lv60Cue": null,
+        "lv70Cue": null,
+        "lv80Cue": null,
+        "lv90Cue": null,
+        "lv100Cue": null,
+        "drawCount": 0
+      },
+      "fps": 1.4414488620275934,
+      "frameP95": 2141.9000000001397
+    },
+    {
+      "frameMs": 903.6000000000931,
+      "drawCalls": 93,
+      "sceneMeshes": 108,
+      "sceneMaterials": 104,
+      "sceneTextures": 21,
+      "vfx": {
+        "active": 0,
+        "pooled": 0,
+        "limit": 96,
+        "geometry3D": true,
+        "noSprites": true,
+        "textures": 0,
+        "shapes": [],
+        "materials": 0,
+        "lv10Cue": null,
+        "lv20Cue": null,
+        "lv30Cue": null,
+        "lv40Cue": null,
+        "lv50Cue": null,
+        "lv60Cue": null,
+        "lv70Cue": null,
+        "lv80Cue": null,
+        "lv90Cue": null,
+        "lv100Cue": null,
+        "drawCount": 0
+      },
+      "fps": 1.4265966814409545,
+      "frameP95": 2141.9000000001397
+    },
+    {
+      "frameMs": 891,
+      "drawCalls": 93,
+      "sceneMeshes": 108,
+      "sceneMaterials": 104,
+      "sceneTextures": 21,
+      "vfx": {
+        "active": 0,
+        "pooled": 0,
+        "limit": 96,
+        "geometry3D": true,
+        "noSprites": true,
+        "textures": 0,
+        "shapes": [],
+        "materials": 0,
+        "lv10Cue": null,
+        "lv20Cue": null,
+        "lv30Cue": null,
+        "lv40Cue": null,
+        "lv50Cue": null,
+        "lv60Cue": null,
+        "lv70Cue": null,
+        "lv80Cue": null,
+        "lv90Cue": null,
+        "lv100Cue": null,
+        "drawCount": 0
+      },
+      "fps": 1.4137805906775338,
+      "frameP95": 2141.9000000001397
+    }
+  ],
+  "pageErrors": [],
+  "performanceEnvironment": "headless Chromium SwiftShader; not player hardware FPS"
+}

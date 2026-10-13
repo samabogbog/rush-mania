@@ -1,0 +1,243 @@
+{
+  "arrival": {
+    "x": 1.5666076390423973,
+    "z": -9.16053032739604
+  },
+  "evidence": [
+    {
+      "cycle": 0,
+      "zone": "orchard",
+      "materials": 164,
+      "textures": 74,
+      "meshes": 372,
+      "details": {
+        "clusters": 990,
+        "vertices": 18468,
+        "visibleMeshes": 9,
+        "contactShadows": 86
+      }
+    },
+    {
+      "cycle": 0,
+      "zone": "marsh",
+      "materials": 210,
+      "textures": 80,
+      "meshes": 381,
+      "details": {
+        "clusters": 990,
+        "vertices": 18468,
+        "visibleMeshes": 9,
+        "contactShadows": 94
+      }
+    },
+    {
+      "cycle": 0,
+      "zone": "frost",
+      "materials": 232,
+      "textures": 84,
+      "meshes": 355,
+      "details": {
+        "clusters": 990,
+        "vertices": 17820,
+        "visibleMeshes": 9,
+        "contactShadows": 87
+      }
+    },
+    {
+      "cycle": 0,
+      "zone": "ruins",
+      "materials": 257,
+      "textures": 89,
+      "meshes": 357,
+      "details": {
+        "clusters": 990,
+        "vertices": 14850,
+        "visibleMeshes": 9,
+        "contactShadows": 96
+      }
+    },
+    {
+      "cycle": 0,
+      "zone": "glade",
+      "materials": 294,
+      "textures": 92,
+      "meshes": 373,
+      "details": {
+        "clusters": 990,
+        "vertices": 18468,
+        "visibleMeshes": 9,
+        "contactShadows": 95
+      }
+    },
+    {
+      "cycle": 0,
+      "zone": "town",
+      "materials": 290,
+      "textures": 48,
+      "meshes": 108,
+      "details": {
+        "clusters": 990,
+        "vertices": 18468,
+        "visibleMeshes": 9,
+        "contactShadows": 76
+      }
+    },
+    {
+      "cycle": 1,
+      "zone": "orchard",
+      "materials": 294,
+      "textures": 92,
+      "meshes": 372,
+      "details": {
+        "clusters": 990,
+        "vertices": 18468,
+        "visibleMeshes": 9,
+        "contactShadows": 86
+      }
+    },
+    {
+      "cycle": 1,
+      "zone": "marsh",
+      "materials": 294,
+      "textures": 92,
+      "meshes": 381,
+      "details": {
+        "clusters": 990,
+        "vertices": 18468,
+        "visibleMeshes": 9,
+        "contactShadows": 94
+      }
+    },
+    {
+      "cycle": 1,
+      "zone": "frost",
+      "materials": 294,
+      "textures": 92,
+      "meshes": 355,
+      "details": {
+        "clusters": 990,
+        "vertices": 17820,
+        "visibleMeshes": 9,
+        "contactShadows": 87
+      }
+    },
+    {
+      "cycle": 1,
+      "zone": "ruins",
+      "materials": 294,
+      "textures": 92,
+      "meshes": 357,
+      "details": {
+        "clusters": 990,
+        "vertices": 14850,
+        "visibleMeshes": 9,
+        "contactShadows": 96
+      }
+    },
+    {
+      "cycle": 1,
+      "zone": "glade",
+      "materials": 294,
+      "textures": 92,
+      "meshes": 373,
+      "details": {
+        "clusters": 990,
+        "vertices": 18468,
+        "visibleMeshes": 9,
+        "contactShadows": 95
+      }
+    },
+    {
+      "cycle": 1,
+      "zone": "town",
+      "materials": 290,
+      "textures": 48,
+      "meshes": 108,
+      "details": {
+        "clusters": 990,
+        "vertices": 18468,
+        "visibleMeshes": 9,
+        "contactShadows": 76
+      }
+    },
+    {
+      "cycle": 2,
+      "zone": "orchard",
+      "materials": 294,
+      "textures": 92,
+      "meshes": 372,
+      "details": {
+        "clusters": 990,
+        "vertices": 18468,
+        "visibleMeshes": 9,
+        "contactShadows": 86
+      }
+    },
+    {
+      "cycle": 2,
+      "zone": "marsh",
+      "materials": 294,
+      "textures": 92,
+      "meshes": 381,
+      "details": {
+        "clusters": 990,
+        "vertices": 18468,
+        "visibleMeshes": 9,
+        "contactShadows": 94
+      }
+    },
+    {
+      "cycle": 2,
+      "zone": "frost",
+      "materials": 294,
+      "textures": 92,
+      "meshes": 355,
+      "details": {
+        "clusters": 990,
+        "vertices": 17820,
+        "visibleMeshes": 9,
+        "contactShadows": 87
+      }
+    },
+    {
+      "cycle": 2,
+      "zone": "ruins",
+      "materials": 294,
+      "textures": 92,
+      "meshes": 357,
+      "details": {
+        "clusters": 990,
+        "vertices": 14850,
+        "visibleMeshes": 9,
+        "contactShadows": 96
+      }
+    },
+    {
+      "cycle": 2,
+      "zone": "glade",
+      "materials": 294,
+      "textures": 92,
+      "meshes": 373,
+      "details": {
+        "clusters": 990,
+        "vertices": 18468,
+        "visibleMeshes": 9,
+        "contactShadows": 95
+      }
+    },
+    {
+      "cycle": 2,
+      "zone": "town",
+      "materials": 290,
+      "textures": 48,
+      "meshes": 108,
+      "details": {
+        "clusters": 990,
+        "vertices": 18468,
+        "visibleMeshes": 9,
+        "contactShadows": 76
+      }
+    }
+  ],
+  "pageErrors": []
+}

@@ -1,0 +1,124 @@
+{
+  "renderer": "Chromium SwiftShader",
+  "playerHardwareFpsClaim": false,
+  "matchedViews": [
+    {
+      "view": "glade-high-1200",
+      "before": {
+        "drawCalls": 121,
+        "sceneMeshes": 345,
+        "sceneMaterials": 116,
+        "sceneTextures": 66,
+        "surfaceTextures": 8
+      },
+      "after": {
+        "drawCalls": 151,
+        "sceneMeshes": 373,
+        "sceneMaterials": 122,
+        "sceneTextures": 66,
+        "surfaceTextures": 8
+      }
+    },
+    {
+      "view": "glade-low-390",
+      "before": {
+        "drawCalls": 24,
+        "sceneMeshes": 345,
+        "sceneMaterials": 126,
+        "sceneTextures": 68,
+        "surfaceTextures": 8
+      },
+      "after": {
+        "drawCalls": 38,
+        "sceneMeshes": 373,
+        "sceneMaterials": 132,
+        "sceneTextures": 68,
+        "surfaceTextures": 8
+      }
+    },
+    {
+      "view": "town-high-1200",
+      "before": {
+        "drawCalls": 71,
+        "sceneMeshes": 81,
+        "sceneMaterials": 102,
+        "sceneTextures": 21,
+        "surfaceTextures": 12
+      },
+      "after": {
+        "drawCalls": 93,
+        "sceneMeshes": 108,
+        "sceneMaterials": 104,
+        "sceneTextures": 21,
+        "surfaceTextures": 12
+      }
+    }
+  ],
+  "finalFrames": [
+    {
+      "view": "frost-high-1200",
+      "sampleCount": 3,
+      "sampledP50Ms": 896.3000000000466,
+      "sampledP95Ms": 896.3000000000466,
+      "rollingFrameP95Ms": 2603.100000000093
+    },
+    {
+      "view": "glade-high-1200",
+      "sampleCount": 2,
+      "sampledP50Ms": 1055,
+      "sampledP95Ms": 1055,
+      "rollingFrameP95Ms": 2183.5
+    },
+    {
+      "view": "glade-low-390",
+      "sampleCount": 16,
+      "sampledP50Ms": 114.9000000001397,
+      "sampledP95Ms": 230.89999999990687,
+      "rollingFrameP95Ms": 415
+    },
+    {
+      "view": "marsh-high-1200",
+      "sampleCount": 2,
+      "sampledP50Ms": 959.3000000000466,
+      "sampledP95Ms": 959.3000000000466,
+      "rollingFrameP95Ms": 2687.2000000001863
+    },
+    {
+      "view": "orchard-high-1200",
+      "sampleCount": 2,
+      "sampledP50Ms": 1010.5,
+      "sampledP95Ms": 1010.5,
+      "rollingFrameP95Ms": 2464.399999999907
+    },
+    {
+      "view": "ruins-high-1200",
+      "sampleCount": 3,
+      "sampledP50Ms": 866.3999999999069,
+      "sampledP95Ms": 866.3999999999069,
+      "rollingFrameP95Ms": 1865.3999999999069
+    },
+    {
+      "view": "town-high-1200",
+      "sampleCount": 3,
+      "sampledP50Ms": 903.6000000000931,
+      "sampledP95Ms": 903.6000000000931,
+      "rollingFrameP95Ms": 2141.9000000001397
+    }
+  ],
+  "geometryVertexLimit": 220000,
+  "geometryMaxMeasured": 217708,
+  "combat": {
+    "sampleCount": 1,
+    "sampledP50Ms": 3043.600000000093,
+    "sampledP95Ms": 3043.600000000093,
+    "maxDrawCalls": 159,
+    "maxVfxActive": 0,
+    "materials": 126,
+    "textures": 66,
+    "mpBefore": 852,
+    "mpAfter": 827,
+    "killsBefore": 0,
+    "killsAfter": 1
+  },
+  "limitations": "High quality software rendering yielded only 2-3 frame samples per short capture; these percentiles are diagnostic observations, not a statistically strong benchmark. Baseline p50 was not recorded. Real hardware 60/30 FPS is not certified."
+}
