@@ -4,7 +4,7 @@ import {craftCost,isCraftMaterial,materialKey} from './crafting.js';
 import {EXP_CHARM,EXP_TOME} from './items.js';
 import {isRuneId,runeKey,hasSocketedRunes,type RuneId} from './runes.js';
 /** Legacy material stacks without IDs still resolve by name AND rarity, never by name alone. */
-export function inventoryKey(item:{id?:string;name:string;rarity?:import('./equipment.js').Rarity;runeId?:RuneId}){return isRuneId(item.runeId)?runeKey(item.runeId,item.rarity||'common'):item.id||(isCraftMaterial(item.name)?materialKey(item.name,item.rarity||'common'):item.name);}
+export function inventoryKey(item:{id?:string;name:string;rarity?:import('./equipment.js').Rarity;runeId?:RuneId}){return item.id||(isRuneId(item.runeId)?runeKey(item.runeId,item.rarity||'common'):isCraftMaterial(item.name)?materialKey(item.name,item.rarity||'common'):item.name);}
 export function salvageYield(item:GearInstance){
  const gear=item.gearId?gearById(item.gearId):undefined,rarity=itemRarity(item);
  if(!gear||hasSocketedRunes(item)||(rarity==='ancient'||rarity==='legend'))return [];

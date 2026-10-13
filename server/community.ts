@@ -6,11 +6,11 @@ import {GameError} from './realm.js';
 import {Simulation,type Item} from '../src/simulation.js';
 import {BAG_CAPACITY,normalizeSecondary} from '../src/game/equipment.js';
 import {species} from '../src/game/content.js';
-import {normalizeRuneSockets} from '../src/game/runes.js';
+import {normalizeRuneSockets,isRuneId} from '../src/game/runes.js';
 import type {Player,Realm} from './protocol.js';
 export type Party={id:string;leader:string;members:string[];invites:string[];lootCursor:number};
 export type Trade={id:string;players:[string,string];accepted:boolean;offers:Record<string,{item:string;count:number;gold:number}>;confirmed:string[];at:number};
-export type Listing={id:string;seller:string;item:Item;price:number;at:number};
+export type Listing={id:string;seller:string;item:Item;runeBundle?:Item[];price:number;at:number};
 export type Community={parties:Party[];friends:Record<string,string[]>;requests:Record<string,string[]>;trades:Trade[];listings:Listing[]};
 export const community=(realm:Realm):Community=>realm.community??={parties:[],friends:{},requests:{},trades:[],listings:[]};
 export const partyOf=(r:Realm,id:string)=>community(r).parties.find(p=>p.members.includes(id));
@@ -19,10 +19,10 @@ const qty=(v:unknown,min=1,max=99999)=>typeof v==='number'&&Number.isSafeInteger
 const notice=(p:Player,text:string)=>{p.events.push({id:++p.serial,text,type:'system'});p.events=p.events.slice(-40)};
 function available(player:Player,key:string,count:number) {
  const item=player.actor.save.items.find(i=>(i.id||i.name)===key&&i.count>=count);
- if(!item||Object.values(player.actor.save.equipped).includes(item.id||'')||item.gearId&&count!==1)reject('Item unavailable or equipped');return item!;
+ if(!item||Object.values(player.actor.save.equipped).includes(item.id||'')||(item.gearId||isRuneId(item.runeId))&&count!==1||isRuneId(item.runeId)&&item.count!==1)reject('Item unavailable or equipped; select one physical rune');return item!;
 }
 function receive(player:Player,item:Item) {
- const items=player.actor.save.items,stack=!item.gearId&&items.find(i=>sameStack(i,item));
+ const items=player.actor.save.items;if(isRuneId(item.runeId)&&(item.count!==1||!item.id||items.some(i=>i.id===item.id)))reject('Invalid or duplicate physical rune');const stack=!item.gearId&&items.find(i=>sameStack(i,item));
  if(stack)stack.count+=item.count;else {if(items.filter(i=>i.count>0).length>=BAG_CAPACITY)reject('Recipient bag is full');items.push({...structuredClone(item),category:itemCategory(item),secondary:normalizeSecondary(item.secondary),...(item.gearId?{refine:refineLevel(item.refine),runes:normalizeRuneSockets(item.runes)}:{})});}
 }
 function remove(player:Player,item:Item,count:number){item.count-=count;player.actor.save.items=player.actor.save.items.filter(i=>i.count>0)}
@@ -55,7 +55,25 @@ function applyCommunityCommand(r:Realm,p:Player,type:string,args:unknown[],now:n
   }
  }
  if(type==='marketList'){if(typeof a!=='string'||!qty(b)||!qty(d,1,1000000)||c.listings.length>=100||c.listings.filter(l=>l.seller===p.id).length>=20)reject('Invalid listing or market full');const item=available(p,a as string,b as number);const escrow={...item,count:b as number};remove(p,item,b as number);c.listings.push({id:crypto.randomUUID(),seller:p.id,item:escrow,price:d as number,at:now});}
- if(type==='marketBuy'||type==='marketCancel') {const listing=c.listings.find(l=>l.id===a);if(!listing)reject('Listing already sold or removed');const seller=r.players[listing!.seller];if(type==='marketCancel'){if(seller.id!==p.id)reject('Only the seller can cancel');receive(p,listing!.item);}else{if(seller.id===p.id||p.actor.save.gold<listing!.price)reject('Not enough gold or your own listing');receive(p,listing!.item);p.actor.save.gold-=listing!.price;const proceeds=Math.floor(listing!.price*(1-economy.marketFee));seller.actor.save.gold+=proceeds;ledger(r,id,p.id,'market:buy:'+listing!.id,now,-listing!.price);ledger(r,id+':seller',seller.id,'market:sell:'+listing!.id,now,proceeds);notice(seller,'Market sale: '+listing!.item.name+' · +'+proceeds+' z ('+Math.round(economy.marketFee*100)+'% fee)');}c.listings=c.listings.filter(l=>l!==listing);}
+ if(type==='marketBuy'||type==='marketCancel') {
+  const listing=c.listings.find(l=>l.id===a);if(!listing)reject('Listing already sold or removed');
+  const seller=r.players[listing!.seller],bundle=listing!.runeBundle;
+  const transfer=(recipient:Player,allowOverflow=false)=>{
+   if(!bundle){receive(recipient,listing!.item);return;}
+   const space=Math.max(0,BAG_CAPACITY-recipient.actor.save.items.filter(i=>i.count>0).length);
+   if(!allowOverflow&&bundle.length>space)reject('Recipient bag needs room for the entire legacy rune bundle');
+   for(const item of bundle.slice(0,space))receive(recipient,item);
+   if(bundle.length>space)recipient.actor.save.runeOverflow=[...(recipient.actor.save.runeOverflow||[]),...structuredClone(bundle.slice(space))];
+  };
+  if(type==='marketCancel'){if(seller.id!==p.id)reject('Only the seller can cancel');transfer(p,!!bundle);}
+  else{
+   if(seller.id===p.id||p.actor.save.gold<listing!.price)reject('Not enough gold or your own listing');
+   transfer(p);p.actor.save.gold-=listing!.price;const proceeds=Math.floor(listing!.price*(1-economy.marketFee));seller.actor.save.gold+=proceeds;
+   ledger(r,id,p.id,'market:buy:'+listing!.id,now,-listing!.price);ledger(r,id+':seller',seller.id,'market:sell:'+listing!.id,now,proceeds);
+   notice(seller,'Market sale: '+listing!.item.name+' · +'+proceeds+' z ('+Math.round(economy.marketFee*100)+'% fee)');
+  }
+  c.listings=c.listings.filter(l=>l!==listing);
+ }
  c.trades=c.trades.filter(t=>now-t.at<120000);return true;
 }
 export function communitySnapshot(r:Realm,p:Player,now:number) {
@@ -69,7 +87,7 @@ export function shareKill(r:Realm,p:Player,monster:Simulation['monsters'][number
  for(const {p:member,sim} of members){const rewardGold=Math.round(gold*(1+(sim.gearBonuses.goldBonus||0)/100)),rewardXp=xp*(1+(sim.gearBonuses.expBonus||0)/100);sim.addExperience(rewardXp);sim.save.gold+=rewardGold;sim.save.kills++;sim.progressQuest('kills');if(spec.boss)sim.progressQuest('boss');sim.markTutorial('attack');sim.onEvent('Party reward · +'+Math.round(rewardXp*sim.experienceMultiplier)+' EXP · +'+rewardGold+' z','reward');ledger(r,crypto.randomUUID(),member.id,'party-kill:'+monster.kind,now,rewardGold);}
  if(actors.find(a=>a.p.id===p.id)!.sim.hasLegacyDrop(monster)){const recipient=members[(party.lootCursor++)%members.length];if(!recipient.sim.addItem(spec.drop,spec.icon))recipient.sim.loot.push({x:monster.x,z:monster.z,name:spec.drop,icon:spec.icon});recipient.sim.onEvent('Party loot: '+spec.drop,'reward');}const stone=actors.find(m=>m.p.id===p.id)!.sim.rollStoneLoot(monster);if(stone){const owner=members[(party.lootCursor++)%members.length],drop=stone;if(!owner.sim.addItem(drop.name,drop.icon))owner.sim.loot.push({x:monster.x,z:monster.z,name:drop.name,icon:drop.icon});}for(const gearDrop of actors.find(m=>m.p.id===p.id)!.sim.rollEquipmentLoot(monster)){const owner=members[(party.lootCursor++)%members.length];if(!owner.sim.addEquipmentItem(gearDrop))owner.sim.loot.push({x:monster.x,z:monster.z,name:gearDrop.name,icon:gearDrop.icon,item:gearDrop});owner.sim.onEvent('Party equipment: '+gearDrop.name,'reward');}
  for(const drop of actors.find(m=>m.p.id===p.id)!.sim.rollMaterialLoot(monster)){const owner=members[(party.lootCursor++)%members.length];if(!owner.sim.addItem(drop.name,drop.icon,drop.count,drop.rarity))owner.sim.loot.push({x:monster.x,z:monster.z,name:drop.name,icon:drop.icon,item:drop});}
- for(const drop of actors.find(m=>m.p.id===p.id)!.sim.rollRuneLoot(monster)){const owner=members[(party.lootCursor++)%members.length];if(!owner.sim.addRune(drop.runeId!,drop.rarity,drop.count))owner.sim.loot.push({x:monster.x,z:monster.z,name:drop.name,icon:drop.icon,item:drop});owner.sim.onEvent('Party rune: '+drop.name,'reward');}
+ for(const drop of actors.find(m=>m.p.id===p.id)!.sim.rollRuneLoot(monster)){const owner=members[(party.lootCursor++)%members.length];if(!owner.sim.addRuneItem(drop))owner.sim.loot.push({x:monster.x,z:monster.z,name:drop.name,icon:drop.icon,item:drop});owner.sim.onEvent('Party rune: '+drop.name,'reward');}
  for(const drop of actors.find(m=>m.p.id===p.id)!.sim.rollPotionLoot(monster)){const owner=members[(party.lootCursor++)%members.length];if(!owner.sim.addItem(drop.name,drop.icon,drop.count))owner.sim.loot.push({x:monster.x,z:monster.z,name:drop.name,icon:drop.icon,item:drop});owner.sim.onEvent('Party potion: '+drop.name,'reward');}
  return true;
 }

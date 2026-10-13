@@ -1,0 +1,22 @@
+{
+  "build": "passed",
+  "unitAuthorityEconomy": 57,
+  "browserAndRealtime": 6,
+  "uniqueChecks": 63,
+  "mobileCraftAdditionalVerification": "390x844 and360x740 passed",
+  "renderer": "Chromium SwiftShader",
+  "preserved": [
+    "rune values",
+    "craft recipes and costs",
+    "drop probability",
+    "two distinct sockets",
+    "free removal",
+    "existing gear and progress"
+  ],
+  "migration": {
+    "saveVersion": 12,
+    "itemRevision": 4,
+    "capacity": 144,
+    "overflow": "lossless claim reserve"
+  }
+}

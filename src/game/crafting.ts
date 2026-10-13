@@ -1,12 +1,12 @@
 import {craftingConfig as config} from '../config/balance.js';
 import {rarityOrder,type Rarity,type GearDefinition} from './equipment.js';
-import {isRuneId,type RuneId} from './runes.js';
+import {isRuneId,runeTypes,type RuneId} from './runes.js';
 export const craftingMaterials=config.materials;
 export const isCraftMaterial=(name:string)=>craftingMaterials.includes(name);
 export const isRarity=(value:unknown):value is Rarity=>typeof value==='string'&&rarityOrder.includes(value as Rarity);
 export const materialRarity=(item:{rarity?:Rarity})=>item.rarity||'common';
 export const materialKey=(name:string,rarity:Rarity)=>`material:${name}:${rarity}`;
-export const sameStack=(a:{name:string;rarity?:Rarity;gearId?:string;runeId?:RuneId},b:{name:string;rarity?:Rarity;gearId?:string;runeId?:RuneId})=>!a.gearId&&!b.gearId&&(isRuneId(a.runeId)||isRuneId(b.runeId)?a.runeId===b.runeId&&materialRarity(a)===materialRarity(b):a.name===b.name&&(!isCraftMaterial(a.name)||materialRarity(a)===materialRarity(b)));
+export const sameStack=(a:{name:string;rarity?:Rarity;gearId?:string;runeId?:RuneId},b:{name:string;rarity?:Rarity;gearId?:string;runeId?:RuneId})=>!a.gearId&&!b.gearId&&!isRuneId(a.runeId)&&!isRuneId(b.runeId)&&!runeTypes.some(r=>r.name===a.name||r.name===b.name)&&a.name===b.name&&(!isCraftMaterial(a.name)||materialRarity(a)===materialRarity(b));
 export const materialCount=(items:{name:string;count:number;rarity?:Rarity}[],name:string,rarity:Rarity)=>items.filter(i=>i.name===name&&materialRarity(i)===rarity).reduce((n,i)=>n+i.count,0);
 export function gearRecipe(gear:GearDefinition):[string,number][]{const tier=Math.floor(gear.level/config.recipe.levelDivisor);return [['Shade essence',config.recipe.essenceBase+tier],[gear.slot==='weapon'||gear.slot==='accessory'?'Rune stone':'Sky feather',config.recipe.partnerBase+tier]];}
 export const craftCost=(gear:GearDefinition)=>gear.level*config.recipe.zenyPerLevel;

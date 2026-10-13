@@ -4,7 +4,6 @@ import {type StoneTier} from './refinement';
 import { Simulation } from '../simulation';
 import type { ZoneId } from './content';
 import type { Rarity, GearSlot } from './equipment';
-import type {RuneId} from './runes.js';
 import type { ClassId } from './classes';
 import { actorFields, type Command, type Snapshot } from '../../server/protocol';
 import {EntityPresentation,LocalPresentation} from './network-presentation';
@@ -30,7 +29,7 @@ export class NetworkSimulation extends Simulation {
   protected accept(snapshot:Snapshot) {
     const oldZone=this.save.zone,oldAlive=this.save.hp>0&&this.deathTime<=0,oldX=this.x,oldZ=this.z;
     this.receivedAt=performance.now();
-    const before=JSON.stringify([this.save.job,this.save.stats,this.save.points,this.save.weapon,this.save.hotbar,this.save.skillChoices,this.save.skillRanks,this.save.auxiliary,this.save.items,this.save.gold,this.save.equipped,this.save.zone,this.save.quests]);
+    const before=JSON.stringify([this.save.job,this.save.stats,this.save.points,this.save.weapon,this.save.hotbar,this.save.skillChoices,this.save.skillRanks,this.save.auxiliary,this.save.items,this.save.runeOverflow,this.save.gold,this.save.equipped,this.save.zone,this.save.quests]);
     for(const field of actorFields) if(snapshot.player.actor[field]!==undefined)(this as unknown as Record<string,unknown>)[field]=snapshot.player.actor[field];
     this.skillCooldownTotals=snapshot.player.actor.skillCooldownTotals||{...this.skillCooldowns};this.autoSkillCursor=snapshot.player.actor.autoSkillCursor||0;
     const socialChanged=JSON.stringify([this.community,this.remotePlayers.map(p=>p.id)])!==JSON.stringify([snapshot.community,snapshot.peers.map(p=>p.id)]);this.community=snapshot.community;
@@ -46,7 +45,7 @@ export class NetworkSimulation extends Simulation {
     for(const chat of snapshot.chat)if(!this.chatSeen.has(chat.id)){this.chatSeen.add(chat.id);this.onEvent(`${chat.from}: ${chat.text}`,'chat')}
     if(this.chatSeen.size>120)this.chatSeen=new Set(snapshot.chat.map(m=>m.id));
     this.connection='Online · server saved'; this.retry=0;
-    if(socialChanged||before!==JSON.stringify([this.save.job,this.save.stats,this.save.points,this.save.weapon,this.save.hotbar,this.save.skillChoices,this.save.skillRanks,this.save.auxiliary,this.save.items,this.save.gold,this.save.equipped,this.save.zone,this.save.quests]))this.onEvent('', 'sync');
+    if(socialChanged||before!==JSON.stringify([this.save.job,this.save.stats,this.save.points,this.save.weapon,this.save.hotbar,this.save.skillChoices,this.save.skillRanks,this.save.auxiliary,this.save.items,this.save.runeOverflow,this.save.gold,this.save.equipped,this.save.zone,this.save.quests]))this.onEvent('', 'sync');
   }
   protected send(type:string,...args:unknown[]) { if(this.stopped)return; if(this.queue.length>=32){this.onEvent('Waiting for connection. Try again shortly.');return;}this.queue.push({id:`${this.session}:${++this.sequence}`,type,args});this.schedule(0); }
   private schedule(delay:number) {if(!this.polling)return;if(this.timer)clearTimeout(this.timer);if(!this.stopped)this.timer=setTimeout(()=>void this.flush(),delay);}
@@ -99,10 +98,11 @@ export class NetworkSimulation extends Simulation {
   override sell(){this.send('sell')}
   override toggleTutorial(){this.send('toggleTutorial')}
   override interact(id:string){this.send('interact',id)}
-  override craft(id:string,rarity:Rarity='common',ingredients?:RuneId[]){if(ingredients)this.send('craft',id,rarity,ingredients);else this.send('craft',id,rarity);return true}
-  override upgradeRune(runeId:RuneId,rarity:Rarity){this.send('upgradeRune',runeId,rarity);return true}
-  override socketRune(itemId:string,slot:number,runeId:RuneId,rarity:Rarity){this.send('socketRune',itemId,slot,runeId,rarity);return true}
+  override craft(id:string,rarity:Rarity='common',ingredients?:string[]){if(ingredients)this.send('craft',id,rarity,ingredients);else this.send('craft',id,rarity);return true}
+  override upgradeRune(firstId:string,secondId:string){this.send('upgradeRune',firstId,secondId);return true}
+  override socketRune(itemId:string,slot:number,runeItemId:string,legacyRarity?:Rarity){if(legacyRarity)this.send('socketRune',itemId,slot,runeItemId,legacyRarity);else this.send('socketRune',itemId,slot,runeItemId);return true}
   override unsocketRune(itemId:string,slot:number){this.send('unsocketRune',itemId,slot);return true}
+  override claimRuneOverflow(){this.send('claimRuneOverflow');return true}
   override upgradeMaterial(name:string,rarity:Rarity){this.send('upgradeMaterial',name,rarity);return true}
   override equip(id:string){this.send('equip',id);return true}
   override unequip(slot:GearSlot){this.send('unequip',slot)}

@@ -20,19 +20,36 @@ export function normalizeRuneSockets(value:unknown):RuneSockets{
 }
 export function runeBonuses(sockets:unknown):Bonuses{const out:Bonuses={};for(const rune of normalizeRuneSockets(sockets))if(rune)out[rune.runeId]=(out[rune.runeId]||0)+runeValue(rune.runeId,rune.rarity);return out;}
 export const hasSocketedRunes=(item:{runes?:RuneSockets})=>normalizeRuneSockets(item.runes).some(Boolean);
-export function makeRuneItem(id:RuneId,rarity:Rarity='common',count=1):Item{const rune=runeById(id)!;return {id:runeKey(id,rarity),runeId:id,name:rune.name,icon:rune.icon,category:'rune',rarity,count};}
+export function makeRuneItem(id:RuneId,rarity:Rarity='common'):Item{const rune=runeById(id)!;return {id:crypto.randomUUID(),runeId:id,name:rune.name,icon:rune.icon,category:'rune',rarity,count:1};}
+/** Expand legacy stacks without changing an already unique physical identity. */
+export function expandRuneItems(items:Item[],seen=new Set<string>()):Item[]{
+ return items.flatMap(item=>{
+  if(item.gearId||!isRuneId(item.runeId))return [item];
+  if(!Number.isSafeInteger(item.count)||item.count<1)return item.count===0?[]:[item];
+  if(item.count===1&&item.id&&!item.id.startsWith('rune:')&&!seen.has(item.id)){seen.add(item.id);return [{...item,count:1}];}
+  const out:Item[]=[];
+  for(let n=0;n<item.count;n++){
+   const next=makeRuneItem(item.runeId,runeRarity(item.rarity)?item.rarity:'common');
+   if(n===0&&item.id&&!item.id.startsWith('rune:')&&!seen.has(item.id))next.id=item.id;
+   while(seen.has(next.id!))next.id=crypto.randomUUID();
+   seen.add(next.id!);out.push(next);
+  }
+  return out;
+ });
+}
 export function rollRuneDrops(level:number,random=Math.random){const chance=(level+runeConfig.dropLevelOffset)/runeConfig.dropDivisor;return runeTypes.flatMap(r=>random()<chance?[makeRuneItem(r.id)]:[]);}
 
 /** Atomic bag projection: consume first, return/create second, then check final capacity. */
-export function exchangeRuneItems(items:Item[],consume:(RuneSocket&{count:number})[],produce:(RuneSocket&{count:number})[],capacity:number):{items:Item[]}|{error:string}{
+export function exchangeRuneItems(items:Item[],consume:(RuneSocket&{count:number;itemId?:string})[],produce:(RuneSocket&{count:number})[],capacity:number):{items:Item[]}|{error:string}{
  const next=structuredClone(items);
  for(const request of consume){
   let remaining=request.count;
-  for(const item of next)if(!item.gearId&&item.runeId===request.runeId&&(item.rarity||'common')===request.rarity&&item.count>0){const take=Math.min(remaining,item.count);item.count-=take;remaining-=take;if(!remaining)break;}
+  for(const item of next)if(!item.gearId&&item.runeId===request.runeId&&(item.rarity||'common')===request.rarity&&item.count===1&&(!request.itemId||item.id===request.itemId)){item.count=0;remaining--;if(!remaining)break;}
   if(remaining)return {error:'Not enough matching runes in your bag.'};
  }
  const active=next.filter(i=>i.count>0);
- for(const result of produce){const stack=active.find(i=>!i.gearId&&i.runeId===result.runeId&&(i.rarity||'common')===result.rarity);if(stack)stack.count+=result.count;else active.push(makeRuneItem(result.runeId,result.rarity,result.count));}
+ if(active.length+produce.reduce((count,result)=>count+result.count,0)>capacity)return {error:'Bag full. Make room for the resulting runes.'};
+ for(const result of produce)for(let n=0;n<result.count;n++)active.push(makeRuneItem(result.runeId,result.rarity));
  if(active.length>capacity)return {error:'Bag full. Make room for the resulting runes.'};
  return {items:active};
 }

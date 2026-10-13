@@ -11,13 +11,13 @@ import { zoneObstacles, protectedPosition, insideMonsterGroup, zoneMonsterGroups
 import {species,isZone, type ZoneId} from '../src/game/content.js';
 import {isGearSlot} from '../src/game/equipment.js';
 import { isClass } from '../src/game/classes.js';
-import {isRuneId,type RuneId} from '../src/game/runes.js';
+import {isRuneId,expandRuneItems} from '../src/game/runes.js';
 import { capture, type Command, type Player, type Realm, type Snapshot } from './protocol.js';
 import type { RealmStore } from './store.js';
 export class GameError extends Error { constructor(message:string,public status=400){super(message)} }
 export const ROOM_LAYOUT_REVISION=6;
 export const MONSTER_BALANCE_REVISION=6;
-export function freshRealm(now:number):Realm { const sim=new Simulation(Math.random,undefined,null); return {version:2,itemRevision:3,time:now,players:{},rooms:{glade:{zone:'glade',monsters:sim.monsters,layoutRevision:ROOM_LAYOUT_REVISION,balanceRevision:MONSTER_BALANCE_REVISION}},chat:[],ledger:[]}; }
+export function freshRealm(now:number):Realm { const sim=new Simulation(Math.random,undefined,null); return {version:2,itemRevision:4,time:now,players:{},rooms:{glade:{zone:'glade',monsters:sim.monsters,layoutRevision:ROOM_LAYOUT_REVISION,balanceRevision:MONSTER_BALANCE_REVISION}},chat:[],ledger:[]}; }
 function roomFor(realm:Realm,id:string,zone:ZoneId) {
   if(!realm.rooms) {realm.rooms={glade:{zone:'glade',monsters:realm.monsters||new Simulation(Math.random,undefined,null).monsters}};delete realm.monsters;realm.version=2;}
   const room=realm.rooms[id];
@@ -73,24 +73,31 @@ function support(realm:Realm,player:Player,sim:Simulation,actors:{p:Player;sim:S
  }};
 }
 export function migrateRealmItems(realm:Realm){
- const rewrite=new Map<string,string>(),removed=new Set<string>();
+ const rewrite=new Map<string,string>(),removed=new Set<string>(),oldRuneOffers=new Set<string>();
  for(const player of Object.values(realm.players)){
-  if(player.actor.save.version>=11)continue;
+  if(player.actor.save.version>=12)continue;
   const renameLegend=player.actor.save.version<9;
-  for(const old of player.actor.save.items){const key=old.id||old.name,next=migrateStoredItem(old,renameLegend);if(!next)removed.add(player.id+':'+key);else if(next.id&&next.id!==key)rewrite.set(player.id+':'+key,next.id);}
+  for(const old of player.actor.save.items){const key=old.id||old.name;if(isRuneId(old.runeId)&&(old.count!==1||!old.id||old.id.startsWith('rune:')))oldRuneOffers.add(player.id+':'+key);const next=migrateStoredItem(old,renameLegend);if(!next)removed.add(player.id+':'+key);else if(next.id&&next.id!==key)rewrite.set(player.id+':'+key,next.id);}
   player.actor.loot=migrateStoredLoot(player.actor.loot||[],renameLegend);
   player.actor.save=new Simulation(Math.random,player.actor.save,null).save;
   if([...removed].some(key=>key.startsWith(player.id+':'))){player.events.push({id:++player.serial,text:'Obsolete crafting materials retired. Equipment, active materials and gold preserved.',type:'system'});player.events=player.events.slice(-40);}
  }
- if((realm.itemRevision||0)<3&&realm.community){
-  realm.community.listings=realm.community.listings.flatMap(listing=>{const item=migrateStoredItem(listing.item,(realm.itemRevision||0)<1);return item?[{...listing,item}]:[];});
+ if((realm.itemRevision||0)<4&&realm.community){
+  const seen=new Set(Object.values(realm.players).flatMap(p=>[...p.actor.save.items,...(p.actor.save.runeOverflow||[])].map(i=>i.id).filter((id):id is string=>!!id)));
+  realm.community.listings=realm.community.listings.flatMap(listing=>{
+   const item=migrateStoredItem(listing.item,(realm.itemRevision||0)<1);if(!item)return [];
+   if(!isRuneId(item.runeId))return [{...listing,item}];
+   const source=listing.runeBundle||[item],bundle=expandRuneItems(source.flatMap(i=>{const next=migrateStoredItem(i,false);return next?[next]:[]}),seen);
+   if(!bundle.length)return [];
+   return [{...listing,item:bundle[0],...(bundle.length>1||listing.runeBundle?{runeBundle:bundle}:{})}];
+  });
  }
  if(realm.community)realm.community.trades=realm.community.trades.filter(trade=>{
   for(const [id,offer] of Object.entries(trade.offers))if(offer.count>0&&removed.has(id+':'+offer.item))return false;
-  for(const [id,offer] of Object.entries(trade.offers))offer.item=rewrite.get(id+':'+offer.item)||offer.item;
+  for(const [id,offer] of Object.entries(trade.offers)){if(offer.count>0&&oldRuneOffers.has(id+':'+offer.item)){delete trade.offers[id];trade.confirmed=[];const player=realm.players[id];if(player){player.events.push({id:++player.serial,text:'Rune: Stacked-rune trade offer cleared. Select individual runes to offer again.',type:'system'});}}else offer.item=rewrite.get(id+':'+offer.item)||offer.item;}
   return true;
  });
- realm.itemRevision=3;
+ realm.itemRevision=4;
 }
 export const INPUT_LEASE_MS=1500;
 export function advanceRealm(realm:Realm,now:number) {
@@ -181,7 +188,7 @@ function execute(player:Player,realm:Realm,command:Command,now:number,admin=fals
       const entry=itemCatalog.find(i=>i.id===a||i.id===gearById(String(a))?.id),rarity=command.args[2],refine=command.args[3],maxRoll=command.args[4];
       if(!entry||!integer(b,1,entry.gearId?20:9999)||typeof rarity!=='string'||!rarityOrder.includes(rarity as Rarity)||!integer(refine,0,10)||(maxRoll!==undefined&&typeof maxRoll!=='boolean'))throw new GameError('Invalid spawn request');
       const existing=!entry.gearId&&sim.save.items.find(i=>sameStack(i,{name:entry.name,runeId:entry.runeId,rarity:rarity as Rarity})&&i.count>0);
-      const slots=sim.save.items.filter(i=>i.count>0).length+(entry.gearId?b as number:existing?0:1);
+      const slots=sim.save.items.filter(i=>i.count>0).length+(entry.gearId||entry.runeId?b as number:existing?0:1);
       if(slots>BAG_CAPACITY) {sim.onEvent('Bag full. Nothing spawned.');break;}
       if(entry.gearId)for(let n=0;n<(b as number);n++)sim.addEquipmentItem({...rollGear(entry.gearId,rarity as Rarity,Math.random,maxRoll===true),refine:refine as number,name:entry.name,icon:entry.icon,count:1,category:itemCategory(entry)});
       else sim.addItem(entry.name,entry.icon,b as number,rarity as Rarity);
@@ -222,11 +229,12 @@ function execute(player:Player,realm:Realm,command:Command,now:number,admin=fals
       if(typeof a!=='string')throw new GameError('Invalid recipe');
       if(a.startsWith('rune:')){
         if(command.args.length!==3||!isRarity(b)||!Array.isArray(command.args[2])){sim.onEvent('Rune: Choose a target, rarity, and four different ingredients.');break;}
-        recordRune(sim.craft(a,b,command.args[2] as RuneId[]));
+        recordRune(sim.craft(a,b,command.args[2] as string[]));
       }else{if(b!==undefined&&!isRarity(b))throw new GameError('Invalid recipe rarity');sim.craft(a,(b||'common') as Rarity);}
       break;
-    case 'upgradeRune':if(command.args.length!==2||!isRuneId(a)||!isRarity(b)){sim.onEvent('Rune: Invalid rune upgrade.');break;}recordRune(sim.upgradeRune(a,b));break;
-    case 'socketRune':if(command.args.length!==4||typeof a!=='string'||!integer(b,0,1)||!isRuneId(command.args[2])||!isRarity(command.args[3])){sim.onEvent('Rune: Invalid socket request.');break;}recordRune(sim.socketRune(a,b as number,command.args[2],command.args[3]));break;
+    case 'upgradeRune':if(command.args.length!==2||typeof a!=='string'||typeof b!=='string'){sim.onEvent('Rune: Invalid rune upgrade.');break;}recordRune(sim.upgradeRune(a,b));break;
+    case 'socketRune':if(![3,4].includes(command.args.length)||typeof a!=='string'||!integer(b,0,1)||typeof command.args[2]!=='string'||(command.args.length===4&&!isRarity(command.args[3]))){sim.onEvent('Rune: Invalid socket request.');break;}recordRune(sim.socketRune(a,b as number,command.args[2],command.args[3] as import('../src/game/equipment.js').Rarity|undefined));break;
+    case 'claimRuneOverflow':if(command.args.length){sim.onEvent('Rune: Invalid pending-rune claim.');break;}recordRune(sim.claimRuneOverflow());break;
     case 'unsocketRune':if(command.args.length!==2||typeof a!=='string'||!integer(b,0,1)){sim.onEvent('Rune: Invalid removal request.');break;}recordRune(sim.unsocketRune(a,b as number));break;
     case 'upgradeMaterial':if(typeof a!=='string'||!isCraftMaterial(a)||!isRarity(b))throw new GameError('Invalid material upgrade');sim.upgradeMaterial(a,b);break;
     case 'equip':if(typeof a!=='string')throw new GameError('Invalid equipment');sim.equip(a);break;
