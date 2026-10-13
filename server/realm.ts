@@ -51,6 +51,11 @@ function roomFor(realm:Realm,id:string,zone:ZoneId) {
 function hydrate(player:Player, realm:Realm) {
   const sim=new Simulation(Math.random,player.actor.save as Save,null), normalizedSave=sim.save;
   player.room ||= normalizedSave.zone;
+  if(normalizedSave.zone==='ruins'){
+    const party=partyOf(realm,player.id),soloRoom='solo-dungeon:'+player.id;
+    // Old zone-only saves and stale instance assignments must never reconnect into shared Ruins.
+    if(player.room!==soloRoom&&player.room!==(party?'dungeon:'+party.id:undefined))player.room=party?'dungeon:'+party.id:soloRoom;
+  }
   const room=roomFor(realm,player.room,normalizedSave.zone);
   Object.assign(sim,structuredClone(player.actor));sim.save=normalizedSave;sim.skillCooldownTotals=player.actor.skillCooldownTotals||{...sim.skillCooldowns};sim.autoSkillCursor=Number.isInteger(sim.autoSkillCursor)?((sim.autoSkillCursor%6)+6)%6:0;sim.cooldowns=Array.from({length:10},(_,n)=>n<6?sim.skillCooldowns[sim.save.hotbar[n]||'']||0:sim.auxiliaryCooldown||0);sim.online=true;sim.balance=realm.balance||{};
   sim.monsters=room.monsters;sim.obstacles=zoneObstacles(sim.save.zone);sim.actorId=player.id;
@@ -90,6 +95,8 @@ export function advanceRealm(realm:Realm,now:number) {
   if(!realm.rooms)roomFor(realm,'glade','glade');
   for(const [id,room] of Object.entries(realm.rooms||{}))roomFor(realm,id,room.zone);
   for(const id of Object.keys(realm.rooms||{}))if(id.startsWith('dungeon:')&&!realm.community?.parties.some(p=>'dungeon:'+p.id===id))delete realm.rooms![id];
+  // Offline owners retain their instance for reconnect; release it after they actually leave.
+  for(const id of Object.keys(realm.rooms||{}))if(id.startsWith('solo-dungeon:')&&!Object.values(realm.players).some(p=>p.room===id&&p.actor.save.zone==='ruins'))delete realm.rooms![id];
   const active=Object.values(realm.players).filter(p=>now-p.lastSeen<10_000);
   const sims=active.map(p=>({p,sim:hydrate(p,realm)}));
   const ownership=new Map<object,string>();
@@ -157,7 +164,13 @@ function execute(player:Player,realm:Realm,command:Command,now:number,admin=fals
   sim.onKill=monster=>shareKill(realm,player,monster,[{p:player,sim},...allies],now);
   const integer=(v:unknown,min:number,max:number)=>typeof v==='number'&&Number.isInteger(v)&&v>=min&&v<=max;
   const handled=communityCommand(realm,player,command.type,command.args,now,command.id);
-  if(handled)sim.save=player.actor.save;
+  if(handled){
+    sim.save=player.actor.save;
+    if(command.type==='partyLeave'){
+      Object.assign(sim,structuredClone(player.actor));
+      sim.monsters=roomFor(realm,player.room||sim.save.zone,sim.save.zone).monsters;
+    }
+  }
   else switch(command.type) {
     case 'adminSpawn': {
       if(!admin)throw new GameError('Admin access required',403);
@@ -208,7 +221,13 @@ function execute(player:Player,realm:Realm,command:Command,now:number,admin=fals
     case 'claimQuest':if(typeof a!=='string')throw new GameError('Invalid quest');sim.claimQuest(a);break;
     case 'travel': {
       if(!isZone(a))throw new GameError('Invalid area');
-      if(a==='ruins'){const party=partyOf(realm,player.id);if(!party||party.members.length<economy.party.dungeonMinMembers||party.members.length>economy.party.maxMembers){sim.onEvent(`Form a party of ${economy.party.dungeonMinMembers}–${economy.party.maxMembers} adventurers to enter`);break;};const members=party.members.map(id=>realm.players[id]);if(members.some(p=>p.actor.save.level<economy.party.dungeonLevel)){sim.onEvent(`All party members must be level ${economy.party.dungeonLevel}`);break;};if(sim.travel(a,true)){player.room='dungeon:'+party.id;sim.monsters=roomFor(realm,player.room,a).monsters;}}
+      if(a==='ruins'){
+        const party=partyOf(realm,player.id);
+        if(party&&(party.members.length<economy.party.dungeonMinMembers||party.members.length>economy.party.maxMembers)){sim.onEvent(`Ruins parties require ${economy.party.dungeonMinMembers}–${economy.party.maxMembers} adventurers`);break;}
+        const members=party?party.members.map(id=>realm.players[id]):[player];
+        if(members.some(p=>!p||p.actor.save.level<economy.party.dungeonLevel)){sim.onEvent(`Every adventurer entering the ruins must be level ${economy.party.dungeonLevel}`);break;}
+        if(sim.travel(a,true)){player.room=party?'dungeon:'+party.id:'solo-dungeon:'+player.id;sim.monsters=roomFor(realm,player.room,a).monsters;}
+      }
       else if(sim.travel(a)) {player.room=a;sim.monsters=roomFor(realm,a,a).monsters;}
       break;
     }

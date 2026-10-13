@@ -282,7 +282,7 @@ export class Simulation {
     if(!isZone(zone)||zone===this.save.zone)return false;
     if(this.target!==null||this.cast||this.monsters.some(m=>m.alive&&m.aggro&&(!this.actorId||m.owner===this.actorId))){this.onEvent("Leave combat before travelling.");return false;}
     if(this.save.level<zones[zone].level){this.onEvent(`Reach Lv ${zones[zone].level} to enter ${zones[zone].name}.`);return false;}
-    if(zone==='ruins'&&this.online&&!allowDungeon){this.onEvent("Gather a party of 2–4 before entering the ruins.");return false;}
+    if(zone==='ruins'&&this.online&&!allowDungeon){this.onEvent("Enter the ruins through the online realm, alone or with your party.");return false;}
     if(Math.hypot(this.x-PORTAL_POSITION.x,this.z-PORTAL_POSITION.z)>3){this.onEvent("Walk to the glowing north portal to travel.");this.goTo(PORTAL_POSITION.x,PORTAL_POSITION.z);return false;}
     this.save.zone=zone;this.populateZone(zone);this.x=0;this.z=-9;this.clearTarget();this.destination=null;this.route=[];this.auto=false;this.actionTime=0;this.loot=[];this.onEvent(`Arrived in ${zones[zone].name}`,"zone");this.markTutorial('travel');this.persist();return true;
   }

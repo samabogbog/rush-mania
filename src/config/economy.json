@@ -29,7 +29,7 @@
     "supportRadius": 8,
     "healFactor": 0.6,
     "buffFactor": 0.7,
-    "dungeonMinMembers": 2,
+    "dungeonMinMembers": 1,
     "dungeonLevel": 70,
     "tauntRadius": 5
   },
