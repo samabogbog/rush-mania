@@ -1,0 +1,14 @@
+{
+  "webgl": 1,
+  "filter": "blur-exponential",
+  "mapSize": 512,
+  "casters": {
+    "registered": 154,
+    "enabled": 135
+  },
+  "movement": {
+    "before": 0,
+    "after": 2.200000000000001
+  },
+  "pageErrors": []
+}

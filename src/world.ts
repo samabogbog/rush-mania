@@ -138,14 +138,17 @@ export class World implements GameWorld {
     sun.shadowMinZ = 1;
     sun.shadowMaxZ = 80;
     const shadows = this.shadows = new ShadowGenerator(1024, sun);
-    // Separable Gaussian blur smooths the canopy silhouette; close ESM avoids overflow.
-    shadows.useBlurCloseExponentialShadowMap = true;
+    // PCSS filters comparisons against blockers; averaging raw close-ESM depth erases small casters.
+    shadows.useContactHardeningShadow = true;
+    if(!shadows.useContactHardeningShadow)shadows.useBlurExponentialShadowMap = true;
+    shadows.contactHardeningLightSizeUVRatio = .06;
+    shadows.filteringQuality = ShadowGenerator.QUALITY_MEDIUM;
     shadows.useKernelBlur = true;
     shadows.blurScale = 2;
-    shadows.blurKernel = 20;
-    shadows.depthScale = 50;
+    shadows.blurKernel = 24;
+    shadows.depthScale = 20;
     shadows.bias = 0.00035;
-    shadows.darkness = 0.12;
+    shadows.darkness = 0.18;
     shadows.normalBias = 0.025;
     this.factory = new Primitives(this.scene);
     this.models = new ModelLibrary(this.scene);
@@ -318,14 +321,23 @@ export class World implements GameWorld {
   }
   private applyQuality(){
     const low=this.quality==='low'||this.autoReduced;
-    this.scene.shadowsEnabled=!low;
+    // Quality reduces the live map budget, never removes moving actor / scenery shadows.
+    this.scene.shadowsEnabled=true;
     this.models.setLowQuality(low);this.skillVFX.setLowQuality(low);
     this.factory.surfaces.setLowQuality(low);
     this.applyEnvironmentQuality();
-    // Setters dispose old blur targets/passes; unchanged settings are no-ops.
-    this.shadows.blurScale=this.quality==='high'?2:1;
-    this.shadows.blurKernel=this.quality==='high'?20:10;
-    const size=this.quality==='high'?2048:512,map=this.shadows.getShadowMap();
+    // Babylon validates depth-comparison sampler support before selecting PCSS.
+    // Unsupported engines use exponential moments, never averaged close-ESM raw depth.
+    this.shadows.useContactHardeningShadow=true;
+    if(!this.shadows.useContactHardeningShadow)this.shadows.useBlurExponentialShadowMap=true;
+    this.shadows.contactHardeningLightSizeUVRatio=.06;
+    this.shadows.filteringQuality=low?ShadowGenerator.QUALITY_LOW:ShadowGenerator.QUALITY_MEDIUM;
+    const high=!low&&this.quality==='high';
+    // Only the portable exponential fallback uses separable blur. PCSS determines its
+    // penumbra from receiver-to-blocker separation and source size instead.
+    this.shadows.blurScale=2;
+    this.shadows.blurKernel=low?6:high?24:12;
+    const size=low?512:high?2048:1024,map=this.shadows.getShadowMap();
     if(map&&map.getSize().width!==size)map.resize(size);
   }
 
@@ -349,7 +361,9 @@ export class World implements GameWorld {
       engine: "Babylon.js",...this.factory.surfaces.diagnostics,
       sceneTextures:this.scene.textures.length,sceneMaterials:this.scene.materials.length,
       texturedMapMeshes:this.mapMeshes.filter(m=>(m.material as StandardMaterial)?.diffuseTexture).length+1,
-      shadowsEnabled:this.scene.shadowsEnabled,shadowFilter:'blur-close-exponential',shadowBlurKernel:this.shadows.blurKernel,shadowBlurScale:this.shadows.blurScale,shadowDarkness:this.shadows.darkness,shadowDepthScale:this.shadows.depthScale,shadowMapSize:this.shadows.getShadowMap()?.getSize().width,
+      shadowsEnabled:this.scene.shadowsEnabled,shadowFilter:this.shadows.useContactHardeningShadow?'pcss-contact-hardening':'blur-exponential',shadowFilterId:this.shadows.filter,shadowPCSSSupported:this.engine._features.supportShadowSamplers,shadowWebGLVersion:this.engine.webGLVersion,shadowSourceSizeUV:this.shadows.useContactHardeningShadow?this.shadows.contactHardeningLightSizeUVRatio:null,shadowSampling:this.shadows.useContactHardeningShadow?(this.shadows.filteringQuality===ShadowGenerator.QUALITY_LOW?'16 blocker / 16 PCF':'16 blocker / 32 PCF'):'separable exponential blur',shadowBlurKernel:this.shadows.blurKernel,shadowBlurScale:this.shadows.blurScale,shadowDarkness:this.shadows.darkness,shadowDepthScale:this.shadows.depthScale,shadowMapSize:this.shadows.getShadowMap()?.getSize().width,
+      shadowBlurFootprintWorld:this.shadows.useContactHardeningShadow?null:(this.sunlight.orthoRight-this.sunlight.orthoLeft)*this.shadows.blurKernel*this.shadows.blurScale/(this.shadows.getShadowMap()?.getSize().width??1024),
+      shadowCasters:{registered:this.shadows.getShadowMap()?.renderList?.length??0,enabled:this.shadows.getShadowMap()?.renderList?.filter(m=>m.isEnabled()&&m.isVisible&&m.visibility>0).length??0},
       lighting:'warm honey sun / sage sky fill',environmentPalette:environmentPalette(this.currentZone??'glade'),environmentDetails:{clusters:this.mapMeshes.reduce((n,m)=>n+(m.metadata?.clusters??0),0),vertices:this.mapMeshes.filter(m=>m.metadata?.environmentDetail).reduce((n,m)=>n+m.getTotalVertices(),0),visibleMeshes:this.mapMeshes.filter(m=>m.metadata?.environmentDetail&&m.isEnabled()).length,contactShadows:this.mapMeshes.reduce((n,m)=>n+(m.metadata?.contactShadows??0),0)},territoriesCount:this.farmTerritories.length,activeGroupId:this.farmTerritories.find(t=>t.active)?.group.id??null,groupCenters:this.farmTerritories.map(t=>({...t.group,visible:t.root.isEnabled()})),worldSize:WORLD_SIZE,worldBounds:WORLD_BOUNDS,modelsLoaded:this.models.loaded,modelsExpected:3+this.sim.monsters.length,
       cameraShake:this.skillCameraShake.diagnostics,previewHeld:this.previewHeld,vfx:this.skillVFX.diagnostics,sceneMeshes:this.scene.meshes.length,skillMotion:this.skillMotion,quality:this.quality,autoReduced:this.autoReduced,riggedActors:this.models.active,motionPoses:this.models.motionDiagnostics,modelErrors:this.models.errors,
       renderWidth:this.engine.getRenderWidth(),renderHeight:this.engine.getRenderHeight(),activeAnimations:this.scene.animatables.length,

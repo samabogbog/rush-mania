@@ -1,0 +1,73 @@
+{
+  "phase": "after",
+  "before": {
+    "x": 0,
+    "z": 2,
+    "quality": "high",
+    "autoReduced": false,
+    "shadowsEnabled": true,
+    "shadowFilter": "pcss-contact-hardening",
+    "shadowFilterId": 7,
+    "shadowPCSSSupported": true,
+    "shadowWebGLVersion": 2,
+    "shadowSourceSizeUV": 0.06,
+    "shadowSampling": "16 blocker / 32 PCF",
+    "shadowMapSize": 2048,
+    "shadowBlurKernel": 24,
+    "shadowBlurScale": 2,
+    "shadowDarkness": 0.18,
+    "shadowDepthScale": 20,
+    "shadowCasters": {
+      "registered": 154,
+      "enabled": 135
+    },
+    "lighting": "warm honey sun / sage sky fill",
+    "environmentPalette": {
+      "ground": 11123574,
+      "path": 13941130
+    },
+    "modelErrors": 0,
+    "drawCalls": 140,
+    "sceneMeshes": 373,
+    "sceneMaterials": 122,
+    "sceneTextures": 65,
+    "fps": 2.9272290849480282,
+    "frameP95": 2113.5999999996275
+  },
+  "moved": {
+    "x": 1.1000000000000003,
+    "z": 2,
+    "quality": "high",
+    "autoReduced": false,
+    "shadowsEnabled": true,
+    "shadowFilter": "pcss-contact-hardening",
+    "shadowFilterId": 7,
+    "shadowPCSSSupported": true,
+    "shadowWebGLVersion": 2,
+    "shadowSourceSizeUV": 0.06,
+    "shadowSampling": "16 blocker / 32 PCF",
+    "shadowMapSize": 2048,
+    "shadowBlurKernel": 24,
+    "shadowBlurScale": 2,
+    "shadowDarkness": 0.18,
+    "shadowDepthScale": 20,
+    "shadowCasters": {
+      "registered": 154,
+      "enabled": 135
+    },
+    "lighting": "warm honey sun / sage sky fill",
+    "environmentPalette": {
+      "ground": 11123574,
+      "path": 13941130
+    },
+    "modelErrors": 0,
+    "drawCalls": 153,
+    "sceneMeshes": 373,
+    "sceneMaterials": 122,
+    "sceneTextures": 65,
+    "fps": 0.7243227582210588,
+    "frameP95": 4651.200000000186
+  },
+  "pageErrors": [],
+  "environment": "Chromium SwiftShader; no player hardware FPS claim"
+}

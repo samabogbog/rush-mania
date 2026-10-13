@@ -39,7 +39,7 @@ export function buildMap(factory: Primitives, blocking: Obstacle[]) {
         for (let k = 0; k < 3; k++) {
           const grass = mesh(
             { kind: "sphere", r: 0.17, segments: 4 },
-            xx % 2 ? 0x557c59 : 0x7f9a65,
+            xx % 2 ? 0x4f8351 : 0x81a355,
             (rand() - 0.5) * 0.3,
             0.24,
             (rand() - 0.5) * 0.3,
@@ -57,7 +57,7 @@ export function buildMap(factory: Primitives, blocking: Obstacle[]) {
     const moss=ball(.28,0x7db077,.07,.57,-.02,group,.12,6);moss.scaling.x=1.3;moss.scaling.z=.85;moss.rotation.y=rand()*Math.PI;
     // Existing collision stones host trees; scenery never introduces a new blocker.
     if([[-6,-4],[4,-7],[-11,0],[7,8],[-6,9]].some(([tx,tz])=>x===tx&&z===tz)){
-      stone.scaling.set(.65,.65,.65);moss.setEnabled(false);roundTree(factory,x,z,0x4f7357,.7,x===7);
+      stone.scaling.set(.65,.65,.65);moss.setEnabled(false);roundTree(factory,x,z,0x4c7d50,.7,x===7);
     }
     blocking.push({x,z,r:.72});
   };
@@ -238,7 +238,7 @@ export function buildZoneMap(factory:Primitives,blocking:Obstacle[],zone:import(
    if(zone==='glade'&&Math.abs(obstacle.x)<16&&Math.abs(obstacle.z)<16)continue;
    if(zone==='town'&&Math.abs(obstacle.x)<16&&Math.abs(obstacle.z)<16)continue;
    const g=factory.group('terrain-prop');g.position.set(obstacle.x,0,obstacle.z);
-   if(zone==='orchard'){roundTree(factory,obstacle.x,obstacle.z,0x7f9259,.65,true);}
+   if(zone==='orchard'){roundTree(factory,obstacle.x,obstacle.z,0x849d4b,.65,true);}
    else if(zone==='marsh'){ball(.7,0x69ad9c,0,.36,0,g,.5);mesh({kind:'cone',r:.32,h:1.5,n:5},0x609987,0,1.1,0,g);}
    else if(zone==='glade'||zone==='town'){ball(obstacle.r*.8,0xaab6a2,0,.3,0,g,.6);ball(obstacle.r*.4,0x7cab6d,0,.5,0,g,.2);}
    else if(zone==='frost'){ball(.8,0x83a4c9,0,.48,0,g,.7);ball(.58,0xe9faff,0,.85,0,g,.35);}
@@ -267,8 +267,8 @@ export function buildZoneMap(factory:Primitives,blocking:Obstacle[],zone:import(
    }
    flowerPatch(factory,x-1.9,z+1.8,index);
   }
-  const fountain=factory.group('fountain');fountain.position.set(0,0,6);mesh({kind:'cylinder',top:1.7,bottom:1.7,h:.5,n:32},0xf2ce94,0,.25,0,fountain);mesh({kind:'cylinder',top:1.4,bottom:1.4,h:.1,n:32},0x60d9ef,0,.53,0,fountain);box(.3,1.1,.3,0xffe8c0,0,1,0,fountain);ball(.25,0x7cddff,0,1.7,0,fountain);fountainRipples(factory,0,6);}
- if(zone==='marsh')for(const [x,z] of [[-8,-4],[8,6]]){const pool=mesh({kind:'disc',r:3.1,n:18},0x499fe9,x,.02,z);pool.rotation.x=-Math.PI/2;const bridge=box(6.5,.15,.8,0xc99c68,x,.15,z);bridge.isPickable=false;waterGarden(factory,x,z,3.1);}
+  const fountain=factory.group('fountain');fountain.position.set(0,0,6);mesh({kind:'cylinder',top:1.7,bottom:1.7,h:.5,n:32},0xf2ce94,0,.25,0,fountain);mesh({kind:'cylinder',top:1.4,bottom:1.4,h:.1,n:32},0x54bfd3,0,.53,0,fountain);box(.3,1.1,.3,0xffe8c0,0,1,0,fountain);ball(.25,0x7cddff,0,1.7,0,fountain);fountainRipples(factory,0,6);}
+ if(zone==='marsh')for(const [x,z] of [[-8,-4],[8,6]]){const pool=mesh({kind:'disc',r:3.1,n:18},0x429fb7,x,.02,z);pool.rotation.x=-Math.PI/2;const bridge=box(6.5,.15,.8,0xc99c68,x,.15,z);bridge.isPickable=false;waterGarden(factory,x,z,3.1);}
  if(zone!=='glade')roundedPortal(factory,PORTAL_POSITION.x,PORTAL_POSITION.z,data.accent);
  meadowDetails(factory,zone,0,0);
  buildExpandedLandscape(factory,zone);
@@ -297,10 +297,10 @@ function buildExpandedLandscape(f:Primitives,zone:import('../game/content').Zone
    }else if(zone==='ruins'){
     f.mesh({kind:'cylinder',top:.55,bottom:.7,h:2.2+(i%3)*.5,n:8},0x7c7398,x,1.1,z);
     f.ball(.72,0xb4a5cc,x,2.4,z,undefined,.25,6);
-   }else roundTree(f,x,z,zone==='orchard'?0x9a9e5c:zone==='marsh'?0x446e65:0x52774f,.8+(i%3)*.12,zone==='orchard');
+   }else roundTree(f,x,z,zone==='orchard'?0x9da549:zone==='marsh'?0x3a786c:0x507e4b,.8+(i%3)*.12,zone==='orchard');
   }
   if(zone==='marsh'){
-   const pool=f.mesh({kind:'disc',r:4,n:20},0x57aab4,sx+8,.021,sz-7);pool.rotation.x=-Math.PI/2;
+   const pool=f.mesh({kind:'disc',r:4,n:20},0x419fac,sx+8,.021,sz-7);pool.rotation.x=-Math.PI/2;
    gardenPath(f,[sx+3,sz-7],[sx+13,sz-7],1.2,0xcba375);
    waterGarden(f,sx+8,sz-7,4);
   }else if(zone!=='frost'&&zone!=='ruins'){

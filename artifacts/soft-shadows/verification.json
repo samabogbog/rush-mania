@@ -1,0 +1,12 @@
+{
+  "build": "passed",
+  "codeTests": 6,
+  "browserTests": 7,
+  "totalUniquePassed": 13,
+  "filter": "PCSS contact hardening",
+  "sourceSizeUV": 0.06,
+  "fallback": "true blurred exponential on real Chromium WebGL1 test",
+  "quality": "high/low/autoReduced plus 390x844 mobile viewport; all live enabled",
+  "builtEntry": "/assets/index-DyP_8ULp.js",
+  "performanceEnvironment": "Chromium SwiftShader; not a certification of player hardware FPS"
+}

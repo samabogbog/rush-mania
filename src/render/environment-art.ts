@@ -6,7 +6,7 @@ import { zoneMonsterGroups, zoneObstacles, PORTAL_POSITION } from '../game/map-d
 
 /** Renderer-only palette: gameplay content keeps its original authored values. */
 export function environmentPalette(zone:ZoneId){
- const palettes={town:[0xb1bd88,0xd7bd8f],glade:[0xacba82,0xd4b98a],orchard:[0xbac184,0xd6b584],marsh:[0x83a68d,0xb6ab88],frost:[0xc6d8da,0xb3c2c2],ruins:[0x969d86,0xb9ac92]};
+ const palettes={town:[0xaebb77,0xd7bd8f],glade:[0xa9bb76,0xd4b98a],orchard:[0xbbc575,0xd6b584],marsh:[0x7ea88e,0xb6ab88],frost:[0xbddadb,0xb3c2c2],ruins:[0x949d7a,0xb9ac92]};
  const [ground,path]=palettes[zone];return {ground,path};
 }
 const tint=(color:number,factor:number)=>{const c=(shift:number)=>Math.min(255,Math.round((color>>shift&255)*factor));return c(16)<<16|c(8)<<8|c(0);};
@@ -28,7 +28,7 @@ export function meadowGround(f:Primitives,color:number,pathColor:number) {
  }
  for(let i=0;i<28;i++) {const t=-15+i*1.12,x=Math.sin(t*.18)*.3+(i%2?.9:-.9),stone=f.ball(.13,0xf4dfb1,x,.024,t,undefined,.2);stone.scaling.x=1.6;}
 }
-export function roundTree(f:Primitives,x:number,z:number,color=0x567c55,scale=1,fruit=false) {
+export function roundTree(f:Primitives,x:number,z:number,color=0x50844d,scale=1,fruit=false) {
  const g=f.group('rounded-canopy');g.position.set(x,0,z);g.scaling.setAll(scale);
  f.mesh({kind:'cylinder',top:.14,bottom:.25,h:1.9,n:12},0xa76e43,0,.95,0,g);
  for(const [dx,dy,dz,r,c] of [[0,2.5,0,1.15,color],[-.65,2.15,.05,.85,tint(color,.8)],[.64,2.35,.1,.88,tint(color,1.16)],[0,3.05,-.12,.75,color]])f.ball(r,c,dx,dy,dz,g,.86,6);
@@ -38,7 +38,7 @@ export function roundTree(f:Primitives,x:number,z:number,color=0x567c55,scale=1,
 export function flowerPatch(f:Primitives,x:number,z:number,seed:number) {
  for(let i=0;i<5;i++) {
   const dx=Math.sin(seed+i*2.4)*.55,dz=Math.cos(seed+i*2.4)*.55;
-  const leaf=f.ball(.19,0x47765b,x+dx,.1,z+dz,undefined,.45,4);leaf.scaling.x=1.5;
+  const leaf=f.ball(.19,0x437e53,x+dx,.1,z+dz,undefined,.45,4);leaf.scaling.x=1.5;
   const colors=[0xfff3d4,0xf4ead1,0xf6dfb6];
   for(let p=0;p<5;p++)f.ball(.07,colors[(seed+i)%3],x+dx+Math.sin(p*Math.PI*2/5)*.075,.23,z+dz+Math.cos(p*Math.PI*2/5)*.075,undefined,.55,4);
   f.ball(.043,0xd9a847,x+dx,.25,z+dz,undefined,.5,4);
@@ -72,7 +72,7 @@ export function meadowPatch(f:Primitives,x:number,z:number,r:number,color:number
  const patch=new Mesh('soft-painted-meadow',f.scene),data=new VertexData();data.positions=positions;data.normals=normals;data.uvs=uvs;data.colors=colors;data.indices=indices;data.applyToMesh(patch);patch.material=f.material(0xffffff);patch.receiveShadows=true;patch.position.set(x,0,z);f.surface(patch,'grass');
 }
 export function townGarden(f:Primitives){
- for(const [x,z,r,c] of [[-11,-7,4,0x9da76e],[11,-7,4,0x9da76e],[-11,8,4.5,0xaab67f],[11,8,4.5,0xaab67f],[-4,13,3,0x9caa74]])meadowPatch(f,x,z,r,c,0xb1bd88);
+ for(const [x,z,r,c] of [[-11,-7,4,0x9da76e],[11,-7,4,0x9da76e],[-11,8,4.5,0xaab67f],[11,8,4.5,0xaab67f],[-4,13,3,0x9caa74]])meadowPatch(f,x,z,r,c,0xaebb77);
  const plaza=f.mesh({kind:'disc',r:4.5,n:64},0xf0dbb1,0,.021,3);plaza.rotation.x=-Math.PI/2;plaza.scaling.y=1.15;
  const inset=f.mesh({kind:'disc',r:4.15,n:64},0xe8d3a9,0,.022,3);inset.rotation.x=-Math.PI/2;inset.scaling.y=1.15;
  // Short staggered paving joints suggest fitted stone without a high-frequency checker texture.
@@ -90,7 +90,7 @@ export function townGarden(f:Primitives){
   f.box(.9,.3,.09,0xa57348,x,.68,z-.16);
   for(const side of [-1,1])f.box(.1,.42,.26,0x855c3c,x+side*.32,.23,z);
   const pot=f.mesh({kind:'cylinder',top:.2,bottom:.14,h:.3,n:10},0xd79770,x,.18,z+.5);
-  f.ball(.25,0x70895d,x,.44,z+.5,undefined,.65,6);
+  f.ball(.25,0x73914f,x,.44,z+.5,undefined,.65,6);
   for(const side of [-1,1])f.ball(.075,0xffc6a6,x+side*.12,.62,z+.5,undefined,.7,4);
  }
  const board=f.group('town-noticeboard');board.position.set(-6.85,0,-7.1);
@@ -98,7 +98,7 @@ export function townGarden(f:Primitives){
  f.box(1.05,.67,.1,0xb48152,0,1.22,0,board);f.box(1.18,.09,.36,0xdea476,0,1.6,0,board);
  for(const [x,c] of [[-.22,0xffefc1],[.19,0xffdfb3]]){f.box(.27,.38,.012,c,x,1.22,.064,board);f.ball(.025,0xc46f59,x,1.36,.08,board,1,4);}
  for(const [x,z] of [[-10,-8],[10,-8],[-10,8],[10,8]]){
-  for(let i=0;i<4;i++){const hedge=f.ball(.4,0x4f7655,x,.3,z+(i-1.5)*.6,undefined,.65,6);hedge.scaling.z=1.15;}
+  for(let i=0;i<4;i++){const hedge=f.ball(.4,0x487d4c,x,.3,z+(i-1.5)*.6,undefined,.65,6);hedge.scaling.z=1.15;}
  }
 }
 
@@ -112,7 +112,7 @@ export function fountainRipples(f:Primitives,x:number,z:number){
 
 /** Pitched clay roof stays inside the original cottage's visual envelope. */
 export function cottageRoof(f:Primitives,g:import('@babylonjs/core/Meshes/transformNode.js').TransformNode,index:number){
- const clay=index%2?0xb8754c:0xbf704c;
+ const clay=index%2?0xc27843:0xc87543;
  for(const side of [-1,1]){
   const roof=f.box(2.95,.13,1.65,clay,0,2.39,side*.65,g);roof.rotation.x=side*.48;f.surface(roof,'stone');
   for(let row=0;row<5;row++){
@@ -123,7 +123,7 @@ export function cottageRoof(f:Primitives,g:import('@babylonjs/core/Meshes/transf
    }
   }
  }
- f.box(3.02,.12,.13,0xca865b,0,2.78,0,g);
+ f.box(3.02,.12,.13,0xd08a50,0,2.78,0,g);
  // Timber gables make the roof read as a cottage from either camera rotation.
  for(const side of [-1,1]){
   const positions=[side*1.21,2, -1.2,side*1.21,2,1.2,side*1.21,2.72,0];
@@ -136,7 +136,7 @@ export function waterGarden(f:Primitives,x:number,z:number,r:number){
  for(let i=0;i<9;i++){
   const a=i*2.399,rad=r*(.48+(i%3)*.12),px=x+Math.cos(a)*rad,pz=z+Math.sin(a)*rad;
   if(Math.abs(pz-z)<.7)continue;
-  const pad=f.mesh({kind:'disc',r:.23+(i%2)*.09,n:9},i%2?0x8da45f:0x799657,px,.038,pz);pad.rotation.x=-Math.PI/2;pad.rotation.z=a;
+  const pad=f.mesh({kind:'disc',r:.23+(i%2)*.09,n:9},i%2?0x92ab4f:0x7e9e48,px,.038,pz);pad.rotation.x=-Math.PI/2;pad.rotation.z=a;
   if(i%3===0){for(let p=0;p<5;p++)f.ball(.075,0xf5e6bf,px+Math.cos(p*1.257)*.08,.075,pz+Math.sin(p*1.257)*.08,undefined,.55,4);f.ball(.04,0xdcb15b,px,.094,pz,undefined,.5,4);}
  }
  for(let i=0;i<12;i++){
@@ -164,7 +164,7 @@ export function meadowDetails(f:Primitives,zone:ZoneId,sx:number,sz:number){
   const positions:number[]=[],normals:number[]=[],colors:number[]=[],indices:number[]=[],uvs:number[]=[];let clusters=0;
   const vertex=(x:number,y:number,z:number,color:number)=>{positions.push(x,y,z);normals.push(0,.8,.6);colors.push((color>>16&255)/255,(color>>8&255)/255,(color&255)/255,1);uvs.push(0,0);return positions.length/3-1;};
   const triangle=(a:number,b:number,c:number)=>indices.push(a,b,c,c,b,a);
-  const leaf=zone==='frost'?0x748f91:zone==='ruins'?0x66775e:zone==='marsh'?0x416f63:0x48735a;
+  const leaf=zone==='frost'?0x748f91:zone==='ruins'?0x66775e:zone==='marsh'?0x416f63:0x437a51;
   const budget=highOnly?30:80;
   for(let attempt=0;attempt<budget*8&&clusters<budget;attempt++){
    const x=sx-14.5+rand()*29,z=sz-14.5+rand()*29;if(!safe(x,z))continue;clusters++;
@@ -173,7 +173,7 @@ export function meadowDetails(f:Primitives,zone:ZoneId,sx:number,sz:number){
     const a=rand()*Math.PI*2,h=(.26+rand()*.35)*scale,w=.10*scale,dx=Math.cos(a),dz=Math.sin(a),bend=.14+(b%2)*.13;
     const base=vertex(x-dz*w*.45,.012,z+dx*w*.45,tint(leaf,.94)),base2=vertex(x+dz*w*.45,.012,z-dx*w*.45,leaf);
     const mid=vertex(x+dx*bend*.35-dz*w,h*.57,z+dz*bend*.35+dx*w,tint(leaf,1.12)),mid2=vertex(x+dx*bend*.35+dz*w,h*.57,z+dz*bend*.35-dx*w,tint(leaf,1.2));
-    const tip=vertex(x+dx*bend,h,z+dz*bend,0x8ba064);triangle(base,base2,mid);triangle(base2,mid2,mid);triangle(mid,mid2,tip);
+    const tip=vertex(x+dx*bend,h,z+dz*bend,0x8da653);triangle(base,base2,mid);triangle(base2,mid2,mid);triangle(mid,mid2,tip);
    }
    if(clusters%5===0&&zone!=='ruins'){
     const fx=x+.18,fz=z+.1,h=.24*scale;

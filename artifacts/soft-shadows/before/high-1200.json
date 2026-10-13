@@ -1,0 +1,53 @@
+{
+  "phase": "before",
+  "before": {
+    "x": 0,
+    "z": 2,
+    "quality": "high",
+    "autoReduced": false,
+    "shadowsEnabled": true,
+    "shadowMapSize": 2048,
+    "shadowBlurKernel": 20,
+    "shadowBlurScale": 2,
+    "shadowDarkness": 0.12,
+    "shadowDepthScale": 50,
+    "lighting": "warm honey sun / sage sky fill",
+    "environmentPalette": {
+      "ground": 11319938,
+      "path": 13941130
+    },
+    "modelErrors": 0,
+    "drawCalls": 142,
+    "sceneMeshes": 373,
+    "sceneMaterials": 122,
+    "sceneTextures": 66,
+    "fps": 2.920438900246832,
+    "frameP95": 1075.6000000005588
+  },
+  "moved": {
+    "x": 1.1000000000000003,
+    "z": 2,
+    "quality": "high",
+    "autoReduced": false,
+    "shadowsEnabled": true,
+    "shadowMapSize": 2048,
+    "shadowBlurKernel": 20,
+    "shadowBlurScale": 2,
+    "shadowDarkness": 0.12,
+    "shadowDepthScale": 50,
+    "lighting": "warm honey sun / sage sky fill",
+    "environmentPalette": {
+      "ground": 11319938,
+      "path": 13941130
+    },
+    "modelErrors": 0,
+    "drawCalls": 155,
+    "sceneMeshes": 373,
+    "sceneMaterials": 122,
+    "sceneTextures": 66,
+    "fps": 1.3546056592414208,
+    "frameP95": 2924.699999999255
+  },
+  "pageErrors": [],
+  "environment": "Chromium SwiftShader; no player hardware FPS claim"
+}
