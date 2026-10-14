@@ -312,9 +312,9 @@ export class Simulation {
   craft(id:string,rarity:Rarity='common',ingredients?:string[]) {
     if(id.startsWith('rune:')){
       const target=id.slice(5);
-      if(!isRuneId(target)||!isRarity(rarity)||!Array.isArray(ingredients)||ingredients.length!==4||ingredients.some(k=>typeof k!=='string'))return this.runeRejected('Choose four different rune types of the same rarity.');
-      const chosen=ingredients.map(ref=>this.resolveRune(ref,rarity));
-      if(chosen.some(i=>!i)||new Set(chosen.map(i=>i!.id)).size!==4||new Set(chosen.map(i=>i!.runeId)).size!==4)return this.runeRejected('Choose four owned runes of different types and the same rarity.');
+      if(!isRuneId(target)||!isRarity(rarity)||!Array.isArray(ingredients)||ingredients.length!==4||ingredients.some(k=>typeof k!=='string'))return this.runeRejected('Choose four individual runes of the same rarity.');
+      const used=new Set<string>(),chosen=ingredients.map(ref=>{const item=this.resolveRune(ref,rarity,used);if(item)used.add(item.id!);return item;});
+      if(chosen.some(i=>!i)||new Set(chosen.map(i=>i!.id)).size!==4)return this.runeRejected('Choose four distinct owned rune pieces of the same rarity; types may repeat.');
       const result=exchangeRuneItems(this.save.items,chosen.map(i=>({itemId:i!.id,runeId:i!.runeId!,rarity,count:1})),[{runeId:target,rarity,count:1}],BAG_CAPACITY);
       if('error' in result)return this.runeRejected(result.error);
       this.save.items=result.items;this.progressQuest('craft');this.persist();this.onEvent(`Rune: Converted four runes into ${runeById(target)!.name} · ${rarity}.`,'reward');return true;
@@ -338,7 +338,7 @@ export class Simulation {
     this.addEquipmentItem(item);this.progressQuest('craft');this.markTutorial('craft');this.onEvent(`Crafted ${gear.name}`,"reward");this.persist();return true;
   }
   private runeRejected(message:string){this.onEvent('Rune: '+message);return false;}
-  private resolveRune(reference:string,rarity?:Rarity){return this.save.items.find(i=>i.count===1&&!i.gearId&&!!i.id&&isRuneId(i.runeId)&&i.id===reference&&(!rarity||materialRarity(i)===rarity))||(isRuneId(reference)&&rarity?this.save.items.find(i=>i.count===1&&!i.gearId&&!!i.id&&i.runeId===reference&&materialRarity(i)===rarity):undefined);}
+  private resolveRune(reference:string,rarity?:Rarity,excluded?:ReadonlySet<string>){return this.save.items.find(i=>i.count===1&&!i.gearId&&!!i.id&&!excluded?.has(i.id)&&isRuneId(i.runeId)&&i.id===reference&&(!rarity||materialRarity(i)===rarity))||(isRuneId(reference)&&rarity?this.save.items.find(i=>i.count===1&&!i.gearId&&!!i.id&&!excluded?.has(i.id)&&i.runeId===reference&&materialRarity(i)===rarity):undefined);}
   addRuneItem(item:Item){if(!isRuneId(item.runeId)||item.count!==1||!item.id||this.save.items.some(i=>i.id===item.id))return false;if(this.save.items.filter(i=>i.count>0).length>=BAG_CAPACITY){this.onEvent('Bag full. Make room before collecting.');return false;}this.save.items.push(structuredClone(item));return true;}
   claimRuneOverflow(){
     const pending=this.save.runeOverflow||[],space=Math.max(0,BAG_CAPACITY-this.save.items.filter(i=>i.count>0).length);

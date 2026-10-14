@@ -1,0 +1,22 @@
+{
+  "build": "passed",
+  "checks": 31,
+  "unitAuthorityDrops": 28,
+  "browserFlows": 3,
+  "viewports": [
+    "1200x800",
+    "360x740"
+  ],
+  "online": "browser API request routed through actual realm.transact with in-memory persistence; same4UUIDs submitted once and server result rendered",
+  "cases": [
+    "four samekind pieces",
+    "two repeated kind pairs",
+    "sameUUID rejection",
+    "foreignUUID rejection",
+    "rarity mismatch",
+    "full bag consumes4 produces1",
+    "command replay",
+    "legacy repeated type references"
+  ],
+  "renderer": "Chromium SwiftShader"
+}

@@ -21,7 +21,7 @@ test('convert consumes four distinct same-rarity kinds, including the chosen res
 });
 test('invalid conversion and mismatched rarity leave every ingredient unchanged',()=>{
  const {s}=setup();for(const id of ['critChance','critDamage','hpRegen','mpRegen'] as RuneId[])give(s,id,4,'common');give(s,'hpRegen',4,'rare');
- for(const input of [['critChance','critChance','hpRegen','mpRegen'],['critChance','critDamage','hpRegen'],['critChance','critDamage','hpRegen','not-a-rune']]){const before=structuredClone(s.save);expect(s.craft('rune:damageBonus','common',input as RuneId[])).toBe(false);expect(s.save).toEqual(before);}
+ for(const input of [['critChance','critDamage','hpRegen'],['critChance','critDamage','hpRegen','not-a-rune']]){const before=structuredClone(s.save);expect(s.craft('rune:damageBonus','common',input as RuneId[])).toBe(false);expect(s.save).toEqual(before);}
  const before=structuredClone(s.save);expect(s.craft('rune:damageBonus','rare',['critChance','critDamage','hpRegen','mpRegen'])).toBe(false);expect(s.save).toEqual(before);
 });
 test('two-to-one upgrade reaches Legend from 16 Common and excludes socketed materials',()=>{

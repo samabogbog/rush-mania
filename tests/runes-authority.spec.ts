@@ -55,3 +55,10 @@ test('authoritative pending-rune claims reject other players and repeated comman
  b=await transact(store,{id:'b',name:'B'},{commands:[command(b,'claimRuneOverflow',[])]},1000);expect(b.player.actor.save.items.some(i=>ids.includes(i.id))).toBe(false);expect(store.realm!.players.a.actor.save.runeOverflow).toHaveLength(2);
  const claim=command(a,'claimRuneOverflow',[]);a=await transact(store,{id:'a',name:'A'},{commands:[claim]},1000);a=await transact(store,{id:'a',name:'A'},{commands:[claim]},1000);expect(a.player.actor.save.runeOverflow).toEqual([]);expect(a.player.actor.save.items.filter(i=>ids.includes(i.id))).toHaveLength(2);
 });
+
+test('authoritative conversion of four same-kind UUIDs consumes once and rejects repeated or foreign UUIDs',async()=>{
+ const {store,...initial}=await setup();let {a,b}=initial;const owned=pieces(a,'hpRegen').map(i=>i.id),before=structuredClone(store.realm!.players.a.actor.save);
+ a=await transact(store,{id:'a',name:'A'},{commands:[command(a,'craft',['rune:damageBonus','common',[owned[0],owned[0],owned[1],owned[2]]])]},1000);expect(a.player.actor.save).toEqual(before);
+ b=await transact(store,{id:'b',name:'B'},{commands:[command(b,'craft',['rune:damageBonus','common',owned])]},1000);expect(b.player.actor.save.items.some(i=>i.runeId==='damageBonus')).toBe(false);expect(store.realm!.players.a.actor.save).toEqual(before);
+ const c=command(a,'craft',['rune:damageBonus','common',owned]);a=await transact(store,{id:'a',name:'A'},{commands:[c]},1000);a=await transact(store,{id:'a',name:'A'},{commands:[c]},1000);expect(pieces(a,'hpRegen')).toHaveLength(0);expect(pieces(a,'damageBonus')).toHaveLength(1);expect(pieces(a,'damageBonus')[0].count).toBe(1);
+});

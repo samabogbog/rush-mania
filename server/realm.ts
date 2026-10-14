@@ -228,7 +228,7 @@ function execute(player:Player,realm:Realm,command:Command,now:number,admin=fals
     case 'craft':
       if(typeof a!=='string')throw new GameError('Invalid recipe');
       if(a.startsWith('rune:')){
-        if(command.args.length!==3||!isRarity(b)||!Array.isArray(command.args[2])){sim.onEvent('Rune: Choose a target, rarity, and four different ingredients.');break;}
+        if(command.args.length!==3||!isRarity(b)||!Array.isArray(command.args[2])){sim.onEvent('Rune: Choose a target, rarity, and four individual rune pieces.');break;}
         recordRune(sim.craft(a,b,command.args[2] as string[]));
       }else{if(b!==undefined&&!isRarity(b))throw new GameError('Invalid recipe rarity');sim.craft(a,(b||'common') as Rarity);}
       break;
